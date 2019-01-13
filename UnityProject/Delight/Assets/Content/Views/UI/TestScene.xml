@@ -1,0 +1,9 @@
+<TestScene xmlns="Delight" BasedOn="LayoutRoot">
+  <Group Orientation="Horizontal" Alignment="TopLeft" Offset="10,10,0,0" Spacing="10">
+    <Button Text="Test 1" Click="Test1" />
+    <Button Text="Test 2" Click="Test2" />
+  </Group>
+  <Region Margin="0,200,0,0">    
+    <BindingTest TestBinding="Patrik" Button1.BackgroundColor="Yellow" />
+  </Region>
+</TestScene> 

@@ -1,0 +1,3 @@
+<Grid xmlns="Delight" BasedOn="UIImageView">
+  <!--Cells="t:CellDefinitions" Cell="at:CellIndex">-->
+</Grid> 

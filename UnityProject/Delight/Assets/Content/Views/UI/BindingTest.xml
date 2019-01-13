@@ -1,0 +1,20 @@
+<BindingTest xmlns="Delight" Button2.BackgroundColor="Red" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2">
+
+  <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
+    BackgroundColor="#ef706a">
+    <Group Spacing="10" Alignment="Top" Margin="0,30,0,0">
+      <Button Text="Test 1" BackgroundColor="Blue" FontSize="24" TextAlignment="Center" Click="Test1" />
+      <Button Text="Test 2" TextAlignment="Center" Click="Test2" />
+      <Button Text="Bg" TextAlignment="Center" BackgroundColor="{TestBinding2}" />
+      <LargeButton Text="Large Button" TextAlignment="Center" />
+      <Label Width="130" Height="50" Text="{TestBinding}" />
+      <Button Text="{TestBinding}" />
+    </Group>
+  </Region>
+  
+  <Region Id="RegionOnDemand" Width="75%" Alignment="Right" Margin="15,30,30,30"
+      BackgroundColor="#949494">
+    <Label Text="{TestBinding}" />
+  </Region>
+
+</BindingTest>

@@ -1,0 +1,3 @@
+<UIView xmlns="Delight" BasedOn="SceneView" RectTransform="t:RectTransform" i.Size="Width, Height" Width="t:ElementSize" Height="t:ElementSize" OverrideWidth="t:ElementSize" OverrideHeight="t:ElementSize"
+        Alignment="t:ElementAlignment" Margin="t:ElementMargin" Offset="t:ElementMargin" OffsetFromParent="t:ElementMargin"  Pivot="t:Vector2" LayoutRoot="t:LayoutRoot" DisableLayoutUpdate="t:bool">
+</UIView>

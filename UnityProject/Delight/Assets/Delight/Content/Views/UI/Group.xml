@@ -1,0 +1,2 @@
+<Group xmlns="Delight" BasedOn="UIImageView" Spacing="t:ElementSize" Orientation="t:ElementOrientation" ContentAlignment="t:ElementAlignment">
+</Group>
