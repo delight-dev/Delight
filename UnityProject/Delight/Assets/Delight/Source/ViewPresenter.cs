@@ -15,6 +15,7 @@ namespace Delight
         #region Fields
 
         public string ViewTypeName;
+        public string ViewTypeNamespace = "Delight";
         public bool LoadOnAwake = true;
         private View _view;
 
@@ -24,7 +25,7 @@ namespace Delight
 
         public async void Awake()
         {
-            var type = TypeHelper.GetType(ViewTypeName);
+            var type = TypeHelper.GetType(ViewTypeName, ViewTypeNamespace);
 
             var sw = System.Diagnostics.Stopwatch.StartNew();
             _view = type != null ? TypeHelper.CreateInstance(type) as View : null;

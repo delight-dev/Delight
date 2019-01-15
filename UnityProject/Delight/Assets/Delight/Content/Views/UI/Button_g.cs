@@ -633,8 +633,8 @@ namespace Delight
 #endif
                 {
                     _button = new Template(UIImageViewTemplates.UIImageView);
-                    Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(120f, ElementSizeUnit.Pixels));
-                    Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
+                    Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_button, ButtonLabel);
                 }
@@ -654,7 +654,7 @@ namespace Delight
 #endif
                 {
                     _buttonLabel = new Template(LabelTemplates.Label);
-                    Delight.Label.TextProperty.SetDefault(_buttonLabel, "DefaultText");
+                    Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
                 }
                 return _buttonLabel;
             }
