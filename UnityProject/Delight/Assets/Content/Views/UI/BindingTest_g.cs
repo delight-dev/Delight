@@ -30,17 +30,17 @@ namespace Delight
                 source.Click = ResolveActionHandler(this, "Test2");
             });
             Button3 = new Button(this, Group1, "Button3", Button3Template);
-            _bindings.Add(new Binding(TestBinding2Property, Button.BackgroundColorProperty, () => this, () => Button3, () => Button3.BackgroundColor = TestBinding2, () => TestBinding2 = Button3.BackgroundColor));
+            _bindings.Add(new Binding(TestBinding2Property.PropertyName, Button.BackgroundColorProperty.PropertyName, () => this, () => Button3, () => Button3.BackgroundColor = TestBinding2, () => TestBinding2 = Button3.BackgroundColor));
             LargeButton1 = new LargeButton(this, Group1, "LargeButton1", LargeButton1Template);
             Label1 = new Label(this, Group1, "Label1", Label1Template);
-            _bindings.Add(new Binding(TestBindingProperty, Label.TextProperty, () => this, () => Label1, () => Label1.Text = TestBinding, () => TestBinding = Label1.Text));
+            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Label.TextProperty.PropertyName, () => this, () => Label1, () => Label1.Text = TestBinding, () => TestBinding = Label1.Text));
             Button4 = new Button(this, Group1, "Button4", Button4Template);
-            _bindings.Add(new Binding(TestBindingProperty, Button.TextProperty, () => this, () => Button4, () => Button4.Text = TestBinding, () => TestBinding = Button4.Text));
+            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Button.TextProperty.PropertyName, () => this, () => Button4, () => Button4.Text = TestBinding, () => TestBinding = Button4.Text));
 
             // constructing Region (RegionOnDemand)
             RegionOnDemand = new Region(this, this, "RegionOnDemand", RegionOnDemandTemplate);
             Label2 = new Label(this, RegionOnDemand, "Label2", Label2Template);
-            _bindings.Add(new Binding(TestBindingProperty, Label.TextProperty, () => this, () => Label2, () => Label2.Text = TestBinding, () => TestBinding = Label2.Text));
+            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Label.TextProperty.PropertyName, () => this, () => Label2, () => Label2.Text = TestBinding, () => TestBinding = Label2.Text));
         }
 
         public BindingTest() : this(null)

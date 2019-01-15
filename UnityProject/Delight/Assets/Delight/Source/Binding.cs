@@ -35,13 +35,6 @@ namespace Delight
             _propagateTargetPropertyValue = propagateTargetPropertyValue;
         }
 
-        // TODO remove once code generator is changed
-        public Binding(DependencyProperty sourceProperty, DependencyProperty targetProperty,
-            Func<DependencyObject> sourceObjectGetter, Func<DependencyObject> targetObjectGetter,
-            Action propagateSourcePropertyValue, Action propagateTargetPropertyValue)
-        {
-        }
-
         #endregion
 
         #region Methods

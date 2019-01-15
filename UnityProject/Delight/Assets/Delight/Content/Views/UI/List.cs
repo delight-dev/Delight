@@ -19,7 +19,7 @@ namespace Delight
 
         private ObservableList<TViewModel> _presentedItems;
 
-        public readonly static DependencyProperty<ObservableList<TViewModel>> ItemsProperty = new DependencyProperty<ObservableList<TViewModel>>();
+        public readonly static DependencyProperty<ObservableList<TViewModel>> ItemsProperty = new DependencyProperty<ObservableList<TViewModel>>("Items");
         public ObservableList<TViewModel> Items
         {
             get { return ItemsProperty.GetValue(this); }
