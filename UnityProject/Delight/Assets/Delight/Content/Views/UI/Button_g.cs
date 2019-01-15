@@ -37,14 +37,14 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>();
+        public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>("Label");
         public Label Label
         {
             get { return LabelProperty.GetValue(this); }
             set { LabelProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> LabelTemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> LabelTemplateProperty = new DependencyProperty<Template>("LabelTemplate");
         public Template LabelTemplate
         {
             get { return LabelTemplateProperty.GetValue(this); }

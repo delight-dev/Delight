@@ -23,7 +23,12 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test1");
             });
-            Label1 = new Label(this, Group1, "Label1", Label1Template);            
+            Button2 = new Button(this, Group1, "Button2", Button2Template, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "Test2");
+            });
+            Label1 = new Label(this, Group1, "Label1", Label1Template);
         }
 
         public ModelBindingTest() : this(null)
@@ -39,6 +44,8 @@ namespace Delight
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(Button2Property);
+            dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
         }
@@ -47,42 +54,56 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>();
+        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
         {
             get { return Group1Property.GetValue(this); }
             set { Group1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>("Group1Template");
         public Template Group1Template
         {
             get { return Group1TemplateProperty.GetValue(this); }
             set { Group1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>();
+        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
         public Button Button1
         {
             get { return Button1Property.GetValue(this); }
             set { Button1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>("Button1Template");
         public Template Button1Template
         {
             get { return Button1TemplateProperty.GetValue(this); }
             set { Button1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>();
+        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
+        public Button Button2
+        {
+            get { return Button2Property.GetValue(this); }
+            set { Button2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
+        public Template Button2Template
+        {
+            get { return Button2TemplateProperty.GetValue(this); }
+            set { Button2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
         public Label Label1
         {
             get { return Label1Property.GetValue(this); }
             set { Label1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
         public Template Label1Template
         {
             get { return Label1TemplateProperty.GetValue(this); }
@@ -120,6 +141,7 @@ namespace Delight
                     _modelBindingTest = new Template(LayoutRootTemplates.LayoutRoot);
                     Delight.ModelBindingTest.Group1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup1);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
+                    Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
                 }
                 return _modelBindingTest;
@@ -180,6 +202,42 @@ namespace Delight
             }
         }
 
+        private static Template _modelBindingTestButton2;
+        public static Template ModelBindingTestButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestButton2 == null || _modelBindingTestButton2.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestButton2 == null)
+#endif
+                {
+                    _modelBindingTestButton2 = new Template(ButtonTemplates.Button);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton2, ModelBindingTestButton2Label);
+                }
+                return _modelBindingTestButton2;
+            }
+        }
+
+        private static Template _modelBindingTestButton2Label;
+        public static Template ModelBindingTestButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestButton2Label == null || _modelBindingTestButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestButton2Label == null)
+#endif
+                {
+                    _modelBindingTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_modelBindingTestButton2Label, "Test 2");
+                }
+                return _modelBindingTestButton2Label;
+            }
+        }
+
         private static Template _modelBindingTestLabel1;
         public static Template ModelBindingTestLabel1
         {
@@ -192,6 +250,7 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
+                    Delight.Label.TextProperty.SetDefault(_modelBindingTestLabel1, "Default");
                     Delight.Label.TextAlignmentProperty.SetDefault(_modelBindingTestLabel1, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.ColorProperty.SetDefault(_modelBindingTestLabel1, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.ExtraPaddingProperty.SetDefault(_modelBindingTestLabel1, true);

@@ -73,98 +73,98 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Region> StudentListProperty = new DependencyProperty<Region>();
+        public readonly static DependencyProperty<Region> StudentListProperty = new DependencyProperty<Region>("StudentList");
         public Region StudentList
         {
             get { return StudentListProperty.GetValue(this); }
             set { StudentListProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> StudentListTemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> StudentListTemplateProperty = new DependencyProperty<Template>("StudentListTemplate");
         public Template StudentListTemplate
         {
             get { return StudentListTemplateProperty.GetValue(this); }
             set { StudentListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>();
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
         public Region Region1
         {
             get { return Region1Property.GetValue(this); }
             set { Region1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
         public Template Region1Template
         {
             get { return Region1TemplateProperty.GetValue(this); }
             set { Region1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>();
+        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
         {
             get { return Group1Property.GetValue(this); }
             set { Group1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>("Group1Template");
         public Template Group1Template
         {
             get { return Group1TemplateProperty.GetValue(this); }
             set { Group1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>();
+        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
         public Button Button1
         {
             get { return Button1Property.GetValue(this); }
             set { Button1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>("Button1Template");
         public Template Button1Template
         {
             get { return Button1TemplateProperty.GetValue(this); }
             set { Button1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>();
+        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
         public Button Button2
         {
             get { return Button2Property.GetValue(this); }
             set { Button2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
         public Template Button2Template
         {
             get { return Button2TemplateProperty.GetValue(this); }
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button3Property = new DependencyProperty<Button>();
+        public readonly static DependencyProperty<Button> Button3Property = new DependencyProperty<Button>("Button3");
         public Button Button3
         {
             get { return Button3Property.GetValue(this); }
             set { Button3Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Button3TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Button3TemplateProperty = new DependencyProperty<Template>("Button3Template");
         public Template Button3Template
         {
             get { return Button3TemplateProperty.GetValue(this); }
             set { Button3TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button4Property = new DependencyProperty<Button>();
+        public readonly static DependencyProperty<Button> Button4Property = new DependencyProperty<Button>("Button4");
         public Button Button4
         {
             get { return Button4Property.GetValue(this); }
             set { Button4Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Button4TemplateProperty = new DependencyProperty<Template>();
+        public readonly static DependencyProperty<Template> Button4TemplateProperty = new DependencyProperty<Template>("Button4Template");
         public Template Button4Template
         {
             get { return Button4TemplateProperty.GetValue(this); }

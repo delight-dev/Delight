@@ -163,7 +163,7 @@ namespace Delight.Parser
             foreach (var declaration in propertyDeclarations)
             {
                 sb.AppendLine();
-                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>();", declaration.PropertyTypeFullName, declaration.PropertyName);
+                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", declaration.PropertyTypeFullName, declaration.PropertyName);
                 sb.AppendLine("        public {0} {1}", declaration.PropertyTypeFullName, declaration.PropertyName);
                 sb.AppendLine("        {");
                 sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", declaration.PropertyName);
@@ -190,7 +190,7 @@ namespace Delight.Parser
                 {
                     // the property maps to a custom object
                     sb.AppendLine();
-                    sb.AppendLine("        public readonly static MappedDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedDependencyProperty<{0}, {1}, {4}>(x => x.{5}, x => x.{3}, (x, y) => x.{3} = y);",
+                    sb.AppendLine("        public readonly static MappedDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, x => x.{3}, (x, y) => x.{3} = y);",
                         mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewName, mappedDeclaration.TargetObjectName);
                     sb.AppendLine("        public {0} {1}", mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
