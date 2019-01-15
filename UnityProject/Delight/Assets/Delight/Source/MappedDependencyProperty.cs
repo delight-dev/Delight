@@ -65,7 +65,7 @@ namespace Delight
             Setter(target, value);
 
             // trigger property-changed event
-            key.OnPropertyChanged(PropertyName); // TODO see if we can use CallerMemberName here so we don't have to store property name for each property (although again its just one per type so no huge deal)
+            key.OnPropertyChanged(PropertyName);
         }
 
         /// <summary>
@@ -161,18 +161,6 @@ namespace Delight
         #endregion        
 
         #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the class. TODO remove.
-        /// </summary>
-        public MappedDependencyProperty(Func<TParent, TObject> objectGetter, Func<TObject, T> getter, Action<TObject, T> setter)
-        {
-            ValueSet = new Dictionary<DependencyObject, bool>();
-            Defaults = new Dictionary<Template, T>();
-            Getter = getter;
-            Setter = setter;
-            ObjectGetter = objectGetter;
-        }
 
         /// <summary>
         /// Initializes a new instance of the class.

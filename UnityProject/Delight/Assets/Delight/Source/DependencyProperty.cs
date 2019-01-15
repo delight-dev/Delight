@@ -141,16 +141,6 @@ namespace Delight
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the class. TODO remove
-        /// </summary>
-        public DependencyProperty()
-        {
-            Values = new Dictionary<DependencyObject, T>();
-            Defaults = new Dictionary<Template, T>();
-            ValueConverter = ValueConverter<T>.Empty;
-        }
-
-        /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
         public DependencyProperty(string propertyName)
@@ -171,7 +161,7 @@ namespace Delight
     {
         #region Fields
 
-        public string PropertyName;
+        public string PropertyName; // TODO by using [CallerMemberName] instead we might not have to store PropertyName
 
         #endregion
 

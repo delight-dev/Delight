@@ -55,14 +55,14 @@ namespace Delight
     // Test type
     public class TestType2 : DependencyObject
     {
-        public readonly static DependencyProperty<System.String> TextProperty = new DependencyProperty<System.String>();
+        public readonly static DependencyProperty<System.String> TextProperty = new DependencyProperty<System.String>("Text");
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
             set { TextProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Color> ColorProperty = new DependencyProperty<Color>();
+        public readonly static DependencyProperty<Color> ColorProperty = new DependencyProperty<Color>("Color");
 
         public TestType2(View parent, string id = null, Template template = null) : base(id, template)
         {

@@ -612,7 +612,7 @@ namespace Delight.Parser
                         if (propertyBinding.BindingType == BindingType.SingleBinding)
                         {
                             var bindingSource = propertyBinding.Sources.First();
-                            sb.AppendLine("            _bindings.Add(new Binding({0}Property, {1}.{2}Property, () => this, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
+                            sb.AppendLine("            _bindings.Add(new Binding({0}Property.PropertyName, {1}.{2}Property.PropertyName, () => this, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
                                 bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id);
                         }
                     }
