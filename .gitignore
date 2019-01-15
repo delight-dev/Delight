@@ -275,9 +275,8 @@ sysinfo.txt
 
 # Unity generated
 
-UnityProject/MarkLight/.vs/
-UnityProject/MarkLight/Temp/
-UnityProject/MarkLight/obj/
-UnityProject/MarkLight/UnityGenerated/
-UnityProject/MarkLight/Library/
-UnityProject/MarkLight/MarkLightTemp.bin
+UnityProject/Delight/.vs/
+UnityProject/Delight/Temp/
+UnityProject/Delight/obj/
+UnityProject/Delight/UnityGenerated/
+UnityProject/Delight/Library/
