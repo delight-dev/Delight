@@ -2,7 +2,6 @@
   <Group Spacing="10">
     <Button Text="Test 1" Click="Test1" />
     <Button Text="Test 2" Click="Test2" />
-    <!-- Model Binding will look like: Text="{@Players.Player1.Name}" -->
-    <Label Text="Default" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" />
+    <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" /> 
   </Group> 
 </ModelBindingTest> 

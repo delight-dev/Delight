@@ -13,9 +13,6 @@ namespace Delight
         protected override void Initialize()
         {
             base.Initialize();
-
-            // set up binding to model
-            _bindings.Add(new Binding("Name", "Text", () => Models.Players.Player1, () => Label1, () => Label1.Text = Models.Players.Player1.Name, () => Models.Players.Player1.Name = Label1.Text));
         }
 
         protected override void BeforeLoad()
