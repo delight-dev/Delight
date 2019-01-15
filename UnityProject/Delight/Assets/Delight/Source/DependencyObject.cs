@@ -10,16 +10,13 @@ namespace Delight
     /// <summary>
     /// Base class for dependency objects.
     /// </summary>
-    public class DependencyObject //: BindableObject
+    public class DependencyObject : BindableObject
     {
         #region Fields
         
         private string _id;
         protected Template _template;
         protected static Dictionary<Template, List<DependencyProperty>> DependencyProperties = new Dictionary<Template, List<DependencyProperty>>();
-
-        public delegate void PropertyChangedEventHandler(DependencyObject source, DependencyProperty property);
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
@@ -52,17 +49,9 @@ namespace Delight
         #region Methods
 
         /// <summary>
-        /// Triggers a property changed event. 
-        /// </summary>
-        public void NotifyPropertyChanged(DependencyObject source, DependencyProperty propertyChanged)
-        {
-            PropertyChanged(source, propertyChanged);
-        }
-
-        /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public virtual void OnPropertyChanged(DependencyObject source, DependencyProperty property)
+        public virtual void OnPropertyChanged(object source, string property)
         {
         }
 

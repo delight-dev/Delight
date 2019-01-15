@@ -45,84 +45,84 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<UnityEngine.RectTransform> RectTransformProperty = new DependencyProperty<UnityEngine.RectTransform>();
+        public readonly static DependencyProperty<UnityEngine.RectTransform> RectTransformProperty = new DependencyProperty<UnityEngine.RectTransform>("RectTransform");
         public UnityEngine.RectTransform RectTransform
         {
             get { return RectTransformProperty.GetValue(this); }
             set { RectTransformProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementSize> WidthProperty = new DependencyProperty<Delight.ElementSize>();
+        public readonly static DependencyProperty<Delight.ElementSize> WidthProperty = new DependencyProperty<Delight.ElementSize>("Width");
         public Delight.ElementSize Width
         {
             get { return WidthProperty.GetValue(this); }
             set { WidthProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementSize> HeightProperty = new DependencyProperty<Delight.ElementSize>();
+        public readonly static DependencyProperty<Delight.ElementSize> HeightProperty = new DependencyProperty<Delight.ElementSize>("Height");
         public Delight.ElementSize Height
         {
             get { return HeightProperty.GetValue(this); }
             set { HeightProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementSize> OverrideWidthProperty = new DependencyProperty<Delight.ElementSize>();
+        public readonly static DependencyProperty<Delight.ElementSize> OverrideWidthProperty = new DependencyProperty<Delight.ElementSize>("OverrideWidth");
         public Delight.ElementSize OverrideWidth
         {
             get { return OverrideWidthProperty.GetValue(this); }
             set { OverrideWidthProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementSize> OverrideHeightProperty = new DependencyProperty<Delight.ElementSize>();
+        public readonly static DependencyProperty<Delight.ElementSize> OverrideHeightProperty = new DependencyProperty<Delight.ElementSize>("OverrideHeight");
         public Delight.ElementSize OverrideHeight
         {
             get { return OverrideHeightProperty.GetValue(this); }
             set { OverrideHeightProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementAlignment> AlignmentProperty = new DependencyProperty<Delight.ElementAlignment>();
+        public readonly static DependencyProperty<Delight.ElementAlignment> AlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("Alignment");
         public Delight.ElementAlignment Alignment
         {
             get { return AlignmentProperty.GetValue(this); }
             set { AlignmentProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementMargin> MarginProperty = new DependencyProperty<Delight.ElementMargin>();
+        public readonly static DependencyProperty<Delight.ElementMargin> MarginProperty = new DependencyProperty<Delight.ElementMargin>("Margin");
         public Delight.ElementMargin Margin
         {
             get { return MarginProperty.GetValue(this); }
             set { MarginProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementMargin> OffsetProperty = new DependencyProperty<Delight.ElementMargin>();
+        public readonly static DependencyProperty<Delight.ElementMargin> OffsetProperty = new DependencyProperty<Delight.ElementMargin>("Offset");
         public Delight.ElementMargin Offset
         {
             get { return OffsetProperty.GetValue(this); }
             set { OffsetProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ElementMargin> OffsetFromParentProperty = new DependencyProperty<Delight.ElementMargin>();
+        public readonly static DependencyProperty<Delight.ElementMargin> OffsetFromParentProperty = new DependencyProperty<Delight.ElementMargin>("OffsetFromParent");
         public Delight.ElementMargin OffsetFromParent
         {
             get { return OffsetFromParentProperty.GetValue(this); }
             set { OffsetFromParentProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<UnityEngine.Vector2> PivotProperty = new DependencyProperty<UnityEngine.Vector2>();
+        public readonly static DependencyProperty<UnityEngine.Vector2> PivotProperty = new DependencyProperty<UnityEngine.Vector2>("Pivot");
         public UnityEngine.Vector2 Pivot
         {
             get { return PivotProperty.GetValue(this); }
             set { PivotProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.LayoutRoot> LayoutRootProperty = new DependencyProperty<Delight.LayoutRoot>();
+        public readonly static DependencyProperty<Delight.LayoutRoot> LayoutRootProperty = new DependencyProperty<Delight.LayoutRoot>("LayoutRoot");
         public Delight.LayoutRoot LayoutRoot
         {
             get { return LayoutRootProperty.GetValue(this); }
             set { LayoutRootProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.Boolean> DisableLayoutUpdateProperty = new DependencyProperty<System.Boolean>();
+        public readonly static DependencyProperty<System.Boolean> DisableLayoutUpdateProperty = new DependencyProperty<System.Boolean>("DisableLayoutUpdate");
         public System.Boolean DisableLayoutUpdate
         {
             get { return DisableLayoutUpdateProperty.GetValue(this); }

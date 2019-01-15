@@ -42,19 +42,13 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(DependencyObject source, DependencyProperty property)
+        public override void OnPropertyChanged(object source, string property)
         {
             base.OnPropertyChanged(source, property);
-            if (property == ItemsProperty)
+            if (property == ItemsProperty.PropertyName)
             {
                 ItemsChanged();
             }
-
-            // TODO in vs 2017 you can switch on types
-            // meanwhile there are solutions https://stackoverflow.com/questions/298976/is-there-a-better-alternative-than-this-to-switch-on-type
-            // for a custom solution for switching on dependency property type
-            // which will be required if the number of handlers grows
-            // might be replaced by string as we want to support binding to BindableObjects
         }
 
         /// <summary>

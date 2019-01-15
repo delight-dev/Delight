@@ -72,7 +72,7 @@ namespace Delight
             }
 
             // trigger property-changed event
-            key.NotifyPropertyChanged(key, this);
+            key.OnPropertyChanged(PropertyName); // TODO see if we can use CallerMemberName here so we don't have to store property name for each property (although again its just one per type so no huge deal)
         }
 
         /// <summary>
@@ -141,13 +141,24 @@ namespace Delight
         #region Constructor
 
         /// <summary>
-        /// Initializes a new instance of the class.
+        /// Initializes a new instance of the class. TODO remove
         /// </summary>
         public DependencyProperty()
         {
             Values = new Dictionary<DependencyObject, T>();
             Defaults = new Dictionary<Template, T>();
             ValueConverter = ValueConverter<T>.Empty;
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public DependencyProperty(string propertyName)
+        {
+            Values = new Dictionary<DependencyObject, T>();
+            Defaults = new Dictionary<Template, T>();
+            ValueConverter = ValueConverter<T>.Empty;
+            PropertyName = propertyName;
         }
 
         #endregion
@@ -158,8 +169,18 @@ namespace Delight
     /// </summary>
     public class DependencyProperty
     {
+        #region Fields
+
+        public string PropertyName;
+
+        #endregion
+
+        #region Methods
+
         public virtual void Initialize(DependencyObject key)
         {
         }
+
+        #endregion
     }
 }

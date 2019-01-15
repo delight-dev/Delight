@@ -10,21 +10,21 @@ namespace Delight
     {
         #region Fields
 
-        private Func<DependencyObject> _sourceObjectGetter;
-        private Func<DependencyObject> _targetObjectGetter;
+        private Func<BindableObject> _sourceObjectGetter;
+        private Func<BindableObject> _targetObjectGetter;
         private Action _propagateSourcePropertyValue;
         private Action _propagateTargetPropertyValue;
-        private DependencyProperty _sourceProperty;
-        private DependencyProperty _targetProperty;
-        private DependencyObject _sourceObject;
-        private DependencyObject _targetObject;
+        private string _sourceProperty;
+        private string _targetProperty;
+        private BindableObject _sourceObject;
+        private BindableObject _targetObject;
 
         #endregion
 
         #region Constructor
 
-        public Binding(DependencyProperty sourceProperty, DependencyProperty targetProperty,
-            Func<DependencyObject> sourceObjectGetter, Func<DependencyObject> targetObjectGetter,
+        public Binding(string sourceProperty, string targetProperty,
+            Func<BindableObject> sourceObjectGetter, Func<BindableObject> targetObjectGetter,
             Action propagateSourcePropertyValue, Action propagateTargetPropertyValue)
         {
             _sourceProperty = sourceProperty;
@@ -33,6 +33,13 @@ namespace Delight
             _targetObjectGetter = targetObjectGetter;
             _propagateSourcePropertyValue = propagateSourcePropertyValue;
             _propagateTargetPropertyValue = propagateTargetPropertyValue;
+        }
+
+        // TODO remove once code generator is changed
+        public Binding(DependencyProperty sourceProperty, DependencyProperty targetProperty,
+            Func<DependencyObject> sourceObjectGetter, Func<DependencyObject> targetObjectGetter,
+            Action propagateSourcePropertyValue, Action propagateTargetPropertyValue)
+        {
         }
 
         #endregion
@@ -63,7 +70,7 @@ namespace Delight
         /// <summary>
         /// Called when a property in the binding source has been changed.
         /// </summary>
-        public void SourcePropertyChanged(DependencyObject source, DependencyProperty property)
+        public void SourcePropertyChanged(object source, string property)
         {
             if (property == _sourceProperty) _propagateSourcePropertyValue();
         }
@@ -71,7 +78,7 @@ namespace Delight
         /// <summary>
         /// Called when a property in the binding target has been changed.
         /// </summary>
-        public void TargetPropertyChanged(DependencyObject source, DependencyProperty property)
+        public void TargetPropertyChanged(object source, string property)
         {
             if (property == _targetProperty) _propagateTargetPropertyValue();
         }
@@ -80,7 +87,7 @@ namespace Delight
 
         #region Properties
 
-        public DependencyObject SourceObject
+        public BindableObject SourceObject
         {
             get
             {
@@ -88,7 +95,7 @@ namespace Delight
             }
         }
 
-        public DependencyObject TargetObject
+        public BindableObject TargetObject
         {
             get
             {

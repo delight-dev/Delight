@@ -59,16 +59,22 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(DependencyObject source, DependencyProperty property)
+        public override void OnPropertyChanged(object source, string property)
         {
             base.OnPropertyChanged(source, property);
-            if (property == WidthProperty || property == HeightProperty || property == OverrideWidthProperty || property == OverrideHeightProperty)
+            switch (property)
             {
-                LayoutChanged();
-            }
-            else if (property == OffsetProperty || property == OffsetFromParentProperty)
-            {
-                OffsetChanged();
+                case nameof(Width):
+                case nameof(Height):
+                case nameof(OverrideWidth):
+                case nameof(OverrideHeight):
+                    LayoutChanged();
+                    break;
+
+                case nameof(Offset):
+                case nameof(OffsetFromParent):
+                    OffsetChanged();
+                    break;
             }
         }
 
