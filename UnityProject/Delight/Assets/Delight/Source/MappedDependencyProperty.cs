@@ -136,7 +136,7 @@ namespace Delight
 
             bool valueSet = false;
             ValueSet.TryGetValue(key, out valueSet);
-            if (valueSet) // TODO any reason to do this check here?
+            if (valueSet) // if value already has been set, don't overwrite it with default value
                 return;
 
             // set default value if specified

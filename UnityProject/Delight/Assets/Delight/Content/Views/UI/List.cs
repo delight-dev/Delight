@@ -79,22 +79,39 @@ namespace Delight
                 _presentedItems.ListChanged += OnListChanged;
             }
 
-            // unload and clear children
+            // unload and clear existing children
             foreach (var child in _layoutChildren)
             {
                 child.Unload();
             }
             _layoutChildren.Clear();
 
+            int i = 0;
             foreach (var item in _presentedItems)
             {
-                // create items
+                // create new children 
                 var itemView = new TView();
                 itemView.Parent = this;
                 itemView.LayoutParent = this;
                 LayoutChildren.Add(itemView);
 
-                itemView.Load();
+                // TODO temp debug logic remove
+                if (itemView is Label && item is Student)
+                {
+                    var student = item as Student;
+                    var label = itemView as Label;
+                    Debug.Log("Student name = " + student.Name);                    
+                    label.Load();
+                    label.Color = Color.black;
+                    label.Offset = new ElementMargin(0, i * 35, 0, 0);
+                    label.Text = student.Name;
+                    ++i;
+                    continue;
+                }
+                
+                // -----
+
+                itemView.Load();                
             }
         }
 

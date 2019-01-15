@@ -17,4 +17,34 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
     }
+
+    public class DataProvider<T> : BindableObject
+    {
+    }
+
+    public partial class PlayerData : DataProvider<Player>
+    {
+        private Player _player1;
+        public Player Player1
+        {
+            get { return _player1; }
+            set { SetProperty(ref _player1, value); }
+        }
+
+        public PlayerData()
+        {
+            _player1 = new Player { Name = "Patrik" };
+        }
+    }
+
+    public static partial class Models
+    {
+        public static PlayerData Players = new PlayerData();
+
+        // bootstrapping
+        static Models()
+        {
+            Debug.Log("Models bootstrapper called");
+        }
+    }
 }

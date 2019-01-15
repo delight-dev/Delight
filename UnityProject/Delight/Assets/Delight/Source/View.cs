@@ -93,7 +93,7 @@ namespace Delight
         /// <summary>
         /// Called once in the object's lifetime by the constructor.
         /// </summary>
-        public virtual void Initialize()
+        protected virtual void Initialize()
         {            
         }
 
@@ -267,8 +267,9 @@ namespace Delight
         /// <summary>
         /// Goes through and clears all run-time dependency property values. 
         /// </summary>
-        protected virtual void ClearDependencyPropertyValues()
+        protected void ClearDependencyPropertyValues()
         {
+            // TODO implement by iterating through dependency property dictionary
         }
 
         /// <summary>

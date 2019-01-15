@@ -1,0 +1,6 @@
+<ModelBindingTest xmlns="Delight" BasedOn="LayoutRoot">
+  <Group Spacing="10">
+    <Button Text="Test 1" Click="Test1" />
+    <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" />
+  </Group> 
+</ModelBindingTest> 

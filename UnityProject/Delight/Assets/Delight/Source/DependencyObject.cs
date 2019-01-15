@@ -10,7 +10,7 @@ namespace Delight
     /// <summary>
     /// Base class for dependency objects.
     /// </summary>
-    public class DependencyObject
+    public class DependencyObject //: BindableObject
     {
         #region Fields
         
