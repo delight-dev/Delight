@@ -30,6 +30,7 @@ namespace Delight.Parser
         private const string ScenesFolder = "/Scenes/";
         private const string DefaultViewType = "UIView";
         private const string DefaultNamespace = "Delight";
+        private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
 
         private static XumlObjectModel _xumlObjectModel;
@@ -613,7 +614,7 @@ namespace Delight.Parser
                 else if (viewField.StartsWith("@"))
                 {
                     bindingSource.SourceTypes |= BindingSourceTypes.Model;
-                    viewField = viewField.Substring(1);
+                    viewField = String.Format("{0}.{1}", ModelsClassName, viewField.Substring(1));
                 }
                 else
                 {

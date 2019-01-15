@@ -122,7 +122,7 @@ namespace Delight.Parser
             sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewName);
             sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewName);
             sb.AppendLine("        {");
-            GenerateChildViewDeclarations(sb, viewName, null, xumlViewObject.ViewDeclarations);
+            GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, viewName, null, xumlViewObject.ViewDeclarations);
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public {0}() : this(null)", viewName);
@@ -556,7 +556,7 @@ namespace Delight.Parser
         /// <summary>
         /// Generates view construction logic from view declaration.
         /// </summary>
-        private static void GenerateChildViewDeclarations(StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null)
+        private static void GenerateChildViewDeclarations(string fileName, XumlViewObject xumlViewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null)
         {
             bool isFirst = true;
 
@@ -612,14 +612,40 @@ namespace Delight.Parser
                         if (propertyBinding.BindingType == BindingType.SingleBinding)
                         {
                             var bindingSource = propertyBinding.Sources.First();
-                            sb.AppendLine("            _bindings.Add(new Binding({0}Property.PropertyName, {1}.{2}Property.PropertyName, () => this, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
-                                bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id);
+                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model))
+                            {
+                                // MODEL BINDING - <ChildView Property="{@Model.ModelObject.Property}">
+                                // binding is between model property and child view dependency property
+                                int sourcePropertyIndex = bindingSource.BindingPath.LastIndexOf(".");
+                                if (sourcePropertyIndex > 0)
+                                {
+                                    var sourceObjectName = bindingSource.BindingPath.Substring(0, sourcePropertyIndex);
+                                    var sourcePropertyName = bindingSource.BindingPath.Substring(sourcePropertyIndex + 1);
+
+                                    sb.AppendLine("            _bindings.Add(new Binding(\"{4}\", {1}.{2}Property.PropertyName, () => {5}, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
+                                        bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id, sourcePropertyName, sourceObjectName);
+                                }
+                                else
+                                {
+                                    Debug.LogError(String.Format("[Delight] {0}: Unable to generate binding to model property <{1} {2}=\"{3}\">. Improperly formatted binding string.",
+                                        GetLineInfo(fileName, propertyBinding),
+                                        xumlViewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                                    continue;
+                                }
+                            }
+                            else
+                            {
+                                // REGULAR BINDING - <ChildView Property="{ParentProperty}">
+                                // binding is between parent view dependency property and child view dependency property
+                                sb.AppendLine("            _bindings.Add(new Binding({0}Property.PropertyName, {1}.{2}Property.PropertyName, () => this, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
+                                    bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id);
+                            }
                         }
                     }
                 }
 
                 // print child view declaration
-                GenerateChildViewDeclarations(sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childId);
+                GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childId);
             }
         }
 

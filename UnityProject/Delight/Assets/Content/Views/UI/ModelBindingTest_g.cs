@@ -29,6 +29,7 @@ namespace Delight
                 source.Click = ResolveActionHandler(this, "Test2");
             });
             Label1 = new Label(this, Group1, "Label1", Label1Template);
+            _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => Models.Players.Player1, () => Label1, () => Label1.Text = Models.Players.Player1.Name, () => Models.Players.Player1.Name = Label1.Text));
         }
 
         public ModelBindingTest() : this(null)
@@ -250,7 +251,6 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
-                    Delight.Label.TextProperty.SetDefault(_modelBindingTestLabel1, "Default");
                     Delight.Label.TextAlignmentProperty.SetDefault(_modelBindingTestLabel1, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.ColorProperty.SetDefault(_modelBindingTestLabel1, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.ExtraPaddingProperty.SetDefault(_modelBindingTestLabel1, true);
