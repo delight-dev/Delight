@@ -62,6 +62,9 @@ namespace Delight.Editor
             // parse changed XUML files and generate code
             XumlParser.ParseXumlFiles(changedAssets);
 
+            // refresh generated scripts
+            AssetDatabase.Refresh();
+
             Debug.Log(String.Format("Total view processing time: {0}", sw.ElapsedMilliseconds)); // TODO remove
         }
 
