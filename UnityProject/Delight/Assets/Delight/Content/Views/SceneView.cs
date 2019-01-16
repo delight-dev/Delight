@@ -134,7 +134,7 @@ namespace Delight
 
         public void Update()
         {
-            SceneView.Update();
+            SceneView?.Update();
         }
 
         #endregion

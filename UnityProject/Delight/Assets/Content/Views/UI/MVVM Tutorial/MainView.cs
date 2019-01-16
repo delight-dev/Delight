@@ -18,9 +18,9 @@ namespace Delight
 
             ViewModel = new MainViewModel(new StudentDataProvider());
 
-            var list = new List<Student, Label>(StudentList);
-            list.Items = ViewModel.Students;
-            list.Margin = new ElementMargin(10);
+            //var list = new List<Student, Label>(StudentList);
+            //list.Items = ViewModel.Students;
+            //list.Margin = new ElementMargin(10);
             //_bindings.Add(new Binding(TestBinding2Property, Button.BackgroundColorProperty, () => this, () => Button3, () => Button3.BackgroundColor = TestBinding2, () => TestBinding2 = Button3.BackgroundColor));
         }
 

@@ -1,7 +1,11 @@
 <ModelBindingTest xmlns="Delight" BasedOn="LayoutRoot">
-  <Group Spacing="10">
-    <Button Text="Test 1" Click="Test1" />
-    <Button Text="Test 2" Click="Test2" />
-    <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" /> 
-  </Group> 
+  <Group Orientation="Horizontal">
+    <Group Spacing="10" Width="500">
+      <Button Text="Test 1" Click="Test1" />
+      <Button Text="Test 2" Click="Test2" />
+      <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" /> 
+    </Group>
+    <Region Id="DynamicList" Width="500" BackgroundColor="Yellow" Margin="50">      
+    </Region> 
+  </Group>
 </ModelBindingTest> 

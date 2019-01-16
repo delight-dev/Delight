@@ -1,7 +1,9 @@
 #region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -18,23 +20,30 @@ namespace Delight
         }
     }
 
-    public class DataProvider<T> : BindableObject
+    public abstract class DataProvider<T> : BindableCollection<T>
     {
+        // TODO may contain additional methods such as "Save" for persisting data and LoadAll for fetching data
+        // e.g. from a server. For this to work we want a way to track if an item is "dirty"
+        // this can be extended with data providers that take parameters through Get method or maybe specified
+        // as generic type parameters
     }
 
     public partial class PlayerData : DataProvider<Player>
     {
-        private Player _player1;
-        public Player Player1
-        {
-            get { return _player1; }
-            set { SetProperty(ref _player1, value); }
-        }
+        public Player Player1 { get; }
 
         public PlayerData()
         {
-            _player1 = new Player { Name = "Patrik" };
+            Player1 = new Player { Name = "Patrik" };
+            Add(Player1);
         }
+
+        //private Player _player1;
+        //public Player Player1
+        //{
+        //    get { return _player1; }
+        //    //set { SetProperty(ref _player1, value); }
+        //}
     }
 
     public static partial class Models

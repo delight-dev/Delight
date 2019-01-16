@@ -158,6 +158,11 @@ namespace Delight
 #endif
                 {
                     _uIView = new Template(SceneViewTemplates.SceneView);
+                    Delight.UIView.WidthProperty.SetDefault(_uIView, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.UIView.HeightProperty.SetDefault(_uIView, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.UIView.MarginProperty.SetDefault(_uIView, new ElementMargin(0f, 0f, 0f, 0f));
+                    Delight.UIView.OffsetProperty.SetDefault(_uIView, new ElementMargin(0f, 0f, 0f, 0f));
+                    Delight.UIView.OffsetFromParentProperty.SetDefault(_uIView, new ElementMargin(0f, 0f, 0f, 0f));
                 }
                 return _uIView;
             }
