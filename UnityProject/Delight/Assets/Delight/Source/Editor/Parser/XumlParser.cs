@@ -387,7 +387,7 @@ namespace Delight.Parser
                     propertyAssignment.PropertyName = attributeName;
                     propertyAssignment.PropertyValue = attributeValue.Substring(assignmentIndex + 1).Trim();
                     propertyAssignment.LineNumber = element.GetLineNumber();
-                    attributeValue = attributeValue.Substring(0, assignmentIndex);
+                    attributeValue = attributeValue.Substring(0, assignmentIndex).Trim();
                 }
 
                 Type propertyType = null;

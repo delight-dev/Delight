@@ -1,0 +1,46 @@
+﻿// ----------------------------------------------------------------------
+// Models
+// ----------------------------------------------------------------------
+
+= World
+int Order
+string Name
+
+= Level
+World
+string Name
+
+= Highscore
+Level
+Player
+int Score
+DateTime Date
+
+= Player
+string Name
+
+// ----------------------------------------------------------------------
+// Data
+// ----------------------------------------------------------------------
+
++ World (Order, Name)
+World1: 1, "World 1" #Dev
+World2: 2, "World 2" #Dev
+
++ Level (World, Name)
+Level1_1: World1, "Level 1-1" #Dev
+Level1_2: World1, "Level 1-2" #Dev
+Level1_3: World1, "Level 1-3" #Dev
+Level1_4: World1, "Level 1-4" #Dev
+Level2_1: World2, "Level 2-1" #Dev
+Level2_2: World2, "Level 2-2" #Dev
+
++ Highscore (Level, Player, Score)
+Level1_1, Player1, 1000 #Dev
+Level1_1, Player2, 800 #Dev
+Level1_1, Player3, 420 #Dev
+
++ Player (Name)
+Player1: "Player 1" #Dev
+Player2: "Player 2" #Dev
+Player3: "Player 3" #Dev

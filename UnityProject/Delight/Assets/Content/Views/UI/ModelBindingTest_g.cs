@@ -18,18 +18,20 @@ namespace Delight
         {
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
-            Button1 = new Button(this, Group1, "Button1", Button1Template, x => 
+            Group2 = new Group(this, Group1, "Group2", Group2Template);
+            Button1 = new Button(this, Group2, "Button1", Button1Template, x => 
             {
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test1");
             });
-            Button2 = new Button(this, Group1, "Button2", Button2Template, x => 
+            Button2 = new Button(this, Group2, "Button2", Button2Template, x => 
             {
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test2");
             });
-            Label1 = new Label(this, Group1, "Label1", Label1Template);
+            Label1 = new Label(this, Group2, "Label1", Label1Template);
             _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => Models.Players.Player1, () => Label1, () => Label1.Text = Models.Players.Player1.Name, () => Models.Players.Player1.Name = Label1.Text));
+            DynamicList = new Region(this, Group1, "DynamicList", DynamicListTemplate);
         }
 
         public ModelBindingTest() : this(null)
@@ -43,12 +45,16 @@ namespace Delight
 
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
+            dependencyProperties.Add(Group2Property);
+            dependencyProperties.Add(Group2TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(DynamicListProperty);
+            dependencyProperties.Add(DynamicListTemplateProperty);
         }
 
         #endregion
@@ -67,6 +73,20 @@ namespace Delight
         {
             get { return Group1TemplateProperty.GetValue(this); }
             set { Group1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
+        public Group Group2
+        {
+            get { return Group2Property.GetValue(this); }
+            set { Group2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Group2TemplateProperty = new DependencyProperty<Template>("Group2Template");
+        public Template Group2Template
+        {
+            get { return Group2TemplateProperty.GetValue(this); }
+            set { Group2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
@@ -111,6 +131,20 @@ namespace Delight
             set { Label1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Region> DynamicListProperty = new DependencyProperty<Region>("DynamicList");
+        public Region DynamicList
+        {
+            get { return DynamicListProperty.GetValue(this); }
+            set { DynamicListProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> DynamicListTemplateProperty = new DependencyProperty<Template>("DynamicListTemplate");
+        public Template DynamicListTemplate
+        {
+            get { return DynamicListTemplateProperty.GetValue(this); }
+            set { DynamicListTemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -141,9 +175,11 @@ namespace Delight
                 {
                     _modelBindingTest = new Template(LayoutRootTemplates.LayoutRoot);
                     Delight.ModelBindingTest.Group1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup1);
+                    Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
+                    Delight.ModelBindingTest.DynamicListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestDynamicList);
                 }
                 return _modelBindingTest;
             }
@@ -161,9 +197,28 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestGroup1 = new Template(GroupTemplates.Group);
-                    Delight.Group.SpacingProperty.SetDefault(_modelBindingTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.OrientationProperty.SetDefault(_modelBindingTestGroup1, Delight.ElementOrientation.Horizontal);
                 }
                 return _modelBindingTestGroup1;
+            }
+        }
+
+        private static Template _modelBindingTestGroup2;
+        public static Template ModelBindingTestGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestGroup2 == null || _modelBindingTestGroup2.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestGroup2 == null)
+#endif
+                {
+                    _modelBindingTestGroup2 = new Template(GroupTemplates.Group);
+                    Delight.Group.SpacingProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.WidthProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(500f, ElementSizeUnit.Pixels));
+                }
+                return _modelBindingTestGroup2;
             }
         }
 
@@ -258,6 +313,26 @@ namespace Delight
                     Delight.Label.HeightProperty.SetDefault(_modelBindingTestLabel1, new ElementSize(50f, ElementSizeUnit.Pixels));
                 }
                 return _modelBindingTestLabel1;
+            }
+        }
+
+        private static Template _modelBindingTestDynamicList;
+        public static Template ModelBindingTestDynamicList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestDynamicList == null || _modelBindingTestDynamicList.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestDynamicList == null)
+#endif
+                {
+                    _modelBindingTestDynamicList = new Template(RegionTemplates.Region);
+                    Delight.Region.WidthProperty.SetDefault(_modelBindingTestDynamicList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(1f, 1f, 0f, 1f));
+                    Delight.Region.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
+                }
+                return _modelBindingTestDynamicList;
             }
         }
 

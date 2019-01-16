@@ -12,15 +12,15 @@ namespace Delight
     /// <summary>
     /// Generic list view.
     /// </summary>
-    public class List<TViewModel, TView> : UIImageView
-        where TView : View, new()
+    public class Collection<TModel> : UIImageView
+        where TModel : BindableObject
     {
         #region Properties
 
-        private ObservableList<TViewModel> _presentedItems;
+        private BindableCollection<TModel> _presentedItems;
 
-        public readonly static DependencyProperty<ObservableList<TViewModel>> ItemsProperty = new DependencyProperty<ObservableList<TViewModel>>("Items");
-        public ObservableList<TViewModel> Items
+        public readonly static DependencyProperty<BindableCollection<TModel>> ItemsProperty = new DependencyProperty<BindableCollection<TModel>>("Items");
+        public BindableCollection<TModel> Items
         {
             get { return ItemsProperty.GetValue(this); }
             set { ItemsProperty.SetValue(this, value); }
@@ -30,7 +30,7 @@ namespace Delight
 
         #region Constructor
 
-        public List(View parent = null, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+        public Collection(View parent = null, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? ListTemplates.Default, initializer)
         {
         }
@@ -56,13 +56,10 @@ namespace Delight
         /// </summary>
         public virtual void ItemsChanged()
         {
-            if (!IsLoaded)
-                return;
-
             if (_presentedItems != null)
             {
                 // unsubscribe from change events in the old list
-                _presentedItems.ListChanged -= OnListChanged;
+                _presentedItems.CollectionChanged -= OnCollectionChanged;
             }
             _presentedItems = Items;
 
@@ -70,7 +67,7 @@ namespace Delight
             if (_presentedItems != null)
             {
                 // subscribe to change events in the new list
-                _presentedItems.ListChanged += OnListChanged;
+                _presentedItems.CollectionChanged += OnCollectionChanged;
             }
 
             // unload and clear existing children
@@ -80,33 +77,35 @@ namespace Delight
             }
             _layoutChildren.Clear();
 
+            if (IsLoaded)
+            {
+                GenerateItems();
+            }
+        }
+
+        protected void GenerateItems()
+        {
+            // TODO the view template needs to be supplied somehow
             int i = 0;
             foreach (var item in _presentedItems)
             {
                 // create new children 
-                var itemView = new TView();
-                itemView.Parent = this;
-                itemView.LayoutParent = this;
-                LayoutChildren.Add(itemView);
-
-                // TODO temp debug logic remove
-                if (itemView is Label && item is Student)
+                var label = new Label(this);
+                if (item is Player)
                 {
-                    var student = item as Student;
-                    var label = itemView as Label;
-                    Debug.Log("Student name = " + student.Name);                    
+                    // bind label text to player name
+                    var player = item as Player;
+                    _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
                     label.Load();
-                    label.Color = Color.black;
                     label.Offset = new ElementMargin(0, i * 35, 0, 0);
-                    label.Text = student.Name;
                     ++i;
-                    continue;
                 }
-                
-                // -----
-
-                itemView.Load();                
+                else
+                {
+                    label.Load();
+                }
             }
+
         }
 
         /// <summary>
@@ -115,17 +114,27 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-
-            // TODO remove debug log
-            Debug.Log(String.Format("List.AfterLoad() called, itemCount = {0}", Items?.Count));
-            ItemsChanged();
+            GenerateItems();
         }
 
         /// <summary>
         /// Called when the list of items has been changed.
         /// </summary>
-        private void OnListChanged(object sender, ListChangedEventArgs e)
+        private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
+            Debug.Log("Collection changed");
+
+            if (e.ChangeAction == CollectionChangeAction.Add)
+            {
+                var label = new Label(this);
+                var player = Items[e.Index] as Player;
+
+                // bind label text to player name
+                _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
+                label.Load();
+                label.Offset = new ElementMargin(0, e.Index * 35, 0, 0);
+            }
+
             //// update list of items
             //if (e.ListChangeAction == ListChangeAction.Clear)
             //{

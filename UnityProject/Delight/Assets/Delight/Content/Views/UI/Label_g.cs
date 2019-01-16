@@ -598,8 +598,7 @@ namespace Delight
 #endif
                 {
                     _label = new Template(UIViewTemplates.UIView);
-                    Delight.Label.WidthProperty.SetDefault(_label, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.ColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24f);
                 }
                 return _label;

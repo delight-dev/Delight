@@ -23,19 +23,19 @@ namespace Delight
         {
             base.BeforeLoad();
 
-            // add generic list
-            var listItems = new List<string, UIView>(this);
+            //// add generic list
+            //var listItems = new List<string, UIView>(this);
 
-            int maxCount = 10000;
+            //int maxCount = 10000;
 
-            // add some items to list
-            var items = new ObservableList<string>();
-            for (int i = 0; i < maxCount; ++i)
-            {
-                items.Add("Item " + i );
-            }
+            //// add some items to list
+            //var items = new ObservableList<string>();
+            //for (int i = 0; i < maxCount; ++i)
+            //{
+            //    items.Add("Item " + i );
+            //}
 
-            listItems.Items = new ObservableList<string>(items);
+            //listItems.Items = new ObservableList<string>(items);
         }
 
         #endregion
