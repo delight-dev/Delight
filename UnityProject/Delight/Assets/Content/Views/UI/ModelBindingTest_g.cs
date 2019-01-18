@@ -329,7 +329,7 @@ namespace Delight
                 {
                     _modelBindingTestDynamicList = new Template(RegionTemplates.Region);
                     Delight.Region.WidthProperty.SetDefault(_modelBindingTestDynamicList, new ElementSize(500f, ElementSizeUnit.Pixels));
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(1f, 1f, 0f, 1f));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.Region.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
                 }
                 return _modelBindingTestDynamicList;

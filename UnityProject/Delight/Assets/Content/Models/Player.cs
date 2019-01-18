@@ -22,10 +22,6 @@ namespace Delight
 
     public abstract class DataProvider<T> : BindableCollection<T>
     {
-        // TODO may contain additional methods such as "Save" for persisting data and LoadAll for fetching data
-        // e.g. from a server. For this to work we want a way to track if an item is "dirty"
-        // this can be extended with data providers that take parameters through Get method or maybe specified
-        // as generic type parameters
     }
 
     public partial class PlayerData : DataProvider<Player>
@@ -37,23 +33,15 @@ namespace Delight
             Player1 = new Player { Name = "Patrik" };
             Add(Player1);
         }
-
-        //private Player _player1;
-        //public Player Player1
-        //{
-        //    get { return _player1; }
-        //    //set { SetProperty(ref _player1, value); }
-        //}
     }
 
     public static partial class Models
     {
         public static PlayerData Players = new PlayerData();
 
-        // bootstrapping
         static Models()
         {
-            Debug.Log("Models bootstrapper called");
+            // TODO lookup model bootstrappers and execute them
         }
     }
 }

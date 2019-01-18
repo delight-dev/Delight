@@ -5,7 +5,7 @@
       <Button Text="Test 2" Click="Test2" />
       <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" /> 
     </Group>
-    <Region Id="DynamicList" Width="500" BackgroundColor="Yellow" Margin="50">      
+    <Region Id="DynamicList" Width="500" BackgroundColor="Green" Margin="50">      
     </Region> 
   </Group>
 </ModelBindingTest> 
