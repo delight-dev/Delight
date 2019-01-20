@@ -53,6 +53,14 @@ namespace Delight.Parser
             foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
             {
                 xumlViewObject.NeedUpdate = AnyParentNeedUpdate(xumlViewObject);
+
+                // update view property declarations with view type data
+                var viewPropertyDeclarations = xumlViewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
+                foreach (var viewPropertyDeclaration in viewPropertyDeclarations)
+                {
+                    var viewObject = _xumlObjectModel.GetViewObject(viewPropertyDeclaration.PropertyTypeName);
+                    viewPropertyDeclaration.PropertyTypeFullName = viewObject.TypeName;
+                }
             }
 
             // update all view objects that are changed            
@@ -523,11 +531,12 @@ namespace Delight.Parser
                 if (String.IsNullOrEmpty(declaration.Declaration.Id))
                     continue;
 
-                var childIdPath = idPath + declaration.Declaration.Id;
-                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? declaration.Declaration.ViewName
-                    : basedOnPath + declaration.Declaration.Id;
+
                 var childViewObject = _xumlObjectModel.GetViewObject(declaration.Declaration.ViewName);
-                var childBasedOnViewName = isParent ? declaration.Declaration.ViewName : basedOnViewName;
+                var childIdPath = idPath + declaration.Declaration.Id;
+                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
+                    : basedOnPath + declaration.Declaration.Id;                
+                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
 
                 List<PropertyExpression> childPropertyAssignments = null;
                 nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
@@ -571,6 +580,7 @@ namespace Delight.Parser
             {
                 // get identifier for view declaration
                 var childId = childViewDeclaration.Id;
+                var childViewObject = _xumlObjectModel.GetViewObject(childViewDeclaration.ViewName);
 
                 // put a comment if we are creating top-level views
                 if (parentViewDeclaration == null)
@@ -585,7 +595,7 @@ namespace Delight.Parser
 
                 // print view declaration: _view = new View(this, layoutParent, id, initializer);
                 var parentReference = parentViewDeclaration == null ? "this" : localParentId;
-                sb.Append(String.Format("            {0} = new {1}(this, {2}, \"{0}\", {0}Template", childId, childViewDeclaration.ViewName, parentReference));
+                sb.Append(String.Format("            {0} = new {1}(this, {2}, \"{0}\", {0}Template", childId, childViewObject.TypeName, parentReference));
 
                 // do we have action handlers?
                 var actionAssignments = childViewDeclaration.PropertyAssignments.Where(x =>
