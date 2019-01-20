@@ -30,7 +30,16 @@ namespace Delight
                 source.Click = ResolveActionHandler(this, "Test2");
             });
             Label1 = new Label(this, Group2, "Label1", Label1Template);
-            _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => Models.Players.Player1, () => Label1, () => Label1.Text = Models.Players.Player1.Name, () => Models.Players.Player1.Name = Label1.Text));
+
+            // binding <Label Text="{@Players.Player1.Name}">
+            _bindings.Add(new Binding(
+                new List<string> { "Player1", "Name" },
+                new List<string> { "Label1", "Text" },
+                new List<Func<BindableObject>> { () => Models.Players, () => Models.Players.Player1 },
+                new List<Func<BindableObject>> { () => this, () => Label1 },
+                () => Label1.Text = Models.Players.Player1.Name,
+                () => Models.Players.Player1.Name = Label1.Text
+            ));
             DynamicList = new Region(this, Group1, "DynamicList", DynamicListTemplate);
         }
 

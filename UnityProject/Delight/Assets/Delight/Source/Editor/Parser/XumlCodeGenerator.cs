@@ -40,13 +40,19 @@ namespace Delight.Parser
 
             var viewsChecked = new Dictionary<string, bool>();
 
-            // for all view objects that aren't changed directly, see if they have any dependencies that have been updated
+            // update views that contain children that needs update
             foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
             {
                 if (xumlViewObject.NeedUpdate)
                     continue;
-
+                                
                 xumlViewObject.NeedUpdate = AnyChildNeedUpdate(xumlViewObject, viewsChecked);
+            }
+
+            // update views that are based on views that needs update
+            foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
+            {
+                xumlViewObject.NeedUpdate = AnyParentNeedUpdate(xumlViewObject);
             }
 
             // update all view objects that are changed            
@@ -85,8 +91,8 @@ namespace Delight.Parser
         {
             Debug.Log("Generating code for " + xumlViewObject.FilePath);
 
-            var viewName = xumlViewObject.Name;
-            var basedOn = xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.Name : "View";
+            var viewTypeName = xumlViewObject.TypeName;
+            var basedOn = xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View";
             var ns = !String.IsNullOrEmpty(xumlViewObject.Namespace) ? xumlViewObject.Namespace : DefaultNamespace;
 
             // build the internal codebehind for the view
@@ -109,7 +115,7 @@ namespace Delight.Parser
             sb.AppendLine();
             sb.AppendLine("namespace {0}", ns);
             sb.AppendLine("{");
-            sb.AppendLine("    public partial class {0} : {1}", viewName, basedOn);
+            sb.AppendLine("    public partial class {0} : {1}", viewTypeName, basedOn);
             sb.AppendLine("    {");
 
             // generate constructors
@@ -119,20 +125,20 @@ namespace Delight.Parser
 
             sb.AppendLine("        #region Constructors");
             sb.AppendLine();
-            sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewName);
-            sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewName);
+            sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewTypeName);
+            sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
             sb.AppendLine("        {");
-            GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, viewName, null, xumlViewObject.ViewDeclarations);
+            GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, viewTypeName, null, xumlViewObject.ViewDeclarations);
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        public {0}() : this(null)", viewName);
+            sb.AppendLine("        public {0}() : this(null)", viewTypeName);
             sb.AppendLine("        {");
             sb.AppendLine("        }");
             sb.AppendLine();
-            sb.AppendLine("        static {0}()", viewName);
+            sb.AppendLine("        static {0}()", viewTypeName);
             sb.AppendLine("        {");
             sb.AppendLine("            var dependencyProperties = new List<DependencyProperty>();");
-            sb.AppendLine("            DependencyProperties.Add({0}Templates.Default, dependencyProperties);", viewName);
+            sb.AppendLine("            DependencyProperties.Add({0}Templates.Default, dependencyProperties);", viewTypeName);
 
             if (propertyDeclarations.Any())
             {
@@ -191,7 +197,7 @@ namespace Delight.Parser
                     // the property maps to a custom object
                     sb.AppendLine();
                     sb.AppendLine("        public readonly static MappedDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, x => x.{3}, (x, y) => x.{3} = y);",
-                        mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewName, mappedDeclaration.TargetObjectName);
+                        mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
                     sb.AppendLine("        public {0} {1}", mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", mappedDeclaration.PropertyName);
@@ -211,7 +217,7 @@ namespace Delight.Parser
             sb.AppendLine("    #region Data Templates");
             sb.AppendLine();
 
-            sb.AppendLine("    public static class {0}Templates", xumlViewObject.Name);
+            sb.AppendLine("    public static class {0}Templates", xumlViewObject.TypeName);
             sb.AppendLine("    {");
 
             // generate template fields
@@ -222,7 +228,7 @@ namespace Delight.Parser
             sb.AppendLine("        {");
             sb.AppendLine("            get");
             sb.AppendLine("            {");
-            sb.AppendLine("                return {0};", xumlViewObject.Name);
+            sb.AppendLine("                return {0};", xumlViewObject.TypeName);
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine();
@@ -314,27 +320,27 @@ namespace Delight.Parser
         private static void GenerateDataTemplate(StringBuilder sb, XumlViewObject xumlViewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName)
         {
-            if (xumlViewObject.Name == "View")
+            if (xumlViewObject.TypeName == "View")
             {
                 return;
             }
 
             if (String.IsNullOrEmpty(idPath))
             {
-                idPath = xumlViewObject.Name;
+                idPath = xumlViewObject.TypeName;
             }
 
             var isParent = String.IsNullOrEmpty(basedOnPath);
 
             var templateBasedOn = isParent ?
-                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.Name : "View" :
+                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View" :
                 basedOnPath;
-            var templateBasedOnViewName = isParent ?
-                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.Name : "View" :
+            var templateBasedOnViewTypeName = isParent ?
+                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View" :
                 basedOnViewName;
 
             var ns = !String.IsNullOrEmpty(xumlViewObject.Namespace) ? xumlViewObject.Namespace : DefaultNamespace;
-            var fullViewName = String.Format("{0}.{1}", ns, xumlViewObject.Name);
+            var fullViewTypeName = String.Format("{0}.{1}", ns, xumlViewObject.TypeName);
 
             // declare template property
             var localId = idPath.ToLocalVariableName();
@@ -351,7 +357,7 @@ namespace Delight.Parser
             sb.AppendLine("                {");
 
             // initialize and instantiate template instance 
-            sb.AppendLine("                    {0} = new Template({1}Templates.{2});", localId, templateBasedOnViewName, templateBasedOn);
+            sb.AppendLine("                    {0} = new Template({1}Templates.{2});", localId, templateBasedOnViewTypeName, templateBasedOn);
 
             // get property declarations, initializers and assignment expressions
             var initializerProperties = GetPropertyInitializers(xumlViewObject);
@@ -492,7 +498,7 @@ namespace Delight.Parser
                     continue;
                 }
 
-                sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewName, propertyName, localId, typeValueInitializer);
+                sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
             }
 
             // set sub-template properties
@@ -502,7 +508,7 @@ namespace Delight.Parser
                 if (String.IsNullOrEmpty(declaration.Declaration.Id))
                     continue;
 
-                sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewName, declaration.Declaration.Id, localId, idPath);
+                sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewTypeName, declaration.Declaration.Id, localId, idPath);
             }
 
             sb.AppendLine("                }");
@@ -605,42 +611,68 @@ namespace Delight.Parser
                     sb.AppendLine(");");
                 }
 
+                // generate bindings
                 if (childViewDeclaration.PropertyBindings.Any())
                 {
                     foreach (var propertyBinding in childViewDeclaration.PropertyBindings)
                     {
-                        if (propertyBinding.BindingType == BindingType.SingleBinding)
+                        if (propertyBinding.BindingType != BindingType.SingleBinding)
                         {
-                            var bindingSource = propertyBinding.Sources.First();
-                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model))
-                            {
-                                // MODEL BINDING - <ChildView Property="{@Model.ModelObject.Property}">
-                                // binding is between model property and child view dependency property
-                                int sourcePropertyIndex = bindingSource.BindingPath.LastIndexOf(".");
-                                if (sourcePropertyIndex > 0)
-                                {
-                                    var sourceObjectName = bindingSource.BindingPath.Substring(0, sourcePropertyIndex);
-                                    var sourcePropertyName = bindingSource.BindingPath.Substring(sourcePropertyIndex + 1);
-
-                                    sb.AppendLine("            _bindings.Add(new Binding(\"{4}\", {1}.{2}Property.PropertyName, () => {5}, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
-                                        bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id, sourcePropertyName, sourceObjectName);
-                                }
-                                else
-                                {
-                                    Debug.LogError(String.Format("[Delight] {0}: Unable to generate binding to model property <{1} {2}=\"{3}\">. Improperly formatted binding string.",
-                                        GetLineInfo(fileName, propertyBinding),
-                                        xumlViewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                // REGULAR BINDING - <ChildView Property="{ParentProperty}">
-                                // binding is between parent view dependency property and child view dependency property
-                                sb.AppendLine("            _bindings.Add(new Binding({0}Property.PropertyName, {1}.{2}Property.PropertyName, () => this, () => {3}, () => {3}.{2} = {0}, () => {0} = {3}.{2}));",
-                                    bindingSource.BindingPath, childViewDeclaration.ViewName, propertyBinding.PropertyName, childViewDeclaration.Id);
-                            }
+                            Debug.LogError(String.Format("[Delight] {0}: Unable to generate binding to property <{1} {2}=\"{3}\">. Multi-binding not implemented.",
+                                GetLineInfo(fileName, propertyBinding),
+                                xumlViewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                            continue;
                         }
+
+                        var bindingSource = propertyBinding.Sources.First();
+                        var targetPath = new List<string>();
+                        targetPath.Add(childViewDeclaration.Id);
+                        targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
+                        var sourcePath = new List<string>();
+                        sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+                        // get property names along path
+                        bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                        string sourceProperties = string.Join(", ", sourcePath.Skip(isModelSource ? 2 : 0).Select(x => "\"" + x + "\""));
+                        string targetProperties = string.Join(", ", targetPath.Select(x => "\"" + x + "\""));
+
+                        // get object getters along path
+                        List<string> sourceGetters = new List<string>();
+                        int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
+                        int sourcePathTake = isModelSource ? 2 : 1;
+                        if (!isModelSource)
+                        {
+                            sourceGetters.Add("() => this");                            
+                        }
+                        for (int i = 0; i < sourcePathCount; ++i)
+                        {
+                            sourceGetters.Add(String.Format("() => {0}", string.Join(".", sourcePath.Take(i + sourcePathTake))));
+                        }
+
+                        List<string> targetGetters = new List<string>();
+                        targetGetters.Add("() => this");
+                        for (int i = 0; i < targetPath.Count - 1; ++i)
+                        {
+                            targetGetters.Add(String.Format("() => {0}", string.Join(".", targetPath.Take(i + 1))));
+                        }
+
+                        string sourceGettersString = string.Join(", ", sourceGetters);
+                        string targetGettersString = string.Join(", ", targetGetters);
+
+                        string sourceProperty = string.Join(".", sourcePath);
+                        string targetProperty = string.Join(".", targetPath);
+
+                        // print smart binding
+                        sb.AppendLine();
+                        sb.AppendLine("            // binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
+                        sb.AppendLine("            _bindings.Add(new Binding(");
+                        sb.AppendLine("                new List<string> {{ {0} }},", sourceProperties);
+                        sb.AppendLine("                new List<string> {{ {0} }},", targetProperties);
+                        sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
+                        sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
+                        sb.AppendLine("                () => {0} = {1},", targetProperty, sourceProperty);
+                        sb.AppendLine("                () => {0} = {1}", sourceProperty, targetProperty);
+                        sb.AppendLine("            ));");
                     }
                 }
 
@@ -765,7 +797,7 @@ namespace Delight.Parser
                             TargetPropertyTypeFullName = declaration.Declaration.PropertyTypeFullName,
                             PropertyName = nonConflictedPropertyName,
                             TargetObjectName = propertyMapping.TargetObjectName,
-                            TargetObjectType = viewObject.Name, // TODO unsure if this is correct
+                            TargetObjectType = viewObject.TypeName, // TODO unsure if this is correct
                             IsViewReference = true
                         });
                     }
@@ -926,6 +958,17 @@ namespace Delight.Parser
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// Check if any of the view's parents need to be updated.
+        /// </summary>
+        private static bool AnyParentNeedUpdate(XumlViewObject xumlViewObject)
+        {
+            if (xumlViewObject.NeedUpdate)
+                return true;
+
+            return xumlViewObject.BasedOn != null ? AnyParentNeedUpdate(xumlViewObject.BasedOn) : false;
         }
 
         #endregion

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class UIView : SceneView
+    public partial class UIView
     {
         #region Methods
 

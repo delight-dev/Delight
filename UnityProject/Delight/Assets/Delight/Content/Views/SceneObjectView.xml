@@ -1,4 +1,4 @@
-<SceneView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool"
+<SceneObjectView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool"
            BeginDrag="t:Action"
            Cancel="t:Action"
            Click="t:Action"
@@ -17,4 +17,4 @@
            Submit="t:Action"
            UpdateSelected="t:Action"           
            > 
-</SceneView> 
+</SceneObjectView> 

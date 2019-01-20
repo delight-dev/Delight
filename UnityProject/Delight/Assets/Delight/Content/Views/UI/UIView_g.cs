@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class UIView : SceneView
+    public partial class UIView : SceneObjectView
     {
         #region Constructors
 
@@ -157,7 +157,7 @@ namespace Delight
                 if (_uIView == null)
 #endif
                 {
-                    _uIView = new Template(SceneViewTemplates.SceneView);
+                    _uIView = new Template(SceneObjectViewTemplates.SceneObjectView);
                     Delight.UIView.WidthProperty.SetDefault(_uIView, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.UIView.HeightProperty.SetDefault(_uIView, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.UIView.MarginProperty.SetDefault(_uIView, new ElementMargin(0f, 0f, 0f, 0f));

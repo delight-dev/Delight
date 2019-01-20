@@ -1,4 +1,4 @@
-<BindingTest xmlns="Delight" Button2.BackgroundColor="Red" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2">
+<BindingTest xmlns="Delight" Button2.BackgroundColor="Red" Player1="t:Player" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2">
 
   <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
     BackgroundColor="#ef706a">
@@ -9,12 +9,17 @@
       <LargeButton Text="Large Button" TextAlignment="Center" />
       <Label Width="130" Height="50" Text="{TestBinding}" />
       <Button Text="{TestBinding}" />
-    </Group>
-  </Region>
+      <Button Text="{Player1.Name}" />
+      <Button Text="{Player1.ChildPlayer.ChildPlayer.Name}" />
+    </Group> 
+  </Region> 
   
   <Region Id="RegionOnDemand" Width="75%" Alignment="Right" Margin="15,30,30,30"
       BackgroundColor="#949494">
-    <Label Text="{TestBinding}" />
+    <Group>
+      <Label Text="{TestBinding}" Height="40" />
+      <Label Text="{Player1.Name}" Height="40" />
+    </Group>
   </Region>
 
 </BindingTest>

@@ -1,2 +1,2 @@
-<ViewSwitcher xmlns="Delight" BasedOn="SceneView">
+<ViewSwitcher xmlns="Delight" BasedOn="SceneObjectView">
 </ViewSwitcher>

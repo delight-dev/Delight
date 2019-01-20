@@ -12,7 +12,7 @@ namespace Delight
     /// <summary>
     /// Base class for bindable generic collections.
     /// </summary>
-    public abstract class BindableCollection<T> : INotifyCollectionChanged, ICollection<T>
+    public abstract class BindableCollection<T> : BindableObject, IBindableCollection, IEnumerable<T>
     {
         #region Fields
 
@@ -102,6 +102,43 @@ namespace Delight
         {
             CollectionChanged?.Invoke(this, eventArgs);
         }
+
+        #region IBindableCollection
+
+        public void Add(object item)
+        {
+            Add((T)item);
+        }
+
+        public void Add(IEnumerable items)
+        {
+            foreach (var item in items)
+            {
+                Add((T)item);
+            }
+        }
+
+        public bool Remove(object item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Remove(IEnumerable items)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetSelected(object item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int GetIndex(object item)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
 
         #endregion
     }

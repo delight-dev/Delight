@@ -1,2 +1,2 @@
-<List xmlns="Delight" BasedOn="UIImageView">
-</List>
+<List xmlns="Delight" TypeName="ListView" BasedOn="Collection">
+</List> 

@@ -1,4 +1,4 @@
-// Internal view logic generated from "SceneView.xml"
+// Internal view logic generated from "SceneObjectView.xml"
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -9,23 +9,23 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class SceneView : View
+    public partial class SceneObjectView : View
     {
         #region Constructors
 
-        public SceneView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? SceneViewTemplates.Default, initializer)
+        public SceneObjectView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+            base(parent, layoutParent, id, template ?? SceneObjectViewTemplates.Default, initializer)
         {
         }
 
-        public SceneView() : this(null)
+        public SceneObjectView() : this(null)
         {
         }
 
-        static SceneView()
+        static SceneObjectView()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(SceneViewTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(SceneObjectViewTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(GameObjectProperty);
             dependencyProperties.Add(EnableScriptEventsProperty);
@@ -190,7 +190,7 @@ namespace Delight
 
     #region Data Templates
 
-    public static class SceneViewTemplates
+    public static class SceneObjectViewTemplates
     {
         #region Properties
 
@@ -198,24 +198,24 @@ namespace Delight
         {
             get
             {
-                return SceneView;
+                return SceneObjectView;
             }
         }
 
-        private static Template _sceneView;
-        public static Template SceneView
+        private static Template _sceneObjectView;
+        public static Template SceneObjectView
         {
             get
             {
 #if UNITY_EDITOR
-                if (_sceneView == null || _sceneView.CurrentVersion != Template.Version)
+                if (_sceneObjectView == null || _sceneObjectView.CurrentVersion != Template.Version)
 #else
-                if (_sceneView == null)
+                if (_sceneObjectView == null)
 #endif
                 {
-                    _sceneView = new Template(ViewTemplates.View);
+                    _sceneObjectView = new Template(ViewTemplates.View);
                 }
-                return _sceneView;
+                return _sceneObjectView;
             }
         }
 

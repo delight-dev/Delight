@@ -30,17 +30,87 @@ namespace Delight
                 source.Click = ResolveActionHandler(this, "Test2");
             });
             Button3 = new Button(this, Group1, "Button3", Button3Template);
-            _bindings.Add(new Binding(TestBinding2Property.PropertyName, Button.BackgroundColorProperty.PropertyName, () => this, () => Button3, () => Button3.BackgroundColor = TestBinding2, () => TestBinding2 = Button3.BackgroundColor));
+
+            // binding <Button BackgroundColor="{TestBinding2}">
+            _bindings.Add(new Binding(
+                new List<string> { "TestBinding2" },
+                new List<string> { "Button3", "BackgroundColor" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Button3 },
+                () => Button3.BackgroundColor = TestBinding2,
+                () => TestBinding2 = Button3.BackgroundColor
+            ));
             LargeButton1 = new LargeButton(this, Group1, "LargeButton1", LargeButton1Template);
             Label1 = new Label(this, Group1, "Label1", Label1Template);
-            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Label.TextProperty.PropertyName, () => this, () => Label1, () => Label1.Text = TestBinding, () => TestBinding = Label1.Text));
+
+            // binding <Label Text="{TestBinding}">
+            _bindings.Add(new Binding(
+                new List<string> { "TestBinding" },
+                new List<string> { "Label1", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Label1 },
+                () => Label1.Text = TestBinding,
+                () => TestBinding = Label1.Text
+            ));
             Button4 = new Button(this, Group1, "Button4", Button4Template);
-            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Button.TextProperty.PropertyName, () => this, () => Button4, () => Button4.Text = TestBinding, () => TestBinding = Button4.Text));
+
+            // binding <Button Text="{TestBinding}">
+            _bindings.Add(new Binding(
+                new List<string> { "TestBinding" },
+                new List<string> { "Button4", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Button4 },
+                () => Button4.Text = TestBinding,
+                () => TestBinding = Button4.Text
+            ));
+            Button5 = new Button(this, Group1, "Button5", Button5Template);
+
+            // binding <Button Text="{Player1.Name}">
+            _bindings.Add(new Binding(
+                new List<string> { "Player1", "Name" },
+                new List<string> { "Button5", "Text" },
+                new List<Func<BindableObject>> { () => this, () => Player1 },
+                new List<Func<BindableObject>> { () => this, () => Button5 },
+                () => Button5.Text = Player1.Name,
+                () => Player1.Name = Button5.Text
+            ));
+            Button6 = new Button(this, Group1, "Button6", Button6Template);
+
+            // binding <Button Text="{Player1.ChildPlayer.ChildPlayer.Name}">
+            _bindings.Add(new Binding(
+                new List<string> { "Player1", "ChildPlayer", "ChildPlayer", "Name" },
+                new List<string> { "Button6", "Text" },
+                new List<Func<BindableObject>> { () => this, () => Player1, () => Player1.ChildPlayer, () => Player1.ChildPlayer.ChildPlayer },
+                new List<Func<BindableObject>> { () => this, () => Button6 },
+                () => Button6.Text = Player1.ChildPlayer.ChildPlayer.Name,
+                () => Player1.ChildPlayer.ChildPlayer.Name = Button6.Text
+            ));
 
             // constructing Region (RegionOnDemand)
             RegionOnDemand = new Region(this, this, "RegionOnDemand", RegionOnDemandTemplate);
-            Label2 = new Label(this, RegionOnDemand, "Label2", Label2Template);
-            _bindings.Add(new Binding(TestBindingProperty.PropertyName, Label.TextProperty.PropertyName, () => this, () => Label2, () => Label2.Text = TestBinding, () => TestBinding = Label2.Text));
+            Group2 = new Group(this, RegionOnDemand, "Group2", Group2Template);
+            Label2 = new Label(this, Group2, "Label2", Label2Template);
+
+            // binding <Label Text="{TestBinding}">
+            _bindings.Add(new Binding(
+                new List<string> { "TestBinding" },
+                new List<string> { "Label2", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Label2 },
+                () => Label2.Text = TestBinding,
+                () => TestBinding = Label2.Text
+            ));
+            Label3 = new Label(this, Group2, "Label3", Label3Template);
+
+            // binding <Label Text="{Player1.Name}">
+            _bindings.Add(new Binding(
+                new List<string> { "Player1", "Name" },
+                new List<string> { "Label3", "Text" },
+                new List<Func<BindableObject>> { () => this, () => Player1 },
+                new List<Func<BindableObject>> { () => this, () => Label3 },
+                () => Label3.Text = Player1.Name,
+                () => Player1.Name = Label3.Text
+            ));
         }
 
         public BindingTest() : this(null)
@@ -52,6 +122,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(BindingTestTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(Player1Property);
             dependencyProperties.Add(TestBindingProperty);
             dependencyProperties.Add(TestBinding2Property);
             dependencyProperties.Add(TestBinding3Property);
@@ -71,15 +142,30 @@ namespace Delight
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Button4Property);
             dependencyProperties.Add(Button4TemplateProperty);
+            dependencyProperties.Add(Button5Property);
+            dependencyProperties.Add(Button5TemplateProperty);
+            dependencyProperties.Add(Button6Property);
+            dependencyProperties.Add(Button6TemplateProperty);
             dependencyProperties.Add(RegionOnDemandProperty);
             dependencyProperties.Add(RegionOnDemandTemplateProperty);
+            dependencyProperties.Add(Group2Property);
+            dependencyProperties.Add(Group2TemplateProperty);
             dependencyProperties.Add(Label2Property);
             dependencyProperties.Add(Label2TemplateProperty);
+            dependencyProperties.Add(Label3Property);
+            dependencyProperties.Add(Label3TemplateProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.Player> Player1Property = new DependencyProperty<Delight.Player>("Player1");
+        public Delight.Player Player1
+        {
+            get { return Player1Property.GetValue(this); }
+            set { Player1Property.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<System.String> TestBindingProperty = new DependencyProperty<System.String>("TestBinding");
         public System.String TestBinding
@@ -214,6 +300,34 @@ namespace Delight
             set { Button4TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
+        public Button Button5
+        {
+            get { return Button5Property.GetValue(this); }
+            set { Button5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
+        public Template Button5Template
+        {
+            get { return Button5TemplateProperty.GetValue(this); }
+            set { Button5TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button6Property = new DependencyProperty<Button>("Button6");
+        public Button Button6
+        {
+            get { return Button6Property.GetValue(this); }
+            set { Button6Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button6TemplateProperty = new DependencyProperty<Template>("Button6Template");
+        public Template Button6Template
+        {
+            get { return Button6TemplateProperty.GetValue(this); }
+            set { Button6TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> RegionOnDemandProperty = new DependencyProperty<Region>("RegionOnDemand");
         public Region RegionOnDemand
         {
@@ -228,6 +342,20 @@ namespace Delight
             set { RegionOnDemandTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
+        public Group Group2
+        {
+            get { return Group2Property.GetValue(this); }
+            set { Group2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Group2TemplateProperty = new DependencyProperty<Template>("Group2Template");
+        public Template Group2Template
+        {
+            get { return Group2TemplateProperty.GetValue(this); }
+            set { Group2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
         public Label Label2
         {
@@ -240,6 +368,20 @@ namespace Delight
         {
             get { return Label2TemplateProperty.GetValue(this); }
             set { Label2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
+        {
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
+        {
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -279,8 +421,12 @@ namespace Delight
                     Delight.BindingTest.LargeButton1TemplateProperty.SetDefault(_bindingTest, BindingTestLargeButton1);
                     Delight.BindingTest.Label1TemplateProperty.SetDefault(_bindingTest, BindingTestLabel1);
                     Delight.BindingTest.Button4TemplateProperty.SetDefault(_bindingTest, BindingTestButton4);
+                    Delight.BindingTest.Button5TemplateProperty.SetDefault(_bindingTest, BindingTestButton5);
+                    Delight.BindingTest.Button6TemplateProperty.SetDefault(_bindingTest, BindingTestButton6);
                     Delight.BindingTest.RegionOnDemandTemplateProperty.SetDefault(_bindingTest, BindingTestRegionOnDemand);
+                    Delight.BindingTest.Group2TemplateProperty.SetDefault(_bindingTest, BindingTestGroup2);
                     Delight.BindingTest.Label2TemplateProperty.SetDefault(_bindingTest, BindingTestLabel2);
+                    Delight.BindingTest.Label3TemplateProperty.SetDefault(_bindingTest, BindingTestLabel3);
                 }
                 return _bindingTest;
             }
@@ -532,6 +678,76 @@ namespace Delight
             }
         }
 
+        private static Template _bindingTestButton5;
+        public static Template BindingTestButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestButton5 == null || _bindingTestButton5.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestButton5 == null)
+#endif
+                {
+                    _bindingTestButton5 = new Template(ButtonTemplates.Button);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton5, BindingTestButton5Label);
+                }
+                return _bindingTestButton5;
+            }
+        }
+
+        private static Template _bindingTestButton5Label;
+        public static Template BindingTestButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestButton5Label == null || _bindingTestButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestButton5Label == null)
+#endif
+                {
+                    _bindingTestButton5Label = new Template(ButtonTemplates.ButtonLabel);
+                }
+                return _bindingTestButton5Label;
+            }
+        }
+
+        private static Template _bindingTestButton6;
+        public static Template BindingTestButton6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestButton6 == null || _bindingTestButton6.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestButton6 == null)
+#endif
+                {
+                    _bindingTestButton6 = new Template(ButtonTemplates.Button);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton6, BindingTestButton6Label);
+                }
+                return _bindingTestButton6;
+            }
+        }
+
+        private static Template _bindingTestButton6Label;
+        public static Template BindingTestButton6Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestButton6Label == null || _bindingTestButton6Label.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestButton6Label == null)
+#endif
+                {
+                    _bindingTestButton6Label = new Template(ButtonTemplates.ButtonLabel);
+                }
+                return _bindingTestButton6Label;
+            }
+        }
+
         private static Template _bindingTestRegionOnDemand;
         public static Template BindingTestRegionOnDemand
         {
@@ -553,6 +769,23 @@ namespace Delight
             }
         }
 
+        private static Template _bindingTestGroup2;
+        public static Template BindingTestGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestGroup2 == null || _bindingTestGroup2.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestGroup2 == null)
+#endif
+                {
+                    _bindingTestGroup2 = new Template(GroupTemplates.Group);
+                }
+                return _bindingTestGroup2;
+            }
+        }
+
         private static Template _bindingTestLabel2;
         public static Template BindingTestLabel2
         {
@@ -565,8 +798,27 @@ namespace Delight
 #endif
                 {
                     _bindingTestLabel2 = new Template(LabelTemplates.Label);
+                    Delight.Label.HeightProperty.SetDefault(_bindingTestLabel2, new ElementSize(40f, ElementSizeUnit.Pixels));
                 }
                 return _bindingTestLabel2;
+            }
+        }
+
+        private static Template _bindingTestLabel3;
+        public static Template BindingTestLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingTestLabel3 == null || _bindingTestLabel3.CurrentVersion != Template.Version)
+#else
+                if (_bindingTestLabel3 == null)
+#endif
+                {
+                    _bindingTestLabel3 = new Template(LabelTemplates.Label);
+                    Delight.Label.HeightProperty.SetDefault(_bindingTestLabel3, new ElementSize(40f, ElementSizeUnit.Pixels));
+                }
+                return _bindingTestLabel3;
             }
         }
 

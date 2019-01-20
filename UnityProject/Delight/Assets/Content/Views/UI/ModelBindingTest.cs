@@ -21,7 +21,7 @@ namespace Delight
             base.BeforeLoad();
 
             // create list that we want to bind to our players
-            var list = new Collection<Player>(this, DynamicList);
+            var list = new CollectionView(this, DynamicList);
             list.Items = Models.Players;
         }
 
@@ -34,7 +34,6 @@ namespace Delight
             _update = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
             {
                 Models.Players.Add(new Player { Name = "Player " + x });
-                Debug.Log("Adding Player " + x);
             });
         }
 
@@ -42,13 +41,11 @@ namespace Delight
         public void Test1()
         {
             Models.Players.Player1.Name = "Julia " + i++;
-            Debug.Log("Models.Players.Player1.Name = " + Models.Players.Player1.Name);
         }
 
         public void Test2()
         {
             Label1.Text = "Sanna";
-            Debug.Log("Models.Players.Player1.Name = " + Models.Players.Player1.Name);
         }
     }
 }

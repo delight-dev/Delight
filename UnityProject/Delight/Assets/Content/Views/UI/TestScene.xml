@@ -1,9 +1,12 @@
-<TestScene xmlns="Delight" BasedOn="LayoutRoot">
+<TestScene xmlns="Delight" BasedOn="LayoutRoot" Player1="t:Player">
   <Group Orientation="Horizontal" Alignment="TopLeft" Offset="10,10,0,0" Spacing="10">
     <Button Text="Test 1" Click="Test1" />
     <Button Text="Test 2" Click="Test2" />
+    <Button Text="Test 3" Click="Test3" /> 
+    <Button Text="Log Binding" Click="LogBinding" />
+    <Button Text="{@Players.Player1.Name}" />
   </Group>
-  <Region Margin="0,200,0,0">    
-    <BindingTest TestBinding="Patrik" Button1.BackgroundColor="Yellow" />
+  <Region Margin="0,200,0,0">
+    <BindingTest Player1.ChildPlayer.ChildPlayer.Name="{Player1.ChildPlayer.ChildPlayer.Name}" TestBinding="Patrik" Button1.BackgroundColor="Yellow" />
   </Region>
-</TestScene> 
+</TestScene>

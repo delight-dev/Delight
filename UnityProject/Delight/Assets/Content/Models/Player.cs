@@ -18,6 +18,14 @@ namespace Delight
             get { return _name; }
             set { SetProperty(ref _name, value); }
         }
+
+        // TODO remove
+        private Player _childPlayer;
+        public Player ChildPlayer
+        {
+            get { return _childPlayer; }
+            set { SetProperty(ref _childPlayer, value); }
+        }
     }
 
     public abstract class DataProvider<T> : BindableCollection<T>

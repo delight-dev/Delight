@@ -77,7 +77,7 @@ namespace Delight.Parser
             }
 
             // create new view object if it doesn't exist
-            viewObject = new XumlViewObject { Name = viewName };
+            viewObject = new XumlViewObject { Name = viewName, TypeName = viewName };
             ViewObjects.Add(viewObject);
             _viewObjects.Add(viewName, viewObject);
             return viewObject;
@@ -149,21 +149,24 @@ namespace Delight.Parser
         public string Name;
 
         [ProtoMember(2)]
-        public string Namespace;
+        public string TypeName;
 
         [ProtoMember(3)]
+        public string Namespace;
+
+        [ProtoMember(4)]
         public string FilePath;
 
-        [ProtoMember(4, AsReference = true)]
+        [ProtoMember(5, AsReference = true)]
         public XumlViewObject BasedOn;
 
-        [ProtoMember(5)]
+        [ProtoMember(6)]
         public bool NeedUpdate;
 
-        [ProtoMember(6)]
+        [ProtoMember(7)]
         public List<PropertyExpression> PropertyExpressions;
 
-        [ProtoMember(7)]
+        [ProtoMember(8)]
         public List<ViewDeclaration> ViewDeclarations;
 
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
@@ -180,6 +183,7 @@ namespace Delight.Parser
         {
             Name = null;
             Namespace = null;
+            TypeName = null;
             FilePath = null;
             BasedOn = null;
             NeedUpdate = false;

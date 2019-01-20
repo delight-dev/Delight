@@ -9,9 +9,9 @@ using UnityEngine.EventSystems;
 namespace Delight
 {
     /// <summary>
-    /// Scene view. // TODO rename to GameObjectView or SceneObjectView
+    /// Scene object view.
     /// </summary>
-    public partial class SceneView : View
+    public partial class SceneObjectView : View
     {
         #region Methods
 
@@ -22,9 +22,9 @@ namespace Delight
         {
             base.BeforeLoad();
 
-            // create game-object and parent it with first SceneView parent            
+            // create game-object and parent it with first scene object parent            
             var go = new UnityEngine.GameObject(String.Format("{0}{1}", GetType().Name, Id.Length != 36 ? " (" + Id + ")" : ""));
-            var parent = this.FindParent<SceneView>();
+            var parent = this.FindParent<SceneObjectView>();
             if (parent != null)
             {
                 go.transform.SetParent(parent.GameObject.transform);
@@ -35,7 +35,7 @@ namespace Delight
             if (EnableScriptEvents)
             {
                 var eventListener = go.AddComponent<UnityScriptEventRelay>();
-                eventListener.SceneView = this;
+                eventListener.SceneObjectView = this;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Delight
     {
         #region Fields
 
-        public SceneView SceneView;
+        public SceneObjectView SceneObjectView;
 
         #endregion
 
@@ -134,7 +134,7 @@ namespace Delight
 
         public void Update()
         {
-            SceneView?.Update();
+            SceneObjectView?.Update();
         }
 
         #endregion

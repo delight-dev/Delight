@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class ViewSwitcher : SceneView
+    public partial class ViewSwitcher : SceneObjectView
     {
         #region Constructors
 
@@ -60,7 +60,7 @@ namespace Delight
                 if (_viewSwitcher == null)
 #endif
                 {
-                    _viewSwitcher = new Template(SceneViewTemplates.SceneView);
+                    _viewSwitcher = new Template(SceneObjectViewTemplates.SceneObjectView);
                 }
                 return _viewSwitcher;
             }

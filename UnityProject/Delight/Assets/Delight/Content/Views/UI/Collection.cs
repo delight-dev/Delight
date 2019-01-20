@@ -10,17 +10,16 @@ using UnityEngine.EventSystems;
 namespace Delight
 {
     /// <summary>
-    /// Generic list view.
+    /// Generic collection view.
     /// </summary>
-    public class Collection<TModel> : UIImageView
-        where TModel : BindableObject
+    public partial class CollectionView
     {
         #region Properties
 
-        private BindableCollection<TModel> _presentedItems;
+        private BindableCollection<Player> _oldCollection;
 
-        public readonly static DependencyProperty<BindableCollection<TModel>> ItemsProperty = new DependencyProperty<BindableCollection<TModel>>("Items");
-        public BindableCollection<TModel> Items
+        public readonly static DependencyProperty<BindableCollection<Player>> ItemsProperty = new DependencyProperty<BindableCollection<Player>>("Items");
+        public BindableCollection<Player> Items
         {
             get { return ItemsProperty.GetValue(this); }
             set { ItemsProperty.SetValue(this, value); }
@@ -30,10 +29,10 @@ namespace Delight
 
         #region Constructor
 
-        public Collection(View parent = null, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ListTemplates.Default, initializer)
-        {
-        }
+        //public CollectionView(View parent = null, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+        //    base(parent, layoutParent, id, template ?? ListViewTemplates.Default, initializer)
+        //{
+        //}
 
         #endregion
 
@@ -56,18 +55,18 @@ namespace Delight
         /// </summary>
         public virtual void ItemsChanged()
         {
-            if (_presentedItems != null)
+            if (_oldCollection != null)
             {
                 // unsubscribe from change events in the old list
-                _presentedItems.CollectionChanged -= OnCollectionChanged;
+                _oldCollection.CollectionChanged -= OnCollectionChanged;
             }
-            _presentedItems = Items;
+            _oldCollection = Items;
 
             // add new list
-            if (_presentedItems != null)
+            if (Items != null)
             {
                 // subscribe to change events in the new list
-                _presentedItems.CollectionChanged += OnCollectionChanged;
+                Items.CollectionChanged += OnCollectionChanged;
             }
 
             // unload and clear existing children
@@ -87,7 +86,7 @@ namespace Delight
         {
             // TODO the view template needs to be supplied somehow
             int i = 0;
-            foreach (var item in _presentedItems)
+            foreach (var item in Items)
             {
                 // create new children 
                 var label = new Label(this);
@@ -95,7 +94,7 @@ namespace Delight
                 {
                     // bind label text to player name
                     var player = item as Player;
-                    _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
+                    //_bindings.Add(new Binding2("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
                     label.Load();
                     label.Offset = new ElementMargin(0, i * 35, 0, 0);
                     ++i;
@@ -130,7 +129,7 @@ namespace Delight
                 var player = Items[e.Index] as Player;
 
                 // bind label text to player name
-                _bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
+                //_bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
                 label.Load();
                 label.Offset = new ElementMargin(0, e.Index * 35, 0, 0);
             }

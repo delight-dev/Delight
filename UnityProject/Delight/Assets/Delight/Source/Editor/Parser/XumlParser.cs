@@ -157,8 +157,9 @@ namespace Delight.Parser
             // clear view object 
             viewObject.Clear();
             viewObject.Name = viewName;
+            viewObject.TypeName = viewName;
             viewObject.FilePath = xumlFile.Path;
-            viewObject.NeedUpdate = true;
+            viewObject.NeedUpdate = true;            
 
             var propertyExpressions = new List<PropertyExpression>();
 
@@ -181,6 +182,12 @@ namespace Delight.Parser
                 if (attributeName.IEquals("BasedOn"))
                 {
                     viewObject.BasedOn = _xumlObjectModel.GetViewObject(attributeValue);
+                    continue;
+                }
+
+                if (attributeName.IEquals("TypeName"))
+                {
+                    viewObject.TypeName = attributeValue;
                     continue;
                 }
 

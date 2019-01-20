@@ -188,9 +188,9 @@ namespace Delight
         public void UpdateBindings()
         {
             // update all bindings
-            foreach (var binding in _bindings)
+            foreach (var smartBinding in _bindings)
             {
-                binding.UpdateBinding();
+                smartBinding.UpdateBinding();
             }
         }
 
@@ -200,11 +200,11 @@ namespace Delight
         public void UpdateBindings(DependencyObject targetObject)
         {
             // update bindings to target object
-            foreach (var binding in _bindings)
+            foreach (var smartBinding in _bindings)
             {
-                if (binding.TargetObject == targetObject)
+                if (smartBinding.TargetObjects.Contains(targetObject))
                 {
-                    binding.UpdateBinding();
+                    smartBinding.UpdateBinding();
                 }
             }
         }
