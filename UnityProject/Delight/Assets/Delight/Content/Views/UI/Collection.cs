@@ -12,18 +12,12 @@ namespace Delight
     /// <summary>
     /// Generic collection view.
     /// </summary>
-    public partial class CollectionView
+    public partial class Collection
     {
         #region Properties
 
-        private BindableCollection<Player> _oldCollection;
-
-        public readonly static DependencyProperty<BindableCollection<Player>> ItemsProperty = new DependencyProperty<BindableCollection<Player>>("Items");
-        public BindableCollection<Player> Items
-        {
-            get { return ItemsProperty.GetValue(this); }
-            set { ItemsProperty.SetValue(this, value); }
-        }
+        public Func<BindableObject, View> ItemInitializer;
+        private BindableCollection _oldCollection;
 
         #endregion
 
@@ -84,27 +78,23 @@ namespace Delight
 
         protected void GenerateItems()
         {
+            if (Items == null)
+                return;
+
             // TODO the view template needs to be supplied somehow
-            int i = 0;
-            foreach (var item in Items)
+            foreach (var item in Items.GetDataEnumerator())
             {
-                // create new children 
-                var label = new Label(this);
-                if (item is Player)
-                {
-                    // bind label text to player name
-                    var player = item as Player;
-                    //_bindings.Add(new Binding2("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
-                    label.Load();
-                    label.Offset = new ElementMargin(0, i * 35, 0, 0);
-                    ++i;
-                }
-                else
-                {
-                    label.Load();
-                }
+                // create new children
+                GenerateItem(item);
             }
 
+        }
+
+        private void GenerateItem(BindableObject item)
+        {
+            var itemView = ItemInitializer(item) as UIView;
+            itemView.Load();
+            itemView.Offset = new ElementMargin(0, LayoutChildren.Count * 35, 0, 0);
         }
 
         /// <summary>
@@ -125,13 +115,7 @@ namespace Delight
 
             if (e.ChangeAction == CollectionChangeAction.Add)
             {
-                var label = new Label(this);
-                var player = Items[e.Index] as Player;
-
-                // bind label text to player name
-                //_bindings.Add(new Binding("Name", Label.TextProperty.PropertyName, () => player, () => label, () => label.Text = player.Name, () => player.Name = label.Text));
-                label.Load();
-                label.Offset = new ElementMargin(0, e.Index * 35, 0, 0);
+                GenerateItem(Items.GetItem(e.Id));
             }
 
             //// update list of items

@@ -21,39 +21,40 @@ namespace Delight
         protected override void Initialize()
         {
             base.Initialize();
+        }
 
-            Player1 = new Player
+        public void Test1()
+        {
+            //Debug.Log("Setting Models.Players.Player1.ChildPlayer.ChildPlayer.Name = \"Test 1\";");
+            //Models.Players.Player1.ChildPlayer.ChildPlayer.Name = "Test 1";
+
+            Debug.Log("Setting Models.Players[0] = new Player(Patrik 1)");
+            Models.Players["Player1"].ChildPlayer = new Player
             {
-                Name = "Player 1",
+                Name = "Patrik 1",
                 ChildPlayer = new Player
                 {
-                    Name = "Player 1.1",
+                    Name = "Patrik 1.1",
                     ChildPlayer = new Player
                     {
-                        Name = "Player 1.1.1"
+                        Name = "Patrik 1.1.1"
                     }
                 }
             };
         }
 
-        public void Test1()
-        {
-            Debug.Log("Setting Player1.ChildPlayer.ChildPlayer.Name = \"Test 1\";");
-            Player1.ChildPlayer.ChildPlayer.Name = "Test 1";
-        }
-
         public void Test2()
         {
             Debug.Log("Setting BindingTest1.Player1 = new Player {...}");
-            BindingTest1.Player1 = new Player
+            BindingTest1.Player1.ChildPlayer = new Player
             {
-                Name = "Player 3",
+                Name = "Test 2",
                 ChildPlayer = new Player
                 {
-                    Name = "Player 3.1",
+                    Name = "Test 2.1",
                     ChildPlayer = new Player
                     {
-                        Name = "Player 3.1.1"
+                        Name = "Test 2.1.1"
                     }
                 }
             };
@@ -61,23 +62,23 @@ namespace Delight
 
         public void Test3()
         {
-            Debug.Log("Setting Player1.ChildPlayer = new Player {...}");
+            Debug.Log("Setting Models.Players.Player1.ChildPlayer = new Player {...}");
 
-            Player1.ChildPlayer = new Player
+            Models.Players.Player1.ChildPlayer = new Player
             {
-                Name = "Player 4.1",
+                Name = "Test 3.1",
                 ChildPlayer = new Player
                 {
-                    Name = "Player 4.1.1"
+                    Name = "Test 3.1.1"
                 }
             };
         }
 
         public void LogBinding()
         {
-            Debug.Log("TestPlayer1.Name = " + Player1.Name);
-            Debug.Log("TestPlayer1.ChildPlayer.Name = " + Player1.ChildPlayer.Name);
-            Debug.Log("TestPlayer1.ChildPlayer.ChildPlayer.Name = " + Player1.ChildPlayer.ChildPlayer.Name);
+            Debug.Log("Models.Players.Player1.Name = " + Models.Players.Player1.Name);
+            Debug.Log("Models.Players.Player1.ChildPlayer.Name = " + Models.Players.Player1.ChildPlayer.Name);
+            Debug.Log("Models.Players.Player1.ChildPlayer.ChildPlayer.Name = " + Models.Players.Player1.ChildPlayer.ChildPlayer.Name);
         }
 
         #endregion

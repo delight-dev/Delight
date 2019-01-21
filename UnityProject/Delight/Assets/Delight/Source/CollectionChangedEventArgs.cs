@@ -14,7 +14,7 @@ namespace Delight
     public class CollectionChangedEventArgs : EventArgs
     {
         public CollectionChangeAction ChangeAction;
-        public int Index;
+        public string Id;
     }
 
     /// <summary>

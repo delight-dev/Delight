@@ -9,35 +9,44 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class CollectionView : UIImageView
+    public partial class Collection : UIImageView
     {
         #region Constructors
 
-        public CollectionView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? CollectionViewTemplates.Default, initializer)
+        public Collection(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+            base(parent, layoutParent, id, template ?? CollectionTemplates.Default, initializer)
         {
         }
 
-        public CollectionView() : this(null)
+        public Collection() : this(null)
         {
         }
 
-        static CollectionView()
+        static Collection()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(CollectionViewTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(CollectionTemplates.Default, dependencyProperties);
+
+            dependencyProperties.Add(ItemsProperty);
         }
 
         #endregion
 
         #region Properties
 
+        public readonly static DependencyProperty<Delight.BindableCollection> ItemsProperty = new DependencyProperty<Delight.BindableCollection>("Items");
+        public Delight.BindableCollection Items
+        {
+            get { return ItemsProperty.GetValue(this); }
+            set { ItemsProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
     #region Data Templates
 
-    public static class CollectionViewTemplates
+    public static class CollectionTemplates
     {
         #region Properties
 
@@ -45,24 +54,24 @@ namespace Delight
         {
             get
             {
-                return CollectionView;
+                return Collection;
             }
         }
 
-        private static Template _collectionView;
-        public static Template CollectionView
+        private static Template _collection;
+        public static Template Collection
         {
             get
             {
 #if UNITY_EDITOR
-                if (_collectionView == null || _collectionView.CurrentVersion != Template.Version)
+                if (_collection == null || _collection.CurrentVersion != Template.Version)
 #else
-                if (_collectionView == null)
+                if (_collection == null)
 #endif
                 {
-                    _collectionView = new Template(UIImageViewTemplates.UIImageView);
+                    _collection = new Template(UIImageViewTemplates.UIImageView);
                 }
-                return _collectionView;
+                return _collection;
             }
         }
 

@@ -30,7 +30,7 @@ namespace Delight
                 source.Click = ResolveActionHandler(this, "Test2");
             });
             Region1 = new Region(this, Group1, "Region1", Region1Template);
-            DynamicList = new ListView(this, Region1, "DynamicList", DynamicListTemplate);
+            DynamicList = new List(this, Region1, "DynamicList", DynamicListTemplate);
         }
 
         public DynamicListTest() : this(null)
@@ -130,8 +130,8 @@ namespace Delight
             set { Region1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ListView> DynamicListProperty = new DependencyProperty<ListView>("DynamicList");
-        public ListView DynamicList
+        public readonly static DependencyProperty<List> DynamicListProperty = new DependencyProperty<List>("DynamicList");
+        public List DynamicList
         {
             get { return DynamicListProperty.GetValue(this); }
             set { DynamicListProperty.SetValue(this, value); }
@@ -323,8 +323,8 @@ namespace Delight
                 if (_dynamicListTestDynamicList == null)
 #endif
                 {
-                    _dynamicListTestDynamicList = new Template(ListViewTemplates.ListView);
-                    Delight.ListView.BackgroundColorProperty.SetDefault(_dynamicListTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    _dynamicListTestDynamicList = new Template(ListTemplates.List);
+                    Delight.List.BackgroundColorProperty.SetDefault(_dynamicListTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                 }
                 return _dynamicListTestDynamicList;
             }

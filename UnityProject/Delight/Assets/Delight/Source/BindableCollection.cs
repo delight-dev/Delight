@@ -9,91 +9,146 @@ using UnityEngine;
 
 namespace Delight
 {
+
     /// <summary>
     /// Base class for bindable generic collections.
     /// </summary>
-    public abstract class BindableCollection<T> : BindableObject, IBindableCollection, IEnumerable<T>
+    public class BindableCollection<T> : BindableCollection, IEnumerable<T>
+        where T : BindableObject
     {
         #region Fields
 
-        public event CollectionChangedEventHandler CollectionChanged;
-        protected List<T> _data = new List<T>();
+        protected Dictionary<string, T> _data = new Dictionary<string, T>();
 
         #endregion
 
         #region Properties
 
-        public int Count => _data != null ? _data.Count : 0;
-        public bool IsReadOnly => false;
-
-        /// <summary>
-        /// Gets or sets the item at the specified index.
-        /// </summary>
-        public T this[int index]
+        public virtual T this[string id]
         {
             get
             {
-                return _data[index];
+                T item;
+                if (_data.TryGetValue(id, out item))
+                {
+                    return item;
+                }
+                return null;
+            }
+            set
+            {
             }
         }
+
+        public override int Count => _data.Count;
 
         #endregion
 
         #region Methods
 
-        public void Edit(Action edit)
+        public override BindableObject GetItem(string id)
+        {
+            return this[id];
+        }
+
+        public virtual void Edit(Action edit)
         {
             // TODO here we want to implement batch edit of collection so just a single change 
             // notification is sent, by setting a internal bool _batchNotifications and letting Add, Remove, etc. check the bool and queue the notifications
             edit();
         }
 
-        public void Add(T item)
+        public virtual void Add(T item)
         {
-            int index = _data.Count;
-            _data.Add(item);
+            if (String.IsNullOrEmpty(item.Id))
+            {
+                item.Id = Guid.NewGuid().ToString();
+            }
+            else if (_data.ContainsKey(item.Id))
+            {
+                return; 
+            }
+
+            _data.Add(item.Id, item);
             OnCollectionChanged(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
-                Index = index
+                Id = item.Id
             });
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
             _data.Clear();
+            OnCollectionChanged(new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Clear
+            });
         }
 
-        public bool Contains(T item)
+        public virtual bool Contains(T item)
         {
-            return _data.Contains(item);
+            return _data.ContainsKey(item.Id);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+        public virtual bool Remove(T item)
         {
-            _data.CopyTo(array, arrayIndex);
+            bool wasRemoved = _data.Remove(item.Id);
+            if (wasRemoved)
+            {
+                OnCollectionChanged(new CollectionChangedEventArgs
+                {
+                    ChangeAction = CollectionChangeAction.Remove,
+                    Id = item.Id
+                });
+                return true;
+            }
+
+            return false;
         }
 
-        public bool Remove(T item)
-        {
-            return _data.Remove(item);
-        }
-
-        /// <summary>
-        /// Gets enumerator for collection.
-        /// </summary>
         public IEnumerator<T> GetEnumerator()
         {
-            return _data.GetEnumerator();
+            return _data.Values.GetEnumerator();
         }
 
-        /// <summary>
-        /// Gets enumerator for collection.
-        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
+
+        public override IEnumerable<BindableObject> GetDataEnumerator()
+        {
+            foreach (var data in _data.Values)
+            {
+                yield return data;
+            }
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Base class for bindable collections.
+    /// </summary>
+    public abstract class BindableCollection : BindableObject, INotifyCollectionChanged
+    {
+        #region Fields
+
+        public event CollectionChangedEventHandler CollectionChanged;
+
+        #endregion
+
+        #region Properties
+
+        public abstract int Count { get; }
+
+        #endregion
+
+        #region Methods
+
+        public abstract IEnumerable<BindableObject> GetDataEnumerator();
+        public abstract BindableObject GetItem(string id);
 
         /// <summary>
         /// Notifies listeners that collection has been changed.
@@ -102,43 +157,6 @@ namespace Delight
         {
             CollectionChanged?.Invoke(this, eventArgs);
         }
-
-        #region IBindableCollection
-
-        public void Add(object item)
-        {
-            Add((T)item);
-        }
-
-        public void Add(IEnumerable items)
-        {
-            foreach (var item in items)
-            {
-                Add((T)item);
-            }
-        }
-
-        public bool Remove(object item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(IEnumerable items)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void SetSelected(object item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetIndex(object item)
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 
         #endregion
     }

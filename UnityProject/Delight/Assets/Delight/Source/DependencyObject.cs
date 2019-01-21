@@ -14,24 +14,12 @@ namespace Delight
     {
         #region Fields
         
-        private string _id;
         protected Template _template;
         protected static Dictionary<Template, List<DependencyProperty>> DependencyProperties = new Dictionary<Template, List<DependencyProperty>>();
 
         #endregion
 
         #region Properties
-
-        /// <summary>
-        /// Gets dependency object ID.
-        /// </summary>
-        public string Id
-        {
-            get
-            {
-                return _id;
-            }
-        }
 
         /// <summary>
         /// Gets dependency object data template.
@@ -71,7 +59,7 @@ namespace Delight
         /// </summary>
         public DependencyObject(string id = null, Template template = null)
         {            
-            _id = id ?? Guid.NewGuid().ToString();
+            Id = id ?? Guid.NewGuid().ToString();
             _template = template;
             PropertyChanged += OnPropertyChanged;
         }

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class ListView
+    public partial class List
     {
     }    
 }

@@ -672,6 +672,11 @@ namespace Delight.Parser
                         string sourceProperty = string.Join(".", sourcePath);
                         string targetProperty = string.Join(".", targetPath);
 
+                        string targetToSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay) ?
+                            String.Format("{0} = {1}", sourceProperty, targetProperty) : "{ }";
+
+                        // TODO in one-way binding we don't need to listen to changes in target object
+
                         // print smart binding
                         sb.AppendLine();
                         sb.AppendLine("            // binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
@@ -681,7 +686,7 @@ namespace Delight.Parser
                         sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
                         sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
                         sb.AppendLine("                () => {0} = {1},", targetProperty, sourceProperty);
-                        sb.AppendLine("                () => {0} = {1}", sourceProperty, targetProperty);
+                        sb.AppendLine("                () => {0}", targetToSource);
                         sb.AppendLine("            ));");
                     }
                 }

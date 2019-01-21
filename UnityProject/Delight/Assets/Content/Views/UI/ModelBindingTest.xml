@@ -3,9 +3,11 @@
     <Group Spacing="10" Width="500">
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Test 2" Click="Test2" />
-      <Label Text="{@Players.Player1.Name}" TextAlignment="Center" Color="Black" ExtraPadding="True" Width="200" Height="50" /> 
-    </Group>
-    <Region Id="DynamicList" Width="500" BackgroundColor="Green" Margin="50">
-    </Region> 
+    </Group> 
+    <List Id="DynamicList" Items="{@Players}" Width="500" BackgroundColor="Green" Margin="50">
+      <!-- Data template generated from: 
+         <Label Text="{@Players[Id].Name}" /> 
+         -->
+    </List>  
   </Group>
 </ModelBindingTest> 

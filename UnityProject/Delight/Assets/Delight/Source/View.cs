@@ -86,6 +86,11 @@ namespace Delight
             get { return _isLoaded; }
         }
 
+        /// <summary>
+        /// Gets list of bindings.
+        /// </summary>
+        public List<Binding> Bindings => _bindings;
+
         #endregion
 
         #region Methods
@@ -188,9 +193,9 @@ namespace Delight
         public void UpdateBindings()
         {
             // update all bindings
-            foreach (var smartBinding in _bindings)
+            foreach (var binding in _bindings)
             {
-                smartBinding.UpdateBinding();
+                binding.UpdateBinding();
             }
         }
 
@@ -200,11 +205,11 @@ namespace Delight
         public void UpdateBindings(DependencyObject targetObject)
         {
             // update bindings to target object
-            foreach (var smartBinding in _bindings)
+            foreach (var binding in _bindings)
             {
-                if (smartBinding.TargetObjects.Contains(targetObject))
+                if (binding.TargetObjects.Contains(targetObject))
                 {
-                    smartBinding.UpdateBinding();
+                    binding.UpdateBinding();
                 }
             }
         }

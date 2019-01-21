@@ -29,18 +29,17 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test2");
             });
-            Label1 = new Label(this, Group2, "Label1", Label1Template);
+            DynamicList = new List(this, Group1, "DynamicList", DynamicListTemplate);
 
-            // binding <Label Text="{@Players.Player1.Name}">
+            // binding <List Items="{@Players}">
             _bindings.Add(new Binding(
-                new List<string> { "Player1", "Name" },
-                new List<string> { "Label1", "Text" },
-                new List<Func<BindableObject>> { () => Models.Players, () => Models.Players.Player1 },
-                new List<Func<BindableObject>> { () => this, () => Label1 },
-                () => Label1.Text = Models.Players.Player1.Name,
-                () => Models.Players.Player1.Name = Label1.Text
+                new List<string> {  },
+                new List<string> { "DynamicList", "Items" },
+                new List<Func<BindableObject>> {  },
+                new List<Func<BindableObject>> { () => this, () => DynamicList },
+                () => DynamicList.Items = Models.Players,
+                () => { }
             ));
-            DynamicList = new Region(this, Group1, "DynamicList", DynamicListTemplate);
         }
 
         public ModelBindingTest() : this(null)
@@ -60,8 +59,6 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
-            dependencyProperties.Add(Label1Property);
-            dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(DynamicListProperty);
             dependencyProperties.Add(DynamicListTemplateProperty);
         }
@@ -126,22 +123,8 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
-        public Label Label1
-        {
-            get { return Label1Property.GetValue(this); }
-            set { Label1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
-        public Template Label1Template
-        {
-            get { return Label1TemplateProperty.GetValue(this); }
-            set { Label1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> DynamicListProperty = new DependencyProperty<Region>("DynamicList");
-        public Region DynamicList
+        public readonly static DependencyProperty<List> DynamicListProperty = new DependencyProperty<List>("DynamicList");
+        public List DynamicList
         {
             get { return DynamicListProperty.GetValue(this); }
             set { DynamicListProperty.SetValue(this, value); }
@@ -187,7 +170,6 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
-                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
                     Delight.ModelBindingTest.DynamicListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestDynamicList);
                 }
                 return _modelBindingTest;
@@ -303,28 +285,6 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestLabel1;
-        public static Template ModelBindingTestLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestLabel1 == null || _modelBindingTestLabel1.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestLabel1 == null)
-#endif
-                {
-                    _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_modelBindingTestLabel1, TMPro.TextAlignmentOptions.Center);
-                    Delight.Label.ColorProperty.SetDefault(_modelBindingTestLabel1, new UnityEngine.Color(0f, 0f, 0f, 1f));
-                    Delight.Label.ExtraPaddingProperty.SetDefault(_modelBindingTestLabel1, true);
-                    Delight.Label.WidthProperty.SetDefault(_modelBindingTestLabel1, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Label.HeightProperty.SetDefault(_modelBindingTestLabel1, new ElementSize(50f, ElementSizeUnit.Pixels));
-                }
-                return _modelBindingTestLabel1;
-            }
-        }
-
         private static Template _modelBindingTestDynamicList;
         public static Template ModelBindingTestDynamicList
         {
@@ -336,10 +296,10 @@ namespace Delight
                 if (_modelBindingTestDynamicList == null)
 #endif
                 {
-                    _modelBindingTestDynamicList = new Template(RegionTemplates.Region);
-                    Delight.Region.WidthProperty.SetDefault(_modelBindingTestDynamicList, new ElementSize(500f, ElementSizeUnit.Pixels));
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
-                    Delight.Region.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
+                    _modelBindingTestDynamicList = new Template(ListTemplates.List);
+                    Delight.List.WidthProperty.SetDefault(_modelBindingTestDynamicList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.List.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
                 }
                 return _modelBindingTestDynamicList;
             }

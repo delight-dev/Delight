@@ -603,19 +603,14 @@ namespace Delight.Parser
             var viewField = bindingSourceString;
             while (viewField.Length > 0)
             {
-                if (viewField.StartsWith("#"))
-                {
-                    bindingSource.SourceTypes |= BindingSourceTypes.Local;
-                    viewField = viewField.Substring(1);
-                }
-                else if (viewField.StartsWith("!"))
+                if (viewField.StartsWith("!"))
                 {
                     bindingSource.SourceTypes |= BindingSourceTypes.Negated;
                     viewField = viewField.Substring(1);
                 }
                 else if (viewField.StartsWith("="))
                 {
-                    bindingSource.SourceTypes |= BindingSourceTypes.OneWay;
+                    bindingSource.SourceTypes |= BindingSourceTypes.TwoWay;
                     viewField = viewField.Substring(1);
                 }
                 else if (viewField.StartsWith("@"))

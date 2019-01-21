@@ -18,6 +18,12 @@ namespace Delight
 
         #endregion
 
+        #region Properties
+
+        public string Id { get; set; }
+
+        #endregion
+
         #region Methods
 
         /// <summary>

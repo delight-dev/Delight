@@ -29,17 +29,77 @@ namespace Delight
     }
 
     public abstract class DataProvider<T> : BindableCollection<T>
+        where T : BindableObject
     {
     }
 
     public partial class PlayerData : DataProvider<Player>
     {
-        public Player Player1 { get; }
+        private Player _player1;
+        public Player Player1
+        {
+            get { return _player1; }
+            set
+            {
+                SetProperty(ref _player1, value);
+            } 
+        }
 
         public PlayerData()
         {
-            Player1 = new Player { Name = "Patrik" };
+            Player1 = new Player
+            {
+                Id = "Player1",
+                Name = "Player 1",
+                ChildPlayer = new Player
+                {
+                    Name = "Player 1.1",
+                    ChildPlayer = new Player
+                    {
+                        Name = "Player 1.1.1"
+                    }
+                }
+            };
             Add(Player1);
+            Add(new Player
+            {
+                Id = "Player2",
+                Name = "Player 2",
+                ChildPlayer = new Player
+                {
+                    Name = "Player 2.1",
+                    ChildPlayer = new Player
+                    {
+                        Name = "Player 2.1.1"
+                    }
+                }
+            });
+            Add(new Player
+            {
+                Id = "Player3",
+                Name = "Player 3",
+                ChildPlayer = new Player
+                {
+                    Name = "Player 3.1",
+                    ChildPlayer = new Player
+                    {
+                        Name = "Player 3.1.1"
+                    }
+                }
+            });
+            Add(new Player
+            {
+                Id = "Player4",
+                Name = "Player 4",
+                ChildPlayer = new Player
+                {
+                    Name = "Player 4.1",
+                    ChildPlayer = new Player
+                    {
+                        Name = "Player 4.1.1"
+                    }
+                }
+            });
         }
     }
 

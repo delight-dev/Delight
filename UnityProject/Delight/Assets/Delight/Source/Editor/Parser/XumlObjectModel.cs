@@ -451,10 +451,9 @@ namespace Delight.Parser
     public enum BindingSourceTypes
     {
         Default = 0,
-        OneWay = 1,
-        Local = 2,
-        Negated = 4,
-        Model = 8
+        TwoWay = 1,
+        Negated = 2 | TwoWay,
+        Model = 4
     }
 
     /// <summary>

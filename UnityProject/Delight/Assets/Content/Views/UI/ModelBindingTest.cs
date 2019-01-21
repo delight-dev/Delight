@@ -20,9 +20,23 @@ namespace Delight
         {
             base.BeforeLoad();
 
-            // create list that we want to bind to our players
-            var list = new CollectionView(this, DynamicList);
-            list.Items = Models.Players;
+            DynamicList.ItemInitializer = item =>
+            {
+                var template = new UIView(this, DynamicList, "ListItem");
+                var label1 = new Label(this, template, "Label1", LabelTemplates.Default);
+
+                // binding <Label Text="{@Players[Id].Name}">
+                template.Bindings.Add(new Binding(
+                        new List<string> { "Name" },
+                        new List<string> { "Label1", "Text" },
+                        new List<Func<BindableObject>> { () => Models.Players[item.Id] },
+                        new List<Func<BindableObject>> { () => this, () => label1 },
+                        () => label1.Text = Models.Players[item.Id].Name,
+                        () => { }
+                    ));
+
+                return template; // will probably be wrapped in a template
+            };
         }
 
         private IDisposable _update;
@@ -33,19 +47,19 @@ namespace Delight
             // add one player every second
             _update = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
             {
-                Models.Players.Add(new Player { Name = "Player " + x });
+                Models.Players.Add(new Player { Id = "Player " + x, Name = "Player " + x });
             });
         }
 
         int i = 0;
         public void Test1()
         {
-            Models.Players.Player1.Name = "Julia " + i++;
+            Models.Players["Player 1"].Name = "Julia " + i++;
         }
 
         public void Test2()
         {
-            Label1.Text = "Sanna";
+            //Label1.Text = "Sanna";
         }
     }
 }

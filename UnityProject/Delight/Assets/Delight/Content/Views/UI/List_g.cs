@@ -9,23 +9,23 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class ListView : CollectionView
+    public partial class List : Collection
     {
         #region Constructors
 
-        public ListView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ListViewTemplates.Default, initializer)
+        public List(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+            base(parent, layoutParent, id, template ?? ListTemplates.Default, initializer)
         {
         }
 
-        public ListView() : this(null)
+        public List() : this(null)
         {
         }
 
-        static ListView()
+        static List()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(ListViewTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(ListTemplates.Default, dependencyProperties);
         }
 
         #endregion
@@ -37,7 +37,7 @@ namespace Delight
 
     #region Data Templates
 
-    public static class ListViewTemplates
+    public static class ListTemplates
     {
         #region Properties
 
@@ -45,24 +45,24 @@ namespace Delight
         {
             get
             {
-                return ListView;
+                return List;
             }
         }
 
-        private static Template _listView;
-        public static Template ListView
+        private static Template _list;
+        public static Template List
         {
             get
             {
 #if UNITY_EDITOR
-                if (_listView == null || _listView.CurrentVersion != Template.Version)
+                if (_list == null || _list.CurrentVersion != Template.Version)
 #else
-                if (_listView == null)
+                if (_list == null)
 #endif
                 {
-                    _listView = new Template(CollectionViewTemplates.CollectionView);
+                    _list = new Template(CollectionTemplates.Collection);
                 }
-                return _listView;
+                return _list;
             }
         }
 

@@ -38,30 +38,19 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "LogBinding");
             });
-            Button5 = new Button(this, Group1, "Button5", Button5Template);
-
-            // binding <Button Text="{@Players.Player1.Name}">
-            _bindings.Add(new Binding(
-                new List<string> { "Player1", "Name" },
-                new List<string> { "Button5", "Text" },
-                new List<Func<BindableObject>> { () => Models.Players, () => Models.Players.Player1 },
-                new List<Func<BindableObject>> { () => this, () => Button5 },
-                () => Button5.Text = Models.Players.Player1.Name,
-                () => Models.Players.Player1.Name = Button5.Text
-            ));
 
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             BindingTest1 = new BindingTest(this, Region1, "BindingTest1", BindingTest1Template);
 
-            // binding <BindingTest Player1.ChildPlayer.ChildPlayer.Name="{Player1.ChildPlayer.ChildPlayer.Name}">
+            // binding <BindingTest Player1="{@Players.Player1}">
             _bindings.Add(new Binding(
-                new List<string> { "Player1", "ChildPlayer", "ChildPlayer", "Name" },
-                new List<string> { "BindingTest1", "Player1", "ChildPlayer", "ChildPlayer", "Name" },
-                new List<Func<BindableObject>> { () => this, () => Player1, () => Player1.ChildPlayer, () => Player1.ChildPlayer.ChildPlayer },
-                new List<Func<BindableObject>> { () => this, () => BindingTest1, () => BindingTest1.Player1, () => BindingTest1.Player1.ChildPlayer, () => BindingTest1.Player1.ChildPlayer.ChildPlayer },
-                () => BindingTest1.Player1.ChildPlayer.ChildPlayer.Name = Player1.ChildPlayer.ChildPlayer.Name,
-                () => Player1.ChildPlayer.ChildPlayer.Name = BindingTest1.Player1.ChildPlayer.ChildPlayer.Name
+                new List<string> { "Player1" },
+                new List<string> { "BindingTest1", "Player1" },
+                new List<Func<BindableObject>> { () => Models.Players },
+                new List<Func<BindableObject>> { () => this, () => BindingTest1 },
+                () => BindingTest1.Player1 = Models.Players.Player1,
+                () => { }
             ));
         }
 
@@ -74,7 +63,6 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(TestSceneTemplates.Default, dependencyProperties);
 
-            dependencyProperties.Add(Player1Property);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Button1Property);
@@ -85,8 +73,6 @@ namespace Delight
             dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(Button4Property);
             dependencyProperties.Add(Button4TemplateProperty);
-            dependencyProperties.Add(Button5Property);
-            dependencyProperties.Add(Button5TemplateProperty);
             dependencyProperties.Add(Region1Property);
             dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(BindingTest1Property);
@@ -96,13 +82,6 @@ namespace Delight
         #endregion
 
         #region Properties
-
-        public readonly static DependencyProperty<Delight.Player> Player1Property = new DependencyProperty<Delight.Player>("Player1");
-        public Delight.Player Player1
-        {
-            get { return Player1Property.GetValue(this); }
-            set { Player1Property.SetValue(this, value); }
-        }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
@@ -174,20 +153,6 @@ namespace Delight
             set { Button4TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
-        public Button Button5
-        {
-            get { return Button5Property.GetValue(this); }
-            set { Button5Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
-        public Template Button5Template
-        {
-            get { return Button5TemplateProperty.GetValue(this); }
-            set { Button5TemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
         public Region Region1
         {
@@ -250,7 +215,6 @@ namespace Delight
                     Delight.TestScene.Button2TemplateProperty.SetDefault(_testScene, TestSceneButton2);
                     Delight.TestScene.Button3TemplateProperty.SetDefault(_testScene, TestSceneButton3);
                     Delight.TestScene.Button4TemplateProperty.SetDefault(_testScene, TestSceneButton4);
-                    Delight.TestScene.Button5TemplateProperty.SetDefault(_testScene, TestSceneButton5);
                     Delight.TestScene.Region1TemplateProperty.SetDefault(_testScene, TestSceneRegion1);
                     Delight.TestScene.BindingTest1TemplateProperty.SetDefault(_testScene, TestSceneBindingTest1);
                 }
@@ -420,41 +384,6 @@ namespace Delight
                     Delight.Label.TextProperty.SetDefault(_testSceneButton4Label, "Log Binding");
                 }
                 return _testSceneButton4Label;
-            }
-        }
-
-        private static Template _testSceneButton5;
-        public static Template TestSceneButton5
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneButton5 == null || _testSceneButton5.CurrentVersion != Template.Version)
-#else
-                if (_testSceneButton5 == null)
-#endif
-                {
-                    _testSceneButton5 = new Template(ButtonTemplates.Button);
-                    Delight.Button.LabelTemplateProperty.SetDefault(_testSceneButton5, TestSceneButton5Label);
-                }
-                return _testSceneButton5;
-            }
-        }
-
-        private static Template _testSceneButton5Label;
-        public static Template TestSceneButton5Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneButton5Label == null || _testSceneButton5Label.CurrentVersion != Template.Version)
-#else
-                if (_testSceneButton5Label == null)
-#endif
-                {
-                    _testSceneButton5Label = new Template(ButtonTemplates.ButtonLabel);
-                }
-                return _testSceneButton5Label;
             }
         }
 

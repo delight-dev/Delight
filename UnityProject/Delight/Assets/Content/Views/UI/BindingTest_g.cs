@@ -38,7 +38,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this },
                 new List<Func<BindableObject>> { () => this, () => Button3 },
                 () => Button3.BackgroundColor = TestBinding2,
-                () => TestBinding2 = Button3.BackgroundColor
+                () => { }
             ));
             LargeButton1 = new LargeButton(this, Group1, "LargeButton1", LargeButton1Template);
             Label1 = new Label(this, Group1, "Label1", Label1Template);
@@ -50,7 +50,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this },
                 new List<Func<BindableObject>> { () => this, () => Label1 },
                 () => Label1.Text = TestBinding,
-                () => TestBinding = Label1.Text
+                () => { }
             ));
             Button4 = new Button(this, Group1, "Button4", Button4Template);
 
@@ -61,7 +61,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this },
                 new List<Func<BindableObject>> { () => this, () => Button4 },
                 () => Button4.Text = TestBinding,
-                () => TestBinding = Button4.Text
+                () => { }
             ));
             Button5 = new Button(this, Group1, "Button5", Button5Template);
 
@@ -72,7 +72,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this, () => Player1 },
                 new List<Func<BindableObject>> { () => this, () => Button5 },
                 () => Button5.Text = Player1.Name,
-                () => Player1.Name = Button5.Text
+                () => { }
             ));
             Button6 = new Button(this, Group1, "Button6", Button6Template);
 
@@ -83,7 +83,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this, () => Player1, () => Player1.ChildPlayer, () => Player1.ChildPlayer.ChildPlayer },
                 new List<Func<BindableObject>> { () => this, () => Button6 },
                 () => Button6.Text = Player1.ChildPlayer.ChildPlayer.Name,
-                () => Player1.ChildPlayer.ChildPlayer.Name = Button6.Text
+                () => { }
             ));
 
             // constructing Region (RegionOnDemand)
@@ -98,7 +98,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this },
                 new List<Func<BindableObject>> { () => this, () => Label2 },
                 () => Label2.Text = TestBinding,
-                () => TestBinding = Label2.Text
+                () => { }
             ));
             Label3 = new Label(this, Group2, "Label3", Label3Template);
 
@@ -109,7 +109,7 @@ namespace Delight
                 new List<Func<BindableObject>> { () => this, () => Player1 },
                 new List<Func<BindableObject>> { () => this, () => Label3 },
                 () => Label3.Text = Player1.Name,
-                () => Player1.Name = Label3.Text
+                () => { }
             ));
         }
 

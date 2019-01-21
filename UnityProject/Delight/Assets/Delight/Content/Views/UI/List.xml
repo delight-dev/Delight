@@ -1,2 +1,2 @@
-<List xmlns="Delight" TypeName="ListView" BasedOn="Collection">
+<List xmlns="Delight" BasedOn="Collection">
 </List> 

@@ -337,7 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d867224532984744854fda615a5cc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewTypeName: TestScene
+  ViewTypeName: ModelBindingTest
   ViewTypeNamespace: Delight
   LoadOnAwake: 1
 --- !u!1 &1503426672
