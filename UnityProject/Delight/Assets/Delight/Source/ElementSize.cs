@@ -155,6 +155,23 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Compares sizes.
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            var elementSize = obj as ElementSize;
+            return (elementSize != null) && (elementSize.Unit == Unit) && (elementSize.Value == Value) && (elementSize.Fill == Fill);
+        }
+
+        /// <summary>
+        /// Gets hashcode.
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         #endregion
 
         #region Properties

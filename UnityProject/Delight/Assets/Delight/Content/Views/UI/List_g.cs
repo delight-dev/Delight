@@ -26,11 +26,36 @@ namespace Delight
         {
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ListTemplates.Default, dependencyProperties);
+
+            dependencyProperties.Add(OrientationProperty);
+            dependencyProperties.Add(SpacingProperty);
+            dependencyProperties.Add(ContentAlignmentProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.ElementOrientation> OrientationProperty = new DependencyProperty<Delight.ElementOrientation>("Orientation");
+        public Delight.ElementOrientation Orientation
+        {
+            get { return OrientationProperty.GetValue(this); }
+            set { OrientationProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
+        public Delight.ElementSize Spacing
+        {
+            get { return SpacingProperty.GetValue(this); }
+            set { SpacingProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementAlignment> ContentAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("ContentAlignment");
+        public Delight.ElementAlignment ContentAlignment
+        {
+            get { return ContentAlignmentProperty.GetValue(this); }
+            set { ContentAlignmentProperty.SetValue(this, value); }
+        }
 
         #endregion
     }

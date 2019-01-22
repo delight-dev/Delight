@@ -36,6 +36,7 @@ namespace Delight
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
 
+            bool hasNewSize = false;
             float maxWidth = 0f;
             float maxHeight = 0f;
             float totalWidth = 0f;
@@ -55,12 +56,15 @@ namespace Delight
             int childIndex = 0;
             for (int i = 0; i < childCount; ++i)
             {
-                var view = children[i];
-                if (view.Width.Unit == ElementSizeUnit.Percents)
+                var childView = children[i];
+                var childWidth = childView.Width ?? ElementSize.Default;
+                var childHeight = childView.Height ?? ElementSize.Default;
+
+                if (childWidth.Unit == ElementSizeUnit.Percents)
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", view.Name));
+                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
                         continue;
                     }
                     else
@@ -69,11 +73,11 @@ namespace Delight
                     }
                 }
 
-                if (view.Height.Unit == ElementSizeUnit.Percents)
+                if (childHeight.Unit == ElementSizeUnit.Percents)
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", view.Name));
+                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
                         continue;
                     }
                     else
@@ -82,50 +86,56 @@ namespace Delight
                     }
                 }
 
-                bool defaultDisableChildLayoutUpdate = view.DisableLayoutUpdate;
-                view.DisableLayoutUpdate = true;
+                bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
+                childView.DisableLayoutUpdate = true;
 
                 // set offsets and alignment
                 var offset = new ElementMargin(
                     new ElementSize(isHorizontal ? totalWidth + spacing.Pixels * childIndex : 0f, ElementSizeUnit.Pixels),
                     new ElementSize(!isHorizontal ? totalHeight + spacing.Pixels * childIndex : 0f, ElementSizeUnit.Pixels));
-                view.OffsetFromParent = offset;
 
                 // set desired alignment if it is valid for the orientation otherwise use defaults
-                var alignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
-                var desiredAlignment = ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : view.Alignment;
+                var alignment = ElementAlignment.Center;
+                var defaultAlignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
+                var desiredAlignment = ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : childView.Alignment;
                 if (isHorizontal && (desiredAlignment == ElementAlignment.Top || desiredAlignment == ElementAlignment.Bottom
                     || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.BottomLeft))
                 {
-                    view.Alignment = alignment | desiredAlignment;
+                    alignment = defaultAlignment | desiredAlignment;
                 }
                 else if (!isHorizontal && (desiredAlignment == ElementAlignment.Left || desiredAlignment == ElementAlignment.Right
                     || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.TopRight))
                 {
-                    view.Alignment = alignment | desiredAlignment;
+                    alignment = defaultAlignment | desiredAlignment;
                 }
                 else
                 {
-                    view.Alignment = alignment;
+                    alignment = defaultAlignment;
                 }
 
                 // get size of content
                 if (!percentageWidth)
                 {
-                    totalWidth += view.Width;
-                    maxWidth = view.Width.Pixels > maxWidth ? view.Width.Pixels : maxWidth;
+                    totalWidth += childWidth;
+                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
                 }
 
                 if (!percentageHeight)
                 {
-                    totalHeight += view.Height;
-                    maxHeight = view.Height.Pixels > maxHeight ? view.Height.Pixels : maxHeight;
+                    totalHeight += childHeight;
+                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
                 }
 
                 // update child layout
-                view.UpdateLayout(false);
+                if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                {
+                    childView.OffsetFromParent = offset;
+                    childView.Alignment = alignment;
+
+                    childView.UpdateLayout(false);
+                }
                 ++childIndex;
-                view.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
+                childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
             }
 
             // set width and height 
@@ -141,11 +151,21 @@ namespace Delight
                 maxWidth += margin.Left.Pixels + margin.Right.Pixels;
 
                 // adjust width to content
-                Width = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                var newWidth = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                if (!newWidth.Equals(Width))
+                {
+                    Width = newWidth;
+                    hasNewSize = true;
+                }
             }
             else
             {
-                Width = new ElementSize(1, ElementSizeUnit.Percents);
+                var newWidth = new ElementSize(1, ElementSizeUnit.Percents);
+                if (!newWidth.Equals(Width))
+                {
+                    Width = newWidth;
+                    hasNewSize = true;
+                }
             }
 
             // adjust height to content
@@ -158,17 +178,27 @@ namespace Delight
                 maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
 
                 // adjust height to content
-                Height = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                var newHeight = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                if (!newHeight.Equals(Height))
+                {
+                    Height = newHeight;
+                    hasNewSize = true;
+                }
             }
             else
             {
-                Height = new ElementSize(1, ElementSizeUnit.Percents);
+                var newHeight = new ElementSize(1, ElementSizeUnit.Percents);
+                if (!newHeight.Equals(Height))
+                {
+                    Height = newHeight;
+                    hasNewSize = true;
+                }
             }
-
-            DisableLayoutUpdate = defaultDisableLayoutUpdate;
-
-            // no need to notify parents if the group doesn't adjusts its size to content
-            base.UpdateLayout(notifyParent);
+                       
+            DisableLayoutUpdate = defaultDisableLayoutUpdate;         
+            base.UpdateLayout(notifyParent && hasNewSize); 
+            // TODO might not be correct to swallow updates here because this can be triggered when
+            // Width/Height changes, so we need to ensure parent is updated in those cases
         }
 
         #endregion

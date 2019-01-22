@@ -4,13 +4,24 @@
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Test 2" Click="Test2" />
     </Group> 
-    <List Id="DynamicList" Items="{@Players}" Width="500" BackgroundColor="Green" Margin="50">
+    <List Id="PlayerList" Items="{@Players}" Width="500" BackgroundColor="Green" Margin="50" Spacing="5">
+
+      <Group BackgroundColor="Blue">
+        <Label /> 
+        <List Id="AchievementsList" Orientation="Vertical" Offset="50,0,0,0" />
+      </Group>
+
+
+        <!--<PlayerListItem Player="{player}" />-->
+
       <!-- Data template generated from: 
          <Label Text="{@Players[Id].Name}" /> 
          -->
-      <List Id="AchievementsList" > <!--Items="{player.Achievements}"-->
-        <Label Offset="20,0,0,0" /> <!--Text="{achievement.Title}"-->
-      </List>
+      <!-- <List Id="AchievementsList" > -->
+        <!--Items="{player.Achievements}"-->
+        <!--<Label Offset="20,0,0,0" />-->
+        <!--Text="{achievement.Title}"-->
+      <!--</List>-->
     </List>  
   </Group>
 </ModelBindingTest> 

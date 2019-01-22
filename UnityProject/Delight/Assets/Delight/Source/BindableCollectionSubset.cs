@@ -19,6 +19,7 @@ namespace Delight
 
         protected BindableCollection<T> _parentCollection;
         protected Func<T, bool> _filter;
+        protected Action<T> _fkSetter;
 
         #endregion
 
@@ -43,11 +44,12 @@ namespace Delight
 
         #region Constructor
 
-        public BindableCollectionSubset(BindableCollection<T> parentCollection, Func<T, bool> filter)
+        public BindableCollectionSubset(BindableCollection<T> parentCollection, Func<T, bool> filter, Action<T> fkSetter)
         {
             _parentCollection = parentCollection;
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
             _filter = filter;
+            _fkSetter = fkSetter;
         }
 
         #endregion
@@ -73,7 +75,7 @@ namespace Delight
         /// <summary>
         /// Called when the parent collection has been modified. 
         /// </summary>
-        private void ParentCollection_CollectionChanged(object source, CollectionChangedEventArgs e)
+        private void ParentCollectionChanged(object source, CollectionChangedEventArgs e)
         {
             switch (e.ChangeAction)
             {
@@ -92,10 +94,7 @@ namespace Delight
                 case CollectionChangeAction.Replace:
                     _data.Clear();
                     _needUpdate = true;
-                    if (_filter(e.Item as T))
-                    {
-                        OnCollectionChanged(e);
-                    }
+                    OnCollectionChanged(e);
                     break;
                 case CollectionChangeAction.Clear:
                     base.Clear();
@@ -110,35 +109,38 @@ namespace Delight
 
         public override void Add(T item)
         {
-            // TODO update item foreign keys to fit into this subset
-            // if the keys aren't empty and doesn't fit into this condition we should
-            // throw a warning and invalidate the whole operation
+            if (_fkSetter != null)
+                _fkSetter(item);
 
-            _parentCollection.CollectionChanged -= ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Add(item);
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             base.Add(item);
         }
 
         public override void Clear()
         {
-            _parentCollection.CollectionChanged -= ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(Data.Values);
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             base.Clear();
         }
 
         public override void Replace(IEnumerable<T> items)
         {
-            // TODO update item foreign keys to fit into this subset
-            // if the keys aren't empty and doesn't fit into this condition we should
-            // throw a warning and invalidate the whole operation
+            if (_fkSetter != null)
+            {
+                foreach (var item in items)
+                {
+                    _fkSetter(item);
+                }
+            }
 
-            _parentCollection.CollectionChanged -= ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Replace(items);
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             base.Replace(items);
         }
@@ -150,18 +152,18 @@ namespace Delight
 
         public override bool Remove(T item)
         {
-            _parentCollection.CollectionChanged -= ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Remove(item);
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             return base.Remove(item);
         }
 
         public override void RemoveRange(IEnumerable<T> items)
         {
-            _parentCollection.CollectionChanged -= ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(items);
-            _parentCollection.CollectionChanged += ParentCollection_CollectionChanged;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             base.RemoveRange(items);
         }

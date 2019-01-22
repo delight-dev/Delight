@@ -29,19 +29,20 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test2");
             });
-            DynamicList = new List(this, Group1, "DynamicList", DynamicListTemplate);
+            PlayerList = new List(this, Group1, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{@Players}">
             _bindings.Add(new Binding(
                 new List<string> {  },
-                new List<string> { "DynamicList", "Items" },
+                new List<string> { "PlayerList", "Items" },
                 new List<Func<BindableObject>> {  },
-                new List<Func<BindableObject>> { () => this, () => DynamicList },
-                () => DynamicList.Items = Models.Players,
+                new List<Func<BindableObject>> { () => this, () => PlayerList },
+                () => PlayerList.Items = Models.Players,
                 () => { }
             ));
-            AchievementsList = new List(this, DynamicList, "AchievementsList", AchievementsListTemplate);
-            Label1 = new Label(this, AchievementsList, "Label1", Label1Template);
+            Group3 = new Group(this, PlayerList, "Group3", Group3Template);
+            Label1 = new Label(this, Group3, "Label1", Label1Template);
+            AchievementsList = new List(this, Group3, "AchievementsList", AchievementsListTemplate);
         }
 
         public ModelBindingTest() : this(null)
@@ -61,12 +62,14 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
-            dependencyProperties.Add(DynamicListProperty);
-            dependencyProperties.Add(DynamicListTemplateProperty);
-            dependencyProperties.Add(AchievementsListProperty);
-            dependencyProperties.Add(AchievementsListTemplateProperty);
+            dependencyProperties.Add(PlayerListProperty);
+            dependencyProperties.Add(PlayerListTemplateProperty);
+            dependencyProperties.Add(Group3Property);
+            dependencyProperties.Add(Group3TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(AchievementsListProperty);
+            dependencyProperties.Add(AchievementsListTemplateProperty);
         }
 
         #endregion
@@ -129,32 +132,32 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<List> DynamicListProperty = new DependencyProperty<List>("DynamicList");
-        public List DynamicList
+        public readonly static DependencyProperty<List> PlayerListProperty = new DependencyProperty<List>("PlayerList");
+        public List PlayerList
         {
-            get { return DynamicListProperty.GetValue(this); }
-            set { DynamicListProperty.SetValue(this, value); }
+            get { return PlayerListProperty.GetValue(this); }
+            set { PlayerListProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> DynamicListTemplateProperty = new DependencyProperty<Template>("DynamicListTemplate");
-        public Template DynamicListTemplate
+        public readonly static DependencyProperty<Template> PlayerListTemplateProperty = new DependencyProperty<Template>("PlayerListTemplate");
+        public Template PlayerListTemplate
         {
-            get { return DynamicListTemplateProperty.GetValue(this); }
-            set { DynamicListTemplateProperty.SetValue(this, value); }
+            get { return PlayerListTemplateProperty.GetValue(this); }
+            set { PlayerListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<List> AchievementsListProperty = new DependencyProperty<List>("AchievementsList");
-        public List AchievementsList
+        public readonly static DependencyProperty<Group> Group3Property = new DependencyProperty<Group>("Group3");
+        public Group Group3
         {
-            get { return AchievementsListProperty.GetValue(this); }
-            set { AchievementsListProperty.SetValue(this, value); }
+            get { return Group3Property.GetValue(this); }
+            set { Group3Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> AchievementsListTemplateProperty = new DependencyProperty<Template>("AchievementsListTemplate");
-        public Template AchievementsListTemplate
+        public readonly static DependencyProperty<Template> Group3TemplateProperty = new DependencyProperty<Template>("Group3Template");
+        public Template Group3Template
         {
-            get { return AchievementsListTemplateProperty.GetValue(this); }
-            set { AchievementsListTemplateProperty.SetValue(this, value); }
+            get { return Group3TemplateProperty.GetValue(this); }
+            set { Group3TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -169,6 +172,20 @@ namespace Delight
         {
             get { return Label1TemplateProperty.GetValue(this); }
             set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<List> AchievementsListProperty = new DependencyProperty<List>("AchievementsList");
+        public List AchievementsList
+        {
+            get { return AchievementsListProperty.GetValue(this); }
+            set { AchievementsListProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> AchievementsListTemplateProperty = new DependencyProperty<Template>("AchievementsListTemplate");
+        public Template AchievementsListTemplate
+        {
+            get { return AchievementsListTemplateProperty.GetValue(this); }
+            set { AchievementsListTemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -204,9 +221,10 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
-                    Delight.ModelBindingTest.DynamicListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestDynamicList);
-                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
+                    Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestPlayerList);
+                    Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup3);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
+                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
                 }
                 return _modelBindingTest;
             }
@@ -321,40 +339,42 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestDynamicList;
-        public static Template ModelBindingTestDynamicList
+        private static Template _modelBindingTestPlayerList;
+        public static Template ModelBindingTestPlayerList
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestDynamicList == null || _modelBindingTestDynamicList.CurrentVersion != Template.Version)
+                if (_modelBindingTestPlayerList == null || _modelBindingTestPlayerList.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestDynamicList == null)
+                if (_modelBindingTestPlayerList == null)
 #endif
                 {
-                    _modelBindingTestDynamicList = new Template(ListTemplates.List);
-                    Delight.List.WidthProperty.SetDefault(_modelBindingTestDynamicList, new ElementSize(500f, ElementSizeUnit.Pixels));
-                    Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestDynamicList, new UnityEngine.Color(0f, 1f, 0f, 1f));
-                    Delight.List.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
+                    _modelBindingTestPlayerList = new Template(ListTemplates.List);
+                    Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.List.MarginProperty.SetDefault(_modelBindingTestPlayerList, new ElementMargin(50f, 50f, 50f, 50f));
+                    Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
-                return _modelBindingTestDynamicList;
+                return _modelBindingTestPlayerList;
             }
         }
 
-        private static Template _modelBindingTestAchievementsList;
-        public static Template ModelBindingTestAchievementsList
+        private static Template _modelBindingTestGroup3;
+        public static Template ModelBindingTestGroup3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestAchievementsList == null || _modelBindingTestAchievementsList.CurrentVersion != Template.Version)
+                if (_modelBindingTestGroup3 == null || _modelBindingTestGroup3.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestAchievementsList == null)
+                if (_modelBindingTestGroup3 == null)
 #endif
                 {
-                    _modelBindingTestAchievementsList = new Template(ListTemplates.List);
+                    _modelBindingTestGroup3 = new Template(GroupTemplates.Group);
+                    Delight.Group.BackgroundColorProperty.SetDefault(_modelBindingTestGroup3, new UnityEngine.Color(0f, 0f, 1f, 1f));
                 }
-                return _modelBindingTestAchievementsList;
+                return _modelBindingTestGroup3;
             }
         }
 
@@ -370,9 +390,27 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
-                    Delight.Label.OffsetProperty.SetDefault(_modelBindingTestLabel1, new ElementMargin(20f, 0f, 0f, 0f));
                 }
                 return _modelBindingTestLabel1;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsList;
+        public static Template ModelBindingTestAchievementsList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsList == null || _modelBindingTestAchievementsList.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsList == null)
+#endif
+                {
+                    _modelBindingTestAchievementsList = new Template(ListTemplates.List);
+                    Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
+                    Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(50f, 0f, 0f, 0f));
+                }
+                return _modelBindingTestAchievementsList;
             }
         }
 

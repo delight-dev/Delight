@@ -88,13 +88,16 @@ namespace Delight
                 GenerateItem(item);
             }
 
+            UpdateLayout();
         }
 
         private void GenerateItem(BindableObject item)
         {
+            if (ItemInitializer == null)
+                return;
+
             var itemView = ItemInitializer(item) as UIView;
             itemView.Load();
-            itemView.Offset = new ElementMargin(0, LayoutChildren.Count * 35, 0, 0);
         }
 
         /// <summary>
@@ -117,6 +120,8 @@ namespace Delight
             {
                 GenerateItem(e.Item);
             }
+
+            UpdateLayout();
 
             //// update list of items
             //if (e.ListChangeAction == ListChangeAction.Clear)

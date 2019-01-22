@@ -20,14 +20,20 @@ namespace Delight
         {
             base.BeforeLoad();
 
+            // test if we can change playerListItem.Item during run-time and see the changes reflected
+
+            // do we want to do below or is there a smoother way by e.g. generating a list-item template
+            // we could have the concept of an inline view perhaps 
+
             // test of template generation with nested lists
-            DynamicList.ItemInitializer = player =>
+            PlayerList.ItemInitializer = player =>
             {
                 // FIRST LIST TEMPLATE
-                var playerListItem = new ListItem(this, DynamicList, "ListItem");
+                var playerListItem = new ListItem(this, PlayerList, "ListItem");
                 playerListItem.Item = player;
 
-                var label1 = new Label(this, playerListItem, "Label1", LabelTemplates.Default);
+                var group3 = new Group(this, playerListItem, "Group3", Group3Template);
+                var label1 = new Label(this, group3, "Label1", Label1Template);
 
                 // binding <Label Text="{@Players[Id].Name}">
                 playerListItem.Bindings.Add(new Binding(
@@ -39,7 +45,7 @@ namespace Delight
                         () => { }
                     ));
 
-                AchievementsList = new List(this, playerListItem, "AchievementsList", AchievementsListTemplate);
+                AchievementsList = new List(this, group3, "AchievementsList", AchievementsListTemplate);
 
                 // binding <List Items="{player.Achievements}">
                 playerListItem.Bindings.Add(new Binding(
@@ -77,6 +83,13 @@ namespace Delight
 
                 return playerListItem;
             };
+
+            //PlayerList.ItemInitializer = item1 =>
+            //{                
+            //    var playerListItem1 = new PlayerListItem(this, PlayerList, "PlayerListItem1", ListItemTemplates.Default);
+            //    playerListItem1.Player = item1 as Player;
+            //    return playerListItem1;
+            //};
         }
 
         private IDisposable _update;
@@ -95,15 +108,16 @@ namespace Delight
         public void Test1()
         {
             Models.Players["Player1"].Name = "Julia " + i++;
+
+            // test changing list item to another one and see if bindings update.
+            //var listItem = DynamicList.LayoutChildren[0] as ListItem;
+            //listItem.Item = Models.Players["Player2"];
+            //listItem.UpdateBindings();
         }
 
         public void Test2()
         {
-            Models.Players["Player1"].Achievements.Add(new Achievement
-            {
-                PlayerId = "Player1", // TODO make it so PlayerId doesn't have to be specified here
-                Title = "Hello"
-            });
+            Models.Players["Player1"].Achievements.Add(new Achievement { Title = "Hello" });
         }
     }
 }

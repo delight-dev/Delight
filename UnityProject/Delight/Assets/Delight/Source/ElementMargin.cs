@@ -134,6 +134,23 @@ namespace Delight
             return String.Format(CultureInfo.InvariantCulture, "{0},{1},{2},{3}", Left.ToString(), Top.ToString(), Right.ToString(), Bottom.ToString());
         }
 
+        /// <summary>
+        /// Compares element margins.
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            var margin = obj as ElementMargin;
+            return (margin != null) && Left.Equals(margin.Left) && Top.Equals(margin.Top) && Right.Equals(margin.Right) && Bottom.Equals(margin.Bottom);
+        }
+
+        /// <summary>
+        /// Gets hashcode.
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
         #endregion
 
         #region Properties

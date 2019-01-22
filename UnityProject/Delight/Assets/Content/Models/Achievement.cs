@@ -31,14 +31,13 @@ namespace Delight
     {
         public AchievementData()
         {
-            Add(new Achievement { PlayerId = "Player1", Title = "Achievement 1-1" });
-            Add(new Achievement { PlayerId = "Player1", Title = "Achievement 1-2" });
-            Add(new Achievement { PlayerId = "Player1", Title = "Achievement 1-3" });
-            Add(new Achievement { PlayerId = "Player1", Title = "Achievement 1-4" });
-            Add(new Achievement { PlayerId = "Player2", Title = "Achievement 2-1" });
-            Add(new Achievement { PlayerId = "Player2", Title = "Achievement 2-2" });
-            Add(new Achievement { PlayerId = "Player2", Title = "Achievement 2-3" });
-            Add(new Achievement { PlayerId = "Player2", Title = "Achievement 2-4" });
+            Add(new Achievement { PlayerId = "Player1", Title = "A1-1" });
+            Add(new Achievement { PlayerId = "Player1", Title = "A1-2" });
+            Add(new Achievement { PlayerId = "Player1", Title = "A1-3" });
+            Add(new Achievement { PlayerId = "Player1", Title = "A1-4" });
+            Add(new Achievement { PlayerId = "Player2", Title = "A2-1" });
+            Add(new Achievement { PlayerId = "Player2", Title = "A2-2" });
+            Add(new Achievement { PlayerId = "Player2", Title = "A2-3" });
         }
 
         protected Dictionary<string, BindableCollectionSubset<Achievement>> _playerAchievements = new Dictionary<string, BindableCollectionSubset<Achievement>>(); 
@@ -52,7 +51,7 @@ namespace Delight
             if (_playerAchievements.TryGetValue(playerId, out playerAchievements))
                 return playerAchievements;
 
-            playerAchievements = new BindableCollectionSubset<Achievement>(this, x => x.PlayerId == playerId);
+            playerAchievements = new BindableCollectionSubset<Achievement>(this, x => x.PlayerId == playerId, x => x.PlayerId = playerId);
             _playerAchievements.Add(playerId, playerAchievements);
             return playerAchievements;
         }
