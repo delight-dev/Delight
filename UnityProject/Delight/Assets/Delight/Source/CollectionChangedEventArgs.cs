@@ -14,7 +14,7 @@ namespace Delight
     public class CollectionChangedEventArgs : EventArgs
     {
         public CollectionChangeAction ChangeAction;
-        public string Id;
+        public BindableObject Item;
     }
 
     /// <summary>
@@ -28,28 +28,18 @@ namespace Delight
         Add = 0,
 
         /// <summary>
-        /// Item moved within collection.
-        /// </summary>
-        Move = 1,
-
-        /// <summary>
         /// Item removed from collection.
         /// </summary>
-        Remove = 2,
+        Remove = 1,
 
         /// <summary>
-        /// Item replaced in collection.
+        /// All items in collection replaced with new set of items.
         /// </summary>
-        Replace = 3,
+        Replace = 2,
 
         /// <summary>
         /// All items cleared from collection.
         /// </summary>
-        Clear = 4,
-
-        /// <summary>
-        /// Items modified in collection.
-        /// </summary>
-        Modify = 5
+        Clear = 3
     }
 }

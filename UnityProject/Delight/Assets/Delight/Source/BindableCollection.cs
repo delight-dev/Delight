@@ -19,6 +19,13 @@ namespace Delight
         #region Fields
 
         protected Dictionary<string, T> _data = new Dictionary<string, T>();
+        protected virtual Dictionary<string, T> Data
+        {
+            get
+            {
+                return _data;
+            }
+        }
 
         #endregion
 
@@ -29,24 +36,37 @@ namespace Delight
             get
             {
                 T item;
-                if (_data.TryGetValue(id, out item))
+                if (Data.TryGetValue(id, out item))
                 {
                     return item;
                 }
                 return null;
             }
-            set
-            {
-            }
         }
 
-        public override int Count => _data.Count;
+        public override int Count => Data.Count;
+
+        #endregion
+
+        #region Constructor
+
+        public BindableCollection()
+        {
+        }
+
+        public BindableCollection(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item); // TODO replace with AddRange
+            }
+        }
 
         #endregion
 
         #region Methods
 
-        public override BindableObject GetItem(string id)
+        public override BindableObject Get(string id)
         {
             return this[id];
         }
@@ -64,42 +84,56 @@ namespace Delight
             {
                 item.Id = Guid.NewGuid().ToString();
             }
-            else if (_data.ContainsKey(item.Id))
+            else if (Data.ContainsKey(item.Id))
             {
+                Debug.LogWarning(String.Format("[Delight] BindableCollection<{0}>: attempt to add item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
                 return; 
             }
 
-            _data.Add(item.Id, item);
+            Data.Add(item.Id, item);
             OnCollectionChanged(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
-                Id = item.Id
+                Item = item
             });
         }
 
         public virtual void Clear()
         {
-            _data.Clear();
+            Data.Clear();
             OnCollectionChanged(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Clear
             });
         }
 
+        public virtual void Replace(IEnumerable<T> items)
+        {
+            Data.Clear();
+            foreach (var item in items)
+            {
+                Data.Add(item.Id, item);
+            }
+            OnCollectionChanged(new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            });
+        }
+
         public virtual bool Contains(T item)
         {
-            return _data.ContainsKey(item.Id);
+            return Data.ContainsKey(item.Id);
         }
 
         public virtual bool Remove(T item)
         {
-            bool wasRemoved = _data.Remove(item.Id);
+            bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
                 OnCollectionChanged(new CollectionChangedEventArgs
                 {
                     ChangeAction = CollectionChangeAction.Remove,
-                    Id = item.Id
+                    Item = item
                 });
                 return true;
             }
@@ -107,9 +141,18 @@ namespace Delight
             return false;
         }
 
-        public IEnumerator<T> GetEnumerator()
+        public virtual void RemoveRange(IEnumerable<T> items)
         {
-            return _data.Values.GetEnumerator();
+            foreach (var item in items)
+            {
+                // TODO implement batch removes
+                Remove(item);
+            }            
+        }
+
+        public virtual IEnumerator<T> GetEnumerator()
+        {
+            return Data.Values.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -119,7 +162,7 @@ namespace Delight
 
         public override IEnumerable<BindableObject> GetDataEnumerator()
         {
-            foreach (var data in _data.Values)
+            foreach (var data in Data.Values)
             {
                 yield return data;
             }
@@ -148,7 +191,7 @@ namespace Delight
         #region Methods
 
         public abstract IEnumerable<BindableObject> GetDataEnumerator();
-        public abstract BindableObject GetItem(string id);
+        public abstract BindableObject Get(string id);
 
         /// <summary>
         /// Notifies listeners that collection has been changed.

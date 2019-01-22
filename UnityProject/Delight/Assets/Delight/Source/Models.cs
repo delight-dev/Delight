@@ -12,5 +12,9 @@ namespace Delight
     /// </summary>
     public static partial class Models
     {
+        static Models()
+        {
+            // TODO lookup model bootstrappers and execute them
+        }
     }
 }

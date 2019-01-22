@@ -115,7 +115,7 @@ namespace Delight
 
             if (e.ChangeAction == CollectionChangeAction.Add)
             {
-                GenerateItem(Items.GetItem(e.Id));
+                GenerateItem(e.Item);
             }
 
             //// update list of items

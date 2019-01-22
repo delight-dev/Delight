@@ -74,17 +74,6 @@ namespace Delight
                 () => Button5.Text = Player1.Name,
                 () => { }
             ));
-            Button6 = new Button(this, Group1, "Button6", Button6Template);
-
-            // binding <Button Text="{Player1.ChildPlayer.ChildPlayer.Name}">
-            _bindings.Add(new Binding(
-                new List<string> { "Player1", "ChildPlayer", "ChildPlayer", "Name" },
-                new List<string> { "Button6", "Text" },
-                new List<Func<BindableObject>> { () => this, () => Player1, () => Player1.ChildPlayer, () => Player1.ChildPlayer.ChildPlayer },
-                new List<Func<BindableObject>> { () => this, () => Button6 },
-                () => Button6.Text = Player1.ChildPlayer.ChildPlayer.Name,
-                () => { }
-            ));
 
             // constructing Region (RegionOnDemand)
             RegionOnDemand = new Region(this, this, "RegionOnDemand", RegionOnDemandTemplate);
@@ -144,8 +133,6 @@ namespace Delight
             dependencyProperties.Add(Button4TemplateProperty);
             dependencyProperties.Add(Button5Property);
             dependencyProperties.Add(Button5TemplateProperty);
-            dependencyProperties.Add(Button6Property);
-            dependencyProperties.Add(Button6TemplateProperty);
             dependencyProperties.Add(RegionOnDemandProperty);
             dependencyProperties.Add(RegionOnDemandTemplateProperty);
             dependencyProperties.Add(Group2Property);
@@ -314,20 +301,6 @@ namespace Delight
             set { Button5TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> Button6Property = new DependencyProperty<Button>("Button6");
-        public Button Button6
-        {
-            get { return Button6Property.GetValue(this); }
-            set { Button6Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Button6TemplateProperty = new DependencyProperty<Template>("Button6Template");
-        public Template Button6Template
-        {
-            get { return Button6TemplateProperty.GetValue(this); }
-            set { Button6TemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Region> RegionOnDemandProperty = new DependencyProperty<Region>("RegionOnDemand");
         public Region RegionOnDemand
         {
@@ -422,7 +395,6 @@ namespace Delight
                     Delight.BindingTest.Label1TemplateProperty.SetDefault(_bindingTest, BindingTestLabel1);
                     Delight.BindingTest.Button4TemplateProperty.SetDefault(_bindingTest, BindingTestButton4);
                     Delight.BindingTest.Button5TemplateProperty.SetDefault(_bindingTest, BindingTestButton5);
-                    Delight.BindingTest.Button6TemplateProperty.SetDefault(_bindingTest, BindingTestButton6);
                     Delight.BindingTest.RegionOnDemandTemplateProperty.SetDefault(_bindingTest, BindingTestRegionOnDemand);
                     Delight.BindingTest.Group2TemplateProperty.SetDefault(_bindingTest, BindingTestGroup2);
                     Delight.BindingTest.Label2TemplateProperty.SetDefault(_bindingTest, BindingTestLabel2);
@@ -710,41 +682,6 @@ namespace Delight
                     _bindingTestButton5Label = new Template(ButtonTemplates.ButtonLabel);
                 }
                 return _bindingTestButton5Label;
-            }
-        }
-
-        private static Template _bindingTestButton6;
-        public static Template BindingTestButton6
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingTestButton6 == null || _bindingTestButton6.CurrentVersion != Template.Version)
-#else
-                if (_bindingTestButton6 == null)
-#endif
-                {
-                    _bindingTestButton6 = new Template(ButtonTemplates.Button);
-                    Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton6, BindingTestButton6Label);
-                }
-                return _bindingTestButton6;
-            }
-        }
-
-        private static Template _bindingTestButton6Label;
-        public static Template BindingTestButton6Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingTestButton6Label == null || _bindingTestButton6Label.CurrentVersion != Template.Version)
-#else
-                if (_bindingTestButton6Label == null)
-#endif
-                {
-                    _bindingTestButton6Label = new Template(ButtonTemplates.ButtonLabel);
-                }
-                return _bindingTestButton6Label;
             }
         }
 

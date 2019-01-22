@@ -23,18 +23,18 @@ namespace Delight
         {
             base.Initialize();
 
-            Player1 = new Player
-            {
-                Name = "Player 2",
-                ChildPlayer = new Player
-                {
-                    Name = "Player 2.1",
-                    ChildPlayer = new Player
-                    {
-                        Name = "Player 2.1.1"
-                    }
-                }
-            };
+            //Player1 = new Player
+            //{
+            //    Name = "Player 2",
+            //    ChildPlayer = new Player
+            //    {
+            //        Name = "Player 2.1",
+            //        ChildPlayer = new Player
+            //        {
+            //            Name = "Player 2.1.1"
+            //        }
+            //    }
+            //};
         }
 
         protected override void BeforeLoad()

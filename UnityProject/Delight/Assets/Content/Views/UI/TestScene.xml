@@ -6,7 +6,7 @@
     <Button Text="Log Binding" Click="LogBinding" />
   </Group>
   <Region Margin="0,200,0,0">
-    <BindingTest Player1="{@Players.Player1}" TestBinding="Patrik" Button1.BackgroundColor="Yellow" />
+    <BindingTest TestBinding="Patrik" Button1.BackgroundColor="Yellow" />
     <!--Player1.ChildPlayer.ChildPlayer.Name="{Player1.ChildPlayer.ChildPlayer.Name}"-->
   </Region>
 </TestScene>

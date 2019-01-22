@@ -20,7 +20,21 @@ namespace Delight
 
         #region Properties
 
-        public string Id { get; set; }
+        private string _id;
+        public string Id
+        {
+            get { return _id; }
+            set { SetProperty(ref _id, value); }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public BindableObject()
+        {
+            _id = Guid.NewGuid().ToString();
+        }
 
         #endregion
 

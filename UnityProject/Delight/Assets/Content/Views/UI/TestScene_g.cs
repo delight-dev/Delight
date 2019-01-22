@@ -42,16 +42,6 @@ namespace Delight
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             BindingTest1 = new BindingTest(this, Region1, "BindingTest1", BindingTest1Template);
-
-            // binding <BindingTest Player1="{@Players.Player1}">
-            _bindings.Add(new Binding(
-                new List<string> { "Player1" },
-                new List<string> { "BindingTest1", "Player1" },
-                new List<Func<BindableObject>> { () => Models.Players },
-                new List<Func<BindableObject>> { () => this, () => BindingTest1 },
-                () => BindingTest1.Player1 = Models.Players.Player1,
-                () => { }
-            ));
         }
 
         public TestScene() : this(null)
@@ -427,7 +417,6 @@ namespace Delight
                     Delight.BindingTest.Label1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Label1);
                     Delight.BindingTest.Button4TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button4);
                     Delight.BindingTest.Button5TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button5);
-                    Delight.BindingTest.Button6TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button6);
                     Delight.BindingTest.RegionOnDemandTemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1RegionOnDemand);
                     Delight.BindingTest.Group2TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Group2);
                     Delight.BindingTest.Label2TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Label2);
@@ -696,41 +685,6 @@ namespace Delight
                     _testSceneBindingTest1Button5Label = new Template(BindingTestTemplates.BindingTestButton5Label);
                 }
                 return _testSceneBindingTest1Button5Label;
-            }
-        }
-
-        private static Template _testSceneBindingTest1Button6;
-        public static Template TestSceneBindingTest1Button6
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneBindingTest1Button6 == null || _testSceneBindingTest1Button6.CurrentVersion != Template.Version)
-#else
-                if (_testSceneBindingTest1Button6 == null)
-#endif
-                {
-                    _testSceneBindingTest1Button6 = new Template(BindingTestTemplates.BindingTestButton6);
-                    Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button6, TestSceneBindingTest1Button6Label);
-                }
-                return _testSceneBindingTest1Button6;
-            }
-        }
-
-        private static Template _testSceneBindingTest1Button6Label;
-        public static Template TestSceneBindingTest1Button6Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneBindingTest1Button6Label == null || _testSceneBindingTest1Button6Label.CurrentVersion != Template.Version)
-#else
-                if (_testSceneBindingTest1Button6Label == null)
-#endif
-                {
-                    _testSceneBindingTest1Button6Label = new Template(BindingTestTemplates.BindingTestButton6Label);
-                }
-                return _testSceneBindingTest1Button6Label;
             }
         }
 

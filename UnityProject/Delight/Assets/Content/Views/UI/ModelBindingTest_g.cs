@@ -40,6 +40,8 @@ namespace Delight
                 () => DynamicList.Items = Models.Players,
                 () => { }
             ));
+            AchievementsList = new List(this, DynamicList, "AchievementsList", AchievementsListTemplate);
+            Label1 = new Label(this, AchievementsList, "Label1", Label1Template);
         }
 
         public ModelBindingTest() : this(null)
@@ -61,6 +63,10 @@ namespace Delight
             dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(DynamicListProperty);
             dependencyProperties.Add(DynamicListTemplateProperty);
+            dependencyProperties.Add(AchievementsListProperty);
+            dependencyProperties.Add(AchievementsListTemplateProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
         }
 
         #endregion
@@ -137,6 +143,34 @@ namespace Delight
             set { DynamicListTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<List> AchievementsListProperty = new DependencyProperty<List>("AchievementsList");
+        public List AchievementsList
+        {
+            get { return AchievementsListProperty.GetValue(this); }
+            set { AchievementsListProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> AchievementsListTemplateProperty = new DependencyProperty<Template>("AchievementsListTemplate");
+        public Template AchievementsListTemplate
+        {
+            get { return AchievementsListTemplateProperty.GetValue(this); }
+            set { AchievementsListTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
+        {
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
+        {
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -171,6 +205,8 @@ namespace Delight
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
                     Delight.ModelBindingTest.DynamicListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestDynamicList);
+                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
+                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
                 }
                 return _modelBindingTest;
             }
@@ -302,6 +338,41 @@ namespace Delight
                     Delight.List.MarginProperty.SetDefault(_modelBindingTestDynamicList, new ElementMargin(50f, 50f, 50f, 50f));
                 }
                 return _modelBindingTestDynamicList;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsList;
+        public static Template ModelBindingTestAchievementsList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsList == null || _modelBindingTestAchievementsList.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsList == null)
+#endif
+                {
+                    _modelBindingTestAchievementsList = new Template(ListTemplates.List);
+                }
+                return _modelBindingTestAchievementsList;
+            }
+        }
+
+        private static Template _modelBindingTestLabel1;
+        public static Template ModelBindingTestLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestLabel1 == null || _modelBindingTestLabel1.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestLabel1 == null)
+#endif
+                {
+                    _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
+                    Delight.Label.OffsetProperty.SetDefault(_modelBindingTestLabel1, new ElementMargin(20f, 0f, 0f, 0f));
+                }
+                return _modelBindingTestLabel1;
             }
         }
 

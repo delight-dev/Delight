@@ -8,6 +8,9 @@
       <!-- Data template generated from: 
          <Label Text="{@Players[Id].Name}" /> 
          -->
+      <List Id="AchievementsList" > <!--Items="{player.Achievements}"-->
+        <Label Offset="20,0,0,0" /> <!--Text="{achievement.Title}"-->
+      </List>
     </List>  
   </Group>
 </ModelBindingTest> 

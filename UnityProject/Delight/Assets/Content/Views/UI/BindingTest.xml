@@ -10,7 +10,6 @@
       <Label Width="130" Height="50" Text="{TestBinding}" />
       <Button Text="{TestBinding}" />
       <Button Text="{Player1.Name}" />
-      <Button Text="{Player1.ChildPlayer.ChildPlayer.Name}" />
     </Group> 
   </Region> 
   
