@@ -21,10 +21,6 @@ namespace Delight
             base.BeforeLoad();
 
             // test if we can change playerListItem.Item during run-time and see the changes reflected
-
-            // do we want to do below or is there a smoother way by e.g. generating a list-item template
-            // we could have the concept of an inline view perhaps 
-
             // test of template generation with nested lists
             PlayerList.ItemInitializer = player =>
             {
