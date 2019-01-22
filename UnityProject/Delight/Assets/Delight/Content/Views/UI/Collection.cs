@@ -81,10 +81,8 @@ namespace Delight
             if (Items == null)
                 return;
 
-            // TODO the view template needs to be supplied somehow
             foreach (var item in Items.GetDataEnumerator())
             {
-                // create new children
                 GenerateItem(item);
             }
 

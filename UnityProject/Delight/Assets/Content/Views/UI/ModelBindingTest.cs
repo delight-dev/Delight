@@ -41,22 +41,22 @@ namespace Delight
                         () => { }
                     ));
 
-                AchievementsList = new List(this, group3, "AchievementsList", AchievementsListTemplate);
+                var achievementsList = new List(this, group3, "AchievementsList", AchievementsListTemplate);
 
                 // binding <List Items="{player.Achievements}">
                 playerListItem.Bindings.Add(new Binding(
                     new List<string> { "Achievements" },
                     new List<string> { "AchievementsList", "Items" },
                     new List<Func<BindableObject>> { () => Models.Players[playerListItem.Item.Id] },
-                    new List<Func<BindableObject>> { () => this, () => AchievementsList },
-                    () => AchievementsList.Items = Models.Players[playerListItem.Item.Id].Achievements,
+                    new List<Func<BindableObject>> { () => this, () => achievementsList },
+                    () => achievementsList.Items = Models.Players[playerListItem.Item.Id].Achievements,
                     () => { }
                 ));
 
-                AchievementsList.ItemInitializer = achievement =>
+                achievementsList.ItemInitializer = achievement =>
                 {
                     // NESTED LIST TEMPLATE
-                    var achievementListItem = new ListItem(this, AchievementsList, "ListItem");
+                    var achievementListItem = new ListItem(this, achievementsList, "ListItem");
                     achievementListItem.Item = achievement;
 
                     var label2 = new Label(this, achievementListItem, "Label1", LabelTemplates.Default);
