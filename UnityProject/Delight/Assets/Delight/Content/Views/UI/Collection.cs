@@ -16,8 +16,8 @@ namespace Delight
     {
         #region Properties
 
-        public Func<BindableObject, View> ItemInitializer;
         private BindableCollection _oldCollection;
+        private List<ContentTemplateData> _contentTemplateData = new List<ContentTemplateData>();
 
         #endregion
 
@@ -91,10 +91,13 @@ namespace Delight
 
         private void GenerateItem(BindableObject item)
         {
-            if (ItemInitializer == null)
+            if (ContentTemplate == null)
                 return;
 
-            var itemView = ItemInitializer(item) as UIView;
+            var templateData = new ContentTemplateData { Item = item };
+            _contentTemplateData.Add(templateData);
+
+            var itemView = ContentTemplate.Activator(templateData) as UIView;
             itemView.Load();
         }
 

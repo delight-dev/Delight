@@ -31,8 +31,8 @@ namespace Delight
             });
             PlayerList = new List(this, Group1, "PlayerList", PlayerListTemplate);
 
-            // binding <List Items="{@Players}">
-            _bindings.Add(new Binding(
+            // binding <List Items="{player in @Players}">
+            Bindings.Add(new Binding(
                 new List<string> {  },
                 new List<string> { "PlayerList", "Items" },
                 new List<Func<BindableObject>> {  },
@@ -40,9 +40,52 @@ namespace Delight
                 () => PlayerList.Items = Models.Players,
                 () => { }
             ));
-            Group3 = new Group(this, PlayerList, "Group3", Group3Template);
-            Label1 = new Label(this, Group3, "Label1", Label1Template);
-            AchievementsList = new List(this, Group3, "AchievementsList", AchievementsListTemplate);
+
+            // Template for PlayerList
+            PlayerList.ContentTemplate = new ContentTemplate(tiPlayer => 
+            {
+                var group3 = new Group(this, PlayerList, "Group3", Group3Template);
+                var label1 = new Label(this, group3, "Label1", Label1Template);
+
+                // binding <Label Text="{player.Name}">
+                group3.Bindings.Add(new Binding(
+                    new List<string> { "Item", "Name" },
+                    new List<string> { "Text" },
+                    new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item },
+                    new List<Func<BindableObject>> { () => label1 },
+                    () => label1.Text = (tiPlayer.Item as Delight.Player).Name,
+                    () => { }
+                ));
+                var achievementsList = new List(this, group3, "AchievementsList", AchievementsListTemplate);
+
+                // binding <List Items="{achievement in player.Achievements}">
+                group3.Bindings.Add(new Binding(
+                    new List<string> { "Item", "Achievements" },
+                    new List<string> { "Items" },
+                    new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item },
+                    new List<Func<BindableObject>> { () => achievementsList },
+                    () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements,
+                    () => { }
+                ));
+
+                // Template for achievementsList
+                achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
+                {
+                    var label2 = new Label(this, achievementsList, "Label2", Label2Template);
+
+                    // binding <Label Text="{achievement.Title}">
+                    label2.Bindings.Add(new Binding(
+                        new List<string> { "Item", "Title" },
+                        new List<string> { "Text" },
+                        new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item },
+                        new List<Func<BindableObject>> { () => label2 },
+                        () => label2.Text = (tiAchievement.Item as Delight.Achievement).Title,
+                        () => { }
+                    ));
+                    return label2;
+                });
+                return group3;
+            });
         }
 
         public ModelBindingTest() : this(null)
@@ -54,6 +97,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ModelBindingTestTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(SomeParentPropertyProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Group2Property);
@@ -70,11 +114,20 @@ namespace Delight
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(AchievementsListProperty);
             dependencyProperties.Add(AchievementsListTemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<System.String> SomeParentPropertyProperty = new DependencyProperty<System.String>("SomeParentProperty");
+        public System.String SomeParentProperty
+        {
+            get { return SomeParentPropertyProperty.GetValue(this); }
+            set { SomeParentPropertyProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
@@ -188,6 +241,20 @@ namespace Delight
             set { AchievementsListTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -225,6 +292,7 @@ namespace Delight
                     Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup3);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
                     Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
+                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel2);
                 }
                 return _modelBindingTest;
             }
@@ -353,7 +421,6 @@ namespace Delight
                     _modelBindingTestPlayerList = new Template(ListTemplates.List);
                     Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
-                    Delight.List.MarginProperty.SetDefault(_modelBindingTestPlayerList, new ElementMargin(50f, 50f, 50f, 50f));
                     Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
                 return _modelBindingTestPlayerList;
@@ -411,6 +478,23 @@ namespace Delight
                     Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(50f, 0f, 0f, 0f));
                 }
                 return _modelBindingTestAchievementsList;
+            }
+        }
+
+        private static Template _modelBindingTestLabel2;
+        public static Template ModelBindingTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestLabel2 == null || _modelBindingTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestLabel2 == null)
+#endif
+                {
+                    _modelBindingTestLabel2 = new Template(LabelTemplates.Label);
+                }
+                return _modelBindingTestLabel2;
             }
         }
 

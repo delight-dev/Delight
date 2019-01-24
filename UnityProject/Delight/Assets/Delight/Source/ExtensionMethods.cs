@@ -119,6 +119,24 @@ namespace Delight
         }
 
         /// <summary>
+        /// Appends line using format with indendation.
+        /// </summary>
+        public static StringBuilder AppendLine(this StringBuilder sb, int indentationLevel, string format, params object[] args)
+        {
+            string indendation = new string(' ', indentationLevel * 4);
+            return sb.AppendLine(indendation + String.Format(format, args));
+        }
+
+        /// <summary>
+        /// Appends string with indendation.
+        /// </summary>
+        public static StringBuilder Append(this StringBuilder sb, int indentationLevel, string str)
+        {
+            string indendation = new string(' ', indentationLevel * 4);
+            return sb.Append(indendation + str);
+        }
+
+        /// <summary>
         /// String.IndexOf ignoring case.
         /// </summary>
         public static int IIndexOf(this string str1, string str2)
@@ -152,12 +170,21 @@ namespace Delight
         }
 
         /// <summary>
+        /// Converts name of variable/property to private member name.
+        /// </summary>
+        public static string ToPrivateMemberName(this string str)
+        {
+            if (String.IsNullOrEmpty(str)) return str;
+            return "_" + char.ToLower(str[0]) + str.Substring(1);
+        }
+
+        /// <summary>
         /// Converts a variable/property to local variable name.
         /// </summary>
         public static string ToLocalVariableName(this string str)
         {
             if (String.IsNullOrEmpty(str)) return str;
-            return "_" + char.ToLower(str[0]) + str.Substring(1);
+            return char.ToLower(str[0]) + str.Substring(1);
         }
 
         /// <summary>

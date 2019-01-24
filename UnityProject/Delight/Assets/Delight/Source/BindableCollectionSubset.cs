@@ -112,20 +112,20 @@ namespace Delight
             if (_fkSetter != null)
                 _fkSetter(item);
 
+            base.Add(item);
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Add(item);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
-
-            base.Add(item);
         }
 
         public override void Clear()
         {
+            base.Clear();
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(Data.Values);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
-
-            base.Clear();
         }
 
         public override void Replace(IEnumerable<T> items)
@@ -138,11 +138,11 @@ namespace Delight
                 }
             }
 
+            base.Replace(items);
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Replace(items);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
-
-            base.Replace(items);
         }
 
         public override bool Contains(T item)
@@ -152,20 +152,22 @@ namespace Delight
 
         public override bool Remove(T item)
         {
+            var result = base.Remove(item);
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Remove(item);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
 
-            return base.Remove(item);
+            return result;
         }
 
         public override void RemoveRange(IEnumerable<T> items)
         {
+            base.RemoveRange(items);
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(items);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
-
-            base.RemoveRange(items);
         }
 
         public override IEnumerator<T> GetEnumerator()

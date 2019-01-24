@@ -35,7 +35,7 @@ namespace Delight.Parser
 
         private static XumlObjectModel _xumlObjectModel;
         private static XumlFile _currentXumlFile;
-        private static Regex _bindingRegex = new Regex(@"{(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?}");
+        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
 
         #endregion
 
@@ -188,6 +188,18 @@ namespace Delight.Parser
                 if (attributeName.IEquals("TypeName"))
                 {
                     viewObject.TypeName = attributeValue;
+                    continue;
+                }
+
+                if (attributeName.IEquals("TemplateContent"))
+                {
+                    bool templateContent;
+                    if (!bool.TryParse(attributeValue, out templateContent))
+                    {
+                        Debug.LogError(String.Format("[Delight] {0}: Invalid TemplateContent value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXumlElement), attributeValue));
+                        continue;
+                    }
+                    viewObject.HasContentTemplate = templateContent;
                     continue;
                 }
 
@@ -587,6 +599,7 @@ namespace Delight.Parser
             {
                 var bindingSourceString = match.Groups["field"].Value.Trim();
                 var bindingSource = ParseBindingSource(bindingSourceString);
+                propertyBinding.ItemId = match.Groups["item"].Value.Trim();
                 propertyBinding.Sources.Add(bindingSource);
             }
 

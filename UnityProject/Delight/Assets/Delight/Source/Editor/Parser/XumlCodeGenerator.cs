@@ -45,7 +45,7 @@ namespace Delight.Parser
             {
                 if (xumlViewObject.NeedUpdate)
                     continue;
-                                
+
                 xumlViewObject.NeedUpdate = AnyChildNeedUpdate(xumlViewObject, viewsChecked);
             }
 
@@ -53,6 +53,7 @@ namespace Delight.Parser
             foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
             {
                 xumlViewObject.NeedUpdate = AnyParentNeedUpdate(xumlViewObject);
+                xumlViewObject.HasContentTemplate = AnyParentHasContentTemplate(xumlViewObject);
 
                 // update view property declarations with view type data
                 var viewPropertyDeclarations = xumlViewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
@@ -173,7 +174,7 @@ namespace Delight.Parser
             // generate dependency properties
 
             sb.AppendLine("        #region Properties");
-            
+
             foreach (var declaration in propertyDeclarations)
             {
                 sb.AppendLine();
@@ -351,8 +352,8 @@ namespace Delight.Parser
             var fullViewTypeName = String.Format("{0}.{1}", ns, xumlViewObject.TypeName);
 
             // declare template property
-            var localId = idPath.ToLocalVariableName();
-            sb.AppendLine("        private static Template {0};", idPath.ToLocalVariableName());
+            var localId = idPath.ToPrivateMemberName();
+            sb.AppendLine("        private static Template {0};", idPath.ToPrivateMemberName());
             sb.AppendLine("        public static Template {0}", idPath);
             sb.AppendLine("        {");
             sb.AppendLine("            get");
@@ -535,7 +536,7 @@ namespace Delight.Parser
                 var childViewObject = _xumlObjectModel.GetViewObject(declaration.Declaration.ViewName);
                 var childIdPath = idPath + declaration.Declaration.Id;
                 var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
-                    : basedOnPath + declaration.Declaration.Id;                
+                    : basedOnPath + declaration.Declaration.Id;
                 var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
 
                 List<PropertyExpression> childPropertyAssignments = null;
@@ -571,16 +572,20 @@ namespace Delight.Parser
         /// <summary>
         /// Generates view construction logic from view declaration.
         /// </summary>
-        private static void GenerateChildViewDeclarations(string fileName, XumlViewObject xumlViewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null)
+        private static void GenerateChildViewDeclarations(string fileName, XumlViewObject xumlViewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
         {
             bool isFirst = true;
+            int indent = 3 + templateDepth;
+            bool inTemplate = templateDepth > 0;
 
             // so we need to loop through all child views, print their construction logic
             foreach (var childViewDeclaration in childViewDeclarations)
             {
                 // get identifier for view declaration
                 var childId = childViewDeclaration.Id;
+                var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
                 var childViewObject = _xumlObjectModel.GetViewObject(childViewDeclaration.ViewName);
+                bool templateContent = childViewObject.HasContentTemplate;
 
                 // put a comment if we are creating top-level views
                 if (parentViewDeclaration == null)
@@ -590,12 +595,12 @@ namespace Delight.Parser
                         sb.AppendLine();
                     }
                     isFirst = false;
-                    sb.AppendLine("            // constructing {0} {1}", childViewDeclaration.ViewName, "(" + childViewDeclaration.Id + ")");
+                    sb.AppendLine(indent, "// constructing {0} {1}", childViewDeclaration.ViewName, "(" + childViewDeclaration.Id + ")");
                 }
 
                 // print view declaration: _view = new View(this, layoutParent, id, initializer);
                 var parentReference = parentViewDeclaration == null ? "this" : localParentId;
-                sb.Append(String.Format("            {0} = new {1}(this, {2}, \"{0}\", {0}Template", childId, childViewObject.TypeName, parentReference));
+                sb.Append(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
 
                 // do we have action handlers?
                 var actionAssignments = childViewDeclaration.PropertyAssignments.Where(x =>
@@ -608,13 +613,13 @@ namespace Delight.Parser
                 {
                     // yes. add initializer for action handlers
                     sb.AppendLine(", x => ");
-                    sb.AppendLine("            {");
-                    sb.AppendLine("                var source = x as {0};", childViewDeclaration.ViewName);
+                    sb.AppendLine(indent, "{{");
+                    sb.AppendLine(indent, "    var source = x as {0};", childViewDeclaration.ViewName);
                     foreach (var actionAssignment in actionAssignments)
                     {
-                        sb.AppendLine("                source.{0} = ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                        sb.AppendLine(indent, "    source.{0} = ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
                     }
-                    sb.AppendLine("            });");
+                    sb.AppendLine(indent, "}});");
                 }
                 else
                 {
@@ -636,31 +641,49 @@ namespace Delight.Parser
 
                         var bindingSource = propertyBinding.Sources.First();
                         var targetPath = new List<string>();
-                        targetPath.Add(childViewDeclaration.Id);
+                        targetPath.Add(childIdVar);
                         targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
                         var sourcePath = new List<string>();
                         sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
 
                         // get property names along path
+                        var templateItemInfo = templateItems != null ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0]) : null;
+                        bool isTemplateItemSource = templateItemInfo != null;
+                        if (isTemplateItemSource)
+                        {
+                            sourcePath[0] = templateItemInfo.VariableName;
+                            sourcePath.Insert(1, "Item");
+                        }
                         bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
-                        string sourceProperties = string.Join(", ", sourcePath.Skip(isModelSource ? 2 : 0).Select(x => "\"" + x + "\""));
-                        string targetProperties = string.Join(", ", targetPath.Select(x => "\"" + x + "\""));
+                        string sourceProperties = string.Join(", ", sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).Select(x => "\"" + x + "\""));
+                        string targetProperties = string.Join(", ", targetPath.Skip(inTemplate ? 1 : 0).Select(x => "\"" + x + "\""));
 
                         // get object getters along path
                         List<string> sourceGetters = new List<string>();
                         int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
                         int sourcePathTake = isModelSource ? 2 : 1;
-                        if (!isModelSource)
+                        if (!isModelSource && !isTemplateItemSource)
                         {
-                            sourceGetters.Add("() => this");                            
+                            sourceGetters.Add("() => this");
                         }
+
                         for (int i = 0; i < sourcePathCount; ++i)
                         {
                             sourceGetters.Add(String.Format("() => {0}", string.Join(".", sourcePath.Take(i + sourcePathTake))));
                         }
 
+                        if (isTemplateItemSource)
+                        {
+                            // in source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                            sourcePath = sourcePath.Skip(2).ToList();
+                            sourcePath.Insert(0, String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemType));
+                        }
+
                         List<string> targetGetters = new List<string>();
-                        targetGetters.Add("() => this");
+                        if (!inTemplate)
+                        {
+                            targetGetters.Add("() => this");
+                        }
                         for (int i = 0; i < targetPath.Count - 1; ++i)
                         {
                             targetGetters.Add(String.Format("() => {0}", string.Join(".", targetPath.Take(i + 1))));
@@ -675,24 +698,63 @@ namespace Delight.Parser
                         string targetToSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay) ?
                             String.Format("{0} = {1}", sourceProperty, targetProperty) : "{ }";
 
-                        // TODO in one-way binding we don't need to listen to changes in target object
+                        // TODO in one-way bindings we don't need to listen to changes in target object
 
                         // print smart binding
                         sb.AppendLine();
-                        sb.AppendLine("            // binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
-                        sb.AppendLine("            _bindings.Add(new Binding(");
-                        sb.AppendLine("                new List<string> {{ {0} }},", sourceProperties);
-                        sb.AppendLine("                new List<string> {{ {0} }},", targetProperties);
-                        sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
-                        sb.AppendLine("                new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
-                        sb.AppendLine("                () => {0} = {1},", targetProperty, sourceProperty);
-                        sb.AppendLine("                () => {0}", targetToSource);
-                        sb.AppendLine("            ));");
+                        sb.AppendLine(indent, "// binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
+                        sb.AppendLine(indent, "{0}Bindings.Add(new Binding(", inTemplate ? firstTemplateChild + "." : "");
+                        sb.AppendLine(indent, "    new List<string> {{ {0} }},", sourceProperties);
+                        sb.AppendLine(indent, "    new List<string> {{ {0} }},", targetProperties);
+                        sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
+                        sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
+                        sb.AppendLine(indent, "    () => {0} = {1},", targetProperty, sourceProperty);
+                        sb.AppendLine(indent, "    () => {0}", targetToSource);
+                        sb.AppendLine(indent, "));");
                     }
                 }
 
+                if (templateContent)
+                {
+                    ++templateDepth;
+
+                    if (templateItems == null)
+                    {
+                        templateItems = new List<TemplateItemInfo>();
+                    }
+
+                    TemplateItemInfo ti = null;
+                    var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
+                    if (itemIdDeclaration != null)
+                    {
+                        // TODO infer item type from path to bindable collection
+                        ti = new TemplateItemInfo();
+                        ti.Name = itemIdDeclaration.ItemId;
+                        ti.VariableName = String.Format("ti{0}", ti.Name.ToPropertyName());
+                        ti.ItemType = templateDepth == 1 ? "Delight.Player" : "Delight.Achievement"; // TODO infer type
+                        templateItems.Add(ti);
+                    }
+
+                    sb.AppendLine();
+                    sb.AppendLine(indent, "// Template for {0}", childIdVar);
+                    sb.AppendLine(indent, "{0}.ContentTemplate = new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : templateDepth.ToString());
+                    sb.AppendLine(indent, "{{");
+                }
+
+                var firstChildInTemplate = childViewDeclaration.ChildDeclarations.FirstOrDefault();
+                if (templateContent && firstChildInTemplate != null)
+                {
+                    firstTemplateChild = firstChildInTemplate.Id.ToLocalVariableName();
+                }
+
                 // print child view declaration
-                GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childId);
+                GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, templateDepth, templateItems, firstTemplateChild);
+
+                if (templateContent)
+                {                    
+                    sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? firstTemplateChild : "null");
+                    sb.AppendLine(indent, "}});");
+                }
             }
         }
 
@@ -984,6 +1046,24 @@ namespace Delight.Parser
                 return true;
 
             return xumlViewObject.BasedOn != null ? AnyParentNeedUpdate(xumlViewObject.BasedOn) : false;
+        }
+
+        /// <summary>
+        /// Check if any of the view's parents need to be updated.
+        /// </summary>
+        private static bool AnyParentHasContentTemplate(XumlViewObject xumlViewObject)
+        {
+            if (xumlViewObject.HasContentTemplate)
+                return true;
+
+            return xumlViewObject.BasedOn != null ? AnyParentHasContentTemplate(xumlViewObject.BasedOn) : false;
+        }
+
+        private class TemplateItemInfo
+        {
+            public string Name;
+            public string VariableName;
+            public string ItemType;
         }
 
         #endregion

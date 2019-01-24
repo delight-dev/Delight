@@ -169,6 +169,9 @@ namespace Delight.Parser
         [ProtoMember(8)]
         public List<ViewDeclaration> ViewDeclarations;
 
+        [ProtoMember(9)]
+        public bool HasContentTemplate;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -387,6 +390,9 @@ namespace Delight.Parser
 
         [ProtoMember(6)]
         public string FormatString;
+
+        [ProtoMember(7)]
+        public string ItemId;
     }
 
     /// <summary>

@@ -32,7 +32,7 @@ namespace Delight
             Button3 = new Button(this, Group1, "Button3", Button3Template);
 
             // binding <Button BackgroundColor="{TestBinding2}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "TestBinding2" },
                 new List<string> { "Button3", "BackgroundColor" },
                 new List<Func<BindableObject>> { () => this },
@@ -44,7 +44,7 @@ namespace Delight
             Label1 = new Label(this, Group1, "Label1", Label1Template);
 
             // binding <Label Text="{TestBinding}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "TestBinding" },
                 new List<string> { "Label1", "Text" },
                 new List<Func<BindableObject>> { () => this },
@@ -55,7 +55,7 @@ namespace Delight
             Button4 = new Button(this, Group1, "Button4", Button4Template);
 
             // binding <Button Text="{TestBinding}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "TestBinding" },
                 new List<string> { "Button4", "Text" },
                 new List<Func<BindableObject>> { () => this },
@@ -66,7 +66,7 @@ namespace Delight
             Button5 = new Button(this, Group1, "Button5", Button5Template);
 
             // binding <Button Text="{Player1.Name}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "Player1", "Name" },
                 new List<string> { "Button5", "Text" },
                 new List<Func<BindableObject>> { () => this, () => Player1 },
@@ -81,7 +81,7 @@ namespace Delight
             Label2 = new Label(this, Group2, "Label2", Label2Template);
 
             // binding <Label Text="{TestBinding}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "TestBinding" },
                 new List<string> { "Label2", "Text" },
                 new List<Func<BindableObject>> { () => this },
@@ -92,7 +92,7 @@ namespace Delight
             Label3 = new Label(this, Group2, "Label3", Label3Template);
 
             // binding <Label Text="{Player1.Name}">
-            _bindings.Add(new Binding(
+            Bindings.Add(new Binding(
                 new List<string> { "Player1", "Name" },
                 new List<string> { "Label3", "Text" },
                 new List<Func<BindableObject>> { () => this, () => Player1 },

@@ -1,2 +1,2 @@
-<List xmlns="Delight" BasedOn="Collection" Orientation="t:ElementOrientation" Spacing="t:ElementSize" ContentAlignment="t:ElementAlignment">
+<List xmlns="Delight" BasedOn="Collection" Orientation="t:ElementOrientation" Spacing="t:ElementSize" ContentAlignment="t:ElementAlignment" TemplateContent="True">
 </List> 
