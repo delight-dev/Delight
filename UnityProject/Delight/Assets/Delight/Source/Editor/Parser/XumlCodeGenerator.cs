@@ -727,12 +727,14 @@ namespace Delight.Parser
                     var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
                     if (itemIdDeclaration != null)
                     {
-                        // TODO infer item type from path to bindable collection
                         ti = new TemplateItemInfo();
                         ti.Name = itemIdDeclaration.ItemId;
                         ti.VariableName = String.Format("ti{0}", ti.Name.ToPropertyName());
-                        ti.ItemType = templateDepth == 1 ? "Delight.Player" : "Delight.Achievement"; // TODO infer type
+                        ti.ItemIdDeclaration = itemIdDeclaration;
                         templateItems.Add(ti);
+
+                        // TODO get item type
+                        ti.ItemType = GetItemTypeFromDeclaration(fileName, xumlViewObject, itemIdDeclaration, templateItems, childViewDeclaration);
                     }
 
                     sb.AppendLine();
@@ -751,11 +753,73 @@ namespace Delight.Parser
                 GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, templateDepth, templateItems, firstTemplateChild);
 
                 if (templateContent)
-                {                    
+                {
                     sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? firstTemplateChild : "null");
                     sb.AppendLine(indent, "}});");
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets item type from item declaration.
+        /// </summary>
+        private static string GetItemTypeFromDeclaration(string fileName, XumlViewObject xumlViewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
+        {
+            var bindingSource = itemIdDeclaration.Sources.FirstOrDefault();
+            if (bindingSource == null)
+                return nameof(BindableObject);
+
+            var sourcePath = new List<string>();
+            sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+            // see if source refers to another template id, e.g. in nested lists <List Items="{item in player.Achievements}">
+            var idInfo = templateIdInfo.FirstOrDefault(x => x.Name == sourcePath[0]);
+            if (idInfo != null)
+            {
+                var source = idInfo.ItemIdDeclaration.Sources.FirstOrDefault();
+                sourcePath.RemoveAt(0);
+                sourcePath.InsertRange(0, source.BindingPath.Split('.'));
+            }
+
+            // go through source path and find the item type 
+            Type sourceType = typeof(Models);
+            if (sourcePath[0] != "Models")
+            {
+                sourceType = TypeHelper.GetType(xumlViewObject.TypeName);
+            }
+
+            // loop through each property and infer their type
+            var bindableCollectionBase = typeof(BindableCollection);
+            for (int i = 1; i < sourcePath.Count; ++i)
+            {
+                var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+                if (memberInfo == null)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Unable to infer item type in binding <{1} {2}=\"{3}\">. Member \"{4}\" not found in type \"{5}\".",
+                        GetLineInfo(fileName, itemIdDeclaration),
+                        viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
+                        sourcePath[i], sourceType.Name));
+                    return nameof(BindableObject);
+                }
+
+                // if it's a bindable collection get the type from the generic argument
+                sourceType = memberInfo.GetMemberType();
+                if (bindableCollectionBase.IsAssignableFrom(sourceType))
+                {
+                    while (!sourceType.IsGenericType)
+                    {
+                        if (sourceType == bindableCollectionBase)
+                        {
+                            return nameof(BindableObject);
+                        }
+                        sourceType = sourceType.BaseType;
+                    }
+
+                    sourceType = sourceType.GetGenericArguments()[0];                    
+                }
+            }
+
+            return sourceType.FullName;
         }
 
         /// <summary>
@@ -1064,6 +1128,7 @@ namespace Delight.Parser
             public string Name;
             public string VariableName;
             public string ItemType;
+            public PropertyBinding ItemIdDeclaration;
         }
 
         #endregion

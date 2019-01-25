@@ -6,11 +6,11 @@
     </Group> 
     <List Id="PlayerList" Items="{player in @Players}" Width="500" BackgroundColor="Green" Spacing="5">
       <Group BackgroundColor="Blue"> 
-        <Label Text="{player.Name}" /> 
+        <Label Text="{player.Name}" />
         <List Id="AchievementsList" Items="{achievement in player.Achievements}" Orientation="Vertical" Offset="50,0,0,0">
           <Label Text="{achievement.Title}" />
         </List>
       </Group> 
-    </List> 
+    </List>
   </Group>
 </ModelBindingTest> 

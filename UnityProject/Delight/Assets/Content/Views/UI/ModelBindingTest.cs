@@ -14,8 +14,9 @@ namespace Delight
     {
         int i = 0;
         public void Test1()
-        {
+        {            
             Models.Players["Player1"].Name = "Julia " + i++;
+            SomeParentProperty = "Yo " + i;
         }
 
         public void Test2()

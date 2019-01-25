@@ -191,15 +191,15 @@ namespace Delight.Parser
                     continue;
                 }
 
-                if (attributeName.IEquals("TemplateContent"))
+                if (attributeName.IEquals("HasContentTemplate"))
                 {
-                    bool templateContent;
-                    if (!bool.TryParse(attributeValue, out templateContent))
+                    bool hasContentTemplate;
+                    if (!bool.TryParse(attributeValue, out hasContentTemplate))
                     {
-                        Debug.LogError(String.Format("[Delight] {0}: Invalid TemplateContent value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXumlElement), attributeValue));
+                        Debug.LogError(String.Format("[Delight] {0}: Invalid HasContentTemplate value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXumlElement), attributeValue));
                         continue;
                     }
-                    viewObject.HasContentTemplate = templateContent;
+                    viewObject.HasContentTemplate = hasContentTemplate;
                     continue;
                 }
 

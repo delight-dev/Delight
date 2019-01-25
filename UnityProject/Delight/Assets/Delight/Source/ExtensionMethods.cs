@@ -197,6 +197,35 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets member info (property or field) from a type.
+        /// </summary>
+        public static MemberInfo GetMemberInfo(this Type type, string field, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
+        {
+            var fieldInfo = type.GetField(field, bindingFlags);
+            if (fieldInfo != null)
+                return fieldInfo;
+
+            var propertyInfo = type.GetProperty(field, bindingFlags);
+            return propertyInfo;
+        }
+
+        /// <summary>
+        /// Gets type from member info (property or field).
+        /// </summary>
+        public static Type GetMemberType(this MemberInfo member)
+        {
+            switch (member.MemberType)
+            {
+                case MemberTypes.Field:
+                    return ((FieldInfo)member).FieldType;
+                case MemberTypes.Property:
+                    return ((PropertyInfo)member).PropertyType;
+                default:
+                    return null;
+            }
+        }
+
+        /// <summary>
         /// Adds event trigger callback.
         /// </summary>
         public static void AddEventTrigger(this GameObject gameObject, DependencyObject sender, View.ViewAction action, EventTriggerType eventTriggerType)
