@@ -17,75 +17,75 @@ using System.Xml.Serialization;
 namespace Delight.Parser
 {
     /// <summary>
-    /// Generates code from XUML object model.
+    /// Generates code from content object model.
     /// </summary>
-    public static class XumlCodeGenerator
+    public static class CodeGenerator
     {
         #region Fields
 
         public static string DefaultViewType = "UIView";
         public static string DefaultNamespace = "Delight";
-        private static XumlObjectModel _xumlObjectModel;
+        private static ContentObjectModel _contentObjectModel;
 
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// Generates code from XUML object model.
+        /// Generates code from object model.
         /// </summary>
-        public static void GenerateCode(XumlObjectModel xumlObjectModel)
+        public static void GenerateCode(ContentObjectModel contentObjectModel)
         {
-            _xumlObjectModel = xumlObjectModel;
+            _contentObjectModel = contentObjectModel;
 
             var viewsChecked = new Dictionary<string, bool>();
 
             // update views that contain children that needs update
-            foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
+            foreach (var viewObject in contentObjectModel.ViewObjects)
             {
-                if (xumlViewObject.NeedUpdate)
+                if (viewObject.NeedUpdate)
                     continue;
 
-                xumlViewObject.NeedUpdate = AnyChildNeedUpdate(xumlViewObject, viewsChecked);
+                viewObject.NeedUpdate = AnyChildNeedUpdate(viewObject, viewsChecked);
             }
 
             // update views that are based on views that needs update
-            foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
+            foreach (var viewObject in contentObjectModel.ViewObjects)
             {
-                xumlViewObject.NeedUpdate = AnyParentNeedUpdate(xumlViewObject);
-                xumlViewObject.HasContentTemplate = AnyParentHasContentTemplate(xumlViewObject);
+                viewObject.NeedUpdate = AnyParentNeedUpdate(viewObject);
+                viewObject.HasContentTemplate = AnyParentHasContentTemplate(viewObject);
 
                 // update view property declarations with view type data
-                var viewPropertyDeclarations = xumlViewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
+                var viewPropertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
                 foreach (var viewPropertyDeclaration in viewPropertyDeclarations)
                 {
-                    var viewObject = _xumlObjectModel.GetViewObject(viewPropertyDeclaration.PropertyTypeName);
-                    viewPropertyDeclaration.PropertyTypeFullName = viewObject.TypeName;
+                    var childViewObject = _contentObjectModel.GetViewObject(viewPropertyDeclaration.PropertyTypeName);
+                    viewPropertyDeclaration.PropertyTypeFullName = childViewObject.TypeName;
                 }
             }
 
             // update all view objects that are changed            
-            foreach (var xumlViewObject in xumlObjectModel.ViewObjects)
+            foreach (var viewObject in contentObjectModel.ViewObjects)
             {
-                if (!xumlViewObject.NeedUpdate)
+                if (!viewObject.NeedUpdate)
                     continue;
 
                 // update properties in view object model
-                UpdateMappedProperties(xumlViewObject);
+                UpdateMappedProperties(viewObject);
 
                 // generate view code
-                GenerateViewCode(xumlViewObject);
-                xumlViewObject.NeedUpdate = false;
+                GenerateViewCode(viewObject);
+                viewObject.NeedUpdate = false;
             }
 
             // update all theme objects that are changed
-            foreach (var xumlThemeObject in xumlObjectModel.ThemeObjects)
+            foreach (var themeObject in contentObjectModel.ThemeObjects)
             {
-                if (!xumlThemeObject.NeedUpdate)
+                if (!themeObject.NeedUpdate)
                     continue;
 
-                GenerateThemeCode(xumlThemeObject);
-                xumlThemeObject.NeedUpdate = false;
+                GenerateThemeCode(themeObject);
+                themeObject.NeedUpdate = false;
             }
 
 #if UNITY_EDITOR
@@ -94,25 +94,25 @@ namespace Delight.Parser
         }
 
         /// <summary>
-        /// Generates code from XUML view object.
+        /// Generates code from XML view object.
         /// </summary>
-        private static void GenerateViewCode(XumlViewObject xumlViewObject)
+        private static void GenerateViewCode(ViewObject viewObject)
         {
-            Debug.Log("Generating code for " + xumlViewObject.FilePath);
+            Debug.Log("Generating code for " + viewObject.FilePath);
 
-            var viewTypeName = xumlViewObject.TypeName;
-            var basedOn = xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View";
-            var ns = !String.IsNullOrEmpty(xumlViewObject.Namespace) ? xumlViewObject.Namespace : DefaultNamespace;
+            var viewTypeName = viewObject.TypeName;
+            var basedOn = viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View";
+            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : DefaultNamespace;
 
             // build the internal codebehind for the view
             var sb = new StringBuilder();
             var templateSb = new StringBuilder();
 
             // start by generating data template as we update property assignment expressions with property declaration information as we do
-            GenerateDataTemplate(templateSb, xumlViewObject, string.Empty, string.Empty, string.Empty, null, null, xumlViewObject.FilePath);
+            GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath);
 
             // open the view class
-            sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", xumlViewObject.Name);
+            sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", viewObject.Name);
             sb.AppendLine("#region Using Statements");
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
@@ -129,15 +129,15 @@ namespace Delight.Parser
 
             // generate constructors
 
-            var propertyDeclarations = xumlViewObject.PropertyExpressions.OfType<PropertyDeclaration>();
-            var mappedDeclarations = GetMappedPropertyDeclarations(xumlViewObject);
+            var propertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>();
+            var mappedDeclarations = GetMappedPropertyDeclarations(viewObject);
 
             sb.AppendLine("        #region Constructors");
             sb.AppendLine();
             sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewTypeName);
             sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
             sb.AppendLine("        {");
-            GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, viewTypeName, null, xumlViewObject.ViewDeclarations);
+            GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public {0}() : this(null)", viewTypeName);
@@ -226,7 +226,7 @@ namespace Delight.Parser
             sb.AppendLine("    #region Data Templates");
             sb.AppendLine();
 
-            sb.AppendLine("    public static class {0}Templates", xumlViewObject.TypeName);
+            sb.AppendLine("    public static class {0}Templates", viewObject.TypeName);
             sb.AppendLine("    {");
 
             // generate template fields
@@ -237,13 +237,13 @@ namespace Delight.Parser
             sb.AppendLine("        {");
             sb.AppendLine("            get");
             sb.AppendLine("            {");
-            sb.AppendLine("                return {0};", xumlViewObject.TypeName);
+            sb.AppendLine("                return {0};", viewObject.TypeName);
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine();
 
             sb.Append(templateSb);
-            //PrintDataTemplateProperties(sb, xumlViewObject, string.Empty, string.Empty, string.Empty, null, null);
+            //PrintDataTemplateProperties(sb, viewObject, string.Empty, string.Empty, string.Empty, null, null);
 
             sb.AppendLine("        #endregion");
             sb.AppendLine("    }");
@@ -255,29 +255,29 @@ namespace Delight.Parser
             sb.AppendLine("}");
 
             // write file
-            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(xumlViewObject.FilePath));
-            var sourceFile = String.Format("{0}/{1}_g.cs", dir, xumlViewObject.Name);
+            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
+            var sourceFile = String.Format("{0}/{1}_g.cs", dir, viewObject.Name);
 
             Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
         /// <summary>
-        /// Generates code from XUML view object.
+        /// Generates code from XML view object.
         /// </summary>
-        private static void GenerateThemeCode(XumlThemeObject xumlThemeObject)
+        private static void GenerateThemeCode(ThemeObject themeObject)
         {
-            Debug.Log("Generating code for " + xumlThemeObject.FilePath);
+            Debug.Log("Generating code for " + themeObject.FilePath);
 
-            var themeName = xumlThemeObject.Name;
-            var basedOn = xumlThemeObject.BasedOn != null ? xumlThemeObject.BasedOn.Name : "Theme";
-            var ns = !String.IsNullOrEmpty(xumlThemeObject.Namespace) ? xumlThemeObject.Namespace : DefaultNamespace;
+            var themeName = themeObject.Name;
+            var basedOn = themeObject.BasedOn != null ? themeObject.BasedOn.Name : "Theme";
+            var ns = !String.IsNullOrEmpty(themeObject.Namespace) ? themeObject.Namespace : DefaultNamespace;
 
             // build the internal codebehind for the view
             var sb = new StringBuilder();
 
             // open the view class
-            sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", xumlThemeObject.Name);
+            sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", themeObject.Name);
             sb.AppendLine("#region Using Statements");
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
@@ -296,7 +296,7 @@ namespace Delight.Parser
 
             // generate methods
 
-            bool hasMethods = xumlThemeObject.ViewDeclarations.Any();
+            bool hasMethods = themeObject.ViewDeclarations.Any();
             if (hasMethods)
             {
                 sb.AppendLine();
@@ -316,8 +316,8 @@ namespace Delight.Parser
             sb.AppendLine("}");
 
             // write file
-            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(xumlThemeObject.FilePath));
-            var sourceFile = String.Format("{0}/{1}_g.cs", dir, xumlThemeObject.Name);
+            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(themeObject.FilePath));
+            var sourceFile = String.Format("{0}/{1}_g.cs", dir, themeObject.Name);
 
             Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
@@ -326,30 +326,30 @@ namespace Delight.Parser
         /// <summary>
         /// Updates view object properties and generates data template.
         /// </summary>
-        private static void GenerateDataTemplate(StringBuilder sb, XumlViewObject xumlViewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
+        private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName)
         {
-            if (xumlViewObject.TypeName == "View")
+            if (viewObject.TypeName == "View")
             {
                 return;
             }
 
             if (String.IsNullOrEmpty(idPath))
             {
-                idPath = xumlViewObject.TypeName;
+                idPath = viewObject.TypeName;
             }
 
             var isParent = String.IsNullOrEmpty(basedOnPath);
 
             var templateBasedOn = isParent ?
-                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View" :
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
                 basedOnPath;
             var templateBasedOnViewTypeName = isParent ?
-                xumlViewObject.BasedOn != null ? xumlViewObject.BasedOn.TypeName : "View" :
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
                 basedOnViewName;
 
-            var ns = !String.IsNullOrEmpty(xumlViewObject.Namespace) ? xumlViewObject.Namespace : DefaultNamespace;
-            var fullViewTypeName = String.Format("{0}.{1}", ns, xumlViewObject.TypeName);
+            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : DefaultNamespace;
+            var fullViewTypeName = String.Format("{0}.{1}", ns, viewObject.TypeName);
 
             // declare template property
             var localId = idPath.ToPrivateMemberName();
@@ -369,13 +369,13 @@ namespace Delight.Parser
             sb.AppendLine("                    {0} = new Template({1}Templates.{2});", localId, templateBasedOnViewTypeName, templateBasedOn);
 
             // get property declarations, initializers and assignment expressions
-            var initializerProperties = GetPropertyInitializers(xumlViewObject);
-            var propertyDeclarations = GetPropertyDeclarations(xumlViewObject, true, true, true);
+            var initializerProperties = GetPropertyInitializers(viewObject);
+            var propertyDeclarations = GetPropertyDeclarations(viewObject, true, true, true);
             var propertyExpressions = new List<PropertyExpression>();
             if (isParent)
             {
                 // if this is a parent we add the property assignments in the root element
-                propertyExpressions.AddRange(xumlViewObject.PropertyExpressions);
+                propertyExpressions.AddRange(viewObject.PropertyExpressions);
             }
 
             if (viewDeclaration != null)
@@ -453,7 +453,7 @@ namespace Delight.Parser
                         // value is set for a property that isn't declared, 
                         Debug.LogError(String.Format("[Delight] {0}: Invalid property assignment <{1} {2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
                             GetLineInfo(fileName, propertyAssignment),
-                            xumlViewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
+                            viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
                         continue;
                     }
 
@@ -503,7 +503,7 @@ namespace Delight.Parser
                     // no initializer found for the type being assigned to
                     Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
                         GetLineInfo(fileName, propertyAssignment),
-                        xumlViewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
+                        viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                     continue;
                 }
 
@@ -511,7 +511,7 @@ namespace Delight.Parser
             }
 
             // set sub-template properties
-            var viewDeclarations = xumlViewObject.GetViewDeclarations(true);
+            var viewDeclarations = viewObject.GetViewDeclarations(true);
             foreach (var declaration in viewDeclarations)
             {
                 if (String.IsNullOrEmpty(declaration.Declaration.Id))
@@ -533,7 +533,7 @@ namespace Delight.Parser
                     continue;
 
 
-                var childViewObject = _xumlObjectModel.GetViewObject(declaration.Declaration.ViewName);
+                var childViewObject = _contentObjectModel.GetViewObject(declaration.Declaration.ViewName);
                 var childIdPath = idPath + declaration.Declaration.Id;
                 var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
                     : basedOnPath + declaration.Declaration.Id;
@@ -559,20 +559,20 @@ namespace Delight.Parser
         /// <summary>
         /// Gets mapped property declarations for a view object.
         /// </summary>
-        private static List<MappedPropertyDeclaration> GetMappedPropertyDeclarations(XumlViewObject xumlViewObject)
+        private static List<MappedPropertyDeclaration> GetMappedPropertyDeclarations(ViewObject viewObject)
         {
-            if (!xumlViewObject.HasUpdatedItsMappedProperties)
+            if (!viewObject.HasUpdatedItsMappedProperties)
             {
-                UpdateMappedProperties(xumlViewObject);
+                UpdateMappedProperties(viewObject);
             }
 
-            return xumlViewObject.MappedPropertyDeclarations;
+            return viewObject.MappedPropertyDeclarations;
         }
 
         /// <summary>
         /// Generates view construction logic from view declaration.
         /// </summary>
-        private static void GenerateChildViewDeclarations(string fileName, XumlViewObject xumlViewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
+        private static void GenerateChildViewDeclarations(string fileName, ViewObject viewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
         {
             bool isFirst = true;
             int indent = 3 + templateDepth;
@@ -584,7 +584,7 @@ namespace Delight.Parser
                 // get identifier for view declaration
                 var childId = childViewDeclaration.Id;
                 var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
-                var childViewObject = _xumlObjectModel.GetViewObject(childViewDeclaration.ViewName);
+                var childViewObject = _contentObjectModel.GetViewObject(childViewDeclaration.ViewName);
                 bool templateContent = childViewObject.HasContentTemplate;
 
                 // put a comment if we are creating top-level views
@@ -635,7 +635,7 @@ namespace Delight.Parser
                         {
                             Debug.LogError(String.Format("[Delight] {0}: Unable to generate binding to property <{1} {2}=\"{3}\">. Multi-binding not implemented.",
                                 GetLineInfo(fileName, propertyBinding),
-                                xumlViewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                                viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
                             continue;
                         }
 
@@ -734,7 +734,7 @@ namespace Delight.Parser
                         templateItems.Add(ti);
 
                         // TODO get item type
-                        ti.ItemType = GetItemTypeFromDeclaration(fileName, xumlViewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                        ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
                     }
 
                     sb.AppendLine();
@@ -750,7 +750,7 @@ namespace Delight.Parser
                 }
 
                 // print child view declaration
-                GenerateChildViewDeclarations(xumlViewObject.FilePath, xumlViewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, templateDepth, templateItems, firstTemplateChild);
+                GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, templateDepth, templateItems, firstTemplateChild);
 
                 if (templateContent)
                 {
@@ -763,7 +763,7 @@ namespace Delight.Parser
         /// <summary>
         /// Gets item type from item declaration.
         /// </summary>
-        private static string GetItemTypeFromDeclaration(string fileName, XumlViewObject xumlViewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
+        private static string GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
         {
             var bindingSource = itemIdDeclaration.Sources.FirstOrDefault();
             if (bindingSource == null)
@@ -785,7 +785,7 @@ namespace Delight.Parser
             Type sourceType = typeof(Models);
             if (sourcePath[0] != "Models")
             {
-                sourceType = TypeHelper.GetType(xumlViewObject.TypeName);
+                sourceType = TypeHelper.GetType(viewObject.TypeName);
             }
 
             // loop through each property and infer their type
@@ -825,7 +825,7 @@ namespace Delight.Parser
         /// <summary>
         /// Gets all property initializers from view object.
         /// </summary>
-        public static List<InitializerProperty> GetPropertyInitializers(XumlViewObject viewObject)
+        public static List<InitializerProperty> GetPropertyInitializers(ViewObject viewObject)
         {
             var propertyInitializers = new List<InitializerProperty>();
             foreach (var initializer in viewObject.PropertyExpressions.OfType<InitializerProperty>())
@@ -844,7 +844,7 @@ namespace Delight.Parser
         /// <summary>
         /// Gets property declarations from view object. 
         /// </summary>
-        public static List<PropertyDeclarationInfo> GetPropertyDeclarations(XumlViewObject viewObject, bool includeInheritedDeclarations, bool includeMappedProperties, bool includeNonDefaultProperties)
+        public static List<PropertyDeclarationInfo> GetPropertyDeclarations(ViewObject viewObject, bool includeInheritedDeclarations, bool includeMappedProperties, bool includeNonDefaultProperties)
         {
             // gets all dependency property declarations in the view
             var propertyDeclarations = new List<PropertyDeclarationInfo>();
@@ -892,18 +892,18 @@ namespace Delight.Parser
         }
 
         /// <summary>
-        /// Updates property information in the xuml view object.
+        /// Updates property information in the view object.
         /// </summary>
-        private static void UpdateMappedProperties(XumlViewObject xumlViewObject)
+        private static void UpdateMappedProperties(ViewObject viewObject)
         {
-            if (xumlViewObject.HasUpdatedItsMappedProperties)
+            if (viewObject.HasUpdatedItsMappedProperties)
                 return;
 
-            xumlViewObject.HasUpdatedItsMappedProperties = true;
-            var propertyDeclarations = GetPropertyDeclarations(xumlViewObject, true, false, true);
+            viewObject.HasUpdatedItsMappedProperties = true;
+            var propertyDeclarations = GetPropertyDeclarations(viewObject, true, false, true);
             var propertyNames = propertyDeclarations.Select(x => x.Declaration.PropertyName).ToList();
-            var propertyMappings = xumlViewObject.PropertyExpressions.OfType<PropertyMapping>();
-            var propertyRenames = xumlViewObject.PropertyExpressions.OfType<PropertyRename>();
+            var propertyMappings = viewObject.PropertyExpressions.OfType<PropertyMapping>();
+            var propertyRenames = viewObject.PropertyExpressions.OfType<PropertyRename>();
 
             // calculate mapped dependency properties
             foreach (var propertyMapping in propertyMappings)
@@ -912,7 +912,7 @@ namespace Delight.Parser
                 var propertyDeclaration = propertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName.IEquals(propertyMapping.TargetObjectName));
                 if (propertyDeclaration == null)
                 {
-                    Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The property \"{2}\" does not exist in this view.", GetLineInfo(xumlViewObject.FilePath, propertyMapping), xumlViewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The property \"{2}\" does not exist in this view.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
                     continue;
                 }
 
@@ -920,8 +920,8 @@ namespace Delight.Parser
                 if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View)
                 {
                     // get view reference and generate mappings for its declarations
-                    var viewObject = _xumlObjectModel.GetViewObject(propertyDeclaration.Declaration.PropertyTypeName);
-                    var declarations = GetPropertyDeclarations(viewObject, true, true, false);
+                    var childViewObject = _contentObjectModel.GetViewObject(propertyDeclaration.Declaration.PropertyTypeName);
+                    var declarations = GetPropertyDeclarations(childViewObject, true, true, false);
                     foreach (var declaration in declarations)
                     {
                         // check if this declaration conflicts with any of the properties in this view, if so add the view-object as a prefix
@@ -932,13 +932,13 @@ namespace Delight.Parser
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration
-                        xumlViewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
+                        viewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
                         {
                             TargetPropertyName = declaration.Declaration.PropertyName,
                             TargetPropertyTypeFullName = declaration.Declaration.PropertyTypeFullName,
                             PropertyName = nonConflictedPropertyName,
                             TargetObjectName = propertyMapping.TargetObjectName,
-                            TargetObjectType = viewObject.TypeName, // TODO unsure if this is correct
+                            TargetObjectType = childViewObject.TypeName, // TODO unsure if this is correct
                             IsViewReference = true
                         });
                     }
@@ -950,7 +950,7 @@ namespace Delight.Parser
                     var targetObjectType = Type.GetType(propertyDeclaration.Declaration.AssemblyQualifiedType);
                     if (targetObjectType == null)
                     {
-                        Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The mapped target object of type \"{4}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", GetLineInfo(xumlViewObject.FilePath, propertyMapping), xumlViewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
+                        Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The mapped target object of type \"{4}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
                         continue;
                     }
 
@@ -982,7 +982,7 @@ namespace Delight.Parser
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for field
-                        xumlViewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
+                        viewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
                         {
                             TargetPropertyName = field.Name,
                             TargetPropertyTypeFullName = field.FieldTypeName(),
@@ -1026,7 +1026,7 @@ namespace Delight.Parser
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for property
-                        xumlViewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
+                        viewObject.MappedPropertyDeclarations.Add(new MappedPropertyDeclaration
                         {
                             TargetPropertyName = property.Name,
                             TargetPropertyTypeFullName = property.FieldTypeName(),
@@ -1063,9 +1063,9 @@ namespace Delight.Parser
         /// <summary>
         /// Check if any of the view object's children need to be updated.
         /// </summary>
-        private static bool AnyChildNeedUpdate(XumlViewObject xumlViewObject, Dictionary<string, bool> viewsChecked)
+        private static bool AnyChildNeedUpdate(ViewObject viewObject, Dictionary<string, bool> viewsChecked)
         {
-            var declarations = GetPropertyDeclarations(xumlViewObject, true, false, true);
+            var declarations = GetPropertyDeclarations(viewObject, true, false, true);
             foreach (var declaration in declarations)
             {
                 if (declaration.Declaration.DeclarationType != PropertyDeclarationType.View)
@@ -1079,7 +1079,7 @@ namespace Delight.Parser
                 }
                 else
                 {
-                    var childViewObject = _xumlObjectModel.GetViewObject(declaration.Declaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.GetViewObject(declaration.Declaration.PropertyTypeName);
                     if (childViewObject.NeedUpdate)
                     {
                         needUpdate = true;
@@ -1104,23 +1104,23 @@ namespace Delight.Parser
         /// <summary>
         /// Check if any of the view's parents need to be updated.
         /// </summary>
-        private static bool AnyParentNeedUpdate(XumlViewObject xumlViewObject)
+        private static bool AnyParentNeedUpdate(ViewObject viewObject)
         {
-            if (xumlViewObject.NeedUpdate)
+            if (viewObject.NeedUpdate)
                 return true;
 
-            return xumlViewObject.BasedOn != null ? AnyParentNeedUpdate(xumlViewObject.BasedOn) : false;
+            return viewObject.BasedOn != null ? AnyParentNeedUpdate(viewObject.BasedOn) : false;
         }
 
         /// <summary>
         /// Check if any of the view's parents need to be updated.
         /// </summary>
-        private static bool AnyParentHasContentTemplate(XumlViewObject xumlViewObject)
+        private static bool AnyParentHasContentTemplate(ViewObject viewObject)
         {
-            if (xumlViewObject.HasContentTemplate)
+            if (viewObject.HasContentTemplate)
                 return true;
 
-            return xumlViewObject.BasedOn != null ? AnyParentHasContentTemplate(xumlViewObject.BasedOn) : false;
+            return viewObject.BasedOn != null ? AnyParentHasContentTemplate(viewObject.BasedOn) : false;
         }
 
         private class TemplateItemInfo

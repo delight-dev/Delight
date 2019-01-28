@@ -28,15 +28,15 @@ namespace Delight.Editor
         {
             DrawDefaultInspector();
 
-            // parse all XUML
-            GUIContent parseXumlContent = new GUIContent("Parse all XUML files", "Parses all XUML files and generates code.");
-            if (GUILayout.Button(parseXumlContent))
+            // parse all content
+            GUIContent parseContent = new GUIContent("Parse all content files", "Parses all content files and generates code.");
+            if (GUILayout.Button(parseContent))
             {
                 // wait for any uncompiled scripts to be compiled first
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
-                // parse all XUML assets
-                XumlParser.ParseAllXumlFiles();
+                // parse all XML files
+                ContentParser.ParseAllXmlFiles();
 
                 // refresh generated scripts
                 AssetDatabase.Refresh();

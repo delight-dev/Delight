@@ -18,14 +18,15 @@ using ProtoBuf;
 namespace Delight.Parser
 {
     /// <summary>
-    /// Parses XUML assets.
+    /// Parses content assets.
     /// </summary>
-    public static class XumlParser
+    public static class ContentParser
     {
         #region Fields
 
-        private const string ViewModelFolder = "/ViewModels/";
-        private const string ViewFolder = "/Views/";
+        private const string AssetsFolder = "/Assets/";
+        private const string ViewModelsFolder = "/ViewModels/";
+        private const string ViewsFolder = "/Views/";
         private const string StylesFolder = "/Styles/";
         private const string ScenesFolder = "/Scenes/";
         private const string DefaultViewType = "UIView";
@@ -33,8 +34,8 @@ namespace Delight.Parser
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
 
-        private static XumlObjectModel _xumlObjectModel;
-        private static XumlFile _currentXumlFile;
+        private static ContentObjectModel _contentObjectModel;
+        private static XmlFile _currentXmlFile;
         private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
 
         #endregion
@@ -42,25 +43,25 @@ namespace Delight.Parser
         #region Methods
 
         /// <summary>
-        /// Processes XUML assets and generates code.
+        /// Processes XML assets and generates code.
         /// </summary>
-        public static void ParseAllXumlFiles()
+        public static void ParseAllXmlFiles()
         {
             var configuration = Configuration.GetInstance();
             configuration.Sanitize();
 
             // create new object model
-            _xumlObjectModel = new XumlObjectModel();
+            _contentObjectModel = new ContentObjectModel();
 
-            // get all XUML assets
+            // get all XML assets
             var ignoreFiles = new HashSet<string>();
-            var xumlFiles = new List<XumlFile>();
-            foreach (var localPath in configuration.XumlFolders)
+            var xumlFiles = new List<XmlFile>();
+            foreach (var localPath in configuration.ContentFolders)
             {
                 string path = String.Format("{0}/{1}", Application.dataPath,
                     localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath);
 
-                foreach (var xumlFile in GetXumlFilesAtPath(path, ignoreFiles))
+                foreach (var xumlFile in GetXmlFilesAtPath(path, ignoreFiles))
                 {
                     xumlFiles.Add(xumlFile);
                     ignoreFiles.Add(xumlFile.Path);
@@ -68,91 +69,91 @@ namespace Delight.Parser
             }
 
             // parse and generate code for the xuml files
-            ParseXumlFiles(xumlFiles);
+            ParseXmlFiles(xumlFiles);
         }
 
         /// <summary>
-        /// Parses XUML assets and generates code.
+        /// Parses XML assets and generates code.
         /// </summary>
-        public static void ParseXumlFiles(IEnumerable<string> paths)
+        public static void ParseXmlFiles(IEnumerable<string> paths)
         {
             // load object model 
-            if (_xumlObjectModel == null)
+            if (_contentObjectModel == null)
             {
                 LoadObjectModel();
             }
 
             // parse and generate code for the xuml files
-            var files = new List<XumlFile>();
+            var files = new List<XmlFile>();
             foreach (var path in paths)
             {
-                var xumlFile = GetXumlFileAtPath(path);
+                var xumlFile = GetXmlFileAtPath(path);
                 files.Add(xumlFile);
             }
 
-            ParseXumlFiles(files);
+            ParseXmlFiles(files);
         }
 
         /// <summary>
-        /// Parses XUML files. 
+        /// Parses XML files. 
         /// </summary>
-        private static void ParseXumlFiles(List<XumlFile> xumlFiles)
+        private static void ParseXmlFiles(List<XmlFile> xumlFiles)
         {
             foreach (var file in xumlFiles)
             {
-                ParseXumlFile(file);
+                ParseXmlFile(file);
             }
 
-            XumlCodeGenerator.GenerateCode(_xumlObjectModel);
+            CodeGenerator.GenerateCode(_contentObjectModel);
             SaveObjectModel();
-            Debug.Log(String.Format("[Delight] XUML processed. {0}", DateTime.Now));
+            Debug.Log(String.Format("[Delight] Content processed. {0}", DateTime.Now));
         }
 
         /// <summary>
-        /// Parses XUML and generates code.
+        /// Parses XML and generates code.
         /// </summary>
-        private static void ParseXumlFile(XumlFile xumlFile)
+        private static void ParseXmlFile(XmlFile xumlFile)
         {
             Debug.Log("Parsing " + xumlFile.Path);
-            if (xumlFile.ContentType == XumlContentType.Unknown)
+            if (xumlFile.ContentType == XmlContentType.Unknown)
             {
-                Debug.LogWarning(String.Format("[Delight] Ignoring XUML file \"{0}\" as it's not in a XUML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewFolder, ViewModelFolder, StylesFolder));
+                Debug.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ViewModelsFolder, StylesFolder));
                 return;
             }
 
-            XElement rootXumlElement = null;
+            XElement rootXmlElement = null;
             try
             {
-                rootXumlElement = XElement.Parse(xumlFile.Content, LoadOptions.SetLineInfo);
+                rootXmlElement = XElement.Parse(xumlFile.Content, LoadOptions.SetLineInfo);
             }
             catch (Exception e)
             {
-                Debug.LogError(String.Format("[Delight] Error parsing XUML file \"{0}\". Exception thrown: {1}", xumlFile.Content, e.Message + e.StackTrace));
+                Debug.LogError(String.Format("[Delight] Error parsing XML file \"{0}\". Exception thrown: {1}", xumlFile.Content, e.Message + e.StackTrace));
                 return;
             }
 
-            if (xumlFile.ContentType == XumlContentType.View)
+            if (xumlFile.ContentType == XmlContentType.View)
             {
-                ParseViewXuml(xumlFile, rootXumlElement);                
+                ParseViewXml(xumlFile, rootXmlElement);                
             }
-            else if (xumlFile.ContentType == XumlContentType.ViewModel)
+            else if (xumlFile.ContentType == XmlContentType.ViewModel)
             {
-                //ParseStylesXuml(xumlFile, rootXumlElement);
+                //ParseStylesXml(xumlFile, rootXmlElement);
             }
             else
             {
-                //ParseViewModelXuml(xumlFile, rootXumlElement);
+                //ParseViewModelXml(xumlFile, rootXmlElement);
             }
         }
 
         /// <summary>
-        /// Parses view XUML and generates code-behind.
+        /// Parses view XML and generates code-behind.
         /// </summary>
-        private static void ParseViewXuml(XumlFile xumlFile, XElement rootXumlElement)
+        private static void ParseViewXml(XmlFile xumlFile, XElement rootXmlElement)
         {
-            _currentXumlFile = xumlFile;
-            var viewName = rootXumlElement.Name.LocalName;
-            var viewObject = _xumlObjectModel.GetViewObject(viewName);
+            _currentXmlFile = xumlFile;
+            var viewName = rootXmlElement.Name.LocalName;
+            var viewObject = _contentObjectModel.GetViewObject(viewName);
 
             // clear view object 
             viewObject.Clear();
@@ -164,7 +165,7 @@ namespace Delight.Parser
             var propertyExpressions = new List<PropertyExpression>();
 
             // parse view's initialization attributes
-            foreach (var attribute in rootXumlElement.Attributes())
+            foreach (var attribute in rootXmlElement.Attributes())
             {
                 string attributeName = attribute.Name.LocalName;
                 string attributeValue = attribute.Value;
@@ -181,7 +182,7 @@ namespace Delight.Parser
 
                 if (attributeName.IEquals("BasedOn"))
                 {
-                    viewObject.BasedOn = _xumlObjectModel.GetViewObject(attributeValue);
+                    viewObject.BasedOn = _contentObjectModel.GetViewObject(attributeValue);
                     continue;
                 }
 
@@ -196,7 +197,7 @@ namespace Delight.Parser
                     bool hasContentTemplate;
                     if (!bool.TryParse(attributeValue, out hasContentTemplate))
                     {
-                        Debug.LogError(String.Format("[Delight] {0}: Invalid HasContentTemplate value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXumlElement), attributeValue));
+                        Debug.LogError(String.Format("[Delight] {0}: Invalid HasContentTemplate value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXmlElement), attributeValue));
                         continue;
                     }
                     viewObject.HasContentTemplate = hasContentTemplate;
@@ -204,17 +205,17 @@ namespace Delight.Parser
                 }
 
                 // parse property expression
-                var result = ParsePropertyExpression(rootXumlElement, attributeName, attributeValue);
+                var result = ParsePropertyExpression(rootXmlElement, attributeName, attributeValue);
                 propertyExpressions.AddRange(result);
             }
 
             if (viewObject.BasedOn == null)
             {
-                viewObject.BasedOn = _xumlObjectModel.GetViewObject(DefaultViewType);
+                viewObject.BasedOn = _contentObjectModel.GetViewObject(DefaultViewType);
             }
 
             // parse the view's children recursively
-            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXumlElement.Elements(), new Dictionary<string, int>());
+            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
 
             // add property declarations for view declarations having IDs
             propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclarations));
@@ -224,20 +225,20 @@ namespace Delight.Parser
         }
 
         /// <summary>
-        /// Parses specified theme XUML file.
+        /// Parses specified theme XML file.
         /// </summary>
-        private static void ParseStylesXuml(XumlFile xumlFile, XElement rootXumlElement)
+        private static void ParseStylesXml(XmlFile xumlFile, XElement rootXmlElement)
         {
-            _currentXumlFile = xumlFile;
-            var themeNameAttr = rootXumlElement.Attribute("Theme");
+            _currentXmlFile = xumlFile;
+            var themeNameAttr = rootXmlElement.Attribute("Theme");
             if (themeNameAttr == null)
             {
-                Debug.LogError(String.Format("[Delight] {0}: Name attribute missing.", GetLineInfo(rootXumlElement)));
+                Debug.LogError(String.Format("[Delight] {0}: Name attribute missing.", GetLineInfo(rootXmlElement)));
                 return;
             }
 
             var themeName = themeNameAttr.Value;
-            var themeObject = _xumlObjectModel.GetThemeObject(themeName);
+            var themeObject = _contentObjectModel.GetThemeObject(themeName);
 
             // clear theme object 
             themeObject.Clear();
@@ -245,26 +246,26 @@ namespace Delight.Parser
             themeObject.FilePath = xumlFile.Path;
             themeObject.NeedUpdate = true;
 
-            var baseDirectoryAttr = rootXumlElement.Attribute("BaseDirectory");
+            var baseDirectoryAttr = rootXmlElement.Attribute("BaseDirectory");
             if (baseDirectoryAttr != null)
             {
                 themeObject.BaseDirectory = baseDirectoryAttr.Value;
             }
 
-            var namespaceAttr = rootXumlElement.Attribute("Namespace");
+            var namespaceAttr = rootXmlElement.Attribute("Namespace");
             if (namespaceAttr != null)
             {
                 themeObject.Namespace = namespaceAttr.Value;
             }
 
-            var basedOnAttr = rootXumlElement.Attribute("BasedOn");
+            var basedOnAttr = rootXmlElement.Attribute("BasedOn");
             if (basedOnAttr != null)
             {
-                themeObject.BasedOn = _xumlObjectModel.GetThemeObject(basedOnAttr.Value);
+                themeObject.BasedOn = _contentObjectModel.GetThemeObject(basedOnAttr.Value);
             }
 
             // parse view declarations
-            var viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXumlElement.Elements(), new Dictionary<string, int>());
+            var viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
             themeObject.ViewDeclarations.AddRange(viewDeclarations);
         }
 
@@ -662,15 +663,15 @@ namespace Delight.Parser
         /// </summary>
         private static string GetLineInfo(IXmlLineInfo element)
         {
-            return String.Format("{0}.xml ({1})", _currentXumlFile.Name, element.LineNumber);
+            return String.Format("{0}.xml ({1})", _currentXmlFile.Name, element.LineNumber);
         }
 
         /// <summary>
-        /// Gets all XUML assets at a path.
+        /// Gets all XML assets at a path.
         /// </summary>
-        private static List<XumlFile> GetXumlFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        private static List<XmlFile> GetXmlFilesAtPath(string path, HashSet<string> ignoreFiles = null)
         {
-            var assets = new List<XumlFile>();
+            var assets = new List<XmlFile>();
             if (Directory.Exists(path))
             {
                 string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
@@ -680,7 +681,7 @@ namespace Delight.Parser
                     if (ignoreFiles != null && ignoreFiles.Contains(filePath))
                         continue;
 
-                    assets.Add(GetXumlFileAtPath(filePath));
+                    assets.Add(GetXmlFileAtPath(filePath));
                 }
             }
 
@@ -688,13 +689,13 @@ namespace Delight.Parser
         }
 
         /// <summary>
-        /// Gets XUML asset at path.
+        /// Gets XML asset at path.
         /// </summary>
-        private static XumlFile GetXumlFileAtPath(string path)
+        private static XmlFile GetXmlFileAtPath(string path)
         {
             var filename = Path.GetFileNameWithoutExtension(path);
-            var xumlContentType = GetXumlContentType(path);
-            return new XumlFile
+            var xumlContentType = GetXmlContentType(path);
+            return new XmlFile
             {
                 Name = filename,
                 Path = path,
@@ -704,25 +705,25 @@ namespace Delight.Parser
         }
 
         /// <summary>
-        /// Gets XUML content type based on path.
+        /// Gets XML content type based on path.
         /// </summary>
-        private static XumlContentType GetXumlContentType(string path)
+        private static XmlContentType GetXmlContentType(string path)
         {
-            if (path.IContains(ViewFolder))
+            if (path.IContains(ViewsFolder))
             {
-                return XumlContentType.View;
+                return XmlContentType.View;
             }
-            else if (path.IContains(ViewModelFolder))
+            else if (path.IContains(ViewModelsFolder))
             {
-                return XumlContentType.ViewModel;
+                return XmlContentType.ViewModel;
             }
             else if (path.IContains(StylesFolder))
             {
-                return XumlContentType.Styles;
+                return XmlContentType.Styles;
             }
             else
             {
-                return XumlContentType.Unknown;
+                return XmlContentType.Unknown;
             }
         }
 
@@ -737,14 +738,14 @@ namespace Delight.Parser
             var modelFilePath = configuration.GetObjectModelFilePath();
             if (!File.Exists(modelFilePath))
             {
-                _xumlObjectModel = new XumlObjectModel();
+                _contentObjectModel = new ContentObjectModel();
                 return;
             }
 
             using (var file = File.OpenRead(modelFilePath))
             {
                 Debug.Log("Deserializing " + modelFilePath);
-                _xumlObjectModel = Serializer.Deserialize<XumlObjectModel>(file);
+                _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
             }
         }
 
@@ -759,25 +760,25 @@ namespace Delight.Parser
             using (var file = File.Open(modelFilePath, FileMode.Create))
             {
                 Debug.Log("Serializing " + modelFilePath);
-                Serializer.Serialize(file, _xumlObjectModel);
+                Serializer.Serialize(file, _contentObjectModel);
             }
         }
 
         /// <summary>
-        /// XUML file.
+        /// XML file.
         /// </summary>
-        private struct XumlFile
+        private struct XmlFile
         {
             public string Name;
             public string Path;
             public string Content;
-            public XumlContentType ContentType;
+            public XmlContentType ContentType;
         }
 
         /// <summary>
-        /// XUML content type.
+        /// XML content type.
         /// </summary>
-        private enum XumlContentType
+        private enum XmlContentType
         {
             View,
             ViewModel,

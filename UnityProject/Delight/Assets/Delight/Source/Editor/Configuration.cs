@@ -17,7 +17,7 @@ namespace Delight.Editor
     {
         #region Fields
 
-        public List<string> XumlFolders;
+        public List<string> ContentFolders;
         public string SchemaFile;
         public string ObjectModelFile;
         public string SourceFolder;
@@ -35,12 +35,12 @@ namespace Delight.Editor
         /// </summary>
         public Configuration()
         {
-            XumlFolders = new List<string>();
-            XumlFolders.Add("Assets/Content/");
-            XumlFolders.Add("Assets/Delight/Content/");
+            ContentFolders = new List<string>();
+            ContentFolders.Add("Assets/Content/");
+            ContentFolders.Add("Assets/Delight/Content/");
 
             SchemaFile = "Assets/Delight/Schemas/Delight.xsd";
-            ObjectModelFile = "DelightTemp.bin";
+            ObjectModelFile = "DelightContent.bin";
         }
 
         #endregion
@@ -55,13 +55,13 @@ namespace Delight.Editor
             var invalidPathChars = Path.GetInvalidPathChars();
 
             // make sure paths are consistantly formatted
-            for (int i = XumlFolders.Count - 1; i >= 0; --i)
+            for (int i = ContentFolders.Count - 1; i >= 0; --i)
             {
-                var path = XumlFolders[i];
+                var path = ContentFolders[i];
                 if (String.IsNullOrEmpty(path) || path.IndexOfAny(invalidPathChars) >= 0)
                 {
-                    Debug.LogWarning(String.Format("[Delight] Improperly formatted XUML folder path \"{0}\" removed from Configuration.asset", path));
-                    XumlFolders.RemoveAt(i);
+                    Debug.LogWarning(String.Format("[Delight] Improperly formatted content folder path \"{0}\" removed from Configuration.asset", path));
+                    ContentFolders.RemoveAt(i);
                     continue;
                 }
 
@@ -74,7 +74,7 @@ namespace Delight.Editor
                     path += "/";
                 }
 
-                XumlFolders[i] = path;
+                ContentFolders[i] = path;
             }
 
             SchemaFile = GetFormattedPath(SchemaFile);

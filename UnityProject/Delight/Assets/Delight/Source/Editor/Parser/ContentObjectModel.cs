@@ -18,25 +18,25 @@ using ProtoBuf;
 namespace Delight.Parser
 {
     /// <summary>
-    /// Contains information about all XUML objects in the project.
+    /// Contains information about all content objects in the project.
     /// </summary>
     [ProtoContract] 
-    public class XumlObjectModel
+    public class ContentObjectModel
     {
         #region Fields
 
         [ProtoMember(1, AsReference = true)]
-        public List<XumlViewObject> ViewObjects;
+        public List<ViewObject> ViewObjects;
 
         [ProtoMember(2, AsReference = true)]
-        public List<XumlModelObject> ModelObjects;
+        public List<ModelObject> ModelObjects;
 
         [ProtoMember(3, AsReference = true)]
-        public List<XumlThemeObject> ThemeObjects;
+        public List<ThemeObject> ThemeObjects;
 
-        private Dictionary<string, XumlViewObject> _viewObjects;
-        private Dictionary<string, XumlModelObject> _modelObjects;
-        private Dictionary<string, XumlThemeObject> _themeObjects;
+        private Dictionary<string, ViewObject> _viewObjects;
+        private Dictionary<string, ModelObject> _modelObjects;
+        private Dictionary<string, ThemeObject> _themeObjects;
 
         #endregion
 
@@ -45,11 +45,11 @@ namespace Delight.Parser
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public XumlObjectModel()
+        public ContentObjectModel()
         {
-            ViewObjects = new List<XumlViewObject>();
-            ModelObjects = new List<XumlModelObject>();
-            ThemeObjects = new List<XumlThemeObject>();
+            ViewObjects = new List<ViewObject>();
+            ModelObjects = new List<ModelObject>();
+            ThemeObjects = new List<ThemeObject>();
         }
 
         #endregion
@@ -59,25 +59,25 @@ namespace Delight.Parser
         /// <summary>
         /// Gets view object.
         /// </summary>
-        public XumlViewObject GetViewObject(string viewName)
+        public ViewObject GetViewObject(string viewName)
         {
             if (_viewObjects == null)
             {
-                _viewObjects = new Dictionary<string, XumlViewObject>();
+                _viewObjects = new Dictionary<string, ViewObject>();
                 foreach (var item in ViewObjects)
                 {
                     _viewObjects.Add(item.Name, item);
                 }
             }
 
-            XumlViewObject viewObject;
+            ViewObject viewObject;
             if (_viewObjects.TryGetValue(viewName, out viewObject))
             {
                 return viewObject;
             }
 
             // create new view object if it doesn't exist
-            viewObject = new XumlViewObject { Name = viewName, TypeName = viewName };
+            viewObject = new ViewObject { Name = viewName, TypeName = viewName };
             ViewObjects.Add(viewObject);
             _viewObjects.Add(viewName, viewObject);
             return viewObject;
@@ -86,25 +86,25 @@ namespace Delight.Parser
         /// <summary>
         /// Gets model object.
         /// </summary>
-        public XumlModelObject GetModelObject(string modelName)
+        public ModelObject GetModelObject(string modelName)
         {
             if (_modelObjects == null)
             {
-                _modelObjects = new Dictionary<string, XumlModelObject>();
+                _modelObjects = new Dictionary<string, ModelObject>();
                 foreach (var item in ModelObjects)
                 {
                     _modelObjects.Add(item.Name, item);
                 }
             }
 
-            XumlModelObject modelObject;
+            ModelObject modelObject;
             if (_modelObjects.TryGetValue(modelName, out modelObject))
             {
                 return modelObject;
             }
 
             // create new model object if it doesn't exist
-            modelObject = new XumlModelObject { Name = modelName };
+            modelObject = new ModelObject { Name = modelName };
             ModelObjects.Add(modelObject);
             _modelObjects.Add(modelName, modelObject);
             return modelObject;
@@ -113,25 +113,25 @@ namespace Delight.Parser
         /// <summary>
         /// Gets theme object.
         /// </summary>
-        public XumlThemeObject GetThemeObject(string themeName)
+        public ThemeObject GetThemeObject(string themeName)
         {
             if (_themeObjects == null)
             {
-                _themeObjects = new Dictionary<string, XumlThemeObject>();
+                _themeObjects = new Dictionary<string, ThemeObject>();
                 foreach (var item in ThemeObjects)
                 {
                     _themeObjects.Add(item.Name, item);
                 }
             }
 
-            XumlThemeObject themeObject;
+            ThemeObject themeObject;
             if (_themeObjects.TryGetValue(themeName, out themeObject))
             {
                 return themeObject;
             }
 
             // create new theme object if it doesn't exist
-            themeObject = new XumlThemeObject { Name = themeName };
+            themeObject = new ThemeObject { Name = themeName };
             ThemeObjects.Add(themeObject);
             _themeObjects.Add(themeName, themeObject);
             return themeObject;
@@ -140,10 +140,10 @@ namespace Delight.Parser
         #endregion
     }
 
-    #region XUML View Object
+    #region View Object
 
     [ProtoContract]
-    public class XumlViewObject
+    public class ViewObject
     {
         [ProtoMember(1)]
         public string Name;
@@ -158,7 +158,7 @@ namespace Delight.Parser
         public string FilePath;
 
         [ProtoMember(5, AsReference = true)]
-        public XumlViewObject BasedOn;
+        public ViewObject BasedOn;
 
         [ProtoMember(6)]
         public bool NeedUpdate;
@@ -175,7 +175,7 @@ namespace Delight.Parser
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
-        public XumlViewObject()
+        public ViewObject()
         {
             PropertyExpressions = new List<PropertyExpression>();
             ViewDeclarations = new List<ViewDeclaration>();
@@ -476,10 +476,10 @@ namespace Delight.Parser
 
     #endregion
 
-    #region XUML Model Object
+    #region Model Object
 
     [ProtoContract]
-    public class XumlModelObject
+    public class ModelObject
     {
         [ProtoMember(1)]
         public string Name;
@@ -491,7 +491,7 @@ namespace Delight.Parser
         public string FilePath;
 
         [ProtoMember(4, AsReference = true)]
-        public XumlViewObject BasedOn;
+        public ViewObject BasedOn;
 
         [ProtoMember(5)]
         public bool NeedUpdate;
@@ -502,7 +502,7 @@ namespace Delight.Parser
         [ProtoMember(7)]
         public List<ViewDeclaration> ViewDeclarations;
 
-        public XumlModelObject()
+        public ModelObject()
         {
             PropertyExpressions = new List<PropertyExpression>();
             ViewDeclarations = new List<ViewDeclaration>();
@@ -556,10 +556,10 @@ namespace Delight.Parser
 
     #endregion
 
-    #region XUML Theme Object
+    #region Theme Object
 
     [ProtoContract]
-    public class XumlThemeObject
+    public class ThemeObject
     {
         [ProtoMember(1)]
         public string Name;
@@ -574,7 +574,7 @@ namespace Delight.Parser
         public string BaseDirectory;
 
         [ProtoMember(5, AsReference = true)]
-        public XumlThemeObject BasedOn;
+        public ThemeObject BasedOn;
 
         [ProtoMember(6)]
         public bool NeedUpdate;
@@ -582,7 +582,7 @@ namespace Delight.Parser
         [ProtoMember(7)]
         public List<ViewDeclaration> ViewDeclarations;
 
-        public XumlThemeObject()
+        public ThemeObject()
         {
             ViewDeclarations = new List<ViewDeclaration>();
         }

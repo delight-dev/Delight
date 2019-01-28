@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b16b203379a930d45a343a386f40947b, type: 3}
   m_Name: Configuration
   m_EditorClassIdentifier: 
-  XumlFolders:
+  ContentFolders:
   - Assets/Content/
   - Assets/Delight/Content/
   SchemaFile: Assets/Delight/Schemas/Delight.xsd
-  ObjectModelFile: DelightTemp.bin
+  ObjectModelFile: DelightContent.bin
   SourceFolder: Assets/Delight/Source/

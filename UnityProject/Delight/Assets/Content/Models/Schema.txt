@@ -5,10 +5,12 @@
 = World
 int Order
 string Name
+Levels
 
 = Level
 World
 string Name
+Highscores
 
 = Highscore
 Level
@@ -17,6 +19,8 @@ int Score
 
 = Player
 string Name
+Highscores
+Achievements
 
 = Achievement
 Player

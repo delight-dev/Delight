@@ -18,18 +18,18 @@ using Delight.Parser;
 namespace Delight.Editor
 {
     /// <summary>
-    /// Processes XUML assets and generates code.
+    /// Processes content assets and generates code.
     /// </summary>
-    internal class XumlAssetProcessor : AssetPostprocessor
+    internal class ContentAssetProcessor : AssetPostprocessor
     {
         #region Methods
 
         /// <summary>
-        /// Processes XUML assets that are added/changed and generates code-behind.
+        /// Processes XML assets that are added/changed and generates code-behind.
         /// </summary>
         static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssetPaths)
         {
-            // don't process XUML assets while playing
+            // don't process content assets while playing
             if (Application.isPlaying) 
                 return; // TODO either process them or queue them to be processed when the editor is not playing
 
@@ -40,13 +40,13 @@ namespace Delight.Editor
 
             foreach (var path in importedAssets)
             {
-                // is the asset in a XUML folder?
-                if (!configuration.XumlFolders.Any(x => path.IIndexOf(x) >= 0))
+                // is the asset in a content folder?
+                if (!configuration.ContentFolders.Any(x => path.IIndexOf(x) >= 0))
                     continue; // no.
 
                 if (path.IIndexOf(".xml") >= 0)
                 {
-                    // XUML file changed               
+                    // content file changed               
                     changedAssets.Add(path);
                 }
             }
@@ -59,8 +59,8 @@ namespace Delight.Editor
 
             var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO remove
 
-            // parse changed XUML files and generate code
-            XumlParser.ParseXumlFiles(changedAssets);
+            // parse changed content files and generate code
+            ContentParser.ParseXmlFiles(changedAssets);
 
             // refresh generated scripts
             AssetDatabase.Refresh();

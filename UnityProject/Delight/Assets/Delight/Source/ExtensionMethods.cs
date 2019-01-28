@@ -19,6 +19,19 @@ namespace Delight
     /// </summary>
     public static class ExtensionMethods
     {
+        #region Fields
+
+        public static Dictionary<string, string> PluralizeExceptions = new Dictionary<string, string>() {
+                { "man", "men" },
+                { "woman", "women" },
+                { "child", "children" },
+                { "tooth", "teeth" },
+                { "foot", "feet" },
+                { "mouse", "mice" },
+                { "belief", "beliefs" } };
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -39,7 +52,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets attribute value from XUML element.
+        /// Gets attribute value from XML element.
         /// </summary>
         public static string AttributeValue(this XElement element, XName attributeName)
         {
@@ -167,6 +180,56 @@ namespace Delight
         public static bool IContains(this string str1, string str2)
         {
             return str1.IndexOf(str2, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        /// <summary>
+        /// Pluralizes a table name.
+        /// </summary>
+        public static string PluralizeTableName(this string text)
+        {
+            if (PluralizeExceptions.ContainsKey(text.ToLowerInvariant()))
+            {
+                return PluralizeExceptions[text.ToLowerInvariant()];
+            }
+            else if (text.EndsWith("y", StringComparison.OrdinalIgnoreCase) &&
+                !text.EndsWith("ay", StringComparison.OrdinalIgnoreCase) &&
+                !text.EndsWith("ey", StringComparison.OrdinalIgnoreCase) &&
+                !text.EndsWith("iy", StringComparison.OrdinalIgnoreCase) &&
+                !text.EndsWith("oy", StringComparison.OrdinalIgnoreCase) &&
+                !text.EndsWith("uy", StringComparison.OrdinalIgnoreCase))
+            {
+                return text.Substring(0, text.Length - 1) + "ies";
+            }
+            else if (text.EndsWith("us", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return text + "es";
+            }
+            else if (text.EndsWith("ss", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return text + "es";
+            }
+            else if (text.EndsWith("s", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return text + "List";
+            }
+            else if (text.EndsWith("x", StringComparison.InvariantCultureIgnoreCase) ||
+                text.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
+                text.EndsWith("sh", StringComparison.InvariantCultureIgnoreCase))
+            {
+                return text + "es";
+            }
+            else if (text.EndsWith("f", StringComparison.InvariantCultureIgnoreCase) && text.Length > 1)
+            {
+                return text.Substring(0, text.Length - 1) + "ves";
+            }
+            else if (text.EndsWith("fe", StringComparison.InvariantCultureIgnoreCase) && text.Length > 2)
+            {
+                return text.Substring(0, text.Length - 2) + "ves";
+            }
+            else
+            {
+                return text + "s";
+            }
         }
 
         /// <summary>
