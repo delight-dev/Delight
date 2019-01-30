@@ -16,6 +16,7 @@ namespace Delight
         public Collection(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? CollectionTemplates.Default, initializer)
         {
+            this.AfterInitializeInternal();
         }
 
         public Collection() : this(null)

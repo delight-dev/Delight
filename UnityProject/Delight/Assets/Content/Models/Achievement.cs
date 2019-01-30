@@ -12,6 +12,13 @@ namespace Delight
 {
     public partial class Achievement : BindableObject
     {
+        public string AchievementSpriteId { get; set; }
+        public SpriteAsset AchievementSprite
+        {
+            get { return Assets.Sprites[AchievementSpriteId]; }
+            set { AchievementSpriteId = value?.Id; }
+        }
+
         public string PlayerId { get; set; }
         public Player Player
         {

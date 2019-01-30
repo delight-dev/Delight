@@ -14,7 +14,7 @@ namespace Delight
     {
         int i = 0;
         public void Test1()
-        {            
+        {
             Models.Players["Player1"].Name = "Julia " + i++;
             SomeParentProperty = "Yo " + i;
         }
@@ -22,11 +22,6 @@ namespace Delight
         public void Test2()
         {
             Models.Players["Player1"].Achievements.Add(new Achievement { Title = "Hello" });
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
         }
 
         protected override void BeforeLoad()

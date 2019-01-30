@@ -42,6 +42,7 @@ namespace Delight
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             BindingTest1 = new BindingTest(this, Region1, "BindingTest1", BindingTest1Template);
+            this.AfterInitializeInternal();
         }
 
         public TestScene() : this(null)

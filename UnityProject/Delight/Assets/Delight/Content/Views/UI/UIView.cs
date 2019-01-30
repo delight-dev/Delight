@@ -120,10 +120,10 @@ namespace Delight
         /// <summary>
         /// Called when after the top-most load is called. Used to update parents.
         /// </summary>
-        protected override void AfterInitialLoad()
+        protected override void AfterInitiatedLoad()
         {            
             NotifyParentOfLayoutUpdate();
-            base.AfterInitialLoad();
+            base.AfterInitiatedLoad();
         }
 
         /// <summary>

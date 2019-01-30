@@ -18,6 +18,7 @@ namespace Delight
         {
             // constructing Label (Label)
             Label = new Label(this, this, "Label", LabelTemplate);
+            this.AfterInitializeInternal();
         }
 
         public Button() : this(null)
@@ -588,6 +589,13 @@ namespace Delight
         {
             get { return Label.DisableLayoutUpdate; }
             set { Label.DisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty LabelLoadModeProperty = Label.LoadModeProperty;
+        public Delight.LoadMode LabelLoadMode
+        {
+            get { return Label.LoadMode; }
+            set { Label.LoadMode = value; }
         }
 
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;

@@ -16,6 +16,7 @@ namespace Delight
         public UICanvas(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? UICanvasTemplates.Default, initializer)
         {
+            this.AfterInitializeInternal();
         }
 
         public UICanvas() : this(null)

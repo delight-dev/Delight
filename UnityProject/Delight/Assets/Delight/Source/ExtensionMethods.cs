@@ -35,6 +35,17 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Makes sure initializer is called only once per type. 
+        /// </summary>
+        public static void AfterInitializeInternal<T>(this T view) where T : IInitialize
+        {
+            if (view.GetType() == typeof(T))
+            {
+                view.AfterInitialize();
+            }
+        }
+
+        /// <summary>
         /// Gets readable string from exception.
         /// </summary>
         public static string Message(this Exception e)

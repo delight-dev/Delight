@@ -100,6 +100,7 @@ namespace Delight
                 () => Label3.Text = Player1.Name,
                 () => { }
             ));
+            this.AfterInitializeInternal();
         }
 
         public BindingTest() : this(null)

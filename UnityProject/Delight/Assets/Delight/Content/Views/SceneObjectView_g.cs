@@ -16,6 +16,7 @@ namespace Delight
         public SceneObjectView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? SceneObjectViewTemplates.Default, initializer)
         {
+            this.AfterInitializeInternal();
         }
 
         public SceneObjectView() : this(null)
@@ -27,6 +28,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(SceneObjectViewTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(LoadModeProperty);
             dependencyProperties.Add(GameObjectProperty);
             dependencyProperties.Add(EnableScriptEventsProperty);
             dependencyProperties.Add(BeginDragProperty);
@@ -51,6 +53,13 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.LoadMode> LoadModeProperty = new DependencyProperty<Delight.LoadMode>("LoadMode");
+        public Delight.LoadMode LoadMode
+        {
+            get { return LoadModeProperty.GetValue(this); }
+            set { LoadModeProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<UnityEngine.GameObject> GameObjectProperty = new DependencyProperty<UnityEngine.GameObject>("GameObject");
         public UnityEngine.GameObject GameObject

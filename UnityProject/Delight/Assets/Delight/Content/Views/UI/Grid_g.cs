@@ -16,6 +16,7 @@ namespace Delight
         public Grid(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? GridTemplates.Default, initializer)
         {
+            this.AfterInitializeInternal();
         }
 
         public Grid() : this(null)

@@ -39,9 +39,10 @@ namespace Delight.Parser
             _contentObjectModel = contentObjectModel;
 
             var viewsChecked = new Dictionary<string, bool>();
+            var viewObjects = contentObjectModel.ViewObjects.ToList();
 
             // update views that contain children that needs update
-            foreach (var viewObject in contentObjectModel.ViewObjects)
+            foreach (var viewObject in viewObjects)
             {
                 if (viewObject.NeedUpdate)
                     continue;
@@ -50,7 +51,7 @@ namespace Delight.Parser
             }
 
             // update views that are based on views that needs update
-            foreach (var viewObject in contentObjectModel.ViewObjects)
+            foreach (var viewObject in viewObjects)
             {
                 viewObject.NeedUpdate = AnyParentNeedUpdate(viewObject);
                 viewObject.HasContentTemplate = AnyParentHasContentTemplate(viewObject);
@@ -65,7 +66,7 @@ namespace Delight.Parser
             }
 
             // update all view objects that are changed            
-            foreach (var viewObject in contentObjectModel.ViewObjects)
+            foreach (var viewObject in viewObjects)
             {
                 if (!viewObject.NeedUpdate)
                     continue;
@@ -138,6 +139,7 @@ namespace Delight.Parser
             sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
             sb.AppendLine("        {");
             GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
+            sb.AppendLine("            this.AfterInitializeInternal();");
             sb.AppendLine("        }");
             sb.AppendLine();
             sb.AppendLine("        public {0}() : this(null)", viewTypeName);

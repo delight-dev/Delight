@@ -18,11 +18,6 @@ namespace Delight
 
         #region Methods
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public void Test1()
         {
             //Debug.Log("Setting Models.Players.Player1.ChildPlayer.ChildPlayer.Name = \"Test 1\";");

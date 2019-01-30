@@ -1,0 +1,28 @@
+<AssetManagementTest xmlns="Delight" BasedOn="LayoutRoot" TimeString="t:string">
+  <Label Id="TimerLabel" Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
+
+  <Group Orientation="Horizontal">
+    <Group Spacing="10" Width="500">
+      <Button Text="Test 1" Click="Test1" />
+      <Button Text="Test 2" Click="Test2" /> 
+    </Group>
+    
+    <BigSlowView LoadMode="OnDemand" />
+    
+    <!-- Three sets of images we want to load on-demand -->
+    <Group>
+      <Group Id="ImageSet1">
+        <Image Sprite="Frame1" /> 
+        <Image Sprite="Frame2" />
+      </Group>
+      <Group Id="ImageSet2">
+        <Image Sprite="Frame3" />
+        <Image Sprite="Frame4" />
+      </Group>
+      <Group Id="ImageSet3">
+        <Image Sprite="Frame2" />
+        <Image Sprite="Frame3" />
+      </Group> 
+    </Group>
+  </Group>
+</AssetManagementTest> 

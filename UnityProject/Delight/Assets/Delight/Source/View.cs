@@ -13,7 +13,7 @@ namespace Delight
     /// <summary>
     /// Base class for views.
     /// </summary>
-    public partial class View : DependencyObject
+    public partial class View : DependencyObject, IInitialize
     {
         #region Fields
 
@@ -45,7 +45,7 @@ namespace Delight
             }
 
             _initializer = initializer;
-            Initialize();
+            BeforeInitialize();
         }
         
         #endregion
@@ -96,10 +96,17 @@ namespace Delight
         #region Methods
 
         /// <summary>
-        /// Called once in the object's lifetime by the constructor.
+        /// Called once in the object's lifetime before construction of children and before load.
         /// </summary>
-        protected virtual void Initialize()
+        protected virtual void BeforeInitialize()
         {            
+        }
+
+        /// <summary>
+        /// Called once in the object's lifetime after construction of children and before load.
+        /// </summary>
+        public virtual void AfterInitialize()
+        {
         }
 
         /// <summary>
@@ -107,22 +114,25 @@ namespace Delight
         /// </summary>
         public async Task LoadAsync()
         {
-            await LoadAsyncInternal();
-            AfterInitialLoad();
+            await LoadAsyncInternal(true);
+            AfterInitiatedLoad();
         }
 
         /// <summary>
         /// Loads the view asynchronously. 
         /// </summary>
-        protected async Task LoadAsyncInternal()
+        protected async Task LoadAsyncInternal(bool initiatedLoad)
         {
             if (IsLoaded)
+                return;
+
+            if (GetLoadMode() == LoadMode.OnDemand && !initiatedLoad)
                 return;
 
             BeforeLoad();
             InitializeDependencyProperties();
 
-            await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal()));
+            await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
             
             UpdateBindings();
 
@@ -137,16 +147,19 @@ namespace Delight
         /// </summary>
         public void Load()
         {
-            LoadInternal();
-            AfterInitialLoad();
+            LoadInternal(true);
+            AfterInitiatedLoad();
         }
 
         /// <summary>
         /// Loads the view. Called internally. 
         /// </summary>
-        protected void LoadInternal()
+        protected void LoadInternal(bool initiatedLoad)
         {
             if (IsLoaded)
+                return;
+
+            if (GetLoadMode() == LoadMode.OnDemand && !initiatedLoad)
                 return;
 
             BeforeLoad();
@@ -154,7 +167,7 @@ namespace Delight
 
             foreach (var child in LayoutChildren)
             {
-                child.LoadInternal();
+                child.LoadInternal(false);
             }
             
             UpdateBindings();
@@ -182,7 +195,7 @@ namespace Delight
         /// <summary>
         /// Called after the top-most view who initiated the load, has been loaded. Used to update parents.
         /// </summary>
-        protected virtual void AfterInitialLoad()
+        protected virtual void AfterInitiatedLoad()
         {
             UpdateParentBindings();
         }
@@ -337,8 +350,16 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Gets view load mode. 
+        /// </summary>
+        protected virtual LoadMode GetLoadMode()
+        {
+            return LoadMode.Automatic;
+        }
+
         #endregion
-    }       
+    }
 
     #region Data Templates
 

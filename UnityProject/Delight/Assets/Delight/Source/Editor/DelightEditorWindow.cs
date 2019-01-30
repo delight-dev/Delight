@@ -34,9 +34,9 @@ namespace Delight.Editor
         /// </summary>
         public void OnGUI()
         {
-            // parse all XML
-            GUIContent parseContent = new GUIContent("Parse all content files", "Parses all content files and generates code.");
-            if (GUILayout.Button(parseContent))
+            // reload views
+            GUIContent reloadViews = new GUIContent("Reload Views", "Parses all views and generates code.");
+            if (GUILayout.Button(reloadViews))
             {
                 // wait for any uncompiled scripts to be compiled first
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -46,6 +46,12 @@ namespace Delight.Editor
 
                 // refresh generated scripts
                 AssetDatabase.Refresh();
+            }
+
+            // reload asset bundles
+            GUIContent generateAssetBundles = new GUIContent("Reload Asset Bundles", "Recreates all asset bundles.");
+            if (GUILayout.Button(generateAssetBundles))
+            {
             }
         }
 

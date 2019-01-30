@@ -86,6 +86,7 @@ namespace Delight
                 });
                 return group3;
             });
+            this.AfterInitializeInternal();
         }
 
         public ModelBindingTest() : this(null)

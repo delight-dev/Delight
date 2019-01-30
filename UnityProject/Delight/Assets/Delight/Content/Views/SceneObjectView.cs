@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -89,6 +90,14 @@ namespace Delight
         public virtual void Update()
         {
             // TODO implement observable pattern instead
+        }
+
+        /// <summary>
+        /// Gets view load mode. 
+        /// </summary>
+        protected override LoadMode GetLoadMode()
+        {
+            return LoadMode;
         }
 
         // TODO implement Activate/Deactivate

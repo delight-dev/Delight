@@ -16,6 +16,7 @@ namespace Delight
         public Group(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? GroupTemplates.Default, initializer)
         {
+            this.AfterInitializeInternal();
         }
 
         public Group() : this(null)
