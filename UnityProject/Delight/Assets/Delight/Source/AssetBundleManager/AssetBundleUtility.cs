@@ -19,9 +19,11 @@ namespace Delight
 #endif
         }
 
+#if UNITY_EDITOR
         public static string GetPlatformForAssetBundles(BuildTarget target)
         {
-            switch (target) {
+            switch (target)
+            {
                 case BuildTarget.Android:
                     return "Android";
                 case BuildTarget.iOS:
@@ -56,10 +58,12 @@ namespace Delight
                     return target.ToString();
             }
         }
+#endif
 
         public static string GetPlatformForAssetBundles(RuntimePlatform platform)
         {
-            switch (platform) {
+            switch (platform)
+            {
                 case RuntimePlatform.Android:
                     return "Android";
                 case RuntimePlatform.IPhonePlayer:
@@ -79,9 +83,14 @@ namespace Delight
 #endif
                 case RuntimePlatform.LinuxPlayer:
                     return "StandaloneLinux";
+#if UNITY_SWITCH
                 case RuntimePlatform.Switch:
                     return "Switch";
+#endif
+                // Add more build targets for your own.
+                // If you add more targets, don't forget to add the same platforms to the function above.
                 default:
+                    Debug.Log("Unknown BuildTarget: Using Default Enum Name: " + platform);
                     return platform.ToString();
             }
         }

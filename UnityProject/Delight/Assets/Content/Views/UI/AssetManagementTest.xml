@@ -12,9 +12,11 @@
     </Group>
     
     <BigSlowView LoadMode="OnDemand" />
-    
+
+    <Image Id="TestImage" Width="200" Height="200" BackgroundColor="White" />
+
     <!-- Three sets of images we want to load on-demand -->
-    <Group>
+    <!--<Group>
       <Group Id="ImageSet1">
         <Image Sprite="Frame1" /> 
         <Image Sprite="Frame2" />
@@ -27,6 +29,6 @@
         <Image Sprite="Frame2" />
         <Image Sprite="Frame3" />
       </Group> 
-    </Group>
+    </Group>-->
   </Group>
 </AssetManagementTest> 

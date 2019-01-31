@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.Networking;
 #endregion
@@ -20,7 +22,7 @@ namespace Delight
         public bool IsAlive { get; set; }
         public CacheMode CacheMode { get; set; }
         public DateTime LastReferenced { get; set; }
-        public UnityEngine.AssetBundle AssetBundleObject { get; set; }
+        public UnityEngine.AssetBundle UnityAssetBundle { get; set; }
 
         private readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
@@ -28,7 +30,7 @@ namespace Delight
         {
             await _locker.LockAsync(async () =>
             {
-                if (AssetBundleObject != null)
+                if (UnityAssetBundle != null)
                 {
                     return;
                 }
@@ -49,7 +51,8 @@ namespace Delight
                 var bundleUri = String.Format("{0}{1}/{2}", bundleBaseUri, AssetBundleData.GetPlatformName(), Id.ToLower());
 
                 // get asset bundle
-                var getBundleRequest = UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, Version, 0);
+                var getBundleRequest = Version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, Version, 0) : 
+                    UnityWebRequestAssetBundle.GetAssetBundle(bundleUri);
                 var response = (await getBundleRequest.SendWebRequest()) as UnityWebRequestAsyncOperation;
                 if (response.webRequest.isNetworkError || response.webRequest.isHttpError)
                 {
@@ -58,12 +61,12 @@ namespace Delight
                 }
 
                 // simulate slow load
-                await Task.Delay(5000);
+                await Task.Delay(2500);
 
-                AssetBundleObject = DownloadHandlerAssetBundle.GetContent(response.webRequest);               
+                UnityAssetBundle = DownloadHandlerAssetBundle.GetContent(response.webRequest);               
             });
 
-            return AssetBundleObject;
+            return UnityAssetBundle;
         }
     }
 
@@ -92,7 +95,8 @@ namespace Delight
 #endif
         }
 
-        protected static string GetPlatformForAssetBundles(BuildTarget target)
+#if UNITY_EDITOR
+        public static string GetPlatformForAssetBundles(BuildTarget target)
         {
             switch (target)
             {
@@ -126,11 +130,13 @@ namespace Delight
                     return "Switch";
 #endif
                 default:
+                    Debug.Log("Unknown BuildTarget: Using Default Enum Name: " + target);
                     return target.ToString();
             }
         }
+#endif
 
-        protected static string GetPlatformForAssetBundles(RuntimePlatform platform)
+        public static string GetPlatformForAssetBundles(RuntimePlatform platform)
         {
             switch (platform)
             {
@@ -157,7 +163,10 @@ namespace Delight
                 case RuntimePlatform.Switch:
                     return "Switch";
 #endif
+                // Add more build targets for your own.
+                // If you add more targets, don't forget to add the same platforms to the function above.
                 default:
+                    Debug.Log("Unknown BuildTarget: Using Default Enum Name: " + platform);
                     return platform.ToString();
             }
         }

@@ -17,8 +17,21 @@ namespace Delight
          
         public void Test1()
         {
-            Debug.Log("Calling LoadAssetBundle1()");
-            LoadAssetBundle1();
+            Debug.Log("Calling LoadFrame1Sprite()");
+            LoadFrame1Sprite();
+
+            //Debug.Log("Calling LoadAssetBundle1()");
+            //LoadAssetBundle1();
+        }
+
+        public async void LoadFrame1Sprite()
+        {
+            Debug.Log("Frame1.GetAsync()");
+            var sprite = await Assets.Sprites.Frame1.GetAsync();
+            Debug.Log("Frame1.GetAsync() result: " + sprite);
+
+            TestImage.Image.sprite = sprite;
+            TestImage.Image.type = UnityEngine.UI.Image.Type.Sliced;
         }
 
         public async void LoadAssetBundle1()
@@ -56,7 +69,7 @@ namespace Delight
                 sb.Clear();
                 foreach (var sprite in Assets.Sprites)
                 {
-                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId, sprite.Object != null ? "yes" : "no");
+                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId, sprite.UnityObject != null ? "yes" : "no");
                 }
 
                 LoadedAssetsString = sb.ToString();
@@ -65,7 +78,7 @@ namespace Delight
                 sb.Clear();
                 foreach (var assetBundle in Assets.AssetBundles)
                 {
-                    sb.AppendLine("{0} : {1}", assetBundle.Id, assetBundle.AssetBundleObject != null ? "yes" : "no");
+                    sb.AppendLine("{0} : {1}", assetBundle.Id, assetBundle.UnityAssetBundle != null ? "yes" : "no");
                 }
                 LoadedAssetBundlesString = sb.ToString();
             });

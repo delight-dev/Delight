@@ -14,7 +14,7 @@ namespace Delight
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> SpriteProperty = 
             new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("Sprite",
-            x => x.Image, (x, y) => x.sprite = y.Object);
+            x => x.Image, (x, y) => x.sprite = y.UnityObject);
         public SpriteAsset Sprite
         {
             get { return SpriteProperty.GetValue(this); }
