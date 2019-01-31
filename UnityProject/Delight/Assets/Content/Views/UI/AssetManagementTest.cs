@@ -6,6 +6,7 @@ using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
+using System.Text;
 #endregion
 
 namespace Delight
@@ -16,58 +17,20 @@ namespace Delight
          
         public void Test1()
         {
-            LoadAssetBundleAsync("bundle1");
-
-            BigSlowView1.LoadAsync();
-
-            //Image1.Sprite = Assets.Sprites.Frame1;
+            Debug.Log("Calling LoadAssetBundle1()");
+            LoadAssetBundle1();
         }
 
-        public async void LoadAssetBundleAsync(string bundleName)
+        public async void LoadAssetBundle1()
         {
-            await LoadAssetBundle(bundleName);
-        }
-
-        System.Collections.IEnumerator LoadAssetBundle(string bundleName)
-        { 
-            AssetBundleManager abm = new AssetBundleManager();
-            if (Application.isEditor)
-            {
-                abm.UseSimulatedUri();
-            }
-            else
-            {
-                // TODO check if asset should be loaded locally (StreamingAssets) or from server
-                abm.SetBaseUri("https://www.example.com/bundles");
-            }
-            var initializeAsync = abm.InitializeAsync();
-            yield return initializeAsync;
-
-            if (initializeAsync.Success)
-            {
-                AssetBundleAsync bundle = abm.GetBundleAsync(bundleName);
-                yield return bundle;
-
-                // TODO remove, simulate slow loading of asset bundle
-                yield return new WaitForSeconds(7);
-
-                if (bundle.AssetBundle != null)
-                {
-                    Debug.Log("WOOOHOOO!!! we loaded a BUNDLE!");
-                    // do something with the bundle
-                    abm.UnloadBundle(bundle.AssetBundle);
-                }
-            }
-            else
-            {
-                Debug.LogError("[Delight] Error initializing ABM.");
-            }
-
-            abm.Dispose();
+            Debug.Log("Bundle1.GetAsync()");
+            var bundle = await Assets.AssetBundles.Bundle1.GetAsync();
+            Debug.Log("Bundle1.GetAsync() result: " + bundle);
         }
 
         public void Test2()
         {
+            BigSlowView1.Unload();
         }
 
         protected override void BeforeLoad()
@@ -75,15 +38,36 @@ namespace Delight
             base.BeforeLoad();
         }
 
-        private IDisposable _update;
+        public StringBuilder sb = new StringBuilder();
+        private IDisposable _updateTimer;
+        private IDisposable _updateLoadedAssets;
         protected override void AfterLoad()
-        {
+        {            
             base.AfterLoad();
 
-            // add one player every second
-            _update = Observable.Interval(TimeSpan.FromMilliseconds(10)).Subscribe(x =>
+            _updateTimer = Observable.Interval(TimeSpan.FromMilliseconds(10)).Subscribe(x =>
             {
                 TimeString = DateTime.Now.ToString("mm:ss.ff");
+            });
+
+            _updateLoadedAssets = Observable.Interval(TimeSpan.FromMilliseconds(500)).Subscribe(x =>
+            {
+                // print loaded sprites
+                sb.Clear();
+                foreach (var sprite in Assets.Sprites)
+                {
+                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId, sprite.Object != null ? "yes" : "no");
+                }
+
+                LoadedAssetsString = sb.ToString();
+
+                // print loaded asset bundles
+                sb.Clear();
+                foreach (var assetBundle in Assets.AssetBundles)
+                {
+                    sb.AppendLine("{0} : {1}", assetBundle.Id, assetBundle.AssetBundleObject != null ? "yes" : "no");
+                }
+                LoadedAssetBundlesString = sb.ToString();
             });
         }
     }

@@ -158,6 +158,15 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Clears run-time values for the specified instance.
+        /// </summary>
+        public override void ClearRuntimeValues(DependencyObject key)
+        {
+            base.ClearRuntimeValues(key);
+            ValueSet.Remove(key);
+        }
+
         #endregion        
 
         #region Constructor

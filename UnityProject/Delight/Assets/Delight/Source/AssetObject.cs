@@ -36,22 +36,6 @@ namespace Delight
         #endregion
 
         #region Methods
-
-        public static implicit operator string(AssetObject<T> asset)
-        {
-            return asset.Id;
-        }
-
-        public static implicit operator AssetObject<T>(T obj)
-        {
-            return null;
-        }
-
-        public static implicit operator T(AssetObject<T> asset)
-        {
-            return null;
-        }
-
         #endregion
     }
 }

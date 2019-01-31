@@ -287,7 +287,26 @@ namespace Delight
         /// </summary>
         protected void ClearDependencyPropertyValues()
         {
-            // TODO implement by iterating through dependency property dictionary
+            var template = _template;
+            while (true)
+            {
+                List<DependencyProperty> dependencyProperties;
+                if (DependencyProperties.TryGetValue(template, out dependencyProperties))
+                {
+                    // iterate through all dependency properties and clear run-time values
+                    for (int i = 0; i < dependencyProperties.Count; ++i)
+                    {
+                        dependencyProperties[i].ClearRuntimeValues(this);
+                    }
+                }
+
+                // do the same for properties in base class
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    break;
+                }
+            }
         }
 
         /// <summary>

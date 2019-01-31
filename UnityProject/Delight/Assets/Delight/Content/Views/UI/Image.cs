@@ -14,25 +14,28 @@ namespace Delight
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> SpriteProperty = 
             new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("Sprite",
-            x => x.Image, (x, y) => x.sprite = y);
+            x => x.Image, (x, y) => x.sprite = y.Object);
         public SpriteAsset Sprite
         {
             get { return SpriteProperty.GetValue(this); }
             set { SpriteProperty.SetValue(this, value); }
         }
 
-        /* so we want to do two things
-         * 1. listen to when the sprite is loaded/unloaded and update Image.sprite 
-         * 2. when a new spriteAsset is set, listen to that sprite instead
-         * we can do this through a specialized dependency property. 
-         **/
+        private SpriteAsset SpriteAsset; 
+        public readonly static DependencyProperty<string> SpriteIdProperty = new DependencyProperty<string>("SpriteId");
+        public string SpriteId
+        {
+            get { return SpriteIdProperty.GetValue(this); }
+            set { SpriteIdProperty.SetValue(this, value); }
+        }
+        
         #endregion
 
         protected override void AfterLoad()
         {
             base.AfterLoad();
 
-            //Sprite.Load();
+            // this is perhaps a situation where an observable is desired, a sprite asset observable that can be subscribed to
         }
     }
 
@@ -53,6 +56,20 @@ namespace Delight
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Initializes the mapped dependency property.
+        /// </summary>
+        public override void Initialize(DependencyObject key)
+        {
+            base.Initialize(key);
+            if (Values.ContainsKey(key))
+            {
+                return;
+            }
+
+            
+        }
 
         /// <summary>
         /// Gets mapped dependency property value for specified instance.
@@ -143,6 +160,15 @@ namespace Delight
         }
 
         /// <summary>
+        /// Clears run-time values for the specified instance.
+        /// </summary>
+        public override void ClearRuntimeValues(DependencyObject key)
+        {
+            base.ClearRuntimeValues(key);
+            Values.Remove(key);
+        }
+
+        /// <summary>
         /// Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
         /// </summary>
         public bool IsUndefined(DependencyObject key)
@@ -193,20 +219,6 @@ namespace Delight
         public void SetDefault(Template template, T defaultValue)
         {
             Defaults[template] = defaultValue;
-        }
-
-        /// <summary>
-        /// Initializes the mapped dependency property.
-        /// </summary>
-        public override void Initialize(DependencyObject key)
-        {
-            base.Initialize(key);
-            if (Values.ContainsKey(key))
-            {
-                return;
-            }
-
-            // get value 
         }
 
         #endregion        

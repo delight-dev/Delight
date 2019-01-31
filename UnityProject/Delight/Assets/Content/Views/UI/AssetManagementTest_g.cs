@@ -16,16 +16,42 @@ namespace Delight
         public AssetManagementTest(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? AssetManagementTestTemplates.Default, initializer)
         {
-            // constructing Label (TimerLabel)
-            TimerLabel = new Label(this, this, "TimerLabel", TimerLabelTemplate);
+            // constructing Label (Label1)
+            Label1 = new Label(this, this, "Label1", Label1Template);
 
             // binding <Label Text="{TimeString}">
             Bindings.Add(new Binding(
                 new List<string> { "TimeString" },
-                new List<string> { "TimerLabel", "Text" },
+                new List<string> { "Label1", "Text" },
                 new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => TimerLabel },
-                () => TimerLabel.Text = TimeString,
+                new List<Func<BindableObject>> { () => this, () => Label1 },
+                () => Label1.Text = TimeString,
+                () => { }
+            ));
+
+            // constructing Label (Label2)
+            Label2 = new Label(this, this, "Label2", Label2Template);
+
+            // binding <Label Text="{LoadedAssetsString}">
+            Bindings.Add(new Binding(
+                new List<string> { "LoadedAssetsString" },
+                new List<string> { "Label2", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Label2 },
+                () => Label2.Text = LoadedAssetsString,
+                () => { }
+            ));
+
+            // constructing Label (Label3)
+            Label3 = new Label(this, this, "Label3", Label3Template);
+
+            // binding <Label Text="{LoadedAssetBundlesString}">
+            Bindings.Add(new Binding(
+                new List<string> { "LoadedAssetBundlesString" },
+                new List<string> { "Label3", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Label3 },
+                () => Label3.Text = LoadedAssetBundlesString,
                 () => { }
             ));
 
@@ -66,8 +92,14 @@ namespace Delight
             DependencyProperties.Add(AssetManagementTestTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(TimeStringProperty);
-            dependencyProperties.Add(TimerLabelProperty);
-            dependencyProperties.Add(TimerLabelTemplateProperty);
+            dependencyProperties.Add(LoadedAssetsStringProperty);
+            dependencyProperties.Add(LoadedAssetBundlesStringProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
+            dependencyProperties.Add(Label3Property);
+            dependencyProperties.Add(Label3TemplateProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Group2Property);
@@ -111,18 +143,60 @@ namespace Delight
             set { TimeStringProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> TimerLabelProperty = new DependencyProperty<Label>("TimerLabel");
-        public Label TimerLabel
+        public readonly static DependencyProperty<System.String> LoadedAssetsStringProperty = new DependencyProperty<System.String>("LoadedAssetsString");
+        public System.String LoadedAssetsString
         {
-            get { return TimerLabelProperty.GetValue(this); }
-            set { TimerLabelProperty.SetValue(this, value); }
+            get { return LoadedAssetsStringProperty.GetValue(this); }
+            set { LoadedAssetsStringProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> TimerLabelTemplateProperty = new DependencyProperty<Template>("TimerLabelTemplate");
-        public Template TimerLabelTemplate
+        public readonly static DependencyProperty<System.String> LoadedAssetBundlesStringProperty = new DependencyProperty<System.String>("LoadedAssetBundlesString");
+        public System.String LoadedAssetBundlesString
         {
-            get { return TimerLabelTemplateProperty.GetValue(this); }
-            set { TimerLabelTemplateProperty.SetValue(this, value); }
+            get { return LoadedAssetBundlesStringProperty.GetValue(this); }
+            set { LoadedAssetBundlesStringProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
+        {
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
+        {
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
+        {
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
+        {
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
@@ -364,7 +438,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTest = new Template(LayoutRootTemplates.LayoutRoot);
-                    Delight.AssetManagementTest.TimerLabelTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestTimerLabel);
+                    Delight.AssetManagementTest.Label1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel1);
+                    Delight.AssetManagementTest.Label2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel2);
+                    Delight.AssetManagementTest.Label3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel3);
                     Delight.AssetManagementTest.Group1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestGroup1);
                     Delight.AssetManagementTest.Group2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestGroup2);
                     Delight.AssetManagementTest.Button1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton1);
@@ -385,23 +461,63 @@ namespace Delight
             }
         }
 
-        private static Template _assetManagementTestTimerLabel;
-        public static Template AssetManagementTestTimerLabel
+        private static Template _assetManagementTestLabel1;
+        public static Template AssetManagementTestLabel1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_assetManagementTestTimerLabel == null || _assetManagementTestTimerLabel.CurrentVersion != Template.Version)
+                if (_assetManagementTestLabel1 == null || _assetManagementTestLabel1.CurrentVersion != Template.Version)
 #else
-                if (_assetManagementTestTimerLabel == null)
+                if (_assetManagementTestLabel1 == null)
 #endif
                 {
-                    _assetManagementTestTimerLabel = new Template(LabelTemplates.Label);
-                    Delight.Label.WidthProperty.SetDefault(_assetManagementTestTimerLabel, new ElementSize(400f, ElementSizeUnit.Pixels));
-                    Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestTimerLabel, Delight.ElementAlignment.Top);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestTimerLabel, TMPro.TextAlignmentOptions.Left);
+                    _assetManagementTestLabel1 = new Template(LabelTemplates.Label);
+                    Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel1, new ElementSize(400f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel1, Delight.ElementAlignment.Top);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel1, TMPro.TextAlignmentOptions.Left);
                 }
-                return _assetManagementTestTimerLabel;
+                return _assetManagementTestLabel1;
+            }
+        }
+
+        private static Template _assetManagementTestLabel2;
+        public static Template AssetManagementTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLabel2 == null || _assetManagementTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLabel2 == null)
+#endif
+                {
+                    _assetManagementTestLabel2 = new Template(LabelTemplates.Label);
+                    Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel2, new ElementSize(400f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel2, Delight.ElementAlignment.TopRight);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel2, TMPro.TextAlignmentOptions.TopLeft);
+                }
+                return _assetManagementTestLabel2;
+            }
+        }
+
+        private static Template _assetManagementTestLabel3;
+        public static Template AssetManagementTestLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLabel3 == null || _assetManagementTestLabel3.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLabel3 == null)
+#endif
+                {
+                    _assetManagementTestLabel3 = new Template(LabelTemplates.Label);
+                    Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel3, new ElementSize(400f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel3, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel3, TMPro.TextAlignmentOptions.TopLeft);
+                }
+                return _assetManagementTestLabel3;
             }
         }
 

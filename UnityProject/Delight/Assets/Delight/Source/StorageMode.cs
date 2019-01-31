@@ -3,6 +3,6 @@
     public enum StorageMode
     {
         Local = 0,
-        Server = 1
+        Remote = 1
     }
 }

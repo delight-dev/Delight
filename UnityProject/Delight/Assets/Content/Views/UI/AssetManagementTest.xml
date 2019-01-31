@@ -1,5 +1,9 @@
-<AssetManagementTest xmlns="Delight" BasedOn="LayoutRoot" TimeString="t:string">
-  <Label Id="TimerLabel" Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
+<AssetManagementTest xmlns="Delight" BasedOn="LayoutRoot" TimeString="t:string" 
+                     LoadedAssetsString="t:string" LoadedAssetBundlesString="t:string">
+  
+  <Label Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
+  <Label Text="{LoadedAssetsString}" Width="400" Alignment="TopRight" TextAlignment="TopLeft" />
+  <Label Text="{LoadedAssetBundlesString}" Width="400" Alignment="TopLeft" TextAlignment="TopLeft" />
 
   <Group Orientation="Horizontal">
     <Group Spacing="10" Width="500">

@@ -76,6 +76,15 @@ namespace Delight
         }
 
         /// <summary>
+        /// Clears run-time values for the specified instance.
+        /// </summary>
+        public override void ClearRuntimeValues(DependencyObject key)
+        {
+            base.ClearRuntimeValues(key);
+            Values.Remove(key);
+        }
+
+        /// <summary>
         /// Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
         /// </summary>
         public bool IsUndefined(DependencyObject key)
@@ -128,14 +137,6 @@ namespace Delight
             Defaults[template] = defaultValue;
         }
 
-        /// <summary>
-        /// Clears run-time values for the specified dependency object.
-        /// </summary>
-        public void Clear(DependencyObject key)
-        {
-            Values.Remove(key);            
-        }
-
         #endregion
 
         #region Constructor
@@ -168,6 +169,10 @@ namespace Delight
         #region Methods
 
         public virtual void Initialize(DependencyObject key)
+        {
+        }
+
+        public virtual void ClearRuntimeValues(DependencyObject key)
         {
         }
 

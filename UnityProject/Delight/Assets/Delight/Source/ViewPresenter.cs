@@ -16,14 +16,14 @@ namespace Delight
 
         public string ViewTypeName;
         public string ViewTypeNamespace = "Delight";
-        public bool LoadOnAwake = true;
+        public bool LoadOnStart = true;
         private View _view;
 
         #endregion
 
         #region Methods
 
-        public async void Awake()
+        public async void Start()
         {
             var type = TypeHelper.GetType(ViewTypeName, ViewTypeNamespace);
 
@@ -38,7 +38,7 @@ namespace Delight
                 return;
             }
 
-            if (LoadOnAwake)
+            if (LoadOnStart)
             {
                 var sw2 = System.Diagnostics.Stopwatch.StartNew();
                 await _view.LoadAsync();
