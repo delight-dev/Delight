@@ -8,9 +8,9 @@ using System.Globalization;
 namespace Delight
 {
     /// <summary>
-    /// Sprite value converter.
+    /// Sprite asset value converter.
     /// </summary>
-    public class SpriteValueConverter : ValueConverter<UnityEngine.Sprite>
+    public class SpriteAssetValueConverter : ValueConverter<SpriteAsset>
     {
         #region Methods
 
@@ -25,7 +25,7 @@ namespace Delight
         /// <summary>
         /// Converts value from string.
         /// </summary>
-        public override UnityEngine.Sprite Convert(string stringValue)
+        public override SpriteAsset Convert(string stringValue)
         {
             return null;
         }
@@ -33,10 +33,10 @@ namespace Delight
         /// <summary>
         /// Converts value from object.
         /// </summary>
-        public override UnityEngine.Sprite Convert(object objectValue)
+        public override SpriteAsset Convert(object objectValue)
         {
             if (objectValue == null)
-                return default(UnityEngine.Sprite);
+                return default(SpriteAsset);
 
             return null;
         }

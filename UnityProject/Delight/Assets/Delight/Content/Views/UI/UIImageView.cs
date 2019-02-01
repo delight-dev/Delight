@@ -19,6 +19,12 @@ namespace Delight
             if (IsBackgroundVisible())
             {
                 Image = GameObject.AddComponent<UnityEngine.UI.Image>();
+
+                if (BackgroundColorProperty.IsUndefined(this))
+                {
+                    // TODO copy logic from Image view
+                    BackgroundColor = Color.clear;
+                }
             }
         }
 

@@ -122,11 +122,11 @@ namespace Delight
             set { Label.Color = value; }
         }
 
-        public readonly static DependencyProperty AlphaProperty = Label.AlphaProperty;
-        public System.Single Alpha
+        public readonly static DependencyProperty TextMeshProUGUIAlphaProperty = Label.TextMeshProUGUIAlphaProperty;
+        public System.Single TextMeshProUGUIAlpha
         {
-            get { return Label.Alpha; }
-            set { Label.Alpha = value; }
+            get { return Label.TextMeshProUGUIAlpha; }
+            set { Label.TextMeshProUGUIAlpha = value; }
         }
 
         public readonly static DependencyProperty EnableVertexGradientProperty = Label.EnableVertexGradientProperty;
@@ -589,6 +589,27 @@ namespace Delight
         {
             get { return Label.DisableLayoutUpdate; }
             set { Label.DisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty LabelAlphaProperty = Label.AlphaProperty;
+        public System.Single LabelAlpha
+        {
+            get { return Label.Alpha; }
+            set { Label.Alpha = value; }
+        }
+
+        public readonly static DependencyProperty LabelIsVisibleProperty = Label.IsVisibleProperty;
+        public System.Boolean LabelIsVisible
+        {
+            get { return Label.IsVisible; }
+            set { Label.IsVisible = value; }
+        }
+
+        public readonly static DependencyProperty LabelRaycastBlockModeProperty = Label.RaycastBlockModeProperty;
+        public Delight.RaycastBlockMode LabelRaycastBlockMode
+        {
+            get { return Label.RaycastBlockMode; }
+            set { Label.RaycastBlockMode = value; }
         }
 
         public readonly static DependencyProperty LabelLoadModeProperty = Label.LoadModeProperty;

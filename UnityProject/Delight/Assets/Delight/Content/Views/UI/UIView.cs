@@ -75,6 +75,12 @@ namespace Delight
                 case nameof(OffsetFromParent):
                     OffsetChanged();
                     break;
+
+                case nameof(Alpha):
+                case nameof(RaycastBlockMode):
+                case nameof(IsVisible):
+                    VisibilityChanged();
+                    break;
             }
         }
 
@@ -85,7 +91,8 @@ namespace Delight
         {
             base.AfterLoad();
 
-            // update layout
+            // update layout and visibility
+            VisibilityChanged();
             UpdateLayout(false);
         }
 
@@ -246,6 +253,44 @@ namespace Delight
             RectTransform.anchoredPosition = new Vector2(
                 RectTransform.offsetMin.x / 2.0f + RectTransform.offsetMax.x / 2.0f,
                 RectTransform.offsetMin.y / 2.0f + RectTransform.offsetMax.y / 2.0f);
+        }
+        
+        /// <summary>
+        /// Called when the visibility of the view has changed. 
+        /// </summary>
+        protected virtual void VisibilityChanged()
+        {
+            if (AlphaProperty.IsUndefined(this) && 
+                IsVisibleProperty.IsUndefined(this) && 
+                RaycastBlockModeProperty.IsUndefined(this))
+                return;
+
+            // to change alpha, visibility and raycast we need a canvas group attached
+            if (CanvasGroup == null)
+            {
+                var canvasGroup = GameObject.GetComponent<CanvasGroup>();
+                CanvasGroup = canvasGroup ?? GameObject.AddComponent<CanvasGroup>();
+            }
+
+            // set alpha value
+            var alpha = AlphaProperty.IsUndefined(this) ? 1 : Alpha;
+            CanvasGroup.alpha = IsVisible ? alpha : 0;
+
+            // set raycast block mode
+            if (RaycastBlockMode == RaycastBlockMode.Always)
+            {
+                CanvasGroup.blocksRaycasts = true;
+            }
+            else if (RaycastBlockMode == RaycastBlockMode.Never)
+            {
+                CanvasGroup.blocksRaycasts = false;
+            }
+            else
+            {
+                CanvasGroup.blocksRaycasts = (IsVisible && alpha > 0);
+            }
+
+            CanvasGroup.interactable = IsVisible && alpha > 0;
         }
 
         #endregion

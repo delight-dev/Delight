@@ -10,232 +10,119 @@ namespace Delight
 {
     public partial class Image
     {
-        #region Properties
-
-        public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> SpriteProperty = 
-            new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("Sprite",
-            x => x.Image, (x, y) => x.sprite = y.UnityObject);
-        public SpriteAsset Sprite
+        /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
         {
-            get { return SpriteProperty.GetValue(this); }
-            set { SpriteProperty.SetValue(this, value); }
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(Color): // TODO implement
+                    break;
+            }
         }
 
-        private SpriteAsset SpriteAsset; 
-        public readonly static DependencyProperty<string> SpriteIdProperty = new DependencyProperty<string>("SpriteId");
-        public string SpriteId
-        {
-            get { return SpriteIdProperty.GetValue(this); }
-            set { SpriteIdProperty.SetValue(this, value); }
-        }
-        
-        #endregion
+        // 1. whenever the sprite asset changes or on load we want to 
+        //    1.1. unregister listeners to old sprite asset
+        //    1.2. register listeners to new sprite asset
+        //    1.3. initiate load of sprite object
+        //    1.4. in the callback map value to our ImageComponent.sprite
+        // 2. whenever we unload the view
+        //    2.1. unregister listeners to sprite asset
+        // find a nice construct to automate these operations
 
         protected override void AfterLoad()
         {
             base.AfterLoad();
 
-            // this is perhaps a situation where an observable is desired, a sprite asset observable that can be subscribed to
+            RegisterAssetListeners();
         }
-    }
 
-    /// <summary>
-    /// Dependency property that maps to another property or field.
-    /// </summary>
-    public class MappedAssetDependencyProperty<T, TObject, TParent> : DependencyProperty
-        where TParent : DependencyObject
-        where T : AssetObject
-    {
-        #region Fields
+        protected override void AfterUnload()
+        {
+            base.AfterUnload();
 
-        public Dictionary<DependencyObject, T> Values; // TODO here we want a weak keyed dictionary
-        public Dictionary<Template, T> Defaults;
-        public Func<TParent, TObject> ObjectGetter;
-        public Action<TObject, T> Setter;
+            UnregisterAssetListeners();
+        }
 
-        #endregion
+        public virtual void UnregisterAssetListeners()
+        {
+            if (Sprite != null) Sprite.PropertyChanged -= SpritePropertyChanged;
+        }
 
-        #region Methods
+        public virtual void RegisterAssetListeners()
+        {
+            if (Sprite != null)
+            {
+                Sprite.PropertyChanged -= SpritePropertyChanged;
+                Sprite.PropertyChanged += SpritePropertyChanged;
+                if (Sprite.UnityObject == null)
+                {
+                    Sprite?.GetAsync();
+                }
+                else
+                {
+                    SpritePropertyChanged(Sprite, nameof(Sprite.UnityObject));
+                }
+            }
+        }
+
+        protected virtual void SpritePropertyChanged(object source, string propertyName)
+        {
+            Debug.Log("nameof(SpriteAsset.UnityObject) = " + nameof(SpriteAsset.UnityObject));
+            if (propertyName != "UnityObject") return;
+            if (ImageComponent == null)
+            {
+                ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+            }
+
+            ImageComponent.sprite = Sprite.UnityObject;
+            ImageChanged();
+        }
 
         /// <summary>
-        /// Initializes the mapped dependency property.
+        /// Called whenever properties affecting the image are changed. 
         /// </summary>
-        public override void Initialize(DependencyObject key)
+        public virtual void ImageChanged()
         {
-            base.Initialize(key);
-            if (Values.ContainsKey(key))
-            {
+            if (ImageComponent == null)
                 return;
-            }
 
-            
-        }
-
-        /// <summary>
-        /// Gets mapped dependency property value for specified instance.
-        /// </summary>
-        public T GetValue(DependencyObject key)
-        {
-            T currentValue;
-            if (Values.TryGetValue(key, out currentValue))
+            if (ColorProperty.IsUndefined(this))
             {
-                return currentValue;
-            }
-            else
-            {
-                return GetDefault(key.Template);
-            }
-        }
-
-        /// <summary>
-        /// Sets dependency property value for specified instance.
-        /// </summary>
-        public void SetValue(DependencyObject key, T value, bool notifyObservers = true)
-        {
-            // get old value
-            T oldValue;
-            T currentValue;
-            if (Values.TryGetValue(key, out currentValue))
-            {
-                oldValue = currentValue;
-            }
-            else
-            {
-                oldValue = GetDefault(key.Template);
-            }
-
-            // has value changed?
-            if (oldValue != null ? oldValue.Equals(value) : value == null)
-            {
-                return; // no.
-            }
-
-            // attach change handlers
-            if (oldValue != null)
-            {
-                oldValue.PropertyChanged -= AssetChanged;
-            }
-
-            if (value != null)
-            {
-                value.PropertyChanged += AssetChanged;
-            }
-
-            // set value
-            if (currentValue != null)
-            {
-                Values[key] = value;
-            }
-            else
-            {
-                Values.Add(key, value);
-            }
-
-            // trigger property-changed event
-            key.OnPropertyChanged(PropertyName);
-
-            //var target = ObjectGetter((TParent)key);
-            //if (target == null)
-            //    return;
-
-            //// has value changed?
-            //T oldValue = Getter(target);
-            //if (oldValue != null ? oldValue.Equals(value) : value == null)
-            //{
-            //    return; // no.
-            //}
-
-            //Setter(target, value);
-
-            //// trigger property-changed event
-            //key.OnPropertyChanged(PropertyName);
-        }
-
-        private void AssetChanged(object source, string propertyName)
-        {
-            // here we have a problem because we don't have access to the dependency object, only the resource
-            // and we have no link between the two. 
-
-            var asset = source as AssetObject;
-        }
-
-        /// <summary>
-        /// Clears run-time values for the specified instance.
-        /// </summary>
-        public override void ClearRuntimeValues(DependencyObject key)
-        {
-            base.ClearRuntimeValues(key);
-            Values.Remove(key);
-        }
-
-        /// <summary>
-        /// Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
-        /// </summary>
-        public bool IsUndefined(DependencyObject key)
-        {
-            if (Values.ContainsKey(key))
-                return false;
-
-            var template = key.Template;
-            while (true)
-            {
-                if (Defaults.ContainsKey(template))
+                if (ImageComponent.sprite != null || ImageComponent.overrideSprite != null)
                 {
-                    return false;
+                    // use white color by default if image is set
+                    ImageComponent.color = Color.white;
                 }
-
-                template = template.BasedOn;
-                if (template == ViewTemplates.Default)
+                else
                 {
-                    return true;
+                    // use clear color by default if image isn't set
+                    ImageComponent.color = Color.clear;
+                }
+            }
+
+            // disable raycast blocks if image is transparent
+            ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+        }
+
+        // TODO experminental code, remove
+        public void RegisterAssetListener<T>(AssetObject<T> assetObject) where T : UnityEngine.Object
+        {
+            if (assetObject != null)
+            {
+                assetObject.PropertyChanged += AssetObjectPropertyChanged;
+                if (assetObject.UnityObject != null)
+                {
+                    // trigger property changed
+                    AssetObjectPropertyChanged(assetObject, nameof(AssetObject<T>.UnityObject));
                 }
             }
         }
 
-        /// <summary>
-        /// Gets default value from type.
-        /// </summary>
-        public T GetDefault(Template template)
+        private void AssetObjectPropertyChanged(object source, string propertyName)
         {
-            while (true)
-            {
-                T defaultValue;
-                if (Defaults.TryGetValue(template, out defaultValue))
-                {
-                    return defaultValue;
-                }
-
-                template = template.BasedOn;
-                if (template == ViewTemplates.Default)
-                {
-                    return default(T);
-                }
-            }
         }
-
-        /// <summary>
-        /// Sets default value for type.
-        /// </summary>
-        public void SetDefault(Template template, T defaultValue)
-        {
-            Defaults[template] = defaultValue;
-        }
-
-        #endregion        
-
-        #region Constructor
-
-        /// <summary>
-        /// Initializes a new instance of the class.
-        /// </summary>
-        public MappedAssetDependencyProperty(string propertyName, Func<TParent, TObject> objectGetter, Action<TObject, T> setter)
-        {
-            Defaults = new Dictionary<Template, T>();
-            Setter = setter;
-            ObjectGetter = objectGetter;
-            PropertyName = propertyName;
-        }
-
-        #endregion
     }
 }

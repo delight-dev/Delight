@@ -339,7 +339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ViewTypeName: AssetManagementTest
   ViewTypeNamespace: Delight
-  LoadOnAwake: 1
+  LoadOnStart: 1
 --- !u!1 &1503426672
 GameObject:
   m_ObjectHideFlags: 0

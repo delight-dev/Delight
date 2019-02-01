@@ -40,6 +40,10 @@ namespace Delight
             dependencyProperties.Add(PivotProperty);
             dependencyProperties.Add(LayoutRootProperty);
             dependencyProperties.Add(DisableLayoutUpdateProperty);
+            dependencyProperties.Add(AlphaProperty);
+            dependencyProperties.Add(IsVisibleProperty);
+            dependencyProperties.Add(RaycastBlockModeProperty);
+            dependencyProperties.Add(CanvasGroupProperty);
         }
 
         #endregion
@@ -128,6 +132,34 @@ namespace Delight
         {
             get { return DisableLayoutUpdateProperty.GetValue(this); }
             set { DisableLayoutUpdateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Single> AlphaProperty = new DependencyProperty<System.Single>("Alpha");
+        public System.Single Alpha
+        {
+            get { return AlphaProperty.GetValue(this); }
+            set { AlphaProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsVisibleProperty = new DependencyProperty<System.Boolean>("IsVisible");
+        public System.Boolean IsVisible
+        {
+            get { return IsVisibleProperty.GetValue(this); }
+            set { IsVisibleProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.RaycastBlockMode> RaycastBlockModeProperty = new DependencyProperty<Delight.RaycastBlockMode>("RaycastBlockMode");
+        public Delight.RaycastBlockMode RaycastBlockMode
+        {
+            get { return RaycastBlockModeProperty.GetValue(this); }
+            set { RaycastBlockModeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.CanvasGroup> CanvasGroupProperty = new DependencyProperty<UnityEngine.CanvasGroup>("CanvasGroup");
+        public UnityEngine.CanvasGroup CanvasGroup
+        {
+            get { return CanvasGroupProperty.GetValue(this); }
+            set { CanvasGroupProperty.SetValue(this, value); }
         }
 
         #endregion

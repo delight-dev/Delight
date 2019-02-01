@@ -17,8 +17,10 @@ namespace Delight
     {
         #region Fields
 
-        public delegate void ViewAction(DependencyObject sender, object eventArgs);        
-        
+        public delegate void ViewAction(DependencyObject sender, object eventArgs);
+        public delegate void LoadedEventHandler(object source);
+        public event LoadedEventHandler Loaded;
+
         protected View _parent;
         protected View _layoutParent;
         protected List<View> _layoutChildren;
@@ -140,6 +142,8 @@ namespace Delight
 
             _isLoaded = true;
             AfterLoad();
+
+            Loaded?.Invoke(this);
         }
 
         /// <summary>
@@ -176,6 +180,8 @@ namespace Delight
 
             _isLoaded = true;
             AfterLoad();
+
+            Loaded?.Invoke(this);
         }
 
         /// <summary>

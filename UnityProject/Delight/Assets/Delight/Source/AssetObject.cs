@@ -29,7 +29,12 @@ namespace Delight
     {
         #region Properties
 
-        public T UnityObject { get; set; }
+        private T _unityObject;
+        public T UnityObject
+        {
+            get { return _unityObject; }
+            set { SetProperty(ref _unityObject, value); }
+        }
 
         private readonly SemaphoreLocker _locker = new SemaphoreLocker();
 
@@ -60,11 +65,12 @@ namespace Delight
                 await Task.Delay(2500);
 
                 // see if sprite is in bundle 
-
                 var unityObject = unityAssetBundle.LoadAsset<T>(Id);
-
-                Debug.Log(String.Format("Assets in bundle \"{0}\": {1}", AssetBundleId, string.Join(",", unityAssetBundle.GetAllAssetNames())));
-                Debug.Log(String.Format("unityAssetBundle.LoadAsset<T>({0}) = {1}", Id, unityObject));
+                if (unityObject == null)
+                {
+                    Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
+                    return;
+                }
 
                 UnityObject = unityObject;
             });

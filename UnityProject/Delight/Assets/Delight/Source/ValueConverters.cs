@@ -65,8 +65,9 @@ namespace Delight
             Converters.Add("Delight.ElementOrientation", new EnumValueConverter<ElementOrientation>());
             Converters.Add("Delight.LoadMode", new EnumValueConverter<LoadMode>());
             Converters.Add("UnityEngine.RenderMode", new EnumValueConverter<UnityEngine.RenderMode>());
+            Converters.Add("Delight.RaycastBlockMode", new EnumValueConverter<RaycastBlockMode>());
             Converters.Add("TMPro.TextAlignmentOptions", new EnumValueConverter<TMPro.TextAlignmentOptions>());
-            Converters.Add("UnityEngine.Sprite", new SpriteValueConverter());            
+            Converters.Add("Delight.SpriteAsset", new SpriteAssetValueConverter());
         }
 
         #endregion

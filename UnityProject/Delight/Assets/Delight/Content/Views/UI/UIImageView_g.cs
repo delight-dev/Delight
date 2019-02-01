@@ -199,7 +199,6 @@ namespace Delight
 #endif
                 {
                     _uIImageView = new Template(UIViewTemplates.UIView);
-                    Delight.UIImageView.BackgroundColorProperty.SetDefault(_uIImageView, new UnityEngine.Color(0f, 0f, 0f, 0f));
                 }
                 return _uIImageView;
             }

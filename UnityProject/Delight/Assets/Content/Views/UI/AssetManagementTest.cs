@@ -13,15 +13,28 @@ namespace Delight
 {
     public partial class AssetManagementTest
     {
-        public AssetBundleManager abm;
-         
+        public override void AfterInitialize()
+        {
+            base.AfterInitialize();
+
+            ImageGroup.Loaded += ImageGroup_Loaded;
+        }
+
         public void Test1()
         {
-            Debug.Log("Calling LoadFrame1Sprite()");
-            LoadFrame1Sprite();
+            LoadProgress = "Loading views...";
+            ImageGroup.LoadAsync();
+        }
 
-            //Debug.Log("Calling LoadAssetBundle1()");
-            //LoadAssetBundle1();
+        public void Test2()
+        {
+            ImageGroup.Unload();
+            LoadProgress = "";
+        }
+
+        private void ImageGroup_Loaded(object source)
+        {
+            LoadProgress = "Views loaded.";
         }
 
         public async void LoadFrame1Sprite()
@@ -30,8 +43,8 @@ namespace Delight
             var sprite = await Assets.Sprites.Frame1.GetAsync();
             Debug.Log("Frame1.GetAsync() result: " + sprite);
 
-            TestImage.Image.sprite = sprite;
-            TestImage.Image.type = UnityEngine.UI.Image.Type.Sliced;
+            //TestImage.ImageComponent.sprite = sprite;
+            //TestImage.ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
         }
 
         public async void LoadAssetBundle1()
@@ -39,11 +52,6 @@ namespace Delight
             Debug.Log("Bundle1.GetAsync()");
             var bundle = await Assets.AssetBundles.Bundle1.GetAsync();
             Debug.Log("Bundle1.GetAsync() result: " + bundle);
-        }
-
-        public void Test2()
-        {
-            BigSlowView1.Unload();
         }
 
         protected override void BeforeLoad()
@@ -60,6 +68,7 @@ namespace Delight
 
             _updateTimer = Observable.Interval(TimeSpan.FromMilliseconds(10)).Subscribe(x =>
             {
+                // print timer to see if UI thread stalls or not
                 TimeString = DateTime.Now.ToString("mm:ss.ff");
             });
 

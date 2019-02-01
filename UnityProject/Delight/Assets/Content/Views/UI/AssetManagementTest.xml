@@ -1,34 +1,31 @@
 <AssetManagementTest xmlns="Delight" BasedOn="LayoutRoot" TimeString="t:string" 
-                     LoadedAssetsString="t:string" LoadedAssetBundlesString="t:string">
+                     LoadedAssetsString="t:string" LoadedAssetBundlesString="t:string" LoadProgress="t:string">
   
   <Label Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
   <Label Text="{LoadedAssetsString}" Width="400" Alignment="TopRight" TextAlignment="TopLeft" />
   <Label Text="{LoadedAssetBundlesString}" Width="400" Alignment="TopLeft" TextAlignment="TopLeft" />
 
-  <Group Orientation="Horizontal">
-    <Group Spacing="10" Width="500">
-      <Button Text="Test 1" Click="Test1" />
-      <Button Text="Test 2" Click="Test2" /> 
+  <Group>
+    <Group Spacing="10" Orientation="Horizontal">
+      <Button Text="Load" Click="Test1" />
+      <Button Text="Unload" Click="Test2" /> 
     </Group>
     
-    <BigSlowView LoadMode="OnDemand" />
-
-    <Image Id="TestImage" Width="200" Height="200" BackgroundColor="White" />
-
     <!-- Three sets of images we want to load on-demand -->
-    <!--<Group>
-      <Group Id="ImageSet1">
-        <Image Sprite="Frame1" /> 
-        <Image Sprite="Frame2" />
+    <Group Id="ImageGroup" Orientation="Horizontal" Spacing="5" LoadMode="OnDemand">
+      <Group Id="ImageSet1" Spacing="5">
+        <Image Sprite="Frame1" Size="150,150" />
+        <Image Sprite="Frame2" Size="150,150" />
+      </Group>  
+      <Group Id="ImageSet2" Spacing="5">
+        <Image Sprite="Frame3" Size="150,150" />
+        <Image Sprite="Frame4" Size="150,150" />
       </Group>
-      <Group Id="ImageSet2">
-        <Image Sprite="Frame3" />
-        <Image Sprite="Frame4" />
-      </Group>
-      <Group Id="ImageSet3">
-        <Image Sprite="Frame2" />
-        <Image Sprite="Frame3" />
+      <Group Id="ImageSet3" Spacing="5">
+        <Image Sprite="Frame2" Size="150,150" />
+        <Image Sprite="Frame3" Size="150,150" />
       </Group> 
-    </Group>-->
+    </Group>
+    <Label Text="{LoadProgress}" Width="400" Alignment="Center" TextAlignment="Center" />
   </Group>
 </AssetManagementTest> 

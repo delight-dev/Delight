@@ -1,3 +1,2 @@
-<UIImageView xmlns="Delight" BasedOn="UIView" Image="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" m.Image="Background"
-             BackgroundColor="Clear">
+<UIImageView xmlns="Delight" BasedOn="UIView" Image="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" m.Image="Background">
 </UIImageView> 

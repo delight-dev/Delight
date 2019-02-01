@@ -101,7 +101,6 @@ namespace Delight
         }
 
         // TODO implement Activate/Deactivate
-        // TODO implement Alpha, IsVisible, RaycastBlockMode, etc.
 
         #endregion
 

@@ -39,7 +39,7 @@ namespace Delight
             dependencyProperties.Add(FontMaterialProperty);
             dependencyProperties.Add(FontMaterialsProperty);
             dependencyProperties.Add(ColorProperty);
-            dependencyProperties.Add(AlphaProperty);
+            dependencyProperties.Add(TextMeshProUGUIAlphaProperty);
             dependencyProperties.Add(EnableVertexGradientProperty);
             dependencyProperties.Add(ColorGradientProperty);
             dependencyProperties.Add(ColorGradientPresetProperty);
@@ -178,11 +178,11 @@ namespace Delight
             set { ColorProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label> AlphaProperty = new MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label>("Alpha", x => x.TextMeshProUGUI, x => x.alpha, (x, y) => x.alpha = y);
-        public System.Single Alpha
+        public readonly static MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label> TextMeshProUGUIAlphaProperty = new MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label>("TextMeshProUGUIAlpha", x => x.TextMeshProUGUI, x => x.alpha, (x, y) => x.alpha = y);
+        public System.Single TextMeshProUGUIAlpha
         {
-            get { return AlphaProperty.GetValue(this); }
-            set { AlphaProperty.SetValue(this, value); }
+            get { return TextMeshProUGUIAlphaProperty.GetValue(this); }
+            set { TextMeshProUGUIAlphaProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> EnableVertexGradientProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("EnableVertexGradient", x => x.TextMeshProUGUI, x => x.enableVertexGradient, (x, y) => x.enableVertexGradient = y);

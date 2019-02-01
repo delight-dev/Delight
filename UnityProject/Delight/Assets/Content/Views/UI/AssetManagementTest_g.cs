@@ -68,8 +68,27 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "Test2");
             });
-            BigSlowView1 = new BigSlowView(this, Group1, "BigSlowView1", BigSlowView1Template);
-            TestImage = new Image(this, Group1, "TestImage", TestImageTemplate);
+            ImageGroup = new Group(this, Group1, "ImageGroup", ImageGroupTemplate);
+            ImageSet1 = new Group(this, ImageGroup, "ImageSet1", ImageSet1Template);
+            Image1 = new Image(this, ImageSet1, "Image1", Image1Template);
+            Image2 = new Image(this, ImageSet1, "Image2", Image2Template);
+            ImageSet2 = new Group(this, ImageGroup, "ImageSet2", ImageSet2Template);
+            Image3 = new Image(this, ImageSet2, "Image3", Image3Template);
+            Image4 = new Image(this, ImageSet2, "Image4", Image4Template);
+            ImageSet3 = new Group(this, ImageGroup, "ImageSet3", ImageSet3Template);
+            Image5 = new Image(this, ImageSet3, "Image5", Image5Template);
+            Image6 = new Image(this, ImageSet3, "Image6", Image6Template);
+            Label4 = new Label(this, Group1, "Label4", Label4Template);
+
+            // binding <Label Text="{LoadProgress}">
+            Bindings.Add(new Binding(
+                new List<string> { "LoadProgress" },
+                new List<string> { "Label4", "Text" },
+                new List<Func<BindableObject>> { () => this },
+                new List<Func<BindableObject>> { () => this, () => Label4 },
+                () => Label4.Text = LoadProgress,
+                () => { }
+            ));
             this.AfterInitializeInternal();
         }
 
@@ -85,6 +104,7 @@ namespace Delight
             dependencyProperties.Add(TimeStringProperty);
             dependencyProperties.Add(LoadedAssetsStringProperty);
             dependencyProperties.Add(LoadedAssetBundlesStringProperty);
+            dependencyProperties.Add(LoadProgressProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Label2Property);
@@ -99,10 +119,28 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
-            dependencyProperties.Add(BigSlowView1Property);
-            dependencyProperties.Add(BigSlowView1TemplateProperty);
-            dependencyProperties.Add(TestImageProperty);
-            dependencyProperties.Add(TestImageTemplateProperty);
+            dependencyProperties.Add(ImageGroupProperty);
+            dependencyProperties.Add(ImageGroupTemplateProperty);
+            dependencyProperties.Add(ImageSet1Property);
+            dependencyProperties.Add(ImageSet1TemplateProperty);
+            dependencyProperties.Add(Image1Property);
+            dependencyProperties.Add(Image1TemplateProperty);
+            dependencyProperties.Add(Image2Property);
+            dependencyProperties.Add(Image2TemplateProperty);
+            dependencyProperties.Add(ImageSet2Property);
+            dependencyProperties.Add(ImageSet2TemplateProperty);
+            dependencyProperties.Add(Image3Property);
+            dependencyProperties.Add(Image3TemplateProperty);
+            dependencyProperties.Add(Image4Property);
+            dependencyProperties.Add(Image4TemplateProperty);
+            dependencyProperties.Add(ImageSet3Property);
+            dependencyProperties.Add(ImageSet3TemplateProperty);
+            dependencyProperties.Add(Image5Property);
+            dependencyProperties.Add(Image5TemplateProperty);
+            dependencyProperties.Add(Image6Property);
+            dependencyProperties.Add(Image6TemplateProperty);
+            dependencyProperties.Add(Label4Property);
+            dependencyProperties.Add(Label4TemplateProperty);
         }
 
         #endregion
@@ -128,6 +166,13 @@ namespace Delight
         {
             get { return LoadedAssetBundlesStringProperty.GetValue(this); }
             set { LoadedAssetBundlesStringProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.String> LoadProgressProperty = new DependencyProperty<System.String>("LoadProgress");
+        public System.String LoadProgress
+        {
+            get { return LoadProgressProperty.GetValue(this); }
+            set { LoadProgressProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -228,32 +273,158 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<BigSlowView> BigSlowView1Property = new DependencyProperty<BigSlowView>("BigSlowView1");
-        public BigSlowView BigSlowView1
+        public readonly static DependencyProperty<Group> ImageGroupProperty = new DependencyProperty<Group>("ImageGroup");
+        public Group ImageGroup
         {
-            get { return BigSlowView1Property.GetValue(this); }
-            set { BigSlowView1Property.SetValue(this, value); }
+            get { return ImageGroupProperty.GetValue(this); }
+            set { ImageGroupProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> BigSlowView1TemplateProperty = new DependencyProperty<Template>("BigSlowView1Template");
-        public Template BigSlowView1Template
+        public readonly static DependencyProperty<Template> ImageGroupTemplateProperty = new DependencyProperty<Template>("ImageGroupTemplate");
+        public Template ImageGroupTemplate
         {
-            get { return BigSlowView1TemplateProperty.GetValue(this); }
-            set { BigSlowView1TemplateProperty.SetValue(this, value); }
+            get { return ImageGroupTemplateProperty.GetValue(this); }
+            set { ImageGroupTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Image> TestImageProperty = new DependencyProperty<Image>("TestImage");
-        public Image TestImage
+        public readonly static DependencyProperty<Group> ImageSet1Property = new DependencyProperty<Group>("ImageSet1");
+        public Group ImageSet1
         {
-            get { return TestImageProperty.GetValue(this); }
-            set { TestImageProperty.SetValue(this, value); }
+            get { return ImageSet1Property.GetValue(this); }
+            set { ImageSet1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> TestImageTemplateProperty = new DependencyProperty<Template>("TestImageTemplate");
-        public Template TestImageTemplate
+        public readonly static DependencyProperty<Template> ImageSet1TemplateProperty = new DependencyProperty<Template>("ImageSet1Template");
+        public Template ImageSet1Template
         {
-            get { return TestImageTemplateProperty.GetValue(this); }
-            set { TestImageTemplateProperty.SetValue(this, value); }
+            get { return ImageSet1TemplateProperty.GetValue(this); }
+            set { ImageSet1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
+        public Image Image1
+        {
+            get { return Image1Property.GetValue(this); }
+            set { Image1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image1TemplateProperty = new DependencyProperty<Template>("Image1Template");
+        public Template Image1Template
+        {
+            get { return Image1TemplateProperty.GetValue(this); }
+            set { Image1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image2Property = new DependencyProperty<Image>("Image2");
+        public Image Image2
+        {
+            get { return Image2Property.GetValue(this); }
+            set { Image2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image2TemplateProperty = new DependencyProperty<Template>("Image2Template");
+        public Template Image2Template
+        {
+            get { return Image2TemplateProperty.GetValue(this); }
+            set { Image2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Group> ImageSet2Property = new DependencyProperty<Group>("ImageSet2");
+        public Group ImageSet2
+        {
+            get { return ImageSet2Property.GetValue(this); }
+            set { ImageSet2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ImageSet2TemplateProperty = new DependencyProperty<Template>("ImageSet2Template");
+        public Template ImageSet2Template
+        {
+            get { return ImageSet2TemplateProperty.GetValue(this); }
+            set { ImageSet2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image3Property = new DependencyProperty<Image>("Image3");
+        public Image Image3
+        {
+            get { return Image3Property.GetValue(this); }
+            set { Image3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image3TemplateProperty = new DependencyProperty<Template>("Image3Template");
+        public Template Image3Template
+        {
+            get { return Image3TemplateProperty.GetValue(this); }
+            set { Image3TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image4Property = new DependencyProperty<Image>("Image4");
+        public Image Image4
+        {
+            get { return Image4Property.GetValue(this); }
+            set { Image4Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image4TemplateProperty = new DependencyProperty<Template>("Image4Template");
+        public Template Image4Template
+        {
+            get { return Image4TemplateProperty.GetValue(this); }
+            set { Image4TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Group> ImageSet3Property = new DependencyProperty<Group>("ImageSet3");
+        public Group ImageSet3
+        {
+            get { return ImageSet3Property.GetValue(this); }
+            set { ImageSet3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ImageSet3TemplateProperty = new DependencyProperty<Template>("ImageSet3Template");
+        public Template ImageSet3Template
+        {
+            get { return ImageSet3TemplateProperty.GetValue(this); }
+            set { ImageSet3TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image5Property = new DependencyProperty<Image>("Image5");
+        public Image Image5
+        {
+            get { return Image5Property.GetValue(this); }
+            set { Image5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image5TemplateProperty = new DependencyProperty<Template>("Image5Template");
+        public Template Image5Template
+        {
+            get { return Image5TemplateProperty.GetValue(this); }
+            set { Image5TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image6Property = new DependencyProperty<Image>("Image6");
+        public Image Image6
+        {
+            get { return Image6Property.GetValue(this); }
+            set { Image6Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image6TemplateProperty = new DependencyProperty<Template>("Image6Template");
+        public Template Image6Template
+        {
+            get { return Image6TemplateProperty.GetValue(this); }
+            set { Image6TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
+        public Label Label4
+        {
+            get { return Label4Property.GetValue(this); }
+            set { Label4Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
+        public Template Label4Template
+        {
+            get { return Label4TemplateProperty.GetValue(this); }
+            set { Label4TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -292,8 +463,17 @@ namespace Delight
                     Delight.AssetManagementTest.Group2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestGroup2);
                     Delight.AssetManagementTest.Button1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton1);
                     Delight.AssetManagementTest.Button2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton2);
-                    Delight.AssetManagementTest.BigSlowView1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestBigSlowView1);
-                    Delight.AssetManagementTest.TestImageTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestTestImage);
+                    Delight.AssetManagementTest.ImageGroupTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageGroup);
+                    Delight.AssetManagementTest.ImageSet1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet1);
+                    Delight.AssetManagementTest.Image1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage1);
+                    Delight.AssetManagementTest.Image2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage2);
+                    Delight.AssetManagementTest.ImageSet2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet2);
+                    Delight.AssetManagementTest.Image3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage3);
+                    Delight.AssetManagementTest.Image4TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage4);
+                    Delight.AssetManagementTest.ImageSet3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet3);
+                    Delight.AssetManagementTest.Image5TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage5);
+                    Delight.AssetManagementTest.Image6TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage6);
+                    Delight.AssetManagementTest.Label4TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel4);
                 }
                 return _assetManagementTest;
             }
@@ -371,7 +551,6 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestGroup1 = new Template(GroupTemplates.Group);
-                    Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementOrientation.Horizontal);
                 }
                 return _assetManagementTestGroup1;
             }
@@ -390,7 +569,7 @@ namespace Delight
                 {
                     _assetManagementTestGroup2 = new Template(GroupTemplates.Group);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.WidthProperty.SetDefault(_assetManagementTestGroup2, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup2, Delight.ElementOrientation.Horizontal);
                 }
                 return _assetManagementTestGroup2;
             }
@@ -426,7 +605,7 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton1Label = new Template(ButtonTemplates.ButtonLabel);
-                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton1Label, "Test 1");
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton1Label, "Load");
                 }
                 return _assetManagementTestButton1Label;
             }
@@ -462,47 +641,223 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
-                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton2Label, "Test 2");
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton2Label, "Unload");
                 }
                 return _assetManagementTestButton2Label;
             }
         }
 
-        private static Template _assetManagementTestBigSlowView1;
-        public static Template AssetManagementTestBigSlowView1
+        private static Template _assetManagementTestImageGroup;
+        public static Template AssetManagementTestImageGroup
         {
             get
             {
 #if UNITY_EDITOR
-                if (_assetManagementTestBigSlowView1 == null || _assetManagementTestBigSlowView1.CurrentVersion != Template.Version)
+                if (_assetManagementTestImageGroup == null || _assetManagementTestImageGroup.CurrentVersion != Template.Version)
 #else
-                if (_assetManagementTestBigSlowView1 == null)
+                if (_assetManagementTestImageGroup == null)
 #endif
                 {
-                    _assetManagementTestBigSlowView1 = new Template(BigSlowViewTemplates.BigSlowView);
-                    Delight.BigSlowView.LoadModeProperty.SetDefault(_assetManagementTestBigSlowView1, Delight.LoadMode.OnDemand);
+                    _assetManagementTestImageGroup = new Template(GroupTemplates.Group);
+                    Delight.Group.OrientationProperty.SetDefault(_assetManagementTestImageGroup, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageGroup, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageGroup, Delight.LoadMode.OnDemand);
                 }
-                return _assetManagementTestBigSlowView1;
+                return _assetManagementTestImageGroup;
             }
         }
 
-        private static Template _assetManagementTestTestImage;
-        public static Template AssetManagementTestTestImage
+        private static Template _assetManagementTestImageSet1;
+        public static Template AssetManagementTestImageSet1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_assetManagementTestTestImage == null || _assetManagementTestTestImage.CurrentVersion != Template.Version)
+                if (_assetManagementTestImageSet1 == null || _assetManagementTestImageSet1.CurrentVersion != Template.Version)
 #else
-                if (_assetManagementTestTestImage == null)
+                if (_assetManagementTestImageSet1 == null)
 #endif
                 {
-                    _assetManagementTestTestImage = new Template(ImageTemplates.Image);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestTestImage, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestTestImage, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Image.BackgroundColorProperty.SetDefault(_assetManagementTestTestImage, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    _assetManagementTestImageSet1 = new Template(GroupTemplates.Group);
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet1, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
-                return _assetManagementTestTestImage;
+                return _assetManagementTestImageSet1;
+            }
+        }
+
+        private static Template _assetManagementTestImage1;
+        public static Template AssetManagementTestImage1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage1 == null || _assetManagementTestImage1.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage1 == null)
+#endif
+                {
+                    _assetManagementTestImage1 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage1, Assets.Sprites["Frame1"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage1, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage1, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage1;
+            }
+        }
+
+        private static Template _assetManagementTestImage2;
+        public static Template AssetManagementTestImage2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage2 == null || _assetManagementTestImage2.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage2 == null)
+#endif
+                {
+                    _assetManagementTestImage2 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage2, Assets.Sprites["Frame2"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage2, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage2, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage2;
+            }
+        }
+
+        private static Template _assetManagementTestImageSet2;
+        public static Template AssetManagementTestImageSet2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImageSet2 == null || _assetManagementTestImageSet2.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImageSet2 == null)
+#endif
+                {
+                    _assetManagementTestImageSet2 = new Template(GroupTemplates.Group);
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet2, new ElementSize(5f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImageSet2;
+            }
+        }
+
+        private static Template _assetManagementTestImage3;
+        public static Template AssetManagementTestImage3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage3 == null || _assetManagementTestImage3.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage3 == null)
+#endif
+                {
+                    _assetManagementTestImage3 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage3, Assets.Sprites["Frame3"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage3, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage3, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage3;
+            }
+        }
+
+        private static Template _assetManagementTestImage4;
+        public static Template AssetManagementTestImage4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage4 == null || _assetManagementTestImage4.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage4 == null)
+#endif
+                {
+                    _assetManagementTestImage4 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage4, Assets.Sprites["Frame4"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage4, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage4, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage4;
+            }
+        }
+
+        private static Template _assetManagementTestImageSet3;
+        public static Template AssetManagementTestImageSet3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImageSet3 == null || _assetManagementTestImageSet3.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImageSet3 == null)
+#endif
+                {
+                    _assetManagementTestImageSet3 = new Template(GroupTemplates.Group);
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet3, new ElementSize(5f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImageSet3;
+            }
+        }
+
+        private static Template _assetManagementTestImage5;
+        public static Template AssetManagementTestImage5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage5 == null || _assetManagementTestImage5.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage5 == null)
+#endif
+                {
+                    _assetManagementTestImage5 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage5, Assets.Sprites["Frame2"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage5, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage5, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage5;
+            }
+        }
+
+        private static Template _assetManagementTestImage6;
+        public static Template AssetManagementTestImage6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestImage6 == null || _assetManagementTestImage6.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestImage6 == null)
+#endif
+                {
+                    _assetManagementTestImage6 = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage6, Assets.Sprites["Frame3"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage6, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage6, new ElementSize(150f, ElementSizeUnit.Pixels));
+                }
+                return _assetManagementTestImage6;
+            }
+        }
+
+        private static Template _assetManagementTestLabel4;
+        public static Template AssetManagementTestLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLabel4 == null || _assetManagementTestLabel4.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLabel4 == null)
+#endif
+                {
+                    _assetManagementTestLabel4 = new Template(LabelTemplates.Label);
+                    Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel4, new ElementSize(400f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel4, Delight.ElementAlignment.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel4, TMPro.TextAlignmentOptions.Center);
+                }
+                return _assetManagementTestLabel4;
             }
         }
 
