@@ -1,2 +1,2 @@
-<Region xmlns="Delight" BasedOn="UIImageView">
+<Region xmlns="Delight" BasedOn="UIImageView" Width="100%" Height="100%">
 </Region> 

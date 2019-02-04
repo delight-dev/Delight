@@ -25,7 +25,7 @@ namespace Delight.Parser
 
         public static string DefaultViewType = "UIView";
         public static string DefaultNamespace = "Delight";
-        private static ContentObjectModel _contentObjectModel;
+        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         #endregion
 
@@ -34,12 +34,10 @@ namespace Delight.Parser
         /// <summary>
         /// Generates code from object model.
         /// </summary>
-        public static void GenerateCode(ContentObjectModel contentObjectModel)
+        public static void GenerateCode()
         {
-            _contentObjectModel = contentObjectModel;
-
             var viewsChecked = new Dictionary<string, bool>();
-            var viewObjects = contentObjectModel.ViewObjects.ToList();
+            var viewObjects = _contentObjectModel.ViewObjects.ToList();
 
             // update views that contain children that needs update
             foreach (var viewObject in viewObjects)
@@ -80,7 +78,7 @@ namespace Delight.Parser
             }
 
             // update all theme objects that are changed
-            foreach (var themeObject in contentObjectModel.ThemeObjects)
+            foreach (var themeObject in _contentObjectModel.ThemeObjects)
             {
                 if (!themeObject.NeedUpdate)
                     continue;
@@ -257,7 +255,7 @@ namespace Delight.Parser
             sb.AppendLine("}");
 
             // write file
-            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
+            var dir = MasterConfigObject.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
             var sourceFile = String.Format("{0}/{1}_g.cs", dir, viewObject.Name);
 
             Debug.Log("Creating " + sourceFile);
@@ -318,7 +316,7 @@ namespace Delight.Parser
             sb.AppendLine("}");
 
             // write file
-            var dir = Configuration.GetFormattedPath(Path.GetDirectoryName(themeObject.FilePath));
+            var dir = MasterConfigObject.GetFormattedPath(Path.GetDirectoryName(themeObject.FilePath));
             var sourceFile = String.Format("{0}/{1}_g.cs", dir, themeObject.Name);
 
             Debug.Log("Creating " + sourceFile);

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -57,9 +58,10 @@ namespace Delight
             {
                 Sprite.PropertyChanged -= SpritePropertyChanged;
                 Sprite.PropertyChanged += SpritePropertyChanged;
+
                 if (Sprite.UnityObject == null)
                 {
-                    Sprite?.GetAsync();
+                    Sprite.LoadAsync();
                 }
                 else
                 {
@@ -70,14 +72,23 @@ namespace Delight
 
         protected virtual void SpritePropertyChanged(object source, string propertyName)
         {
-            Debug.Log("nameof(SpriteAsset.UnityObject) = " + nameof(SpriteAsset.UnityObject));
             if (propertyName != "UnityObject") return;
             if (ImageComponent == null)
             {
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
             }
 
-            ImageComponent.sprite = Sprite.UnityObject;
+            var sprite = Sprite.UnityObject;
+            ImageComponent.sprite = sprite;
+            if (sprite != null && TypeProperty.IsUndefined(this))
+            {
+                // if type is undefined auto-detect if sprite is sliced
+                if (sprite.border != Vector4.zero)
+                {
+                    ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
+                }
+            }
+
             ImageChanged();
         }
 
@@ -103,6 +114,18 @@ namespace Delight
                 }
             }
 
+            if (Width == null && Height == null)
+            {
+                // if width and height is undefined, adjust size to native size of sprite
+                var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
+                if (sprite != null)
+                {
+                    ImageComponent.SetNativeSize();
+                    OverrideWidth = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.x);
+                    OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
+                }
+            }
+
             // disable raycast blocks if image is transparent
             ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
         }
@@ -112,7 +135,9 @@ namespace Delight
         {
             if (assetObject != null)
             {
+                assetObject.PropertyChanged -= AssetObjectPropertyChanged;
                 assetObject.PropertyChanged += AssetObjectPropertyChanged;
+
                 if (assetObject.UnityObject != null)
                 {
                     // trigger property changed

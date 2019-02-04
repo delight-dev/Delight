@@ -52,8 +52,8 @@ namespace Delight
             for (int i = 0; i < childCount; ++i)
             {
                 var childView = children[i];
-                var childWidth = childView.Width ?? ElementSize.Default;
-                var childHeight = childView.Height ?? ElementSize.Default;
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
 
                 if (childWidth.Unit == ElementSizeUnit.Percents)
                 {

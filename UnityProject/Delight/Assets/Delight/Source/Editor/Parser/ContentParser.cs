@@ -34,7 +34,7 @@ namespace Delight.Parser
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
 
-        private static ContentObjectModel _contentObjectModel;
+        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
         private static XmlFile _currentXmlFile;
         private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
 
@@ -47,11 +47,10 @@ namespace Delight.Parser
         /// </summary>
         public static void ParseAllXmlFiles()
         {
-            var configuration = Configuration.GetInstance();
-            configuration.Sanitize();
+            var configuration = _contentObjectModel.MasterConfigObject;
 
-            // create new object model
-            _contentObjectModel = new ContentObjectModel();
+            // clear object model
+            _contentObjectModel.ClearParsedContent();
 
             // get all XML assets
             var ignoreFiles = new HashSet<string>();
@@ -77,12 +76,6 @@ namespace Delight.Parser
         /// </summary>
         public static void ParseXmlFiles(IEnumerable<string> paths)
         {
-            // load object model 
-            if (_contentObjectModel == null)
-            {
-                LoadObjectModel();
-            }
-
             // parse and generate code for the xuml files
             var files = new List<XmlFile>();
             foreach (var path in paths)
@@ -104,8 +97,8 @@ namespace Delight.Parser
                 ParseXmlFile(file);
             }
 
-            CodeGenerator.GenerateCode(_contentObjectModel);
-            SaveObjectModel();
+            CodeGenerator.GenerateCode();
+            _contentObjectModel.SaveObjectModel();
             Debug.Log(String.Format("[Delight] Content processed. {0}", DateTime.Now));
         }
 
@@ -677,7 +670,7 @@ namespace Delight.Parser
                 string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
                 foreach (string unformattedFilePath in filePaths)
                 {
-                    var filePath = Configuration.GetFormattedPath(unformattedFilePath);
+                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
                     if (ignoreFiles != null && ignoreFiles.Contains(filePath))
                         continue;
 
@@ -724,43 +717,6 @@ namespace Delight.Parser
             else
             {
                 return XmlContentType.Unknown;
-            }
-        }
-
-        /// <summary>
-        /// Loads object model if it's not already loaded.
-        /// </summary>
-        private static void LoadObjectModel()
-        {
-            var configuration = Configuration.GetInstance();
-
-            // check if file exist
-            var modelFilePath = configuration.GetObjectModelFilePath();
-            if (!File.Exists(modelFilePath))
-            {
-                _contentObjectModel = new ContentObjectModel();
-                return;
-            }
-
-            using (var file = File.OpenRead(modelFilePath))
-            {
-                Debug.Log("Deserializing " + modelFilePath);
-                _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
-            }
-        }
-
-        /// <summary>
-        /// Saves object model if it's not already loaded.
-        /// </summary>
-        private static void SaveObjectModel()
-        {
-            var configuration = Configuration.GetInstance();
-            var modelFilePath = configuration.GetObjectModelFilePath();
-
-            using (var file = File.Open(modelFilePath, FileMode.Create))
-            {
-                Debug.Log("Serializing " + modelFilePath);
-                Serializer.Serialize(file, _contentObjectModel);
             }
         }
 

@@ -14,16 +14,16 @@
     <!-- Three sets of images we want to load on-demand -->
     <Group Id="ImageGroup" Orientation="Horizontal" Spacing="5" LoadMode="OnDemand">
       <Group Id="ImageSet1" Spacing="5">
-        <Image Sprite="Frame1" Size="150,150" />
-        <Image Sprite="Frame2" Size="150,150" />
+        <Image Sprite="Frame1" />
+        <Image Sprite="Frame2" />
       </Group>  
       <Group Id="ImageSet2" Spacing="5">
-        <Image Sprite="Frame3" Size="150,150" />
-        <Image Sprite="Frame4" Size="150,150" />
+        <Image Sprite="Frame3" />
+        <Image Sprite="Frame4" />
       </Group>
       <Group Id="ImageSet3" Spacing="5">
-        <Image Sprite="Frame2" Size="150,150" />
-        <Image Sprite="Frame3" Size="150,150" />
+        <Image Sprite="Frame2" />
+        <Image Sprite="Frame3" />
       </Group> 
     </Group>
     <Label Text="{LoadProgress}" Width="400" Alignment="Center" TextAlignment="Center" />

@@ -25,6 +25,8 @@ namespace Delight.Parser
     {
         #region Fields
 
+        public static string ContentObjectModelFile = "DelightContent.bin";
+
         [ProtoMember(1, AsReference = true)]
         public List<ViewObject> ViewObjects;
 
@@ -34,9 +36,13 @@ namespace Delight.Parser
         [ProtoMember(3, AsReference = true)]
         public List<ThemeObject> ThemeObjects;
 
+        [ProtoMember(4)]
+        public MasterConfigObject MasterConfigObject;
+
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, ThemeObject> _themeObjects;
+        private static ContentObjectModel _contentObjectModel;
 
         #endregion
 
@@ -50,6 +56,7 @@ namespace Delight.Parser
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
             ThemeObjects = new List<ThemeObject>();
+            MasterConfigObject = MasterConfigObject.CreateDefault();
         }
 
         #endregion
@@ -135,6 +142,70 @@ namespace Delight.Parser
             ThemeObjects.Add(themeObject);
             _themeObjects.Add(themeName, themeObject);
             return themeObject;
+        }
+
+        public static ContentObjectModel GetInstance()
+        {
+            if (_contentObjectModel != null)
+                return _contentObjectModel;
+
+            LoadObjectModel();
+            return _contentObjectModel;
+        }
+
+        /// <summary>
+        /// Loads object model if it's not already loaded.
+        /// </summary>
+        private static void LoadObjectModel()
+        {
+            // check if file exist
+            var modelFilePath = GetContentObjectModelFilePath();
+            if (!File.Exists(modelFilePath))
+            {
+                _contentObjectModel = new ContentObjectModel();
+                return;
+            }
+
+            using (var file = File.OpenRead(modelFilePath))
+            {
+                Debug.Log("Deserializing " + modelFilePath);
+                _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
+            }
+        }
+
+        /// <summary>
+        /// Saves object model if it's not already loaded.
+        /// </summary>
+        public void SaveObjectModel()
+        {
+            var modelFilePath = GetContentObjectModelFilePath();
+            MasterConfigObject.Sanitize();
+
+            using (var file = File.Open(modelFilePath, FileMode.Create))
+            {
+                Debug.Log("Serializing " + modelFilePath);
+                Serializer.Serialize(file, _contentObjectModel);
+            }
+        }
+
+        public void ClearParsedContent()
+        {
+            ViewObjects = new List<ViewObject>();
+            ModelObjects = new List<ModelObject>();
+            ThemeObjects = new List<ThemeObject>();
+            _viewObjects = null;
+            _themeObjects = null;
+            _modelObjects = null;
+        }
+
+        /// <summary>
+        /// Gets object model file path.
+        /// </summary>
+        private static string GetContentObjectModelFilePath()
+        {
+            // get application path minus "/Assets" folder
+            var path = Application.dataPath.Substring(0, Application.dataPath.Length - 7);
+            return String.Format("{0}/{1}", path, ContentObjectModelFile);
         }
 
         #endregion
@@ -595,6 +666,84 @@ namespace Delight.Parser
             FilePath = null;
             NeedUpdate = false;
             ViewDeclarations.Clear();
+        }
+    }
+
+    #endregion
+
+    #region Config Object
+
+    public enum BuildConfiguration
+    {
+        Dev = 0,
+        Staging = 1,
+        Production = 2
+    }
+
+    [ProtoContract]
+    public class MasterConfigObject
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public BuildConfiguration BuildConfiguration;
+
+        [ProtoMember(3)]
+        public List<string> ContentFolders;
+
+        public MasterConfigObject()
+        {
+            ContentFolders = new List<string>();
+        }
+
+        public static MasterConfigObject CreateDefault()
+        {
+            var defaultConfig = new MasterConfigObject();
+            defaultConfig.ContentFolders.Add("Assets/Content/");
+            defaultConfig.ContentFolders.Add("Assets/Delight/Content/");
+            return defaultConfig;
+        }
+
+        /// <summary>
+        /// Sanitize configuration.
+        /// </summary>
+        public void Sanitize()
+        {
+            var invalidPathChars = Path.GetInvalidPathChars();
+
+            // make sure paths are consistantly formatted
+            for (int i = ContentFolders.Count - 1; i >= 0; --i)
+            {
+                var path = ContentFolders[i];
+                if (String.IsNullOrEmpty(path) || path.IndexOfAny(invalidPathChars) >= 0)
+                {
+                    Debug.LogWarning(String.Format("[Delight] Improperly formatted content folder path \"{0}\" removed from configuration.", path));
+                    ContentFolders.RemoveAt(i);
+                    continue;
+                }
+
+                // make sure directory separators are uniform
+                path = GetFormattedPath(path);
+
+                // make sure path ends with a directory separator
+                if (!path.EndsWith("/"))
+                {
+                    path += "/";
+                }
+
+                ContentFolders[i] = path;
+            }
+        }
+
+        /// <summary>
+        /// Gets uniformally formatted path with forward slashes "/" as directory separators.
+        /// </summary>
+        public static string GetFormattedPath(string path)
+        {
+            if (String.IsNullOrEmpty(path))
+                return path;
+            return path.Replace("\\", "/");
         }
     }
 

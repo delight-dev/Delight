@@ -57,8 +57,8 @@ namespace Delight
             for (int i = 0; i < childCount; ++i)
             {
                 var childView = children[i];
-                var childWidth = childView.Width ?? ElementSize.Default;
-                var childHeight = childView.Height ?? ElementSize.Default;
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
 
                 if (childWidth.Unit == ElementSizeUnit.Percents)
                 {
@@ -197,8 +197,6 @@ namespace Delight
                        
             DisableLayoutUpdate = defaultDisableLayoutUpdate;         
             base.UpdateLayout(notifyParent && hasNewSize); 
-            // TODO might not be correct to swallow updates here because this can be triggered when
-            // Width/Height changes, so we need to ensure parent is updated in those cases
         }
 
         #endregion

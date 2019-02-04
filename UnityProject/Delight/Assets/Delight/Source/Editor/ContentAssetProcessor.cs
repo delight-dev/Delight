@@ -34,8 +34,7 @@ namespace Delight.Editor
                 return; // TODO either process them or queue them to be processed when the editor is not playing
 
             // check if any views have been added or changed
-            var configuration = Configuration.GetInstance();
-            configuration.Sanitize();
+            var configuration = ContentObjectModel.GetInstance().MasterConfigObject;
             var changedAssets = new List<string>();
 
             foreach (var path in importedAssets)

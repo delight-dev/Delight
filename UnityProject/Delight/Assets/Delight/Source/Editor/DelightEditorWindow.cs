@@ -14,7 +14,7 @@ using UnityEngine.UI;
 namespace Delight.Editor
 {
     /// <summary>
-    /// Editor window displaying the control panel for the framework.
+    /// Editor window displaying the control panel and configuration of the framework.
     /// </summary>
     public class DelightEditorWindow : UnityEditor.EditorWindow
     {
@@ -35,8 +35,8 @@ namespace Delight.Editor
         public void OnGUI()
         {
             // reload views
-            GUIContent reloadViews = new GUIContent("Reload Views", "Parses all views and generates code.");
-            if (GUILayout.Button(reloadViews))
+            GUIContent rebuildViews = new GUIContent("Rebuild Views", "Rebuilds all views.");
+            if (GUILayout.Button(rebuildViews))
             {
                 // wait for any uncompiled scripts to be compiled first
                 AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -49,8 +49,8 @@ namespace Delight.Editor
             }
 
             // reload asset bundles
-            GUIContent generateAssetBundles = new GUIContent("Reload Asset Bundles", "Recreates all asset bundles.");
-            if (GUILayout.Button(generateAssetBundles))
+            GUIContent rebuildAssetBundles = new GUIContent("Rebuild Asset Bundles", "Rebuilds all asset bundles.");
+            if (GUILayout.Button(rebuildAssetBundles))
             {
             }
         }

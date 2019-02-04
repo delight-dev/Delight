@@ -42,6 +42,11 @@ namespace Delight
 
         #region Methods
 
+        public async void LoadAsync()
+        {
+            await GetAsync();
+        }
+
         public async Task<T> GetAsync()
         {
             await _locker.LockAsync(async () =>

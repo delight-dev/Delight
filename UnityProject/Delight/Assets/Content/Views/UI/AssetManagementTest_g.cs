@@ -698,8 +698,6 @@ namespace Delight
                 {
                     _assetManagementTestImage1 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage1, Assets.Sprites["Frame1"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage1, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage1, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage1;
             }
@@ -718,8 +716,6 @@ namespace Delight
                 {
                     _assetManagementTestImage2 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage2, Assets.Sprites["Frame2"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage2, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage2, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage2;
             }
@@ -756,8 +752,6 @@ namespace Delight
                 {
                     _assetManagementTestImage3 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage3, Assets.Sprites["Frame3"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage3, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage3, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage3;
             }
@@ -776,8 +770,6 @@ namespace Delight
                 {
                     _assetManagementTestImage4 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage4, Assets.Sprites["Frame4"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage4, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage4, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage4;
             }
@@ -814,8 +806,6 @@ namespace Delight
                 {
                     _assetManagementTestImage5 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage5, Assets.Sprites["Frame2"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage5, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage5, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage5;
             }
@@ -834,8 +824,6 @@ namespace Delight
                 {
                     _assetManagementTestImage6 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage6, Assets.Sprites["Frame3"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage6, new ElementSize(150f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage6, new ElementSize(150f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage6;
             }

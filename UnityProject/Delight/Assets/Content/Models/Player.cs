@@ -19,6 +19,8 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
+        public Player NestedPlayer { get; set; } // TODO remove
+
         public BindableCollection<Achievement> Achievements
         {
             get { return Models.Achievements.Get(this); }
