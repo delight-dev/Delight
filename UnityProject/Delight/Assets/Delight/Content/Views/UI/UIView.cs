@@ -134,6 +134,15 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called when after the top-most unload is called. Used to update parents.
+        /// </summary>
+        protected override void AfterInitiatedUnload()
+        {
+            NotifyParentOfLayoutUpdate();
+            base.AfterInitiatedUnload();
+        }
+
+        /// <summary>
         /// Updates layout.
         /// </summary>
         public virtual void UpdateLayout(bool notifyParent = true)

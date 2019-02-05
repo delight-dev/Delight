@@ -1,5 +1,5 @@
 ﻿#region Using Statements
-using Delight.Parser;
+using Delight.Editor.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -15,6 +15,8 @@ namespace Delight
 {
     public class AssetBundle : BindableObject
     {
+        #region Fields
+
         public static string SimulatedUri = string.Format("file://{0}/../AssetBundles/", Application.dataPath);
 
         public uint Version { get; set; }
@@ -25,6 +27,15 @@ namespace Delight
         public UnityEngine.AssetBundle UnityAssetBundle { get; set; }
 
         private readonly SemaphoreLocker _locker = new SemaphoreLocker();
+
+        #endregion
+
+        #region Methods
+
+        public async void LoadAsync()
+        {
+            await GetAsync();
+        }
 
         public async Task<UnityEngine.AssetBundle> GetAsync()
         {
@@ -68,6 +79,8 @@ namespace Delight
 
             return UnityAssetBundle;
         }
+
+        #endregion
     }
 
     public partial class AssetBundleData : DataProvider<AssetBundle>

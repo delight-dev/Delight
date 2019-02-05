@@ -1,5 +1,5 @@
 ﻿#region Using Statements
-using Delight.Parser;
+using Delight.Editor.Parser;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,23 +28,16 @@ namespace Delight.Editor
         {
             DrawDefaultInspector();
 
-            // reload all views
-            GUIContent reloadViews = new GUIContent("Reload Views", "Parses all views and generates code.");
-            if (GUILayout.Button(reloadViews))
+            // rebuild views
+            GUIContent rebuildViews = new GUIContent("Rebuild Views", "Rebuilds all views.");
+            if (GUILayout.Button(rebuildViews))
             {
-                // wait for any uncompiled scripts to be compiled first
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-
-                // parse all XML files
-                ContentParser.ParseAllXmlFiles();
-
-                // refresh generated scripts
-                AssetDatabase.Refresh();
+                ContentParser.RebuildViews();
             }
 
-            // reload asset bundles
-            GUIContent generateAssetBundles = new GUIContent("Reload Asset Bundles", "Recreates all asset bundles.");
-            if (GUILayout.Button(generateAssetBundles))
+            // rebuild asset bundles
+            GUIContent rebuildAssetBundles = new GUIContent("Rebuild Asset Bundles", "Rebuilds all asset bundles.");
+            if (GUILayout.Button(rebuildAssetBundles))
             {
             }
         }

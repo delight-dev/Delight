@@ -13,9 +13,10 @@ using Delight.Editor;
 using UnityEngine;
 using System.Xml.Serialization;
 using ProtoBuf;
+using UnityEditor;
 #endregion
 
-namespace Delight.Parser
+namespace Delight.Editor.Parser
 {
     /// <summary>
     /// Parses content assets.
@@ -24,23 +25,39 @@ namespace Delight.Parser
     {
         #region Fields
 
-        private const string AssetsFolder = "/Assets/";
-        private const string ViewModelsFolder = "/ViewModels/";
-        private const string ViewsFolder = "/Views/";
-        private const string StylesFolder = "/Styles/";
-        private const string ScenesFolder = "/Scenes/";
+        public const string AssetsFolder = "/Assets/";
+        public const string ModelsFolder = "/Models/";
+        public const string ViewsFolder = "/Views/";
+        public const string StylesFolder = "/Styles/";
+        public const string ScenesFolder = "/Scenes/";
         private const string DefaultViewType = "UIView";
         private const string DefaultNamespace = "Delight";
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
+
         private static XmlFile _currentXmlFile;
         private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
 
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Processes all XML assets and generates code.
+        /// </summary>
+        public static void RebuildViews()
+        {
+            // wait for any uncompiled scripts to be compiled first
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
+            // parse all XML assets
+            ParseAllXmlFiles();
+
+            // refresh generated scripts
+            AssetDatabase.Refresh();
+        }
 
         /// <summary>
         /// Processes XML assets and generates code.
@@ -110,7 +127,7 @@ namespace Delight.Parser
             Debug.Log("Parsing " + xumlFile.Path);
             if (xumlFile.ContentType == XmlContentType.Unknown)
             {
-                Debug.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ViewModelsFolder, StylesFolder));
+                Debug.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ScenesFolder, StylesFolder));
                 return;
             }
 
@@ -129,13 +146,21 @@ namespace Delight.Parser
             {
                 ParseViewXml(xumlFile, rootXmlElement);                
             }
-            else if (xumlFile.ContentType == XmlContentType.ViewModel)
-            {
-                //ParseStylesXml(xumlFile, rootXmlElement);
-            }
             else
             {
-                //ParseViewModelXml(xumlFile, rootXmlElement);
+                Debug.Log(String.Format("[Delight] Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
+            }
+        }
+
+        /// <summary>
+        /// Parses asset objects. 
+        /// </summary>
+        public static void ParseAssetFiles(List<string> addedOrUpdatedAssetObjects, List<string> deletedAssetObjects, List<string> movedAssetObjects, List<string> movedFromAssetObjects)
+        {
+            // TODO generate asset bundles and asset objects in our content object model
+
+            foreach (var newAsset in addedOrUpdatedAssetObjects)
+            {
             }
         }
 
@@ -706,13 +731,13 @@ namespace Delight.Parser
             {
                 return XmlContentType.View;
             }
-            else if (path.IContains(ViewModelsFolder))
-            {
-                return XmlContentType.ViewModel;
-            }
             else if (path.IContains(StylesFolder))
             {
-                return XmlContentType.Styles;
+                return XmlContentType.Style;
+            }
+            else if (path.IContains(ScenesFolder))
+            {
+                return XmlContentType.Scene;
             }
             else
             {
@@ -736,9 +761,9 @@ namespace Delight.Parser
         /// </summary>
         private enum XmlContentType
         {
-            View,
-            ViewModel,
-            Styles,
+            View = 0,
+            Style = 1,
+            Scene = 2,
             Unknown
         }
 

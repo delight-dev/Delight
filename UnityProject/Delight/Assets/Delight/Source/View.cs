@@ -207,6 +207,13 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called after the top-most view who initiated the unload, has been unloaded. Used to update parents.
+        /// </summary>
+        protected virtual void AfterInitiatedUnload()
+        {
+        }
+
+        /// <summary>
         /// Updates bindings after children has been loaded.
         /// </summary>
         public void UpdateBindings()
@@ -274,12 +281,21 @@ namespace Delight
         /// <summary>
         /// Unloads the view.
         /// </summary>
-        public virtual void Unload()
+        public void Unload()
+        {
+            UnloadInternal();
+            AfterInitiatedUnload();
+        }
+
+        /// <summary>
+        /// Unloads the view.
+        /// </summary>
+        protected void UnloadInternal()
         {
             BeforeUnload();
             foreach (var child in LayoutChildren)
             {
-                child.Unload();
+                child.UnloadInternal();
             }
 
             AfterUnload();

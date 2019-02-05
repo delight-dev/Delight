@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 using ProtoBuf;
 #endregion
 
-namespace Delight.Parser
+namespace Delight.Editor.Parser
 {
     /// <summary>
     /// Contains information about all content objects in the project.
@@ -552,77 +552,8 @@ namespace Delight.Parser
     [ProtoContract]
     public class ModelObject
     {
-        [ProtoMember(1)]
+        [ProtoMember(0)]
         public string Name;
-
-        [ProtoMember(2)]
-        public string Namespace;
-
-        [ProtoMember(3)]
-        public string FilePath;
-
-        [ProtoMember(4, AsReference = true)]
-        public ViewObject BasedOn;
-
-        [ProtoMember(5)]
-        public bool NeedUpdate;
-
-        [ProtoMember(6)]
-        public List<PropertyExpression> PropertyExpressions;
-
-        [ProtoMember(7)]
-        public List<ViewDeclaration> ViewDeclarations;
-
-        public ModelObject()
-        {
-            PropertyExpressions = new List<PropertyExpression>();
-            ViewDeclarations = new List<ViewDeclaration>();
-        }
-
-        public void Clear()
-        {
-            Name = null;
-            Namespace = null;
-            FilePath = null;
-            BasedOn = null;
-            NeedUpdate = false;
-            PropertyExpressions.Clear();
-            ViewDeclarations.Clear();
-        }
-
-        public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)
-        {
-            // gets all view declarations in the view
-            var viewDeclarations = new List<ViewDeclarationInfo>();
-            if (includeInheritedDeclarations && BasedOn != null)
-            {
-                foreach (var declaration in BasedOn.GetViewDeclarations(true))
-                {
-                    declaration.IsInherited = true;
-                    viewDeclarations.Add(declaration);
-                }
-            }
-
-            foreach (var viewDeclaration in ViewDeclarations)
-            {
-                viewDeclarations.AddRange(GetViewDeclarations(viewDeclaration));
-            }
-
-            return viewDeclarations;
-        }
-
-        private List<ViewDeclarationInfo> GetViewDeclarations(ViewDeclaration viewDeclaration)
-        {
-            var viewDeclarations = new List<ViewDeclarationInfo>();
-            viewDeclarations.Add(new ViewDeclarationInfo { Declaration = viewDeclaration });
-
-            foreach (var childDeclaration in viewDeclaration.ChildDeclarations)
-            {
-                viewDeclarations.AddRange(GetViewDeclarations(childDeclaration));
-            }
-
-            return viewDeclarations;
-        }
     }
 
     #endregion

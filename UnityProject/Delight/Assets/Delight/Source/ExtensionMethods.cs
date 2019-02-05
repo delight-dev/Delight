@@ -169,6 +169,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// String.LastIndexOf ignoring case.
+        /// </summary>
+        public static int ILastIndexOf(this string str1, string str2)
+        {
+            return str1.LastIndexOf(str2, StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
         /// String.Equals ignoring case.
         /// </summary>
         public static bool IEquals(this string str1, string str2)

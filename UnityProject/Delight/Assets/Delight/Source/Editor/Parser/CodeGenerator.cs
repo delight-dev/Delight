@@ -14,7 +14,7 @@ using UnityEngine;
 using System.Xml.Serialization;
 #endregion
 
-namespace Delight.Parser
+namespace Delight.Editor.Parser
 {
     /// <summary>
     /// Generates code from content object model.

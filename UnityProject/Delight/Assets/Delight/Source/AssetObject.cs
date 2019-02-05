@@ -27,7 +27,7 @@ namespace Delight
     public class AssetObject<T> : AssetObject
         where T : UnityEngine.Object
     {
-        #region Properties
+        #region Fields
 
         private T _unityObject;
         public T UnityObject
