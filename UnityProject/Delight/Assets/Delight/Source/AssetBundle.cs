@@ -54,12 +54,23 @@ namespace Delight
                         Assets.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
                 }
 
+                bundleBaseUri = StorageMode == StorageMode.Remote ?
+                    Assets.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath; // TODO remove
+
                 if (!bundleBaseUri.EndsWith("/"))
                 {
                     bundleBaseUri += "/";
                 }
 
-                var bundleUri = String.Format("{0}{1}/{2}", bundleBaseUri, AssetBundleData.GetPlatformName(), Id.ToLower());
+                var bundleUri = string.Empty;
+                if (StorageMode == StorageMode.Remote)
+                {
+                    bundleUri = String.Format("{0}{1}/{2}", bundleBaseUri, AssetBundleData.GetPlatformName(), Id.ToLower());
+                }
+                else
+                {
+                    bundleUri = String.Format("{0}{1}", bundleBaseUri, Id.ToLower());
+                }
 
                 // get asset bundle
                 var getBundleRequest = Version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, Version, 0) : 
@@ -72,7 +83,7 @@ namespace Delight
                 }
 
                 // simulate slow load
-                await Task.Delay(2500);
+                // await Task.Delay(1500); // TODO remove
 
                 UnityAssetBundle = DownloadHandlerAssetBundle.GetContent(response.webRequest);               
             });
@@ -92,12 +103,14 @@ namespace Delight
 
         public AssetBundleData()
         {
-            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Remote };
+            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
             Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
 
             Add(Bundle1);
             Add(Bundle2);
         }
+
+        #region Methods
 
         public static string GetPlatformName()
         {
@@ -183,6 +196,8 @@ namespace Delight
                     return platform.ToString();
             }
         }
+
+        #endregion
     }
 
     public static partial class Assets

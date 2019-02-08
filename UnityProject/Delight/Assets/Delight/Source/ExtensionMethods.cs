@@ -555,6 +555,17 @@ namespace Delight
             return view.FindParent<T>(x => true);
         }
 
+        /// <summary>
+        /// Adds range of items to hash-set.
+        /// </summary>
+        public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                hashSet.Add(item);
+            }
+        }
+
         #endregion
     }
 }

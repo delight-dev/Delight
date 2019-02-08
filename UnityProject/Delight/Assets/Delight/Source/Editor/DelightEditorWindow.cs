@@ -45,7 +45,10 @@ namespace Delight.Editor
             GUIContent rebuildAssetBundles = new GUIContent("Rebuild Asset Bundles", "Rebuilds all asset bundles.");
             if (GUILayout.Button(rebuildAssetBundles))
             {
+                ContentParser.RebuildAssetBundles();
             }
+
+            // show list of asset bundles show name, version, storage mode, load mode and a rebuild button
         }
 
         #endregion

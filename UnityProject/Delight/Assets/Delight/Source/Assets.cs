@@ -10,7 +10,7 @@ namespace Delight
 {
     public static partial class Assets
     {
-        public static string ServerUri;
+        public static string ServerUri = String.Empty;
         public static ServerUriLocator ServerUriLocator = new ServerUriLocator();
     }
 }

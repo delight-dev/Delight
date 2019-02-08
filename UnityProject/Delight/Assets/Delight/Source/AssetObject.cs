@@ -65,9 +65,14 @@ namespace Delight
 
                 // get unity asset bundle URI 
                 var unityAssetBundle = await assetBundle.GetAsync();
+                if (unityAssetBundle == null)
+                {
+                    Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
+                    return;
+                }
 
                 // simulate slow load
-                await Task.Delay(2500);
+                // await Task.Delay(1500); // TODO remove
 
                 // see if sprite is in bundle 
                 var unityObject = unityAssetBundle.LoadAsset<T>(Id);
@@ -84,5 +89,15 @@ namespace Delight
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Asset object type.
+    /// </summary>
+    public enum AssetObjectType
+    {
+        Unknown = 0,
+        Texture2D = 1,
+        Sprite = 2
     }
 }

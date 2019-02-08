@@ -27,12 +27,8 @@ namespace Delight.Editor
         /// <summary>
         /// Processes XML assets that are added/changed and generates code-behind.
         /// </summary>
-        static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
+        public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {
-            // don't process content assets while playing
-            if (Application.isPlaying) 
-                return; // TODO either process them or queue them to be processed when the editor is not playing
-
             // check if any views have been added or changed
             var contentModel = ContentObjectModel.GetInstance();
             var configuration = contentModel.MasterConfigObject;
@@ -54,7 +50,6 @@ namespace Delight.Editor
                 // is the asset in the assets folder? 
                 if (IsInAssetFolder(path, contentFolder))
                 {
-                    Debug.Log("Asset changed: " + path); // TODO remove
                     addedOrUpdatedAssetObjects.Add(path);
                     continue;
                 }
@@ -77,7 +72,6 @@ namespace Delight.Editor
                 // is the asset in the assets folder? 
                 if (IsInAssetFolder(path, contentFolder))
                 {
-                    Debug.Log("Asset deleted: " + path); // TODO remove
                     deletedAssetObjects.Add(path);
                     continue;
                 }
@@ -102,11 +96,14 @@ namespace Delight.Editor
                     continue; // no.
 
                 // is the asset in the assets folder? 
-                if (IsInAssetFolder(movedToPath, toContentFolder) || IsInAssetFolder(movedFromPath, fromContentFolder))
+                bool movedFromAssetFolder = IsInAssetFolder(movedFromPath, fromContentFolder);
+                if (IsInAssetFolder(movedToPath, toContentFolder) || movedFromAssetFolder)
                 {
-                    Debug.Log("Asset moved: " + movedToPath); // TODO remove
                     movedAssetObjects.Add(movedToPath);
-                    movedFromAssetObjects.Add(movedFromPath);
+                    if (movedFromAssetFolder)
+                    {
+                        movedFromAssetObjects.Add(movedFromPath);
+                    }
                     continue;
                 }
 
@@ -117,14 +114,27 @@ namespace Delight.Editor
                 }
             }
 
-            bool contentProcessed = false;
+            bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
+            bool viewsChanged = addedOrUpdatedXmlAssets.Count() > 0;
+            bool contentChanged = assetsChanged || rebuildViews || viewsChanged;
+
+            // if editor is playing queue assets to be processed after exiting play mode
+            if (Application.isPlaying)
+            {
+                if (contentChanged)
+                {
+                    Debug.Log("[Delight] ContentAssetProcessor: Content changed while editor is playing. Content will be processed after editor exits play mode.");
+                    EditorEventListener.AddPostProcessBatch(importedAssets, deletedAssets, movedAssets, movedFromAssets);
+                }
+                return;
+            }
+
             var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO for tracking processing time
 
             // any asset objects added, moved or deleted?
-            if (addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedFromAssetObjects.Count() > 0)
+            if (assetsChanged)
             {
                 ContentParser.ParseAssetFiles(addedOrUpdatedAssetObjects, deletedAssetObjects, movedAssetObjects, movedFromAssetObjects);
-                contentProcessed = true;
             }
 
             // any xml content moved or deleted? 
@@ -132,20 +142,18 @@ namespace Delight.Editor
             {
                 // yes. rebuild all views
                 ContentParser.RebuildViews();
-                contentProcessed = true;
             }
-            else if (addedOrUpdatedXmlAssets.Count() > 0)
+            else if (viewsChanged)
             {
                 // parse new content and generate code
                 ContentParser.ParseXmlFiles(addedOrUpdatedXmlAssets);
 
                 // refresh generated scripts
                 AssetDatabase.Refresh();
-                contentProcessed = true;
             }
 
             // TODO for tracking processing time
-            if (contentProcessed)
+            if (contentChanged)
             {
                 Debug.Log(String.Format("Total content processing time: {0}", sw.ElapsedMilliseconds)); 
             }

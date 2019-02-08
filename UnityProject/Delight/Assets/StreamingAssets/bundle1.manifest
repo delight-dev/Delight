@@ -1,0 +1,19 @@
+ManifestFileVersion: 0
+CRC: 3404831971
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 442a58f0ab8004eee965fad5906ac3f8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Content/Assets/Bundle1/Sprites/Frame2.psd
+- Assets/Content/Assets/Bundle1/Sprites/Frame1.psd
+Dependencies: []

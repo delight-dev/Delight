@@ -36,12 +36,16 @@ namespace Delight.Editor.Parser
         [ProtoMember(3, AsReference = true)]
         public List<ThemeObject> ThemeObjects;
 
-        [ProtoMember(4)]
+        [ProtoMember(4, AsReference = true)]
+        public List<AssetBundleObject> AssetBundleObjects;
+
+        [ProtoMember(5, AsReference = true)]
         public MasterConfigObject MasterConfigObject;
 
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, ThemeObject> _themeObjects;
+        private Dictionary<string, AssetBundleObject> _assetBundleObjects;
         private static ContentObjectModel _contentObjectModel;
 
         #endregion
@@ -56,6 +60,7 @@ namespace Delight.Editor.Parser
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
             ThemeObjects = new List<ThemeObject>();
+            AssetBundleObjects = new List<AssetBundleObject>();
             MasterConfigObject = MasterConfigObject.CreateDefault();
         }
 
@@ -88,6 +93,26 @@ namespace Delight.Editor.Parser
             ViewObjects.Add(viewObject);
             _viewObjects.Add(viewName, viewObject);
             return viewObject;
+        }
+
+        /// <summary>
+        /// Gets asset bundle object.
+        /// </summary>
+        public AssetBundleObject GetAssetBundleObject(string bundleName, string bundlePath)
+        {
+            var bundle = AssetBundleObjects.FirstOrDefault(x => x.Path.IEquals(bundlePath) && x.Name.IEquals(bundleName));
+            if (bundle != null) return bundle;
+
+            var existingBundle = AssetBundleObjects.FirstOrDefault(x => x.Name.IEquals(bundleName));
+            if (existingBundle != null)
+            {
+                Debug.LogError(String.Format("[Delight] Can't add asset bundle at \"{0}\". Bundle with same name exist at \"{1}\". Please make sure the bundle names are unique.", bundlePath, existingBundle.Path));
+                return null;
+            }
+
+            bundle = new AssetBundleObject { Name = bundleName, Path = bundlePath };
+            AssetBundleObjects.Add(bundle);
+            return bundle;            
         }
 
         /// <summary>
@@ -174,7 +199,7 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Saves object model if it's not already loaded.
+        /// Saves object model.
         /// </summary>
         public void SaveObjectModel()
         {
@@ -552,7 +577,7 @@ namespace Delight.Editor.Parser
     [ProtoContract]
     public class ModelObject
     {
-        [ProtoMember(0)]
+        [ProtoMember(1)]
         public string Name;
     }
 
@@ -676,6 +701,75 @@ namespace Delight.Editor.Parser
                 return path;
             return path.Replace("\\", "/");
         }
+    }
+
+    #endregion
+
+    #region Asset Bundle Objects
+
+    [ProtoContract]
+    public class AssetBundleObject
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public int Version;
+
+        [ProtoMember(3)]
+        public StorageMode StorageMode;
+        
+        [ProtoMember(4)]
+        public bool NeedUpdate;
+
+        [ProtoMember(5)]
+        public string Path;
+
+        [ProtoMember(6)]
+        public List<UnityAssetObject> AssetObjects;
+
+        [ProtoMember(7)]
+        public bool NeedBuild;
+
+        /// <summary>
+        /// Gets asset bundle object.
+        /// </summary>
+        public UnityAssetObject GetUnityAssetObject(string assetName, string path, AssetObjectType assetObjectType)
+        {
+            var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.Type == assetObjectType);
+            if (asset != null)
+            {
+                asset.Path = path;
+                return asset;
+            }
+
+            asset = new UnityAssetObject { Name = assetName, Type = assetObjectType, Path = path };
+            AssetObjects.Add(asset);
+            return asset;
+        }
+
+        public void RemoveAssetAtPath(string path)
+        {
+            AssetObjects.RemoveAll(x => x.Path.IEquals(path));
+        }
+
+        public AssetBundleObject()
+        {
+            AssetObjects = new List<UnityAssetObject>();
+        }
+    }
+
+    [ProtoContract]
+    public class UnityAssetObject
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public AssetObjectType Type;
+
+        [ProtoMember(3)]
+        public string Path;
     }
 
     #endregion

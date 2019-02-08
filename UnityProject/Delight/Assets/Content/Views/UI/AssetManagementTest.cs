@@ -69,7 +69,7 @@ namespace Delight
             _updateTimer = Observable.Interval(TimeSpan.FromMilliseconds(10)).Subscribe(x =>
             {
                 // print timer to see if UI thread stalls or not
-                TimeString = DateTime.Now.ToString("mm:ss.ff");
+                TimeString = String.Format("<mspace=13>{0}</mspace>", DateTime.Now.ToString("mm:ss.ff"));
             });
 
             _updateLoadedAssets = Observable.Interval(TimeSpan.FromMilliseconds(500)).Subscribe(x =>

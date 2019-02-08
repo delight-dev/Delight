@@ -32,12 +32,14 @@ namespace Delight.Editor.Parser
         #region Methods
 
         /// <summary>
-        /// Generates code from object model.
+        /// Generates view code from object model.
         /// </summary>
-        public static void GenerateCode()
+        public static void GenerateViewCode()
         {
             var viewsChecked = new Dictionary<string, bool>();
             var viewObjects = _contentObjectModel.ViewObjects.ToList();
+
+            // TODO generate code for asset bundles and objects if updated
 
             // update views that contain children that needs update
             foreach (var viewObject in viewObjects)
@@ -90,6 +92,13 @@ namespace Delight.Editor.Parser
 #if UNITY_EDITOR
             ++Template.Version;
 #endif
+        }
+
+        /// <summary>
+        /// Generates asset code. 
+        /// </summary>
+        public static void GenerateAssetCode()
+        {
         }
 
         /// <summary>
