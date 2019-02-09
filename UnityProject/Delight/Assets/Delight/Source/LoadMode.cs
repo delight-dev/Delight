@@ -17,6 +17,7 @@ namespace Delight
         /// <summary>
         /// View is loaded when explicitly requested to load by calling its Load method. 
         /// </summary>
+        Manual = 1,
         OnDemand = 1
     }
 }

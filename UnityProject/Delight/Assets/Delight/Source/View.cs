@@ -116,6 +116,9 @@ namespace Delight
         /// </summary>
         public async Task LoadAsync()
         {
+            if (IsLoaded)
+                return;
+
             await LoadAsyncInternal(true);
             AfterInitiatedLoad();
         }
@@ -128,7 +131,7 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (GetLoadMode() == LoadMode.OnDemand && !initiatedLoad)
+            if (GetLoadMode() == LoadMode.Manual && !initiatedLoad)
                 return;
 
             BeforeLoad();
@@ -151,6 +154,9 @@ namespace Delight
         /// </summary>
         public void Load()
         {
+            if (IsLoaded)
+                return;
+
             LoadInternal(true);
             AfterInitiatedLoad();
         }
@@ -163,7 +169,7 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (GetLoadMode() == LoadMode.OnDemand && !initiatedLoad)
+            if (GetLoadMode() == LoadMode.Manual && !initiatedLoad)
                 return;
 
             BeforeLoad();
@@ -283,6 +289,9 @@ namespace Delight
         /// </summary>
         public void Unload()
         {
+            if (!IsLoaded)
+                return;
+
             UnloadInternal();
             AfterInitiatedUnload();
         }
@@ -292,6 +301,9 @@ namespace Delight
         /// </summary>
         protected void UnloadInternal()
         {
+            if (!IsLoaded)
+                return;
+
             BeforeUnload();
             foreach (var child in LayoutChildren)
             {

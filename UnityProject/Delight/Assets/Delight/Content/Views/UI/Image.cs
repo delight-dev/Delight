@@ -49,24 +49,29 @@ namespace Delight
 
         public virtual void UnregisterAssetListeners()
         {
-            if (Sprite != null) Sprite.PropertyChanged -= SpritePropertyChanged;
+            if (Sprite == null)
+                return;
+
+            Sprite.UnregisterReference(GameObject);
+            Sprite.PropertyChanged -= SpritePropertyChanged;
         }
 
         public virtual void RegisterAssetListeners()
         {
-            if (Sprite != null)
-            {
-                Sprite.PropertyChanged -= SpritePropertyChanged;
-                Sprite.PropertyChanged += SpritePropertyChanged;
+            if (Sprite == null)
+                return;
 
-                if (Sprite.UnityObject == null)
-                {
-                    Sprite.LoadAsync();
-                }
-                else
-                {
-                    SpritePropertyChanged(Sprite, nameof(Sprite.UnityObject));
-                }
+            Sprite.RegisterReference(GameObject);
+            Sprite.PropertyChanged -= SpritePropertyChanged;
+            Sprite.PropertyChanged += SpritePropertyChanged;
+
+            if (Sprite.UnityObject == null)
+            {
+                Sprite.LoadAsync();
+            }
+            else
+            {
+                SpritePropertyChanged(Sprite, nameof(Sprite.UnityObject));
             }
         }
 

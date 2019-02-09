@@ -24,7 +24,10 @@
       <Group Id="ImageSet3" Spacing="5">
         <Image Sprite="Frame2" />
         <Image Sprite="Frame3" />
-      </Group> 
+      </Group>
+      <Group Id="ImageSet4" Spacing="5">
+        <Image Sprite="BigSprite" Width="256" Height="517" />
+      </Group>
     </Group>
     <Label Text="{LoadProgress}" Width="400" Alignment="Center" TextAlignment="Center" />
   </Group>

@@ -8,6 +8,9 @@ using UnityEngine;
 
 namespace Delight
 {
+    /// <summary>
+    /// Main access point for all the assets used by the framework. 
+    /// </summary>
     public static partial class Assets
     {
         public static string AssetBundlesServerUri = AssetBundle.SimulatedUri;

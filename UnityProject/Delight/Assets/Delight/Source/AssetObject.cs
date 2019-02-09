@@ -48,6 +48,24 @@ namespace Delight
 
         #region Methods
 
+        public void RegisterReference(object referenceObject)
+        {
+            var assetBundle = AssetBundle;
+            if (assetBundle == null)
+                return; // TODO if resource keep track of references per asset object not bundle
+
+            assetBundle.RegisterReference(referenceObject);
+        }
+
+        public void UnregisterReference(object referenceObject)
+        {
+            var assetBundle = AssetBundle;
+            if (assetBundle == null)
+                return; // TODO if resource keep track of references per asset object not bundle
+
+            assetBundle.UnregisterReference(referenceObject);
+        }
+
         public async void LoadAsync()
         {
             await GetAsync();

@@ -13,6 +13,9 @@ using UnityEngine.Networking;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base class for asset bundles. 
+    /// </summary>
     public class AssetBundle : BindableObject
     {
         #region Fields
@@ -22,19 +25,90 @@ namespace Delight
 
         public uint Version { get; set; }
         public StorageMode StorageMode { get; set; }
+        public LoadMode LoadMode { get; set; }
         public UnityEngine.AssetBundle UnityAssetBundle { get; set; }
 
-        private readonly SemaphoreLocker _locker = new SemaphoreLocker();
+        private readonly SemaphoreLocker _locker;
+        public Dictionary<int, WeakReference> _referenceObjects;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the class. 
+        /// </summary>
+        public AssetBundle()
+        {
+            _locker = new SemaphoreLocker();
+            _referenceObjects = new Dictionary<int, WeakReference>();
+        }
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Registers load object. 
+        /// </summary>
+        public void RegisterReference(object referenceObject)
+        {
+            if (LoadMode != LoadMode.Automatic)
+                return;
+
+            _referenceObjects[referenceObject.GetHashCode()] = new WeakReference(referenceObject);
+        }
+
+        /// <summary>
+        /// Registers load object. 
+        /// </summary>
+        public void UnregisterReference(object referenceObject)
+        {
+            if (LoadMode != LoadMode.Automatic)
+                return;
+
+            _referenceObjects.Remove(referenceObject.GetHashCode());
+            List<int> deadReferences = null;
+            foreach (var refObjects in _referenceObjects)
+            {
+                if (refObjects.Value.IsAlive)
+                    continue;
+
+                if (deadReferences == null)
+                    deadReferences = new List<int>();
+                deadReferences.Add(refObjects.Value.Target.GetHashCode());
+            }
+
+            if (deadReferences != null)
+            {
+                foreach (var deadReference in deadReferences)
+                {
+                    _referenceObjects.Remove(deadReference);
+
+                    // TODO remove
+                    Debug.Log("Dead reference found!");
+                }
+            }
+
+            if (_referenceObjects.Count <= 0 && UnityAssetBundle != null)
+            {
+                // unload bundle
+                UnityAssetBundle.Unload(true);
+                UnityAssetBundle = null;
+            }
+        }
+
+        /// <summary>
+        /// Loads the asset bundle asynchronously. 
+        /// </summary>
         public async void LoadAsync()
         {
             await GetAsync();
         }
 
+        /// <summary>
+        /// Loads the asset bundle asynchronously, returns the loaded object.
+        /// </summary>
         public async Task<UnityEngine.AssetBundle> GetAsync()
         {
             await _locker.LockAsync(async () =>
@@ -84,10 +158,11 @@ namespace Delight
         #endregion
     }
 
+    /// <summary>
+    /// Asset bundle data provider. Contains all the asset bundles used by the framework.
+    /// </summary>
     public partial class AssetBundleData : DataProvider<AssetBundle>
     {
-        public static int Version = 0;
-
         public readonly AssetBundle Bundle1;
         public readonly AssetBundle Bundle2;
 

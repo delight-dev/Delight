@@ -30,6 +30,8 @@ namespace Delight
         {
             ImageGroup.Unload();
             LoadProgress = "";
+
+            GC.Collect();
         }
 
         private void ImageGroup_Loaded(object source)
@@ -78,7 +80,7 @@ namespace Delight
                 sb.Clear();
                 foreach (var sprite in Assets.Sprites)
                 {
-                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId, sprite.UnityObject != null ? "yes" : "no");
+                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId ?? "Resources", sprite.UnityObject != null ? "yes" : "no");
                 }
 
                 LoadedAssetsString = sb.ToString();

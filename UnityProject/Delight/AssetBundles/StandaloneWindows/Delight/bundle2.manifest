@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3978236924
+CRC: 1027725673
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: fa3dcdee5230eec1ca7b4ec01a5072e0
+    Hash: 101ca40040b1d70de1ace78f0055a29f
   TypeTreeHash:
     serializedVersion: 2
     Hash: ea5a42e0fd8ea905efa7aa926a3b8944
@@ -14,7 +14,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Content/Assets/Resources/Frame4.psd
 - Assets/Content/Assets/Bundle2/Frame3.psd
-- Assets/Content/Assets/Resources/bluefloral01.png
+- Assets/Content/Assets/Bundle2/BigSprite.psd
 Dependencies: []
