@@ -629,13 +629,6 @@ namespace Delight.Editor.Parser
 
     #region Config Object
 
-    public enum BuildConfiguration
-    {
-        Dev = 0,
-        Staging = 1,
-        Production = 2
-    }
-
     [ProtoContract]
     public class MasterConfigObject
     {
@@ -703,6 +696,13 @@ namespace Delight.Editor.Parser
         }
     }
 
+    public enum BuildConfiguration
+    {
+        Dev = 0,
+        Staging = 1,
+        Production = 2
+    }
+
     #endregion
 
     #region Asset Bundle Objects
@@ -730,6 +730,17 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(7)]
         public bool NeedBuild;
+
+        /// <summary>
+        /// Bool indicating if this is a resource bundle. 
+        /// </summary>
+        public bool IsResource
+        {
+            get
+            {
+                return Name.IEquals("Resources");
+            }
+        }
 
         /// <summary>
         /// Gets asset bundle object.

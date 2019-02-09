@@ -30,13 +30,13 @@ namespace Delight.Editor.Parser
         public const string ViewsFolder = "/Views/";
         public const string StylesFolder = "/Styles/";
         public const string ScenesFolder = "/Scenes/";
-        public const string StreamingPath = "Assets/StreamingAssets";
+        public const string StreamingPath = "Assets/StreamingAssets/" + AssetBundle.DelightAssetsFolder;
         public const string RemoteAssetBundlesBasePath = "AssetBundles/";
         private const string DefaultViewType = "UIView";
         private const string DefaultNamespace = "Delight";
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
-        
+
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         private static XmlFile _currentXmlFile;
@@ -69,7 +69,7 @@ namespace Delight.Editor.Parser
             var configuration = _contentObjectModel.MasterConfigObject;
 
             // clear object model            
-            _contentObjectModel.ClearParsedContent();            
+            _contentObjectModel.ClearParsedContent();
 
             // get all XML assets
             var ignoreFiles = new HashSet<string>();
@@ -146,7 +146,7 @@ namespace Delight.Editor.Parser
 
             if (xumlFile.ContentType == XmlContentType.View)
             {
-                ParseViewXml(xumlFile, rootXmlElement);                
+                ParseViewXml(xumlFile, rootXmlElement);
             }
             else
             {
@@ -176,7 +176,7 @@ namespace Delight.Editor.Parser
                     continue;
 
                 bundle.NeedUpdate = true;
-                bundle.NeedBuild = true;
+                bundle.NeedBuild = !bundle.IsResource;
 
                 // add asset object to bundle
                 var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(newAssetPath);
@@ -185,13 +185,13 @@ namespace Delight.Editor.Parser
                     Debug.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", newAssetPath));
                     continue;
                 }
-                
+
                 // set bundle name on asset
                 AssetImporter assetImporter = AssetImporter.GetAtPath(newAssetPath);
-                assetImporter.assetBundleName = bundle.Name.ToLower();
+                assetImporter.assetBundleName = !bundle.IsResource ? bundle.Name.ToLower() : String.Empty;
 
                 // see what type of asset it is
-                AssetObjectType assetObjectType = AssetObjectType.Unknown;
+                AssetObjectType assetObjectType = AssetObjectType.Default;
                 if (unityAssetObject is Texture2D)
                 {
                     var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(newAssetPath);
@@ -205,7 +205,7 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                // TODO add for font, material, TextMeshPro, etc. 
+                // TODO add for font, material, TextMeshPro resources, etc. 
 
                 var assetName = Path.GetFileNameWithoutExtension(newAssetPath);
                 var asset = bundle.GetUnityAssetObject(assetName, newAssetPath, assetObjectType);
@@ -230,7 +230,7 @@ namespace Delight.Editor.Parser
                     continue;
 
                 bundle.NeedUpdate = true;
-                bundle.NeedBuild = true;
+                bundle.NeedBuild = !bundle.IsResource;
 
                 // remove asset object from bundle
                 bundle.RemoveAssetAtPath(deletedAssetPath);
@@ -242,11 +242,37 @@ namespace Delight.Editor.Parser
             _contentObjectModel.SaveObjectModel();
         }
 
+        /// <summary>
+        /// Rebuilds asset bundles. 
+        /// </summary>
         public static void RebuildAssetBundles()
         {
-            // TODO clear output folders
+            // ask to clear output folders
+            var outputPath = GetRemoteBundlePath();
+            string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
+            if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
+            {
+                try
+                {
+                    if (Directory.Exists(outputPath))
+                    {
+                        Directory.Delete(outputPath, true);
+                    }
+                    if (Directory.Exists(StreamingPath))
+                    {
+                        Directory.Delete(StreamingPath, true);
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+
+            // TODO refresh bundle names for assets
 
             BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
+            Debug.Log("[Delight] Asset bundles rebuild completed.");
         }
 
         /// <summary>
@@ -266,10 +292,19 @@ namespace Delight.Editor.Parser
                 return;
 
             var streamedBundles = new List<AssetBundleBuild>();
-            var remoteBundles = new List<AssetBundleBuild>();            
+            var remoteBundles = new List<AssetBundleBuild>();
             foreach (var bundle in bundles)
             {
+                if (bundle.IsResource)
+                    continue;
+
                 Debug.Log(String.Format("[Delight] Building asset bundle \"{0}\".", bundle.Name));
+
+                // TODO remove
+                if (bundle.Name.IEquals("Bundle2"))
+                {
+                    bundle.StorageMode = StorageMode.Remote;
+                }
 
                 var build = new AssetBundleBuild();
                 build.assetBundleName = bundle.Name.ToLower();
@@ -302,12 +337,20 @@ namespace Delight.Editor.Parser
             if (remoteBundles.Count() > 0)
             {
                 // get output path
-                var outputPath = String.Format("{0}{1}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName());
+                var outputPath = GetRemoteBundlePath();
                 if (!Directory.Exists(outputPath))
                     Directory.CreateDirectory(outputPath);
 
                 BuildPipeline.BuildAssetBundles(outputPath, remoteBundles.ToArray(), BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
             }
+        }
+        
+        /// <summary>
+        /// Gets remote asset bundle path.
+        /// </summary>
+        public static string GetRemoteBundlePath()
+        {
+            return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
         }
 
         /// <summary>
@@ -324,7 +367,7 @@ namespace Delight.Editor.Parser
             viewObject.Name = viewName;
             viewObject.TypeName = viewName;
             viewObject.FilePath = xumlFile.Path;
-            viewObject.NeedUpdate = true;            
+            viewObject.NeedUpdate = true;
 
             var propertyExpressions = new List<PropertyExpression>();
 
@@ -567,7 +610,7 @@ namespace Delight.Editor.Parser
                 {
                     var propertyAssignment = new PropertyAssignment();
                     propertyExpressions.Add(propertyAssignment);
-                                        
+
                     propertyAssignment.PropertyName = attributeName;
                     propertyAssignment.PropertyValue = attributeValue.Substring(assignmentIndex + 1).Trim();
                     propertyAssignment.LineNumber = element.GetLineNumber();
@@ -631,7 +674,7 @@ namespace Delight.Editor.Parser
                 // mapped view
                 var mappedViewDeclaration = new PropertyMapping();
                 propertyExpressions.Add(mappedViewDeclaration);
-                                
+
                 mappedViewDeclaration.TargetObjectName = attributeName.Substring(2);
                 mappedViewDeclaration.MapPattern = attributeValue;
                 mappedViewDeclaration.LineNumber = element.GetLineNumber();
@@ -694,7 +737,7 @@ namespace Delight.Editor.Parser
                 propertyTypeName = fullTypeName;
             }
         }
-        
+
         /// <summary>
         /// Parses binding. 
         /// </summary>
@@ -821,7 +864,7 @@ namespace Delight.Editor.Parser
                 return false;
             }
         }
-        
+
         /// <summary>
         /// Gets formatted line information from element.
         /// </summary>

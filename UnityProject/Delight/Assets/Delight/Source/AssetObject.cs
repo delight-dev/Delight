@@ -13,12 +13,18 @@ namespace Delight
     /// </summary>
     public class AssetObject : BindableObject
     {
+        #region Fields
+
+        public bool IsResource { get; set; }
+
         public string AssetBundleId { get; set; }
         public AssetBundle AssetBundle
         {
             get { return Assets.AssetBundles[AssetBundleId]; }
             set { AssetBundleId = value?.Id; }
         }
+
+        #endregion
     }
 
     /// <summary>
@@ -56,6 +62,21 @@ namespace Delight
                     return;
                 }
 
+                // is asset included in build?
+                if (IsResource)
+                {
+                    // yes. load from resources folder
+                    var resourceObject = await Resources.LoadAsync<T>(Id);
+                    if (resourceObject == null)
+                    {
+                        Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", Id));
+                        return;
+                    }
+
+                    UnityObject = resourceObject as T;
+                    return;
+                }
+
                 var assetBundle = AssetBundle;
                 if (assetBundle == null)
                 {
@@ -63,7 +84,7 @@ namespace Delight
                     return;
                 }
 
-                // get unity asset bundle URI 
+                // get unity asset bundle
                 var unityAssetBundle = await assetBundle.GetAsync();
                 if (unityAssetBundle == null)
                 {
@@ -75,14 +96,14 @@ namespace Delight
                 // await Task.Delay(1500); // TODO remove
 
                 // see if sprite is in bundle 
-                var unityObject = unityAssetBundle.LoadAsset<T>(Id);
+                var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id);
                 if (unityObject == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
                     return;
                 }
 
-                UnityObject = unityObject;
+                UnityObject = unityObject as T;
             });
 
             return UnityObject;
@@ -96,7 +117,7 @@ namespace Delight
     /// </summary>
     public enum AssetObjectType
     {
-        Unknown = 0,
+        Default = 0,
         Texture2D = 1,
         Sprite = 2
     }

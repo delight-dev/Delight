@@ -37,9 +37,7 @@ namespace Delight.Editor.Parser
         public static void GenerateViewCode()
         {
             var viewsChecked = new Dictionary<string, bool>();
-            var viewObjects = _contentObjectModel.ViewObjects.ToList();
-
-            // TODO generate code for asset bundles and objects if updated
+            var viewObjects = _contentObjectModel.ViewObjects.ToList();            
 
             // update views that contain children that needs update
             foreach (var viewObject in viewObjects)
@@ -99,6 +97,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateAssetCode()
         {
+            // TODO generate code for asset bundles and objects if updated
         }
 
         /// <summary>
@@ -742,7 +741,6 @@ namespace Delight.Editor.Parser
                         ti.ItemIdDeclaration = itemIdDeclaration;
                         templateItems.Add(ti);
 
-                        // TODO get item type
                         ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
                     }
 

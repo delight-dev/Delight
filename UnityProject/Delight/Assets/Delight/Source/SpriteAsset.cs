@@ -23,7 +23,7 @@ namespace Delight
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2" };
-            Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2" };
+            Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true }; // AssetBundleId = "Bundle2" };
 
             Add(Frame1);
             Add(Frame2);

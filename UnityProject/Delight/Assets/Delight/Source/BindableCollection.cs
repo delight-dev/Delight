@@ -35,6 +35,9 @@ namespace Delight
         {
             get
             {
+                if (id == null)
+                    return null;
+
                 T item;
                 if (Data.TryGetValue(id, out item))
                 {

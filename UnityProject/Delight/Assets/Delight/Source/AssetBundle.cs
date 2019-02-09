@@ -18,12 +18,10 @@ namespace Delight
         #region Fields
 
         public static string SimulatedUri = string.Format("file://{0}/../AssetBundles/", Application.dataPath);
+        public const string DelightAssetsFolder = "Delight/";
 
         public uint Version { get; set; }
         public StorageMode StorageMode { get; set; }
-        public bool IsAlive { get; set; }
-        public CacheMode CacheMode { get; set; }
-        public DateTime LastReferenced { get; set; }
         public UnityEngine.AssetBundle UnityAssetBundle { get; set; }
 
         private readonly SemaphoreLocker _locker = new SemaphoreLocker();
@@ -47,16 +45,8 @@ namespace Delight
                 }
 
                 // get bundle URI 
-                string bundleBaseUri = SimulatedUri;
-                if (!Application.isEditor)
-                {
-                    bundleBaseUri = StorageMode == StorageMode.Remote ?
-                        Assets.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
-                }
-
-                bundleBaseUri = StorageMode == StorageMode.Remote ?
-                    Assets.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath; // TODO remove
-
+                var bundleBaseUri = StorageMode == StorageMode.Remote ?
+                    Assets.AssetBundlesServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
                 if (!bundleBaseUri.EndsWith("/"))
                 {
                     bundleBaseUri += "/";
@@ -65,11 +55,11 @@ namespace Delight
                 var bundleUri = string.Empty;
                 if (StorageMode == StorageMode.Remote)
                 {
-                    bundleUri = String.Format("{0}{1}/{2}", bundleBaseUri, AssetBundleData.GetPlatformName(), Id.ToLower());
+                    bundleUri = String.Format("{0}{1}{2}{3}", bundleBaseUri, AssetBundleData.GetPlatformName() + "/", DelightAssetsFolder, Id.ToLower());
                 }
                 else
                 {
-                    bundleUri = String.Format("{0}{1}", bundleBaseUri, Id.ToLower());
+                    bundleUri = String.Format("{0}{1}{2}", bundleBaseUri, DelightAssetsFolder, Id.ToLower());
                 }
 
                 // get asset bundle
@@ -203,13 +193,5 @@ namespace Delight
     public static partial class Assets
     {
         public static AssetBundleData AssetBundles = new AssetBundleData();
-    }
-
-    public enum CacheMode
-    {
-        PerSession = 0,
-        Timeout = 1,
-        Never = 2,
-        Forever = 4
     }
 }

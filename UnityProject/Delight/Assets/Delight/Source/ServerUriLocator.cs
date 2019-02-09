@@ -1,4 +1,8 @@
-﻿namespace Delight
+﻿#region Using Statements
+using UnityEngine;
+#endregion
+
+namespace Delight
 {
     /// <summary>
     /// Defeault server uri locator.
@@ -7,7 +11,7 @@
     {
         public virtual string GetServerUri(string bundleName)
         {
-            return Assets.ServerUri;
+            return Assets.AssetBundlesServerUri;
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 #endregion
 
@@ -55,6 +56,14 @@ namespace Delight.Editor
                     break;
 
                 case PlayModeStateChange.EnteredPlayMode:
+                    // add sub-scene
+                    //var activeScene = SceneManager.GetActiveScene();
+
+                    var scene = SceneManager.CreateScene("DelightEditor");
+
+                    // try create a game object in scene
+                    break;
+
                 case PlayModeStateChange.ExitingPlayMode:
                     break;
             }
