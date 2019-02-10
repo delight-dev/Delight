@@ -50,8 +50,16 @@ namespace Delight.Editor
                     // generate bundles if necessary
                     var bundles = ContentObjectModel.GetInstance().AssetBundleObjects.Where(x => x.NeedBuild).ToList();
                     if (bundles.Count > 0)
-                    {
-                        ContentParser.BuildAssetBundles(bundles);
+                    {                        
+                        try
+                        {
+                            ContentAssetProcessor.IgnoreChanges = true;
+                            ContentParser.BuildAssetBundles(bundles);
+                        }
+                        finally
+                        {
+                            ContentAssetProcessor.IgnoreChanges = false;
+                        }
                     }
                     break;
 

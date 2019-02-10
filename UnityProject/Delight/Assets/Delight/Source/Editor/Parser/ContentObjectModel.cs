@@ -191,10 +191,21 @@ namespace Delight.Editor.Parser
                 return;
             }
 
+            // deserialize file
             using (var file = File.OpenRead(modelFilePath))
             {
                 Debug.Log("Deserializing " + modelFilePath);
-                _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
+                try
+                {
+                    _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.LogError(String.Format("[Delight] Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
+                    _contentObjectModel = new ContentObjectModel();
+                    return;
+                }
             }
         }
 
@@ -720,15 +731,12 @@ namespace Delight.Editor.Parser
         public StorageMode StorageMode;
         
         [ProtoMember(4)]
-        public bool NeedUpdate;
-
-        [ProtoMember(5)]
         public string Path;
 
-        [ProtoMember(6)]
+        [ProtoMember(5)]
         public List<UnityAssetObject> AssetObjects;
 
-        [ProtoMember(7)]
+        [ProtoMember(6)]
         public bool NeedBuild;
 
         /// <summary>
@@ -745,16 +753,16 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets asset bundle object.
         /// </summary>
-        public UnityAssetObject GetUnityAssetObject(string assetName, string path, AssetObjectType assetObjectType)
+        public UnityAssetObject GetUnityAssetObject(string assetName, string path, Type type)
         {
-            var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.Type == assetObjectType);
+            var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.TypeName.IEquals(type.Name));
             if (asset != null)
             {
                 asset.Path = path;
                 return asset;
             }
 
-            asset = new UnityAssetObject { Name = assetName, Type = assetObjectType, Path = path };
+            asset = new UnityAssetObject { Name = assetName, TypeName = type.Name, TypeFullName = type.FullName, Path = path };
             AssetObjects.Add(asset);
             return asset;
         }
@@ -777,10 +785,19 @@ namespace Delight.Editor.Parser
         public string Name;
 
         [ProtoMember(2)]
-        public AssetObjectType Type;
+        public string Path;
 
         [ProtoMember(3)]
-        public string Path;
+        public string TypeName;
+
+        [ProtoMember(4)]
+        public string TypeFullName;
+
+        [ProtoMember(5)]
+        public string AssetBundleName;
+
+        [ProtoMember(6)]
+        public bool IsResource;
     }
 
     #endregion

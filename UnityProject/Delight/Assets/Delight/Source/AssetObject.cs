@@ -129,14 +129,4 @@ namespace Delight
 
         #endregion
     }
-
-    /// <summary>
-    /// Asset object type.
-    /// </summary>
-    public enum AssetObjectType
-    {
-        Default = 0,
-        Texture2D = 1,
-        Sprite = 2
-    }
 }

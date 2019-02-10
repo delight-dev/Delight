@@ -41,12 +41,12 @@ namespace Delight
 
         public async void LoadFrame1Sprite()
         {
-            Debug.Log("Frame1.GetAsync()");
-            var sprite = await Assets.Sprites.Frame1.GetAsync();
-            Debug.Log("Frame1.GetAsync() result: " + sprite);
+            //Debug.Log("Frame1.GetAsync()");
+            //var sprite = await Assets.Sprites.Frame1.GetAsync();
+            //Debug.Log("Frame1.GetAsync() result: " + sprite);
 
-            //TestImage.ImageComponent.sprite = sprite;
-            //TestImage.ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
+            ////TestImage.ImageComponent.sprite = sprite;
+            ////TestImage.ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
         }
 
         public async void LoadAssetBundle1()

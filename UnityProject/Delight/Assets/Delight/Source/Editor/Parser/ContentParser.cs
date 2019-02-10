@@ -68,7 +68,7 @@ namespace Delight.Editor.Parser
         {
             var configuration = _contentObjectModel.MasterConfigObject;
 
-            // clear object model            
+            // clear XML content objects from model
             _contentObjectModel.ClearParsedContent();
 
             // get all XML assets
@@ -162,74 +162,29 @@ namespace Delight.Editor.Parser
             // add asset objects and bundles
             foreach (var newAssetPath in addedOrUpdatedAssetObjects.Concat(movedAssetObjects))
             {
-                // get asset bundle object
-                int assetFolderIndex = newAssetPath.ILastIndexOf(AssetsFolder);
-                var pathInContentFolder = newAssetPath.Substring(assetFolderIndex + AssetsFolder.Length);
-
-                var paths = pathInContentFolder.Split('/');
-                if (paths.Length <= 1)
-                    continue;
-
-                var bundleName = paths[0];
-                var bundle = _contentObjectModel.GetAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(newAssetPath);
                 if (bundle == null)
                     continue;
 
-                bundle.NeedUpdate = true;
                 bundle.NeedBuild = !bundle.IsResource;
 
                 // add asset object to bundle
-                var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(newAssetPath);
-                if (unityAssetObject == null)
-                {
-                    Debug.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", newAssetPath));
+                var asset = AddAssetToBundle(bundle, newAssetPath);
+                if (asset == null)
                     continue;
-                }
 
-                // set bundle name on asset
-                AssetImporter assetImporter = AssetImporter.GetAtPath(newAssetPath);
-                assetImporter.assetBundleName = !bundle.IsResource ? bundle.Name.ToLower() : String.Empty;
-
-                // see what type of asset it is
-                AssetObjectType assetObjectType = AssetObjectType.Default;
-                if (unityAssetObject is Texture2D)
-                {
-                    var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(newAssetPath);
-                    if (sprite != null)
-                    {
-                        assetObjectType = AssetObjectType.Sprite;
-                    }
-                    else
-                    {
-                        assetObjectType = AssetObjectType.Texture2D;
-                    }
-                }
-
-                // TODO add for font, material, TextMeshPro resources, etc. 
-
-                var assetName = Path.GetFileNameWithoutExtension(newAssetPath);
-                var asset = bundle.GetUnityAssetObject(assetName, newAssetPath, assetObjectType);
-
-                Debug.Log(String.Format("Adding asset \"{0}\" of type \"{1}\" to bundle \"{2}\".", asset.Name, asset.Type, bundle.Name)); // TODO remove
+                Debug.Log(String.Format("Adding asset \"{0}\" of type \"{1}\" to bundle \"{2}\".", asset.Name, asset.TypeName, bundle.Name)); // TODO remove
             }
 
             // delete asset objects
             foreach (var deletedAssetPath in deletedAssetObjects.Concat(movedFromAssetObjects))
             {
-                // get asset bundle object
-                int assetFolderIndex = deletedAssetPath.ILastIndexOf(AssetsFolder);
-                var pathInContentFolder = deletedAssetPath.Substring(assetFolderIndex + AssetsFolder.Length);
-
-                var paths = pathInContentFolder.Split('/');
-                if (paths.Length <= 1)
-                    continue;
-
-                var bundleName = paths[0];
-                var bundle = _contentObjectModel.GetAssetBundleObject(bundleName, deletedAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(deletedAssetPath);
                 if (bundle == null)
                     continue;
 
-                bundle.NeedUpdate = true;
                 bundle.NeedBuild = !bundle.IsResource;
 
                 // remove asset object from bundle
@@ -240,13 +195,54 @@ namespace Delight.Editor.Parser
             }
 
             _contentObjectModel.SaveObjectModel();
+
+            // generate code
+            CodeGenerator.GenerateAssetCode();
         }
 
         /// <summary>
-        /// Rebuilds asset bundles. 
+        /// Rebuilds assets bundles. 
         /// </summary>
         public static void RebuildAssetBundles()
         {
+            var configuration = _contentObjectModel.MasterConfigObject;
+
+            // clear parsed assets from model
+            _contentObjectModel.AssetBundleObjects.Clear();
+
+            // get all assets
+            var ignoreFiles = new HashSet<string>();
+            var assetFiles = new List<string>();
+            foreach (var localPath in configuration.ContentFolders)
+            {
+                string path = String.Format("{0}/{1}{2}", Application.dataPath,
+                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
+                    AssetsFolder.Substring(1));
+
+                foreach (var assetFile in GetAssetFilesAtPath(path, ignoreFiles))
+                {
+                    assetFiles.Add(assetFile);
+                    ignoreFiles.Add(assetFile);
+
+                    Debug.Log("Found asset at " + assetFile);
+                }
+            }
+
+            // create asset bundles and asset objects for the assets found
+            foreach (var assetFile in assetFiles)
+            {
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(assetFile);
+                if (bundle == null)
+                    continue;
+
+                var relativeAssetFilePath = "Assets" + assetFile.Substring(Application.dataPath.Length);
+                AddAssetToBundle(bundle, relativeAssetFilePath);
+                bundle.NeedBuild = true;
+            }
+
+            _contentObjectModel.SaveObjectModel();
+
             // ask to clear output folders
             var outputPath = GetRemoteBundlePath();
             string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
@@ -269,10 +265,51 @@ namespace Delight.Editor.Parser
                 }
             }
 
-            // TODO refresh bundle names for assets
-
+            // build asset bundles
             BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
+
+            // generate asset code
+            CodeGenerator.GenerateAssetCode();
+
             Debug.Log("[Delight] Asset bundles rebuild completed.");
+        }
+
+        /// <summary>
+        /// Adds asset to bundle. 
+        /// </summary>
+        private static UnityAssetObject AddAssetToBundle(AssetBundleObject bundle, string assetFile)
+        {
+            // add asset object to bundle
+            var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(assetFile);
+            if (unityAssetObject == null)
+            {
+                Debug.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", assetFile));
+                return null;
+            }
+
+            // set bundle name on asset
+            AssetImporter assetImporter = AssetImporter.GetAtPath(assetFile);
+            assetImporter.assetBundleName = !bundle.IsResource ? bundle.Name.ToLower() : String.Empty;
+
+            // see what type of asset it is
+            Type assetObjectType = unityAssetObject.GetType();
+
+            // handle special case when Texture2D is a sprite
+            if (unityAssetObject is Texture2D)
+            {
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetFile);
+                if (sprite != null)
+                {
+                    assetObjectType = typeof(Sprite);
+                }
+            }
+
+            var assetName = Path.GetFileNameWithoutExtension(assetFile);
+            var asset = bundle.GetUnityAssetObject(assetName, assetFile, assetObjectType);
+            asset.IsResource = bundle.IsResource;
+            asset.AssetBundleName = bundle.Name;
+
+            return asset;
         }
 
         /// <summary>
@@ -874,6 +911,48 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Gets all assets at a path.
+        /// </summary>
+        private static List<string> GetAssetFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        {
+            var assets = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] filePaths = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+                foreach (string unformattedFilePath in filePaths)
+                {
+                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
+                        continue;
+
+                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
+                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
+                        continue;
+
+                    assets.Add(filePath);
+                }
+            }
+
+            return assets;
+        }
+
+        /// <summary>
+        /// Gets Asset bundle from file path.
+        /// </summary>
+        private static AssetBundleObject GetAssetBundleFromFilePath(string newAssetPath)
+        {
+            // get asset bundle object
+            int assetFolderIndex = newAssetPath.ILastIndexOf(AssetsFolder);
+            var pathInContentFolder = newAssetPath.Substring(assetFolderIndex + AssetsFolder.Length);
+
+            var paths = pathInContentFolder.Split('/');
+            if (paths.Length <= 1)
+                return null;
+
+            var bundleName = paths[0];
+            return _contentObjectModel.GetAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
+        }
+
+                /// <summary>
         /// Gets all XML assets at a path.
         /// </summary>
         private static List<XmlFile> GetXmlFilesAtPath(string path, HashSet<string> ignoreFiles = null)

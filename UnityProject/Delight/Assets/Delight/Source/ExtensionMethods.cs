@@ -204,7 +204,7 @@ namespace Delight
         /// <summary>
         /// Pluralizes a table name.
         /// </summary>
-        public static string PluralizeTableName(this string text)
+        public static string Pluralize(this string text, string pluralWhenEndsWithS = null)
         {
             if (PluralizeExceptions.ContainsKey(text.ToLowerInvariant()))
             {
@@ -229,7 +229,7 @@ namespace Delight
             }
             else if (text.EndsWith("s", StringComparison.InvariantCultureIgnoreCase))
             {
-                return text + "List";
+                return pluralWhenEndsWithS == null ? text : text + pluralWhenEndsWithS;
             }
             else if (text.EndsWith("x", StringComparison.InvariantCultureIgnoreCase) ||
                 text.EndsWith("ch", StringComparison.InvariantCultureIgnoreCase) ||
@@ -270,12 +270,19 @@ namespace Delight
         }
 
         /// <summary>
-        /// Converts a variable to property name.
+        /// Converts a variable name to property name.
         /// </summary>
         public static string ToPropertyName(this string str)
         {
             if (String.IsNullOrEmpty(str)) return str;
-            return char.ToUpper(str[0]) + str.Substring(1);
+
+            // capitalize the first letter
+            var str2 = char.ToUpper(str[0]) + str.Substring(1);
+
+            // return string containing only letters, digits and underscore characters
+            return new string((from c in str2
+                               where char.IsLetterOrDigit(c) || c == '_'
+                               select c).ToArray());
         }
 
         /// <summary>

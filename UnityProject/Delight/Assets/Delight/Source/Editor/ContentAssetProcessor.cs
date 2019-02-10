@@ -22,6 +22,12 @@ namespace Delight.Editor
     /// </summary>
     internal class ContentAssetProcessor : AssetPostprocessor
     {
+        #region Fields
+
+        public static bool IgnoreChanges = true;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -47,6 +53,12 @@ namespace Delight.Editor
                 if (contentFolder == null)
                     continue; // no.
 
+                // is it an cs file?
+                if (path.IIndexOf(".cs") >= 0)
+                {
+                    continue; // yes. ignore
+                }
+
                 // is the asset in the assets folder? 
                 if (IsInAssetFolder(path, contentFolder))
                 {
@@ -69,6 +81,12 @@ namespace Delight.Editor
                 if (contentFolder == null)
                     continue; // no.
 
+                // is it an cs file?
+                if (path.IIndexOf(".cs") >= 0)
+                {
+                    continue; // yes. ignore
+                }
+
                 // is the asset in the assets folder? 
                 if (IsInAssetFolder(path, contentFolder))
                 {
@@ -88,6 +106,12 @@ namespace Delight.Editor
             {
                 var movedToPath = movedAssets[i];
                 var movedFromPath = movedFromAssets[i];
+
+                // is it an cs file?
+                if (movedToPath.IIndexOf(".cs") >= 0)
+                {
+                    continue; // yes. ignore
+                }
 
                 // is the asset moved to or from a content folder?
                 var toContentFolder = configuration.ContentFolders.FirstOrDefault(x => movedToPath.IIndexOf(x) >= 0);

@@ -97,7 +97,141 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateAssetCode()
         {
-            // TODO generate code for asset bundles and objects if updated
+            Debug.Log("Generating asset code.");
+            var sb = new StringBuilder();
+
+            // open the view class
+            sb.AppendLine("// Internal view logic generated from assets");
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Linq;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            // TODO allow configuration of namespaces to be included
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", DefaultNamespace);
+            sb.AppendLine("{");
+
+            // generate asset bundle data
+
+            var bundles = _contentObjectModel.AssetBundleObjects.Where(x => !x.IsResource).OrderBy(x => x.Name).ToList();
+            if (bundles.Count() > 0)
+            {
+                sb.AppendLine("    #region Asset Bundles");
+                sb.AppendLine();
+                sb.AppendLine("    public partial class AssetBundleData : DataProvider<AssetBundle>");
+                sb.AppendLine("    {");
+                sb.AppendLine("        #region Fields");
+                sb.AppendLine();
+
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("        public readonly AssetBundle {0};", assetBundle.Name.ToPropertyName());
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine();
+                sb.AppendLine("        #region Constructor");
+                sb.AppendLine();
+                sb.AppendLine("        public AssetBundleData()");
+                sb.AppendLine("        {");
+
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, assetBundle.StorageMode.ToString());
+                }
+                sb.AppendLine();
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("            Add({0});", assetBundle.Name.ToPropertyName());
+                }
+
+                sb.AppendLine("        }");
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    #endregion");
+            }
+
+            // generate asset object data
+            List<UnityAssetObject> assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
+            var assetObjectTypes = assetObjects.Select(x => x.TypeName).Distinct().ToList();
+            foreach (var assetObjectType in assetObjectTypes)
+            {
+                var assetObjectsOfType = assetObjects.Where(x => x.TypeName == assetObjectType).ToList();
+                var firstObject = assetObjectsOfType[0];
+                var assetObjectTypeName = assetObjectType.EndsWith("Asset") ? assetObjectType : assetObjectType + "Asset";
+
+                sb.AppendLine();
+                sb.AppendLine("    #region {0}", assetObjectTypeName);
+                sb.AppendLine();
+                sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetObjectTypeName, firstObject.TypeFullName);
+                sb.AppendLine("    {");
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetObjectTypeName);
+                sb.AppendLine("    {");
+                sb.AppendLine("        #region Fields");
+                sb.AppendLine();
+
+                foreach (var assetObject in assetObjectsOfType)
+                {
+                    sb.AppendLine("        public readonly {0} {1};", assetObjectTypeName, assetObject.Name.ToPropertyName());
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine();
+                sb.AppendLine("        #region Constructor");
+                sb.AppendLine();
+                sb.AppendLine("        public {0}Data()", assetObjectTypeName);
+                sb.AppendLine("        {");
+
+                foreach (var assetObject in assetObjectsOfType)
+                {
+                    if (!assetObject.IsResource)
+                    {
+                        sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetObjectTypeName, assetObject.AssetBundleName);
+                    }
+                    else
+                    {
+                        sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetObjectTypeName);
+                    }
+                }
+                sb.AppendLine();
+                foreach (var assetObject in assetObjectsOfType)
+                {
+                    sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
+                }
+
+                sb.AppendLine("        }");
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("    }");
+                sb.AppendLine();
+
+                sb.AppendLine("    public static partial class Assets");
+                sb.AppendLine("    {");
+                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetObjectTypeName, assetObjectType.Pluralize());
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    #endregion");
+            }
+
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            string path = String.Format("{0}/Delight/Content{1}", Application.dataPath, ContentParser.AssetsFolder);
+            var sourceFile = String.Format("{0}Assets_g.cs", path);
+
+            Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
         }
 
         /// <summary>

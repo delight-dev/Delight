@@ -163,18 +163,6 @@ namespace Delight
     /// </summary>
     public partial class AssetBundleData : DataProvider<AssetBundle>
     {
-        public readonly AssetBundle Bundle1;
-        public readonly AssetBundle Bundle2;
-
-        public AssetBundleData()
-        {
-            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
-            Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
-
-            Add(Bundle1);
-            Add(Bundle2);
-        }
-
         #region Methods
 
         public static string GetPlatformName()
@@ -264,7 +252,10 @@ namespace Delight
 
         #endregion
     }
-
+    
+    /// <summary>
+    /// Add asset bundles data.
+    /// </summary>
     public static partial class Assets
     {
         public static AssetBundleData AssetBundles = new AssetBundleData();
