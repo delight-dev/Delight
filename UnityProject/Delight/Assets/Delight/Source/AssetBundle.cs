@@ -84,9 +84,6 @@ namespace Delight
                 foreach (var deadReference in deadReferences)
                 {
                     _referenceObjects.Remove(deadReference);
-
-                    // TODO remove
-                    Debug.Log("Dead reference found!");
                 }
             }
 

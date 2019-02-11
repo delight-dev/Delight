@@ -684,6 +684,8 @@ namespace Delight
                 {
                     _buttonLabel = new Template(LabelTemplates.Label);
                     Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
+                    Delight.Label.WidthProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.HeightProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _buttonLabel;
             }

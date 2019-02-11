@@ -44,7 +44,7 @@ namespace Delight.Editor.Parser
 
         #endregion
 
-        #region Methods
+        #region Views, Scenes and Styles
 
         /// <summary>
         /// Processes all XML assets and generates code.
@@ -70,6 +70,7 @@ namespace Delight.Editor.Parser
 
             // clear XML content objects from model
             _contentObjectModel.ClearParsedContent();
+            _contentObjectModel.ClearAssetTypes(false);
 
             // get all XML assets
             var ignoreFiles = new HashSet<string>();
@@ -117,6 +118,13 @@ namespace Delight.Editor.Parser
             }
 
             CodeGenerator.GenerateViewCode();
+
+            if (_contentObjectModel.AssetsNeedUpdate)
+            {
+                _contentObjectModel.AssetsNeedUpdate = false;
+                CodeGenerator.GenerateAssetCode();
+            }
+
             _contentObjectModel.SaveObjectModel();
             Debug.Log(String.Format("[Delight] Content processed. {0}", DateTime.Now));
         }
@@ -155,249 +163,13 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Parses asset objects. 
-        /// </summary>
-        public static void ParseAssetFiles(List<string> addedOrUpdatedAssetObjects, List<string> deletedAssetObjects, List<string> movedAssetObjects, List<string> movedFromAssetObjects)
-        {
-            // add asset objects and bundles
-            foreach (var newAssetPath in addedOrUpdatedAssetObjects.Concat(movedAssetObjects))
-            {
-                // get asset bundle from file path
-                var bundle = GetAssetBundleFromFilePath(newAssetPath);
-                if (bundle == null)
-                    continue;
-
-                bundle.NeedBuild = !bundle.IsResource;
-
-                // add asset object to bundle
-                var asset = AddAssetToBundle(bundle, newAssetPath);
-                if (asset == null)
-                    continue;
-
-                Debug.Log(String.Format("Adding asset \"{0}\" of type \"{1}\" to bundle \"{2}\".", asset.Name, asset.TypeName, bundle.Name)); // TODO remove
-            }
-
-            // delete asset objects
-            foreach (var deletedAssetPath in deletedAssetObjects.Concat(movedFromAssetObjects))
-            {
-                // get asset bundle from file path
-                var bundle = GetAssetBundleFromFilePath(deletedAssetPath);
-                if (bundle == null)
-                    continue;
-
-                bundle.NeedBuild = !bundle.IsResource;
-
-                // remove asset object from bundle
-                bundle.RemoveAssetAtPath(deletedAssetPath);
-
-                var assetName = Path.GetFileNameWithoutExtension(deletedAssetPath); // TODO remove
-                Debug.Log(String.Format("Removing asset \"{0}\" from bundle \"{1}\".", assetName, bundle.Name)); // TODO remove
-            }
-
-            _contentObjectModel.SaveObjectModel();
-
-            // generate code
-            CodeGenerator.GenerateAssetCode();
-        }
-
-        /// <summary>
-        /// Rebuilds assets bundles. 
-        /// </summary>
-        public static void RebuildAssetBundles()
-        {
-            var configuration = _contentObjectModel.MasterConfigObject;
-
-            // clear parsed assets from model
-            _contentObjectModel.AssetBundleObjects.Clear();
-
-            // get all assets
-            var ignoreFiles = new HashSet<string>();
-            var assetFiles = new List<string>();
-            foreach (var localPath in configuration.ContentFolders)
-            {
-                string path = String.Format("{0}/{1}{2}", Application.dataPath,
-                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
-                    AssetsFolder.Substring(1));
-
-                foreach (var assetFile in GetAssetFilesAtPath(path, ignoreFiles))
-                {
-                    assetFiles.Add(assetFile);
-                    ignoreFiles.Add(assetFile);
-
-                    Debug.Log("Found asset at " + assetFile);
-                }
-            }
-
-            // create asset bundles and asset objects for the assets found
-            foreach (var assetFile in assetFiles)
-            {
-                // get asset bundle from file path
-                var bundle = GetAssetBundleFromFilePath(assetFile);
-                if (bundle == null)
-                    continue;
-
-                var relativeAssetFilePath = "Assets" + assetFile.Substring(Application.dataPath.Length);
-                AddAssetToBundle(bundle, relativeAssetFilePath);
-                bundle.NeedBuild = true;
-            }
-
-            _contentObjectModel.SaveObjectModel();
-
-            // ask to clear output folders
-            var outputPath = GetRemoteBundlePath();
-            string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
-            if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
-            {
-                try
-                {
-                    if (Directory.Exists(outputPath))
-                    {
-                        Directory.Delete(outputPath, true);
-                    }
-                    if (Directory.Exists(StreamingPath))
-                    {
-                        Directory.Delete(StreamingPath, true);
-                    }
-                }
-                catch (System.Exception e)
-                {
-                    Debug.LogException(e);
-                }
-            }
-
-            // build asset bundles
-            BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
-
-            // generate asset code
-            CodeGenerator.GenerateAssetCode();
-
-            Debug.Log("[Delight] Asset bundles rebuild completed.");
-        }
-
-        /// <summary>
-        /// Adds asset to bundle. 
-        /// </summary>
-        private static UnityAssetObject AddAssetToBundle(AssetBundleObject bundle, string assetFile)
-        {
-            // add asset object to bundle
-            var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(assetFile);
-            if (unityAssetObject == null)
-            {
-                Debug.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", assetFile));
-                return null;
-            }
-
-            // set bundle name on asset
-            AssetImporter assetImporter = AssetImporter.GetAtPath(assetFile);
-            assetImporter.assetBundleName = !bundle.IsResource ? bundle.Name.ToLower() : String.Empty;
-
-            // see what type of asset it is
-            Type assetObjectType = unityAssetObject.GetType();
-
-            // handle special case when Texture2D is a sprite
-            if (unityAssetObject is Texture2D)
-            {
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetFile);
-                if (sprite != null)
-                {
-                    assetObjectType = typeof(Sprite);
-                }
-            }
-
-            var assetName = Path.GetFileNameWithoutExtension(assetFile);
-            var asset = bundle.GetUnityAssetObject(assetName, assetFile, assetObjectType);
-            asset.IsResource = bundle.IsResource;
-            asset.AssetBundleName = bundle.Name;
-
-            return asset;
-        }
-
-        /// <summary>
-        /// Builds asset bundle.
-        /// </summary>
-        public static void BuildAssetBundle(AssetBundleObject bundle)
-        {
-            BuildAssetBundles(new List<AssetBundleObject> { bundle });
-        }
-
-        /// <summary>
-        /// Builds asset bundle. 
-        /// </summary>
-        public static void BuildAssetBundles(List<AssetBundleObject> bundles)
-        {
-            if (bundles.Count <= 0)
-                return;
-
-            var streamedBundles = new List<AssetBundleBuild>();
-            var remoteBundles = new List<AssetBundleBuild>();
-            foreach (var bundle in bundles)
-            {
-                if (bundle.IsResource)
-                    continue;
-
-                Debug.Log(String.Format("[Delight] Building asset bundle \"{0}\".", bundle.Name));
-
-                // TODO remove
-                if (bundle.Name.IEquals("Bundle2"))
-                {
-                    bundle.StorageMode = StorageMode.Remote;
-                }
-
-                var build = new AssetBundleBuild();
-                build.assetBundleName = bundle.Name.ToLower();
-                build.assetBundleVariant = String.Empty;
-                build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
-                if (bundle.StorageMode == StorageMode.Local)
-                {
-                    streamedBundles.Add(build);
-                }
-                else
-                {
-                    remoteBundles.Add(build);
-                }
-
-                bundle.NeedBuild = false;
-            }
-
-            _contentObjectModel.SaveObjectModel();
-
-            // build streamed bundles
-            if (streamedBundles.Count() > 0)
-            {
-                if (!Directory.Exists(StreamingPath))
-                    Directory.CreateDirectory(StreamingPath);
-
-                // build bundles with LZ4 compression
-                BuildPipeline.BuildAssetBundles(StreamingPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
-            }
-
-            if (remoteBundles.Count() > 0)
-            {
-                // get output path
-                var outputPath = GetRemoteBundlePath();
-                if (!Directory.Exists(outputPath))
-                    Directory.CreateDirectory(outputPath);
-
-                BuildPipeline.BuildAssetBundles(outputPath, remoteBundles.ToArray(), BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
-            }
-        }
-        
-        /// <summary>
-        /// Gets remote asset bundle path.
-        /// </summary>
-        public static string GetRemoteBundlePath()
-        {
-            return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
-        }
-
-        /// <summary>
         /// Parses view XML and generates code-behind.
         /// </summary>
         private static void ParseViewXml(XmlFile xumlFile, XElement rootXmlElement)
         {
             _currentXmlFile = xumlFile;
             var viewName = rootXmlElement.Name.LocalName;
-            var viewObject = _contentObjectModel.GetViewObject(viewName);
+            var viewObject = _contentObjectModel.LoadViewObject(viewName);
 
             // clear view object 
             viewObject.Clear();
@@ -426,7 +198,7 @@ namespace Delight.Editor.Parser
 
                 if (attributeName.IEquals("BasedOn"))
                 {
-                    viewObject.BasedOn = _contentObjectModel.GetViewObject(attributeValue);
+                    viewObject.BasedOn = _contentObjectModel.LoadViewObject(attributeValue);
                     continue;
                 }
 
@@ -455,7 +227,7 @@ namespace Delight.Editor.Parser
 
             if (viewObject.BasedOn == null)
             {
-                viewObject.BasedOn = _contentObjectModel.GetViewObject(DefaultViewType);
+                viewObject.BasedOn = _contentObjectModel.LoadViewObject(DefaultViewType);
             }
 
             // parse the view's children recursively
@@ -482,7 +254,7 @@ namespace Delight.Editor.Parser
             }
 
             var themeName = themeNameAttr.Value;
-            var themeObject = _contentObjectModel.GetThemeObject(themeName);
+            var themeObject = _contentObjectModel.LoadThemeObject(themeName);
 
             // clear theme object 
             themeObject.Clear();
@@ -505,7 +277,7 @@ namespace Delight.Editor.Parser
             var basedOnAttr = rootXmlElement.Attribute("BasedOn");
             if (basedOnAttr != null)
             {
-                themeObject.BasedOn = _contentObjectModel.GetThemeObject(basedOnAttr.Value);
+                themeObject.BasedOn = _contentObjectModel.LoadThemeObject(basedOnAttr.Value);
             }
 
             // parse view declarations
@@ -694,10 +466,18 @@ namespace Delight.Editor.Parser
                     return new List<PropertyExpression>();
                 }
 
-                if (typeof(UnityEngine.Component).IsAssignableFrom(propertyType))
+                bool isUnityComponent = typeof(UnityEngine.Component).IsAssignableFrom(propertyType);                    
+                if (isUnityComponent)
                 {
                     propertyDeclaration.DeclarationType = PropertyDeclarationType.UnityComponent;
                 }
+
+                if (IsUnityAssetType(propertyType))
+                {
+                    propertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
+                    _contentObjectModel.LoadAssetType(propertyType, false);
+                }
+
                 propertyDeclaration.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
                 propertyDeclaration.PropertyName = attributeName;
                 propertyDeclaration.PropertyTypeName = propertyType.Name;
@@ -753,6 +533,17 @@ namespace Delight.Editor.Parser
 
             propertyExpressions.Add(new PropertyAssignment { PropertyName = attributeName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber() });
             return propertyExpressions;
+        }
+
+        /// <summary>
+        /// Checks if a type is a unity asset object type.
+        /// </summary>
+        public static bool IsUnityAssetType(Type type)
+        {
+            Type unityObjectType = typeof(UnityEngine.Object);
+            return unityObjectType.IsAssignableFrom(type) &&
+                !typeof(UnityEngine.GameObject).IsAssignableFrom(type) &&
+                !typeof(UnityEngine.Component).IsAssignableFrom(type);    
         }
 
         /// <summary>
@@ -911,48 +702,6 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets all assets at a path.
-        /// </summary>
-        private static List<string> GetAssetFilesAtPath(string path, HashSet<string> ignoreFiles = null)
-        {
-            var assets = new List<string>();
-            if (Directory.Exists(path))
-            {
-                string[] filePaths = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
-                foreach (string unformattedFilePath in filePaths)
-                {
-                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
-                        continue;
-
-                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
-                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
-                        continue;
-
-                    assets.Add(filePath);
-                }
-            }
-
-            return assets;
-        }
-
-        /// <summary>
-        /// Gets Asset bundle from file path.
-        /// </summary>
-        private static AssetBundleObject GetAssetBundleFromFilePath(string newAssetPath)
-        {
-            // get asset bundle object
-            int assetFolderIndex = newAssetPath.ILastIndexOf(AssetsFolder);
-            var pathInContentFolder = newAssetPath.Substring(assetFolderIndex + AssetsFolder.Length);
-
-            var paths = pathInContentFolder.Split('/');
-            if (paths.Length <= 1)
-                return null;
-
-            var bundleName = paths[0];
-            return _contentObjectModel.GetAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
-        }
-
-                /// <summary>
         /// Gets all XML assets at a path.
         /// </summary>
         private static List<XmlFile> GetXmlFilesAtPath(string path, HashSet<string> ignoreFiles = null)
@@ -1033,6 +782,293 @@ namespace Delight.Editor.Parser
             Style = 1,
             Scene = 2,
             Unknown
+        }
+
+        #endregion
+
+        #region Assets
+
+        /// <summary>
+        /// Parses asset objects. 
+        /// </summary>
+        public static void ParseAssetFiles(List<string> addedOrUpdatedAssetObjects, List<string> deletedAssetObjects, List<string> movedAssetObjects, List<string> movedFromAssetObjects)
+        {
+            // add asset objects and bundles
+            foreach (var newAssetPath in addedOrUpdatedAssetObjects.Concat(movedAssetObjects))
+            {
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(newAssetPath);
+                if (bundle == null)
+                    continue;
+
+                bundle.NeedBuild = !bundle.IsResource;
+
+                // add asset object to bundle
+                var asset = AddAssetToBundle(bundle, newAssetPath);
+                if (asset == null)
+                    continue;
+
+                Debug.Log(String.Format("Adding asset \"{0}\" of type \"{1}\" to bundle \"{2}\".", asset.Name, asset.Type.Name, bundle.Name)); // TODO remove
+            }
+
+            // delete asset objects
+            foreach (var deletedAssetPath in deletedAssetObjects.Concat(movedFromAssetObjects))
+            {
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(deletedAssetPath);
+                if (bundle == null)
+                    continue;
+
+                bundle.NeedBuild = !bundle.IsResource;
+
+                // remove asset object from bundle
+                bundle.RemoveAssetAtPath(deletedAssetPath);
+
+                var assetName = Path.GetFileNameWithoutExtension(deletedAssetPath); // TODO remove
+                Debug.Log(String.Format("Removing asset \"{0}\" from bundle \"{1}\".", assetName, bundle.Name)); // TODO remove
+            }
+
+            // generate code
+            CodeGenerator.GenerateAssetCode();
+
+            _contentObjectModel.AssetsNeedUpdate = false;
+            _contentObjectModel.SaveObjectModel();
+        }
+
+        /// <summary>
+        /// Rebuilds assets bundles. 
+        /// </summary>
+        public static void RebuildAssetBundles()
+        {
+            var configuration = _contentObjectModel.MasterConfigObject;
+
+            // clear parsed assets from model
+            _contentObjectModel.AssetBundleObjects.Clear();
+            _contentObjectModel.ClearAssetTypes(true);
+
+            // get all assets
+            var ignoreFiles = new HashSet<string>();
+            var assetFiles = new List<string>();
+            foreach (var localPath in configuration.ContentFolders)
+            {
+                string path = String.Format("{0}/{1}{2}", Application.dataPath,
+                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
+                    AssetsFolder.Substring(1));
+
+                foreach (var assetFile in GetAssetFilesAtPath(path, ignoreFiles))
+                {
+                    assetFiles.Add(assetFile);
+                    ignoreFiles.Add(assetFile);
+
+                    Debug.Log("Found asset at " + assetFile);
+                }
+            }
+
+            // create asset bundles and asset objects for the assets found
+            foreach (var assetFile in assetFiles)
+            {
+                // get asset bundle from file path
+                var bundle = GetAssetBundleFromFilePath(assetFile);
+                if (bundle == null)
+                    continue;
+
+                var relativeAssetFilePath = "Assets" + assetFile.Substring(Application.dataPath.Length);
+                AddAssetToBundle(bundle, relativeAssetFilePath);
+                bundle.NeedBuild = true;
+            }
+
+            _contentObjectModel.SaveObjectModel();
+
+            // ask to clear output folders
+            var outputPath = GetRemoteBundlePath();
+            string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
+            if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
+            {
+                try
+                {
+                    if (Directory.Exists(outputPath))
+                    {
+                        Directory.Delete(outputPath, true);
+                    }
+                    if (Directory.Exists(StreamingPath))
+                    {
+                        Directory.Delete(StreamingPath, true);
+                    }
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e);
+                }
+            }
+
+            // build asset bundles
+            BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
+
+            // generate asset code
+            CodeGenerator.GenerateAssetCode();
+
+            _contentObjectModel.AssetsNeedUpdate = false;
+            _contentObjectModel.SaveObjectModel();
+
+            Debug.Log("[Delight] Asset bundles rebuild completed.");
+        }
+
+        /// <summary>
+        /// Adds asset to bundle. 
+        /// </summary>
+        private static UnityAssetObject AddAssetToBundle(AssetBundleObject bundle, string assetFile)
+        {
+            // add asset object to bundle
+            var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(assetFile);
+            if (unityAssetObject == null)
+            {
+                Debug.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", assetFile));
+                return null;
+            }
+
+            // set bundle name on asset
+            AssetImporter assetImporter = AssetImporter.GetAtPath(assetFile);
+            assetImporter.assetBundleName = !bundle.IsResource ? bundle.Name.ToLower() : String.Empty;
+
+            // see what type of asset it is
+            Type assetObjectType = unityAssetObject.GetType();
+
+            // handle special case when Texture2D is a sprite
+            if (unityAssetObject is Texture2D)
+            {
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(assetFile);
+                if (sprite != null)
+                {
+                    assetObjectType = typeof(Sprite);
+                }
+            }
+
+            var assetName = Path.GetFileNameWithoutExtension(assetFile);
+            var asset = bundle.LoadUnityAssetObject(assetName, assetFile, assetObjectType);
+            asset.IsResource = bundle.IsResource;
+            asset.AssetBundleName = bundle.Name;
+
+            return asset;
+        }
+
+        /// <summary>
+        /// Builds asset bundle.
+        /// </summary>
+        public static void BuildAssetBundle(AssetBundleObject bundle)
+        {
+            BuildAssetBundles(new List<AssetBundleObject> { bundle });
+        }
+
+        /// <summary>
+        /// Builds asset bundle. 
+        /// </summary>
+        public static void BuildAssetBundles(List<AssetBundleObject> bundles)
+        {
+            if (bundles.Count <= 0)
+                return;
+
+            var streamedBundles = new List<AssetBundleBuild>();
+            var remoteBundles = new List<AssetBundleBuild>();
+            foreach (var bundle in bundles)
+            {
+                bundle.NeedBuild = false;
+                if (bundle.IsResource)
+                    continue;
+
+                Debug.Log(String.Format("[Delight] Building asset bundle \"{0}\".", bundle.Name));
+
+                // TODO remove
+                if (bundle.Name.IEquals("Bundle2"))
+                {
+                    bundle.StorageMode = StorageMode.Remote;
+                }
+
+                var build = new AssetBundleBuild();
+                build.assetBundleName = bundle.Name.ToLower();
+                build.assetBundleVariant = String.Empty;
+                build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
+                if (bundle.StorageMode == StorageMode.Local)
+                {
+                    streamedBundles.Add(build);
+                }
+                else
+                {
+                    remoteBundles.Add(build);
+                }
+            }
+
+            _contentObjectModel.SaveObjectModel();
+
+            // build streamed bundles
+            if (streamedBundles.Count() > 0)
+            {
+                if (!Directory.Exists(StreamingPath))
+                    Directory.CreateDirectory(StreamingPath);
+
+                // build bundles with LZ4 compression
+                BuildPipeline.BuildAssetBundles(StreamingPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+            }
+
+            if (remoteBundles.Count() > 0)
+            {
+                // get output path
+                var outputPath = GetRemoteBundlePath();
+                if (!Directory.Exists(outputPath))
+                    Directory.CreateDirectory(outputPath);
+
+                BuildPipeline.BuildAssetBundles(outputPath, remoteBundles.ToArray(), BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+            }
+        }
+
+        /// <summary>
+        /// Gets remote asset bundle path.
+        /// </summary>
+        public static string GetRemoteBundlePath()
+        {
+            return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
+        }
+
+
+        /// <summary>
+        /// Gets all assets at a path.
+        /// </summary>
+        private static List<string> GetAssetFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        {
+            var assets = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] filePaths = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories);
+                foreach (string unformattedFilePath in filePaths)
+                {
+                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
+                        continue;
+
+                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
+                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
+                        continue;
+
+                    assets.Add(filePath);
+                }
+            }
+
+            return assets;
+        }
+
+        /// <summary>
+        /// Gets Asset bundle from file path.
+        /// </summary>
+        private static AssetBundleObject GetAssetBundleFromFilePath(string newAssetPath)
+        {
+            // get asset bundle object
+            int assetFolderIndex = newAssetPath.ILastIndexOf(AssetsFolder);
+            var pathInContentFolder = newAssetPath.Substring(assetFolderIndex + AssetsFolder.Length);
+
+            var paths = pathInContentFolder.Split('/');
+            if (paths.Length <= 1)
+                return null;
+
+            var bundleName = paths[0];
+            return _contentObjectModel.LoadAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
         }
 
         #endregion

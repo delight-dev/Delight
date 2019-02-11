@@ -24,6 +24,99 @@ namespace Delight
             set { AssetBundleId = value?.Id; }
         }
 
+        public Dictionary<int, WeakReference> _referenceObjects;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public AssetObject()
+        {
+            _referenceObjects = new Dictionary<int, WeakReference>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Registers that an object references the asset.
+        /// </summary>
+        public void RegisterReference(object referenceObject)
+        {
+            // register reference
+            _referenceObjects[referenceObject.GetHashCode()] = new WeakReference(referenceObject);
+
+            // register reference on asset bundle
+            var assetBundle = AssetBundle;
+            if (assetBundle != null)
+            {
+                assetBundle.RegisterReference(referenceObject);
+            }
+
+            // trigger load 
+            LoadAsync();
+        }
+
+        /// <summary>
+        /// Unregisters an object from referencing the asset.
+        /// </summary>
+        public void UnregisterReference(object referenceObject)
+        {
+            // unregister reference
+            _referenceObjects.Remove(referenceObject.GetHashCode());
+
+            // remove dead references
+            List<int> deadReferences = null;
+            foreach (var refObjects in _referenceObjects)
+            {
+                if (refObjects.Value.IsAlive)
+                    continue;
+
+                if (deadReferences == null)
+                    deadReferences = new List<int>();
+                deadReferences.Add(refObjects.Value.Target.GetHashCode());
+            }
+
+            if (deadReferences != null)
+            {
+                foreach (var deadReference in deadReferences)
+                {
+                    _referenceObjects.Remove(deadReference);
+                }
+            }
+
+            // if nothing references the asset, unload it
+            if (_referenceObjects.Count <= 0)
+            {
+                Unload();
+            }
+
+            // unregister reference on asset bundle
+            var assetBundle = AssetBundle;
+            if (assetBundle == null)
+                return;
+
+            assetBundle.UnregisterReference(referenceObject);
+        }
+
+        /// <summary>
+        /// Loads the asset asynchronously. 
+        /// </summary>
+        public virtual void LoadAsync()
+        {
+        }
+
+        /// <summary>
+        /// Unloads the asset.
+        /// </summary>
+        public virtual void Unload()
+        {
+        }
+
         #endregion
     }
 
@@ -48,29 +141,17 @@ namespace Delight
 
         #region Methods
 
-        public void RegisterReference(object referenceObject)
-        {
-            var assetBundle = AssetBundle;
-            if (assetBundle == null)
-                return; // TODO if resource keep track of references per asset object not bundle
-
-            assetBundle.RegisterReference(referenceObject);
-        }
-
-        public void UnregisterReference(object referenceObject)
-        {
-            var assetBundle = AssetBundle;
-            if (assetBundle == null)
-                return; // TODO if resource keep track of references per asset object not bundle
-
-            assetBundle.UnregisterReference(referenceObject);
-        }
-
-        public async void LoadAsync()
+        /// <summary>
+        /// Loads the asset asynchronously. 
+        /// </summary>
+        public override async void LoadAsync()
         {
             await GetAsync();
         }
 
+        /// <summary>
+        /// Loads the asset asynchronously. 
+        /// </summary>
         public async Task<T> GetAsync()
         {
             await _locker.LockAsync(async () =>
@@ -111,7 +192,7 @@ namespace Delight
                 }
 
                 // simulate slow load
-                // await Task.Delay(1500); // TODO remove
+                //await Task.Delay(1500); // TODO remove, add simulate network lag setting in editor
 
                 // see if sprite is in bundle 
                 var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id);
@@ -125,6 +206,23 @@ namespace Delight
             });
 
             return UnityObject;
+        }
+
+        /// <summary>
+        /// Unloads the asset.
+        /// </summary>
+        public override void Unload()
+        {
+            if (UnityObject == null)
+                return;
+
+            if (IsResource)
+            {
+                Resources.UnloadAsset(UnityObject);
+            }
+
+            UnityObject = null;
+            //UnityEngine.Object.Destroy(UnityObject);
         }
 
         #endregion

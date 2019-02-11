@@ -271,7 +271,7 @@ namespace Delight
                     // iterate through all dependency properties and initialize them
                     for (int i = 0; i < dependencyProperties.Count; ++i)
                     {
-                        dependencyProperties[i].Initialize(this);
+                        dependencyProperties[i].Load(this);
                     }
                 }
 
@@ -330,7 +330,7 @@ namespace Delight
                     // iterate through all dependency properties and clear run-time values
                     for (int i = 0; i < dependencyProperties.Count; ++i)
                     {
-                        dependencyProperties[i].ClearRuntimeValues(this);
+                        dependencyProperties[i].Unload(this);
                     }
                 }
 

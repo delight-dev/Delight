@@ -45,8 +45,6 @@ namespace Delight
                 sw2.Stop();
                 Debug.Log(String.Format("Initialize view {0}: {1}", ViewTypeName, sw2.ElapsedMilliseconds));
             }
-            
-            Debug.Log("Done.");
         }
 
         public async void Load()

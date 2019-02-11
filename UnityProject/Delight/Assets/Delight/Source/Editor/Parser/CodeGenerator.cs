@@ -58,7 +58,7 @@ namespace Delight.Editor.Parser
                 var viewPropertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
                 foreach (var viewPropertyDeclaration in viewPropertyDeclarations)
                 {
-                    var childViewObject = _contentObjectModel.GetViewObject(viewPropertyDeclaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(viewPropertyDeclaration.PropertyTypeName);
                     viewPropertyDeclaration.PropertyTypeFullName = childViewObject.TypeName;
                 }
             }
@@ -101,7 +101,7 @@ namespace Delight.Editor.Parser
             var sb = new StringBuilder();
 
             // open the view class
-            sb.AppendLine("// Internal view logic generated from assets");
+            sb.AppendLine("// Asset data and providers generated from asset content");
             sb.AppendLine("#region Using Statements");
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Linq;");
@@ -160,64 +160,68 @@ namespace Delight.Editor.Parser
 
             // generate asset object data
             List<UnityAssetObject> assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
-            var assetObjectTypes = assetObjects.Select(x => x.TypeName).Distinct().ToList();
-            foreach (var assetObjectType in assetObjectTypes)
+            foreach (var assetType in _contentObjectModel.AssetTypes)
             {
-                var assetObjectsOfType = assetObjects.Where(x => x.TypeName == assetObjectType).ToList();
-                var firstObject = assetObjectsOfType[0];
-                var assetObjectTypeName = assetObjectType.EndsWith("Asset") ? assetObjectType : assetObjectType + "Asset";
+                var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
+                var assetTypeName = assetType.Name.EndsWith("Asset") ? assetType.Name : assetType.Name + "Asset";
+                var assetTypeNamePlural = assetType.Name.Pluralize();
 
                 sb.AppendLine();
-                sb.AppendLine("    #region {0}", assetObjectTypeName);
+                sb.AppendLine("    #region {0}", assetTypeNamePlural);
                 sb.AppendLine();
-                sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetObjectTypeName, firstObject.TypeFullName);
+                sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetTypeName, assetType.FullName);
                 sb.AppendLine("    {");
                 sb.AppendLine("    }");
                 sb.AppendLine();
-                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetObjectTypeName);
+                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
                 sb.AppendLine("    {");
-                sb.AppendLine("        #region Fields");
-                sb.AppendLine();
 
-                foreach (var assetObject in assetObjectsOfType)
+                if (assetObjectsOfType.Count > 0)
                 {
-                    sb.AppendLine("        public readonly {0} {1};", assetObjectTypeName, assetObject.Name.ToPropertyName());
-                }
 
-                sb.AppendLine();
-                sb.AppendLine("        #endregion");
-                sb.AppendLine();
-                sb.AppendLine("        #region Constructor");
-                sb.AppendLine();
-                sb.AppendLine("        public {0}Data()", assetObjectTypeName);
-                sb.AppendLine("        {");
+                    sb.AppendLine("        #region Fields");
+                    sb.AppendLine();
 
-                foreach (var assetObject in assetObjectsOfType)
-                {
-                    if (!assetObject.IsResource)
+                    foreach (var assetObject in assetObjectsOfType)
                     {
-                        sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetObjectTypeName, assetObject.AssetBundleName);
+                        sb.AppendLine("        public readonly {0} {1};", assetTypeName, assetObject.Name.ToPropertyName());
                     }
-                    else
-                    {
-                        sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetObjectTypeName);
-                    }
-                }
-                sb.AppendLine();
-                foreach (var assetObject in assetObjectsOfType)
-                {
-                    sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
-                }
 
-                sb.AppendLine("        }");
-                sb.AppendLine();
-                sb.AppendLine("        #endregion");
+                    sb.AppendLine();
+                    sb.AppendLine("        #endregion");
+                    sb.AppendLine();
+                    sb.AppendLine("        #region Constructor");
+                    sb.AppendLine();
+                    sb.AppendLine("        public {0}Data()", assetTypeName);
+                    sb.AppendLine("        {");
+
+                    foreach (var assetObject in assetObjectsOfType)
+                    {
+                        if (!assetObject.IsResource)
+                        {
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName);
+                        }
+                        else
+                        {
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName);
+                        }
+                    }
+                    sb.AppendLine();
+                    foreach (var assetObject in assetObjectsOfType)
+                    {
+                        sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
+                    }
+
+                    sb.AppendLine("        }");
+                    sb.AppendLine();
+                    sb.AppendLine("        #endregion");
+                }
                 sb.AppendLine("    }");
                 sb.AppendLine();
 
                 sb.AppendLine("    public static partial class Assets");
                 sb.AppendLine("    {");
-                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetObjectTypeName, assetObjectType.Pluralize());
+                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetTypeName, assetTypeNamePlural);
                 sb.AppendLine("    }");
                 sb.AppendLine();
                 sb.AppendLine("    #endregion");
@@ -319,6 +323,8 @@ namespace Delight.Editor.Parser
 
             foreach (var declaration in propertyDeclarations)
             {
+                if (declaration.PropertyName == "Sprite") continue; // TODO remove
+
                 sb.AppendLine();
                 sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", declaration.PropertyTypeFullName, declaration.PropertyName);
                 sb.AppendLine("        public {0} {1}", declaration.PropertyTypeFullName, declaration.PropertyName);
@@ -675,7 +681,7 @@ namespace Delight.Editor.Parser
                     continue;
 
 
-                var childViewObject = _contentObjectModel.GetViewObject(declaration.Declaration.ViewName);
+                var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.ViewName);
                 var childIdPath = idPath + declaration.Declaration.Id;
                 var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
                     : basedOnPath + declaration.Declaration.Id;
@@ -726,7 +732,7 @@ namespace Delight.Editor.Parser
                 // get identifier for view declaration
                 var childId = childViewDeclaration.Id;
                 var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
-                var childViewObject = _contentObjectModel.GetViewObject(childViewDeclaration.ViewName);
+                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
                 bool templateContent = childViewObject.HasContentTemplate;
 
                 // put a comment if we are creating top-level views
@@ -1061,7 +1067,7 @@ namespace Delight.Editor.Parser
                 if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View)
                 {
                     // get view reference and generate mappings for its declarations
-                    var childViewObject = _contentObjectModel.GetViewObject(propertyDeclaration.Declaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(propertyDeclaration.Declaration.PropertyTypeName);
                     var declarations = GetPropertyDeclarations(childViewObject, true, true, false);
                     foreach (var declaration in declarations)
                     {
@@ -1120,6 +1126,14 @@ namespace Delight.Editor.Parser
                                 continue;
                         }
 
+                        // check if field is referencing an asset 
+                        bool isAssetReference = ContentParser.IsUnityAssetType(field.FieldType);
+                        if (isAssetReference)
+                        {
+                            // add asset type
+                            _contentObjectModel.LoadAssetType(field.FieldType, false);
+                        }
+
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for field
@@ -1130,7 +1144,8 @@ namespace Delight.Editor.Parser
                             PropertyName = nonConflictedPropertyName,
                             TargetObjectName = propertyMapping.TargetObjectName,
                             TargetObjectType = targetObjectType.FullName,
-                            IsViewReference = false
+                            IsViewReference = false,
+                            IsAssetReference = isAssetReference
                         });
                     }
 
@@ -1164,6 +1179,14 @@ namespace Delight.Editor.Parser
                                 continue;
                         }
 
+                        // check if property is referencing an asset 
+                        bool isAssetReference = ContentParser.IsUnityAssetType(property.PropertyType);
+                        if (isAssetReference)
+                        {
+                            // add asset type
+                            _contentObjectModel.LoadAssetType(property.PropertyType, false);
+                        }
+
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for property
@@ -1174,7 +1197,8 @@ namespace Delight.Editor.Parser
                             PropertyName = nonConflictedPropertyName,
                             TargetObjectName = propertyMapping.TargetObjectName,
                             TargetObjectType = targetObjectType.FullName,
-                            IsViewReference = false
+                            IsViewReference = false,
+                            IsAssetReference = isAssetReference
                         });
                     }
                 }
@@ -1220,7 +1244,7 @@ namespace Delight.Editor.Parser
                 }
                 else
                 {
-                    var childViewObject = _contentObjectModel.GetViewObject(declaration.Declaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.PropertyTypeName);
                     if (childViewObject.NeedUpdate)
                     {
                         needUpdate = true;

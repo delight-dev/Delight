@@ -25,7 +25,7 @@ namespace Delight
         /// <summary>
         /// Gets dependency property value for specified instance.
         /// </summary>
-        public T GetValue(DependencyObject key)
+        public virtual T GetValue(DependencyObject key)
         {
             T currentValue;
             if (Values.TryGetValue(key, out currentValue))
@@ -41,7 +41,7 @@ namespace Delight
         /// <summary>
         /// Sets dependency property value for specified instance.
         /// </summary>
-        public void SetValue(DependencyObject key, T value, bool notifyObservers = true)
+        public virtual void SetValue(DependencyObject key, T value, bool notifyObservers = true)
         {
             // get old value
             T oldValue;
@@ -76,18 +76,18 @@ namespace Delight
         }
 
         /// <summary>
-        /// Clears run-time values for the specified instance.
+        /// Called when the dependency object has been unloaded. Clears run-time values for the specified instance.
         /// </summary>
-        public override void ClearRuntimeValues(DependencyObject key)
+        public override void Unload(DependencyObject key)
         {
-            base.ClearRuntimeValues(key);
+            base.Unload(key);
             Values.Remove(key);
         }
 
         /// <summary>
         /// Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
         /// </summary>
-        public bool IsUndefined(DependencyObject key)
+        public virtual bool IsUndefined(DependencyObject key)
         {
             if (Values.ContainsKey(key))
                 return false;
@@ -111,7 +111,7 @@ namespace Delight
         /// <summary>
         /// Gets default value from type.
         /// </summary>
-        public T GetDefault(Template template)
+        public virtual T GetDefault(Template template)
         {
             while (true)
             {
@@ -132,7 +132,7 @@ namespace Delight
         /// <summary>
         /// Sets default value for type.
         /// </summary>
-        public void SetDefault(Template template, T defaultValue)
+        public virtual void SetDefault(Template template, T defaultValue)
         {
             Defaults[template] = defaultValue;
         }
@@ -168,11 +168,17 @@ namespace Delight
 
         #region Methods
 
-        public virtual void Initialize(DependencyObject key)
+        /// <summary>
+        /// Called when the dependency object has been loaded. Used e.g. by mapped dependency properties to propagate initial values.
+        /// </summary>
+        public virtual void Load(DependencyObject key)
         {
         }
 
-        public virtual void ClearRuntimeValues(DependencyObject key)
+        /// <summary>
+        /// Called when the dependency object has been unloaded.
+        /// </summary>
+        public virtual void Unload(DependencyObject key)
         {
         }
 

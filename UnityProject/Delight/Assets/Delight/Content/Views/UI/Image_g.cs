@@ -52,13 +52,6 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Delight.SpriteAsset> SpriteProperty = new DependencyProperty<Delight.SpriteAsset>("Sprite");
-        public Delight.SpriteAsset Sprite
-        {
-            get { return SpriteProperty.GetValue(this); }
-            set { SpriteProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<UnityEngine.UI.Image> ImageComponentProperty = new DependencyProperty<UnityEngine.UI.Image>("ImageComponent");
         public UnityEngine.UI.Image ImageComponent
         {

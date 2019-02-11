@@ -55,20 +55,40 @@ namespace Delight
                 () => { }
             ));
 
-            // constructing Group (Group1)
-            Group1 = new Group(this, this, "Group1", Group1Template);
-            Group2 = new Group(this, Group1, "Group2", Group2Template);
-            Button1 = new Button(this, Group2, "Button1", Button1Template, x => 
+            // constructing Region (Region1)
+            Region1 = new Region(this, this, "Region1", Region1Template);
+            Group1 = new Group(this, Region1, "Group1", Group1Template);
+            LoadAllButton = new Button(this, Group1, "LoadAllButton", LoadAllButtonTemplate, x => 
             {
                 var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test1");
+                source.Click = ResolveActionHandler(this, "LoadAll");
             });
-            Button2 = new Button(this, Group2, "Button2", Button2Template, x => 
+            Load1Button = new Button(this, Group1, "Load1Button", Load1ButtonTemplate, x => 
             {
                 var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test2");
+                source.Click = ResolveActionHandler(this, "ToggleLoad1");
             });
-            ImageGroup = new Group(this, Group1, "ImageGroup", ImageGroupTemplate);
+            Load2Button = new Button(this, Group1, "Load2Button", Load2ButtonTemplate, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "ToggleLoad2");
+            });
+            Load3Button = new Button(this, Group1, "Load3Button", Load3ButtonTemplate, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "ToggleLoad3");
+            });
+            Load4Button = new Button(this, Group1, "Load4Button", Load4ButtonTemplate, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "ToggleLoad4");
+            });
+            Button1 = new Button(this, Group1, "Button1", Button1Template, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "UnloadAll");
+            });
+            ImageGroup = new Group(this, Region1, "ImageGroup", ImageGroupTemplate);
             ImageSet1 = new Group(this, ImageGroup, "ImageSet1", ImageSet1Template);
             Image1 = new Image(this, ImageSet1, "Image1", Image1Template);
             Image2 = new Image(this, ImageSet1, "Image2", Image2Template);
@@ -80,7 +100,7 @@ namespace Delight
             Image6 = new Image(this, ImageSet3, "Image6", Image6Template);
             ImageSet4 = new Group(this, ImageGroup, "ImageSet4", ImageSet4Template);
             Image7 = new Image(this, ImageSet4, "Image7", Image7Template);
-            Label4 = new Label(this, Group1, "Label4", Label4Template);
+            Label4 = new Label(this, Region1, "Label4", Label4Template);
 
             // binding <Label Text="{LoadProgress}">
             Bindings.Add(new Binding(
@@ -113,14 +133,22 @@ namespace Delight
             dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(Label3Property);
             dependencyProperties.Add(Label3TemplateProperty);
+            dependencyProperties.Add(Region1Property);
+            dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
-            dependencyProperties.Add(Group2Property);
-            dependencyProperties.Add(Group2TemplateProperty);
+            dependencyProperties.Add(LoadAllButtonProperty);
+            dependencyProperties.Add(LoadAllButtonTemplateProperty);
+            dependencyProperties.Add(Load1ButtonProperty);
+            dependencyProperties.Add(Load1ButtonTemplateProperty);
+            dependencyProperties.Add(Load2ButtonProperty);
+            dependencyProperties.Add(Load2ButtonTemplateProperty);
+            dependencyProperties.Add(Load3ButtonProperty);
+            dependencyProperties.Add(Load3ButtonTemplateProperty);
+            dependencyProperties.Add(Load4ButtonProperty);
+            dependencyProperties.Add(Load4ButtonTemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
-            dependencyProperties.Add(Button2Property);
-            dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(ImageGroupProperty);
             dependencyProperties.Add(ImageGroupTemplateProperty);
             dependencyProperties.Add(ImageSet1Property);
@@ -223,6 +251,20 @@ namespace Delight
             set { Label3TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
+        public Region Region1
+        {
+            get { return Region1Property.GetValue(this); }
+            set { Region1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
+        public Template Region1Template
+        {
+            get { return Region1TemplateProperty.GetValue(this); }
+            set { Region1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
         {
@@ -237,18 +279,74 @@ namespace Delight
             set { Group1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
-        public Group Group2
+        public readonly static DependencyProperty<Button> LoadAllButtonProperty = new DependencyProperty<Button>("LoadAllButton");
+        public Button LoadAllButton
         {
-            get { return Group2Property.GetValue(this); }
-            set { Group2Property.SetValue(this, value); }
+            get { return LoadAllButtonProperty.GetValue(this); }
+            set { LoadAllButtonProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Group2TemplateProperty = new DependencyProperty<Template>("Group2Template");
-        public Template Group2Template
+        public readonly static DependencyProperty<Template> LoadAllButtonTemplateProperty = new DependencyProperty<Template>("LoadAllButtonTemplate");
+        public Template LoadAllButtonTemplate
         {
-            get { return Group2TemplateProperty.GetValue(this); }
-            set { Group2TemplateProperty.SetValue(this, value); }
+            get { return LoadAllButtonTemplateProperty.GetValue(this); }
+            set { LoadAllButtonTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Load1ButtonProperty = new DependencyProperty<Button>("Load1Button");
+        public Button Load1Button
+        {
+            get { return Load1ButtonProperty.GetValue(this); }
+            set { Load1ButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Load1ButtonTemplateProperty = new DependencyProperty<Template>("Load1ButtonTemplate");
+        public Template Load1ButtonTemplate
+        {
+            get { return Load1ButtonTemplateProperty.GetValue(this); }
+            set { Load1ButtonTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Load2ButtonProperty = new DependencyProperty<Button>("Load2Button");
+        public Button Load2Button
+        {
+            get { return Load2ButtonProperty.GetValue(this); }
+            set { Load2ButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Load2ButtonTemplateProperty = new DependencyProperty<Template>("Load2ButtonTemplate");
+        public Template Load2ButtonTemplate
+        {
+            get { return Load2ButtonTemplateProperty.GetValue(this); }
+            set { Load2ButtonTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Load3ButtonProperty = new DependencyProperty<Button>("Load3Button");
+        public Button Load3Button
+        {
+            get { return Load3ButtonProperty.GetValue(this); }
+            set { Load3ButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Load3ButtonTemplateProperty = new DependencyProperty<Template>("Load3ButtonTemplate");
+        public Template Load3ButtonTemplate
+        {
+            get { return Load3ButtonTemplateProperty.GetValue(this); }
+            set { Load3ButtonTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Load4ButtonProperty = new DependencyProperty<Button>("Load4Button");
+        public Button Load4Button
+        {
+            get { return Load4ButtonProperty.GetValue(this); }
+            set { Load4ButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Load4ButtonTemplateProperty = new DependencyProperty<Template>("Load4ButtonTemplate");
+        public Template Load4ButtonTemplate
+        {
+            get { return Load4ButtonTemplateProperty.GetValue(this); }
+            set { Load4ButtonTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
@@ -263,20 +361,6 @@ namespace Delight
         {
             get { return Button1TemplateProperty.GetValue(this); }
             set { Button1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
-        public Button Button2
-        {
-            get { return Button2Property.GetValue(this); }
-            set { Button2Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
-        public Template Button2Template
-        {
-            get { return Button2TemplateProperty.GetValue(this); }
-            set { Button2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> ImageGroupProperty = new DependencyProperty<Group>("ImageGroup");
@@ -493,10 +577,14 @@ namespace Delight
                     Delight.AssetManagementTest.Label1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel1);
                     Delight.AssetManagementTest.Label2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel2);
                     Delight.AssetManagementTest.Label3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel3);
+                    Delight.AssetManagementTest.Region1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestRegion1);
                     Delight.AssetManagementTest.Group1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestGroup1);
-                    Delight.AssetManagementTest.Group2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestGroup2);
+                    Delight.AssetManagementTest.LoadAllButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoadAllButton);
+                    Delight.AssetManagementTest.Load1ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad1Button);
+                    Delight.AssetManagementTest.Load2ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad2Button);
+                    Delight.AssetManagementTest.Load3ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad3Button);
+                    Delight.AssetManagementTest.Load4ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad4Button);
                     Delight.AssetManagementTest.Button1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton1);
-                    Delight.AssetManagementTest.Button2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton2);
                     Delight.AssetManagementTest.ImageGroupTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageGroup);
                     Delight.AssetManagementTest.ImageSet1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet1);
                     Delight.AssetManagementTest.Image1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage1);
@@ -575,6 +663,23 @@ namespace Delight
             }
         }
 
+        private static Template _assetManagementTestRegion1;
+        public static Template AssetManagementTestRegion1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestRegion1 == null || _assetManagementTestRegion1.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestRegion1 == null)
+#endif
+                {
+                    _assetManagementTestRegion1 = new Template(RegionTemplates.Region);
+                }
+                return _assetManagementTestRegion1;
+            }
+        }
+
         private static Template _assetManagementTestGroup1;
         public static Template AssetManagementTestGroup1
         {
@@ -587,27 +692,197 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestGroup1 = new Template(GroupTemplates.Group);
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementOrientation.Vertical);
+                    Delight.Group.AlignmentProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementAlignment.TopLeft);
+                    Delight.Group.OffsetProperty.SetDefault(_assetManagementTestGroup1, new ElementMargin(20f, 100f, 0f, 0f));
                 }
                 return _assetManagementTestGroup1;
             }
         }
 
-        private static Template _assetManagementTestGroup2;
-        public static Template AssetManagementTestGroup2
+        private static Template _assetManagementTestLoadAllButton;
+        public static Template AssetManagementTestLoadAllButton
         {
             get
             {
 #if UNITY_EDITOR
-                if (_assetManagementTestGroup2 == null || _assetManagementTestGroup2.CurrentVersion != Template.Version)
+                if (_assetManagementTestLoadAllButton == null || _assetManagementTestLoadAllButton.CurrentVersion != Template.Version)
 #else
-                if (_assetManagementTestGroup2 == null)
+                if (_assetManagementTestLoadAllButton == null)
 #endif
                 {
-                    _assetManagementTestGroup2 = new Template(GroupTemplates.Group);
-                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup2, Delight.ElementOrientation.Horizontal);
+                    _assetManagementTestLoadAllButton = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoadAllButton, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoadAllButton, AssetManagementTestLoadAllButtonLabel);
                 }
-                return _assetManagementTestGroup2;
+                return _assetManagementTestLoadAllButton;
+            }
+        }
+
+        private static Template _assetManagementTestLoadAllButtonLabel;
+        public static Template AssetManagementTestLoadAllButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoadAllButtonLabel == null || _assetManagementTestLoadAllButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoadAllButtonLabel == null)
+#endif
+                {
+                    _assetManagementTestLoadAllButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestLoadAllButtonLabel, "LoadAll");
+                }
+                return _assetManagementTestLoadAllButtonLabel;
+            }
+        }
+
+        private static Template _assetManagementTestLoad1Button;
+        public static Template AssetManagementTestLoad1Button
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad1Button == null || _assetManagementTestLoad1Button.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad1Button == null)
+#endif
+                {
+                    _assetManagementTestLoad1Button = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad1Button, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad1Button, AssetManagementTestLoad1ButtonLabel);
+                }
+                return _assetManagementTestLoad1Button;
+            }
+        }
+
+        private static Template _assetManagementTestLoad1ButtonLabel;
+        public static Template AssetManagementTestLoad1ButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad1ButtonLabel == null || _assetManagementTestLoad1ButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad1ButtonLabel == null)
+#endif
+                {
+                    _assetManagementTestLoad1ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad1ButtonLabel, "Load Set 1");
+                }
+                return _assetManagementTestLoad1ButtonLabel;
+            }
+        }
+
+        private static Template _assetManagementTestLoad2Button;
+        public static Template AssetManagementTestLoad2Button
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad2Button == null || _assetManagementTestLoad2Button.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad2Button == null)
+#endif
+                {
+                    _assetManagementTestLoad2Button = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad2Button, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad2Button, AssetManagementTestLoad2ButtonLabel);
+                }
+                return _assetManagementTestLoad2Button;
+            }
+        }
+
+        private static Template _assetManagementTestLoad2ButtonLabel;
+        public static Template AssetManagementTestLoad2ButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad2ButtonLabel == null || _assetManagementTestLoad2ButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad2ButtonLabel == null)
+#endif
+                {
+                    _assetManagementTestLoad2ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad2ButtonLabel, "Load Set 2");
+                }
+                return _assetManagementTestLoad2ButtonLabel;
+            }
+        }
+
+        private static Template _assetManagementTestLoad3Button;
+        public static Template AssetManagementTestLoad3Button
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad3Button == null || _assetManagementTestLoad3Button.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad3Button == null)
+#endif
+                {
+                    _assetManagementTestLoad3Button = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad3Button, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad3Button, AssetManagementTestLoad3ButtonLabel);
+                }
+                return _assetManagementTestLoad3Button;
+            }
+        }
+
+        private static Template _assetManagementTestLoad3ButtonLabel;
+        public static Template AssetManagementTestLoad3ButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad3ButtonLabel == null || _assetManagementTestLoad3ButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad3ButtonLabel == null)
+#endif
+                {
+                    _assetManagementTestLoad3ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad3ButtonLabel, "Load Set 3");
+                }
+                return _assetManagementTestLoad3ButtonLabel;
+            }
+        }
+
+        private static Template _assetManagementTestLoad4Button;
+        public static Template AssetManagementTestLoad4Button
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad4Button == null || _assetManagementTestLoad4Button.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad4Button == null)
+#endif
+                {
+                    _assetManagementTestLoad4Button = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad4Button, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad4Button, AssetManagementTestLoad4ButtonLabel);
+                }
+                return _assetManagementTestLoad4Button;
+            }
+        }
+
+        private static Template _assetManagementTestLoad4ButtonLabel;
+        public static Template AssetManagementTestLoad4ButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestLoad4ButtonLabel == null || _assetManagementTestLoad4ButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestLoad4ButtonLabel == null)
+#endif
+                {
+                    _assetManagementTestLoad4ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad4ButtonLabel, "Load Set 4");
+                }
+                return _assetManagementTestLoad4ButtonLabel;
             }
         }
 
@@ -623,6 +898,7 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton1 = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestButton1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestButton1, AssetManagementTestButton1Label);
                 }
                 return _assetManagementTestButton1;
@@ -641,45 +917,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton1Label = new Template(ButtonTemplates.ButtonLabel);
-                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton1Label, "Load");
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton1Label, "UnloadAll");
                 }
                 return _assetManagementTestButton1Label;
-            }
-        }
-
-        private static Template _assetManagementTestButton2;
-        public static Template AssetManagementTestButton2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_assetManagementTestButton2 == null || _assetManagementTestButton2.CurrentVersion != Template.Version)
-#else
-                if (_assetManagementTestButton2 == null)
-#endif
-                {
-                    _assetManagementTestButton2 = new Template(ButtonTemplates.Button);
-                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestButton2, AssetManagementTestButton2Label);
-                }
-                return _assetManagementTestButton2;
-            }
-        }
-
-        private static Template _assetManagementTestButton2Label;
-        public static Template AssetManagementTestButton2Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_assetManagementTestButton2Label == null || _assetManagementTestButton2Label.CurrentVersion != Template.Version)
-#else
-                if (_assetManagementTestButton2Label == null)
-#endif
-                {
-                    _assetManagementTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
-                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton2Label, "Unload");
-                }
-                return _assetManagementTestButton2Label;
             }
         }
 
@@ -697,7 +937,6 @@ namespace Delight
                     _assetManagementTestImageGroup = new Template(GroupTemplates.Group);
                     Delight.Group.OrientationProperty.SetDefault(_assetManagementTestImageGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageGroup, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageGroup, Delight.LoadMode.Manual);
                 }
                 return _assetManagementTestImageGroup;
             }
@@ -716,6 +955,7 @@ namespace Delight
                 {
                     _assetManagementTestImageSet1 = new Template(GroupTemplates.Group);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet1, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet1, Delight.LoadMode.Manual);
                 }
                 return _assetManagementTestImageSet1;
             }
@@ -734,6 +974,8 @@ namespace Delight
                 {
                     _assetManagementTestImage1 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage1, Assets.Sprites["Frame1"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage1;
             }
@@ -752,6 +994,8 @@ namespace Delight
                 {
                     _assetManagementTestImage2 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage2, Assets.Sprites["Frame2"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage2;
             }
@@ -770,6 +1014,7 @@ namespace Delight
                 {
                     _assetManagementTestImageSet2 = new Template(GroupTemplates.Group);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet2, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet2, Delight.LoadMode.Manual);
                 }
                 return _assetManagementTestImageSet2;
             }
@@ -788,6 +1033,8 @@ namespace Delight
                 {
                     _assetManagementTestImage3 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage3, Assets.Sprites["Frame3"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage3;
             }
@@ -806,6 +1053,8 @@ namespace Delight
                 {
                     _assetManagementTestImage4 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage4, Assets.Sprites["Frame4"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage4;
             }
@@ -824,6 +1073,7 @@ namespace Delight
                 {
                     _assetManagementTestImageSet3 = new Template(GroupTemplates.Group);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet3, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet3, Delight.LoadMode.Manual);
                 }
                 return _assetManagementTestImageSet3;
             }
@@ -842,6 +1092,8 @@ namespace Delight
                 {
                     _assetManagementTestImage5 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage5, Assets.Sprites["Frame2"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage5;
             }
@@ -860,6 +1112,8 @@ namespace Delight
                 {
                     _assetManagementTestImage6 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage6, Assets.Sprites["Frame3"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage6;
             }
@@ -878,6 +1132,7 @@ namespace Delight
                 {
                     _assetManagementTestImageSet4 = new Template(GroupTemplates.Group);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet4, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet4, Delight.LoadMode.Manual);
                 }
                 return _assetManagementTestImageSet4;
             }
@@ -896,8 +1151,8 @@ namespace Delight
                 {
                     _assetManagementTestImage7 = new Template(ImageTemplates.Image);
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage7, Assets.Sprites["BigSprite"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage7, new ElementSize(256f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage7, new ElementSize(517f, ElementSizeUnit.Pixels));
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage7, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage7, new ElementSize(205f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage7;
             }

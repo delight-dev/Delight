@@ -141,6 +141,7 @@ namespace Delight.Editor
             bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
             bool viewsChanged = addedOrUpdatedXmlAssets.Count() > 0;
             bool contentChanged = assetsChanged || rebuildViews || viewsChanged;
+            bool refreshScripts = false;
 
             // if editor is playing queue assets to be processed after exiting play mode
             if (Application.isPlaying)
@@ -159,6 +160,7 @@ namespace Delight.Editor
             if (assetsChanged)
             {
                 ContentParser.ParseAssetFiles(addedOrUpdatedAssetObjects, deletedAssetObjects, movedAssetObjects, movedFromAssetObjects);
+                refreshScripts = true;
             }
 
             // any xml content moved or deleted? 
@@ -171,7 +173,11 @@ namespace Delight.Editor
             {
                 // parse new content and generate code
                 ContentParser.ParseXmlFiles(addedOrUpdatedXmlAssets);
+                refreshScripts = true;
+            }
 
+            if (refreshScripts)
+            {
                 // refresh generated scripts
                 AssetDatabase.Refresh();
             }

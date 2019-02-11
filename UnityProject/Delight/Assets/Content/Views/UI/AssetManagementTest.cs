@@ -13,54 +13,79 @@ namespace Delight
 {
     public partial class AssetManagementTest
     {
-        public override void AfterInitialize()
+        public void LoadAll()
         {
-            base.AfterInitialize();
-
-            ImageGroup.Loaded += ImageGroup_Loaded;
+            if (!ImageSet1.IsLoaded) ToggleLoad1();
+            if (!ImageSet2.IsLoaded) ToggleLoad2();
+            if (!ImageSet3.IsLoaded) ToggleLoad3();
+            if (!ImageSet4.IsLoaded) ToggleLoad4();
         }
 
-        public void Test1()
+        public void UnloadAll()
         {
-            LoadProgress = "Loading views...";
-            ImageGroup.LoadAsync();
-        }
-
-        public void Test2()
-        {
-            ImageGroup.Unload();
-            LoadProgress = "";
-
+            if (ImageSet1.IsLoaded) ToggleLoad1();
+            if (ImageSet2.IsLoaded) ToggleLoad2();
+            if (ImageSet3.IsLoaded) ToggleLoad3();
+            if (ImageSet4.IsLoaded) ToggleLoad4();
             GC.Collect();
         }
 
-        private void ImageGroup_Loaded(object source)
+        public async void ToggleLoad1()
         {
-            LoadProgress = "Views loaded.";
+            if (!ImageSet1.IsLoaded)
+            {
+                await ImageSet1.LoadAsync();
+                Load1Button.Text = "Unload Set 1";
+            }
+            else
+            {
+                ImageSet1.Unload();
+                Load1Button.Text = "Load Set 1";                
+            }
         }
 
-        public async void LoadFrame1Sprite()
+        public async void ToggleLoad2()
         {
-            //Debug.Log("Frame1.GetAsync()");
-            //var sprite = await Assets.Sprites.Frame1.GetAsync();
-            //Debug.Log("Frame1.GetAsync() result: " + sprite);
-
-            ////TestImage.ImageComponent.sprite = sprite;
-            ////TestImage.ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
+            if (!ImageSet2.IsLoaded)
+            {
+                await ImageSet2.LoadAsync();
+                Load2Button.Text = "Unload Set 2";
+            }
+            else
+            {
+                ImageSet2.Unload();
+                Load2Button.Text = "Load Set 2";
+            }
         }
 
-        public async void LoadAssetBundle1()
+        public async void ToggleLoad3()
         {
-            Debug.Log("Bundle1.GetAsync()");
-            var bundle = await Assets.AssetBundles.Bundle1.GetAsync();
-            Debug.Log("Bundle1.GetAsync() result: " + bundle);
+            if (!ImageSet3.IsLoaded)
+            {
+                await ImageSet3.LoadAsync();
+                Load3Button.Text = "Unload Set 3";
+            }
+            else
+            {
+                ImageSet3.Unload();
+                Load3Button.Text = "Load Set 3";
+            }
         }
 
-        protected override void BeforeLoad()
+        public async void ToggleLoad4()
         {
-            base.BeforeLoad();
+            if (!ImageSet4.IsLoaded)
+            {
+                await ImageSet4.LoadAsync();
+                Load4Button.Text = "Unload Set 4";
+            }
+            else
+            {
+                ImageSet4.Unload();
+                Load4Button.Text = "Load Set 4";
+            }
         }
-
+       
         public StringBuilder sb = new StringBuilder();
         private IDisposable _updateTimer;
         private IDisposable _updateLoadedAssets;

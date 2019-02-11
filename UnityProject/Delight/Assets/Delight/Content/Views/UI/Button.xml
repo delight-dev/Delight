@@ -1,4 +1,4 @@
 <Button xmlns="Delight" BasedOn="UIImageView" Width="160" Height="40" BackgroundColor="Gray" m.Label="">
-  <Label Id="Label" TextAlignment="Center" />
+  <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" />
 </Button> 
 

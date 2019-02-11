@@ -20,7 +20,7 @@ namespace Delight.Editor.Parser
     /// <summary>
     /// Contains information about all content objects in the project.
     /// </summary>
-    [ProtoContract] 
+    [ProtoContract]
     public class ContentObjectModel
     {
         #region Fields
@@ -42,10 +42,17 @@ namespace Delight.Editor.Parser
         [ProtoMember(5, AsReference = true)]
         public MasterConfigObject MasterConfigObject;
 
+        [ProtoMember(6)]
+        public bool AssetsNeedUpdate;
+
+        [ProtoMember(7, AsReference = true)]
+        public List<AssetType> AssetTypes;
+
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, ThemeObject> _themeObjects;
         private Dictionary<string, AssetBundleObject> _assetBundleObjects;
+        private Dictionary<string, AssetType> _assetTypes;
         private static ContentObjectModel _contentObjectModel;
 
         #endregion
@@ -62,6 +69,7 @@ namespace Delight.Editor.Parser
             ThemeObjects = new List<ThemeObject>();
             AssetBundleObjects = new List<AssetBundleObject>();
             MasterConfigObject = MasterConfigObject.CreateDefault();
+            AssetTypes = new List<AssetType>();
         }
 
         #endregion
@@ -69,9 +77,9 @@ namespace Delight.Editor.Parser
         #region Methods
 
         /// <summary>
-        /// Gets view object.
+        /// Loads specified view object, creates new one if it doesn't exist.
         /// </summary>
-        public ViewObject GetViewObject(string viewName)
+        public ViewObject LoadViewObject(string viewName)
         {
             if (_viewObjects == null)
             {
@@ -96,9 +104,9 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets asset bundle object.
+        /// Loads specified asset bundle object, creates new one if it doesn't exist.
         /// </summary>
-        public AssetBundleObject GetAssetBundleObject(string bundleName, string bundlePath)
+        public AssetBundleObject LoadAssetBundleObject(string bundleName, string bundlePath)
         {
             var bundle = AssetBundleObjects.FirstOrDefault(x => x.Path.IEquals(bundlePath) && x.Name.IEquals(bundleName));
             if (bundle != null) return bundle;
@@ -112,13 +120,13 @@ namespace Delight.Editor.Parser
 
             bundle = new AssetBundleObject { Name = bundleName, Path = bundlePath };
             AssetBundleObjects.Add(bundle);
-            return bundle;            
+            return bundle;
         }
 
         /// <summary>
-        /// Gets model object.
+        /// Loads specified model object, creates new one if it doesn't exist.
         /// </summary>
-        public ModelObject GetModelObject(string modelName)
+        public ModelObject LoadModelObject(string modelName)
         {
             if (_modelObjects == null)
             {
@@ -143,9 +151,9 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets theme object.
+        /// Loads specified theme object, creates new one if it doesn't exist.
         /// </summary>
-        public ThemeObject GetThemeObject(string themeName)
+        public ThemeObject LoadThemeObject(string themeName)
         {
             if (_themeObjects == null)
             {
@@ -244,6 +252,70 @@ namespace Delight.Editor.Parser
             return String.Format("{0}/{1}", path, ContentObjectModelFile);
         }
 
+        /// <summary>
+        /// Loads specified asset type, creates new one if it doesn't exist.
+        /// </summary>
+        public AssetType LoadAssetType(Type type, bool addedFromAssetFile)
+        {
+            return LoadAssetType(type.Name, type.FullName, addedFromAssetFile);
+        }
+
+        /// <summary>
+        /// Loads specified asset type, creates new one if it doesn't exist.
+        /// </summary>
+        public AssetType LoadAssetType(string name, string fullName, bool addedFromAssetFile)
+        {
+            if (_assetTypes == null)
+            {
+                _assetTypes = new Dictionary<string, AssetType>();
+                foreach (var item in AssetTypes)
+                {
+                    _assetTypes.Add(item.FullName, item);
+                }
+            }
+
+            AssetType assetType;
+            if (_assetTypes.TryGetValue(fullName, out assetType))
+            {
+                if (addedFromAssetFile)
+                    assetType.AddedFromAssetFile = true;
+                else
+                    assetType.AddedFromView = true;
+
+                return assetType;
+            }
+
+            AssetsNeedUpdate = true;
+
+            // create new theme object if it doesn't exist
+            assetType = new AssetType { Name = name, FullName = fullName, AddedFromAssetFile = addedFromAssetFile, AddedFromView = !addedFromAssetFile };
+            AssetTypes.Add(assetType);
+            _assetTypes.Add(fullName, assetType);
+
+            return assetType;
+        }
+
+        /// <summary>
+        /// Clears asset types added from either views or asset files.
+        /// </summary>
+        public void ClearAssetTypes(bool addedFromAssetFiles)
+        {
+            // remove asset types no longer references from files or views
+            for (int i = AssetTypes.Count - 1; i >= 0; --i)
+            {
+                var item = AssetTypes[i];
+                if ((addedFromAssetFiles && !item.AddedFromView) || 
+                    (!addedFromAssetFiles && !item.AddedFromAssetFile))
+                {
+                    AssetTypes.RemoveAt(i);
+                    if (_assetTypes != null)
+                    {
+                        _assetTypes.Remove(item.FullName);
+                    }
+                }
+            }
+        }
+
         #endregion
     }
 
@@ -318,7 +390,7 @@ namespace Delight.Editor.Parser
             {
                 viewDeclarations.AddRange(GetViewDeclarations(viewDeclaration));
             }
-            
+
             return viewDeclarations;
         }
 
@@ -326,7 +398,7 @@ namespace Delight.Editor.Parser
         {
             var viewDeclarations = new List<ViewDeclarationInfo>();
             viewDeclarations.Add(new ViewDeclarationInfo { Declaration = viewDeclaration });
-            
+
             foreach (var childDeclaration in viewDeclaration.ChildDeclarations)
             {
                 viewDeclarations.AddRange(GetViewDeclarations(childDeclaration));
@@ -347,8 +419,8 @@ namespace Delight.Editor.Parser
         public string FullTargetPropertyPath
         {
             get
-            {                
-                return IsMapped ? String.Format("{0}.{1}", TargetObjectName, TargetPropertyName) : 
+            {
+                return IsMapped ? String.Format("{0}.{1}", TargetObjectName, TargetPropertyName) :
                     Declaration.PropertyName;
             }
         }
@@ -404,19 +476,20 @@ namespace Delight.Editor.Parser
     public class MappedPropertyDeclaration
     {
         public bool IsViewReference;
+        public bool IsAssetReference;
         public string TargetPropertyName;
         public string TargetPropertyTypeFullName;
         public string TargetObjectName;
         public string TargetObjectType;
-        public string PropertyName;      
-        
+        public string PropertyName;
+
         public string FullTargetPropertyPath
         {
             get
             {
                 return String.Format("{0}.{1}", TargetObjectName, TargetPropertyName);
             }
-        }  
+        }
     }
 
     /// <summary>
@@ -578,7 +651,8 @@ namespace Delight.Editor.Parser
         Action = 1,
         Template = 2,
         View = 3,
-        UnityComponent = 4
+        UnityComponent = 4,
+        Asset = 5
     }
 
     #endregion
@@ -729,7 +803,7 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(3)]
         public StorageMode StorageMode;
-        
+
         [ProtoMember(4)]
         public string Path;
 
@@ -751,18 +825,19 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets asset bundle object.
+        /// Loads asset object, creates new one if it doesn't exist.
         /// </summary>
-        public UnityAssetObject GetUnityAssetObject(string assetName, string path, Type type)
+        public UnityAssetObject LoadUnityAssetObject(string assetName, string path, Type type)
         {
-            var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.TypeName.IEquals(type.Name));
+            var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.Type.Name.IEquals(type.Name));
             if (asset != null)
             {
                 asset.Path = path;
                 return asset;
             }
 
-            asset = new UnityAssetObject { Name = assetName, TypeName = type.Name, TypeFullName = type.FullName, Path = path };
+            var assetType = ContentObjectModel.GetInstance().LoadAssetType(type, true);
+            asset = new UnityAssetObject { Name = assetName, Type = assetType, Path = path };
             AssetObjects.Add(asset);
             return asset;
         }
@@ -787,17 +862,30 @@ namespace Delight.Editor.Parser
         [ProtoMember(2)]
         public string Path;
 
-        [ProtoMember(3)]
-        public string TypeName;
+        [ProtoMember(3, AsReference = true)]
+        public AssetType Type;
 
         [ProtoMember(4)]
-        public string TypeFullName;
-
-        [ProtoMember(5)]
         public string AssetBundleName;
 
-        [ProtoMember(6)]
+        [ProtoMember(5)]
         public bool IsResource;
+    }
+
+    [ProtoContract]
+    public class AssetType
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public string FullName;
+
+        [ProtoMember(3)]
+        public bool AddedFromAssetFile;
+
+        [ProtoMember(4)]
+        public bool AddedFromView;
     }
 
     #endregion

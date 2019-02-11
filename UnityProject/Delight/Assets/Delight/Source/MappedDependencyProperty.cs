@@ -126,9 +126,9 @@ namespace Delight
         /// <summary>
         /// Initializes the mapped dependency property.
         /// </summary>
-        public override void Initialize(DependencyObject key)
+        public override void Load(DependencyObject key)
         {
-            base.Initialize(key);
+            base.Load(key);
 
             var target = ObjectGetter((TParent)key);
             if (target == null)
@@ -161,9 +161,9 @@ namespace Delight
         /// <summary>
         /// Clears run-time values for the specified instance.
         /// </summary>
-        public override void ClearRuntimeValues(DependencyObject key)
+        public override void Unload(DependencyObject key)
         {
-            base.ClearRuntimeValues(key);
+            base.Unload(key);
             ValueSet.Remove(key);
         }
 

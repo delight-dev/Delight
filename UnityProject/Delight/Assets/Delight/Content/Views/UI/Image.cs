@@ -11,6 +11,13 @@ namespace Delight
 {
     public partial class Image
     {
+        public readonly static BindableObjectDependencyProperty<Delight.SpriteAsset> SpriteProperty = new BindableObjectDependencyProperty<Delight.SpriteAsset>("Sprite");
+        public Delight.SpriteAsset Sprite
+        {
+            get { return SpriteProperty.GetValue(this); }
+            set { SpriteProperty.SetValue(this, value); }
+        }
+
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -21,76 +28,36 @@ namespace Delight
             {
                 case nameof(Color): // TODO implement
                     break;
+                case nameof(Sprite):
+                    SpriteChanged();
+                    break;
             }
         }
 
-        // 1. whenever the sprite asset changes or on load we want to 
-        //    1.1. unregister listeners to old sprite asset
-        //    1.2. register listeners to new sprite asset
-        //    1.3. initiate load of sprite object
-        //    1.4. in the callback map value to our ImageComponent.sprite
-        // 2. whenever we unload the view
-        //    2.1. unregister listeners to sprite asset
-        // find a nice construct to automate these operations
-
-        protected override void AfterLoad()
+        /// <summary>
+        /// Called when the sprite is changed. 
+        /// </summary>
+        protected virtual void SpriteChanged()
         {
-            base.AfterLoad();
-
-            RegisterAssetListeners();
-        }
-
-        protected override void AfterUnload()
-        {
-            base.AfterUnload();
-
-            UnregisterAssetListeners();
-        }
-
-        public virtual void UnregisterAssetListeners()
-        {
-            if (Sprite == null)
+            if (GameObject == null)
                 return;
 
-            Sprite.UnregisterReference(GameObject);
-            Sprite.PropertyChanged -= SpritePropertyChanged;
-        }
-
-        public virtual void RegisterAssetListeners()
-        {
-            if (Sprite == null)
-                return;
-
-            Sprite.RegisterReference(GameObject);
-            Sprite.PropertyChanged -= SpritePropertyChanged;
-            Sprite.PropertyChanged += SpritePropertyChanged;
-
-            if (Sprite.UnityObject == null)
-            {
-                Sprite.LoadAsync();
-            }
-            else
-            {
-                SpritePropertyChanged(Sprite, nameof(Sprite.UnityObject));
-            }
-        }
-
-        protected virtual void SpritePropertyChanged(object source, string propertyName)
-        {
-            if (propertyName != "UnityObject") return;
-            if (ImageComponent == null)
+            var sprite = Sprite?.UnityObject;
+            if (sprite != null && ImageComponent == null)
             {
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
             }
 
-            var sprite = Sprite.UnityObject;
-            ImageComponent.sprite = sprite;
-            if (sprite != null && TypeProperty.IsUndefined(this))
+            if (ImageComponent != null)
             {
-                // if type is undefined auto-detect if sprite is sliced
-                if (sprite.border != Vector4.zero)
+                ImageComponent.sprite = sprite;
+                if (sprite != null && TypeProperty.IsUndefined(this))
                 {
-                    ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
+                    // if type is undefined auto-detect if sprite is sliced
+                    if (sprite.border != Vector4.zero)
+                    {
+                        ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
+                    }
                 }
             }
 
@@ -133,26 +100,6 @@ namespace Delight
 
             // disable raycast blocks if image is transparent
             ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
-        }
-
-        // TODO experminental code, remove
-        public void RegisterAssetListener<T>(AssetObject<T> assetObject) where T : UnityEngine.Object
-        {
-            if (assetObject != null)
-            {
-                assetObject.PropertyChanged -= AssetObjectPropertyChanged;
-                assetObject.PropertyChanged += AssetObjectPropertyChanged;
-
-                if (assetObject.UnityObject != null)
-                {
-                    // trigger property changed
-                    AssetObjectPropertyChanged(assetObject, nameof(AssetObject<T>.UnityObject));
-                }
-            }
-        }
-
-        private void AssetObjectPropertyChanged(object source, string propertyName)
-        {
         }
     }
 }

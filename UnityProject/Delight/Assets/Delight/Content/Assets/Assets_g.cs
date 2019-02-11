@@ -1,4 +1,4 @@
-// Internal view logic generated from assets
+// Asset data and providers generated from asset content
 #region Using Statements
 using System;
 using System.Linq;
@@ -37,7 +37,7 @@ namespace Delight
 
     #endregion
 
-    #region SpriteAsset
+    #region Sprites
 
     public partial class SpriteAsset : AssetObject<UnityEngine.Sprite>
     {
@@ -82,40 +82,7 @@ namespace Delight
 
     #endregion
 
-    #region Texture2DAsset
-
-    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
-    {
-    }
-
-    public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
-    {
-        #region Fields
-
-        public readonly Texture2DAsset Bluefloral01;
-
-        #endregion
-
-        #region Constructor
-
-        public Texture2DAssetData()
-        {
-            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2" };
-
-            Add(Bluefloral01);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
-    }
-
-    #endregion
-
-    #region MaterialAsset
+    #region Materials
 
     public partial class MaterialAsset : AssetObject<UnityEngine.Material>
     {
@@ -148,7 +115,7 @@ namespace Delight
 
     #endregion
 
-    #region TMP_FontAsset
+    #region TMP_FontAssets
 
     public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
     {
@@ -177,6 +144,73 @@ namespace Delight
     public static partial class Assets
     {
         public static TMP_FontAssetData TMP_FontAssets = new TMP_FontAssetData();
+    }
+
+    #endregion
+
+    #region Texture2Ds
+
+    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
+    {
+    }
+
+    public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
+    {
+        #region Fields
+
+        public readonly Texture2DAsset Bluefloral01;
+
+        #endregion
+
+        #region Constructor
+
+        public Texture2DAssetData()
+        {
+            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2" };
+
+            Add(Bluefloral01);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
+    #region TMP_ColorGradients
+
+    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
+    {
+    }
+
+    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
+    }
+
+    #endregion
+
+    #region TMP_SpriteAssets
+
+    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
+    {
+    }
+
+    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
     }
 
     #endregion
