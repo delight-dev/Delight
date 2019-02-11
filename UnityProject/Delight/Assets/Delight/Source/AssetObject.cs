@@ -192,10 +192,11 @@ namespace Delight
                 }
 
                 // simulate slow load
-                //await Task.Delay(1500); // TODO remove, add simulate network lag setting in editor
+                //await Task.Delay(1500); // TODO add simulate network lag setting in editor
 
                 // see if sprite is in bundle 
-                var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id);
+                //var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id); // bug in Unity makes it so assets loaded asynchronously does not get unloaded when Resources.UnloadAsset() is called
+                var unityObject = unityAssetBundle.LoadAsset<T>(Id);
                 if (unityObject == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
@@ -220,9 +221,13 @@ namespace Delight
             {
                 Resources.UnloadAsset(UnityObject);
             }
+            else
+            {
+                Resources.UnloadAsset(UnityObject);
+                Resources.UnloadUnusedAssets(); // TODO potentially expensive call but asset from bundle isn't freed from memory without calling it
+            }
 
             UnityObject = null;
-            //UnityEngine.Object.Destroy(UnityObject);
         }
 
         #endregion
