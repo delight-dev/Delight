@@ -135,7 +135,7 @@ namespace Delight
                 return;
 
             BeforeLoad();
-            InitializeDependencyProperties();
+            LoadDependencyProperties();
 
             await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
             
@@ -173,7 +173,7 @@ namespace Delight
                 return;
 
             BeforeLoad();
-            InitializeDependencyProperties();
+            LoadDependencyProperties();
 
             foreach (var child in LayoutChildren)
             {
@@ -258,9 +258,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Initializes dependency properties. 
+        /// Loads dependency properties. 
         /// </summary>
-        protected void InitializeDependencyProperties()
+        protected void LoadDependencyProperties()
         {
             var template = _template;
             while (true)
@@ -311,15 +311,15 @@ namespace Delight
             }
 
             AfterUnload();
-            ClearDependencyPropertyValues();
+            UnloadDependencyProperties();
 
             _isLoaded = false;
         }
 
         /// <summary>
-        /// Goes through and clears all run-time dependency property values. 
+        /// Unloads dependency properties. 
         /// </summary>
-        protected void ClearDependencyPropertyValues()
+        protected void UnloadDependencyProperties()
         {
             var template = _template;
             while (true)

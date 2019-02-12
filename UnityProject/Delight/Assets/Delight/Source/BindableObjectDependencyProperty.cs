@@ -141,7 +141,7 @@ namespace Delight
             {
                 var assetObject = value as AssetObject;
                 assetObject.UnregisterReference(key);
-            }           
+            }
 
             base.Unload(key);
         }
