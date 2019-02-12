@@ -58,15 +58,15 @@ namespace Delight
             set { ImageProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, UIImageView> BackgroundSpriteProperty = new MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, UIImageView>("BackgroundSprite", x => x.Image, x => x.sprite, (x, y) => x.sprite = y);
-        public UnityEngine.Sprite BackgroundSprite
+        public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView> BackgroundSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView>("BackgroundSprite", x => x.Image, (x, y) => x.sprite = y?.UnityObject);
+        public SpriteAsset BackgroundSprite
         {
             get { return BackgroundSpriteProperty.GetValue(this); }
             set { BackgroundSpriteProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, UIImageView> BackgroundOverrideSpriteProperty = new MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, UIImageView>("BackgroundOverrideSprite", x => x.Image, x => x.overrideSprite, (x, y) => x.overrideSprite = y);
-        public UnityEngine.Sprite BackgroundOverrideSprite
+        public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView> BackgroundOverrideSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView>("BackgroundOverrideSprite", x => x.Image, (x, y) => x.overrideSprite = y?.UnityObject);
+        public SpriteAsset BackgroundOverrideSprite
         {
             get { return BackgroundOverrideSpriteProperty.GetValue(this); }
             set { BackgroundOverrideSpriteProperty.SetValue(this, value); }
@@ -135,8 +135,8 @@ namespace Delight
             set { BackgroundUseSpriteMeshProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Material, UnityEngine.UI.Image, UIImageView> BackgroundMaterialProperty = new MappedDependencyProperty<UnityEngine.Material, UnityEngine.UI.Image, UIImageView>("BackgroundMaterial", x => x.Image, x => x.material, (x, y) => x.material = y);
-        public UnityEngine.Material BackgroundMaterial
+        public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView> BackgroundMaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView>("BackgroundMaterial", x => x.Image, (x, y) => x.material = y?.UnityObject);
+        public MaterialAsset BackgroundMaterial
         {
             get { return BackgroundMaterialProperty.GetValue(this); }
             set { BackgroundMaterialProperty.SetValue(this, value); }

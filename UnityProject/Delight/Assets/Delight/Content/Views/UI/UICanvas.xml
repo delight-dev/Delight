@@ -2,6 +2,7 @@
           Canvas="t:UnityEngine.Canvas, UnityEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           CanvasScaler="t:UnityEngine.UI.CanvasScaler, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           GraphicRaycaster="t:UnityEngine.UI.GraphicRaycaster, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+          RenderCamera="t:string"
           m.Canvas="" m.CanvasScaler="" m.GraphicRaycaster=""
           RenderMode="ScreenSpaceOverlay"
           PixelPerfect="False">

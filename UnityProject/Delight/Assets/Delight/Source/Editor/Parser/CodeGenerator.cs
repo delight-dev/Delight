@@ -162,6 +162,9 @@ namespace Delight.Editor.Parser
             List<UnityAssetObject> assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
             foreach (var assetType in _contentObjectModel.AssetTypes)
             {
+                if (assetType.Name == "DefaultAsset")
+                    continue; // ignore default assets
+
                 var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
                 var assetTypeName = assetType.FormattedTypeName;
                 var assetTypeNamePlural = assetType.Name.Pluralize();
@@ -338,10 +341,12 @@ namespace Delight.Editor.Parser
             {
                 if (mappedDeclaration.IsViewReference)
                 {
+                    var typeName = mappedDeclaration.IsAssetReference ? mappedDeclaration.AssetType.FormattedTypeName : mappedDeclaration.TargetPropertyTypeFullName;
+
                     // the property maps to a dependency property in another view
                     sb.AppendLine();
                     sb.AppendLine("        public readonly static DependencyProperty {0}Property = {1}.{2}Property;", mappedDeclaration.PropertyName, mappedDeclaration.TargetObjectType, mappedDeclaration.TargetPropertyName);
-                    sb.AppendLine("        public {0} {1}", mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.PropertyName);
+                    sb.AppendLine("        public {0} {1}", typeName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}.{1}; }}", mappedDeclaration.TargetObjectName, mappedDeclaration.TargetPropertyName);
                     sb.AppendLine("            set {{ {0}.{1} = value; }}", mappedDeclaration.TargetObjectName, mappedDeclaration.TargetPropertyName);
@@ -1107,7 +1112,9 @@ namespace Delight.Editor.Parser
                             PropertyName = nonConflictedPropertyName,
                             TargetObjectName = propertyMapping.TargetObjectName,
                             TargetObjectType = childViewObject.TypeName, // TODO unsure if this is correct
-                            IsViewReference = true
+                            IsViewReference = true,
+                            IsAssetReference = declaration.IsAssetReference,
+                            AssetType = declaration.AssetType
                         });
                     }
                 }

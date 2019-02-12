@@ -31,7 +31,7 @@
         <Image Sprite="Frame3" Size="100,100" />
       </Group>
       <Group Id="ImageSet4" Spacing="5" LoadMode="OnDemand">
-        <Image Id="BigSpriteImage" Sprite="BigSprite"  Size="100,205" />
+        <Image Id="BigSpriteImage" Sprite="BigSprite" Size="100,205" />
       </Group>
     </Group> 
     <Label Text="{LoadProgress}" Width="400" Alignment="Center" TextAlignment="Center" />

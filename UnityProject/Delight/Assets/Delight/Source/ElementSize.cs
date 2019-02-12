@@ -12,18 +12,62 @@ namespace Delight
     /// Represents size in pixels or percentage.
     /// </summary>
     [Serializable]
-    public class ElementSize
+    public class ElementSize : AtomicBindableObject
     {
         #region Fields
 
         [SerializeField]
         private float _value;
+        public float Value
+        {
+            get { return _value; }
+            set { SetProperty(ref _value, value); }
+        }
 
         [SerializeField]
         private ElementSizeUnit _unit;
+        public ElementSizeUnit Unit
+        {
+            get { return _unit; }
+            set { SetProperty(ref _unit, value); }
+        }
 
         [SerializeField]
         private bool _fill;
+        public bool Fill
+        {
+            get { return _fill; }
+            set { SetProperty(ref _fill, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets element size in pixels.
+        /// </summary>
+        public float Pixels
+        {
+            get
+            {
+                if (_unit == ElementSizeUnit.Pixels)
+                {
+                    return _value;
+                }
+                else
+                {
+                    return 0f;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets element size in percents.
+        /// </summary>
+        public float Percent
+        {
+            get
+            {
+                return _unit == ElementSizeUnit.Percents ? _value : 0f;
+            }
+        }
 
         public static readonly ElementSize Default = new ElementSize();
         public static readonly ElementSize DefaultLayout = new ElementSize(1.0f, ElementSizeUnit.Percents);
@@ -64,9 +108,17 @@ namespace Delight
         /// </summary>
         public ElementSize(ElementSize elementSize)
         {
-            _value = elementSize.Value;
-            _unit = elementSize.Unit;
-            _fill = elementSize.Fill;
+            if (elementSize == null)
+            {
+                _value = 0.0f;
+                _unit = ElementSizeUnit.Pixels;
+            }
+            else
+            {
+                _value = elementSize.Value;
+                _unit = elementSize.Unit;
+                _fill = elementSize.Fill;
+            }
         }
 
         #endregion
@@ -170,84 +222,6 @@ namespace Delight
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets element size value.
-        /// </summary>
-        public float Value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                _value = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets element size in pixels.
-        /// </summary>
-        public float Pixels
-        {
-            get
-            {
-                if (_unit == ElementSizeUnit.Pixels)
-                {
-                    return _value;
-                }
-                else
-                {
-                    return 0f;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets element size in percents.
-        /// </summary>
-        public float Percent
-        {
-            get
-            {
-                return _unit == ElementSizeUnit.Percents ? _value : 0f;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets element size unit.
-        /// </summary>
-        public ElementSizeUnit Unit
-        {
-            get
-            {
-                return _unit;
-            }
-            set
-            {
-                _unit = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets boolean indicating if element size is to fill out remaining space (used by DataGrid).
-        /// </summary>
-        public bool Fill
-        {
-            get
-            {
-                return _fill;
-            }
-            set
-            {
-                _fill = value;
-            }
         }
 
         #endregion

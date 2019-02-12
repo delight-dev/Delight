@@ -31,6 +31,7 @@ namespace Delight
             dependencyProperties.Add(CanvasProperty);
             dependencyProperties.Add(CanvasScalerProperty);
             dependencyProperties.Add(GraphicRaycasterProperty);
+            dependencyProperties.Add(RenderCameraProperty);
             dependencyProperties.Add(RenderModeProperty);
             dependencyProperties.Add(ScaleFactorProperty);
             dependencyProperties.Add(ReferencePixelsPerUnitProperty);
@@ -82,6 +83,13 @@ namespace Delight
         {
             get { return GraphicRaycasterProperty.GetValue(this); }
             set { GraphicRaycasterProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.String> RenderCameraProperty = new DependencyProperty<System.String>("RenderCamera");
+        public System.String RenderCamera
+        {
+            get { return RenderCameraProperty.GetValue(this); }
+            set { RenderCameraProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.RenderMode, UnityEngine.Canvas, UICanvas> RenderModeProperty = new MappedDependencyProperty<UnityEngine.RenderMode, UnityEngine.Canvas, UICanvas>("RenderMode", x => x.Canvas, x => x.renderMode, (x, y) => x.renderMode = y);

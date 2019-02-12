@@ -136,15 +136,15 @@ namespace Delight
             set { IsRightToLeftTextProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<TMPro.TMP_FontAsset, TMPro.TextMeshProUGUI, Label> FontProperty = new MappedDependencyProperty<TMPro.TMP_FontAsset, TMPro.TextMeshProUGUI, Label>("Font", x => x.TextMeshProUGUI, x => x.font, (x, y) => x.font = y);
-        public TMPro.TMP_FontAsset Font
+        public readonly static MappedAssetDependencyProperty<TMP_FontAsset, TMPro.TextMeshProUGUI, Label> FontProperty = new MappedAssetDependencyProperty<TMP_FontAsset, TMPro.TextMeshProUGUI, Label>("Font", x => x.TextMeshProUGUI, (x, y) => x.font = y?.UnityObject);
+        public TMP_FontAsset Font
         {
             get { return FontProperty.GetValue(this); }
             set { FontProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label> FontSharedMaterialProperty = new MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label>("FontSharedMaterial", x => x.TextMeshProUGUI, x => x.fontSharedMaterial, (x, y) => x.fontSharedMaterial = y);
-        public UnityEngine.Material FontSharedMaterial
+        public readonly static MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label> FontSharedMaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label>("FontSharedMaterial", x => x.TextMeshProUGUI, (x, y) => x.fontSharedMaterial = y?.UnityObject);
+        public MaterialAsset FontSharedMaterial
         {
             get { return FontSharedMaterialProperty.GetValue(this); }
             set { FontSharedMaterialProperty.SetValue(this, value); }
@@ -157,8 +157,8 @@ namespace Delight
             set { FontSharedMaterialsProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label> FontMaterialProperty = new MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label>("FontMaterial", x => x.TextMeshProUGUI, x => x.fontMaterial, (x, y) => x.fontMaterial = y);
-        public UnityEngine.Material FontMaterial
+        public readonly static MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label> FontMaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label>("FontMaterial", x => x.TextMeshProUGUI, (x, y) => x.fontMaterial = y?.UnityObject);
+        public MaterialAsset FontMaterial
         {
             get { return FontMaterialProperty.GetValue(this); }
             set { FontMaterialProperty.SetValue(this, value); }
@@ -199,15 +199,15 @@ namespace Delight
             set { ColorGradientProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<TMPro.TMP_ColorGradient, TMPro.TextMeshProUGUI, Label> ColorGradientPresetProperty = new MappedDependencyProperty<TMPro.TMP_ColorGradient, TMPro.TextMeshProUGUI, Label>("ColorGradientPreset", x => x.TextMeshProUGUI, x => x.colorGradientPreset, (x, y) => x.colorGradientPreset = y);
-        public TMPro.TMP_ColorGradient ColorGradientPreset
+        public readonly static MappedAssetDependencyProperty<TMP_ColorGradientAsset, TMPro.TextMeshProUGUI, Label> ColorGradientPresetProperty = new MappedAssetDependencyProperty<TMP_ColorGradientAsset, TMPro.TextMeshProUGUI, Label>("ColorGradientPreset", x => x.TextMeshProUGUI, (x, y) => x.colorGradientPreset = y?.UnityObject);
+        public TMP_ColorGradientAsset ColorGradientPreset
         {
             get { return ColorGradientPresetProperty.GetValue(this); }
             set { ColorGradientPresetProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<TMPro.TMP_SpriteAsset, TMPro.TextMeshProUGUI, Label> SpriteAssetProperty = new MappedDependencyProperty<TMPro.TMP_SpriteAsset, TMPro.TextMeshProUGUI, Label>("SpriteAsset", x => x.TextMeshProUGUI, x => x.spriteAsset, (x, y) => x.spriteAsset = y);
-        public TMPro.TMP_SpriteAsset SpriteAsset
+        public readonly static MappedAssetDependencyProperty<TMP_SpriteAsset, TMPro.TextMeshProUGUI, Label> SpriteAssetProperty = new MappedAssetDependencyProperty<TMP_SpriteAsset, TMPro.TextMeshProUGUI, Label>("SpriteAsset", x => x.TextMeshProUGUI, (x, y) => x.spriteAsset = y?.UnityObject);
+        public TMP_SpriteAsset SpriteAsset
         {
             get { return SpriteAssetProperty.GetValue(this); }
             set { SpriteAssetProperty.SetValue(this, value); }
@@ -563,8 +563,8 @@ namespace Delight
             set { RaycastTargetProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label> MaterialProperty = new MappedDependencyProperty<UnityEngine.Material, TMPro.TextMeshProUGUI, Label>("Material", x => x.TextMeshProUGUI, x => x.material, (x, y) => x.material = y);
-        public UnityEngine.Material Material
+        public readonly static MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label>("Material", x => x.TextMeshProUGUI, (x, y) => x.material = y?.UnityObject);
+        public MaterialAsset Material
         {
             get { return MaterialProperty.GetValue(this); }
             set { MaterialProperty.SetValue(this, value); }

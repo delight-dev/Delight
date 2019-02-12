@@ -81,14 +81,14 @@ namespace Delight
         }
 
         public readonly static DependencyProperty FontProperty = Label.FontProperty;
-        public TMPro.TMP_FontAsset Font
+        public TMP_FontAsset Font
         {
             get { return Label.Font; }
             set { Label.Font = value; }
         }
 
         public readonly static DependencyProperty FontSharedMaterialProperty = Label.FontSharedMaterialProperty;
-        public UnityEngine.Material FontSharedMaterial
+        public MaterialAsset FontSharedMaterial
         {
             get { return Label.FontSharedMaterial; }
             set { Label.FontSharedMaterial = value; }
@@ -102,7 +102,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty FontMaterialProperty = Label.FontMaterialProperty;
-        public UnityEngine.Material FontMaterial
+        public MaterialAsset FontMaterial
         {
             get { return Label.FontMaterial; }
             set { Label.FontMaterial = value; }
@@ -144,14 +144,14 @@ namespace Delight
         }
 
         public readonly static DependencyProperty ColorGradientPresetProperty = Label.ColorGradientPresetProperty;
-        public TMPro.TMP_ColorGradient ColorGradientPreset
+        public TMP_ColorGradientAsset ColorGradientPreset
         {
             get { return Label.ColorGradientPreset; }
             set { Label.ColorGradientPreset = value; }
         }
 
         public readonly static DependencyProperty SpriteAssetProperty = Label.SpriteAssetProperty;
-        public TMPro.TMP_SpriteAsset SpriteAsset
+        public TMP_SpriteAsset SpriteAsset
         {
             get { return Label.SpriteAsset; }
             set { Label.SpriteAsset = value; }
@@ -508,7 +508,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty MaterialProperty = Label.MaterialProperty;
-        public UnityEngine.Material Material
+        public MaterialAsset Material
         {
             get { return Label.Material; }
             set { Label.Material = value; }

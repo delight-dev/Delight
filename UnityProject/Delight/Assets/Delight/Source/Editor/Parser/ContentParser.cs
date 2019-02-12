@@ -867,12 +867,13 @@ namespace Delight.Editor.Parser
             // create asset bundles and asset objects for the assets found
             foreach (var assetFile in assetFiles)
             {
+                var relativeAssetFilePath = "Assets" + assetFile.Substring(Application.dataPath.Length);
+
                 // get asset bundle from file path
-                var bundle = GetAssetBundleFromFilePath(assetFile);
+                var bundle = GetAssetBundleFromFilePath(relativeAssetFilePath);
                 if (bundle == null)
                     continue;
-
-                var relativeAssetFilePath = "Assets" + assetFile.Substring(Application.dataPath.Length);
+                                
                 AddAssetToBundle(bundle, relativeAssetFilePath);
                 bundle.NeedBuild = true;
             }

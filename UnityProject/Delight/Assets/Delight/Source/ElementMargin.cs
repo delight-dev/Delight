@@ -9,24 +9,60 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Represents left, top, right and bottom margins.
+    /// Represents left, top, right and bottom margins or offset.
     /// </summary>
     [Serializable]
-    public class ElementMargin
+    public class ElementMargin : AtomicBindableObject
     {
-        #region Fields
+        #region Properties
 
         [SerializeField]
         private ElementSize _left;
+        public ElementSize Left
+        {
+            get { return _left; }
+            set
+            {
+                AttachListeners(_left, value);
+                SetProperty(ref _left, value);
+            }
+        }
 
         [SerializeField]
         private ElementSize _top;
+        public ElementSize Top
+        {
+            get { return _top; }
+            set
+            {
+                AttachListeners(_top, value);
+                SetProperty(ref _top, value);
+            }
+        }
 
         [SerializeField]
         private ElementSize _right;
+        public ElementSize Right
+        {
+            get { return _right; }
+            set
+            {
+                AttachListeners(_right, value);
+                SetProperty(ref _right, value);
+            }
+        }
 
         [SerializeField]
         private ElementSize _bottom;
+        public ElementSize Bottom
+        {
+            get { return _bottom; }
+            set
+            {
+                AttachListeners(_bottom, value);
+                SetProperty(ref _bottom, value);
+            }
+        }
 
         public static readonly ElementMargin Default = new ElementMargin();
 
@@ -39,10 +75,10 @@ namespace Delight
         /// </summary>
         public ElementMargin()
         {
-            _left = new ElementSize();
-            _top = new ElementSize();
-            _right = new ElementSize();
-            _bottom = new ElementSize();
+            Left = new ElementSize();
+            Top = new ElementSize();
+            Right = new ElementSize();
+            Bottom = new ElementSize();
         }
 
         /// <summary>
@@ -50,10 +86,10 @@ namespace Delight
         /// </summary>
         public ElementMargin(ElementSize margin)
         {
-            _left = margin;
-            _top = margin;
-            _right = margin;
-            _bottom = margin;
+            Left = new ElementSize(margin);
+            Top = new ElementSize(margin);
+            Right = new ElementSize(margin);
+            Bottom = new ElementSize(margin);
         }
 
         /// <summary>
@@ -61,10 +97,10 @@ namespace Delight
         /// </summary>
         public ElementMargin(ElementSize left, ElementSize top)
         {
-            _left = left;
-            _top = top;
-            _right = new ElementSize();
-            _bottom = new ElementSize();
+            Left = new ElementSize(left);
+            Top = new ElementSize(top);
+            Right = new ElementSize();
+            Bottom = new ElementSize();
         }
 
         /// <summary>
@@ -73,10 +109,10 @@ namespace Delight
         public ElementMargin(ElementSize left, ElementSize top, ElementSize right)
             : this()
         {
-            _left = left;
-            _top = top;
-            _right = right;
-            _bottom = new ElementSize();
+            Left = new ElementSize(left);
+            Top = new ElementSize(top);
+            Right = new ElementSize(right);
+            Bottom = new ElementSize();
         }
 
         /// <summary>
@@ -84,10 +120,10 @@ namespace Delight
         /// </summary>
         public ElementMargin(ElementSize left, ElementSize top, ElementSize right, ElementSize bottom)
         {
-            _left = left;
-            _top = top;
-            _right = right;
-            _bottom = bottom;
+            Left = new ElementSize(left);
+            Top = new ElementSize(top);
+            Right = new ElementSize(right);
+            Bottom = new ElementSize(bottom);
         }
 
         #endregion
@@ -95,11 +131,28 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Attaches listeners to internal objects.
+        /// </summary>
+        public void AttachListeners(AtomicBindableObject oldValue, AtomicBindableObject newValue)
+        {
+            if (oldValue != null) oldValue.PropertyChanged -= OnInternalPropertyChanged;
+            if (newValue != null) newValue.PropertyChanged += OnInternalPropertyChanged;
+        }
+
+        /// <summary>
+        /// Called when an internal object changes.
+        /// </summary>
+        private void OnInternalPropertyChanged(object source, string propertyName)
+        {
+            OnPropertyChanged("ElementMargin");
+        }
+
+        /// <summary>
         /// Gets left margin from left size.
         /// </summary>
         public static ElementMargin FromLeft(ElementSize left)
         {
-            return new ElementMargin(left, new ElementSize(), new ElementSize(), new ElementSize());
+            return new ElementMargin(left, null, null, null);
         }
 
         /// <summary>
@@ -107,7 +160,7 @@ namespace Delight
         /// </summary>
         public static ElementMargin FromTop(ElementSize top)
         {
-            return new ElementMargin(new ElementSize(), top, new ElementSize(), new ElementSize());
+            return new ElementMargin(null, top, null, null);
         }
 
         /// <summary>
@@ -115,7 +168,7 @@ namespace Delight
         /// </summary>
         public static ElementMargin FromRight(ElementSize right)
         {
-            return new ElementMargin(new ElementSize(), new ElementSize(), right, new ElementSize());
+            return new ElementMargin(null, null, right, null);
         }
 
         /// <summary>
@@ -123,7 +176,7 @@ namespace Delight
         /// </summary>
         public static ElementMargin FromBottom(ElementSize bottom)
         {
-            return new ElementMargin(new ElementSize(), new ElementSize(), new ElementSize(), bottom);
+            return new ElementMargin(null, null, null, bottom);
         }
 
         /// <summary>
@@ -149,70 +202,6 @@ namespace Delight
         public override int GetHashCode()
         {
             return base.GetHashCode();
-        }
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>
-        /// Gets or sets left margin.
-        /// </summary>
-        public ElementSize Left
-        {
-            get
-            {
-                return _left;
-            }
-            set
-            {
-                _left = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets top margin.
-        /// </summary>
-        public ElementSize Top
-        {
-            get
-            {
-                return _top;
-            }
-            set
-            {
-                _top = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets right margin.
-        /// </summary>
-        public ElementSize Right
-        {
-            get
-            {
-                return _right;
-            }
-            set
-            {
-                _right = value;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets bottom margin.
-        /// </summary>
-        public ElementSize Bottom
-        {
-            get
-            {
-                return _bottom;
-            }
-            set
-            {
-                _bottom = value;
-            }
         }
 
         #endregion
