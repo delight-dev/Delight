@@ -413,6 +413,8 @@ namespace Delight.Editor.Parser
         public PropertyDeclaration Declaration;
         public bool IsInherited;
         public bool IsMapped;
+        public bool IsAssetReference;
+        public AssetType AssetType;        
         public string TargetObjectName;
         public string TargetPropertyName;
 
@@ -482,6 +484,7 @@ namespace Delight.Editor.Parser
         public string TargetObjectName;
         public string TargetObjectType;
         public string PropertyName;
+        public AssetType AssetType;
 
         public string FullTargetPropertyPath
         {
@@ -886,6 +889,14 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(4)]
         public bool AddedFromView;
+
+        public string FormattedTypeName
+        {
+            get
+            {
+                return Name.EndsWith("Asset") ? Name : Name + "Asset";
+            }
+        }
     }
 
     #endregion

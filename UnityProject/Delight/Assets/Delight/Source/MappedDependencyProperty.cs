@@ -47,7 +47,7 @@ namespace Delight
         /// <summary>
         /// Sets dependency property value for specified instance.
         /// </summary>
-        public void SetValue(DependencyObject key, T value, bool notifyObservers = true)
+        public void SetValue(DependencyObject key, T value)
         {
             var target = ObjectGetter((TParent)key);
             if (target == null)

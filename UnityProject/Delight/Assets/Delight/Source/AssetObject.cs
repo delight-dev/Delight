@@ -11,7 +11,7 @@ namespace Delight
     /// <summary>
     /// Base class for unity asset objects.
     /// </summary>
-    public class AssetObject : BindableObject
+    public class AssetObject : AtomicBindableObject
     {
         #region Fields
 
@@ -115,6 +115,14 @@ namespace Delight
         /// </summary>
         public virtual void Unload()
         {
+        }
+
+        /// <summary>
+        /// Gets unity object.
+        /// </summary>
+        public virtual UnityEngine.Object GetUnityObject()
+        {
+            return null;
         }
 
         #endregion
@@ -228,6 +236,14 @@ namespace Delight
             }
 
             UnityObject = null;
+        }
+
+        /// <summary>
+        /// Gets unity object.
+        /// </summary>
+        public override UnityEngine.Object GetUnityObject()
+        {
+            return UnityObject;
         }
 
         #endregion

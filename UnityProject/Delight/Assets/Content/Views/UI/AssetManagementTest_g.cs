@@ -88,6 +88,11 @@ namespace Delight
                 var source = x as Button;
                 source.Click = ResolveActionHandler(this, "UnloadAll");
             });
+            Button2 = new Button(this, Group1, "Button2", Button2Template, x => 
+            {
+                var source = x as Button;
+                source.Click = ResolveActionHandler(this, "SetSprite");
+            });
             ImageGroup = new Group(this, Region1, "ImageGroup", ImageGroupTemplate);
             ImageSet1 = new Group(this, ImageGroup, "ImageSet1", ImageSet1Template);
             Image1 = new Image(this, ImageSet1, "Image1", Image1Template);
@@ -99,7 +104,7 @@ namespace Delight
             Image5 = new Image(this, ImageSet3, "Image5", Image5Template);
             Image6 = new Image(this, ImageSet3, "Image6", Image6Template);
             ImageSet4 = new Group(this, ImageGroup, "ImageSet4", ImageSet4Template);
-            Image7 = new Image(this, ImageSet4, "Image7", Image7Template);
+            BigSpriteImage = new Image(this, ImageSet4, "BigSpriteImage", BigSpriteImageTemplate);
             Label4 = new Label(this, Region1, "Label4", Label4Template);
 
             // binding <Label Text="{LoadProgress}">
@@ -149,6 +154,8 @@ namespace Delight
             dependencyProperties.Add(Load4ButtonTemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(Button2Property);
+            dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(ImageGroupProperty);
             dependencyProperties.Add(ImageGroupTemplateProperty);
             dependencyProperties.Add(ImageSet1Property);
@@ -171,8 +178,8 @@ namespace Delight
             dependencyProperties.Add(Image6TemplateProperty);
             dependencyProperties.Add(ImageSet4Property);
             dependencyProperties.Add(ImageSet4TemplateProperty);
-            dependencyProperties.Add(Image7Property);
-            dependencyProperties.Add(Image7TemplateProperty);
+            dependencyProperties.Add(BigSpriteImageProperty);
+            dependencyProperties.Add(BigSpriteImageTemplateProperty);
             dependencyProperties.Add(Label4Property);
             dependencyProperties.Add(Label4TemplateProperty);
         }
@@ -363,6 +370,20 @@ namespace Delight
             set { Button1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
+        public Button Button2
+        {
+            get { return Button2Property.GetValue(this); }
+            set { Button2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
+        public Template Button2Template
+        {
+            get { return Button2TemplateProperty.GetValue(this); }
+            set { Button2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Group> ImageGroupProperty = new DependencyProperty<Group>("ImageGroup");
         public Group ImageGroup
         {
@@ -517,18 +538,18 @@ namespace Delight
             set { ImageSet4TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Image> Image7Property = new DependencyProperty<Image>("Image7");
-        public Image Image7
+        public readonly static DependencyProperty<Image> BigSpriteImageProperty = new DependencyProperty<Image>("BigSpriteImage");
+        public Image BigSpriteImage
         {
-            get { return Image7Property.GetValue(this); }
-            set { Image7Property.SetValue(this, value); }
+            get { return BigSpriteImageProperty.GetValue(this); }
+            set { BigSpriteImageProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Image7TemplateProperty = new DependencyProperty<Template>("Image7Template");
-        public Template Image7Template
+        public readonly static DependencyProperty<Template> BigSpriteImageTemplateProperty = new DependencyProperty<Template>("BigSpriteImageTemplate");
+        public Template BigSpriteImageTemplate
         {
-            get { return Image7TemplateProperty.GetValue(this); }
-            set { Image7TemplateProperty.SetValue(this, value); }
+            get { return BigSpriteImageTemplateProperty.GetValue(this); }
+            set { BigSpriteImageTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
@@ -585,6 +606,7 @@ namespace Delight
                     Delight.AssetManagementTest.Load3ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad3Button);
                     Delight.AssetManagementTest.Load4ButtonTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLoad4Button);
                     Delight.AssetManagementTest.Button1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton1);
+                    Delight.AssetManagementTest.Button2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestButton2);
                     Delight.AssetManagementTest.ImageGroupTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageGroup);
                     Delight.AssetManagementTest.ImageSet1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet1);
                     Delight.AssetManagementTest.Image1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage1);
@@ -596,7 +618,7 @@ namespace Delight
                     Delight.AssetManagementTest.Image5TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage5);
                     Delight.AssetManagementTest.Image6TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage6);
                     Delight.AssetManagementTest.ImageSet4TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImageSet4);
-                    Delight.AssetManagementTest.Image7TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestImage7);
+                    Delight.AssetManagementTest.BigSpriteImageTemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestBigSpriteImage);
                     Delight.AssetManagementTest.Label4TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel4);
                 }
                 return _assetManagementTest;
@@ -923,6 +945,43 @@ namespace Delight
             }
         }
 
+        private static Template _assetManagementTestButton2;
+        public static Template AssetManagementTestButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestButton2 == null || _assetManagementTestButton2.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestButton2 == null)
+#endif
+                {
+                    _assetManagementTestButton2 = new Template(ButtonTemplates.Button);
+                    Delight.Button.WidthProperty.SetDefault(_assetManagementTestButton2, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestButton2, AssetManagementTestButton2Label);
+                }
+                return _assetManagementTestButton2;
+            }
+        }
+
+        private static Template _assetManagementTestButton2Label;
+        public static Template AssetManagementTestButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_assetManagementTestButton2Label == null || _assetManagementTestButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_assetManagementTestButton2Label == null)
+#endif
+                {
+                    _assetManagementTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
+                    Delight.Label.TextProperty.SetDefault(_assetManagementTestButton2Label, "SetSprite");
+                }
+                return _assetManagementTestButton2Label;
+            }
+        }
+
         private static Template _assetManagementTestImageGroup;
         public static Template AssetManagementTestImageGroup
         {
@@ -1138,23 +1197,23 @@ namespace Delight
             }
         }
 
-        private static Template _assetManagementTestImage7;
-        public static Template AssetManagementTestImage7
+        private static Template _assetManagementTestBigSpriteImage;
+        public static Template AssetManagementTestBigSpriteImage
         {
             get
             {
 #if UNITY_EDITOR
-                if (_assetManagementTestImage7 == null || _assetManagementTestImage7.CurrentVersion != Template.Version)
+                if (_assetManagementTestBigSpriteImage == null || _assetManagementTestBigSpriteImage.CurrentVersion != Template.Version)
 #else
-                if (_assetManagementTestImage7 == null)
+                if (_assetManagementTestBigSpriteImage == null)
 #endif
                 {
-                    _assetManagementTestImage7 = new Template(ImageTemplates.Image);
-                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage7, Assets.Sprites["BigSprite"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage7, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage7, new ElementSize(205f, ElementSizeUnit.Pixels));
+                    _assetManagementTestBigSpriteImage = new Template(ImageTemplates.Image);
+                    Delight.Image.SpriteProperty.SetDefault(_assetManagementTestBigSpriteImage, Assets.Sprites["BigSprite"]);
+                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(205f, ElementSizeUnit.Pixels));
                 }
-                return _assetManagementTestImage7;
+                return _assetManagementTestBigSpriteImage;
             }
         }
 

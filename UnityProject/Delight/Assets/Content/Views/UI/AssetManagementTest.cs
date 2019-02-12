@@ -85,6 +85,11 @@ namespace Delight
                 Load4Button.Text = "Load Set 4";
             }
         }
+
+        public void SetSprite()
+        {
+            BigSpriteImage.Sprite = Assets.Sprites.Frame1;
+        }
        
         public StringBuilder sb = new StringBuilder();
         private IDisposable _updateTimer;

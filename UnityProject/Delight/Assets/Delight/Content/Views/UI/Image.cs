@@ -11,13 +11,6 @@ namespace Delight
 {
     public partial class Image
     {
-        public readonly static BindableObjectDependencyProperty<Delight.SpriteAsset> SpriteProperty = new BindableObjectDependencyProperty<Delight.SpriteAsset>("Sprite");
-        public Delight.SpriteAsset Sprite
-        {
-            get { return SpriteProperty.GetValue(this); }
-            set { SpriteProperty.SetValue(this, value); }
-        }
-
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -31,6 +24,16 @@ namespace Delight
                 case nameof(Sprite):
                     SpriteChanged();
                     break;
+            }
+        }
+
+        protected override void BeforeLoad()
+        {
+            base.BeforeLoad();
+            // always add image component
+            if (ImageComponent == null)
+            {
+                ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
             }
         }
 

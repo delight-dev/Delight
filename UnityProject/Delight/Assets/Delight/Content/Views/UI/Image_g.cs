@@ -28,9 +28,8 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ImageTemplates.Default, dependencyProperties);
 
-            dependencyProperties.Add(SpriteProperty);
             dependencyProperties.Add(ImageComponentProperty);
-            dependencyProperties.Add(ImageComponentSpriteProperty);
+            dependencyProperties.Add(SpriteProperty);
             dependencyProperties.Add(OverrideSpriteProperty);
             dependencyProperties.Add(TypeProperty);
             dependencyProperties.Add(PreserveAspectProperty);
@@ -59,15 +58,15 @@ namespace Delight
             set { ImageComponentProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, Image> ImageComponentSpriteProperty = new MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, Image>("ImageComponentSprite", x => x.ImageComponent, x => x.sprite, (x, y) => x.sprite = y);
-        public UnityEngine.Sprite ImageComponentSprite
+        public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> SpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("Sprite", x => x.ImageComponent, (x, y) => x.sprite = y?.UnityObject);
+        public SpriteAsset Sprite
         {
-            get { return ImageComponentSpriteProperty.GetValue(this); }
-            set { ImageComponentSpriteProperty.SetValue(this, value); }
+            get { return SpriteProperty.GetValue(this); }
+            set { SpriteProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, Image> OverrideSpriteProperty = new MappedDependencyProperty<UnityEngine.Sprite, UnityEngine.UI.Image, Image>("OverrideSprite", x => x.ImageComponent, x => x.overrideSprite, (x, y) => x.overrideSprite = y);
-        public UnityEngine.Sprite OverrideSprite
+        public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> OverrideSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("OverrideSprite", x => x.ImageComponent, (x, y) => x.overrideSprite = y?.UnityObject);
+        public SpriteAsset OverrideSprite
         {
             get { return OverrideSpriteProperty.GetValue(this); }
             set { OverrideSpriteProperty.SetValue(this, value); }
@@ -136,8 +135,8 @@ namespace Delight
             set { UseSpriteMeshProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Material, UnityEngine.UI.Image, Image> MaterialProperty = new MappedDependencyProperty<UnityEngine.Material, UnityEngine.UI.Image, Image>("Material", x => x.ImageComponent, x => x.material, (x, y) => x.material = y);
-        public UnityEngine.Material Material
+        public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image>("Material", x => x.ImageComponent, (x, y) => x.material = y?.UnityObject);
+        public MaterialAsset Material
         {
             get { return MaterialProperty.GetValue(this); }
             set { MaterialProperty.SetValue(this, value); }

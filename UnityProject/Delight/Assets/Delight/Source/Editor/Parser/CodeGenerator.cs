@@ -163,7 +163,7 @@ namespace Delight.Editor.Parser
             foreach (var assetType in _contentObjectModel.AssetTypes)
             {
                 var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
-                var assetTypeName = assetType.Name.EndsWith("Asset") ? assetType.Name : assetType.Name + "Asset";
+                var assetTypeName = assetType.FormattedTypeName;
                 var assetTypeNamePlural = assetType.Name.Pluralize();
 
                 sb.AppendLine();
@@ -323,8 +323,6 @@ namespace Delight.Editor.Parser
 
             foreach (var declaration in propertyDeclarations)
             {
-                if (declaration.PropertyName == "Sprite") continue; // TODO remove
-
                 sb.AppendLine();
                 sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", declaration.PropertyTypeFullName, declaration.PropertyName);
                 sb.AppendLine("        public {0} {1}", declaration.PropertyTypeFullName, declaration.PropertyName);
@@ -347,6 +345,18 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}.{1}; }}", mappedDeclaration.TargetObjectName, mappedDeclaration.TargetPropertyName);
                     sb.AppendLine("            set {{ {0}.{1} = value; }}", mappedDeclaration.TargetObjectName, mappedDeclaration.TargetPropertyName);
+                    sb.AppendLine("        }");
+                }
+                else if (mappedDeclaration.IsAssetReference)
+                {
+                    // the property maps to a unity asset in another object (e.g. unity component)
+                    sb.AppendLine();
+                    sb.AppendLine("        public readonly static MappedAssetDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedAssetDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, (x, y) => x.{3} = y?.UnityObject);",
+                        mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
+                    sb.AppendLine("        public {0} {1}", mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.PropertyName);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", mappedDeclaration.PropertyName);
+                    sb.AppendLine("            set {{ {0}Property.SetValue(this, value); }}", mappedDeclaration.PropertyName);
                     sb.AppendLine("        }");
                 }
                 else
@@ -645,14 +655,23 @@ namespace Delight.Editor.Parser
                 if (decl.Declaration.DeclarationType == PropertyDeclarationType.Action)
                     continue;
 
-                var typeValueInitializer = ValueConverters.GetInitializer(decl.Declaration.PropertyTypeFullName, propertyAssignment.PropertyValue);
+                var propertyTypeName = decl.IsAssetReference ? decl.AssetType.FormattedTypeName : decl.Declaration.PropertyTypeFullName;
+                var typeValueInitializer = ValueConverters.GetInitializer(propertyTypeName, propertyAssignment.PropertyValue);
                 if (String.IsNullOrEmpty(typeValueInitializer))
                 {
-                    // no initializer found for the type being assigned to
-                    Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
-                        GetLineInfo(fileName, propertyAssignment),
-                        viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
-                    continue;
+                    if (decl.IsAssetReference)
+                    {
+                        // if asset initializer not found, use default initializer for asset types
+                        typeValueInitializer = String.Format("Assets.{0}[\"{1}\"]", decl.AssetType.Name.Pluralize(), propertyAssignment.PropertyValue);
+                    }
+                    else
+                    {
+                        // no initializer found for the type being assigned to
+                        Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
+                            GetLineInfo(fileName, propertyAssignment),
+                            viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
+                        continue;
+                    }
                 }
 
                 sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
@@ -1013,6 +1032,8 @@ namespace Delight.Editor.Parser
                     propertyDeclarations.Add(new PropertyDeclarationInfo
                     {
                         IsMapped = true,
+                        IsAssetReference = mappedProperty.IsAssetReference,
+                        AssetType = mappedProperty.AssetType,
                         TargetObjectName = mappedProperty.TargetObjectName,
                         TargetPropertyName = mappedProperty.TargetPropertyName,
                         Declaration = new PropertyDeclaration
@@ -1128,12 +1149,6 @@ namespace Delight.Editor.Parser
 
                         // check if field is referencing an asset 
                         bool isAssetReference = ContentParser.IsUnityAssetType(field.FieldType);
-                        if (isAssetReference)
-                        {
-                            // add asset type
-                            _contentObjectModel.LoadAssetType(field.FieldType, false);
-                        }
-
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for field
@@ -1145,8 +1160,9 @@ namespace Delight.Editor.Parser
                             TargetObjectName = propertyMapping.TargetObjectName,
                             TargetObjectType = targetObjectType.FullName,
                             IsViewReference = false,
-                            IsAssetReference = isAssetReference
-                        });
+                            IsAssetReference = isAssetReference,
+                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(field.FieldType, false) : null
+                    });
                     }
 
                     var properties = targetObjectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -1181,12 +1197,6 @@ namespace Delight.Editor.Parser
 
                         // check if property is referencing an asset 
                         bool isAssetReference = ContentParser.IsUnityAssetType(property.PropertyType);
-                        if (isAssetReference)
-                        {
-                            // add asset type
-                            _contentObjectModel.LoadAssetType(property.PropertyType, false);
-                        }
-
                         propertyNames.Add(nonConflictedPropertyName);
 
                         // add new mapped property declaration for property
@@ -1198,7 +1208,8 @@ namespace Delight.Editor.Parser
                             TargetObjectName = propertyMapping.TargetObjectName,
                             TargetObjectType = targetObjectType.FullName,
                             IsViewReference = false,
-                            IsAssetReference = isAssetReference
+                            IsAssetReference = isAssetReference,
+                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(property.PropertyType, false) : null
                         });
                     }
                 }

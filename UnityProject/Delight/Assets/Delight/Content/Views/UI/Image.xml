@@ -1,3 +1,2 @@
-<Image xmlns="Delight" BasedOn="UIView" Sprite="t:SpriteAsset" 
-       ImageComponent="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" m.ImageComponent="">
+<Image xmlns="Delight" BasedOn="UIView" ImageComponent="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" m.ImageComponent="">
 </Image> 
