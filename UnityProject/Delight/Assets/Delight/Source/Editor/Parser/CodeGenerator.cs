@@ -813,9 +813,10 @@ namespace Delight.Editor.Parser
                     }
                 }
 
+                var childTemplateDepth = templateDepth;
                 if (templateContent)
                 {
-                    ++templateDepth;
+                    ++childTemplateDepth;
 
                     if (templateItems == null)
                     {
@@ -842,17 +843,18 @@ namespace Delight.Editor.Parser
                 }
 
                 var firstChildInTemplate = childViewDeclaration.ChildDeclarations.FirstOrDefault();
+                var childFirstTemplateChild = firstTemplateChild;
                 if (templateContent && firstChildInTemplate != null)
                 {
-                    firstTemplateChild = firstChildInTemplate.Id.ToLocalVariableName();
+                    childFirstTemplateChild = firstChildInTemplate.Id.ToLocalVariableName();
                 }
 
                 // print child view declaration
-                GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, templateDepth, templateItems, firstTemplateChild);
+                GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, childFirstTemplateChild);
 
                 if (templateContent)
                 {
-                    sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? firstTemplateChild : "null");
+                    sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? childFirstTemplateChild : "null");
                     sb.AppendLine(indent, "}});");
                 }
             }
