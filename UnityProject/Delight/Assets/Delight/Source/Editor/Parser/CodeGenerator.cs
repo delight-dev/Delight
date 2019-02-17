@@ -63,6 +63,12 @@ namespace Delight.Editor.Parser
                 }
             }
 
+            // validate view content
+            foreach (var viewObject in viewObjects)
+            {
+                ValidateViewDeclarations(viewObject, viewObject.ViewDeclarations);
+            }
+
             // update all view objects that are changed            
             foreach (var viewObject in viewObjects)
             {
@@ -80,6 +86,34 @@ namespace Delight.Editor.Parser
 #if UNITY_EDITOR
             ++Template.Version;
 #endif
+        }
+
+        /// <summary>
+        /// Validates view declarations in the view object.
+        /// </summary>
+        private static void ValidateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
+        {
+            foreach (var childViewDeclaration in childViewDeclarations)
+            {
+                // get identifier for view declaration
+                var childId = childViewDeclaration.Id;
+                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
+                bool templateContent = childViewObject.HasContentTemplate;
+
+                // if a child declaration has template content and has multiple children - wrap those children in a region
+                if (templateContent && childViewDeclaration.ChildDeclarations.Count() > 1)
+                {
+                    string viewName = childViewDeclaration.ViewName.IEquals("List") ? "ListItem" : "Region";
+                    var wrappingRegionDeclaration = new ViewDeclaration { Id = childId + "Content", ViewName = viewName, ChildDeclarations = childViewDeclaration.ChildDeclarations };
+                    childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
+                    childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
+
+                    // add property declarations for the wrapping region
+                    viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
+                }
+
+                ValidateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
+            }
         }
 
         /// <summary>
@@ -915,7 +949,7 @@ namespace Delight.Editor.Parser
                         sourceType = sourceType.BaseType;
                     }
 
-                    sourceType = sourceType.GetGenericArguments()[0];                    
+                    sourceType = sourceType.GetGenericArguments()[0];
                 }
             }
 
@@ -1098,7 +1132,7 @@ namespace Delight.Editor.Parser
                             IsViewReference = false,
                             IsAssetReference = isAssetReference,
                             AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(field.FieldType, false) : null
-                    });
+                        });
                     }
 
                     var properties = targetObjectType.GetProperties(BindingFlags.Public | BindingFlags.Instance);

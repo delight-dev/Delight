@@ -30,6 +30,11 @@ namespace Delight
             get { return _score; }
             set { SetProperty(ref _score, value); }
         }
+
+        public string ScoreText
+        {
+            get { return _score.ToString(); }
+        }
     }
 
     public partial class HighscoreData : DataProvider<Highscore>

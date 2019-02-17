@@ -353,24 +353,34 @@ namespace Delight.Editor.Parser
             return styleDeclarations;
         }
 
-
         /// <summary>
         /// Gets property declarations from view declarations.
         /// </summary>
-        private static IEnumerable<PropertyExpression> GetPropertyDeclarations(List<ViewDeclaration> viewDeclarations)
+        public static IEnumerable<PropertyExpression> GetPropertyDeclarations(List<ViewDeclaration> viewDeclarations)
         {
             var propertyExpressions = new List<PropertyExpression>();
             foreach (var viewDeclaration in viewDeclarations)
             {
-                if (!String.IsNullOrEmpty(viewDeclaration.Id))
-                {
-                    // TODO get the type of the view and create a proper full property name, note that the view might not exist yet though since its code hasn't been generated
-                    propertyExpressions.Add(new PropertyDeclaration { PropertyName = viewDeclaration.Id, PropertyTypeFullName = viewDeclaration.ViewName, PropertyTypeName = viewDeclaration.ViewName, DeclarationType = PropertyDeclarationType.View });
-                    propertyExpressions.Add(new PropertyDeclaration { PropertyName = String.Format("{0}Template", viewDeclaration.Id), PropertyTypeName = "Template", PropertyTypeFullName = "Template", DeclarationType = PropertyDeclarationType.Template });
-                }
+                propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclaration));
                 propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclaration.ChildDeclarations));
             }
 
+            return propertyExpressions;
+        }
+
+        /// <summary>
+        /// Gets property declarations from a view declaration.
+        /// </summary>
+        public static IEnumerable<PropertyExpression> GetPropertyDeclarations(ViewDeclaration viewDeclaration)
+        {
+            if (String.IsNullOrEmpty(viewDeclaration.Id))
+                return Enumerable.Empty<PropertyExpression>();
+
+            // TODO get the type of the view and create a proper full property name, note that the view might not exist yet though since its code hasn't been generated
+
+            PropertyExpression[] propertyExpressions = new PropertyExpression[2];
+            propertyExpressions[0] = new PropertyDeclaration { PropertyName = viewDeclaration.Id, PropertyTypeFullName = viewDeclaration.ViewName, PropertyTypeName = viewDeclaration.ViewName, DeclarationType = PropertyDeclarationType.View };
+            propertyExpressions[1] = new PropertyDeclaration { PropertyName = String.Format("{0}Template", viewDeclaration.Id), PropertyTypeName = "Template", PropertyTypeFullName = "Template", DeclarationType = PropertyDeclarationType.Template };
             return propertyExpressions;
         }
 
@@ -541,7 +551,7 @@ namespace Delight.Editor.Parser
                     return new List<PropertyExpression>();
                 }
 
-                bool isUnityComponent = typeof(UnityEngine.Component).IsAssignableFrom(propertyType);                    
+                bool isUnityComponent = typeof(UnityEngine.Component).IsAssignableFrom(propertyType);
                 if (isUnityComponent)
                 {
                     propertyDeclaration.DeclarationType = PropertyDeclarationType.UnityComponent;
@@ -618,7 +628,7 @@ namespace Delight.Editor.Parser
             Type unityObjectType = typeof(UnityEngine.Object);
             return unityObjectType.IsAssignableFrom(type) &&
                 !typeof(UnityEngine.GameObject).IsAssignableFrom(type) &&
-                !typeof(UnityEngine.Component).IsAssignableFrom(type);    
+                !typeof(UnityEngine.Component).IsAssignableFrom(type);
         }
 
         /// <summary>
@@ -948,7 +958,7 @@ namespace Delight.Editor.Parser
                 var bundle = GetAssetBundleFromFilePath(relativeAssetFilePath);
                 if (bundle == null)
                     continue;
-                                
+
                 AddAssetToBundle(bundle, relativeAssetFilePath);
                 bundle.NeedBuild = true;
             }
