@@ -11,6 +11,6 @@
           <Label Text="{achievement.Title}" />
         </List>
       </Group> 
-    </List>
+    </List> 
   </Group>
 </ModelBindingTest> 

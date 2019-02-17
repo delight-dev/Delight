@@ -34,7 +34,7 @@ namespace Delight.Editor.Parser
         public List<ModelObject> ModelObjects;
 
         [ProtoMember(3, AsReference = true)]
-        public List<ThemeObject> ThemeObjects;
+        public List<StyleObject> StyleObjects;
 
         [ProtoMember(4, AsReference = true)]
         public List<AssetBundleObject> AssetBundleObjects;
@@ -50,7 +50,7 @@ namespace Delight.Editor.Parser
 
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
-        private Dictionary<string, ThemeObject> _themeObjects;
+        private Dictionary<string, StyleObject> _styleObjects;
         private Dictionary<string, AssetBundleObject> _assetBundleObjects;
         private Dictionary<string, AssetType> _assetTypes;
         private static ContentObjectModel _contentObjectModel;
@@ -66,7 +66,7 @@ namespace Delight.Editor.Parser
         {
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
-            ThemeObjects = new List<ThemeObject>();
+            StyleObjects = new List<StyleObject>();
             AssetBundleObjects = new List<AssetBundleObject>();
             MasterConfigObject = MasterConfigObject.CreateDefault();
             AssetTypes = new List<AssetType>();
@@ -151,32 +151,35 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Loads specified theme object, creates new one if it doesn't exist.
+        /// Loads specified style object, creates new one if it doesn't exist.
         /// </summary>
-        public ThemeObject LoadThemeObject(string themeName)
+        public StyleObject LoadStyleObject(string styleName)
         {
-            if (_themeObjects == null)
+            if (_styleObjects == null)
             {
-                _themeObjects = new Dictionary<string, ThemeObject>();
-                foreach (var item in ThemeObjects)
+                _styleObjects = new Dictionary<string, StyleObject>();
+                foreach (var item in StyleObjects)
                 {
-                    _themeObjects.Add(item.Name, item);
+                    _styleObjects.Add(item.Name, item);
                 }
             }
 
-            ThemeObject themeObject;
-            if (_themeObjects.TryGetValue(themeName, out themeObject))
+            StyleObject styleObject;
+            if (_styleObjects.TryGetValue(styleName, out styleObject))
             {
-                return themeObject;
+                return styleObject;
             }
 
-            // create new theme object if it doesn't exist
-            themeObject = new ThemeObject { Name = themeName };
-            ThemeObjects.Add(themeObject);
-            _themeObjects.Add(themeName, themeObject);
-            return themeObject;
+            // create new style object if it doesn't exist
+            styleObject = new StyleObject { Name = styleName };
+            StyleObjects.Add(styleObject);
+            _styleObjects.Add(styleName, styleObject);
+            return styleObject;
         }
 
+        /// <summary>
+        /// Gets singleton instance of content object model.
+        /// </summary>
         public static ContentObjectModel GetInstance()
         {
             if (_contentObjectModel != null)
@@ -232,13 +235,16 @@ namespace Delight.Editor.Parser
             }
         }
 
+        /// <summary>
+        /// Clears parsed XML content from the object model. 
+        /// </summary>
         public void ClearParsedContent()
         {
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
-            ThemeObjects = new List<ThemeObject>();
+            StyleObjects = new List<StyleObject>();
             _viewObjects = null;
-            _themeObjects = null;
+            _styleObjects = null;
             _modelObjects = null;
         }
 
@@ -316,6 +322,52 @@ namespace Delight.Editor.Parser
             }
         }
 
+        /// <summary>
+        /// Gets all style property assignments for the specified view object. 
+        /// </summary>
+        public static List<PropertyAssignment> GetViewObjectStylePropertyAssignments(string viewName)
+        {
+            var model = GetInstance();
+
+            // get all default style declarations belonging to specified view
+            var styleDeclarations = model.StyleObjects.SelectMany(x => 
+                x.StyleDeclarations.Where(y => String.IsNullOrEmpty(y.StyleName) && 
+                                               y.ViewName.IEquals(viewName)));
+
+            var propertyAssignments = styleDeclarations.SelectMany(x => x.PropertyAssignments);
+            return propertyAssignments.ToList();
+        }
+
+        /// <summary>
+        /// Gets all style property assignments for the specified view declaration and style. 
+        /// </summary>
+        public static List<PropertyAssignment> GetStylePropertyAssignments(string viewName, string styleName)
+        {
+            var model = GetInstance();
+
+            // get all default styles belonging to specified view and styleId
+            var styleDeclarations = model.StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => y.StyleName.IEquals(styleName) &&
+                                               y.ViewName.IEquals(viewName)));
+
+            var propertyAssignments = new List<PropertyAssignment>();                        
+            foreach (var styleDeclaration in styleDeclarations)
+            {
+                // add property assignments from the styles this style is based on
+                var basedOnDeclaration = styleDeclaration.BasedOn;
+                while (basedOnDeclaration != null)
+                {
+                    propertyAssignments.AddRange(basedOnDeclaration.PropertyAssignments);
+                    basedOnDeclaration = basedOnDeclaration.BasedOn;
+                }
+
+                // add property assignments from this style
+                propertyAssignments.AddRange(styleDeclaration.PropertyAssignments);                
+            }
+
+            return propertyAssignments;
+        }
+
         #endregion
     }
 
@@ -324,6 +376,8 @@ namespace Delight.Editor.Parser
     [ProtoContract]
     public class ViewObject
     {
+        #region Fields
+
         [ProtoMember(1)]
         public string Name;
 
@@ -354,11 +408,33 @@ namespace Delight.Editor.Parser
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
+        #endregion
+
+        #region Constructor
+
         public ViewObject()
         {
             PropertyExpressions = new List<PropertyExpression>();
             ViewDeclarations = new List<ViewDeclaration>();
             MappedPropertyDeclarations = new List<MappedPropertyDeclaration>();
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Gets property assignments, including those set by styles. 
+        /// </summary>
+        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle()
+        {
+            var propertyAssignments = new List<PropertyAssignment>();
+            propertyAssignments.AddRange(PropertyExpressions.OfType<PropertyAssignment>());
+
+            var stylePropertyAssignments = ContentObjectModel.GetViewObjectStylePropertyAssignments(Name);
+            propertyAssignments.AddRange(stylePropertyAssignments);
+
+            return propertyAssignments;
         }
 
         public void Clear()
@@ -406,6 +482,8 @@ namespace Delight.Editor.Parser
 
             return viewDeclarations;
         }
+
+        #endregion
     }
 
     public class PropertyDeclarationInfo
@@ -597,6 +675,8 @@ namespace Delight.Editor.Parser
     [ProtoContract]
     public class ViewDeclaration
     {
+        #region Fields
+
         [ProtoMember(1)]
         public string ViewName;
 
@@ -615,12 +695,42 @@ namespace Delight.Editor.Parser
         [ProtoMember(6)]
         public int LineNumber;
 
+        [ProtoMember(7)]
+        public string Style;
+
+        #endregion
+
+        #region Constructor
+
         public ViewDeclaration()
         {
             PropertyAssignments = new List<PropertyAssignment>();
             PropertyBindings = new List<PropertyBinding>();
             ChildDeclarations = new List<ViewDeclaration>();
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Gets property assignments, including those set by styles. 
+        /// </summary>
+        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle()
+        {
+            var propertyAssignments = new List<PropertyAssignment>();
+            propertyAssignments.AddRange(PropertyAssignments);
+
+            if (!String.IsNullOrEmpty(Style))
+            {
+                var stylePropertyAssignments = ContentObjectModel.GetStylePropertyAssignments(ViewName, Style);
+                propertyAssignments.AddRange(stylePropertyAssignments);
+            }
+
+            return propertyAssignments;
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -671,46 +781,82 @@ namespace Delight.Editor.Parser
 
     #endregion
 
-    #region Theme Object
+    #region Style Object
 
     [ProtoContract]
-    public class ThemeObject
+    public class StyleObject
     {
+        #region Fields
+
         [ProtoMember(1)]
         public string Name;
 
         [ProtoMember(2)]
-        public string Namespace;
-
-        [ProtoMember(3)]
         public string FilePath;
 
-        [ProtoMember(4)]
-        public string BaseDirectory;
-
-        [ProtoMember(5, AsReference = true)]
-        public ThemeObject BasedOn;
-
-        [ProtoMember(6)]
+        [ProtoMember(3)]
         public bool NeedUpdate;
 
-        [ProtoMember(7)]
-        public List<ViewDeclaration> ViewDeclarations;
+        [ProtoMember(4)]
+        public List<StyleDeclaration> StyleDeclarations;
 
-        public ThemeObject()
+        #endregion
+
+        #region Constructor
+
+        public StyleObject()
         {
-            ViewDeclarations = new List<ViewDeclaration>();
+            StyleDeclarations = new List<StyleDeclaration>();
         }
+
+        #endregion
+
+        #region Methods
 
         public void Clear()
         {
             Name = null;
-            Namespace = null;
-            BasedOn = null;
             FilePath = null;
             NeedUpdate = false;
-            ViewDeclarations.Clear();
+            StyleDeclarations.Clear();
         }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Stores information about a style declaration.
+    /// </summary>
+    [ProtoContract]
+    public class StyleDeclaration
+    {
+        #region Fields
+
+        [ProtoMember(1)]
+        public string ViewName;
+
+        [ProtoMember(2)]
+        public string StyleName;
+
+        [ProtoMember(3)]
+        public List<PropertyAssignment> PropertyAssignments;
+
+        [ProtoMember(5)]
+        public int LineNumber;
+
+        [ProtoMember(6, AsReference = true)]
+        public StyleDeclaration BasedOn;
+
+        #endregion
+
+        #region Constructor
+
+        public StyleDeclaration()
+        {
+            PropertyAssignments = new List<PropertyAssignment>();
+        }
+
+        #endregion
     }
 
     #endregion

@@ -88,7 +88,11 @@ namespace Delight
 
         public void SetSprite()
         {
+            if (BigSpriteImage.Offset == null)
+                BigSpriteImage.Offset = new ElementMargin();
+
             BigSpriteImage.Sprite = Assets.Sprites.Frame1;
+            BigSpriteImage.Offset.Left += 20;
         }
        
         public StringBuilder sb = new StringBuilder();

@@ -108,10 +108,13 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Parses XML files. 
+        /// Parses XML files and generates code. 
         /// </summary>
         private static void ParseXmlFiles(List<XmlFile> xumlFiles)
         {
+            // sort files by content type (styles -> scenes -> views)
+            xumlFiles = xumlFiles.OrderBy(x => x.ContentType).ToList();
+
             foreach (var file in xumlFiles)
             {
                 ParseXmlFile(file);
@@ -130,7 +133,7 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Parses XML and generates code.
+        /// Parses XML.
         /// </summary>
         private static void ParseXmlFile(XmlFile xumlFile)
         {
@@ -156,14 +159,18 @@ namespace Delight.Editor.Parser
             {
                 ParseViewXml(xumlFile, rootXmlElement);
             }
+            else if (xumlFile.ContentType == XmlContentType.Style)
+            {
+                ParseStyleXml(xumlFile, rootXmlElement);
+            }
             else
             {
-                Debug.Log(String.Format("[Delight] Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
+                Debug.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
             }
         }
 
         /// <summary>
-        /// Parses view XML and generates code-behind.
+        /// Parses view XML.
         /// </summary>
         private static void ParseViewXml(XmlFile xumlFile, XElement rootXmlElement)
         {
@@ -241,49 +248,111 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Parses specified theme XML file.
+        /// Parses style XML file.
         /// </summary>
-        private static void ParseStylesXml(XmlFile xumlFile, XElement rootXmlElement)
+        private static void ParseStyleXml(XmlFile xumlFile, XElement rootXmlElement)
         {
             _currentXmlFile = xumlFile;
-            var themeNameAttr = rootXmlElement.Attribute("Theme");
-            if (themeNameAttr == null)
+            var styleName = rootXmlElement.Name.LocalName;
+            var styleObject = _contentObjectModel.LoadStyleObject(styleName);
+
+            // clear style object
+            styleObject.Clear();
+            styleObject.Name = styleName;
+            styleObject.FilePath = xumlFile.Path;
+            styleObject.NeedUpdate = true;
+
+            // parse view's initialization attributes
+            foreach (var attribute in rootXmlElement.Attributes())
             {
-                Debug.LogError(String.Format("[Delight] {0}: Name attribute missing.", GetLineInfo(rootXmlElement)));
-                return;
+                string attributeName = attribute.Name.LocalName;
+                string attributeValue = attribute.Value;
+
+                // ignore namespace specification
+                if (attributeName.IEquals("xmlns"))
+                    continue;
+
+                Debug.LogWarning(String.Format("[Delight] {0}: Invalid attribute <{1} {2}=\"{3}\">. Attributes can't be specified on style root element.", GetLineInfo(rootXmlElement), styleName, attributeName, attributeValue));
             }
 
-            var themeName = themeNameAttr.Value;
-            var themeObject = _contentObjectModel.LoadThemeObject(themeName);
-
-            // clear theme object 
-            themeObject.Clear();
-            themeObject.Name = themeName;
-            themeObject.FilePath = xumlFile.Path;
-            themeObject.NeedUpdate = true;
-
-            var baseDirectoryAttr = rootXmlElement.Attribute("BaseDirectory");
-            if (baseDirectoryAttr != null)
-            {
-                themeObject.BaseDirectory = baseDirectoryAttr.Value;
-            }
-
-            var namespaceAttr = rootXmlElement.Attribute("Namespace");
-            if (namespaceAttr != null)
-            {
-                themeObject.Namespace = namespaceAttr.Value;
-            }
-
-            var basedOnAttr = rootXmlElement.Attribute("BasedOn");
-            if (basedOnAttr != null)
-            {
-                themeObject.BasedOn = _contentObjectModel.LoadThemeObject(basedOnAttr.Value);
-            }
-
-            // parse view declarations
-            var viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
-            themeObject.ViewDeclarations.AddRange(viewDeclarations);
+            // parse style declarations
+            List<StyleDeclaration> viewDeclarations = ParseStyleDeclarations(xumlFile.Path, rootXmlElement.Elements());
+            styleObject.StyleDeclarations.AddRange(viewDeclarations);
         }
+
+        /// <summary>
+        /// Parses view declarations.
+        /// </summary>
+        private static List<StyleDeclaration> ParseStyleDeclarations(string path, IEnumerable<XElement> styleElements)
+        {
+            var styleDeclarations = new List<StyleDeclaration>();
+            foreach (var styleElement in styleElements)
+            {
+                var styleDeclaration = new StyleDeclaration();
+                styleDeclaration.ViewName = styleElement.Name.LocalName;
+                styleDeclaration.LineNumber = styleElement.GetLineNumber();
+                styleDeclarations.Add(styleDeclaration);
+
+                // parse style property expressions
+                foreach (var attribute in styleElement.Attributes())
+                {
+                    string attributeName = attribute.Name.LocalName;
+                    string attributeValue = attribute.Value;
+
+                    if (attributeName.IEquals("Style"))
+                    {
+                        styleDeclaration.StyleName = attributeValue;
+                        continue;
+                    }
+
+                    if (attributeName.IEquals("BasedOn"))
+                    {
+                        styleDeclaration.BasedOn = styleDeclarations.FirstOrDefault(x => x.ViewName.IEquals(styleDeclaration.ViewName) && x.StyleName.IEquals(attributeValue));
+                        if (styleDeclaration.BasedOn == null)
+                        {
+                            Debug.LogError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Couldn't find the style \"{3}\" this style is based on - make sure it's declared in the same file before this style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                        }
+                        continue;
+                    }
+
+                    // parse property expressions
+                    var propertyExpressions = ParsePropertyExpression(styleElement, attributeName, attributeValue);
+                    foreach (var propertyExpression in propertyExpressions)
+                    {
+                        var propertyDeclaration = propertyExpression as PropertyDeclaration;
+                        if (propertyDeclaration != null)
+                        {
+                            Debug.LogError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Property declarations can't be specified in the style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                            continue;
+                        }
+
+                        var mappedViewDeclaration = propertyExpression as PropertyMapping;
+                        if (mappedViewDeclaration != null)
+                        {
+                            Debug.LogError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Property mappings can't be specified in the style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                            continue;
+                        }
+
+                        var propertyAssignment = propertyExpression as PropertyAssignment;
+                        if (propertyAssignment != null)
+                        {
+                            styleDeclaration.PropertyAssignments.Add(propertyAssignment);
+                            continue;
+                        }
+
+                        var propertyBinding = propertyExpression as PropertyBinding;
+                        if (propertyBinding != null)
+                        {
+                            Debug.LogError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Property bindings can't be specified in the style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                            continue;
+                        }
+                    }
+                }
+            }
+
+            return styleDeclarations;
+        }
+
 
         /// <summary>
         /// Gets property declarations from view declarations.
@@ -308,7 +377,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses view declarations.
         /// </summary>
-        private static List<ViewDeclaration> ParseViewDeclarations(string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdList)
+        private static List<ViewDeclaration> ParseViewDeclarations(string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount)
         {
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
@@ -326,6 +395,12 @@ namespace Delight.Editor.Parser
                     if (attributeName.IEquals("Id"))
                     {
                         viewDeclaration.Id = attributeValue;
+                        continue;
+                    }
+
+                    if (attributeName.IEquals("Style"))
+                    {
+                        viewDeclaration.Style = attributeValue;
                         continue;
                     }
 
@@ -365,17 +440,17 @@ namespace Delight.Editor.Parser
 
                 if (String.IsNullOrEmpty(viewDeclaration.Id))
                 {
-                    if (!viewIdList.ContainsKey(viewDeclaration.ViewName))
+                    if (!viewIdCount.ContainsKey(viewDeclaration.ViewName))
                     {
-                        viewIdList.Add(viewDeclaration.ViewName, 0);
+                        viewIdCount.Add(viewDeclaration.ViewName, 0);
                     }
 
-                    ++viewIdList[viewDeclaration.ViewName];
-                    viewDeclaration.Id = viewDeclaration.ViewName + viewIdList[viewDeclaration.ViewName];
+                    ++viewIdCount[viewDeclaration.ViewName];
+                    viewDeclaration.Id = viewDeclaration.ViewName + viewIdCount[viewDeclaration.ViewName];
                 }
 
                 // parse child elements
-                viewDeclaration.ChildDeclarations = ParseViewDeclarations(path, viewElement.Elements(), viewIdList);
+                viewDeclaration.ChildDeclarations = ParseViewDeclarations(path, viewElement.Elements(), viewIdCount);
                 viewDeclarations.Add(viewDeclaration);
             }
 
@@ -778,8 +853,8 @@ namespace Delight.Editor.Parser
         /// </summary>
         private enum XmlContentType
         {
-            View = 0,
-            Style = 1,
+            Style = 0,
+            View = 1,
             Scene = 2,
             Unknown
         }

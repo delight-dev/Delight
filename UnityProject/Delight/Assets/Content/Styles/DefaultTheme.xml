@@ -1,5 +1,5 @@
-<Styles>
+<DefaultTheme>
   <Button BackgroundColor="Green" />
   <Button Style="BlueButton" BackgroundColor="Blue" />
   <Button Style="LargeBlueButton" BasedOn="BlueButton" Height="100" Width="200" />
-</Styles>
+</DefaultTheme> 

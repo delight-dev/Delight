@@ -60,10 +60,17 @@ namespace Delight.Editor
                 }
 
                 // is the asset in the assets folder? 
-                if (IsInAssetFolder(path, contentFolder))
+                if (IsInAssetsFolder(path, contentFolder))
                 {
                     addedOrUpdatedAssetObjects.Add(path);
                     continue;
+                }
+
+                // is the asset in a styles folder?
+                if (IsInStylesFolder(path, contentFolder))
+                {
+                    // yes. rebuild all views
+                    rebuildViews = true;
                 }
 
                 // is it an xml asset?
@@ -88,7 +95,7 @@ namespace Delight.Editor
                 }
 
                 // is the asset in the assets folder? 
-                if (IsInAssetFolder(path, contentFolder))
+                if (IsInAssetsFolder(path, contentFolder))
                 {
                     deletedAssetObjects.Add(path);
                     continue;
@@ -120,8 +127,8 @@ namespace Delight.Editor
                     continue; // no.
 
                 // is the asset in the assets folder? 
-                bool movedFromAssetFolder = IsInAssetFolder(movedFromPath, fromContentFolder);
-                if (IsInAssetFolder(movedToPath, toContentFolder) || movedFromAssetFolder)
+                bool movedFromAssetFolder = IsInAssetsFolder(movedFromPath, fromContentFolder);
+                if (IsInAssetsFolder(movedToPath, toContentFolder) || movedFromAssetFolder)
                 {
                     movedAssetObjects.Add(movedToPath);
                     if (movedFromAssetFolder)
@@ -189,14 +196,30 @@ namespace Delight.Editor
             }
         }
 
-        public static bool IsInAssetFolder(string path, string contentFolder)
+        /// <summary>
+        /// Returns boolean indicating if file is in assets folder.
+        /// </summary>
+        public static bool IsInAssetsFolder(string path, string contentFolder)
         {
             if (contentFolder == null)
                 return false;
 
-            int assetFolderIndex = path.ILastIndexOf(ContentParser.AssetsFolder);
+            int assetsFolderIndex = path.ILastIndexOf(ContentParser.AssetsFolder);
             int contentFolderIndex = path.IIndexOf(contentFolder);
-            return assetFolderIndex >= 0 && assetFolderIndex >= contentFolderIndex;
+            return assetsFolderIndex >= 0 && assetsFolderIndex >= contentFolderIndex;
+        }
+
+        /// <summary>
+        /// Returns boolean indiciating if file is in styles folder.
+        /// </summary>
+        public static bool IsInStylesFolder(string path, string contentFolder)
+        {
+            if (contentFolder == null)
+                return false;
+
+            int stylesFolderIndex = path.ILastIndexOf(ContentParser.StylesFolder);
+            int contentFolderIndex = path.IIndexOf(contentFolder);
+            return stylesFolderIndex >= 0 && stylesFolderIndex >= contentFolderIndex;
         }
 
         #endregion

@@ -37,7 +37,7 @@ namespace Delight.Editor.Parser
         public static void GenerateViewCode()
         {
             var viewsChecked = new Dictionary<string, bool>();
-            var viewObjects = _contentObjectModel.ViewObjects.ToList();            
+            var viewObjects = _contentObjectModel.ViewObjects.ToList();
 
             // update views that contain children that needs update
             foreach (var viewObject in viewObjects)
@@ -75,16 +75,6 @@ namespace Delight.Editor.Parser
                 // generate view code
                 GenerateViewCode(viewObject);
                 viewObject.NeedUpdate = false;
-            }
-
-            // update all theme objects that are changed
-            foreach (var themeObject in _contentObjectModel.ThemeObjects)
-            {
-                if (!themeObject.NeedUpdate)
-                    continue;
-
-                GenerateThemeCode(themeObject);
-                themeObject.NeedUpdate = false;
             }
 
 #if UNITY_EDITOR
@@ -426,67 +416,6 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Generates code from XML view object.
-        /// </summary>
-        private static void GenerateThemeCode(ThemeObject themeObject)
-        {
-            Debug.Log("Generating code for " + themeObject.FilePath);
-
-            var themeName = themeObject.Name;
-            var basedOn = themeObject.BasedOn != null ? themeObject.BasedOn.Name : "Theme";
-            var ns = !String.IsNullOrEmpty(themeObject.Namespace) ? themeObject.Namespace : DefaultNamespace;
-
-            // build the internal codebehind for the view
-            var sb = new StringBuilder();
-
-            // open the view class
-            sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", themeObject.Name);
-            sb.AppendLine("#region Using Statements");
-            sb.AppendLine("using System;");
-            sb.AppendLine("using System.Collections.Generic;");
-            sb.AppendLine("using System.Runtime.CompilerServices;");
-            sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using UnityEngine.UI;");
-            // TODO allow configuration of namespaces to be included
-            sb.AppendLine("#endregion");
-            sb.AppendLine();
-            sb.AppendLine("namespace {0}", ns);
-            sb.AppendLine("{");
-            sb.AppendLine("    public partial class {0} : {1}", themeName, basedOn);
-            sb.AppendLine("    {");
-
-            // generate constructor
-
-            // generate methods
-
-            bool hasMethods = themeObject.ViewDeclarations.Any();
-            if (hasMethods)
-            {
-                sb.AppendLine();
-                sb.AppendLine("        #region Methods");
-            }
-
-            if (hasMethods)
-            {
-                sb.AppendLine();
-                sb.AppendLine("        #endregion");
-            }
-
-            // close the theme class
-            sb.AppendLine("    }");
-
-            // close namespace
-            sb.AppendLine("}");
-
-            // write file
-            var dir = MasterConfigObject.GetFormattedPath(Path.GetDirectoryName(themeObject.FilePath));
-            var sourceFile = String.Format("{0}/{1}_g.cs", dir, themeObject.Name);
-
-            Debug.Log("Creating " + sourceFile);
-            File.WriteAllText(sourceFile, sb.ToString());
-        }
-
-        /// <summary>
         /// Updates view object properties and generates data template.
         /// </summary>
         private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
@@ -534,29 +463,28 @@ namespace Delight.Editor.Parser
             // get property declarations, initializers and assignment expressions
             var initializerProperties = GetPropertyInitializers(viewObject);
             var propertyDeclarations = GetPropertyDeclarations(viewObject, true, true, true);
-            var propertyExpressions = new List<PropertyExpression>();
+            var propertyAssignments = new List<PropertyAssignment>();
             if (isParent)
             {
                 // if this is a parent we add the property assignments in the root element
-                propertyExpressions.AddRange(viewObject.PropertyExpressions);
+                propertyAssignments.AddRange(viewObject.GetPropertyAssignmentsWithStyle());
             }
 
             if (viewDeclaration != null)
             {
                 // add assignments set by parent <Parent><ThisView Property="Value"></Parent>
-                propertyExpressions.AddRange(viewDeclaration.PropertyAssignments.Cast<PropertyExpression>());
+                propertyAssignments.AddRange(viewDeclaration.GetPropertyAssignmentsWithStyle());
             }
 
             if (nestedPropertyExpressions != null)
             {
                 // add nested assignments set by parent (that would be expressions like <Button Label.Text="Value">)
-                propertyExpressions.AddRange(nestedPropertyExpressions);
+                propertyAssignments.AddRange(nestedPropertyExpressions.OfType<PropertyAssignment>());
             }
 
             var nestedChildViewPropertyExpressions = new Dictionary<string, List<PropertyExpression>>();
 
             // generate value initializers for the property assignments
-            var propertyAssignments = propertyExpressions.OfType<PropertyAssignment>().ToList();
             for (int i = 0; i < propertyAssignments.Count; ++i)
             {
                 var propertyAssignment = propertyAssignments[i];
@@ -703,7 +631,6 @@ namespace Delight.Editor.Parser
             {
                 if (String.IsNullOrEmpty(declaration.Declaration.Id))
                     continue;
-
 
                 var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.ViewName);
                 var childIdPath = idPath + declaration.Declaration.Id;

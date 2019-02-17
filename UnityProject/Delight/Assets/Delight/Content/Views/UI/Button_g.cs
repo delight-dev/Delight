@@ -665,6 +665,7 @@ namespace Delight
                     Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_button, ButtonLabel);
                 }
                 return _button;
