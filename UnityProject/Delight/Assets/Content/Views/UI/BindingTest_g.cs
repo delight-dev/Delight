@@ -19,16 +19,10 @@ namespace Delight
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             Group1 = new Group(this, Region1, "Group1", Group1Template);
-            Button1 = new Button(this, Group1, "Button1", Button1Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test1");
-            });
-            Button2 = new Button(this, Group1, "Button2", Button2Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test2");
-            });
+            Button1 = new Button(this, Group1, "Button1", Button1Template);
+            Button1.Click += ResolveActionHandler(this, "Test1");
+            Button2 = new Button(this, Group1, "Button2", Button2Template);
+            Button2.Click += ResolveActionHandler(this, "Test2");
             Button3 = new Button(this, Group1, "Button3", Button3Template);
 
             // binding <Button BackgroundColor="{TestBinding2}">

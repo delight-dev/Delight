@@ -21,6 +21,7 @@ namespace Delight
         public Dictionary<DependencyObject, PropertyChangedEventHandler> PropertyChangedHandlers;
         public bool IsAssetType;
         public bool IsAtomicBindableObjectType;
+        public bool ClearValuesOnUnload; 
 
         #endregion
 
@@ -215,7 +216,10 @@ namespace Delight
                 }
             }
 
-            Values.Remove(key);
+            if (ClearValuesOnUnload)
+            {
+                Values.Remove(key);
+            }
         }
 
         /// <summary>
@@ -284,8 +288,11 @@ namespace Delight
             Defaults = new Dictionary<Template, T>();
             ValueConverter = ValueConverter<T>.Empty;
             PropertyName = propertyName;
-            IsAssetType = typeof(AssetObject).IsAssignableFrom(typeof(T));
-            IsAtomicBindableObjectType = typeof(AtomicBindableObject).IsAssignableFrom(typeof(T));
+
+            var propertyType = typeof(T);
+            IsAssetType = typeof(AssetObject).IsAssignableFrom(propertyType);
+            IsAtomicBindableObjectType = typeof(AtomicBindableObject).IsAssignableFrom(propertyType);
+            ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.View.ViewAction).IsAssignableFrom(propertyType);
 
             if (IsAtomicBindableObjectType)
             {

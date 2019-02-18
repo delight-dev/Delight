@@ -19,16 +19,10 @@ namespace Delight
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1, "Group2", Group2Template);
-            Button1 = new Button(this, Group2, "Button1", Button1Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test1");
-            });
-            Button2 = new Button(this, Group2, "Button2", Button2Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "Test2");
-            });
+            Button1 = new Button(this, Group2, "Button1", Button1Template);
+            Button1.Click += ResolveActionHandler(this, "Test1");
+            Button2 = new Button(this, Group2, "Button2", Button2Template);
+            Button2.Click += ResolveActionHandler(this, "Test2");
             PlayerList = new List(this, Group1, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in @Players}">

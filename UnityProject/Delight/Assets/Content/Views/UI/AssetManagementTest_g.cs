@@ -58,41 +58,20 @@ namespace Delight
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             Group1 = new Group(this, Region1, "Group1", Group1Template);
-            LoadAllButton = new Button(this, Group1, "LoadAllButton", LoadAllButtonTemplate, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "LoadAll");
-            });
-            Load1Button = new Button(this, Group1, "Load1Button", Load1ButtonTemplate, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "ToggleLoad1");
-            });
-            Load2Button = new Button(this, Group1, "Load2Button", Load2ButtonTemplate, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "ToggleLoad2");
-            });
-            Load3Button = new Button(this, Group1, "Load3Button", Load3ButtonTemplate, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "ToggleLoad3");
-            });
-            Load4Button = new Button(this, Group1, "Load4Button", Load4ButtonTemplate, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "ToggleLoad4");
-            });
-            Button1 = new Button(this, Group1, "Button1", Button1Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "UnloadAll");
-            });
-            Button2 = new Button(this, Group1, "Button2", Button2Template, x => 
-            {
-                var source = x as Button;
-                source.Click = ResolveActionHandler(this, "SetSprite");
-            });
+            LoadAllButton = new Button(this, Group1, "LoadAllButton", LoadAllButtonTemplate);
+            LoadAllButton.Click += ResolveActionHandler(this, "LoadAll");
+            Load1Button = new Button(this, Group1, "Load1Button", Load1ButtonTemplate);
+            Load1Button.Click += ResolveActionHandler(this, "ToggleLoad1");
+            Load2Button = new Button(this, Group1, "Load2Button", Load2ButtonTemplate);
+            Load2Button.Click += ResolveActionHandler(this, "ToggleLoad2");
+            Load3Button = new Button(this, Group1, "Load3Button", Load3ButtonTemplate);
+            Load3Button.Click += ResolveActionHandler(this, "ToggleLoad3");
+            Load4Button = new Button(this, Group1, "Load4Button", Load4ButtonTemplate);
+            Load4Button.Click += ResolveActionHandler(this, "ToggleLoad4");
+            Button1 = new Button(this, Group1, "Button1", Button1Template);
+            Button1.Click += ResolveActionHandler(this, "UnloadAll");
+            Button2 = new Button(this, Group1, "Button2", Button2Template);
+            Button2.Click += ResolveActionHandler(this, "SetSprite");
             ImageGroup = new Group(this, Region1, "ImageGroup", ImageGroupTemplate);
             ImageSet1 = new Group(this, ImageGroup, "ImageSet1", ImageSet1Template);
             Image1 = new Image(this, ImageSet1, "Image1", Image1Template);

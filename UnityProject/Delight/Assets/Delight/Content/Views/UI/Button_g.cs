@@ -18,6 +18,11 @@ namespace Delight
         {
             // constructing Label (Label)
             Label = new Label(this, this, "Label", LabelTemplate);
+            Click += ResolveActionHandler(this, "ButtonMouseClick");
+            MouseEnter += ResolveActionHandler(this, "ButtonMouseEnter");
+            MouseExit += ResolveActionHandler(this, "ButtonMouseExit");
+            MouseDown += ResolveActionHandler(this, "ButtonMouseDown");
+            MouseUp += ResolveActionHandler(this, "ButtonMouseUp");
             this.AfterInitializeInternal();
         }
 

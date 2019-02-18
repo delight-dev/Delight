@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 #endregion
@@ -35,6 +36,8 @@ namespace Delight
         /// </summary>
         public void ButtonMouseClick()
         {
+            Debug.Log("ButtonMouseClick() called");
+
             if (!IsToggleButton)
                 return;
 

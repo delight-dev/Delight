@@ -318,6 +318,18 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
                 sb.AppendLine("        {");
                 GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
+
+                // do we have action handlers specified on the root element?
+                var actionAssignments = viewObject.GetPropertyAssignmentsWithStyle()
+                    .Where(x => x.PropertyDeclarationInfo != null && 
+                                x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
+
+                // yes. attach handlers
+                foreach (var actionAssignment in actionAssignments)
+                {
+                    sb.AppendLine("            {0} += ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                }
+
                 sb.AppendLine("            this.AfterInitializeInternal();");
                 sb.AppendLine("        }");
                 sb.AppendLine();
@@ -739,7 +751,7 @@ namespace Delight.Editor.Parser
 
                 // print view declaration: _view = new View(this, layoutParent, id, initializer);
                 var parentReference = parentViewDeclaration == null ? "this" : localParentId;
-                sb.Append(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
+                sb.AppendLine(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template);", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
 
                 // do we have action handlers?
                 var actionAssignments = childViewDeclaration.PropertyAssignments.Where(x =>
@@ -751,18 +763,10 @@ namespace Delight.Editor.Parser
                 if (actionAssignments.Any())
                 {
                     // yes. add initializer for action handlers
-                    sb.AppendLine(", x => ");
-                    sb.AppendLine(indent, "{{");
-                    sb.AppendLine(indent, "    var source = x as {0};", childViewDeclaration.ViewName);
                     foreach (var actionAssignment in actionAssignments)
                     {
-                        sb.AppendLine(indent, "    source.{0} = ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childId, actionAssignment.PropertyName, actionAssignment.PropertyValue);
                     }
-                    sb.AppendLine(indent, "}});");
-                }
-                else
-                {
-                    sb.AppendLine(");");
                 }
 
                 // generate bindings
