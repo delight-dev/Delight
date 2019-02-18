@@ -1,4 +1,8 @@
-<Button xmlns="Delight" BasedOn="UIImageView" Width="160" Height="40" BackgroundColor="Gray" m.Label="">
+<Button xmlns="Delight" BasedOn="UIImageView" Width="160" Height="40" BackgroundColor="Gray" m.Label=""
+        Click="ButtonMouseClick" MouseEnter="ButtonMouseEnter" MouseExit="ButtonMouseExit" 
+        MouseDown="ButtonMouseDown" MouseUp="ButtonMouseUp"
+        IsToggleButton="t:bool" IsDisabled="t:bool" ToggleValue="t:bool" TextPadding="t:ElementMargin"
+        CanToggleOn="t:bool" CanToggleOff="t:bool" ToggleClick="t:Action" IsMouseOver="t:bool" IsPressed="t:bool">
   <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" />
 </Button>  
 

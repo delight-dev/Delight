@@ -1,29 +1,19 @@
 ManifestFileVersion: 0
-CRC: 4002209739
+CRC: 1556952168
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e6851394df02bc2a5fdea456e96ee858
+    Hash: 3318ec1f42c04fbce010083a732b9249
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 92a0116e34dbadd26c5a769a3b7f54a4
+    Hash: ea5a42e0fd8ea905efa7aa926a3b8944
 HashAppended: 0
 ClassTypes:
-- Class: 21
-  Script: {instanceID: 0}
 - Class: 28
-  Script: {instanceID: 0}
-- Class: 48
-  Script: {instanceID: 0}
-- Class: 114
-  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-- Class: 115
   Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Content/Assets/Bundle2/LiberationSans SDF - Drop Shadow.mat
-- Assets/Content/Assets/Bundle2/LiberationSans SDF.asset
 - Assets/Content/Assets/Bundle2/Frame3.psd
 - Assets/Content/Assets/Bundle2/bluefloral01.png
 - Assets/Content/Assets/Bundle2/BigSprite.psd

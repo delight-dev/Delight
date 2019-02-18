@@ -37,6 +37,75 @@ namespace Delight
 
     #endregion
 
+    #region TMP_FontAssets
+
+    public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
+    {
+    }
+
+    public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
+    {
+        #region Fields
+
+        public readonly TMP_FontAsset LiberationSansSDF;
+
+        #endregion
+
+        #region Constructor
+
+        public TMP_FontAssetData()
+        {
+            LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle1" };
+
+            Add(LiberationSansSDF);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_FontAssetData TMP_FontAssets = new TMP_FontAssetData();
+    }
+
+    #endregion
+
+    #region Materials
+
+    public partial class MaterialAsset : AssetObject<UnityEngine.Material>
+    {
+    }
+
+    public partial class MaterialAssetData : DataProvider<MaterialAsset>
+    {
+        #region Fields
+
+        public readonly MaterialAsset Netpattern01;
+        public readonly MaterialAsset LiberationSansSDFDropShadow;
+
+        #endregion
+
+        #region Constructor
+
+        public MaterialAssetData()
+        {
+            Netpattern01 = new MaterialAsset { Id = "Net pattern 01", AssetBundleId = "Bundle1" };
+            LiberationSansSDFDropShadow = new MaterialAsset { Id = "LiberationSans SDF - Drop Shadow", AssetBundleId = "Bundle1" };
+
+            Add(Netpattern01);
+            Add(LiberationSansSDFDropShadow);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static MaterialAssetData Materials = new MaterialAssetData();
+    }
+
+    #endregion
+
     #region Sprites
 
     public partial class SpriteAsset : AssetObject<UnityEngine.Sprite>
@@ -82,75 +151,6 @@ namespace Delight
 
     #endregion
 
-    #region Materials
-
-    public partial class MaterialAsset : AssetObject<UnityEngine.Material>
-    {
-    }
-
-    public partial class MaterialAssetData : DataProvider<MaterialAsset>
-    {
-        #region Fields
-
-        public readonly MaterialAsset Netpattern01;
-        public readonly MaterialAsset LiberationSansSDFDropShadow;
-
-        #endregion
-
-        #region Constructor
-
-        public MaterialAssetData()
-        {
-            Netpattern01 = new MaterialAsset { Id = "Net pattern 01", AssetBundleId = "Bundle1" };
-            LiberationSansSDFDropShadow = new MaterialAsset { Id = "LiberationSans SDF - Drop Shadow", AssetBundleId = "Bundle2" };
-
-            Add(Netpattern01);
-            Add(LiberationSansSDFDropShadow);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static MaterialAssetData Materials = new MaterialAssetData();
-    }
-
-    #endregion
-
-    #region TMP_FontAssets
-
-    public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
-    {
-    }
-
-    public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
-    {
-        #region Fields
-
-        public readonly TMP_FontAsset LiberationSansSDF;
-
-        #endregion
-
-        #region Constructor
-
-        public TMP_FontAssetData()
-        {
-            LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle2" };
-
-            Add(LiberationSansSDF);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_FontAssetData TMP_FontAssets = new TMP_FontAssetData();
-    }
-
-    #endregion
-
     #region Texture2Ds
 
     public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
@@ -161,9 +161,9 @@ namespace Delight
     {
         #region Fields
 
-        public readonly Texture2DAsset Preview;
         public readonly Texture2DAsset Diffuse;
         public readonly Texture2DAsset Normal;
+        public readonly Texture2DAsset Preview;
         public readonly Texture2DAsset Bluefloral01;
 
         #endregion
@@ -172,14 +172,14 @@ namespace Delight
 
         public Texture2DAssetData()
         {
-            Preview = new Texture2DAsset { Id = "preview", AssetBundleId = "Bundle1" };
             Diffuse = new Texture2DAsset { Id = "diffuse", AssetBundleId = "Bundle1" };
             Normal = new Texture2DAsset { Id = "normal", AssetBundleId = "Bundle1" };
+            Preview = new Texture2DAsset { Id = "preview", AssetBundleId = "Bundle1" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2" };
 
-            Add(Preview);
             Add(Diffuse);
             Add(Normal);
+            Add(Preview);
             Add(Bluefloral01);
         }
 

@@ -78,8 +78,9 @@ namespace Delight.Editor.Parser
                 // update properties in view object model
                 UpdateMappedProperties(viewObject);
 
-                // generate view code
+                // generate view code    
                 GenerateViewCode(viewObject);
+
                 viewObject.NeedUpdate = false;
             }
 
@@ -273,7 +274,12 @@ namespace Delight.Editor.Parser
             Debug.Log("Generating code for " + viewObject.FilePath);
 
             var viewTypeName = viewObject.TypeName;
-            var basedOn = viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View";
+            bool isBaseView = viewObject.TypeName.IEquals("View");
+            string basedOn = string.Empty;
+            if (!isBaseView)
+            {
+                basedOn = String.Format(" : {0}", viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View");
+            }
             var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : DefaultNamespace;
 
             // build the internal codebehind for the view
@@ -296,7 +302,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
             sb.AppendLine("namespace {0}", ns);
             sb.AppendLine("{");
-            sb.AppendLine("    public partial class {0} : {1}", viewTypeName, basedOn);
+            sb.AppendLine("    public partial class {0}{1}", viewTypeName, basedOn);
             sb.AppendLine("    {");
 
             // generate constructors
@@ -306,17 +312,20 @@ namespace Delight.Editor.Parser
 
             sb.AppendLine("        #region Constructors");
             sb.AppendLine();
-            sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewTypeName);
-            sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
-            sb.AppendLine("        {");
-            GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
-            sb.AppendLine("            this.AfterInitializeInternal();");
-            sb.AppendLine("        }");
-            sb.AppendLine();
-            sb.AppendLine("        public {0}() : this(null)", viewTypeName);
-            sb.AppendLine("        {");
-            sb.AppendLine("        }");
-            sb.AppendLine();
+            if (!isBaseView)
+            {
+                sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewTypeName);
+                sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
+                sb.AppendLine("        {");
+                GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
+                sb.AppendLine("            this.AfterInitializeInternal();");
+                sb.AppendLine("        }");
+                sb.AppendLine();
+                sb.AppendLine("        public {0}() : this(null)", viewTypeName);
+                sb.AppendLine("        {");
+                sb.AppendLine("        }");
+                sb.AppendLine();
+            }
             sb.AppendLine("        static {0}()", viewTypeName);
             sb.AppendLine("        {");
             sb.AppendLine("            var dependencyProperties = new List<DependencyProperty>();");
@@ -430,7 +439,6 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
 
             sb.Append(templateSb);
-            //PrintDataTemplateProperties(sb, viewObject, string.Empty, string.Empty, string.Empty, null, null);
 
             sb.AppendLine("        #endregion");
             sb.AppendLine("    }");
@@ -442,7 +450,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("}");
 
             // write file
-            var dir = MasterConfigObject.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
+            var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
             var sourceFile = String.Format("{0}/{1}_g.cs", dir, viewObject.Name);
 
             Debug.Log("Creating " + sourceFile);
@@ -455,11 +463,6 @@ namespace Delight.Editor.Parser
         private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName)
         {
-            if (viewObject.TypeName == "View")
-            {
-                return;
-            }
-
             if (String.IsNullOrEmpty(idPath))
             {
                 idPath = viewObject.TypeName;
@@ -491,8 +494,11 @@ namespace Delight.Editor.Parser
             sb.AppendLine("#endif");
             sb.AppendLine("                {");
 
+            var basedOnParameter = viewObject.TypeName.IEquals("View") ? "null" :
+                String.Format("{0}Templates.{1}", templateBasedOnViewTypeName, templateBasedOn);
+
             // initialize and instantiate template instance 
-            sb.AppendLine("                    {0} = new Template({1}Templates.{2});", localId, templateBasedOnViewTypeName, templateBasedOn);
+            sb.AppendLine("                    {0} = new Template({1});", localId, basedOnParameter);
 
             // get property declarations, initializers and assignment expressions
             var initializerProperties = GetPropertyInitializers(viewObject);

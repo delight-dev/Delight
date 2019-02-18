@@ -36,8 +36,7 @@ namespace Delight.Editor
         public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {
             // check if any views have been added or changed
-            var contentModel = ContentObjectModel.GetInstance();
-            var configuration = contentModel.MasterConfigObject;
+            var config = MasterConfig.GetInstance();
             var addedOrUpdatedXmlAssets = new List<string>();
             var addedOrUpdatedAssetObjects = new List<string>();
             var deletedAssetObjects = new List<string>();
@@ -49,7 +48,7 @@ namespace Delight.Editor
             foreach (var path in importedAssets)
             {
                 // is the asset in a content folder?
-                var contentFolder = configuration.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
+                var contentFolder = config.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
                 if (contentFolder == null)
                     continue; // no.
 
@@ -84,7 +83,7 @@ namespace Delight.Editor
             foreach (var path in deletedAssets)
             {
                 // is the asset in a content folder?
-                var contentFolder = configuration.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
+                var contentFolder = config.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
                 if (contentFolder == null)
                     continue; // no.
 
@@ -121,8 +120,8 @@ namespace Delight.Editor
                 }
 
                 // is the asset moved to or from a content folder?
-                var toContentFolder = configuration.ContentFolders.FirstOrDefault(x => movedToPath.IIndexOf(x) >= 0);
-                var fromContentFolder = configuration.ContentFolders.FirstOrDefault(x => movedFromPath.IIndexOf(x) >= 0);
+                var toContentFolder = config.ContentFolders.FirstOrDefault(x => movedToPath.IIndexOf(x) >= 0);
+                var fromContentFolder = config.ContentFolders.FirstOrDefault(x => movedFromPath.IIndexOf(x) >= 0);
                 if (toContentFolder == null && fromContentFolder == null)
                     continue; // no.
 

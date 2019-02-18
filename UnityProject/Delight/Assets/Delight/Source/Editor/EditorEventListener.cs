@@ -48,9 +48,13 @@ namespace Delight.Editor
 
                 case PlayModeStateChange.ExitingEditMode:
                     // generate bundles if necessary
+                    var needBuild = MasterConfig.GetInstance().AssetsNeedBuild;
+                    if (!needBuild)
+                        break;
+
                     var bundles = ContentObjectModel.GetInstance().AssetBundleObjects.Where(x => x.NeedBuild).ToList();
                     if (bundles.Count > 0)
-                    {                        
+                    {
                         try
                         {
                             ContentAssetProcessor.IgnoreChanges = true;
@@ -67,7 +71,7 @@ namespace Delight.Editor
                     // add sub-scene
                     //var activeScene = SceneManager.GetActiveScene();
 
-                    var scene = SceneManager.CreateScene("DelightEditor");
+                    //var scene = SceneManager.CreateScene("DelightEditor");
 
                     // try create a game object in scene
                     break;

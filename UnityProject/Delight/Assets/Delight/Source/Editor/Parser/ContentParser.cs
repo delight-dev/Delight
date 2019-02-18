@@ -66,7 +66,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void ParseAllXmlFiles()
         {
-            var configuration = _contentObjectModel.MasterConfigObject;
+            var config = MasterConfig.GetInstance();
 
             // clear XML content objects from model
             _contentObjectModel.ClearParsedContent();
@@ -75,7 +75,7 @@ namespace Delight.Editor.Parser
             // get all XML assets
             var ignoreFiles = new HashSet<string>();
             var xumlFiles = new List<XmlFile>();
-            foreach (var localPath in configuration.ContentFolders)
+            foreach (var localPath in config.ContentFolders)
             {
                 string path = String.Format("{0}/{1}", Application.dataPath,
                     localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath);
@@ -232,7 +232,7 @@ namespace Delight.Editor.Parser
                 propertyExpressions.AddRange(result);
             }
 
-            if (viewObject.BasedOn == null)
+            if (viewObject.BasedOn == null && !viewObject.Name.IEquals("View"))
             {
                 viewObject.BasedOn = _contentObjectModel.LoadViewObject(DefaultViewType);
             }
@@ -797,7 +797,7 @@ namespace Delight.Editor.Parser
                 string[] filePaths = Directory.GetFiles(path, "*.xml", SearchOption.AllDirectories);
                 foreach (string unformattedFilePath in filePaths)
                 {
-                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
+                    var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);
                     if (ignoreFiles != null && ignoreFiles.Contains(filePath))
                         continue;
 
@@ -878,6 +878,8 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void ParseAssetFiles(List<string> addedOrUpdatedAssetObjects, List<string> deletedAssetObjects, List<string> movedAssetObjects, List<string> movedFromAssetObjects)
         {
+            bool assetsNeedBuild = false;
+
             // add asset objects and bundles
             foreach (var newAssetPath in addedOrUpdatedAssetObjects.Concat(movedAssetObjects))
             {
@@ -887,6 +889,7 @@ namespace Delight.Editor.Parser
                     continue;
 
                 bundle.NeedBuild = !bundle.IsResource;
+                assetsNeedBuild |= bundle.NeedBuild;
 
                 // add asset object to bundle
                 var asset = AddAssetToBundle(bundle, newAssetPath);
@@ -905,6 +908,7 @@ namespace Delight.Editor.Parser
                     continue;
 
                 bundle.NeedBuild = !bundle.IsResource;
+                assetsNeedBuild |= bundle.NeedBuild;
 
                 // remove asset object from bundle
                 bundle.RemoveAssetAtPath(deletedAssetPath);
@@ -918,6 +922,13 @@ namespace Delight.Editor.Parser
 
             _contentObjectModel.AssetsNeedUpdate = false;
             _contentObjectModel.SaveObjectModel();
+
+            var config = MasterConfig.GetInstance();
+            if (assetsNeedBuild && !config.AssetsNeedBuild)
+            {
+                config.AssetsNeedBuild = true;
+                config.SaveConfig();
+            }
         }
 
         /// <summary>
@@ -925,7 +936,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void RebuildAssetBundles()
         {
-            var configuration = _contentObjectModel.MasterConfigObject;
+            var config = MasterConfig.GetInstance();
 
             // clear parsed assets from model
             _contentObjectModel.AssetBundleObjects.Clear();
@@ -934,7 +945,7 @@ namespace Delight.Editor.Parser
             // get all assets
             var ignoreFiles = new HashSet<string>();
             var assetFiles = new List<string>();
-            foreach (var localPath in configuration.ContentFolders)
+            foreach (var localPath in config.ContentFolders)
             {
                 string path = String.Format("{0}/{1}{2}", Application.dataPath,
                     localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
@@ -944,8 +955,6 @@ namespace Delight.Editor.Parser
                 {
                     assetFiles.Add(assetFile);
                     ignoreFiles.Add(assetFile);
-
-                    Debug.Log("Found asset at " + assetFile);
                 }
             }
 
@@ -1085,6 +1094,13 @@ namespace Delight.Editor.Parser
 
             _contentObjectModel.SaveObjectModel();
 
+            var config = MasterConfig.GetInstance();            
+            if (!_contentObjectModel.AssetBundleObjects.Any(x => x.NeedBuild))
+            {
+                config.AssetsNeedBuild = false;
+                config.SaveConfig();
+            }
+
             // build streamed bundles
             if (streamedBundles.Count() > 0)
             {
@@ -1129,7 +1145,7 @@ namespace Delight.Editor.Parser
                     if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
                         continue;
 
-                    var filePath = MasterConfigObject.GetFormattedPath(unformattedFilePath);
+                    var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);
                     if (ignoreFiles != null && ignoreFiles.Contains(filePath))
                         continue;
 

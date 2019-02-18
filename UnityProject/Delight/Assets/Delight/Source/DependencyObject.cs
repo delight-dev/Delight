@@ -13,7 +13,10 @@ namespace Delight
     public class DependencyObject : BindableObject
     {
         #region Fields
-        
+
+        public static string DefaultStateName = "Default";
+        public static string AnyStateName = "Any";
+
         protected Template _template;
         protected static Dictionary<Template, List<DependencyProperty>> DependencyProperties = new Dictionary<Template, List<DependencyProperty>>();
 

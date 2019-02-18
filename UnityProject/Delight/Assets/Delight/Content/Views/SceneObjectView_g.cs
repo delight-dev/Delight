@@ -28,7 +28,6 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(SceneObjectViewTemplates.Default, dependencyProperties);
 
-            dependencyProperties.Add(LoadModeProperty);
             dependencyProperties.Add(GameObjectProperty);
             dependencyProperties.Add(EnableScriptEventsProperty);
             dependencyProperties.Add(BeginDragProperty);
@@ -40,10 +39,10 @@ namespace Delight
             dependencyProperties.Add(EndDragProperty);
             dependencyProperties.Add(InitializePotentialDragProperty);
             dependencyProperties.Add(MoveProperty);
-            dependencyProperties.Add(PointerDownProperty);
-            dependencyProperties.Add(PointerEnterProperty);
-            dependencyProperties.Add(PointerExitProperty);
-            dependencyProperties.Add(PointerUpProperty);
+            dependencyProperties.Add(MouseDownProperty);
+            dependencyProperties.Add(MouseEnterProperty);
+            dependencyProperties.Add(MouseExitProperty);
+            dependencyProperties.Add(MouseUpProperty);
             dependencyProperties.Add(ScrollProperty);
             dependencyProperties.Add(SelectProperty);
             dependencyProperties.Add(SubmitProperty);
@@ -53,13 +52,6 @@ namespace Delight
         #endregion
 
         #region Properties
-
-        public readonly static DependencyProperty<Delight.LoadMode> LoadModeProperty = new DependencyProperty<Delight.LoadMode>("LoadMode");
-        public Delight.LoadMode LoadMode
-        {
-            get { return LoadModeProperty.GetValue(this); }
-            set { LoadModeProperty.SetValue(this, value); }
-        }
 
         public readonly static DependencyProperty<UnityEngine.GameObject> GameObjectProperty = new DependencyProperty<UnityEngine.GameObject>("GameObject");
         public UnityEngine.GameObject GameObject
@@ -138,32 +130,32 @@ namespace Delight
             set { MoveProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> PointerDownProperty = new DependencyProperty<ViewAction>("PointerDown");
-        public ViewAction PointerDown
+        public readonly static DependencyProperty<ViewAction> MouseDownProperty = new DependencyProperty<ViewAction>("MouseDown");
+        public ViewAction MouseDown
         {
-            get { return PointerDownProperty.GetValue(this); }
-            set { PointerDownProperty.SetValue(this, value); }
+            get { return MouseDownProperty.GetValue(this); }
+            set { MouseDownProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> PointerEnterProperty = new DependencyProperty<ViewAction>("PointerEnter");
-        public ViewAction PointerEnter
+        public readonly static DependencyProperty<ViewAction> MouseEnterProperty = new DependencyProperty<ViewAction>("MouseEnter");
+        public ViewAction MouseEnter
         {
-            get { return PointerEnterProperty.GetValue(this); }
-            set { PointerEnterProperty.SetValue(this, value); }
+            get { return MouseEnterProperty.GetValue(this); }
+            set { MouseEnterProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> PointerExitProperty = new DependencyProperty<ViewAction>("PointerExit");
-        public ViewAction PointerExit
+        public readonly static DependencyProperty<ViewAction> MouseExitProperty = new DependencyProperty<ViewAction>("MouseExit");
+        public ViewAction MouseExit
         {
-            get { return PointerExitProperty.GetValue(this); }
-            set { PointerExitProperty.SetValue(this, value); }
+            get { return MouseExitProperty.GetValue(this); }
+            set { MouseExitProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> PointerUpProperty = new DependencyProperty<ViewAction>("PointerUp");
-        public ViewAction PointerUp
+        public readonly static DependencyProperty<ViewAction> MouseUpProperty = new DependencyProperty<ViewAction>("MouseUp");
+        public ViewAction MouseUp
         {
-            get { return PointerUpProperty.GetValue(this); }
-            set { PointerUpProperty.SetValue(this, value); }
+            get { return MouseUpProperty.GetValue(this); }
+            set { MouseUpProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewAction> ScrollProperty = new DependencyProperty<ViewAction>("Scroll");

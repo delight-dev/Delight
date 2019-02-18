@@ -131,7 +131,7 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (GetLoadMode() == LoadMode.Manual && !initiatedLoad)
+            if (LoadMode == LoadMode.Manual && !initiatedLoad)
                 return;
 
             BeforeLoad();
@@ -169,7 +169,7 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (GetLoadMode() == LoadMode.Manual && !initiatedLoad)
+            if (LoadMode == LoadMode.Manual && !initiatedLoad)
                 return;
 
             BeforeLoad();
@@ -404,45 +404,12 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets view load mode. 
+        /// Sets the state of the view.
         /// </summary>
-        protected virtual LoadMode GetLoadMode()
+        public virtual void SetState(string state)
         {
-            return LoadMode.Automatic;
         }
 
         #endregion
     }
-
-    #region Data Templates
-
-    public static class ViewTemplates
-    {
-        #region Properties
-
-        public static Template Default
-        {
-            get
-            {
-                return View;
-            }
-        }
-
-        private static Template _view;
-        public static Template View
-        {
-            get
-            {
-                if (_view == null)
-                {
-                    _view = new Template(null);
-                }
-                return _view;
-            }
-        }
-
-        #endregion
-    }
-
-    #endregion
 }

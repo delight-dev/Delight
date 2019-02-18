@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 828459280
+CRC: 3289497150
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: daaded6df1841114e9dbadf8b903d32a
+    Hash: 4bcdb8a2456846ebf3d146c330b33158
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 011d1bb1b97750065fc8e33fbaec9bad
+    Hash: 92a0116e34dbadd26c5a769a3b7f54a4
 HashAppended: 0
 ClassTypes:
 - Class: 21
@@ -15,13 +15,19 @@ ClassTypes:
   Script: {instanceID: 0}
 - Class: 48
   Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Content/Assets/Bundle1/Sprites/LiberationSans SDF - Drop Shadow.mat
 - Assets/Content/Assets/Bundle1/Sprites/Frame2.psd
 - Assets/Content/Assets/Bundle1/Materials/Net 01/preview.jpg
 - Assets/Content/Assets/Bundle1/Materials/Net 01/diffuse.tga
 - Assets/Content/Assets/Bundle1/Materials/Net 01/Net pattern 01.mat
 - Assets/Content/Assets/Bundle1/Materials/Net 01/normal.tga
+- Assets/Content/Assets/Bundle1/Sprites/LiberationSans SDF.asset
 - Assets/Content/Assets/Bundle1/Sprites/Frame1.psd
 Dependencies: []

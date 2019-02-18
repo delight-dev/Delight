@@ -57,10 +57,10 @@ namespace Delight
             GameObject.AddEventTrigger(this, InitializePotentialDrag, EventTriggerType.InitializePotentialDrag);
             GameObject.AddEventTrigger(this, Move, EventTriggerType.Move);
             GameObject.AddEventTrigger(this, Click, EventTriggerType.PointerClick);
-            GameObject.AddEventTrigger(this, PointerDown, EventTriggerType.PointerDown);
-            GameObject.AddEventTrigger(this, PointerEnter, EventTriggerType.PointerEnter);
-            GameObject.AddEventTrigger(this, PointerExit, EventTriggerType.PointerExit);
-            GameObject.AddEventTrigger(this, PointerUp, EventTriggerType.PointerUp);
+            GameObject.AddEventTrigger(this, MouseDown, EventTriggerType.PointerDown);
+            GameObject.AddEventTrigger(this, MouseEnter, EventTriggerType.PointerEnter);
+            GameObject.AddEventTrigger(this, MouseExit, EventTriggerType.PointerExit);
+            GameObject.AddEventTrigger(this, MouseUp, EventTriggerType.PointerUp);
             GameObject.AddEventTrigger(this, Scroll, EventTriggerType.Scroll);
             GameObject.AddEventTrigger(this, Select, EventTriggerType.Select);
             GameObject.AddEventTrigger(this, Submit, EventTriggerType.Submit);
@@ -90,14 +90,6 @@ namespace Delight
         public virtual void Update()
         {
             // TODO implement observable pattern instead
-        }
-
-        /// <summary>
-        /// Gets view load mode. 
-        /// </summary>
-        protected override LoadMode GetLoadMode()
-        {
-            return LoadMode;
         }
 
         // TODO implement Activate/Deactivate

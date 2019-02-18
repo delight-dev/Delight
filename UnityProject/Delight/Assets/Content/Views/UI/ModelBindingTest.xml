@@ -3,9 +3,9 @@
     <Group Spacing="10" Width="500">
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Test 2" Click="Test2" />
-    </Group> 
+    </Group>
     <List Id="PlayerList" Items="{player in @Players}" Width="500" BackgroundColor="Green" Spacing="5">
-      <Group BackgroundColor="Blue"> 
+      <Group BackgroundColor="Blue">
         <Label Text="{player.Name}" />
         <List Id="AchievementsList" Items="{achievement in player.Achievements}" Orientation="Vertical" Offset="50,0,0,0">
           <Label Text="{achievement.Title}" />
@@ -13,4 +13,4 @@
       </Group> 
     </List> 
   </Group>
-</ModelBindingTest> 
+</ModelBindingTest>

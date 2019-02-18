@@ -39,9 +39,6 @@ namespace Delight.Editor.Parser
         [ProtoMember(4, AsReference = true)]
         public List<AssetBundleObject> AssetBundleObjects;
 
-        [ProtoMember(5, AsReference = true)]
-        public MasterConfigObject MasterConfigObject;
-
         [ProtoMember(6)]
         public bool AssetsNeedUpdate;
 
@@ -67,8 +64,7 @@ namespace Delight.Editor.Parser
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
             StyleObjects = new List<StyleObject>();
-            AssetBundleObjects = new List<AssetBundleObject>();
-            MasterConfigObject = MasterConfigObject.CreateDefault();
+            AssetBundleObjects = new List<AssetBundleObject>();            
             AssetTypes = new List<AssetType>();
         }
 
@@ -226,8 +222,6 @@ namespace Delight.Editor.Parser
         public void SaveObjectModel()
         {
             var modelFilePath = GetContentObjectModelFilePath();
-            MasterConfigObject.Sanitize();
-
             using (var file = File.Open(modelFilePath, FileMode.Create))
             {
                 Debug.Log("Serializing " + modelFilePath);
@@ -857,84 +851,6 @@ namespace Delight.Editor.Parser
         }
 
         #endregion
-    }
-
-    #endregion
-
-    #region Config Object
-
-    [ProtoContract]
-    public class MasterConfigObject
-    {
-        [ProtoMember(1)]
-        public string Name;
-
-        [ProtoMember(2)]
-        public BuildConfiguration BuildConfiguration;
-
-        [ProtoMember(3)]
-        public List<string> ContentFolders;
-
-        public MasterConfigObject()
-        {
-            ContentFolders = new List<string>();
-        }
-
-        public static MasterConfigObject CreateDefault()
-        {
-            var defaultConfig = new MasterConfigObject();
-            defaultConfig.ContentFolders.Add("Assets/Content/");
-            defaultConfig.ContentFolders.Add("Assets/Delight/Content/");
-            return defaultConfig;
-        }
-
-        /// <summary>
-        /// Sanitize configuration.
-        /// </summary>
-        public void Sanitize()
-        {
-            var invalidPathChars = Path.GetInvalidPathChars();
-
-            // make sure paths are consistantly formatted
-            for (int i = ContentFolders.Count - 1; i >= 0; --i)
-            {
-                var path = ContentFolders[i];
-                if (String.IsNullOrEmpty(path) || path.IndexOfAny(invalidPathChars) >= 0)
-                {
-                    Debug.LogWarning(String.Format("[Delight] Improperly formatted content folder path \"{0}\" removed from configuration.", path));
-                    ContentFolders.RemoveAt(i);
-                    continue;
-                }
-
-                // make sure directory separators are uniform
-                path = GetFormattedPath(path);
-
-                // make sure path ends with a directory separator
-                if (!path.EndsWith("/"))
-                {
-                    path += "/";
-                }
-
-                ContentFolders[i] = path;
-            }
-        }
-
-        /// <summary>
-        /// Gets uniformally formatted path with forward slashes "/" as directory separators.
-        /// </summary>
-        public static string GetFormattedPath(string path)
-        {
-            if (String.IsNullOrEmpty(path))
-                return path;
-            return path.Replace("\\", "/");
-        }
-    }
-
-    public enum BuildConfiguration
-    {
-        Dev = 0,
-        Staging = 1,
-        Production = 2
     }
 
     #endregion

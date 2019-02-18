@@ -30,6 +30,15 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ButtonTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(IsToggleButtonProperty);
+            dependencyProperties.Add(IsDisabledProperty);
+            dependencyProperties.Add(ToggleValueProperty);
+            dependencyProperties.Add(TextPaddingProperty);
+            dependencyProperties.Add(CanToggleOnProperty);
+            dependencyProperties.Add(CanToggleOffProperty);
+            dependencyProperties.Add(ToggleClickProperty);
+            dependencyProperties.Add(IsMouseOverProperty);
+            dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(LabelProperty);
             dependencyProperties.Add(LabelTemplateProperty);
         }
@@ -37,6 +46,69 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<System.Boolean> IsToggleButtonProperty = new DependencyProperty<System.Boolean>("IsToggleButton");
+        public System.Boolean IsToggleButton
+        {
+            get { return IsToggleButtonProperty.GetValue(this); }
+            set { IsToggleButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsDisabledProperty = new DependencyProperty<System.Boolean>("IsDisabled");
+        public System.Boolean IsDisabled
+        {
+            get { return IsDisabledProperty.GetValue(this); }
+            set { IsDisabledProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> ToggleValueProperty = new DependencyProperty<System.Boolean>("ToggleValue");
+        public System.Boolean ToggleValue
+        {
+            get { return ToggleValueProperty.GetValue(this); }
+            set { ToggleValueProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementMargin> TextPaddingProperty = new DependencyProperty<Delight.ElementMargin>("TextPadding");
+        public Delight.ElementMargin TextPadding
+        {
+            get { return TextPaddingProperty.GetValue(this); }
+            set { TextPaddingProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanToggleOnProperty = new DependencyProperty<System.Boolean>("CanToggleOn");
+        public System.Boolean CanToggleOn
+        {
+            get { return CanToggleOnProperty.GetValue(this); }
+            set { CanToggleOnProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanToggleOffProperty = new DependencyProperty<System.Boolean>("CanToggleOff");
+        public System.Boolean CanToggleOff
+        {
+            get { return CanToggleOffProperty.GetValue(this); }
+            set { CanToggleOffProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ToggleClickProperty = new DependencyProperty<ViewAction>("ToggleClick");
+        public ViewAction ToggleClick
+        {
+            get { return ToggleClickProperty.GetValue(this); }
+            set { ToggleClickProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsMouseOverProperty = new DependencyProperty<System.Boolean>("IsMouseOver");
+        public System.Boolean IsMouseOver
+        {
+            get { return IsMouseOverProperty.GetValue(this); }
+            set { IsMouseOverProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsPressedProperty = new DependencyProperty<System.Boolean>("IsPressed");
+        public System.Boolean IsPressed
+        {
+            get { return IsPressedProperty.GetValue(this); }
+            set { IsPressedProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>("Label");
         public Label Label
@@ -612,13 +684,6 @@ namespace Delight
             set { Label.RaycastBlockMode = value; }
         }
 
-        public readonly static DependencyProperty LabelLoadModeProperty = Label.LoadModeProperty;
-        public Delight.LoadMode LabelLoadMode
-        {
-            get { return Label.LoadMode; }
-            set { Label.LoadMode = value; }
-        }
-
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {
@@ -631,6 +696,20 @@ namespace Delight
         {
             get { return Label.EnableScriptEvents; }
             set { Label.EnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty LabelLoadModeProperty = Label.LoadModeProperty;
+        public Delight.LoadMode LabelLoadMode
+        {
+            get { return Label.LoadMode; }
+            set { Label.LoadMode = value; }
+        }
+
+        public readonly static DependencyProperty LabelStateProperty = Label.StateProperty;
+        public System.String LabelState
+        {
+            get { return Label.State; }
+            set { Label.State = value; }
         }
 
         #endregion
