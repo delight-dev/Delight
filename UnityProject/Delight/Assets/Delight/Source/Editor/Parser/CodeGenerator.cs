@@ -657,7 +657,7 @@ namespace Delight.Editor.Parser
                             viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                         continue;
                     }
-                }
+                }               
 
                 sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
             }

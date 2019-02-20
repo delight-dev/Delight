@@ -21,9 +21,38 @@ namespace Delight
         /// </summary>
         public override string GetInitializer(string stringValue)
         {
-            var convertedValue = Convert(stringValue);
-            return String.Format(CultureInfo.InvariantCulture, "new ElementMargin({0}f, {1}f, {2}f, {3}f)", 
-                convertedValue.Left, convertedValue.Top, convertedValue.Right, convertedValue.Bottom);            
+            var elementSizeConverter = new ElementSizeValueConverter();
+
+            string[] valueList;
+            valueList = stringValue.Split(',').ToArray();
+            if (valueList.Length == 1)
+            {
+                return String.Format(CultureInfo.InvariantCulture, "new ElementMargin({0})",
+                    elementSizeConverter.GetInitializer(valueList[0]));
+            }
+            else if (valueList.Length == 2)
+            {
+                return String.Format(CultureInfo.InvariantCulture, "new ElementMargin({0}, {1})",
+                    elementSizeConverter.GetInitializer(valueList[0]),
+                    elementSizeConverter.GetInitializer(valueList[1]));
+            }
+            else if (valueList.Length == 3)
+            {
+                return String.Format(CultureInfo.InvariantCulture, "new ElementMargin({0}, {1}, {2})",
+                    elementSizeConverter.GetInitializer(valueList[0]),
+                    elementSizeConverter.GetInitializer(valueList[1]),
+                    elementSizeConverter.GetInitializer(valueList[2]));
+            }
+            else if (valueList.Length == 4)
+            {
+                return String.Format(CultureInfo.InvariantCulture, "new ElementMargin({0}, {1}, {2}, {3})",
+                    elementSizeConverter.GetInitializer(valueList[0]),
+                    elementSizeConverter.GetInitializer(valueList[1]),
+                    elementSizeConverter.GetInitializer(valueList[2]),
+                    elementSizeConverter.GetInitializer(valueList[3]));
+            }
+
+            throw new Exception(String.Format("Improperly formatted string."));
         }
 
         /// <summary>
@@ -32,7 +61,7 @@ namespace Delight
         public override ElementMargin Convert(string stringValue)
         {
             string[] valueList;
-            valueList = stringValue.Split(',').ToArray();            
+            valueList = stringValue.Split(',').ToArray();
             if (valueList.Length == 1)
             {
                 return new ElementMargin(ElementSize.Parse(valueList[0]));

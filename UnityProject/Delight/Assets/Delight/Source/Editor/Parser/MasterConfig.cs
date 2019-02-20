@@ -37,6 +37,9 @@ namespace Delight.Editor.Parser
         public List<string> ContentFolders;
 
         [ProtoMember(4)]
+        public List<string> Views;
+
+        [ProtoMember(5)]
         public bool AssetsNeedBuild;
 
         private static MasterConfig _config;
@@ -51,6 +54,7 @@ namespace Delight.Editor.Parser
         public MasterConfig()
         {
             ContentFolders = new List<string>();
+            Views = new List<string>();
         }
 
         #endregion

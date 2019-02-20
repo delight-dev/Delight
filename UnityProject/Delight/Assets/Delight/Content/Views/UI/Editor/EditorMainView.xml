@@ -1,0 +1,10 @@
+<EditorMainView xmlns="Delight" BasedOn="LayoutRoot">
+  <Region Id="ContentRegion" Margin="250,0,0,0">
+    <Image Id="GridImage" Sprite="EditorGrid" Type="Tiled" Width="100%" Height="100%" />
+    <Image Color="#c1c1c2" Size="1,100%" />
+    <Image Color="#c1c1c2" Size="100%,1" />
+    <Button Click="Test1" Text="Test" />
+  </Region>
+  <Region Id="LeftPanel" Width="250" Alignment="Left" BackgroundColor="#c1c1c2">
+  </Region>
+</EditorMainView> 

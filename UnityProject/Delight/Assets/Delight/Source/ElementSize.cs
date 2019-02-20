@@ -56,6 +56,11 @@ namespace Delight
                     return 0f;
                 }
             }
+            set
+            {
+                _unit = ElementSizeUnit.Pixels;
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -66,6 +71,11 @@ namespace Delight
             get
             {
                 return _unit == ElementSizeUnit.Percents ? _value : 0f;
+            }
+            set
+            {
+                _unit = ElementSizeUnit.Percents;
+                Value = value;
             }
         }
 
@@ -97,6 +107,8 @@ namespace Delight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
+        /// <param name="value">Size in pixels or percent. Percentages are specified in the range 0-1.</param>
+        /// <param name="unit">Specifies if the size is in pixels or percents.</param>
         public ElementSize(float value, ElementSizeUnit unit)
         {
             _value = value;

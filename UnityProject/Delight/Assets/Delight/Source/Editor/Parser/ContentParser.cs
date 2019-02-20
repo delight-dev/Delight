@@ -129,6 +129,12 @@ namespace Delight.Editor.Parser
             }
 
             _contentObjectModel.SaveObjectModel();
+
+            // update config
+            var config = MasterConfig.GetInstance();
+            config.Views = _contentObjectModel.ViewObjects.Select(x => x.TypeName).OrderBy(x => x).ToList();
+            config.SaveConfig();
+
             Debug.Log(String.Format("[Delight] Content processed. {0}", DateTime.Now));
         }
 

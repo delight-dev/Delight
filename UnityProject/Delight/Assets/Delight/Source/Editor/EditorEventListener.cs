@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,16 +15,49 @@ using UnityEngine.UI;
 
 namespace Delight.Editor
 {
+    /// <summary>
+    /// Listens to editor application events and synchronizes things in the scene.
+    /// </summary>
     [InitializeOnLoad]
     public static class EditorEventListener
     {
+        #region Fields
+
+        public static Scene? EditorScene;
         public static bool QueuedAssetsToBeProcessed = false;
         public static PostprocessAllAssetsBatch PostprocessBatch = new PostprocessAllAssetsBatch();
 
+        #endregion
+
         static EditorEventListener()
         {
-            EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            EditorApplication.hierarchyChanged += OnHierarchyChanged;
+        }
+
+        private static void OnHierarchyChanged()
+        {
+            var activeScene = EditorSceneManager.GetActiveScene();
+            if (activeScene.name == "DelightEditor")
+            {
+                EditorApplication.update -= OnEditorUpdate;
+                EditorApplication.update += OnEditorUpdate;
+
+                EditorScene = activeScene;
+            }
+            else
+            {
+                EditorApplication.update -= OnEditorUpdate;
+                EditorScene = null;
+            }
+        }
+
+        private static void OnEditorUpdate()
+        {
+            if (Application.isPlaying)
+                return;
+
+            // TODO perform live updates, etc. in edit mode
         }
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)
@@ -68,12 +102,10 @@ namespace Delight.Editor
                     break;
 
                 case PlayModeStateChange.EnteredPlayMode:
+                    // TODO remove
                     // add sub-scene
                     //var activeScene = SceneManager.GetActiveScene();
-
                     //var scene = SceneManager.CreateScene("DelightEditor");
-
-                    // try create a game object in scene
                     break;
 
                 case PlayModeStateChange.ExitingPlayMode:

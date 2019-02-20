@@ -1,7 +1,7 @@
 ManifestFileVersion: 0
-CRC: 1180766947
+CRC: 3750748681
 AssetBundleManifest:
   AssetBundleInfos:
     Info_0:
-      Name: bundle1
+      Name: editorassets
       Dependencies: {}

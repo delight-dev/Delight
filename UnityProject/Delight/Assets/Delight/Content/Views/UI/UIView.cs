@@ -302,6 +302,41 @@ namespace Delight
             CanvasGroup.interactable = IsVisible && alpha > 0;
         }
 
+        /// <summary>
+        /// Sets size of view in pixels.
+        /// </summary>
+        public void SetSize(float width, float height)
+        {
+            Width.Pixels = width;
+            Height.Pixels = height;
+        }
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets actual width of view in pixels. Useful when Width may be specified as percentage and you want actual pixel width.
+        /// </summary>
+        public float ActualWidth
+        {
+            get
+            {
+                return Mathf.Abs(RectTransform.rect.width);
+            }
+        }
+
+        /// <summary>
+        /// Gets actual height of view in pixels. Useful when Height may be specified as percentage and you want actual pixel height.
+        /// </summary>
+        public float ActualHeight
+        {
+            get
+            {
+                return Mathf.Abs(RectTransform.rect.height);
+            }
+        }
+
         #endregion
     }
 }

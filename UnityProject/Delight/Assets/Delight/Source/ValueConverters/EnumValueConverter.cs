@@ -20,7 +20,7 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var enumType = typeof(T);
-            return String.Format("{0}.{1}", enumType.FullName, (T)Enum.Parse(typeof(T), stringValue, true));
+            return String.Format("{0}.{1}", enumType.FullName.Replace('+', '.'), (T)Enum.Parse(typeof(T), stringValue, true));
         }
 
         /// <summary>

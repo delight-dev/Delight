@@ -14,9 +14,9 @@ using UnityEngine.UI;
 namespace Delight.Editor
 {
     /// <summary>
-    /// Editor window displaying the control panel and configuration of the framework.
+    /// Unity editor window displaying the control panel.
     /// </summary>
-    public class DelightEditorWindow : UnityEditor.EditorWindow
+    public class DelightControlPanel : UnityEditor.EditorWindow
     {
         #region Methods
 
@@ -26,7 +26,7 @@ namespace Delight.Editor
         [MenuItem("Window/Delight")]
         public static void ShowWindow()
         {
-            GetWindow(typeof(DelightEditorWindow), false, "Delight");
+            GetWindow(typeof(DelightControlPanel), false, "Delight");
         }
 
         /// <summary>
@@ -48,7 +48,14 @@ namespace Delight.Editor
                 ContentParser.RebuildAssetBundles();
             }
 
-            // show list of asset bundles show name, version, storage mode, load mode and a rebuild button
+            // open editor
+            GUIContent openEditor = new GUIContent("Open Editor", "Opens delight editor.");
+            if (GUILayout.Button(openEditor))
+            {
+                DelightEditor.Open();
+            }
+
+            // TODO show list of asset bundles show name, version, storage mode, load mode and a rebuild button
         }
 
         #endregion

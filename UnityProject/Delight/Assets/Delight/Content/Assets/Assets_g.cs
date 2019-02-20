@@ -18,6 +18,7 @@ namespace Delight
 
         public readonly AssetBundle Bundle1;
         public readonly AssetBundle Bundle2;
+        public readonly AssetBundle EditorAssets;
 
         #endregion
 
@@ -27,9 +28,11 @@ namespace Delight
         {
             Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
             Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
+            EditorAssets = new AssetBundle { Id = "EditorAssets", StorageMode = StorageMode.Local };
 
             Add(Bundle1);
             Add(Bundle2);
+            Add(EditorAssets);
         }
 
         #endregion
@@ -121,6 +124,7 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
+        public readonly SpriteAsset EditorGrid;
 
         #endregion
 
@@ -133,12 +137,14 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2" };
             Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true };
+            EditorGrid = new SpriteAsset { Id = "EditorGrid", AssetBundleId = "EditorAssets" };
 
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
+            Add(EditorGrid);
         }
 
         #endregion
@@ -147,6 +153,40 @@ namespace Delight
     public static partial class Assets
     {
         public static SpriteAssetData Sprites = new SpriteAssetData();
+    }
+
+    #endregion
+
+    #region TMP_ColorGradients
+
+    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
+    {
+    }
+
+    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
+    }
+
+    #endregion
+
+    #region TMP_SpriteAssets
+
+    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
+    {
+    }
+
+    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
     }
 
     #endregion
@@ -189,40 +229,6 @@ namespace Delight
     public static partial class Assets
     {
         public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
-    }
-
-    #endregion
-
-    #region TMP_ColorGradients
-
-    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
-    {
-    }
-
-    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
-    }
-
-    #endregion
-
-    #region TMP_SpriteAssets
-
-    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
-    {
-    }
-
-    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
     }
 
     #endregion
