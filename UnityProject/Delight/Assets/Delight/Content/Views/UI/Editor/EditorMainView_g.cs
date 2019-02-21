@@ -223,6 +223,7 @@ namespace Delight
                     Delight.Image.TypeProperty.SetDefault(_editorMainViewGridImage, UnityEngine.UI.Image.Type.Tiled);
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewGridImage, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.HeightProperty.SetDefault(_editorMainViewGridImage, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.IsVisibleProperty.SetDefault(_editorMainViewGridImage, false);
                 }
                 return _editorMainViewGridImage;
             }

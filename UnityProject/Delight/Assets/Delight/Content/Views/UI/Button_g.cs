@@ -703,6 +703,13 @@ namespace Delight
             set { Label.EnableScriptEvents = value; }
         }
 
+        public readonly static DependencyProperty LabelIsActiveProperty = Label.IsActiveProperty;
+        public System.Boolean LabelIsActive
+        {
+            get { return Label.IsActive; }
+            set { Label.IsActive = value; }
+        }
+
         public readonly static DependencyProperty LabelLoadModeProperty = Label.LoadModeProperty;
         public Delight.LoadMode LabelLoadMode
         {
@@ -746,6 +753,8 @@ namespace Delight
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(1f, 0f, 0f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0f, 0f, 1f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_button, ButtonLabel);
                 }
                 return _button;

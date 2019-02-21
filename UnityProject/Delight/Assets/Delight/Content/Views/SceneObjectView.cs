@@ -85,11 +85,32 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(IsActive):
+                    IsActiveChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when IsActive property has been changed.
+        /// </summary>
+        public virtual void IsActiveChanged()
+        {
+            GameObject?.SetActive(IsActive);
+        }
+
+        /// <summary>
         /// Called once per frame if EnableScriptEvents is true.
         /// </summary>
         public virtual void Update()
         {
-            // TODO implement observable pattern instead
         }
 
         // TODO implement Activate/Deactivate

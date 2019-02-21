@@ -30,6 +30,7 @@ namespace Delight
 
             dependencyProperties.Add(GameObjectProperty);
             dependencyProperties.Add(EnableScriptEventsProperty);
+            dependencyProperties.Add(IsActiveProperty);
             dependencyProperties.Add(BeginDragProperty);
             dependencyProperties.Add(CancelProperty);
             dependencyProperties.Add(ClickProperty);
@@ -65,6 +66,13 @@ namespace Delight
         {
             get { return EnableScriptEventsProperty.GetValue(this); }
             set { EnableScriptEventsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsActiveProperty = new DependencyProperty<System.Boolean>("IsActive");
+        public System.Boolean IsActive
+        {
+            get { return IsActiveProperty.GetValue(this); }
+            set { IsActiveProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewAction> BeginDragProperty = new DependencyProperty<ViewAction>("BeginDrag");

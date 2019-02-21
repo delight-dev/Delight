@@ -278,7 +278,7 @@ namespace Delight
             if (CanvasGroup == null)
             {
                 var canvasGroup = GameObject.GetComponent<CanvasGroup>();
-                CanvasGroup = canvasGroup ?? GameObject.AddComponent<CanvasGroup>();
+                CanvasGroup = canvasGroup == null ? GameObject.AddComponent<CanvasGroup>() : canvasGroup;
             }
 
             // set alpha value

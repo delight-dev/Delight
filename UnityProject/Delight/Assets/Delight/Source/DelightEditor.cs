@@ -26,12 +26,11 @@ namespace Delight
 
         void Awake()
         {
-            Debug.Log("Editor awake");            
+    
         }
 
         public static void Open()
         {
-            Debug.Log("Opening Delight Editor Scene");
         }
 
         //private static void OnEditorUpdate()

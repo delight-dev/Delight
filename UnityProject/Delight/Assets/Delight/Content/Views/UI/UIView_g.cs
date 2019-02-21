@@ -194,6 +194,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _uIView.Name = "UIView";
 #endif
+                    Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);
                 }
                 return _uIView;
             }

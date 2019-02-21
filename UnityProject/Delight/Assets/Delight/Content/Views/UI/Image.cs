@@ -19,7 +19,8 @@ namespace Delight
             base.OnPropertyChanged(source, property);
             switch (property)
             {
-                case nameof(Color): // TODO implement
+                case nameof(Color):
+                    ImageChanged();
                     break;
                 case nameof(Sprite):
                     SpriteChanged();
