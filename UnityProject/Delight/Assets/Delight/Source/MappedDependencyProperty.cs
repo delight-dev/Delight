@@ -260,7 +260,7 @@ namespace Delight
             return TryGetStateDefault(key, state, out defaultValue);
         }
 
-        #endregion        
+        #endregion
 
         #region Constructor
 

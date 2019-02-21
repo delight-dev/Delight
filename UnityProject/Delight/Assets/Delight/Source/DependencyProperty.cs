@@ -397,10 +397,8 @@ namespace Delight
             IsAssetType = typeof(AssetObject).IsAssignableFrom(propertyType);
             IsAtomicBindableObjectType = typeof(AtomicBindableObject).IsAssignableFrom(propertyType);
 
-            // don't clear values that are view and view action references as they are set in constructor and not to change during run-time
-            ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.View.ViewAction).IsAssignableFrom(propertyType) &&
-                                  !typeof(UnityEngine.Component).IsAssignableFrom(propertyType);
-
+            // don't clear view references and view actions as they are set in constructor and not to change during run-time
+            ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.View.ViewAction).IsAssignableFrom(propertyType);
             if (IsAtomicBindableObjectType)
             {
                 PropertyChangedHandlers = new Dictionary<DependencyObject, PropertyChangedEventHandler>();
