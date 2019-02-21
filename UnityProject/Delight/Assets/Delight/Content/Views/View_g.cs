@@ -19,7 +19,6 @@ namespace Delight
             DependencyProperties.Add(ViewTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(LoadModeProperty);
-            dependencyProperties.Add(StateProperty);
         }
 
         #endregion
@@ -31,13 +30,6 @@ namespace Delight
         {
             get { return LoadModeProperty.GetValue(this); }
             set { LoadModeProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.String> StateProperty = new DependencyProperty<System.String>("State");
-        public System.String State
-        {
-            get { return StateProperty.GetValue(this); }
-            set { StateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -69,6 +61,9 @@ namespace Delight
 #endif
                 {
                     _view = new Template(null);
+#if UNITY_EDITOR
+                    _view.Name = "View";
+#endif
                 }
                 return _view;
             }

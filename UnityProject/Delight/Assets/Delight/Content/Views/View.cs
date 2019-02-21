@@ -42,14 +42,14 @@ namespace Delight
             _layoutChildren = new List<View>();
             _layoutParent = layoutParent ?? parent;
             if (_layoutParent != null)
-            {                
+            {
                 _layoutParent.LayoutChildren.Add(this);
             }
 
             _initializer = initializer;
             BeforeInitialize();
         }
-        
+
         #endregion
 
         #region Properties
@@ -79,7 +79,7 @@ namespace Delight
         {
             get { return _layoutChildren; }
         }
-        
+
         /// <summary>
         /// Gets boolean indicating if view is loaded.
         /// </summary>
@@ -101,7 +101,7 @@ namespace Delight
         /// Called once in the object's lifetime before construction of children and before load.
         /// </summary>
         protected virtual void BeforeInitialize()
-        {            
+        {
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Delight
             LoadDependencyProperties();
 
             await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
-            
+
             UpdateBindings();
 
             _initializer?.Invoke(this);
@@ -179,7 +179,7 @@ namespace Delight
             {
                 child.LoadInternal(false);
             }
-            
+
             UpdateBindings();
 
             _initializer?.Invoke(this);
@@ -406,8 +406,90 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public virtual void SetState(string state)
+        public virtual void SetState(string newState)
         {
+            if (newState.IEquals(_previousState))
+                return;
+
+            var stateChangingProperties = GetStateChangingProperties(newState);
+            if (stateChangingProperties != null)
+            {
+                // unload all state changing dependency properties
+                for (int i = 0; i < stateChangingProperties.Count; ++i)
+                {
+                    stateChangingProperties[i].Unload(this);
+                }
+
+                // set state
+                _state = newState;
+                _previousState = newState;
+
+                // load all state changing dependency properties
+                for (int i = 0; i < stateChangingProperties.Count; ++i)
+                {
+                    stateChangingProperties[i].Load(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets list of state changing properties.
+        /// </summary>
+        private List<DependencyProperty> GetStateChangingProperties(string newState)
+        {
+            // get list of properties changing state for this template
+            List<DependencyProperty> stateChangingProperties;
+            if (!StateChangingProperties.TryGetValue(_template, out stateChangingProperties))
+            {
+                List<DependencyProperty> templateStateChangingProperties = null;
+
+                // initialize list of all properties that changes state for this template                
+                var template = _template;
+                while (true)
+                {
+                    List<DependencyProperty> dependencyProperties;
+                    if (DependencyProperties.TryGetValue(template, out dependencyProperties))
+                    {
+                        // iterate through all dependency properties and clear run-time values
+                        for (int i = 0; i < dependencyProperties.Count; ++i)
+                        {
+                            var dependencyProperty = dependencyProperties[i];
+                            if (dependencyProperty.HasState(_template))
+                            {
+                                if (templateStateChangingProperties == null)
+                                    templateStateChangingProperties = new List<DependencyProperty>();
+
+                                templateStateChangingProperties.Add(dependencyProperties[i]);
+                            }
+                        }
+                    }
+
+                    // do the same for properties in base class
+                    template = template.BasedOn;
+                    if (template == ViewTemplates.Default)
+                    {
+                        break;
+                    }
+                }
+
+                stateChangingProperties = templateStateChangingProperties;
+                StateChangingProperties.Add(_template, stateChangingProperties);
+            }
+
+            if (stateChangingProperties == null)
+                return null;
+
+            // filter properties and return those affected by the state change
+            for (int i = stateChangingProperties.Count - 1; i >= 0; --i)
+            {
+                var property = stateChangingProperties[i];
+                if (property.HasState(_template, _previousState) || property.HasState(_template, newState))
+                    continue;
+
+                stateChangingProperties.RemoveAt(i);
+            }
+
+            return stateChangingProperties;
         }
 
         #endregion

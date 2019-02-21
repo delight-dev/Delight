@@ -279,6 +279,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTest = new Template(LayoutRootTemplates.LayoutRoot);
+#if UNITY_EDITOR
+                    _modelBindingTest.Name = "ModelBindingTest";
+#endif
                     Delight.ModelBindingTest.Group1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup1);
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
@@ -305,6 +308,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestGroup1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _modelBindingTestGroup1.Name = "ModelBindingTestGroup1";
+#endif
                     Delight.Group.OrientationProperty.SetDefault(_modelBindingTestGroup1, Delight.ElementOrientation.Horizontal);
                 }
                 return _modelBindingTestGroup1;
@@ -323,6 +329,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestGroup2 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _modelBindingTestGroup2.Name = "ModelBindingTestGroup2";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.Group.WidthProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(500f, ElementSizeUnit.Pixels));
                 }
@@ -342,6 +351,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _modelBindingTestButton1.Name = "ModelBindingTestButton1";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton1, ModelBindingTestButton1Label);
                 }
                 return _modelBindingTestButton1;
@@ -360,6 +372,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _modelBindingTestButton1Label.Name = "ModelBindingTestButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_modelBindingTestButton1Label, "Test 1");
                 }
                 return _modelBindingTestButton1Label;
@@ -378,6 +393,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestButton2 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _modelBindingTestButton2.Name = "ModelBindingTestButton2";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton2, ModelBindingTestButton2Label);
                 }
                 return _modelBindingTestButton2;
@@ -396,6 +414,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _modelBindingTestButton2Label.Name = "ModelBindingTestButton2Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_modelBindingTestButton2Label, "Test 2");
                 }
                 return _modelBindingTestButton2Label;
@@ -414,6 +435,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestPlayerList = new Template(ListTemplates.List);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerList.Name = "ModelBindingTestPlayerList";
+#endif
                     Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
@@ -434,6 +458,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestGroup3 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _modelBindingTestGroup3.Name = "ModelBindingTestGroup3";
+#endif
                     Delight.Group.BackgroundColorProperty.SetDefault(_modelBindingTestGroup3, new UnityEngine.Color(0f, 0f, 1f, 1f));
                 }
                 return _modelBindingTestGroup3;
@@ -452,6 +479,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _modelBindingTestLabel1.Name = "ModelBindingTestLabel1";
+#endif
                 }
                 return _modelBindingTestLabel1;
             }
@@ -469,8 +499,11 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestAchievementsList = new Template(ListTemplates.List);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsList.Name = "ModelBindingTestAchievementsList";
+#endif
                     Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
-                    Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(50f, 0f, 0f, 0f));
+                    Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _modelBindingTestAchievementsList;
             }
@@ -488,6 +521,9 @@ namespace Delight
 #endif
                 {
                     _modelBindingTestLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _modelBindingTestLabel2.Name = "ModelBindingTestLabel2";
+#endif
                 }
                 return _modelBindingTestLabel2;
             }

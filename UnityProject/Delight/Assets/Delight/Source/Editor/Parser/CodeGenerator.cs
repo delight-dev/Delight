@@ -494,7 +494,7 @@ namespace Delight.Editor.Parser
 
             // declare template property
             var localId = idPath.ToPrivateMemberName();
-            sb.AppendLine("        private static Template {0};", idPath.ToPrivateMemberName());
+            sb.AppendLine("        private static Template {0};", localId);
             sb.AppendLine("        public static Template {0}", idPath);
             sb.AppendLine("        {");
             sb.AppendLine("            get");
@@ -511,6 +511,11 @@ namespace Delight.Editor.Parser
 
             // initialize and instantiate template instance 
             sb.AppendLine("                    {0} = new Template({1});", localId, basedOnParameter);
+
+            // add name in editor so we can easy track which template is used where in the debugger
+            sb.AppendLine("#if UNITY_EDITOR");
+            sb.AppendLine("                    {0}.Name = \"{1}\";", localId, idPath);
+            sb.AppendLine("#endif");
 
             // get property declarations, initializers and assignment expressions
             var initializerProperties = GetPropertyInitializers(viewObject);
@@ -657,9 +662,17 @@ namespace Delight.Editor.Parser
                             viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                         continue;
                     }
-                }               
+                }
 
-                sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
+                // set property value
+                if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                {
+                    sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
+                }
+                else
+                {
+                    sb.AppendLine("                    {0}.{1}Property.SetStateDefault(\"{2}\", {3}, {4});", fullViewTypeName, propertyName, propertyAssignment.StateName, localId, typeValueInitializer);
+                }
             }
 
             // set sub-template properties

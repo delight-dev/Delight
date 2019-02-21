@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _performanceTest = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _performanceTest.Name = "PerformanceTest";
+#endif
                 }
                 return _performanceTest;
             }

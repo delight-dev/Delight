@@ -619,6 +619,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(2)]
         public string PropertyValue;
 
+        [ProtoMember(3)]
+        public string StateName;
+
         public PropertyDeclarationInfo PropertyDeclarationInfo;
     }
 

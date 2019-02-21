@@ -189,6 +189,9 @@ namespace Delight
 #endif
                 {
                     _testScene = new Template(LayoutRootTemplates.LayoutRoot);
+#if UNITY_EDITOR
+                    _testScene.Name = "TestScene";
+#endif
                     Delight.TestScene.Group1TemplateProperty.SetDefault(_testScene, TestSceneGroup1);
                     Delight.TestScene.Button1TemplateProperty.SetDefault(_testScene, TestSceneButton1);
                     Delight.TestScene.Button2TemplateProperty.SetDefault(_testScene, TestSceneButton2);
@@ -213,9 +216,12 @@ namespace Delight
 #endif
                 {
                     _testSceneGroup1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _testSceneGroup1.Name = "TestSceneGroup1";
+#endif
                     Delight.Group.OrientationProperty.SetDefault(_testSceneGroup1, Delight.ElementOrientation.Horizontal);
                     Delight.Group.AlignmentProperty.SetDefault(_testSceneGroup1, Delight.ElementAlignment.TopLeft);
-                    Delight.Group.OffsetProperty.SetDefault(_testSceneGroup1, new ElementMargin(10f, 10f, 0f, 0f));
+                    Delight.Group.OffsetProperty.SetDefault(_testSceneGroup1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Group.SpacingProperty.SetDefault(_testSceneGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                 }
                 return _testSceneGroup1;
@@ -234,6 +240,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _testSceneButton1.Name = "TestSceneButton1";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneButton1, TestSceneButton1Label);
                 }
                 return _testSceneButton1;
@@ -252,6 +261,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _testSceneButton1Label.Name = "TestSceneButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_testSceneButton1Label, "Test 1");
                 }
                 return _testSceneButton1Label;
@@ -270,6 +282,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton2 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _testSceneButton2.Name = "TestSceneButton2";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneButton2, TestSceneButton2Label);
                 }
                 return _testSceneButton2;
@@ -288,6 +303,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton2Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _testSceneButton2Label.Name = "TestSceneButton2Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_testSceneButton2Label, "Test 2");
                 }
                 return _testSceneButton2Label;
@@ -306,6 +324,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton3 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _testSceneButton3.Name = "TestSceneButton3";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneButton3, TestSceneButton3Label);
                 }
                 return _testSceneButton3;
@@ -324,6 +345,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton3Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _testSceneButton3Label.Name = "TestSceneButton3Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_testSceneButton3Label, "Test 3");
                 }
                 return _testSceneButton3Label;
@@ -342,6 +366,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton4 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _testSceneButton4.Name = "TestSceneButton4";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneButton4, TestSceneButton4Label);
                 }
                 return _testSceneButton4;
@@ -360,6 +387,9 @@ namespace Delight
 #endif
                 {
                     _testSceneButton4Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _testSceneButton4Label.Name = "TestSceneButton4Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_testSceneButton4Label, "Log Binding");
                 }
                 return _testSceneButton4Label;
@@ -378,7 +408,10 @@ namespace Delight
 #endif
                 {
                     _testSceneRegion1 = new Template(RegionTemplates.Region);
-                    Delight.Region.MarginProperty.SetDefault(_testSceneRegion1, new ElementMargin(0f, 200f, 0f, 0f));
+#if UNITY_EDITOR
+                    _testSceneRegion1.Name = "TestSceneRegion1";
+#endif
+                    Delight.Region.MarginProperty.SetDefault(_testSceneRegion1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(200f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _testSceneRegion1;
             }
@@ -396,6 +429,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1 = new Template(BindingTestTemplates.BindingTest);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1.Name = "TestSceneBindingTest1";
+#endif
                     Delight.BindingTest.TestBindingProperty.SetDefault(_testSceneBindingTest1, "Patrik");
                     Delight.BindingTest.Region1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Region1);
                     Delight.BindingTest.Group1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Group1);
@@ -427,6 +463,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Region1 = new Template(BindingTestTemplates.BindingTestRegion1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Region1.Name = "TestSceneBindingTest1Region1";
+#endif
                 }
                 return _testSceneBindingTest1Region1;
             }
@@ -444,6 +483,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Group1 = new Template(BindingTestTemplates.BindingTestGroup1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Group1.Name = "TestSceneBindingTest1Group1";
+#endif
                 }
                 return _testSceneBindingTest1Group1;
             }
@@ -461,6 +503,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button1 = new Template(BindingTestTemplates.BindingTestButton1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button1.Name = "TestSceneBindingTest1Button1";
+#endif
                     Delight.Button.BackgroundColorProperty.SetDefault(_testSceneBindingTest1Button1, new UnityEngine.Color(1f, 1f, 0f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button1, TestSceneBindingTest1Button1Label);
                 }
@@ -480,6 +525,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button1Label = new Template(BindingTestTemplates.BindingTestButton1Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button1Label.Name = "TestSceneBindingTest1Button1Label";
+#endif
                 }
                 return _testSceneBindingTest1Button1Label;
             }
@@ -497,6 +545,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button2 = new Template(BindingTestTemplates.BindingTestButton2);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button2.Name = "TestSceneBindingTest1Button2";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button2, TestSceneBindingTest1Button2Label);
                 }
                 return _testSceneBindingTest1Button2;
@@ -515,6 +566,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button2Label = new Template(BindingTestTemplates.BindingTestButton2Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button2Label.Name = "TestSceneBindingTest1Button2Label";
+#endif
                 }
                 return _testSceneBindingTest1Button2Label;
             }
@@ -532,6 +586,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button3 = new Template(BindingTestTemplates.BindingTestButton3);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button3.Name = "TestSceneBindingTest1Button3";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button3, TestSceneBindingTest1Button3Label);
                 }
                 return _testSceneBindingTest1Button3;
@@ -550,6 +607,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button3Label = new Template(BindingTestTemplates.BindingTestButton3Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button3Label.Name = "TestSceneBindingTest1Button3Label";
+#endif
                 }
                 return _testSceneBindingTest1Button3Label;
             }
@@ -567,6 +627,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1LargeButton1 = new Template(BindingTestTemplates.BindingTestLargeButton1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1LargeButton1.Name = "TestSceneBindingTest1LargeButton1";
+#endif
                     Delight.LargeButton.LabelTemplateProperty.SetDefault(_testSceneBindingTest1LargeButton1, TestSceneBindingTest1LargeButton1Label);
                 }
                 return _testSceneBindingTest1LargeButton1;
@@ -585,6 +648,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1LargeButton1Label = new Template(BindingTestTemplates.BindingTestLargeButton1Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1LargeButton1Label.Name = "TestSceneBindingTest1LargeButton1Label";
+#endif
                 }
                 return _testSceneBindingTest1LargeButton1Label;
             }
@@ -602,6 +668,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Label1 = new Template(BindingTestTemplates.BindingTestLabel1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Label1.Name = "TestSceneBindingTest1Label1";
+#endif
                 }
                 return _testSceneBindingTest1Label1;
             }
@@ -619,6 +688,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button4 = new Template(BindingTestTemplates.BindingTestButton4);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button4.Name = "TestSceneBindingTest1Button4";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button4, TestSceneBindingTest1Button4Label);
                 }
                 return _testSceneBindingTest1Button4;
@@ -637,6 +709,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button4Label = new Template(BindingTestTemplates.BindingTestButton4Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button4Label.Name = "TestSceneBindingTest1Button4Label";
+#endif
                 }
                 return _testSceneBindingTest1Button4Label;
             }
@@ -654,6 +729,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button5 = new Template(BindingTestTemplates.BindingTestButton5);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button5.Name = "TestSceneBindingTest1Button5";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button5, TestSceneBindingTest1Button5Label);
                 }
                 return _testSceneBindingTest1Button5;
@@ -672,6 +750,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Button5Label = new Template(BindingTestTemplates.BindingTestButton5Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button5Label.Name = "TestSceneBindingTest1Button5Label";
+#endif
                 }
                 return _testSceneBindingTest1Button5Label;
             }
@@ -689,6 +770,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1RegionOnDemand = new Template(BindingTestTemplates.BindingTestRegionOnDemand);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1RegionOnDemand.Name = "TestSceneBindingTest1RegionOnDemand";
+#endif
                 }
                 return _testSceneBindingTest1RegionOnDemand;
             }
@@ -706,6 +790,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Group2 = new Template(BindingTestTemplates.BindingTestGroup2);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Group2.Name = "TestSceneBindingTest1Group2";
+#endif
                 }
                 return _testSceneBindingTest1Group2;
             }
@@ -723,6 +810,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Label2 = new Template(BindingTestTemplates.BindingTestLabel2);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Label2.Name = "TestSceneBindingTest1Label2";
+#endif
                 }
                 return _testSceneBindingTest1Label2;
             }
@@ -740,6 +830,9 @@ namespace Delight
 #endif
                 {
                     _testSceneBindingTest1Label3 = new Template(BindingTestTemplates.BindingTestLabel3);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Label3.Name = "TestSceneBindingTest1Label3";
+#endif
                 }
                 return _testSceneBindingTest1Label3;
             }

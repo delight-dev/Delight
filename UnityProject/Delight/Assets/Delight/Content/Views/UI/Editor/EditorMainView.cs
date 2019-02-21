@@ -25,7 +25,8 @@ namespace Delight
         }
 
         public void Test1()
-        {           
+        {
+            //Button1.SetState("Highlighted");            
         }
     }
 }

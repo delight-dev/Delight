@@ -87,6 +87,9 @@ namespace Delight
 #endif
                 {
                     _list = new Template(CollectionTemplates.Collection);
+#if UNITY_EDITOR
+                    _list.Name = "List";
+#endif
                 }
                 return _list;
             }

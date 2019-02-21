@@ -87,6 +87,9 @@ namespace Delight
 #endif
                 {
                     _group = new Template(UIImageViewTemplates.UIImageView);
+#if UNITY_EDITOR
+                    _group.Name = "Group";
+#endif
                 }
                 return _group;
             }

@@ -157,40 +157,6 @@ namespace Delight
 
     #endregion
 
-    #region TMP_ColorGradients
-
-    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
-    {
-    }
-
-    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
-    }
-
-    #endregion
-
-    #region TMP_SpriteAssets
-
-    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
-    {
-    }
-
-    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
-    }
-
-    #endregion
-
     #region Texture2Ds
 
     public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
@@ -229,6 +195,40 @@ namespace Delight
     public static partial class Assets
     {
         public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
+    #region TMP_ColorGradients
+
+    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
+    {
+    }
+
+    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
+    }
+
+    #endregion
+
+    #region TMP_SpriteAssets
+
+    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
+    {
+    }
+
+    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
     }
 
     #endregion

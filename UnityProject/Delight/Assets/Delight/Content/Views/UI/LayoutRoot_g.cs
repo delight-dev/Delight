@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _layoutRoot = new Template(UICanvasTemplates.UICanvas);
+#if UNITY_EDITOR
+                    _layoutRoot.Name = "LayoutRoot";
+#endif
                     Delight.LayoutRoot.EnableScriptEventsProperty.SetDefault(_layoutRoot, true);
                 }
                 return _layoutRoot;

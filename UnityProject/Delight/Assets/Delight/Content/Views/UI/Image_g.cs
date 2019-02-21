@@ -199,6 +199,9 @@ namespace Delight
 #endif
                 {
                     _image = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _image.Name = "Image";
+#endif
                 }
                 return _image;
             }

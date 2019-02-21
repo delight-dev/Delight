@@ -599,6 +599,9 @@ namespace Delight
 #endif
                 {
                     _label = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _label.Name = "Label";
+#endif
                     Delight.Label.TextAlignmentProperty.SetDefault(_label, TMPro.TextAlignmentOptions.Left);
                     Delight.Label.WidthProperty.SetDefault(_label, new ElementSize(120f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(40f, ElementSizeUnit.Pixels));

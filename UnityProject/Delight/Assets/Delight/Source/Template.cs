@@ -18,6 +18,7 @@ namespace Delight
         public Template BasedOn;
 
 #if UNITY_EDITOR
+        public string Name; 
         public static int Version = 0;
         public int CurrentVersion;
 #endif

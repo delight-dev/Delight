@@ -303,6 +303,9 @@ namespace Delight
 #endif
                 {
                     _uICanvas = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _uICanvas.Name = "UICanvas";
+#endif
                     Delight.UICanvas.RenderModeProperty.SetDefault(_uICanvas, UnityEngine.RenderMode.ScreenSpaceOverlay);
                     Delight.UICanvas.PixelPerfectProperty.SetDefault(_uICanvas, false);
                 }

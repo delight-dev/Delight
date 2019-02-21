@@ -710,13 +710,6 @@ namespace Delight
             set { Label.LoadMode = value; }
         }
 
-        public readonly static DependencyProperty LabelStateProperty = Label.StateProperty;
-        public System.String LabelState
-        {
-            get { return Label.State; }
-            set { Label.State = value; }
-        }
-
         #endregion
     }
 
@@ -746,6 +739,9 @@ namespace Delight
 #endif
                 {
                     _button = new Template(UIImageViewTemplates.UIImageView);
+#if UNITY_EDITOR
+                    _button.Name = "Button";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
@@ -768,6 +764,9 @@ namespace Delight
 #endif
                 {
                     _buttonLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _buttonLabel.Name = "ButtonLabel";
+#endif
                     Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.WidthProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));

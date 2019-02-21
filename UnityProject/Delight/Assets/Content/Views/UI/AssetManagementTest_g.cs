@@ -574,6 +574,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTest = new Template(LayoutRootTemplates.LayoutRoot);
+#if UNITY_EDITOR
+                    _assetManagementTest.Name = "AssetManagementTest";
+#endif
                     Delight.AssetManagementTest.Label1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel1);
                     Delight.AssetManagementTest.Label2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel2);
                     Delight.AssetManagementTest.Label3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel3);
@@ -616,6 +619,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _assetManagementTestLabel1.Name = "AssetManagementTestLabel1";
+#endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel1, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel1, Delight.ElementAlignment.Top);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel1, TMPro.TextAlignmentOptions.Left);
@@ -636,6 +642,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _assetManagementTestLabel2.Name = "AssetManagementTestLabel2";
+#endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel2, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel2, Delight.ElementAlignment.TopRight);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel2, TMPro.TextAlignmentOptions.TopLeft);
@@ -656,6 +665,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLabel3 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _assetManagementTestLabel3.Name = "AssetManagementTestLabel3";
+#endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel3, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel3, Delight.ElementAlignment.TopLeft);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel3, TMPro.TextAlignmentOptions.TopLeft);
@@ -676,6 +688,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestRegion1 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _assetManagementTestRegion1.Name = "AssetManagementTestRegion1";
+#endif
                 }
                 return _assetManagementTestRegion1;
             }
@@ -693,10 +708,13 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestGroup1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestGroup1.Name = "AssetManagementTestGroup1";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementOrientation.Vertical);
                     Delight.Group.AlignmentProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementAlignment.TopLeft);
-                    Delight.Group.OffsetProperty.SetDefault(_assetManagementTestGroup1, new ElementMargin(20f, 100f, 0f, 0f));
+                    Delight.Group.OffsetProperty.SetDefault(_assetManagementTestGroup1, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(100f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _assetManagementTestGroup1;
             }
@@ -714,6 +732,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoadAllButton = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestLoadAllButton.Name = "AssetManagementTestLoadAllButton";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoadAllButton, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoadAllButton, AssetManagementTestLoadAllButtonLabel);
                 }
@@ -733,6 +754,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoadAllButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestLoadAllButtonLabel.Name = "AssetManagementTestLoadAllButtonLabel";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestLoadAllButtonLabel, "LoadAll");
                 }
                 return _assetManagementTestLoadAllButtonLabel;
@@ -751,6 +775,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad1Button = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad1Button.Name = "AssetManagementTestLoad1Button";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad1Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad1Button, AssetManagementTestLoad1ButtonLabel);
                 }
@@ -770,6 +797,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad1ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad1ButtonLabel.Name = "AssetManagementTestLoad1ButtonLabel";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad1ButtonLabel, "Load Set 1");
                 }
                 return _assetManagementTestLoad1ButtonLabel;
@@ -788,6 +818,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad2Button = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad2Button.Name = "AssetManagementTestLoad2Button";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad2Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad2Button, AssetManagementTestLoad2ButtonLabel);
                 }
@@ -807,6 +840,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad2ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad2ButtonLabel.Name = "AssetManagementTestLoad2ButtonLabel";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad2ButtonLabel, "Load Set 2");
                 }
                 return _assetManagementTestLoad2ButtonLabel;
@@ -825,6 +861,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad3Button = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad3Button.Name = "AssetManagementTestLoad3Button";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad3Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad3Button, AssetManagementTestLoad3ButtonLabel);
                 }
@@ -844,6 +883,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad3ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad3ButtonLabel.Name = "AssetManagementTestLoad3ButtonLabel";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad3ButtonLabel, "Load Set 3");
                 }
                 return _assetManagementTestLoad3ButtonLabel;
@@ -862,6 +904,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad4Button = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad4Button.Name = "AssetManagementTestLoad4Button";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestLoad4Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestLoad4Button, AssetManagementTestLoad4ButtonLabel);
                 }
@@ -881,6 +926,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLoad4ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestLoad4ButtonLabel.Name = "AssetManagementTestLoad4ButtonLabel";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestLoad4ButtonLabel, "Load Set 4");
                 }
                 return _assetManagementTestLoad4ButtonLabel;
@@ -899,6 +947,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestButton1.Name = "AssetManagementTestButton1";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestButton1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestButton1, AssetManagementTestButton1Label);
                 }
@@ -918,6 +969,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestButton1Label.Name = "AssetManagementTestButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestButton1Label, "UnloadAll");
                 }
                 return _assetManagementTestButton1Label;
@@ -936,6 +990,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton2 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _assetManagementTestButton2.Name = "AssetManagementTestButton2";
+#endif
                     Delight.Button.WidthProperty.SetDefault(_assetManagementTestButton2, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_assetManagementTestButton2, AssetManagementTestButton2Label);
                 }
@@ -955,6 +1012,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _assetManagementTestButton2Label.Name = "AssetManagementTestButton2Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_assetManagementTestButton2Label, "SetSprite");
                 }
                 return _assetManagementTestButton2Label;
@@ -973,6 +1033,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImageGroup = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestImageGroup.Name = "AssetManagementTestImageGroup";
+#endif
                     Delight.Group.OrientationProperty.SetDefault(_assetManagementTestImageGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageGroup, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
@@ -992,6 +1055,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImageSet1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestImageSet1.Name = "AssetManagementTestImageSet1";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet1, Delight.LoadMode.Manual);
                 }
@@ -1011,6 +1077,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage1 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage1.Name = "AssetManagementTestImage1";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage1, Assets.Sprites["Frame1"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1031,6 +1100,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage2 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage2.Name = "AssetManagementTestImage2";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage2, Assets.Sprites["Frame2"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1051,6 +1123,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImageSet2 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestImageSet2.Name = "AssetManagementTestImageSet2";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet2, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet2, Delight.LoadMode.Manual);
                 }
@@ -1070,6 +1145,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage3 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage3.Name = "AssetManagementTestImage3";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage3, Assets.Sprites["Frame3"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1090,6 +1168,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage4 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage4.Name = "AssetManagementTestImage4";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage4, Assets.Sprites["Frame4"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1110,6 +1191,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImageSet3 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestImageSet3.Name = "AssetManagementTestImageSet3";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet3, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet3, Delight.LoadMode.Manual);
                 }
@@ -1129,6 +1213,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage5 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage5.Name = "AssetManagementTestImage5";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage5, Assets.Sprites["Frame2"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1149,6 +1236,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImage6 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestImage6.Name = "AssetManagementTestImage6";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage6, Assets.Sprites["Frame3"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1169,6 +1259,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestImageSet4 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _assetManagementTestImageSet4.Name = "AssetManagementTestImageSet4";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet4, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet4, Delight.LoadMode.Manual);
                 }
@@ -1188,6 +1281,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestBigSpriteImage = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _assetManagementTestBigSpriteImage.Name = "AssetManagementTestBigSpriteImage";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestBigSpriteImage, Assets.Sprites["BigSprite"]);
                     Delight.Image.WidthProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(205f, ElementSizeUnit.Pixels));
@@ -1208,6 +1304,9 @@ namespace Delight
 #endif
                 {
                     _assetManagementTestLabel4 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _assetManagementTestLabel4.Name = "AssetManagementTestLabel4";
+#endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel4, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel4, Delight.ElementAlignment.Center);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel4, TMPro.TextAlignmentOptions.Center);

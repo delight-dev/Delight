@@ -191,6 +191,9 @@ namespace Delight
 #endif
                 {
                     _uIView = new Template(SceneObjectViewTemplates.SceneObjectView);
+#if UNITY_EDITOR
+                    _uIView.Name = "UIView";
+#endif
                 }
                 return _uIView;
             }

@@ -6,7 +6,7 @@ using UnityEngine;
 #endregion
 
 namespace Delight
-{   
+{
     /// <summary>
     /// Dependency property that maps to another property or field.
     /// </summary>
@@ -20,6 +20,8 @@ namespace Delight
         public Func<TParent, TObject> ObjectGetter;
         public Func<TObject, T> Getter;
         public Action<TObject, T> Setter;
+        public Dictionary<string, Dictionary<Template, T>> StateDefaults;
+        public Dictionary<Template, bool> HasStateDefaults;
 
         #endregion
 
@@ -40,7 +42,7 @@ namespace Delight
             }
             else
             {
-                return GetDefault(key.Template);
+                return GetDefault(key);
             }
         }
 
@@ -78,39 +80,82 @@ namespace Delight
             if (valueSet)
                 return false;
 
-            var template = key.Template;
-            while (true)
-            {
-                if (Defaults.ContainsKey(template))
-                {
-                    return false;
-                }
-
-                template = template.BasedOn;
-                if (template == ViewTemplates.Default)
-                {
-                    return true;
-                }
-            }
+            T defaultValue;
+            return !TryGetDefault(key, out defaultValue);
         }
 
         /// <summary>
         /// Gets default value from type.
         /// </summary>
-        public T GetDefault(Template template)
+        public T GetDefault(DependencyObject key)
         {
+            T defaultValue;
+            TryGetDefault(key, out defaultValue);
+            return defaultValue;
+        }
+
+        /// <summary>
+        /// Gets default value if it exist.
+        /// </summary>
+        public bool TryGetDefault(DependencyObject key, out T defaultValue)
+        {
+            // try get state default value
+            defaultValue = default(T);
+            if (TryGetStateDefault(key, out defaultValue))
+            {
+                return true;
+            }
+
+            // try get default value
+            var template = key.Template;
             while (true)
             {
-                T defaultValue;
                 if (Defaults.TryGetValue(template, out defaultValue))
                 {
-                    return defaultValue;
+                    return true;
                 }
 
                 template = template.BasedOn;
                 if (template == ViewTemplates.Default)
                 {
-                    return default(T);
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets default state value if it exist.
+        /// </summary>
+        public bool TryGetStateDefault(DependencyObject key, out T defaultValue)
+        {
+            return TryGetStateDefault(key.Template, key.State, out defaultValue);
+        }
+
+        /// <summary>
+        /// Gets default state value if it exist.
+        /// </summary>
+        public bool TryGetStateDefault(Template key, string state, out T defaultValue)
+        {
+            defaultValue = default(T);
+            if (String.IsNullOrEmpty(state) || StateDefaults == null)
+                return false;
+
+            Dictionary<Template, T> stateDefaults;
+            if (!StateDefaults.TryGetValue(state, out stateDefaults))
+                return false;
+
+            var template = key;
+            while (true)
+            {
+                if (stateDefaults.TryGetValue(template, out defaultValue))
+                {
+                    return true;
+                }
+
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    return false;
                 }
             }
         }
@@ -139,22 +184,11 @@ namespace Delight
             if (valueSet) // if value already has been set, don't overwrite it with default value
                 return;
 
-            // set default value if specified
-            var template = key.Template;
-            while (true)
+            // map default value to target
+            T defaultValue; 
+            if (TryGetDefault(key, out defaultValue))
             {
-                T defaultValue;
-                if (Defaults.TryGetValue(template, out defaultValue))
-                {
-                    Setter(target, defaultValue);
-                    return;
-                }
-
-                template = template.BasedOn;
-                if (template == ViewTemplates.Default)
-                {
-                    return;
-                }
+                Setter(target, defaultValue);
             }
         }
 
@@ -165,6 +199,65 @@ namespace Delight
         {
             base.Unload(key);
             ValueSet.Remove(key);
+        }
+
+        /// <summary>
+        /// Sets default state value for type.
+        /// </summary>
+        public void SetStateDefault(string state, Template template, T defaultValue)
+        {
+            if (StateDefaults == null)
+            {
+                StateDefaults = new Dictionary<string, Dictionary<Template, T>>();
+                HasStateDefaults = new Dictionary<Template, bool>();
+            }
+
+            Dictionary<Template, T> stateValues;
+            if (!StateDefaults.TryGetValue(state, out stateValues))
+            {
+                stateValues = new Dictionary<Template, T>();
+                StateDefaults[state] = stateValues;
+            }
+
+            stateValues[template] = defaultValue;
+            HasStateDefaults[template] = true;
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if dependency property has any state values set.
+        /// </summary>
+        public override bool HasState(Template key)
+        {
+            if (HasStateDefaults == null)
+                return false;
+
+            var template = key;
+            while (true)
+            {
+                bool hasState = false;
+                if (HasStateDefaults.TryGetValue(template, out hasState))
+                {
+                    if (hasState)
+                    {
+                        return true;
+                    }
+                }
+
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if dependency property has state value set.
+        /// </summary>
+        public override bool HasState(Template key, string state)
+        {
+            T defaultValue;
+            return TryGetStateDefault(key, state, out defaultValue);
         }
 
         #endregion        

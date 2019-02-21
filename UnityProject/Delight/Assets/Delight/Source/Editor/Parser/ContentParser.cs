@@ -479,9 +479,38 @@ namespace Delight.Editor.Parser
         private static List<PropertyExpression> ParsePropertyExpression(XElement element, string attributeName, string attributeValue)
         {
             var propertyExpressions = new List<PropertyExpression>();
+            int dotCount = attributeName.Count(x => x == '.');
+
+            // see if property name has state name specified
+            string propertyName = attributeName;
+            string stateName = string.Empty;
+            bool hasStateName = false;
+            if (attributeName.Contains("-"))
+            {
+                var names = attributeName.Split('-');
+                if (names.Length != 2)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property expression {1}=\"{2}\". Only a single dash \"-\" may be used to denote state property assignment.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
+
+                hasStateName = true;
+
+                int stateNameStartIndex = names[0].LastIndexOf('.');
+                if (stateNameStartIndex < 0) stateNameStartIndex = 0;
+                stateName = names[0].Substring(stateNameStartIndex);
+                propertyName = attributeName.Replace(stateName + "-", "");
+            }
 
             if (attributeValue.IEquals("t:Action"))
             {
+                // validate
+                if (dotCount > 0 || hasStateName)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a single property name.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
+
                 // action property declaration
                 var propertyDeclaration = new PropertyDeclaration();
                 propertyExpressions.Add(propertyDeclaration);
@@ -497,6 +526,13 @@ namespace Delight.Editor.Parser
 
             if (attributeValue.IStartsWith("t:"))
             {
+                // validate
+                if (dotCount > 0 || hasStateName)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a single property name.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
+
                 // regular property declaration
                 var propertyDeclaration = new PropertyDeclaration();
                 propertyExpressions.Add(propertyDeclaration);
@@ -617,12 +653,19 @@ namespace Delight.Editor.Parser
             // is the value a binding?
             if (ValueIsBinding(attributeValue))
             {
+                // validate
+                if (hasStateName)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property binding {1}=\"{2}\". Binding to state properties are not allowed.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
+
                 // parse binding string
                 propertyExpressions.Add(ParseBinding(element, attributeName, attributeValue));
                 return propertyExpressions;
             }
 
-            propertyExpressions.Add(new PropertyAssignment { PropertyName = attributeName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber() });
+            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber() });
             return propertyExpressions;
         }
 

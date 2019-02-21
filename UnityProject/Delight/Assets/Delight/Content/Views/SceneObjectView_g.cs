@@ -215,6 +215,9 @@ namespace Delight
 #endif
                 {
                     _sceneObjectView = new Template(ViewTemplates.View);
+#if UNITY_EDITOR
+                    _sceneObjectView.Name = "SceneObjectView";
+#endif
                 }
                 return _sceneObjectView;
             }

@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _region = new Template(UIImageViewTemplates.UIImageView);
+#if UNITY_EDITOR
+                    _region.Name = "Region";
+#endif
                     Delight.Region.WidthProperty.SetDefault(_region, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Region.HeightProperty.SetDefault(_region, new ElementSize(1f, ElementSizeUnit.Percents));
                 }

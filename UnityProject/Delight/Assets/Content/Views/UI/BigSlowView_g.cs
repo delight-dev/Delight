@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _bigSlowView = new Template(UIImageViewTemplates.UIImageView);
+#if UNITY_EDITOR
+                    _bigSlowView.Name = "BigSlowView";
+#endif
                     Delight.BigSlowView.WidthProperty.SetDefault(_bigSlowView, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.BigSlowView.HeightProperty.SetDefault(_bigSlowView, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.BigSlowView.BackgroundColorProperty.SetDefault(_bigSlowView, new UnityEngine.Color(0f, 1f, 0f, 1f));

@@ -14,11 +14,14 @@ namespace Delight
     {
         #region Fields
 
-        public static string DefaultStateName = "Default";
+        public static string DefaultStateName = String.Empty;
         public static string AnyStateName = "Any";
 
         protected Template _template;
         protected static Dictionary<Template, List<DependencyProperty>> DependencyProperties = new Dictionary<Template, List<DependencyProperty>>();
+        protected static Dictionary<Template, List<DependencyProperty>> StateChangingProperties = new Dictionary<Template, List<DependencyProperty>>();
+        protected string _state;
+        protected string _previousState;
 
         #endregion
 
@@ -32,6 +35,17 @@ namespace Delight
             get
             {
                 return _template;
+            }
+        }
+
+        /// <summary>
+        /// Gets dependency object state.
+        /// </summary>
+        public string State
+        {
+            get
+            {
+                return _state;
             }
         }
 

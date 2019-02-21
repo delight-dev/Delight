@@ -169,6 +169,9 @@ namespace Delight
 #endif
                 {
                     _editorMainView = new Template(LayoutRootTemplates.LayoutRoot);
+#if UNITY_EDITOR
+                    _editorMainView.Name = "EditorMainView";
+#endif
                     Delight.EditorMainView.ContentRegionTemplateProperty.SetDefault(_editorMainView, EditorMainViewContentRegion);
                     Delight.EditorMainView.GridImageTemplateProperty.SetDefault(_editorMainView, EditorMainViewGridImage);
                     Delight.EditorMainView.Image1TemplateProperty.SetDefault(_editorMainView, EditorMainViewImage1);
@@ -192,6 +195,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewContentRegion = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _editorMainViewContentRegion.Name = "EditorMainViewContentRegion";
+#endif
                     Delight.Region.MarginProperty.SetDefault(_editorMainViewContentRegion, new ElementMargin(new ElementSize(250f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _editorMainViewContentRegion;
@@ -210,6 +216,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewGridImage = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _editorMainViewGridImage.Name = "EditorMainViewGridImage";
+#endif
                     Delight.Image.SpriteProperty.SetDefault(_editorMainViewGridImage, Assets.Sprites["EditorGrid"]);
                     Delight.Image.TypeProperty.SetDefault(_editorMainViewGridImage, UnityEngine.UI.Image.Type.Tiled);
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewGridImage, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -231,6 +240,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewImage1 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _editorMainViewImage1.Name = "EditorMainViewImage1";
+#endif
                     Delight.Image.ColorProperty.SetDefault(_editorMainViewImage1, new UnityEngine.Color(0.7568628f, 0.7568628f, 0.7607843f, 1f));
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewImage1, new ElementSize(1f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_editorMainViewImage1, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -251,6 +263,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewImage2 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _editorMainViewImage2.Name = "EditorMainViewImage2";
+#endif
                     Delight.Image.ColorProperty.SetDefault(_editorMainViewImage2, new UnityEngine.Color(0.7568628f, 0.7568628f, 0.7607843f, 1f));
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewImage2, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.HeightProperty.SetDefault(_editorMainViewImage2, new ElementSize(1f, ElementSizeUnit.Pixels));
@@ -271,6 +286,10 @@ namespace Delight
 #endif
                 {
                     _editorMainViewButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _editorMainViewButton1.Name = "EditorMainViewButton1";
+#endif
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _editorMainViewButton1, new UnityEngine.Color(1f, 0f, 0f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_editorMainViewButton1, EditorMainViewButton1Label);
                 }
                 return _editorMainViewButton1;
@@ -289,6 +308,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _editorMainViewButton1Label.Name = "EditorMainViewButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_editorMainViewButton1Label, "Test");
                 }
                 return _editorMainViewButton1Label;
@@ -307,6 +329,9 @@ namespace Delight
 #endif
                 {
                     _editorMainViewLeftPanel = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _editorMainViewLeftPanel.Name = "EditorMainViewLeftPanel";
+#endif
                     Delight.Region.WidthProperty.SetDefault(_editorMainViewLeftPanel, new ElementSize(250f, ElementSizeUnit.Pixels));
                     Delight.Region.AlignmentProperty.SetDefault(_editorMainViewLeftPanel, Delight.ElementAlignment.Left);
                     Delight.Region.BackgroundColorProperty.SetDefault(_editorMainViewLeftPanel, new UnityEngine.Color(0.7568628f, 0.7568628f, 0.7607843f, 1f));

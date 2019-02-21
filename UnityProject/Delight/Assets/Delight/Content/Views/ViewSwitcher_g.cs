@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _viewSwitcher = new Template(SceneObjectViewTemplates.SceneObjectView);
+#if UNITY_EDITOR
+                    _viewSwitcher.Name = "ViewSwitcher";
+#endif
                 }
                 return _viewSwitcher;
             }

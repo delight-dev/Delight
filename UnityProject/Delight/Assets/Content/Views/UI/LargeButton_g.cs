@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _largeButton = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _largeButton.Name = "LargeButton";
+#endif
                     Delight.LargeButton.WidthProperty.SetDefault(_largeButton, new ElementSize(180f, ElementSizeUnit.Pixels));
                     Delight.LargeButton.HeightProperty.SetDefault(_largeButton, new ElementSize(100f, ElementSizeUnit.Pixels));
                     Delight.LargeButton.BackgroundColorProperty.SetDefault(_largeButton, new UnityEngine.Color(0f, 1f, 0f, 1f));
@@ -83,6 +86,9 @@ namespace Delight
 #endif
                 {
                     _largeButtonLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _largeButtonLabel.Name = "LargeButtonLabel";
+#endif
                 }
                 return _largeButtonLabel;
             }

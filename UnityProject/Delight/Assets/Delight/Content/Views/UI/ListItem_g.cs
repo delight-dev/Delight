@@ -71,6 +71,9 @@ namespace Delight
 #endif
                 {
                     _listItem = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _listItem.Name = "ListItem";
+#endif
                 }
                 return _listItem;
             }

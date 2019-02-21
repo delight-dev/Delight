@@ -381,6 +381,9 @@ namespace Delight
 #endif
                 {
                     _bindingTest = new Template(UIViewTemplates.UIView);
+#if UNITY_EDITOR
+                    _bindingTest.Name = "BindingTest";
+#endif
                     Delight.BindingTest.Region1TemplateProperty.SetDefault(_bindingTest, BindingTestRegion1);
                     Delight.BindingTest.Group1TemplateProperty.SetDefault(_bindingTest, BindingTestGroup1);
                     Delight.BindingTest.Button1TemplateProperty.SetDefault(_bindingTest, BindingTestButton1);
@@ -411,9 +414,12 @@ namespace Delight
 #endif
                 {
                     _bindingTestRegion1 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _bindingTestRegion1.Name = "BindingTestRegion1";
+#endif
                     Delight.Region.WidthProperty.SetDefault(_bindingTestRegion1, new ElementSize(0.25f, ElementSizeUnit.Percents));
                     Delight.Region.AlignmentProperty.SetDefault(_bindingTestRegion1, Delight.ElementAlignment.Left);
-                    Delight.Region.MarginProperty.SetDefault(_bindingTestRegion1, new ElementMargin(30f, 30f, 15f, 30f));
+                    Delight.Region.MarginProperty.SetDefault(_bindingTestRegion1, new ElementMargin(new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(15f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels)));
                     Delight.Region.BackgroundColorProperty.SetDefault(_bindingTestRegion1, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
                 }
                 return _bindingTestRegion1;
@@ -432,9 +438,12 @@ namespace Delight
 #endif
                 {
                     _bindingTestGroup1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _bindingTestGroup1.Name = "BindingTestGroup1";
+#endif
                     Delight.Group.SpacingProperty.SetDefault(_bindingTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.Group.AlignmentProperty.SetDefault(_bindingTestGroup1, Delight.ElementAlignment.Top);
-                    Delight.Group.MarginProperty.SetDefault(_bindingTestGroup1, new ElementMargin(0f, 30f, 0f, 0f));
+                    Delight.Group.MarginProperty.SetDefault(_bindingTestGroup1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _bindingTestGroup1;
             }
@@ -452,6 +461,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _bindingTestButton1.Name = "BindingTestButton1";
+#endif
                     Delight.Button.BackgroundColorProperty.SetDefault(_bindingTestButton1, new UnityEngine.Color(0f, 0f, 1f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton1, BindingTestButton1Label);
                 }
@@ -471,6 +483,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestButton1Label.Name = "BindingTestButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton1Label, "Test 1");
                     Delight.Label.FontSizeProperty.SetDefault(_bindingTestButton1Label, 24f);
                     Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton1Label, TMPro.TextAlignmentOptions.Center);
@@ -491,6 +506,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton2 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _bindingTestButton2.Name = "BindingTestButton2";
+#endif
                     Delight.Button.BackgroundColorProperty.SetDefault(_bindingTestButton2, new UnityEngine.Color(1f, 0f, 0f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton2, BindingTestButton2Label);
                 }
@@ -510,6 +528,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton2Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestButton2Label.Name = "BindingTestButton2Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton2Label, "Test 2");
                     Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton2Label, TMPro.TextAlignmentOptions.Center);
                 }
@@ -529,6 +550,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton3 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _bindingTestButton3.Name = "BindingTestButton3";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton3, BindingTestButton3Label);
                 }
                 return _bindingTestButton3;
@@ -547,6 +571,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton3Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestButton3Label.Name = "BindingTestButton3Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton3Label, "Bg");
                     Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton3Label, TMPro.TextAlignmentOptions.Center);
                 }
@@ -566,6 +593,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestLargeButton1 = new Template(LargeButtonTemplates.LargeButton);
+#if UNITY_EDITOR
+                    _bindingTestLargeButton1.Name = "BindingTestLargeButton1";
+#endif
                     Delight.LargeButton.LabelTemplateProperty.SetDefault(_bindingTestLargeButton1, BindingTestLargeButton1Label);
                 }
                 return _bindingTestLargeButton1;
@@ -584,6 +614,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestLargeButton1Label = new Template(LargeButtonTemplates.LargeButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestLargeButton1Label.Name = "BindingTestLargeButton1Label";
+#endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestLargeButton1Label, "Large Button");
                     Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestLargeButton1Label, TMPro.TextAlignmentOptions.Center);
                 }
@@ -603,6 +636,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _bindingTestLabel1.Name = "BindingTestLabel1";
+#endif
                     Delight.Label.WidthProperty.SetDefault(_bindingTestLabel1, new ElementSize(130f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel1, new ElementSize(50f, ElementSizeUnit.Pixels));
                 }
@@ -622,6 +658,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton4 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _bindingTestButton4.Name = "BindingTestButton4";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton4, BindingTestButton4Label);
                 }
                 return _bindingTestButton4;
@@ -640,6 +679,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton4Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestButton4Label.Name = "BindingTestButton4Label";
+#endif
                 }
                 return _bindingTestButton4Label;
             }
@@ -657,6 +699,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton5 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _bindingTestButton5.Name = "BindingTestButton5";
+#endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton5, BindingTestButton5Label);
                 }
                 return _bindingTestButton5;
@@ -675,6 +720,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestButton5Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _bindingTestButton5Label.Name = "BindingTestButton5Label";
+#endif
                 }
                 return _bindingTestButton5Label;
             }
@@ -692,9 +740,12 @@ namespace Delight
 #endif
                 {
                     _bindingTestRegionOnDemand = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _bindingTestRegionOnDemand.Name = "BindingTestRegionOnDemand";
+#endif
                     Delight.Region.WidthProperty.SetDefault(_bindingTestRegionOnDemand, new ElementSize(0.75f, ElementSizeUnit.Percents));
                     Delight.Region.AlignmentProperty.SetDefault(_bindingTestRegionOnDemand, Delight.ElementAlignment.Right);
-                    Delight.Region.MarginProperty.SetDefault(_bindingTestRegionOnDemand, new ElementMargin(15f, 30f, 30f, 30f));
+                    Delight.Region.MarginProperty.SetDefault(_bindingTestRegionOnDemand, new ElementMargin(new ElementSize(15f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels)));
                     Delight.Region.BackgroundColorProperty.SetDefault(_bindingTestRegionOnDemand, new UnityEngine.Color(0.5803922f, 0.5803922f, 0.5803922f, 1f));
                 }
                 return _bindingTestRegionOnDemand;
@@ -713,6 +764,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestGroup2 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _bindingTestGroup2.Name = "BindingTestGroup2";
+#endif
                 }
                 return _bindingTestGroup2;
             }
@@ -730,6 +784,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _bindingTestLabel2.Name = "BindingTestLabel2";
+#endif
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel2, new ElementSize(40f, ElementSizeUnit.Pixels));
                 }
                 return _bindingTestLabel2;
@@ -748,6 +805,9 @@ namespace Delight
 #endif
                 {
                     _bindingTestLabel3 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _bindingTestLabel3.Name = "BindingTestLabel3";
+#endif
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel3, new ElementSize(40f, ElementSizeUnit.Pixels));
                 }
                 return _bindingTestLabel3;

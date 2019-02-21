@@ -62,6 +62,9 @@ namespace Delight
 #endif
                 {
                     _grid = new Template(UIImageViewTemplates.UIImageView);
+#if UNITY_EDITOR
+                    _grid.Name = "Grid";
+#endif
                 }
                 return _grid;
             }
