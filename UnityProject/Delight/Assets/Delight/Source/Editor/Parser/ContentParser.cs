@@ -233,6 +233,12 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
+                if (attributeName.IEquals("ContentTemplateType"))
+                {
+                    viewObject.ContentTemplate = _contentObjectModel.LoadViewObject(attributeValue);
+                    continue;
+                }
+
                 // parse property expression
                 var result = ParsePropertyExpression(rootXmlElement, attributeName, attributeValue);
                 propertyExpressions.AddRange(result);

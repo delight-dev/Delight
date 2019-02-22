@@ -10,7 +10,38 @@ namespace Delight
 {
     public partial class ListItem
     {
+        #region Properties
+
+        /// <summary>
+        /// Parent list the item resides in.
+        /// </summary>
+        public List ParentList { get; set; }
+
+        /// <summary>
+        /// Returns default item style.
+        /// </summary>
+        public string DefaultItemStyle
+        {
+            get
+            {
+                return IsAlternate ? "Alternate" : String.Empty;
+            }
+        }
+
+        #endregion
+
         #region Methods
+
+        /// <summary>
+        /// Called once in the object's lifetime after construction of children and before load.
+        /// </summary>
+        public override void AfterInitialize()
+        {
+            base.AfterInitialize();
+
+            // find parent list
+            ParentList = this.FindParent<List>();
+        }
 
         /// <summary>
         /// Called when a child changes its layout.
@@ -23,6 +54,9 @@ namespace Delight
             LayoutRoot.RegisterNeedLayoutUpdate(this);
         }
 
+        /// <summary>
+        /// Updates layout.
+        /// </summary>
         public override void UpdateLayout(bool notifyParent = true)
         {
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
@@ -79,6 +113,107 @@ namespace Delight
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
 
             base.UpdateLayout(notifyParent && hasNewSize);
+        }
+
+        /// <summary>
+        /// Called when mouse is clicked.
+        /// </summary>
+        public void ListItemMouseClick()
+        {
+            if (ParentList == null || State == "Disabled")
+                return;
+
+            if (!ParentList.SelectOnMouseUp)
+                return;
+
+            SetState("Selected"); // TODO implement
+            //ParentList.SelectItem(this, true);
+        }
+
+        /// <summary>
+        /// Called when mouse enters.
+        /// </summary>
+        public void ListItemMouseEnter()
+        {
+            Debug.Log("ListItemMouseEnter()"); // TODO remove
+
+            if (State == "Disabled")
+                return;
+
+            IsMouseOver = true;
+            if (IsSelected)
+                return;
+
+            if (IsPressed)
+            {
+                SetState("Pressed");
+            }
+            else
+            {
+                SetState("Highlighted");
+            }
+        }
+
+        /// <summary>
+        /// Called when mouse exits.
+        /// </summary>
+        public void ListItemMouseExit()
+        {
+            Debug.Log("ListItemMouseExit()"); // TODO remove
+
+            if (State == "Disabled")
+                return;
+
+            IsMouseOver = false;
+            if (IsSelected)
+                return;
+
+            SetState(DefaultItemStyle);
+        }
+
+        /// <summary>
+        /// Called when mouse down.
+        /// </summary>
+        public void ListItemMouseDown()
+        {
+            if (ParentList == null || State == "Disabled")
+                return;
+
+            if (!ParentList.SelectOnMouseUp)
+            {
+                SetState("Selected"); // TODO implement
+                //ParentList.SelectItem(this, true);
+            }
+            else
+            {
+                IsPressed = true;
+                if (IsSelected)
+                    return;
+
+                SetState("Pressed");
+            }
+        }
+
+        /// <summary>
+        /// Called when mouse up.
+        /// </summary>
+        public void ListItemMouseUp()
+        {
+            if (State == "Disabled")
+                return;
+
+            IsPressed = false;
+            if (IsSelected)
+                return;
+
+            if (IsMouseOver)
+            {
+                SetState("Highlighted");
+            }
+            else
+            {
+                SetState(DefaultItemStyle);
+            }
         }
 
         #endregion

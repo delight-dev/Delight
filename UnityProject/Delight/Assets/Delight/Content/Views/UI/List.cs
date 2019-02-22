@@ -193,7 +193,120 @@ namespace Delight
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
             base.UpdateLayout(notifyParent && hasNewSize);
         }
+        
+        ///// <summary>
+        ///// Selects item in the list.
+        ///// </summary>
+        //public void SelectItem(VirtualizedListItem virtualizedItem, bool triggeredByClick = false)
+        //{
+        //    if (virtualizedItem == null || (triggeredByClick && !CanSelect))
+        //        return;
+
+        //    // is item already selected?
+        //    if (virtualizedItem.IsSelected)
+        //    {
+        //        // yes. can it be deselected?
+        //        if (triggeredByClick && !CanDeselect)
+        //        {
+        //            // no. should it be re-selected?
+        //            if (CanReselect)
+        //            {
+        //                // yes. select it again
+        //                SetSelected(virtualizedItem, true);
+        //            }
+
+        //            return; // no.
+        //        }
+
+        //        // deselect and trigger actions
+        //        SetSelected(virtualizedItem, false);
+        //    }
+        //    else
+        //    {
+        //        // select
+        //        SetSelected(virtualizedItem, true);
+
+        //        // deselect other items
+        //        foreach (var item in _virtualizedItems)
+        //        {
+        //            if (item == virtualizedItem)
+        //                continue;
+
+        //            // deselect and trigger actions
+        //            SetSelected(item, false);
+        //        }
+
+        //        // should this item immediately be deselected?
+        //        if (DeselectAfterSelect)
+        //        {
+        //            // yes.
+        //            SetSelected(virtualizedItem, false);
+        //        }
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Selects item in the list.
+        ///// </summary>
+        //public void SelectItem(int index)
+        //{
+        //    if (Items.Value == null || index < 0 || index >= Items.Value.Count)
+        //        return;
+
+        //    _selectedItem = Items.Value[index];
+        //    int startIndex = _previousFirstRowIndex * ItemsPerVirtualizedRow;
+        //    int endIndex = startIndex + (VirtualizedItemsCount - 1);
+
+        //    // is item outside viewport? 
+        //    if (index < startIndex || index > endIndex)
+        //        return; // yes. no need to update
+
+        //    // select virtualized list item
+        //    var virtualizedItem = _virtualizedItems[index - startIndex];
+        //    SelectItem(virtualizedItem, false);
+        //}
+
+        ///// <summary>
+        ///// Selects or deselects a list item.
+        ///// </summary>
+        //private void SetSelected(VirtualizedListItem virtualizedItem, bool selected)
+        //{
+        //    if (virtualizedItem == null)
+        //        return;
+
+        //    virtualizedItem.IsSelected.Value = selected;
+        //    if (selected)
+        //    {
+        //        // item selected
+        //        _selectedItem = virtualizedItem.Item.Value;
+        //        IsItemSelected.Value = true;
+        //        if (Items.Value != null)
+        //        {
+        //            Items.Value.SetSelected(_selectedItem);
+        //        }
+
+        //        // trigger item selected action
+        //        if (ItemSelected.HasEntries)
+        //        {
+        //            ItemSelected.Trigger(new VirtualizedItemSelectionActionData { IsSelected = true, ItemView = virtualizedItem, Item = virtualizedItem.Item.Value });
+        //        }
+        //    }
+        //    else
+        //    {
+        //        if (_selectedItem == virtualizedItem.Item.Value)
+        //        {
+        //            _selectedItem = null;
+        //            IsItemSelected.Value = false;
+        //        }
+
+        //        // trigger item deselected action
+        //        if (ItemDeselected.HasEntries)
+        //        {
+        //            ItemDeselected.Trigger(new VirtualizedItemSelectionActionData { IsSelected = selected, ItemView = virtualizedItem, Item = virtualizedItem.Item.Value });
+        //        }
+        //    }
+        //}
 
         #endregion
-    }    
+    }
 }

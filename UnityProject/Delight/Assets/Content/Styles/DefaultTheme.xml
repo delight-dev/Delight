@@ -2,4 +2,5 @@
   <Button BackgroundColor="Green" Highlighted-BackgroundColor="Red" Pressed-BackgroundColor="Blue" />
   <Button Style="BlueButton" BackgroundColor="Blue" />
   <Button Style="LargeBlueButton" BasedOn="BlueButton" Height="100" Width="200" />
-</DefaultTheme> 
+  <ListItem Selected-BackgroundColor="White" Highlighted-BackgroundColor="Red" Pressed-BackgroundColor="Blue" />
+</DefaultTheme>

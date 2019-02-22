@@ -96,21 +96,43 @@ namespace Delight.Editor.Parser
         {
             foreach (var childViewDeclaration in childViewDeclarations)
             {
-                // get identifier for view declaration
-                var childId = childViewDeclaration.Id;
+                // validate template content
                 var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
                 bool templateContent = childViewObject.HasContentTemplate;
-
-                // if a child declaration has template content and has multiple children - wrap those children in a region
-                if (templateContent && childViewDeclaration.ChildDeclarations.Count() > 1)
+                if (templateContent)
                 {
-                    string viewName = childViewDeclaration.ViewName.IEquals("List") ? "ListItem" : "Region";
-                    var wrappingRegionDeclaration = new ViewDeclaration { Id = childId + "Content", ViewName = viewName, ChildDeclarations = childViewDeclaration.ChildDeclarations };
-                    childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
-                    childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
+                    var childId = childViewDeclaration.Id;
+                    var contentTemplateType = childViewObject.ContentTemplate?.TypeName;
+                    bool wrapContent = false;
 
-                    // add property declarations for the wrapping region
-                    viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
+                    // see if template child is of appropriate type
+                    if (!String.IsNullOrEmpty(contentTemplateType) && childViewDeclaration.ChildDeclarations.Count() == 1)
+                    {
+                        var templateChildObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ChildDeclarations[0].ViewName);
+                        wrapContent = true;
+                        while (templateChildObject != null)
+                        {
+                            if (templateChildObject.TypeName.IEquals(contentTemplateType))
+                            {
+                                wrapContent = false;
+                                break; 
+                            }
+
+                            templateChildObject = templateChildObject.BasedOn;
+                        }
+                    }
+
+                    if (wrapContent)
+                    {
+                        // children is not of appropriate type, so we need to wrap them
+                        string viewName = !String.IsNullOrEmpty(contentTemplateType) ? contentTemplateType : "Region";
+                        var wrappingRegionDeclaration = new ViewDeclaration { Id = childId + "Content", ViewName = viewName, ChildDeclarations = childViewDeclaration.ChildDeclarations };
+                        childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
+                        childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
+
+                        // add property declarations for the wrapping region
+                        viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
+                    }
                 }
 
                 ValidateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
@@ -321,7 +343,7 @@ namespace Delight.Editor.Parser
 
                 // do we have action handlers specified on the root element?
                 var actionAssignments = viewObject.GetPropertyAssignmentsWithStyle()
-                    .Where(x => x.PropertyDeclarationInfo != null && 
+                    .Where(x => x.PropertyDeclarationInfo != null &&
                                 x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
 
                 // yes. attach handlers

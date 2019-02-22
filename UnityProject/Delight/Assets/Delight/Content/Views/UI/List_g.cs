@@ -31,6 +31,14 @@ namespace Delight
             dependencyProperties.Add(OrientationProperty);
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(ContentAlignmentProperty);
+            dependencyProperties.Add(AlternateItemsProperty);
+            dependencyProperties.Add(IsScrollableProperty);
+            dependencyProperties.Add(CanSelectProperty);
+            dependencyProperties.Add(CanDeselectProperty);
+            dependencyProperties.Add(CanMultiSelectProperty);
+            dependencyProperties.Add(CanReselectProperty);
+            dependencyProperties.Add(DeselectAfterSelectProperty);
+            dependencyProperties.Add(SelectOnMouseUpProperty);
         }
 
         #endregion
@@ -56,6 +64,62 @@ namespace Delight
         {
             get { return ContentAlignmentProperty.GetValue(this); }
             set { ContentAlignmentProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> AlternateItemsProperty = new DependencyProperty<System.Boolean>("AlternateItems");
+        public System.Boolean AlternateItems
+        {
+            get { return AlternateItemsProperty.GetValue(this); }
+            set { AlternateItemsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsScrollableProperty = new DependencyProperty<System.Boolean>("IsScrollable");
+        public System.Boolean IsScrollable
+        {
+            get { return IsScrollableProperty.GetValue(this); }
+            set { IsScrollableProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
+        public System.Boolean CanSelect
+        {
+            get { return CanSelectProperty.GetValue(this); }
+            set { CanSelectProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanDeselectProperty = new DependencyProperty<System.Boolean>("CanDeselect");
+        public System.Boolean CanDeselect
+        {
+            get { return CanDeselectProperty.GetValue(this); }
+            set { CanDeselectProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanMultiSelectProperty = new DependencyProperty<System.Boolean>("CanMultiSelect");
+        public System.Boolean CanMultiSelect
+        {
+            get { return CanMultiSelectProperty.GetValue(this); }
+            set { CanMultiSelectProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> CanReselectProperty = new DependencyProperty<System.Boolean>("CanReselect");
+        public System.Boolean CanReselect
+        {
+            get { return CanReselectProperty.GetValue(this); }
+            set { CanReselectProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> DeselectAfterSelectProperty = new DependencyProperty<System.Boolean>("DeselectAfterSelect");
+        public System.Boolean DeselectAfterSelect
+        {
+            get { return DeselectAfterSelectProperty.GetValue(this); }
+            set { DeselectAfterSelectProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> SelectOnMouseUpProperty = new DependencyProperty<System.Boolean>("SelectOnMouseUp");
+        public System.Boolean SelectOnMouseUp
+        {
+            get { return SelectOnMouseUpProperty.GetValue(this); }
+            set { SelectOnMouseUpProperty.SetValue(this, value); }
         }
 
         #endregion

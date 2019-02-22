@@ -72,8 +72,8 @@ namespace Delight
         {
             if (ImageComponent == null)
             {
-                // add image component if background is visible
-                if (!BackgroundIsVisible())
+                // add image component if background color is defined
+                if (BackgroundColorProperty.IsUndefined(this, true))
                     return;
                 
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();

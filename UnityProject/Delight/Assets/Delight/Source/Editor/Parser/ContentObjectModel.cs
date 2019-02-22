@@ -399,6 +399,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(9)]
         public bool HasContentTemplate;
 
+        [ProtoMember(10, AsReference = true)]
+        public ViewObject ContentTemplate;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 

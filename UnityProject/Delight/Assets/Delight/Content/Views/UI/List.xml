@@ -1,2 +1,6 @@
-<List xmlns="Delight" BasedOn="Collection" Orientation="t:ElementOrientation" Spacing="t:ElementSize" ContentAlignment="t:ElementAlignment" HasContentTemplate="True">
+<List xmlns="Delight" BasedOn="Collection" Orientation="t:ElementOrientation" Spacing="t:ElementSize" ContentAlignment="t:ElementAlignment" 
+      HasContentTemplate="True" ContentTemplateType="ListItem"
+      AlternateItems="t:bool"
+      IsScrollable="t:bool"
+      CanSelect="t:bool" CanDeselect="t:bool" CanMultiSelect="t:bool" CanReselect="t:bool" DeselectAfterSelect="t:bool" SelectOnMouseUp="t:bool">
 </List> 

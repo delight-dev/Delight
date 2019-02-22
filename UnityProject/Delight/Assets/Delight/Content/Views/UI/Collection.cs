@@ -22,12 +22,6 @@ namespace Delight
         #endregion
 
         #region Constructor
-
-        //public CollectionView(View parent = null, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-        //    base(parent, layoutParent, id, template ?? ListViewTemplates.Default, initializer)
-        //{
-        //}
-
         #endregion
 
         #region Methods
@@ -76,6 +70,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Generates views from data in collection. 
+        /// </summary>
         protected void GenerateItems()
         {
             if (Items == null)
@@ -89,6 +86,9 @@ namespace Delight
             UpdateLayout();
         }
 
+        /// <summary>
+        /// Generates list item.
+        /// </summary>
         private void GenerateItem(BindableObject item)
         {
             if (ContentTemplate == null)
@@ -97,7 +97,7 @@ namespace Delight
             var templateData = new ContentTemplateData { Item = item };
             _contentTemplateData.Add(templateData);
 
-            var itemView = ContentTemplate.Activator(templateData) as UIView;
+            var itemView = ContentTemplate.Activator(templateData);
             itemView.Load();
         }
 
