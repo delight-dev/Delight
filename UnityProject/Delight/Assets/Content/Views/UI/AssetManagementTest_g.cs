@@ -57,34 +57,34 @@ namespace Delight
 
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
-            Group1 = new Group(this, Region1, "Group1", Group1Template);
-            LoadAllButton = new Button(this, Group1, "LoadAllButton", LoadAllButtonTemplate);
+            Group1 = new Group(this, Region1.Content, "Group1", Group1Template);
+            LoadAllButton = new Button(this, Group1.Content, "LoadAllButton", LoadAllButtonTemplate);
             LoadAllButton.Click += ResolveActionHandler(this, "LoadAll");
-            Load1Button = new Button(this, Group1, "Load1Button", Load1ButtonTemplate);
+            Load1Button = new Button(this, Group1.Content, "Load1Button", Load1ButtonTemplate);
             Load1Button.Click += ResolveActionHandler(this, "ToggleLoad1");
-            Load2Button = new Button(this, Group1, "Load2Button", Load2ButtonTemplate);
+            Load2Button = new Button(this, Group1.Content, "Load2Button", Load2ButtonTemplate);
             Load2Button.Click += ResolveActionHandler(this, "ToggleLoad2");
-            Load3Button = new Button(this, Group1, "Load3Button", Load3ButtonTemplate);
+            Load3Button = new Button(this, Group1.Content, "Load3Button", Load3ButtonTemplate);
             Load3Button.Click += ResolveActionHandler(this, "ToggleLoad3");
-            Load4Button = new Button(this, Group1, "Load4Button", Load4ButtonTemplate);
+            Load4Button = new Button(this, Group1.Content, "Load4Button", Load4ButtonTemplate);
             Load4Button.Click += ResolveActionHandler(this, "ToggleLoad4");
-            Button1 = new Button(this, Group1, "Button1", Button1Template);
+            Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "UnloadAll");
-            Button2 = new Button(this, Group1, "Button2", Button2Template);
+            Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
             Button2.Click += ResolveActionHandler(this, "SetSprite");
-            ImageGroup = new Group(this, Region1, "ImageGroup", ImageGroupTemplate);
-            ImageSet1 = new Group(this, ImageGroup, "ImageSet1", ImageSet1Template);
-            Image1 = new Image(this, ImageSet1, "Image1", Image1Template);
-            Image2 = new Image(this, ImageSet1, "Image2", Image2Template);
-            ImageSet2 = new Group(this, ImageGroup, "ImageSet2", ImageSet2Template);
-            Image3 = new Image(this, ImageSet2, "Image3", Image3Template);
-            Image4 = new Image(this, ImageSet2, "Image4", Image4Template);
-            ImageSet3 = new Group(this, ImageGroup, "ImageSet3", ImageSet3Template);
-            Image5 = new Image(this, ImageSet3, "Image5", Image5Template);
-            Image6 = new Image(this, ImageSet3, "Image6", Image6Template);
-            ImageSet4 = new Group(this, ImageGroup, "ImageSet4", ImageSet4Template);
-            BigSpriteImage = new Image(this, ImageSet4, "BigSpriteImage", BigSpriteImageTemplate);
-            Label4 = new Label(this, Region1, "Label4", Label4Template);
+            ImageGroup = new Group(this, Region1.Content, "ImageGroup", ImageGroupTemplate);
+            ImageSet1 = new Group(this, ImageGroup.Content, "ImageSet1", ImageSet1Template);
+            Image1 = new Image(this, ImageSet1.Content, "Image1", Image1Template);
+            Image2 = new Image(this, ImageSet1.Content, "Image2", Image2Template);
+            ImageSet2 = new Group(this, ImageGroup.Content, "ImageSet2", ImageSet2Template);
+            Image3 = new Image(this, ImageSet2.Content, "Image3", Image3Template);
+            Image4 = new Image(this, ImageSet2.Content, "Image4", Image4Template);
+            ImageSet3 = new Group(this, ImageGroup.Content, "ImageSet3", ImageSet3Template);
+            Image5 = new Image(this, ImageSet3.Content, "Image5", Image5Template);
+            Image6 = new Image(this, ImageSet3.Content, "Image6", Image6Template);
+            ImageSet4 = new Group(this, ImageGroup.Content, "ImageSet4", ImageSet4Template);
+            BigSpriteImage = new Image(this, ImageSet4.Content, "BigSpriteImage", BigSpriteImageTemplate);
+            Label4 = new Label(this, Region1.Content, "Label4", Label4Template);
 
             // binding <Label Text="{LoadProgress}">
             Bindings.Add(new Binding(

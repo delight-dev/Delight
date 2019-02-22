@@ -402,6 +402,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(10, AsReference = true)]
         public ViewObject ContentTemplate;
 
+        [ProtoMember(11, AsReference = true)]
+        public ViewDeclaration ContentContainer;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -442,6 +445,9 @@ namespace Delight.Editor.Parser
             FilePath = null;
             BasedOn = null;
             NeedUpdate = false;
+            ContentContainer = null;
+            ContentTemplate = null;
+            HasContentTemplate = false;
             PropertyExpressions.Clear();
             ViewDeclarations.Clear();
         }

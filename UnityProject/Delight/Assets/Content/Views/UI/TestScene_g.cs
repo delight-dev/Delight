@@ -18,18 +18,18 @@ namespace Delight
         {
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
-            Button1 = new Button(this, Group1, "Button1", Button1Template);
+            Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
-            Button2 = new Button(this, Group1, "Button2", Button2Template);
+            Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
             Button2.Click += ResolveActionHandler(this, "Test2");
-            Button3 = new Button(this, Group1, "Button3", Button3Template);
+            Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
             Button3.Click += ResolveActionHandler(this, "Test3");
-            Button4 = new Button(this, Group1, "Button4", Button4Template);
+            Button4 = new Button(this, Group1.Content, "Button4", Button4Template);
             Button4.Click += ResolveActionHandler(this, "LogBinding");
 
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
-            BindingTest1 = new BindingTest(this, Region1, "BindingTest1", BindingTest1Template);
+            BindingTest1 = new BindingTest(this, Region1.Content, "BindingTest1", BindingTest1Template);
             this.AfterInitializeInternal();
         }
 

@@ -18,10 +18,10 @@ namespace Delight
         {
             // constructing Region (ContentRegion)
             ContentRegion = new Region(this, this, "ContentRegion", ContentRegionTemplate);
-            GridImage = new Image(this, ContentRegion, "GridImage", GridImageTemplate);
-            Image1 = new Image(this, ContentRegion, "Image1", Image1Template);
-            Image2 = new Image(this, ContentRegion, "Image2", Image2Template);
-            Button1 = new Button(this, ContentRegion, "Button1", Button1Template);
+            GridImage = new Image(this, ContentRegion.Content, "GridImage", GridImageTemplate);
+            Image1 = new Image(this, ContentRegion.Content, "Image1", Image1Template);
+            Image2 = new Image(this, ContentRegion.Content, "Image2", Image2Template);
+            Button1 = new Button(this, ContentRegion.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
 
             // constructing Region (LeftPanel)

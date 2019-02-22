@@ -18,12 +18,12 @@ namespace Delight
         {
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
-            Group1 = new Group(this, Region1, "Group1", Group1Template);
-            Button1 = new Button(this, Group1, "Button1", Button1Template);
+            Group1 = new Group(this, Region1.Content, "Group1", Group1Template);
+            Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
-            Button2 = new Button(this, Group1, "Button2", Button2Template);
+            Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
             Button2.Click += ResolveActionHandler(this, "Test2");
-            Button3 = new Button(this, Group1, "Button3", Button3Template);
+            Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
 
             // binding <Button BackgroundColor="{TestBinding2}">
             Bindings.Add(new Binding(
@@ -34,8 +34,8 @@ namespace Delight
                 () => Button3.BackgroundColor = TestBinding2,
                 () => { }
             ));
-            LargeButton1 = new LargeButton(this, Group1, "LargeButton1", LargeButton1Template);
-            Label1 = new Label(this, Group1, "Label1", Label1Template);
+            LargeButton1 = new LargeButton(this, Group1.Content, "LargeButton1", LargeButton1Template);
+            Label1 = new Label(this, Group1.Content, "Label1", Label1Template);
 
             // binding <Label Text="{TestBinding}">
             Bindings.Add(new Binding(
@@ -46,7 +46,7 @@ namespace Delight
                 () => Label1.Text = TestBinding,
                 () => { }
             ));
-            Button4 = new Button(this, Group1, "Button4", Button4Template);
+            Button4 = new Button(this, Group1.Content, "Button4", Button4Template);
 
             // binding <Button Text="{TestBinding}">
             Bindings.Add(new Binding(
@@ -57,7 +57,7 @@ namespace Delight
                 () => Button4.Text = TestBinding,
                 () => { }
             ));
-            Button5 = new Button(this, Group1, "Button5", Button5Template);
+            Button5 = new Button(this, Group1.Content, "Button5", Button5Template);
 
             // binding <Button Text="{Player1.Name}">
             Bindings.Add(new Binding(
@@ -71,8 +71,8 @@ namespace Delight
 
             // constructing Region (RegionOnDemand)
             RegionOnDemand = new Region(this, this, "RegionOnDemand", RegionOnDemandTemplate);
-            Group2 = new Group(this, RegionOnDemand, "Group2", Group2Template);
-            Label2 = new Label(this, Group2, "Label2", Label2Template);
+            Group2 = new Group(this, RegionOnDemand.Content, "Group2", Group2Template);
+            Label2 = new Label(this, Group2.Content, "Label2", Label2Template);
 
             // binding <Label Text="{TestBinding}">
             Bindings.Add(new Binding(
@@ -83,7 +83,7 @@ namespace Delight
                 () => Label2.Text = TestBinding,
                 () => { }
             ));
-            Label3 = new Label(this, Group2, "Label3", Label3Template);
+            Label3 = new Label(this, Group2.Content, "Label3", Label3Template);
 
             // binding <Label Text="{Player1.Name}">
             Bindings.Add(new Binding(

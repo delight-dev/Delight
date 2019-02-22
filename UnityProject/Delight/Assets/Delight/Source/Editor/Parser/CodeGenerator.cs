@@ -352,6 +352,12 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("            {0} += ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
                 }
 
+                // set content container
+                if (viewObject.ContentContainer != null)
+                {
+                    sb.AppendLine("            Content = {0};", viewObject.ContentContainer.Id);
+                }
+
                 sb.AppendLine("            this.AfterInitializeInternal();");
                 sb.AppendLine("        }");
                 sb.AppendLine();
@@ -785,7 +791,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // print view declaration: _view = new View(this, layoutParent, id, initializer);
-                var parentReference = parentViewDeclaration == null ? "this" : localParentId;
+                var parentReference = parentViewDeclaration == null ? "this" : localParentId + ".Content";
                 sb.AppendLine(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template);", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
 
                 // do we have action handlers?

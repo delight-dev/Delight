@@ -58,11 +58,11 @@ namespace Delight
             }
 
             // unload and clear existing children
-            foreach (var child in _layoutChildren)
+            foreach (var child in Content.LayoutChildren)
             {
                 child.Unload();
             }
-            _layoutChildren.Clear();
+            Content.LayoutChildren.Clear();
 
             if (IsLoaded)
             {

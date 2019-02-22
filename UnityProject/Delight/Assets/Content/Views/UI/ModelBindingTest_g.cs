@@ -18,12 +18,12 @@ namespace Delight
         {
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
-            Group2 = new Group(this, Group1, "Group2", Group2Template);
-            Button1 = new Button(this, Group2, "Button1", Button1Template);
+            Group2 = new Group(this, Group1.Content, "Group2", Group2Template);
+            Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
-            Button2 = new Button(this, Group2, "Button2", Button2Template);
+            Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
             Button2.Click += ResolveActionHandler(this, "Test2");
-            PlayerList = new List(this, Group1, "PlayerList", PlayerListTemplate);
+            PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in @Players}">
             Bindings.Add(new Binding(
@@ -38,9 +38,9 @@ namespace Delight
             // Template for PlayerList
             PlayerList.ContentTemplate = new ContentTemplate(tiPlayer => 
             {
-                var playerListContent = new ListItem(this, PlayerList, "PlayerListContent", PlayerListContentTemplate);
-                var group3 = new Group(this, playerListContent, "Group3", Group3Template);
-                var label1 = new Label(this, group3, "Label1", Label1Template);
+                var playerListContent = new ListItem(this, PlayerList.Content, "PlayerListContent", PlayerListContentTemplate);
+                var group3 = new Group(this, playerListContent.Content, "Group3", Group3Template);
+                var label1 = new Label(this, group3.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{player.Name}">
                 playerListContent.Bindings.Add(new Binding(
@@ -51,7 +51,7 @@ namespace Delight
                     () => label1.Text = (tiPlayer.Item as Delight.Player).Name,
                     () => { }
                 ));
-                var achievementsList = new List(this, group3, "AchievementsList", AchievementsListTemplate);
+                var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
 
                 // binding <List Items="{achievement in player.Achievements}">
                 playerListContent.Bindings.Add(new Binding(
@@ -66,8 +66,8 @@ namespace Delight
                 // Template for achievementsList
                 achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
                 {
-                    var achievementsListContent = new ListItem(this, achievementsList, "AchievementsListContent", AchievementsListContentTemplate);
-                    var label2 = new Label(this, achievementsListContent, "Label2", Label2Template);
+                    var achievementsListContent = new ListItem(this, achievementsList.Content, "AchievementsListContent", AchievementsListContentTemplate);
+                    var label2 = new Label(this, achievementsListContent.Content, "Label2", Label2Template);
 
                     // binding <Label Text="{achievement.Title}">
                     achievementsListContent.Bindings.Add(new Binding(

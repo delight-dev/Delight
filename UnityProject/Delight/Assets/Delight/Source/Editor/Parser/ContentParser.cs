@@ -250,7 +250,7 @@ namespace Delight.Editor.Parser
             }
 
             // parse the view's children recursively
-            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
+            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(viewObject, xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
 
             // add property declarations for view declarations having IDs
             propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclarations));
@@ -399,7 +399,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses view declarations.
         /// </summary>
-        private static List<ViewDeclaration> ParseViewDeclarations(string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount)
+        private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount)
         {
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
@@ -423,6 +423,12 @@ namespace Delight.Editor.Parser
                     if (attributeName.IEquals("Style"))
                     {
                         viewDeclaration.Style = attributeValue;
+                        continue;
+                    }
+
+                    if (attributeName.IEquals("IsContentContainer"))
+                    {
+                        viewObject.ContentContainer = viewDeclaration;
                         continue;
                     }
 
@@ -472,7 +478,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // parse child elements
-                viewDeclaration.ChildDeclarations = ParseViewDeclarations(path, viewElement.Elements(), viewIdCount);
+                viewDeclaration.ChildDeclarations = ParseViewDeclarations(viewObject, path, viewElement.Elements(), viewIdCount);
                 viewDeclarations.Add(viewDeclaration);
             }
 

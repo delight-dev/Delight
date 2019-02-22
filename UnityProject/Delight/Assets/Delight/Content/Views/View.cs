@@ -23,6 +23,7 @@ namespace Delight
 
         protected View _parent;
         protected View _layoutParent;
+        protected View _content;
         protected List<View> _layoutChildren;
         protected List<Binding> _bindings;
         protected Action<View> _initializer;
@@ -47,6 +48,7 @@ namespace Delight
             }
 
             _initializer = initializer;
+            _content = this;
             BeforeInitialize();
         }
 
@@ -70,6 +72,15 @@ namespace Delight
         {
             get { return _layoutParent; }
             set { _layoutParent = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets content container.
+        /// </summary>
+        public View Content
+        {
+            get { return _content; }
+            set { _content = value; }
         }
 
         /// <summary>
