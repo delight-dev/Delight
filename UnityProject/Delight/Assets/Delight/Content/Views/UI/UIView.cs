@@ -81,6 +81,10 @@ namespace Delight
                 case nameof(IsVisible):
                     VisibilityChanged();
                     break;
+
+                case nameof(FastMaterial):
+                    FastMaterialChanged();
+                    break;
             }
         }
 
@@ -309,6 +313,13 @@ namespace Delight
         {
             Width.Pixels = width;
             Height.Pixels = height;
+        }
+
+        /// <summary>
+        /// Called whenever the UI fast default material has been loaded/changed.
+        /// </summary>
+        protected virtual void FastMaterialChanged()
+        {
         }
 
         #endregion

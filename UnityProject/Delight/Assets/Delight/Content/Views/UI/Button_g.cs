@@ -689,6 +689,13 @@ namespace Delight
             set { Label.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty LabelUseFastShaderProperty = Label.UseFastShaderProperty;
+        public System.Boolean LabelUseFastShader
+        {
+            get { return Label.UseFastShader; }
+            set { Label.UseFastShader = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {

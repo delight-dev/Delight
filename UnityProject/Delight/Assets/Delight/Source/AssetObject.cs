@@ -16,6 +16,7 @@ namespace Delight
         #region Fields
 
         public bool IsResource { get; set; }
+        public string RelativePath { get; set; }
 
         public string AssetBundleId { get; set; }
         public AssetBundle AssetBundle
@@ -25,6 +26,15 @@ namespace Delight
         }
 
         public Dictionary<int, WeakReference> _referenceObjects;
+
+        public string FullPath
+        {
+            get
+            {
+                return RelativePath + Id;
+            }
+        }
+
 
         #endregion
 
@@ -173,10 +183,10 @@ namespace Delight
                 if (IsResource)
                 {
                     // yes. load from resources folder
-                    var resourceObject = await Resources.LoadAsync<T>(Id);
+                    var resourceObject = await Resources.LoadAsync<T>(FullPath);
                     if (resourceObject == null)
                     {
-                        Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", Id));
+                        Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", FullPath));
                         return;
                     }
 
@@ -200,7 +210,7 @@ namespace Delight
                 }
 
                 // simulate slow load
-                //await Task.Delay(1500); // TODO add simulate network lag setting in editor
+                //await Task.Delay(1500); // TODO add option to simulate network lag in editor
 
                 // see if sprite is in bundle 
                 //var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id); // bug in Unity makes it so assets loaded asynchronously does not get unloaded when Resources.UnloadAsset() is called

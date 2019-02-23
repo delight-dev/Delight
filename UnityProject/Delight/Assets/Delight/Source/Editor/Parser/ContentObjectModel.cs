@@ -108,10 +108,9 @@ namespace Delight.Editor.Parser
             if (bundle != null) return bundle;
 
             var existingBundle = AssetBundleObjects.FirstOrDefault(x => x.Name.IEquals(bundleName));
-            if (existingBundle != null)
+            if (existingBundle != null && !bundleName.IEquals("Resources"))
             {
-                Debug.LogError(String.Format("[Delight] Can't add asset bundle at \"{0}\". Bundle with same name exist at \"{1}\". Please make sure the bundle names are unique.", bundlePath, existingBundle.Path));
-                return null;
+                Debug.LogError(String.Format("[Delight] Duplicate asset bundle \"{0}\" at \"{1}\". Bundle with same name exist at \"{2}\". Please make sure the bundle names are unique.", bundleName, bundlePath, existingBundle.Path));
             }
 
             bundle = new AssetBundleObject { Name = bundleName, Path = bundlePath };
@@ -495,7 +494,7 @@ namespace Delight.Editor.Parser
         public bool IsInherited;
         public bool IsMapped;
         public bool IsAssetReference;
-        public AssetType AssetType;        
+        public AssetType AssetType;
         public string TargetObjectName;
         public string TargetPropertyName;
 
@@ -551,6 +550,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(8)]
         public PropertyDeclarationType DeclarationType;
+
+        [ProtoMember(9, AsReference = true)]
+        public AssetType AssetType;
     }
 
     /// <summary>
@@ -902,20 +904,33 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Full path to bundle.
+        /// </summary>
+        public string FullPath
+        {
+            get
+            {
+                return String.Format("{0}/{1}/", Path, Name);
+            }
+        }
+
+        /// <summary>
         /// Loads asset object, creates new one if it doesn't exist.
         /// </summary>
         public UnityAssetObject LoadUnityAssetObject(string assetName, string path, Type type)
         {
             var asset = AssetObjects.FirstOrDefault(x => x.Name.IEquals(assetName) && x.Type.Name.IEquals(type.Name));
-            if (asset != null)
+            if (asset == null)
             {
-                asset.Path = path;
-                return asset;
+                var assetType = ContentObjectModel.GetInstance().LoadAssetType(type, true);
+                asset = new UnityAssetObject { Name = assetName, Type = assetType, Path = path, IsResource = IsResource, AssetBundleName = Name };
+                AssetObjects.Add(asset);
             }
 
-            var assetType = ContentObjectModel.GetInstance().LoadAssetType(type, true);
-            asset = new UnityAssetObject { Name = assetName, Type = assetType, Path = path };
-            AssetObjects.Add(asset);
+            // path within bundle can change
+            asset.Path = path;
+            string relativePath = asset.Path.Substring(FullPath.Length - 1);
+            asset.RelativePath = relativePath.Substring(0, relativePath.LastIndexOf(assetName));
             return asset;
         }
 
@@ -947,6 +962,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(5)]
         public bool IsResource;
+
+        [ProtoMember(6)]
+        public string RelativePath;
     }
 
     [ProtoContract]

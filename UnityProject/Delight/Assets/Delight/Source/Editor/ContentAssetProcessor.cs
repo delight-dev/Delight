@@ -154,7 +154,7 @@ namespace Delight.Editor
             {
                 if (contentChanged)
                 {
-                    Debug.Log("[Delight] ContentAssetProcessor: Content changed while editor is playing. Content will be processed after editor exits play mode.");
+                    Debug.Log("[Delight] Content (View, Assets, etc) changed while editor is playing. Content will be processed after editor exits play mode.");
                     EditorEventListener.AddPostProcessBatch(importedAssets, deletedAssets, movedAssets, movedFromAssets);
                 }
                 return;

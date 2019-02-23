@@ -249,11 +249,11 @@ namespace Delight.Editor.Parser
                     {
                         if (!assetObject.IsResource)
                         {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName);
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\", RelativePath = \"{4}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName, assetObject.RelativePath);
                         }
                         else
                         {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName);
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true, RelativePath = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.RelativePath);
                         }
                     }
                     sb.AppendLine();
@@ -399,9 +399,11 @@ namespace Delight.Editor.Parser
 
             foreach (var declaration in propertyDeclarations)
             {
+                var typeName = declaration.DeclarationType == PropertyDeclarationType.Asset ? declaration.AssetType.FormattedTypeName : declaration.PropertyTypeFullName;
+
                 sb.AppendLine();
-                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", declaration.PropertyTypeFullName, declaration.PropertyName);
-                sb.AppendLine("        public {0} {1}", declaration.PropertyTypeFullName, declaration.PropertyName);
+                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", typeName, declaration.PropertyName);
+                sb.AppendLine("        public {0} {1}", typeName, declaration.PropertyName);
                 sb.AppendLine("        {");
                 sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", declaration.PropertyName);
                 sb.AppendLine("            set {{ {0}Property.SetValue(this, value); }}", declaration.PropertyName);
@@ -1040,7 +1042,8 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
-                propertyDeclarations.Add(new PropertyDeclarationInfo { Declaration = declaration });
+                propertyDeclarations.Add(new PropertyDeclarationInfo { Declaration = declaration, IsAssetReference = declaration.DeclarationType == PropertyDeclarationType.Asset,
+                    AssetType = declaration.AssetType });
             }
 
             if (includeMappedProperties)

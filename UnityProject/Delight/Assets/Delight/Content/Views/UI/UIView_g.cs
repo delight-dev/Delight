@@ -44,6 +44,8 @@ namespace Delight
             dependencyProperties.Add(IsVisibleProperty);
             dependencyProperties.Add(RaycastBlockModeProperty);
             dependencyProperties.Add(CanvasGroupProperty);
+            dependencyProperties.Add(UseFastShaderProperty);
+            dependencyProperties.Add(FastMaterialProperty);
         }
 
         #endregion
@@ -162,6 +164,20 @@ namespace Delight
             set { CanvasGroupProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Boolean> UseFastShaderProperty = new DependencyProperty<System.Boolean>("UseFastShader");
+        public System.Boolean UseFastShader
+        {
+            get { return UseFastShaderProperty.GetValue(this); }
+            set { UseFastShaderProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<MaterialAsset> FastMaterialProperty = new DependencyProperty<MaterialAsset>("FastMaterial");
+        public MaterialAsset FastMaterial
+        {
+            get { return FastMaterialProperty.GetValue(this); }
+            set { FastMaterialProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -195,6 +211,7 @@ namespace Delight
                     _uIView.Name = "UIView";
 #endif
                     Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);
+                    Delight.UIView.FastMaterialProperty.SetDefault(_uIView, Assets.Materials["UI-Fast-Default"]);
                 }
                 return _uIView;
             }

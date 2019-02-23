@@ -47,6 +47,7 @@ namespace Delight
             if (sprite != null && ImageComponent == null)
             {
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                FastMaterialChanged(); // apply fast material if specified
             }
 
             if (ImageComponent != null)
@@ -126,6 +127,20 @@ namespace Delight
             return IsVisible;
         }
 
+        /// <summary>
+        /// Called whenever the UI fast default material has been loaded/changed.
+        /// </summary>
+        protected override void FastMaterialChanged()
+        {
+            base.FastMaterialChanged();
+            if (!UseFastShader)
+                return;
+
+            if (ImageComponent == null)
+                return;
+
+            ImageComponent.material = FastMaterial?.UnityObject;
+        }
 
         #endregion
     }

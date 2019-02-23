@@ -31,6 +31,7 @@ namespace Delight
         protected override void BeforeLoad()
         {
             base.BeforeLoad();
+
             // always add image component
             if (ImageComponent == null)
             {
@@ -104,6 +105,21 @@ namespace Delight
 
             // disable raycast blocks if image is transparent
             ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+        }
+
+        /// <summary>
+        /// Called whenever the UI fast default material has been loaded/changed.
+        /// </summary>
+        protected override void FastMaterialChanged()
+        {
+            base.FastMaterialChanged();
+            if (!UseFastShader)
+                return;
+
+            if (ImageComponent == null)
+                return;
+
+            ImageComponent.material = FastMaterial?.UnityObject;
         }
     }
 }

@@ -18,7 +18,6 @@ namespace Delight
 
         public readonly AssetBundle Bundle1;
         public readonly AssetBundle Bundle2;
-        public readonly AssetBundle EditorAssets;
 
         #endregion
 
@@ -28,11 +27,9 @@ namespace Delight
         {
             Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
             Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
-            EditorAssets = new AssetBundle { Id = "EditorAssets", StorageMode = StorageMode.Local };
 
             Add(Bundle1);
             Add(Bundle2);
-            Add(EditorAssets);
         }
 
         #endregion
@@ -58,7 +55,7 @@ namespace Delight
 
         public TMP_FontAssetData()
         {
-            LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle1" };
+            LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
 
             Add(LiberationSansSDF);
         }
@@ -85,6 +82,7 @@ namespace Delight
 
         public readonly MaterialAsset Netpattern01;
         public readonly MaterialAsset LiberationSansSDFDropShadow;
+        public readonly MaterialAsset UIFastDefault;
 
         #endregion
 
@@ -92,11 +90,13 @@ namespace Delight
 
         public MaterialAssetData()
         {
-            Netpattern01 = new MaterialAsset { Id = "Net pattern 01", AssetBundleId = "Bundle1" };
-            LiberationSansSDFDropShadow = new MaterialAsset { Id = "LiberationSans SDF - Drop Shadow", AssetBundleId = "Bundle1" };
+            Netpattern01 = new MaterialAsset { Id = "Net pattern 01", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
+            LiberationSansSDFDropShadow = new MaterialAsset { Id = "LiberationSans SDF - Drop Shadow", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            UIFastDefault = new MaterialAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Materials/" };
 
             Add(Netpattern01);
             Add(LiberationSansSDFDropShadow);
+            Add(UIFastDefault);
         }
 
         #endregion
@@ -132,12 +132,12 @@ namespace Delight
 
         public SpriteAssetData()
         {
-            Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1" };
-            Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1" };
-            BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2" };
-            Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2" };
-            Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true };
-            EditorGrid = new SpriteAsset { Id = "EditorGrid", AssetBundleId = "EditorAssets" };
+            Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
+            Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
+            Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true, RelativePath = "" };
+            EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Frame1);
             Add(Frame2);
@@ -178,10 +178,10 @@ namespace Delight
 
         public Texture2DAssetData()
         {
-            Diffuse = new Texture2DAsset { Id = "diffuse", AssetBundleId = "Bundle1" };
-            Normal = new Texture2DAsset { Id = "normal", AssetBundleId = "Bundle1" };
-            Preview = new Texture2DAsset { Id = "preview", AssetBundleId = "Bundle1" };
-            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2" };
+            Diffuse = new Texture2DAsset { Id = "diffuse", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
+            Normal = new Texture2DAsset { Id = "normal", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
+            Preview = new Texture2DAsset { Id = "preview", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
+            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
 
             Add(Diffuse);
             Add(Normal);
@@ -195,6 +195,39 @@ namespace Delight
     public static partial class Assets
     {
         public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
+    #region Shaders
+
+    public partial class ShaderAsset : AssetObject<UnityEngine.Shader>
+    {
+    }
+
+    public partial class ShaderAssetData : DataProvider<ShaderAsset>
+    {
+        #region Fields
+
+        public readonly ShaderAsset UIFastDefault;
+
+        #endregion
+
+        #region Constructor
+
+        public ShaderAssetData()
+        {
+            UIFastDefault = new ShaderAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Shaders/" };
+
+            Add(UIFastDefault);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static ShaderAssetData Shaders = new ShaderAssetData();
     }
 
     #endregion

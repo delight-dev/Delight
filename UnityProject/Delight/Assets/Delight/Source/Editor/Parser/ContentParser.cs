@@ -549,6 +549,7 @@ namespace Delight.Editor.Parser
                 var propertyDeclaration = new PropertyDeclaration();
                 propertyExpressions.Add(propertyDeclaration);
                 propertyDeclaration.LineNumber = element.GetLineNumber();
+                //propertyDeclaration.
 
                 int commaIndex = attributeValue.IndexOf(",");
                 int assignmentIndex = attributeValue.IndexOf("=");
@@ -614,7 +615,7 @@ namespace Delight.Editor.Parser
                 if (IsUnityAssetType(propertyType))
                 {
                     propertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
-                    _contentObjectModel.LoadAssetType(propertyType, false);
+                    propertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(propertyType, false);                    
                 }
 
                 propertyDeclaration.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
@@ -1101,9 +1102,6 @@ namespace Delight.Editor.Parser
 
             var assetName = Path.GetFileNameWithoutExtension(assetFile);
             var asset = bundle.LoadUnityAssetObject(assetName, assetFile, assetObjectType);
-            asset.IsResource = bundle.IsResource;
-            asset.AssetBundleName = bundle.Name;
-
             return asset;
         }
 
@@ -1231,7 +1229,7 @@ namespace Delight.Editor.Parser
                 return null;
 
             var bundleName = paths[0];
-            return _contentObjectModel.LoadAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + bundleName.Length + 1));
+            return _contentObjectModel.LoadAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + AssetsFolder.Length));
         }
 
         #endregion

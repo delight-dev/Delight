@@ -172,6 +172,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _editorMainView.Name = "EditorMainView";
 #endif
+                    Delight.EditorMainView.UseFastShaderProperty.SetDefault(_editorMainView, true);
                     Delight.EditorMainView.ContentRegionTemplateProperty.SetDefault(_editorMainView, EditorMainViewContentRegion);
                     Delight.EditorMainView.GridImageTemplateProperty.SetDefault(_editorMainView, EditorMainViewGridImage);
                     Delight.EditorMainView.Image1TemplateProperty.SetDefault(_editorMainView, EditorMainViewImage1);
@@ -199,6 +200,8 @@ namespace Delight
                     _editorMainViewContentRegion.Name = "EditorMainViewContentRegion";
 #endif
                     Delight.Region.MarginProperty.SetDefault(_editorMainViewContentRegion, new ElementMargin(new ElementSize(250f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Region.UseFastShaderProperty.SetDefault(_editorMainViewContentRegion, true);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_editorMainViewContentRegion, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _editorMainViewContentRegion;
             }
@@ -224,6 +227,7 @@ namespace Delight
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewGridImage, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.HeightProperty.SetDefault(_editorMainViewGridImage, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.IsVisibleProperty.SetDefault(_editorMainViewGridImage, false);
+                    Delight.Image.UseFastShaderProperty.SetDefault(_editorMainViewGridImage, true);
                 }
                 return _editorMainViewGridImage;
             }
@@ -245,6 +249,7 @@ namespace Delight
                     _editorMainViewImage1.Name = "EditorMainViewImage1";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_editorMainViewImage1, new UnityEngine.Color(0.7568628f, 0.7568628f, 0.7607843f, 1f));
+                    Delight.Image.UseFastShaderProperty.SetDefault(_editorMainViewImage1, true);
                     Delight.Image.WidthProperty.SetDefault(_editorMainViewImage1, new ElementSize(1f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_editorMainViewImage1, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
@@ -291,6 +296,7 @@ namespace Delight
                     _editorMainViewButton1.Name = "EditorMainViewButton1";
 #endif
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _editorMainViewButton1, new UnityEngine.Color(1f, 0f, 0f, 1f));
+                    Delight.Button.UseFastShaderProperty.SetDefault(_editorMainViewButton1, true);
                     Delight.Button.LabelTemplateProperty.SetDefault(_editorMainViewButton1, EditorMainViewButton1Label);
                 }
                 return _editorMainViewButton1;
@@ -336,6 +342,7 @@ namespace Delight
                     Delight.Region.WidthProperty.SetDefault(_editorMainViewLeftPanel, new ElementSize(250f, ElementSizeUnit.Pixels));
                     Delight.Region.AlignmentProperty.SetDefault(_editorMainViewLeftPanel, Delight.ElementAlignment.Left);
                     Delight.Region.BackgroundColorProperty.SetDefault(_editorMainViewLeftPanel, new UnityEngine.Color(0.7568628f, 0.7568628f, 0.7607843f, 1f));
+                    Delight.Region.UseFastShaderProperty.SetDefault(_editorMainViewLeftPanel, true);
                 }
                 return _editorMainViewLeftPanel;
             }
