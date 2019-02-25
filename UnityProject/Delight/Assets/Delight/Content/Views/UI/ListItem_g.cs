@@ -39,6 +39,8 @@ namespace Delight
             dependencyProperties.Add(IsSelectedProperty);
             dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(IsMouseOverProperty);
+            dependencyProperties.Add(LengthProperty);
+            dependencyProperties.Add(BreadthProperty);
         }
 
         #endregion
@@ -87,6 +89,20 @@ namespace Delight
             set { IsMouseOverProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Delight.ElementSize> LengthProperty = new DependencyProperty<Delight.ElementSize>("Length");
+        public Delight.ElementSize Length
+        {
+            get { return LengthProperty.GetValue(this); }
+            set { LengthProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> BreadthProperty = new DependencyProperty<Delight.ElementSize>("Breadth");
+        public Delight.ElementSize Breadth
+        {
+            get { return BreadthProperty.GetValue(this); }
+            set { BreadthProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -119,9 +135,12 @@ namespace Delight
 #if UNITY_EDITOR
                     _listItem.Name = "ListItem";
 #endif
-                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _listItem, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Highlighted", _listItem, new UnityEngine.Color(1f, 0f, 0f, 1f));
-                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Pressed", _listItem, new UnityEngine.Color(0f, 0f, 1f, 1f));
+                    Delight.ListItem.BreadthProperty.SetDefault(_listItem, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.BackgroundColorProperty.SetDefault(_listItem, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _listItem, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Highlighted", _listItem, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Pressed", _listItem, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Alternate", _listItem, new UnityEngine.Color(0.9490196f, 0.9490196f, 0.9490196f, 1f));
                 }
                 return _listItem;
             }

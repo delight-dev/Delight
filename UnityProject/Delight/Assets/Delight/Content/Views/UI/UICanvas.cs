@@ -15,6 +15,8 @@ namespace Delight
         protected override void BeforeLoad()
         {
             base.BeforeLoad();
+            if (IgnoreObject)
+                return;
 
             Canvas = GameObject.AddComponent<UnityEngine.Canvas>();
             CanvasScaler = GameObject.AddComponent<UnityEngine.UI.CanvasScaler>();

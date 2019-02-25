@@ -1,0 +1,14 @@
+<DelightDesigner xmlns="Delight" BasedOn="LayoutRoot">
+  <Region Id="ContentRegion" Margin="0,0,0,0">
+    <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
+    <Image Color="#3f3f3d" Size="1,100%" />
+    <Image Color="#3f3f3d" Size="100%,1" />
+    <Button Click="Test1" Text="Test" />
+  </Region>
+  <!--<Region Id="ContentExplorer" Width="250">
+    <List IsScrollable="True">      
+    </List>    
+  </Region>  
+  <Grid>
+  </Grid>-->
+</DelightDesigner>  

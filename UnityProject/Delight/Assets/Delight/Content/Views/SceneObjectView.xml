@@ -1,4 +1,4 @@
-<SceneObjectView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool"
+<SceneObjectView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool" IgnoreObject="t:bool" 
            IsActive="t:bool"
            BeginDrag="t:Action"
            Cancel="t:Action"
@@ -18,4 +18,9 @@
            Submit="t:Action"
            UpdateSelected="t:Action"            
            > 
-</SceneObjectView> 
+</SceneObjectView>
+
+<!-- 
+IsActive: Boolean indicating if the game object is active.
+IgnoreObject: Boolean indicating if the scene object should be ignored and not be part of the scene object hierarchy.
+-->

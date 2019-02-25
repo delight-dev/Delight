@@ -1,6 +1,8 @@
 <ListItem xmlns="Delight" BasedOn="UIImageView" Item="t:BindableObject"
           IsDisabled="t:bool" IsAlternate="t:bool" IsSelected="t:bool"
           IsPressed="t:bool" IsMouseOver="t:bool"
+          Length="t:ElementSize" 
+          Breadth="t:ElementSize"
           Click="ListItemMouseClick" 
           MouseEnter="ListItemMouseEnter"
           MouseExit="ListItemMouseExit"

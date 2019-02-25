@@ -519,7 +519,7 @@ namespace Delight.Editor.Parser
                 // validate
                 if (dotCount > 0 || hasStateName)
                 {
-                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a single property name.", GetLineInfo(element), attributeName, attributeValue));
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -536,12 +536,101 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
+            //if (attributeValue.IStartsWith("at:"))
+            //{
+            //    // validate
+            //    if (dotCount > 0 || hasStateName)
+            //    {
+            //        Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
+            //        return propertyExpressions;
+            //    }
+
+            //    // regular property declaration
+            //    var propertyDeclaration = new PropertyDeclaration();
+            //    propertyExpressions.Add(propertyDeclaration);
+            //    propertyDeclaration.LineNumber = element.GetLineNumber();
+
+            //    int commaIndex = attributeValue.IndexOf(",");
+            //    int assignmentIndex = attributeValue.IndexOf("=");
+
+            //    // parse property value if any
+            //    if (assignmentIndex > 0 && commaIndex <= 0)
+            //    {
+            //        var propertyAssignment = new PropertyAssignment();
+            //        propertyExpressions.Add(propertyAssignment);
+
+            //        propertyAssignment.PropertyName = attributeName;
+            //        propertyAssignment.PropertyValue = attributeValue.Substring(assignmentIndex + 1).Trim();
+            //        propertyAssignment.LineNumber = element.GetLineNumber();
+            //        attributeValue = attributeValue.Substring(0, assignmentIndex).Trim();
+            //    }
+
+            //    Type propertyType = null;
+            //    string propertyTypeName = attributeValue.Substring(2);
+            //    string propertyNamespace = null;
+
+            //    // check if it's a generic type 
+            //    int startBracketIndex = propertyTypeName.IndexOf("[");
+            //    if (startBracketIndex > 0)
+            //    {
+            //        // validate generic type
+            //        var genericTypeName = propertyTypeName.Substring(0, startBracketIndex);
+            //        GetPropertyTypeNameAndNamespace(genericTypeName, out genericTypeName, out propertyNamespace);
+
+            //        // TODO validate generic type parameters, loop through each generic parameter and get their type and full name 
+
+            //        propertyType = TypeHelper.GetType(genericTypeName, propertyNamespace);
+            //        propertyDeclaration.PropertyName = attributeName;
+            //        propertyDeclaration.PropertyTypeName = propertyType.Name;
+            //        propertyDeclaration.PropertyTypeFullName = String.Format("{0}{1}", propertyType.FullName, propertyTypeName.Substring(startBracketIndex).Replace('[', '<').Replace(']', '>').Trim());
+
+            //        return propertyExpressions;
+            //    }
+
+            //    if (commaIndex > 0)
+            //    {
+            //        // assembly qualified type is specified
+            //        propertyType = Type.GetType(propertyTypeName);
+            //    }
+            //    else
+            //    {
+            //        // get type from specified name (and namespace)
+            //        GetPropertyTypeNameAndNamespace(propertyTypeName, out propertyTypeName, out propertyNamespace);
+            //        propertyType = TypeHelper.GetType(propertyTypeName, propertyNamespace);
+            //    }
+
+            //    if (propertyType == null)
+            //    {
+            //        Debug.LogError(String.Format("[Delight] {0}: Property type not found {1}=\"{2}\".", GetLineInfo(element), attributeName, attributeValue));
+            //        return new List<PropertyExpression>();
+            //    }
+
+            //    bool isUnityComponent = typeof(UnityEngine.Component).IsAssignableFrom(propertyType);
+            //    if (isUnityComponent)
+            //    {
+            //        propertyDeclaration.DeclarationType = PropertyDeclarationType.UnityComponent;
+            //    }
+
+            //    if (IsUnityAssetType(propertyType))
+            //    {
+            //        propertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
+            //        propertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(propertyType, false);
+            //    }
+
+            //    propertyDeclaration.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
+            //    propertyDeclaration.PropertyName = attributeName;
+            //    propertyDeclaration.PropertyTypeName = propertyType.Name;
+            //    propertyDeclaration.PropertyTypeFullName = propertyType.FullName;
+
+            //    return propertyExpressions;
+            //}
+
             if (attributeValue.IStartsWith("t:"))
             {
                 // validate
                 if (dotCount > 0 || hasStateName)
                 {
-                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a single property name.", GetLineInfo(element), attributeName, attributeValue));
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
                     return propertyExpressions;
                 }
 

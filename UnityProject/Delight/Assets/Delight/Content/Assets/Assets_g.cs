@@ -124,7 +124,9 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
+        public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset EditorGrid;
+        public readonly SpriteAsset DesignerGrid2;
 
         #endregion
 
@@ -137,14 +139,18 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true, RelativePath = "" };
+            DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
+            DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
+            Add(DesignerGrid);
             Add(EditorGrid);
+            Add(DesignerGrid2);
         }
 
         #endregion

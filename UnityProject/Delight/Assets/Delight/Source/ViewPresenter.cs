@@ -49,6 +49,9 @@ namespace Delight
                 if (GameObject != null) GameObject.DestroyImmediate(GameObject);
 #endif
                 Create();
+
+                if (_view == null)
+                    return;
             }
  
             var sw2 = System.Diagnostics.Stopwatch.StartNew();

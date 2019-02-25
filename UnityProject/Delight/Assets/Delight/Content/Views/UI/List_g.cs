@@ -16,6 +16,9 @@ namespace Delight
         public List(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? ListTemplates.Default, initializer)
         {
+            // constructing ScrollableRegion (ScrollableRegion)
+            ScrollableRegion = new ScrollableRegion(this, this, "ScrollableRegion", ScrollableRegionTemplate);
+            Content = ScrollableRegion;
             this.AfterInitializeInternal();
         }
 
@@ -33,12 +36,15 @@ namespace Delight
             dependencyProperties.Add(ContentAlignmentProperty);
             dependencyProperties.Add(AlternateItemsProperty);
             dependencyProperties.Add(IsScrollableProperty);
+            dependencyProperties.Add(IsVirtualizedProperty);
             dependencyProperties.Add(CanSelectProperty);
             dependencyProperties.Add(CanDeselectProperty);
             dependencyProperties.Add(CanMultiSelectProperty);
             dependencyProperties.Add(CanReselectProperty);
             dependencyProperties.Add(DeselectAfterSelectProperty);
             dependencyProperties.Add(SelectOnMouseUpProperty);
+            dependencyProperties.Add(ScrollableRegionProperty);
+            dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
 
         #endregion
@@ -78,6 +84,13 @@ namespace Delight
         {
             get { return IsScrollableProperty.GetValue(this); }
             set { IsScrollableProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsVirtualizedProperty = new DependencyProperty<System.Boolean>("IsVirtualized");
+        public System.Boolean IsVirtualized
+        {
+            get { return IsVirtualizedProperty.GetValue(this); }
+            set { IsVirtualizedProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
@@ -122,6 +135,20 @@ namespace Delight
             set { SelectOnMouseUpProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
+        public ScrollableRegion ScrollableRegion
+        {
+            get { return ScrollableRegionProperty.GetValue(this); }
+            set { ScrollableRegionProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ScrollableRegionTemplateProperty = new DependencyProperty<Template>("ScrollableRegionTemplate");
+        public Template ScrollableRegionTemplate
+        {
+            get { return ScrollableRegionTemplateProperty.GetValue(this); }
+            set { ScrollableRegionTemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -154,8 +181,30 @@ namespace Delight
 #if UNITY_EDITOR
                     _list.Name = "List";
 #endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;
+            }
+        }
+
+        private static Template _listScrollableRegion;
+        public static Template ListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegion == null || _listScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegion == null)
+#endif
+                {
+                    _listScrollableRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
+#if UNITY_EDITOR
+                    _listScrollableRegion.Name = "ListScrollableRegion";
+#endif
+                    Delight.ScrollableRegion.BubbleNotifyChildLayoutChangedProperty.SetDefault(_listScrollableRegion, true);
+                }
+                return _listScrollableRegion;
             }
         }
 

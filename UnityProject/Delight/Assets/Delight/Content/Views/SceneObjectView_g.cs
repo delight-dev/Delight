@@ -30,6 +30,7 @@ namespace Delight
 
             dependencyProperties.Add(GameObjectProperty);
             dependencyProperties.Add(EnableScriptEventsProperty);
+            dependencyProperties.Add(IgnoreObjectProperty);
             dependencyProperties.Add(IsActiveProperty);
             dependencyProperties.Add(BeginDragProperty);
             dependencyProperties.Add(CancelProperty);
@@ -66,6 +67,13 @@ namespace Delight
         {
             get { return EnableScriptEventsProperty.GetValue(this); }
             set { EnableScriptEventsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IgnoreObjectProperty = new DependencyProperty<System.Boolean>("IgnoreObject");
+        public System.Boolean IgnoreObject
+        {
+            get { return IgnoreObjectProperty.GetValue(this); }
+            set { IgnoreObjectProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> IsActiveProperty = new DependencyProperty<System.Boolean>("IsActive");

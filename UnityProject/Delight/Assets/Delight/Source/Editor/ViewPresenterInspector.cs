@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -38,6 +39,10 @@ namespace Delight.Editor
 
             int newSelectedViewIndex = EditorGUILayout.Popup("View", selectedViewIndex, viewList.ToArray());
             viewPresenter.ViewTypeName = newSelectedViewIndex > 0 ? config.Views[newSelectedViewIndex - 1] : String.Empty;
+            if (newSelectedViewIndex != selectedViewIndex)
+            {
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+            }
 
             // TODO here we can look up assembly qualified name to make instantiation quicker
 

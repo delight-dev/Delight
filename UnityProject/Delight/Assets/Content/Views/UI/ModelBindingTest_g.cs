@@ -476,10 +476,33 @@ namespace Delight
                     _modelBindingTestPlayerList.Name = "ModelBindingTestPlayerList";
 #endif
                     Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.HeightProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.List.IsScrollableProperty.SetDefault(_modelBindingTestPlayerList, true);
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestPlayerList, ModelBindingTestPlayerListScrollableRegion);
                 }
                 return _modelBindingTestPlayerList;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegion;
+        public static Template ModelBindingTestPlayerListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegion == null || _modelBindingTestPlayerListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegion == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegion.Name = "ModelBindingTestPlayerListScrollableRegion";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegion;
             }
         }
 
@@ -560,8 +583,29 @@ namespace Delight
 #endif
                     Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
                     Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsList, ModelBindingTestAchievementsListScrollableRegion);
                 }
                 return _modelBindingTestAchievementsList;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegion;
+        public static Template ModelBindingTestAchievementsListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegion == null || _modelBindingTestAchievementsListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegion == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegion.Name = "ModelBindingTestAchievementsListScrollableRegion";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegion;
             }
         }
 

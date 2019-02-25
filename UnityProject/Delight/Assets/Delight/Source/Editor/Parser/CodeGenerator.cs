@@ -613,7 +613,7 @@ namespace Delight.Editor.Parser
                         nestedChildViewPropertyExpressions.Add(childViewName, childPropertyExpressions);
                     }
 
-                    childPropertyExpressions.Add(new PropertyAssignment { PropertyName = childViewPropertyName, PropertyValue = propertyAssignment.PropertyValue });
+                    childPropertyExpressions.Add(new PropertyAssignment { PropertyName = childViewPropertyName, PropertyValue = propertyAssignment.PropertyValue, StateName = propertyAssignment.StateName, LineNumber = propertyAssignment.LineNumber });
                     continue;
                 }
 

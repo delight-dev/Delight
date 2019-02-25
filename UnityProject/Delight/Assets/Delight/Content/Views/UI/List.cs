@@ -13,6 +13,20 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called just before the view and its children are loaded.
+        /// </summary>
+        protected override void BeforeLoad()
+        {
+            base.BeforeLoad();
+
+            // if the list isn't scrollable, disable the scrollable region
+            if (!IsScrollable)
+            {
+                ScrollableRegion.IgnoreObject = true;
+            }
+        }
+
+        /// <summary>
         /// Called when a child changes its layout.
         /// </summary>
         protected override void ChildLayoutChanged()
@@ -40,7 +54,7 @@ namespace Delight
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
             List<UIView> children = new List<UIView>();
-            this.ForEach<UIView>(x =>
+            Content.ForEach<UIView>(x =>
             {
                 children.Add(x);
             }, false);

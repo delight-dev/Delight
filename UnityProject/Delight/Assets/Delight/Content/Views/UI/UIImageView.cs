@@ -29,6 +29,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called just before the view and its children are loaded.
+        /// </summary>
         protected override void BeforeLoad()
         {
             base.BeforeLoad();

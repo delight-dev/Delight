@@ -4,7 +4,7 @@
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Test 2" Click="Test2" />
     </Group>
-    <List Id="PlayerList" Items="{player in @Players}" Width="500" BackgroundColor="Green" Spacing="5">
+    <List Id="PlayerList" Items="{player in @Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" IsScrollable="True">
       <Group>
         <Label Text="{player.Name}" />
         <List Id="AchievementsList" Items="{achievement in player.Achievements}" Orientation="Vertical" Offset="50,0,0,0">

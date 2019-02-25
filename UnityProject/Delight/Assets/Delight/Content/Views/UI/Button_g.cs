@@ -192,11 +192,11 @@ namespace Delight
             set { Label.FontMaterials = value; }
         }
 
-        public readonly static DependencyProperty ColorProperty = Label.ColorProperty;
-        public UnityEngine.Color Color
+        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
+        public UnityEngine.Color FontColor
         {
-            get { return Label.Color; }
-            set { Label.Color = value; }
+            get { return Label.FontColor; }
+            set { Label.FontColor = value; }
         }
 
         public readonly static DependencyProperty TextMeshProUGUIAlphaProperty = Label.TextMeshProUGUIAlphaProperty;
@@ -696,6 +696,13 @@ namespace Delight
             set { Label.UseFastShader = value; }
         }
 
+        public readonly static DependencyProperty LabelBubbleNotifyChildLayoutChangedProperty = Label.BubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean LabelBubbleNotifyChildLayoutChanged
+        {
+            get { return Label.BubbleNotifyChildLayoutChanged; }
+            set { Label.BubbleNotifyChildLayoutChanged = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {
@@ -708,6 +715,13 @@ namespace Delight
         {
             get { return Label.EnableScriptEvents; }
             set { Label.EnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty LabelIgnoreObjectProperty = Label.IgnoreObjectProperty;
+        public System.Boolean LabelIgnoreObject
+        {
+            get { return Label.IgnoreObject; }
+            set { Label.IgnoreObject = value; }
         }
 
         public readonly static DependencyProperty LabelIsActiveProperty = Label.IsActiveProperty;
@@ -759,9 +773,11 @@ namespace Delight
                     Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
-                    Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0f, 1f, 0f, 1f));
-                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(1f, 0f, 0f, 1f));
-                    Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0f, 0f, 1f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
+                    Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Disabled", _button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_button, ButtonLabel);
                 }
                 return _button;
@@ -786,6 +802,12 @@ namespace Delight
                     Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.WidthProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.FontColorProperty.SetDefault(_buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontStyleProperty.SetDefault(_buttonLabel, TMPro.FontStyles.Normal);
+                    Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _buttonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
+                    Delight.Label.FontColorProperty.SetStateDefault("Pressed", _buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, TMPro.FontStyles.Italic);
+                    Delight.Label.FontColorProperty.SetStateDefault("Disabled", _buttonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                 }
                 return _buttonLabel;
             }

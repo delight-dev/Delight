@@ -21,9 +21,6 @@ namespace Delight
 
         #endregion
 
-        #region Constructor
-        #endregion
-
         #region Methods
 
         /// <summary>

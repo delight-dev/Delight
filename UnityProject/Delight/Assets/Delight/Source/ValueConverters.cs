@@ -69,7 +69,7 @@ namespace Delight
             Converters.Add("Delight.RaycastBlockMode", new EnumValueConverter<RaycastBlockMode>());
             Converters.Add("TMPro.TextAlignmentOptions", new EnumValueConverter<TMPro.TextAlignmentOptions>());
             Converters.Add("Delight.SpriteAsset", new SpriteAssetValueConverter());
-            Converters.Add("Delight.MaterialAsset", new SpriteAssetValueConverter());
+            Converters.Add("TMPro.FontStyles", new EnumValueConverter<TMPro.FontStyles>());
         }
 
         #endregion

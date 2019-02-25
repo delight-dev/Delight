@@ -14,6 +14,7 @@ namespace Delight
     /// </summary>
     public partial class SceneObjectView : View
     {
+
         #region Methods
 
         /// <summary>
@@ -22,10 +23,13 @@ namespace Delight
         protected override void BeforeLoad()
         {
             base.BeforeLoad();
+            if (IgnoreObject)
+                return;
 
-            // create game-object and parent it with first scene object parent            
-            var go = new UnityEngine.GameObject(String.Format("{0}{1}", GetType().Name, Id.Length != 36 ? " (" + Id + ")" : ""));
-            var parent = this.FindParent<SceneObjectView>();
+            // create game-object and parent it with first scene object parent (that is not set to be ignored)           
+            const int GuidIdLength = 36;
+            var go = new UnityEngine.GameObject(String.Format("{0}{1}", GetType().Name, Id.Length != GuidIdLength ? " (" + Id + ")" : ""));
+            var parent = this.FindParent<SceneObjectView>(x => !x.IgnoreObject);
             if (parent != null)
             {
                 go.transform.SetParent(parent.GameObject.transform);
@@ -46,6 +50,8 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
+            if (IgnoreObject)
+                return;
 
             // add unity event system triggers
             GameObject.AddEventTrigger(this, BeginDrag, EventTriggerType.BeginDrag);
@@ -73,6 +79,8 @@ namespace Delight
         protected override void AfterUnload()
         {
             base.AfterUnload();
+            if (IgnoreObject)
+                return;
 
             // destroy game-object
 #if UNITY_EDITOR
@@ -112,8 +120,6 @@ namespace Delight
         public virtual void Update()
         {
         }
-
-        // TODO implement Activate/Deactivate
 
         #endregion
 

@@ -46,6 +46,7 @@ namespace Delight
             dependencyProperties.Add(CanvasGroupProperty);
             dependencyProperties.Add(UseFastShaderProperty);
             dependencyProperties.Add(FastMaterialProperty);
+            dependencyProperties.Add(BubbleNotifyChildLayoutChangedProperty);
         }
 
         #endregion
@@ -176,6 +177,13 @@ namespace Delight
         {
             get { return FastMaterialProperty.GetValue(this); }
             set { FastMaterialProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> BubbleNotifyChildLayoutChangedProperty = new DependencyProperty<System.Boolean>("BubbleNotifyChildLayoutChanged");
+        public System.Boolean BubbleNotifyChildLayoutChanged
+        {
+            get { return BubbleNotifyChildLayoutChangedProperty.GetValue(this); }
+            set { BubbleNotifyChildLayoutChangedProperty.SetValue(this, value); }
         }
 
         #endregion

@@ -38,7 +38,7 @@ namespace Delight
             dependencyProperties.Add(FontSharedMaterialsProperty);
             dependencyProperties.Add(FontMaterialProperty);
             dependencyProperties.Add(FontMaterialsProperty);
-            dependencyProperties.Add(ColorProperty);
+            dependencyProperties.Add(FontColorProperty);
             dependencyProperties.Add(TextMeshProUGUIAlphaProperty);
             dependencyProperties.Add(EnableVertexGradientProperty);
             dependencyProperties.Add(ColorGradientProperty);
@@ -171,11 +171,11 @@ namespace Delight
             set { FontMaterialsProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Color, TMPro.TextMeshProUGUI, Label> ColorProperty = new MappedDependencyProperty<UnityEngine.Color, TMPro.TextMeshProUGUI, Label>("Color", x => x.TextMeshProUGUI, x => x.color, (x, y) => x.color = y);
-        public UnityEngine.Color Color
+        public readonly static MappedDependencyProperty<UnityEngine.Color, TMPro.TextMeshProUGUI, Label> FontColorProperty = new MappedDependencyProperty<UnityEngine.Color, TMPro.TextMeshProUGUI, Label>("FontColor", x => x.TextMeshProUGUI, x => x.color, (x, y) => x.color = y);
+        public UnityEngine.Color FontColor
         {
-            get { return ColorProperty.GetValue(this); }
-            set { ColorProperty.SetValue(this, value); }
+            get { return FontColorProperty.GetValue(this); }
+            set { FontColorProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label> TextMeshProUGUIAlphaProperty = new MappedDependencyProperty<System.Single, TMPro.TextMeshProUGUI, Label>("TextMeshProUGUIAlpha", x => x.TextMeshProUGUI, x => x.alpha, (x, y) => x.alpha = y);
@@ -605,7 +605,7 @@ namespace Delight
                     Delight.Label.TextAlignmentProperty.SetDefault(_label, TMPro.TextAlignmentOptions.Left);
                     Delight.Label.WidthProperty.SetDefault(_label, new ElementSize(120f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(40f, ElementSizeUnit.Pixels));
-                    Delight.Label.ColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
+                    Delight.Label.FontColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24f);
                 }
                 return _label;

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class EditorMainView
+    public partial class DelightDesigner
     {
         public override void Update()
         {

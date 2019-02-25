@@ -18,18 +18,10 @@ namespace Delight
         {
             base.BeforeLoad();
 
-            // add rect transform
-            var rectTransform = GameObject.GetComponent<RectTransform>();
-            if (rectTransform == null)
-            {
-                rectTransform = GameObject.AddComponent<RectTransform>();
-            }
-            RectTransform = rectTransform;
-
             // initialize root canvas
             if (LayoutRoot == null)
             {
-                var parentUIView = this.FindParent<UIView>();
+                var parentUIView = this.FindParent<UIView>(x => !x.IgnoreObject);
                 if (parentUIView == null)
                 {
                     // we are the root view
@@ -45,7 +37,11 @@ namespace Delight
                         layoutRoot.Load();
                         LayoutRoot = layoutRoot;
                         LayoutParent = LayoutRoot;
-                        GameObject.transform.SetParent(layoutRoot.GameObject.transform);
+
+                        if (!IgnoreObject)
+                        {
+                            GameObject.transform.SetParent(layoutRoot.GameObject.transform);
+                        }
                     }
                 }
                 else
@@ -54,6 +50,17 @@ namespace Delight
                     LayoutRoot = parentUIView.LayoutRoot;
                 }
             }
+
+            if (IgnoreObject)
+                return;
+
+            // add rect transform
+            var rectTransform = GameObject.GetComponent<RectTransform>();
+            if (rectTransform == null)
+            {
+                rectTransform = GameObject.AddComponent<RectTransform>();
+            }
+            RectTransform = rectTransform;
         }
 
         /// <summary>
@@ -61,6 +68,9 @@ namespace Delight
         /// </summary>
         public override void OnPropertyChanged(object source, string property)
         {
+            if (IgnoreObject)
+                return;
+
             base.OnPropertyChanged(source, property);
             switch (property)
             {
@@ -94,6 +104,8 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
+            if (IgnoreObject)
+                return;
 
             // update layout and visibility
             VisibilityChanged();
@@ -113,6 +125,9 @@ namespace Delight
         /// </summary>
         protected void LayoutChanged()
         {
+            if (IgnoreObject)
+                return;
+
             if (DisableLayoutUpdate)
                 return;
 
@@ -132,7 +147,7 @@ namespace Delight
         /// Called when after the top-most load is called. Used to update parents.
         /// </summary>
         protected override void AfterInitiatedLoad()
-        {            
+        {
             NotifyParentOfLayoutUpdate();
             base.AfterInitiatedLoad();
         }
@@ -179,6 +194,10 @@ namespace Delight
         /// </summary>
         protected virtual void ChildLayoutChanged()
         {
+            if (BubbleNotifyChildLayoutChanged || IgnoreObject)
+            {
+                NotifyParentOfLayoutUpdate();
+            }
         }
 
         /// <summary>

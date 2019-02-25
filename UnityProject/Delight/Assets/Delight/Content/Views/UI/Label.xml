@@ -1,3 +1,3 @@
 <Label xmlns="Delight" BasedOn="UIView" TextMeshProUGUI="t:TMPro.TextMeshProUGUI, Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
-       m.TextMeshProUGUI="" rename.TextMeshProUGUIAlignment="TextAlignment" TextAlignment="Left" Width="120" Height="40" Color="Black" FontSize="24">
-</Label>
+       m.TextMeshProUGUI="" rename.TextMeshProUGUIAlignment="TextAlignment" rename.Color="FontColor" TextAlignment="Left" Width="120" Height="40" FontColor="Black" FontSize="24">
+</Label> 

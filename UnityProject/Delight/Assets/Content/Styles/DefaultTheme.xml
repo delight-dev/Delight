@@ -1,6 +1,11 @@
 <DefaultTheme>
-  <Button BackgroundColor="Green" Highlighted-BackgroundColor="Red" Pressed-BackgroundColor="Blue" />
+  <Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal" 
+          Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
+          Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="50px"
+          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" />
   <Button Style="BlueButton" BackgroundColor="Blue" />
   <Button Style="LargeBlueButton" BasedOn="BlueButton" Height="100" Width="200" />
-  <ListItem Selected-BackgroundColor="White" Highlighted-BackgroundColor="Red" Pressed-BackgroundColor="Blue" />
+  <ListItem Breadth="50" BackgroundColor="White" Selected-BackgroundColor="#ef706a" 
+            Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" 
+            Alternate-BackgroundColor="Gray95" /> 
 </DefaultTheme>
