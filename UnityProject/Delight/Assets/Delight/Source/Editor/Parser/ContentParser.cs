@@ -537,90 +537,59 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
-            // attached property declaration TODO cleanup
-            //if (attributeValue.IStartsWith("at:"))
-            //{
-            //    // validate
-            //    if (dotCount > 0 || hasStateName)
-            //    {
-            //        Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
-            //        return propertyExpressions;
-            //    }
+            // attached property declaration
+            if (attributeValue.IStartsWith("at:"))
+            {
+                // validate
+                if (dotCount > 0 || hasStateName)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
 
-            //    var propertyDeclaration = new PropertyDeclaration();
-            //    propertyExpressions.Add(propertyDeclaration);
-            //    propertyDeclaration.LineNumber = element.GetLineNumber();
-            //    propertyDeclaration.IsAttachedProperty = true;
+                int commaIndex = attributeValue.IndexOf(",");
+                int assignmentIndex = attributeValue.IndexOf("=");
+                
+                if (assignmentIndex > 0)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Assignment not allowed in declaration.", GetLineInfo(element), attributeName, attributeValue));
+                    return propertyExpressions;
+                }
 
-            //    int commaIndex = attributeValue.IndexOf(",");
-            //    int assignmentIndex = attributeValue.IndexOf("=");
+                // parse property value if any
+                var attachedProperty = new AttachedProperty();
+                attachedProperty.LineNumber = element.GetLineNumber();
+                propertyExpressions.Add(attachedProperty);
 
-            //    // parse property value if any
-            //    if (assignmentIndex > 0)
-            //    {
-            //        Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Assignment not allowed in declaration.", GetLineInfo(element), attributeName, attributeValue));
-            //        return propertyExpressions;
-            //    }
+                Type propertyType = null;
+                string propertyTypeName = attributeValue.Substring(3);
+                string propertyNamespace = null;
 
-            //    Type propertyType = null;
-            //    string propertyTypeName = attributeValue.Substring(3);
-            //    string propertyNamespace = null;
+                if (commaIndex > 0)
+                {
+                    // assembly qualified type is specified
+                    propertyType = Type.GetType(propertyTypeName);
+                }
+                else
+                {
+                    // get type from specified name (and namespace)
+                    GetPropertyTypeNameAndNamespace(propertyTypeName, out propertyTypeName, out propertyNamespace);
+                    propertyType = TypeHelper.GetType(propertyTypeName, propertyNamespace);
+                }
 
-            //    // check if it's a generic type 
-            //    int startBracketIndex = propertyTypeName.IndexOf("[");
-            //    if (startBracketIndex > 0)
-            //    {
-            //        // validate generic type
-            //        var genericTypeName = propertyTypeName.Substring(0, startBracketIndex);
-            //        GetPropertyTypeNameAndNamespace(genericTypeName, out genericTypeName, out propertyNamespace);
+                if (propertyType == null)
+                {
+                    Debug.LogError(String.Format("[Delight] {0}: Property type not found {1}=\"{2}\".", GetLineInfo(element), attributeName, attributeValue));
+                    return new List<PropertyExpression>();
+                }
 
-            //        // TODO validate generic type parameters, loop through each generic parameter and get their type and full name 
+                attachedProperty.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
+                attachedProperty.PropertyName = attributeName;
+                attachedProperty.PropertyTypeName = propertyType.Name;
+                attachedProperty.PropertyTypeFullName = propertyType.FullName;
 
-            //        propertyType = TypeHelper.GetType(genericTypeName, propertyNamespace);
-            //        propertyDeclaration.PropertyName = attributeName;
-            //        propertyDeclaration.PropertyTypeName = propertyType.Name;
-            //        propertyDeclaration.PropertyTypeFullName = String.Format("{0}{1}", propertyType.FullName, propertyTypeName.Substring(startBracketIndex).Replace('[', '<').Replace(']', '>').Trim());
-
-            //        return propertyExpressions;
-            //    }
-
-            //    if (commaIndex > 0)
-            //    {
-            //        // assembly qualified type is specified
-            //        propertyType = Type.GetType(propertyTypeName);
-            //    }
-            //    else
-            //    {
-            //        // get type from specified name (and namespace)
-            //        GetPropertyTypeNameAndNamespace(propertyTypeName, out propertyTypeName, out propertyNamespace);
-            //        propertyType = TypeHelper.GetType(propertyTypeName, propertyNamespace);
-            //    }
-
-            //    if (propertyType == null)
-            //    {
-            //        Debug.LogError(String.Format("[Delight] {0}: Property type not found {1}=\"{2}\".", GetLineInfo(element), attributeName, attributeValue));
-            //        return new List<PropertyExpression>();
-            //    }
-
-            //    bool isUnityComponent = typeof(UnityEngine.Component).IsAssignableFrom(propertyType);
-            //    if (isUnityComponent)
-            //    {
-            //        propertyDeclaration.DeclarationType = PropertyDeclarationType.UnityComponent;
-            //    }
-
-            //    if (IsUnityAssetType(propertyType))
-            //    {
-            //        propertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
-            //        propertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(propertyType, false);
-            //    }
-
-            //    propertyDeclaration.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
-            //    propertyDeclaration.PropertyName = attributeName;
-            //    propertyDeclaration.PropertyTypeName = propertyType.Name;
-            //    propertyDeclaration.PropertyTypeFullName = propertyType.FullName;
-
-            //    return propertyExpressions;
-            //}
+                return propertyExpressions;
+            }
 
             // property declaration
             if (attributeValue.IStartsWith("t:"))
@@ -672,8 +641,6 @@ namespace Delight.Editor.Parser
                     propertyType = TypeHelper.GetType(fullGenericTypeName, propertyNamespace);
                     if (propertyType == null)
                     {
-                        TypeHelper.GetGenericType(genericTypeName);
-
                         Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Unable to find generic type \"{3}\".", GetLineInfo(element), attributeName, attributeValue, genericTypeName));
                         return new List<PropertyExpression>();
                     }

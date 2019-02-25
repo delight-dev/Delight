@@ -331,6 +331,7 @@ namespace Delight.Editor.Parser
 
             var propertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>();
             var mappedDeclarations = GetMappedPropertyDeclarations(viewObject);
+            var attachedProperties = viewObject.PropertyExpressions.OfType<AttachedProperty>();
 
             sb.AppendLine("        #region Constructors");
             sb.AppendLine();
@@ -350,6 +351,12 @@ namespace Delight.Editor.Parser
                 foreach (var actionAssignment in actionAssignments)
                 {
                     sb.AppendLine("            {0} += ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                }
+
+                // initialize any attached properties                
+                foreach (var attachedProperty in attachedProperties)
+                {
+                    sb.AppendLine("            {0} = new AttachedProperty<{1}>(this, \"{0}\");", attachedProperty.PropertyName, attachedProperty.PropertyTypeFullName);
                 }
 
                 // set content container
@@ -451,6 +458,14 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("            set {{ {0}Property.SetValue(this, value); }}", mappedDeclaration.PropertyName);
                     sb.AppendLine("        }");
                 }
+            }
+
+            // generate attached properties
+
+            foreach (var attachedProperty in attachedProperties)
+            {
+                sb.AppendLine();
+                sb.AppendLine("        public AttachedProperty<{0}> {1} {{ get; private set; }}", attachedProperty.PropertyTypeFullName, attachedProperty.PropertyName);
             }
 
             sb.AppendLine();

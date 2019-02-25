@@ -13,13 +13,9 @@ namespace Delight
     /// </summary>
     public partial class LayoutGrid
     {
-        public AttachedProperty<CellIndex> Cell;
-        public AttachedProperty<CellIndex> CellSpan;
-
         public override void AfterInitialize()
         {
             base.AfterInitialize();
-            Cell = new AttachedProperty<CellIndex>(this, "Cell");
         }
 
         /// <summary>

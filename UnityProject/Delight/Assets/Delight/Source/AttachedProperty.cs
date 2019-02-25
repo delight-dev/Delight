@@ -22,6 +22,9 @@ namespace Delight
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
         public AttachedProperty(BindableObject parent, string propertyName)
         {
             _attachedValues = new Dictionary<object, T>();

@@ -524,6 +524,7 @@ namespace Delight.Editor.Parser
     [ProtoInclude(4, typeof(PropertyMapping))]
     [ProtoInclude(5, typeof(PropertyRename))]
     [ProtoInclude(6, typeof(InitializerProperty))]
+    [ProtoInclude(7, typeof(AttachedProperty))]
     public class PropertyExpression
     {
         [ProtoMember(101)]
@@ -553,9 +554,6 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(9, AsReference = true)]
         public AssetType AssetType;
-
-        [ProtoMember(10)]
-        public bool IsAttachedProperty;
     }
 
     /// <summary>
@@ -619,6 +617,25 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(2)]
         public List<string> Properties;
+    }
+
+    /// <summary>
+    /// Stores information about an attached property declaration.
+    /// </summary>
+    [ProtoContract]
+    public class AttachedProperty : PropertyExpression
+    {
+        [ProtoMember(1)]
+        public string PropertyName;
+
+        [ProtoMember(2)]
+        public string PropertyTypeName;
+
+        [ProtoMember(4)]
+        public string AssemblyQualifiedType;
+
+        [ProtoMember(6)]
+        public string PropertyTypeFullName;
     }
 
     /// <summary>
