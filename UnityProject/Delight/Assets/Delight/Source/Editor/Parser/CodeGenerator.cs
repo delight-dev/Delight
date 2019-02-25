@@ -63,10 +63,10 @@ namespace Delight.Editor.Parser
                 }
             }
 
-            // validate view content
+            // validate and update view declarations - template content, attached properties, etc.
             foreach (var viewObject in viewObjects)
             {
-                ValidateViewDeclarations(viewObject, viewObject.ViewDeclarations);
+                UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations);
             }
 
             // update all view objects that are changed            
@@ -92,10 +92,50 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Validates view declarations in the view object.
         /// </summary>
-        private static void ValidateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
+        private static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
         {
             foreach (var childViewDeclaration in childViewDeclarations)
             {
+                // update attached assignments 
+                var attachedAssignmentsNeedUpdate = childViewDeclaration.PropertyAssignments.Where(x => x.AttachedNeedUpdate).ToList();
+                foreach (var attachedAssignment in attachedAssignmentsNeedUpdate)
+                {
+                    attachedAssignment.AttachedNeedUpdate = false;
+                    int indexOfDot = attachedAssignment.PropertyName.IndexOf('.');
+                    var parentViewName = attachedAssignment.PropertyName.Substring(0, indexOfDot);
+                    var parentPropertyName = attachedAssignment.PropertyName.Substring(indexOfDot + 1);
+
+                    // see if we can find a view object of specified type as a parent to this view
+                    var parentViewDeclaration = childViewDeclaration.ParentDeclaration;
+                    while (parentViewDeclaration != null)
+                    {
+                        if (parentViewDeclaration.ViewName.IEquals(parentViewName))
+                        {
+                            // see if view actually has attached property declared
+                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
+                            var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
+                            if (attachedPropertyDeclaration != null)
+                            {
+                                // remove property assignment and add attached property assignment to declaration
+                                childViewDeclaration.PropertyAssignments.Remove(attachedAssignment);
+                                childViewDeclaration.AttachedPropertyAssignments.Add(new AttachedPropertyAssignment
+                                {
+                                    LineNumber = attachedAssignment.LineNumber,
+                                    PropertyName = parentPropertyName,
+                                    PropertyValue = attachedAssignment.PropertyValue,
+                                    ParentId = parentViewDeclaration.Id,
+                                    PropertyTypeName = attachedPropertyDeclaration.PropertyTypeName,
+                                    ParentViewName = parentViewName
+                                });
+
+                                break;
+                            }
+                        }
+
+                        parentViewDeclaration = parentViewDeclaration.ParentDeclaration;
+                    }
+                }
+
                 // validate template content
                 var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
                 bool templateContent = childViewObject.HasContentTemplate;
@@ -115,7 +155,7 @@ namespace Delight.Editor.Parser
                             if (templateChildObject.TypeName.IEquals(contentTemplateType))
                             {
                                 wrapContent = false;
-                                break; 
+                                break;
                             }
 
                             templateChildObject = templateChildObject.BasedOn;
@@ -126,7 +166,15 @@ namespace Delight.Editor.Parser
                     {
                         // children is not of appropriate type, so we need to wrap them
                         string viewName = !String.IsNullOrEmpty(contentTemplateType) ? contentTemplateType : "Region";
-                        var wrappingRegionDeclaration = new ViewDeclaration { Id = childId + "Content", ViewName = viewName, ChildDeclarations = childViewDeclaration.ChildDeclarations };
+                        var wrappingRegionDeclaration = new ViewDeclaration
+                        {
+                            Id = childId + "Content",
+                            ViewName = viewName,
+                            ChildDeclarations = childViewDeclaration.ChildDeclarations,
+                            ParentDeclaration = childViewDeclaration
+                        };
+                        wrappingRegionDeclaration.ChildDeclarations.ForEach(x => x.ParentDeclaration = wrappingRegionDeclaration);
+
                         childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
                         childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
 
@@ -135,7 +183,7 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                ValidateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
+                UpdateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
             }
         }
 
@@ -828,6 +876,23 @@ namespace Delight.Editor.Parser
                     }
                 }
 
+                // do we have attached properties?
+                foreach (var attachedProperty in childViewDeclaration.AttachedPropertyAssignments)
+                {
+                    // yes. add initializer for attached property
+                    var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeName, attachedProperty.PropertyValue);
+                    if (String.IsNullOrEmpty(typeValueInitializer))
+                    {
+                        Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to attached property <{1} {5}.{2}=\"{3}\">. Unable to convert value to property of type \"{4}\". Makes sure to include the namespace in the attached property declaration.",
+                            GetLineInfo(fileName, attachedProperty),
+                            viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
+                        continue;
+                    }
+
+                    var attachedParentIdVar = inTemplate ? attachedProperty.ParentId.ToLocalVariableName() : attachedProperty.ParentId;
+                    sb.AppendLine(indent, "{0}.{1}.SetValue({2}, {3});", attachedParentIdVar, attachedProperty.PropertyName, childIdVar, typeValueInitializer);
+                }
+
                 // generate bindings
                 if (childViewDeclaration.PropertyBindings.Any())
                 {
@@ -1058,8 +1123,12 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
-                propertyDeclarations.Add(new PropertyDeclarationInfo { Declaration = declaration, IsAssetReference = declaration.DeclarationType == PropertyDeclarationType.Asset,
-                    AssetType = declaration.AssetType });
+                propertyDeclarations.Add(new PropertyDeclarationInfo
+                {
+                    Declaration = declaration,
+                    IsAssetReference = declaration.DeclarationType == PropertyDeclarationType.Asset,
+                    AssetType = declaration.AssetType
+                });
             }
 
             if (includeMappedProperties)

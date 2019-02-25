@@ -250,7 +250,7 @@ namespace Delight.Editor.Parser
             }
 
             // parse the view's children recursively
-            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(viewObject, xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>());
+            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(viewObject, xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>(), null);
 
             // add property declarations for view declarations having IDs
             propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclarations));
@@ -399,7 +399,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses view declarations.
         /// </summary>
-        private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount)
+        private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration)
         {
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
@@ -407,6 +407,7 @@ namespace Delight.Editor.Parser
                 var viewDeclaration = new ViewDeclaration();
                 viewDeclaration.ViewName = viewElement.Name.LocalName;
                 viewDeclaration.LineNumber = viewElement.GetLineNumber();
+                viewDeclaration.ParentDeclaration = parentViewDeclaration;
 
                 // parse view's initialization attributes
                 foreach (var attribute in viewElement.Attributes())
@@ -478,7 +479,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // parse child elements
-                viewDeclaration.ChildDeclarations = ParseViewDeclarations(viewObject, path, viewElement.Elements(), viewIdCount);
+                viewDeclaration.ChildDeclarations = ParseViewDeclarations(viewObject, path, viewElement.Elements(), viewIdCount, viewDeclaration);
                 viewDeclarations.Add(viewDeclaration);
             }
 
@@ -746,7 +747,8 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
-            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber() });
+            bool attachedNeedUpdate = propertyName.Count(x => x == '.') == 1;
+            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber(), AttachedNeedUpdate = attachedNeedUpdate });
             return propertyExpressions;
         }
 

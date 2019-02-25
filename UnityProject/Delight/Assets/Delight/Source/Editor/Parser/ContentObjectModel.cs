@@ -525,6 +525,7 @@ namespace Delight.Editor.Parser
     [ProtoInclude(5, typeof(PropertyRename))]
     [ProtoInclude(6, typeof(InitializerProperty))]
     [ProtoInclude(7, typeof(AttachedProperty))]
+    [ProtoInclude(8, typeof(AttachedPropertyAssignment))]
     public class PropertyExpression
     {
         [ProtoMember(101)]
@@ -653,7 +654,32 @@ namespace Delight.Editor.Parser
         [ProtoMember(3)]
         public string StateName;
 
+        [ProtoMember(4)]
+        public bool AttachedNeedUpdate;
+
         public PropertyDeclarationInfo PropertyDeclarationInfo;
+    }
+
+    /// <summary>
+    /// Stores information about a attached property assignment.
+    /// </summary>
+    [ProtoContract]
+    public class AttachedPropertyAssignment : PropertyExpression
+    {
+        [ProtoMember(1)]
+        public string PropertyName;
+
+        [ProtoMember(2)]
+        public string PropertyValue;
+
+        [ProtoMember(3)]
+        public string ParentId;
+
+        [ProtoMember(4)]
+        public string PropertyTypeName;
+
+        [ProtoMember(5)]
+        public string ParentViewName;
     }
 
     /// <summary>
@@ -726,6 +752,12 @@ namespace Delight.Editor.Parser
         [ProtoMember(7)]
         public string Style;
 
+        [ProtoMember(8)]
+        public List<AttachedPropertyAssignment> AttachedPropertyAssignments;
+
+        [ProtoMember(9, AsReference = true)]
+        public ViewDeclaration ParentDeclaration;
+
         #endregion
 
         #region Constructor
@@ -735,6 +767,7 @@ namespace Delight.Editor.Parser
             PropertyAssignments = new List<PropertyAssignment>();
             PropertyBindings = new List<PropertyBinding>();
             ChildDeclarations = new List<ViewDeclaration>();
+            AttachedPropertyAssignments = new List<AttachedPropertyAssignment>();
         }
 
         #endregion

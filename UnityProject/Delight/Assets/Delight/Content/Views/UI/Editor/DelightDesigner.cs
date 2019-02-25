@@ -15,17 +15,17 @@ namespace Delight
         {
             base.AfterInitialize();
 
-            Grid1.Cell.SetValue(Cell00, new CellIndex(0, 0));
-            Grid1.Cell.SetValue(Cell01, new CellIndex(0, 1));
-            Grid1.Cell.SetValue(Cell02, new CellIndex(0, 2));
+            //Grid1.Cell.SetValue(Cell00, new CellIndex(0, 0));
+            //Grid1.Cell.SetValue(Cell01, new CellIndex(0, 1));
+            //Grid1.Cell.SetValue(Cell02, new CellIndex(0, 2));
 
-            Grid1.Cell.SetValue(Cell10, new CellIndex(1, 0));
-            Grid1.Cell.SetValue(Cell11, new CellIndex(1, 1));
-            Grid1.Cell.SetValue(Cell12, new CellIndex(1, 2));
+            //Grid1.Cell.SetValue(Cell10, new CellIndex(1, 0));
+            //Grid1.Cell.SetValue(Cell11, new CellIndex(1, 1));
+            //Grid1.Cell.SetValue(Cell12, new CellIndex(1, 2));
 
-            Grid1.Cell.SetValue(Cell20, new CellIndex(2, 0));
-            Grid1.Cell.SetValue(Cell21, new CellIndex(2, 1));
-            Grid1.Cell.SetValue(Cell22, new CellIndex(2, 2));
+            //Grid1.Cell.SetValue(Cell20, new CellIndex(2, 0));
+            //Grid1.Cell.SetValue(Cell21, new CellIndex(2, 1));
+            //Grid1.Cell.SetValue(Cell22, new CellIndex(2, 2));
         }
 
         public override void Update()
