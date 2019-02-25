@@ -1,3 +1,4 @@
 Assets/Content/Assets/Delight/Content/"AssetManagementTest"BigSlowView"BindingTest"Button"
-Collection"DelightDesigner"Grid"Group"Image"Label"LargeButton"
+Collection"DelightDesigner"GridExample"Group"Image"Label"LargeButton"
+LayoutGrid"
 LayoutRoot"List"ListItem"ModelBindingTest"PerformanceTest"Region"SceneObjectView"ScrollableRegion"	TestScene"UICanvas"UIImageView"UIView"View"ViewSwitcher

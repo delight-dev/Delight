@@ -514,6 +514,7 @@ namespace Delight.Editor.Parser
                 propertyName = attributeName.Replace(stateName + "-", "");
             }
 
+            // action property declaration
             if (attributeValue.IEquals("t:Action"))
             {
                 // validate
@@ -528,14 +529,15 @@ namespace Delight.Editor.Parser
                 propertyExpressions.Add(propertyDeclaration);
 
                 propertyDeclaration.PropertyName = attributeName;
-                propertyDeclaration.PropertyTypeName = "ViewAction"; // TODO these can be removed if generator handles action declaration as special case
-                propertyDeclaration.PropertyTypeFullName = "ViewAction"; // TODO these can be removed if generator handles action declaration as special case
+                propertyDeclaration.PropertyTypeName = "ViewAction";
+                propertyDeclaration.PropertyTypeFullName = "ViewAction";
                 propertyDeclaration.DeclarationType = PropertyDeclarationType.Action;
                 propertyDeclaration.LineNumber = element.GetLineNumber();
 
                 return propertyExpressions;
             }
 
+            // attached property declaration TODO cleanup
             //if (attributeValue.IStartsWith("at:"))
             //{
             //    // validate
@@ -545,28 +547,23 @@ namespace Delight.Editor.Parser
             //        return propertyExpressions;
             //    }
 
-            //    // regular property declaration
             //    var propertyDeclaration = new PropertyDeclaration();
             //    propertyExpressions.Add(propertyDeclaration);
             //    propertyDeclaration.LineNumber = element.GetLineNumber();
+            //    propertyDeclaration.IsAttachedProperty = true;
 
             //    int commaIndex = attributeValue.IndexOf(",");
             //    int assignmentIndex = attributeValue.IndexOf("=");
 
             //    // parse property value if any
-            //    if (assignmentIndex > 0 && commaIndex <= 0)
+            //    if (assignmentIndex > 0)
             //    {
-            //        var propertyAssignment = new PropertyAssignment();
-            //        propertyExpressions.Add(propertyAssignment);
-
-            //        propertyAssignment.PropertyName = attributeName;
-            //        propertyAssignment.PropertyValue = attributeValue.Substring(assignmentIndex + 1).Trim();
-            //        propertyAssignment.LineNumber = element.GetLineNumber();
-            //        attributeValue = attributeValue.Substring(0, assignmentIndex).Trim();
+            //        Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Assignment not allowed in declaration.", GetLineInfo(element), attributeName, attributeValue));
+            //        return propertyExpressions;
             //    }
 
             //    Type propertyType = null;
-            //    string propertyTypeName = attributeValue.Substring(2);
+            //    string propertyTypeName = attributeValue.Substring(3);
             //    string propertyNamespace = null;
 
             //    // check if it's a generic type 
@@ -625,6 +622,7 @@ namespace Delight.Editor.Parser
             //    return propertyExpressions;
             //}
 
+            // property declaration
             if (attributeValue.IStartsWith("t:"))
             {
                 // validate
@@ -638,7 +636,6 @@ namespace Delight.Editor.Parser
                 var propertyDeclaration = new PropertyDeclaration();
                 propertyExpressions.Add(propertyDeclaration);
                 propertyDeclaration.LineNumber = element.GetLineNumber();
-                //propertyDeclaration.
 
                 int commaIndex = attributeValue.IndexOf(",");
                 int assignmentIndex = attributeValue.IndexOf("=");
@@ -669,10 +666,24 @@ namespace Delight.Editor.Parser
 
                     // TODO validate generic type parameters, loop through each generic parameter and get their type and full name 
 
-                    propertyType = TypeHelper.GetType(genericTypeName, propertyNamespace);
+                    int genericParameterCount = propertyTypeName.Count(x => x == ',') + 1;
+                    var fullGenericTypeName = String.Format("{0}`{1}", genericTypeName, genericParameterCount);
+
+                    propertyType = TypeHelper.GetType(fullGenericTypeName, propertyNamespace);
+                    if (propertyType == null)
+                    {
+                        TypeHelper.GetGenericType(genericTypeName);
+
+                        Debug.LogError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Unable to find generic type \"{3}\".", GetLineInfo(element), attributeName, attributeValue, genericTypeName));
+                        return new List<PropertyExpression>();
+                    }
+
                     propertyDeclaration.PropertyName = attributeName;
-                    propertyDeclaration.PropertyTypeName = propertyType.Name;
-                    propertyDeclaration.PropertyTypeFullName = String.Format("{0}{1}", propertyType.FullName, propertyTypeName.Substring(startBracketIndex).Replace('[', '<').Replace(']', '>').Trim());
+                    propertyDeclaration.PropertyTypeName = genericTypeName;
+
+                    int genericTypeParameterCountIndex = propertyType.FullName.IndexOf('`');
+                    string formattedPropertyTypeFullName = propertyType.FullName.Substring(0, genericTypeParameterCountIndex);
+                    propertyDeclaration.PropertyTypeFullName = String.Format("{0}{1}", formattedPropertyTypeFullName, propertyTypeName.Substring(startBracketIndex).Replace('[', '<').Replace(']', '>').Trim());
 
                     return propertyExpressions;
                 }
@@ -747,6 +758,7 @@ namespace Delight.Editor.Parser
 
                 initializerProperty.PropertyName = attributeName.Substring(2);
                 var properties = attributeValue.Split(',').Select(x => x.Trim()).Where(y => !String.IsNullOrEmpty(y));
+
                 initializerProperty.Properties = properties.ToList();
                 initializerProperty.LineNumber = element.GetLineNumber();
                 return propertyExpressions;

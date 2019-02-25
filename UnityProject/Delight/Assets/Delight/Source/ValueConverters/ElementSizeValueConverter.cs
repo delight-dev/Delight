@@ -21,9 +21,9 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var convertedValue = Convert(stringValue);
-            if (convertedValue.Fill)
+            if (convertedValue.Unit == ElementSizeUnit.Pixels)
             {
-                return String.Format(CultureInfo.InvariantCulture, "new ElementSize { Fill = true }");
+                return String.Format(CultureInfo.InvariantCulture, "new ElementSize({0}f, ElementSizeUnit.Pixels)", convertedValue.Pixels);
             }
             else if (convertedValue.Unit == ElementSizeUnit.Percents)
             {                
@@ -31,8 +31,8 @@ namespace Delight
             }
             else
             {
-                return String.Format(CultureInfo.InvariantCulture, "new ElementSize({0}f, ElementSizeUnit.Pixels)", convertedValue.Pixels);
-            }            
+                return String.Format(CultureInfo.InvariantCulture, "new ElementSize({0}f, ElementSizeUnit.Proportional)", convertedValue.Proportion);
+            }
         }
 
         /// <summary>

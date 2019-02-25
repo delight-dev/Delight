@@ -32,14 +32,6 @@ namespace Delight
             set { SetProperty(ref _unit, value); }
         }
 
-        [SerializeField]
-        private bool _fill;
-        public bool Fill
-        {
-            get { return _fill; }
-            set { SetProperty(ref _fill, value); }
-        }
-
         /// <summary>
         /// Gets or sets element size in pixels.
         /// </summary>
@@ -70,11 +62,27 @@ namespace Delight
         {
             get
             {
-                return _unit == ElementSizeUnit.Percents ? _value : 0f;
+                return _unit == ElementSizeUnit.Percents || _unit == ElementSizeUnit.Proportional ? _value : 0f;
             }
             set
             {
                 _unit = ElementSizeUnit.Percents;
+                Value = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets element size in proportions.
+        /// </summary>
+        public float Proportion
+        {
+            get
+            {
+                return _unit == ElementSizeUnit.Percents || _unit == ElementSizeUnit.Proportional ? _value : 0f;
+            }
+            set
+            {
+                _unit = ElementSizeUnit.Proportional;
                 Value = value;
             }
         }
@@ -129,7 +137,6 @@ namespace Delight
             {
                 _value = elementSize.Value;
                 _unit = elementSize.Unit;
-                _fill = elementSize.Fill;
             }
         }
 
@@ -171,17 +178,26 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets element size with the specified proportion.
+        /// </summary>
+        public static ElementSize FromProportion(float proportion)
+        {
+            return new ElementSize(proportion, ElementSizeUnit.Proportional);
+        }
+
+        /// <summary>
         /// Parses string into element size.
         /// </summary>
         public static ElementSize Parse(string value)
         {
             ElementSize elementSize = new ElementSize();
             string trimmedValue = value.Trim();
-            if (trimmedValue == "*")
+            if (trimmedValue.EndsWith("*"))
             {
-                elementSize.Value = 1;
-                elementSize.Unit = ElementSizeUnit.Percents;
-                elementSize.Fill = true;
+                int lastIndex = trimmedValue.LastIndexOf("*", StringComparison.OrdinalIgnoreCase);
+                var proportion = lastIndex > 0 ? System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) : 1.0f;
+                elementSize.Value = proportion;
+                elementSize.Unit = ElementSizeUnit.Proportional;
             }
             else if (trimmedValue.EndsWith("%"))
             {
@@ -225,7 +241,7 @@ namespace Delight
         public override bool Equals(object obj)
         {
             var elementSize = obj as ElementSize;
-            return (elementSize != null) && (elementSize.Unit == Unit) && (elementSize.Value == Value) && (elementSize.Fill == Fill);
+            return (elementSize != null) && (elementSize.Unit == Unit) && (elementSize.Value == Value);
         }
 
         /// <summary>

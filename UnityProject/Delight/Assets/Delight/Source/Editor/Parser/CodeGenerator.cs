@@ -636,7 +636,8 @@ namespace Delight.Editor.Parser
                     }
 
                     // this assignment is to an initializer property - create new property assignments
-                    var assignmentValues = propertyAssignment.PropertyValue.Split(',');
+                    var splitter = propertyAssignment.PropertyValue.Contains(";") ? ';' : ',';
+                    var assignmentValues = propertyAssignment.PropertyValue.Split(splitter);
                     for (int k = 0; k < initializerProperty.Properties.Count; ++k)
                     {
                         if (assignmentValues.Length == 1)

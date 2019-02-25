@@ -17,6 +17,11 @@ namespace Delight
         /// <summary>
         /// Element size specified in percents.
         /// </summary>
-        Percents = 1
+        Percents = 1,
+
+        /// <summary>
+        /// Element size specified in proportion to other sizes.
+        /// </summary>
+        Proportional = 2
     }
 }

@@ -1,0 +1,15 @@
+<GridExample xmlns="Delight" BasedOn="LayoutRoot">
+  <Grid RowDefinitions="200,200,200" ColumnDefinitions="200,200,200"> 
+    <Region Id="Cell00" BackgroundColor="#5389e0" />
+    <Region Id="Cell01" BackgroundColor="#e375f9" />
+    <Region Id="Cell02" BackgroundColor="#74f9d5" />
+
+    <Region Id="Cell10" BackgroundColor="#f9c674" />
+    <Region Id="Cell11" BackgroundColor="#fced2d" />
+    <Region Id="Cell12" BackgroundColor="#2cf72f" />
+
+    <Region Id="Cell20" BackgroundColor="#ef552b" />
+    <Region Id="Cell21" BackgroundColor="#0087ff" />
+    <Region Id="Cell22" BackgroundColor="#8730ad" />
+  </Grid>
+</GridExample>

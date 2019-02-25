@@ -109,6 +109,26 @@ namespace Delight
             return Activator.CreateInstance(type);
         }
 
+        // TODO clean up
+        public static void GetGenericType(string typeName)
+        {
+            if (_typeDictionary == null)
+            {
+                InitializeAssemblyTypes();
+            }
+
+            foreach (var type in _typeDictionary)
+            {
+                if (!type.Key.Contains(typeName))
+                    continue;
+                
+                foreach (var t in type.Value)
+                {
+                    Debug.Log(t.Name + " | " + t.FullName);
+                }
+            }
+        }
+
         /// <summary>
         /// Gets type with the specified name and namespace. 
         /// </summary>

@@ -23,6 +23,18 @@ namespace Delight
             Image2 = new Image(this, ContentRegion.Content, "Image2", Image2Template);
             Button1 = new Button(this, ContentRegion.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
+
+            // constructing Grid (Grid1)
+            Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
+            Cell00 = new Region(this, Grid1.Content, "Cell00", Cell00Template);
+            Cell01 = new Region(this, Grid1.Content, "Cell01", Cell01Template);
+            Cell02 = new Region(this, Grid1.Content, "Cell02", Cell02Template);
+            Cell10 = new Region(this, Grid1.Content, "Cell10", Cell10Template);
+            Cell11 = new Region(this, Grid1.Content, "Cell11", Cell11Template);
+            Cell12 = new Region(this, Grid1.Content, "Cell12", Cell12Template);
+            Cell20 = new Region(this, Grid1.Content, "Cell20", Cell20Template);
+            Cell21 = new Region(this, Grid1.Content, "Cell21", Cell21Template);
+            Cell22 = new Region(this, Grid1.Content, "Cell22", Cell22Template);
             this.AfterInitializeInternal();
         }
 
@@ -45,6 +57,26 @@ namespace Delight
             dependencyProperties.Add(Image2TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(Grid1Property);
+            dependencyProperties.Add(Grid1TemplateProperty);
+            dependencyProperties.Add(Cell00Property);
+            dependencyProperties.Add(Cell00TemplateProperty);
+            dependencyProperties.Add(Cell01Property);
+            dependencyProperties.Add(Cell01TemplateProperty);
+            dependencyProperties.Add(Cell02Property);
+            dependencyProperties.Add(Cell02TemplateProperty);
+            dependencyProperties.Add(Cell10Property);
+            dependencyProperties.Add(Cell10TemplateProperty);
+            dependencyProperties.Add(Cell11Property);
+            dependencyProperties.Add(Cell11TemplateProperty);
+            dependencyProperties.Add(Cell12Property);
+            dependencyProperties.Add(Cell12TemplateProperty);
+            dependencyProperties.Add(Cell20Property);
+            dependencyProperties.Add(Cell20TemplateProperty);
+            dependencyProperties.Add(Cell21Property);
+            dependencyProperties.Add(Cell21TemplateProperty);
+            dependencyProperties.Add(Cell22Property);
+            dependencyProperties.Add(Cell22TemplateProperty);
         }
 
         #endregion
@@ -121,6 +153,146 @@ namespace Delight
             set { Button1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<LayoutGrid> Grid1Property = new DependencyProperty<LayoutGrid>("Grid1");
+        public LayoutGrid Grid1
+        {
+            get { return Grid1Property.GetValue(this); }
+            set { Grid1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Grid1TemplateProperty = new DependencyProperty<Template>("Grid1Template");
+        public Template Grid1Template
+        {
+            get { return Grid1TemplateProperty.GetValue(this); }
+            set { Grid1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell00Property = new DependencyProperty<Region>("Cell00");
+        public Region Cell00
+        {
+            get { return Cell00Property.GetValue(this); }
+            set { Cell00Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell00TemplateProperty = new DependencyProperty<Template>("Cell00Template");
+        public Template Cell00Template
+        {
+            get { return Cell00TemplateProperty.GetValue(this); }
+            set { Cell00TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell01Property = new DependencyProperty<Region>("Cell01");
+        public Region Cell01
+        {
+            get { return Cell01Property.GetValue(this); }
+            set { Cell01Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell01TemplateProperty = new DependencyProperty<Template>("Cell01Template");
+        public Template Cell01Template
+        {
+            get { return Cell01TemplateProperty.GetValue(this); }
+            set { Cell01TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell02Property = new DependencyProperty<Region>("Cell02");
+        public Region Cell02
+        {
+            get { return Cell02Property.GetValue(this); }
+            set { Cell02Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell02TemplateProperty = new DependencyProperty<Template>("Cell02Template");
+        public Template Cell02Template
+        {
+            get { return Cell02TemplateProperty.GetValue(this); }
+            set { Cell02TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell10Property = new DependencyProperty<Region>("Cell10");
+        public Region Cell10
+        {
+            get { return Cell10Property.GetValue(this); }
+            set { Cell10Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell10TemplateProperty = new DependencyProperty<Template>("Cell10Template");
+        public Template Cell10Template
+        {
+            get { return Cell10TemplateProperty.GetValue(this); }
+            set { Cell10TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell11Property = new DependencyProperty<Region>("Cell11");
+        public Region Cell11
+        {
+            get { return Cell11Property.GetValue(this); }
+            set { Cell11Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell11TemplateProperty = new DependencyProperty<Template>("Cell11Template");
+        public Template Cell11Template
+        {
+            get { return Cell11TemplateProperty.GetValue(this); }
+            set { Cell11TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell12Property = new DependencyProperty<Region>("Cell12");
+        public Region Cell12
+        {
+            get { return Cell12Property.GetValue(this); }
+            set { Cell12Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell12TemplateProperty = new DependencyProperty<Template>("Cell12Template");
+        public Template Cell12Template
+        {
+            get { return Cell12TemplateProperty.GetValue(this); }
+            set { Cell12TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell20Property = new DependencyProperty<Region>("Cell20");
+        public Region Cell20
+        {
+            get { return Cell20Property.GetValue(this); }
+            set { Cell20Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell20TemplateProperty = new DependencyProperty<Template>("Cell20Template");
+        public Template Cell20Template
+        {
+            get { return Cell20TemplateProperty.GetValue(this); }
+            set { Cell20TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell21Property = new DependencyProperty<Region>("Cell21");
+        public Region Cell21
+        {
+            get { return Cell21Property.GetValue(this); }
+            set { Cell21Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell21TemplateProperty = new DependencyProperty<Template>("Cell21Template");
+        public Template Cell21Template
+        {
+            get { return Cell21TemplateProperty.GetValue(this); }
+            set { Cell21TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Cell22Property = new DependencyProperty<Region>("Cell22");
+        public Region Cell22
+        {
+            get { return Cell22Property.GetValue(this); }
+            set { Cell22Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Cell22TemplateProperty = new DependencyProperty<Template>("Cell22Template");
+        public Template Cell22Template
+        {
+            get { return Cell22TemplateProperty.GetValue(this); }
+            set { Cell22TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -158,6 +330,16 @@ namespace Delight
                     Delight.DelightDesigner.Image1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage1);
                     Delight.DelightDesigner.Image2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage2);
                     Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
+                    Delight.DelightDesigner.Grid1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGrid1);
+                    Delight.DelightDesigner.Cell00TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell00);
+                    Delight.DelightDesigner.Cell01TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell01);
+                    Delight.DelightDesigner.Cell02TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell02);
+                    Delight.DelightDesigner.Cell10TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell10);
+                    Delight.DelightDesigner.Cell11TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell11);
+                    Delight.DelightDesigner.Cell12TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell12);
+                    Delight.DelightDesigner.Cell20TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell20);
+                    Delight.DelightDesigner.Cell21TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell21);
+                    Delight.DelightDesigner.Cell22TemplateProperty.SetDefault(_delightDesigner, DelightDesignerCell22);
                 }
                 return _delightDesigner;
             }
@@ -294,6 +476,217 @@ namespace Delight
                     Delight.Label.TextProperty.SetDefault(_delightDesignerButton1Label, "Test");
                 }
                 return _delightDesignerButton1Label;
+            }
+        }
+
+        private static Template _delightDesignerGrid1;
+        public static Template DelightDesignerGrid1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerGrid1 == null || _delightDesignerGrid1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerGrid1 == null)
+#endif
+                {
+                    _delightDesignerGrid1 = new Template(LayoutGridTemplates.LayoutGrid);
+#if UNITY_EDITOR
+                    _delightDesignerGrid1.Name = "DelightDesignerGrid1";
+#endif
+                    Delight.LayoutGrid.RowDefinitionsProperty.SetDefault(_delightDesignerGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.LayoutGrid.ColumnDefinitionsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                }
+                return _delightDesignerGrid1;
+            }
+        }
+
+        private static Template _delightDesignerCell00;
+        public static Template DelightDesignerCell00
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell00 == null || _delightDesignerCell00.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell00 == null)
+#endif
+                {
+                    _delightDesignerCell00 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell00.Name = "DelightDesignerCell00";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell00, new UnityEngine.Color(0.3254902f, 0.5372549f, 0.8784314f, 1f));
+                }
+                return _delightDesignerCell00;
+            }
+        }
+
+        private static Template _delightDesignerCell01;
+        public static Template DelightDesignerCell01
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell01 == null || _delightDesignerCell01.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell01 == null)
+#endif
+                {
+                    _delightDesignerCell01 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell01.Name = "DelightDesignerCell01";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell01, new UnityEngine.Color(0.8901961f, 0.4588235f, 0.9764706f, 1f));
+                }
+                return _delightDesignerCell01;
+            }
+        }
+
+        private static Template _delightDesignerCell02;
+        public static Template DelightDesignerCell02
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell02 == null || _delightDesignerCell02.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell02 == null)
+#endif
+                {
+                    _delightDesignerCell02 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell02.Name = "DelightDesignerCell02";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell02, new UnityEngine.Color(0.454902f, 0.9764706f, 0.8352941f, 1f));
+                }
+                return _delightDesignerCell02;
+            }
+        }
+
+        private static Template _delightDesignerCell10;
+        public static Template DelightDesignerCell10
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell10 == null || _delightDesignerCell10.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell10 == null)
+#endif
+                {
+                    _delightDesignerCell10 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell10.Name = "DelightDesignerCell10";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell10, new UnityEngine.Color(0.9764706f, 0.7764706f, 0.454902f, 1f));
+                }
+                return _delightDesignerCell10;
+            }
+        }
+
+        private static Template _delightDesignerCell11;
+        public static Template DelightDesignerCell11
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell11 == null || _delightDesignerCell11.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell11 == null)
+#endif
+                {
+                    _delightDesignerCell11 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell11.Name = "DelightDesignerCell11";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell11, new UnityEngine.Color(0.9882353f, 0.9294118f, 0.1764706f, 1f));
+                }
+                return _delightDesignerCell11;
+            }
+        }
+
+        private static Template _delightDesignerCell12;
+        public static Template DelightDesignerCell12
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell12 == null || _delightDesignerCell12.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell12 == null)
+#endif
+                {
+                    _delightDesignerCell12 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell12.Name = "DelightDesignerCell12";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell12, new UnityEngine.Color(0.172549f, 0.9686275f, 0.1843137f, 1f));
+                }
+                return _delightDesignerCell12;
+            }
+        }
+
+        private static Template _delightDesignerCell20;
+        public static Template DelightDesignerCell20
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell20 == null || _delightDesignerCell20.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell20 == null)
+#endif
+                {
+                    _delightDesignerCell20 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell20.Name = "DelightDesignerCell20";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell20, new UnityEngine.Color(0.9372549f, 0.3333333f, 0.1686275f, 1f));
+                }
+                return _delightDesignerCell20;
+            }
+        }
+
+        private static Template _delightDesignerCell21;
+        public static Template DelightDesignerCell21
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell21 == null || _delightDesignerCell21.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell21 == null)
+#endif
+                {
+                    _delightDesignerCell21 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell21.Name = "DelightDesignerCell21";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell21, new UnityEngine.Color(0f, 0.5294118f, 1f, 1f));
+                }
+                return _delightDesignerCell21;
+            }
+        }
+
+        private static Template _delightDesignerCell22;
+        public static Template DelightDesignerCell22
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerCell22 == null || _delightDesignerCell22.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerCell22 == null)
+#endif
+                {
+                    _delightDesignerCell22 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerCell22.Name = "DelightDesignerCell22";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerCell22, new UnityEngine.Color(0.5294118f, 0.1882353f, 0.6784314f, 1f));
+                }
+                return _delightDesignerCell22;
             }
         }
 

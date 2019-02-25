@@ -70,6 +70,8 @@ namespace Delight
             Converters.Add("TMPro.TextAlignmentOptions", new EnumValueConverter<TMPro.TextAlignmentOptions>());
             Converters.Add("Delight.SpriteAsset", new SpriteAssetValueConverter());
             Converters.Add("TMPro.FontStyles", new EnumValueConverter<TMPro.FontStyles>());
+            Converters.Add("Delight.RowDefinitions", new RowDefinitionsValueConverter());
+            Converters.Add("Delight.ColumnDefinitions", new ColumnDefinitionsValueConverter());
         }
 
         #endregion

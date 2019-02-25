@@ -553,6 +553,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(9, AsReference = true)]
         public AssetType AssetType;
+
+        [ProtoMember(10)]
+        public bool IsAttachedProperty;
     }
 
     /// <summary>

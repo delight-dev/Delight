@@ -195,7 +195,7 @@ namespace Delight
                 }
             }
                        
-            DisableLayoutUpdate = defaultDisableLayoutUpdate;         
+            DisableLayoutUpdate = defaultDisableLayoutUpdate;
             base.UpdateLayout(notifyParent && hasNewSize); 
         }
 
