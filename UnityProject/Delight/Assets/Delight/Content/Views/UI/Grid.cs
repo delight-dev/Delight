@@ -47,6 +47,8 @@ namespace Delight
 
             UpdateRowAndColumnDefinitions();
 
+            Debug.Log("Updating grid layout");
+
             // arrange children into grid
             for (int i = 0; i < children.Count; ++i)
             {
@@ -56,9 +58,7 @@ namespace Delight
                 {
                     Debug.LogWarning(String.Format("[Delight] {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
                     continue;
-                }
-
-                Debug.Log("Arranging cell: " + cellIndex.Row + ", " + cellIndex.Column);
+                }               
 
                 // calculate width, height and offset of view based on cell index
                 int columnIndex = cellIndex.Column < ColumnDefinitions.Count ? cellIndex.Column : ColumnDefinitions.Count - 1;
@@ -66,9 +66,6 @@ namespace Delight
 
                 int rowIndex = cellIndex.Row < RowDefinitions.Count ? cellIndex.Row : RowDefinitions.Count - 1;
                 var rowDefinition = RowDefinitions[rowIndex];
-
-                Debug.Log("Row/Column index: " + rowIndex + ", " + columnIndex);
-                Debug.Log("Offset: " + rowDefinition.ActualOffset + ", " + columnDefinition.ActualOffset);
 
                 ElementMargin cellOffset = new ElementMargin();
                 cellOffset.Left = columnDefinition.ActualOffset;
