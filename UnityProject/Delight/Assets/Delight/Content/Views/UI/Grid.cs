@@ -47,8 +47,6 @@ namespace Delight
 
             UpdateRowAndColumnDefinitions();
 
-            Debug.Log("Updating grid layout");
-
             // arrange children into grid
             for (int i = 0; i < children.Count; ++i)
             {
