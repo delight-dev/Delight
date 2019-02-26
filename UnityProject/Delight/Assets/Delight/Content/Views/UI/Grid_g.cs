@@ -33,8 +33,8 @@ namespace Delight
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(ColumnSpacingProperty);
             dependencyProperties.Add(RowSpacingProperty);
-            dependencyProperties.Add(RowDefinitionsProperty);
-            dependencyProperties.Add(ColumnDefinitionsProperty);
+            dependencyProperties.Add(RowsProperty);
+            dependencyProperties.Add(ColumnsProperty);
         }
 
         #endregion
@@ -62,18 +62,18 @@ namespace Delight
             set { RowSpacingProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.RowDefinitions> RowDefinitionsProperty = new DependencyProperty<Delight.RowDefinitions>("RowDefinitions");
-        public Delight.RowDefinitions RowDefinitions
+        public readonly static DependencyProperty<Delight.RowDefinitions> RowsProperty = new DependencyProperty<Delight.RowDefinitions>("Rows");
+        public Delight.RowDefinitions Rows
         {
-            get { return RowDefinitionsProperty.GetValue(this); }
-            set { RowDefinitionsProperty.SetValue(this, value); }
+            get { return RowsProperty.GetValue(this); }
+            set { RowsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.ColumnDefinitions> ColumnDefinitionsProperty = new DependencyProperty<Delight.ColumnDefinitions>("ColumnDefinitions");
-        public Delight.ColumnDefinitions ColumnDefinitions
+        public readonly static DependencyProperty<Delight.ColumnDefinitions> ColumnsProperty = new DependencyProperty<Delight.ColumnDefinitions>("Columns");
+        public Delight.ColumnDefinitions Columns
         {
-            get { return ColumnDefinitionsProperty.GetValue(this); }
-            set { ColumnDefinitionsProperty.SetValue(this, value); }
+            get { return ColumnsProperty.GetValue(this); }
+            set { ColumnsProperty.SetValue(this, value); }
         }
 
         public AttachedProperty<Delight.CellIndex> Cell { get; private set; }
@@ -112,6 +112,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _layoutGrid.Name = "LayoutGrid";
 #endif
+                    Delight.LayoutGrid.EnableScriptEventsProperty.SetDefault(_layoutGrid, true);
                 }
                 return _layoutGrid;
             }

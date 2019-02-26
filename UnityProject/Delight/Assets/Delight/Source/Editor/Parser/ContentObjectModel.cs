@@ -570,6 +570,7 @@ namespace Delight.Editor.Parser
         public string TargetObjectType;
         public string PropertyName;
         public AssetType AssetType;
+        public string TargetAssemblyQualifiedType;
 
         public string FullTargetPropertyPath
         {

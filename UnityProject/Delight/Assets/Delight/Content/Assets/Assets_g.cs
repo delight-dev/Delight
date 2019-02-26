@@ -48,6 +48,7 @@ namespace Delight
         #region Fields
 
         public readonly TMP_FontAsset LiberationSansSDF;
+        public readonly TMP_FontAsset EbrimaSDF;
 
         #endregion
 
@@ -56,8 +57,10 @@ namespace Delight
         public TMP_FontAssetData()
         {
             LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
 
             Add(LiberationSansSDF);
+            Add(EbrimaSDF);
         }
 
         #endregion
@@ -234,6 +237,39 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
+    }
+
+    #endregion
+
+    #region Fonts
+
+    public partial class FontAsset : AssetObject<UnityEngine.Font>
+    {
+    }
+
+    public partial class FontAssetData : DataProvider<FontAsset>
+    {
+        #region Fields
+
+        public readonly FontAsset Ebrima;
+
+        #endregion
+
+        #region Constructor
+
+        public FontAssetData()
+        {
+            Ebrima = new FontAsset { Id = "Ebrima", IsResource = true, RelativePath = "Fonts/" };
+
+            Add(Ebrima);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static FontAssetData Fonts = new FontAssetData();
     }
 
     #endregion

@@ -1,5 +1,6 @@
 <Grid xmlns="Delight" BasedOn="UIImageView" TypeName="LayoutGrid"
       Spacing="t:ElementSize" ColumnSpacing="t:ElementSize" RowSpacing="t:ElementSize"
-      RowDefinitions="t:RowDefinitions" ColumnDefinitions="t:ColumnDefinitions"
-      i.Cells="RowDefinitions, ColumnDefinitions" Cell="at:CellIndex" CellSpan="at:CellIndex"> 
+      Rows="t:RowDefinitions" Columns="t:ColumnDefinitions"
+      i.Cells="RowDefinitions, ColumnDefinitions" Cell="at:CellIndex" CellSpan="at:CellIndex"
+      EnableScriptEvents="True"> 
 </Grid> 

@@ -31,7 +31,7 @@ namespace Delight
             get { return _unit; }
             set { SetProperty(ref _unit, value); }
         }
-
+        
         /// <summary>
         /// Gets or sets element size in pixels.
         /// </summary>

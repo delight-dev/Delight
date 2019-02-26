@@ -1,43 +1,23 @@
-<DelightDesigner xmlns="Delight" BasedOn="LayoutRoot">
-  <Region Id="ContentRegion" Margin="0,0,0,0">
-    <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
-    <Image Color="#3f3f3d" Size="1,100%" />
-    <Image Color="#3f3f3d" Size="100%,1" />
-    <Button Click="Test1" Text="Test" />
-  </Region>
-
-  <Grid Cells="200,*,*; 200,200,*">  
-    <Region Grid.Cell="0,0" Id="Cell00" BackgroundColor="#5389e0" />
-    <Region Grid.Cell="0,1" Id="Cell01" BackgroundColor="#e375f9" />
-    <Region Grid.Cell="0,2" Id="Cell02" BackgroundColor="#74f9d5" />
-
-    <Region Grid.Cell="1,0" Id="Cell10" BackgroundColor="#f9c674" />
-    <Region Grid.Cell="1,1" Id="Cell11" BackgroundColor="#fced2d" />
-    <Region Grid.Cell="1,2" Id="Cell12" BackgroundColor="#2cf72f" />
-
-    <Region Grid.Cell="2,0" Id="Cell20" BackgroundColor="#ef552b" />
-    <Region Grid.Cell="2,1" Id="Cell21" BackgroundColor="#0087ff" />
-    <Region Grid.Cell="2,2" Id="Cell22" BackgroundColor="#8730ad" />
-  </Grid>
+<DelightDesigner xmlns="Delight" BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData">
   
-  <!--<Grid RowDefinitions="200,*,*" ColumnDefinitions="200,200,*">
-    <Region Id="Cell00" BackgroundColor="#5389e0" />
-    <Region Id="Cell01" BackgroundColor="#e375f9" />
-    <Region Id="Cell02" BackgroundColor="#74f9d5" />
+  <Grid Columns="250,*,250" Rows="50,*">
+    <!-- Designer Content Region -->
+    <Region Grid.Cell="1,1" Id="ContentRegion" BackgroundColor="#fced2d">
+      <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
+      <Image Color="#3f3f3d" Size="1,100%" />
+      <Image Color="#3f3f3d" Size="100%,1" />
+      <Button Click="Test1" Text="Test" />
+    </Region>
 
-    <Region Id="Cell10" BackgroundColor="#f9c674" />
-    <Region Id="Cell11" BackgroundColor="#fced2d" />
-    <Region Id="Cell12" BackgroundColor="#2cf72f" />
+    <!-- Left Panel - Content Explorer -->
+    <Region Grid.Cell="0,0" Grid.CellSpan="2,0" BackgroundColor="#dcdcdc">
+      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="0,50,0,5" BackgroundColor="Blue" ContentAlignment="Left" Width="100%">
+        <ListItem Width="100%">
+          <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima SDF" Width="240" EnableWordWrapping="False" Margin="10,0,0,0" OverflowMode="Ellipsis" /> 
+        </ListItem>
+      </List>
+    </Region> 
 
-    <Region Id="Cell20" BackgroundColor="#ef552b" />
-    <Region Id="Cell21" BackgroundColor="#0087ff" />
-    <Region Id="Cell22" BackgroundColor="#8730ad" />
-  </Grid>-->
-  
-  <!--<Region Id="ContentExplorer" Width="250">
-    <List IsScrollable="True">      
-    </List>    
-  </Region>  
-  <Grid>
-  </Grid>-->
+  </Grid> 
+
 </DelightDesigner>  

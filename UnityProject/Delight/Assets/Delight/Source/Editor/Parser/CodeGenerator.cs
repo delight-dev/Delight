@@ -750,11 +750,26 @@ namespace Delight.Editor.Parser
                     }
                     else
                     {
-                        // no initializer found for the type being assigned to
-                        Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
-                            GetLineInfo(fileName, propertyAssignment),
-                            viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
-                        continue;
+                        // see if type is enum 
+                        Type type = null;
+                        if (!String.IsNullOrEmpty(decl.Declaration.AssemblyQualifiedType))
+                        {
+                            type = Type.GetType(decl.Declaration.AssemblyQualifiedType);
+                        }
+
+                        if (type != null && type.IsEnum)
+                        {
+                            // generate generic initializer for enum type
+                            typeValueInitializer = String.Format("{0}.{1}", type.FullName.Replace('+', '.'), Enum.Parse(type, propertyAssignment.PropertyValue, true));
+                        }
+                        else
+                        {
+                            // no initializer found for the type being assigned to
+                            Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
+                                GetLineInfo(fileName, propertyAssignment),
+                                viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
+                            continue;
+                        }
                     }
                 }
 
@@ -916,8 +931,12 @@ namespace Delight.Editor.Parser
                         // get property names along path
                         var templateItemInfo = templateItems != null ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0]) : null;
                         bool isTemplateItemSource = templateItemInfo != null;
+
                         if (isTemplateItemSource)
                         {
+                            if (templateItemInfo.ItemType == null)
+                                continue; // item type was not inferred so ignore binding
+
                             sourcePath[0] = templateItemInfo.VariableName;
                             sourcePath.Insert(1, "Item");
                         }
@@ -1051,14 +1070,16 @@ namespace Delight.Editor.Parser
 
             // go through source path and find the item type 
             Type sourceType = typeof(Models);
+            int startIndex = 1;
             if (sourcePath[0] != "Models")
             {
                 sourceType = TypeHelper.GetType(viewObject.TypeName);
+                startIndex = 0;
             }
 
             // loop through each property and infer their type
             var bindableCollectionBase = typeof(BindableCollection);
-            for (int i = 1; i < sourcePath.Count; ++i)
+            for (int i = startIndex; i < sourcePath.Count; ++i)
             {
                 var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
                 if (memberInfo == null)
@@ -1067,7 +1088,7 @@ namespace Delight.Editor.Parser
                         GetLineInfo(fileName, itemIdDeclaration),
                         viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
                         sourcePath[i], sourceType.Name));
-                    return nameof(BindableObject);
+                    return null;
                 }
 
                 // if it's a bindable collection get the type from the generic argument
@@ -1148,7 +1169,8 @@ namespace Delight.Editor.Parser
                             PropertyName = mappedProperty.PropertyName,
                             PropertyTypeName = mappedProperty.TargetPropertyTypeFullName,
                             PropertyTypeFullName = mappedProperty.TargetPropertyTypeFullName,
-                            DeclarationType = mappedProperty.IsViewReference ? PropertyDeclarationType.View : PropertyDeclarationType.Default
+                            DeclarationType = mappedProperty.IsViewReference ? PropertyDeclarationType.View : PropertyDeclarationType.Default,
+                            AssemblyQualifiedType = mappedProperty.TargetAssemblyQualifiedType                            
                         }
                     });
                 }
@@ -1216,7 +1238,8 @@ namespace Delight.Editor.Parser
                             TargetObjectType = childViewObject.TypeName, // TODO unsure if this is correct
                             IsViewReference = true,
                             IsAssetReference = declaration.IsAssetReference,
-                            AssetType = declaration.AssetType
+                            AssetType = declaration.AssetType,
+                            TargetAssemblyQualifiedType = declaration.Declaration.AssemblyQualifiedType
                         });
                     }
                 }
@@ -1270,7 +1293,8 @@ namespace Delight.Editor.Parser
                             TargetObjectType = targetObjectType.FullName,
                             IsViewReference = false,
                             IsAssetReference = isAssetReference,
-                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(field.FieldType, false) : null
+                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(field.FieldType, false) : null,
+                            TargetAssemblyQualifiedType = field.FieldType.AssemblyQualifiedName
                         });
                     }
 
@@ -1318,7 +1342,8 @@ namespace Delight.Editor.Parser
                             TargetObjectType = targetObjectType.FullName,
                             IsViewReference = false,
                             IsAssetReference = isAssetReference,
-                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(property.PropertyType, false) : null
+                            AssetType = isAssetReference ? _contentObjectModel.LoadAssetType(property.PropertyType, false) : null,
+                            TargetAssemblyQualifiedType = property.PropertyType.AssemblyQualifiedName
                         });
                     }
                 }

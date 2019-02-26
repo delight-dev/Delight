@@ -8,7 +8,7 @@ using System.Globalization;
 namespace Delight
 {
     /// <summary>
-    /// Int value converter.
+    /// Enum value converter.
     /// </summary>
     public class EnumValueConverter<T> : ValueConverter<T>
     {

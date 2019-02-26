@@ -81,6 +81,7 @@ namespace Delight
             dependencyProperties.Add(MappingUvLineOffsetProperty);
             dependencyProperties.Add(RenderModeProperty);
             dependencyProperties.Add(GeometrySortingOrderProperty);
+            dependencyProperties.Add(VertexBufferAutoSizeReductionProperty);
             dependencyProperties.Add(FirstVisibleCharacterProperty);
             dependencyProperties.Add(MaxVisibleCharactersProperty);
             dependencyProperties.Add(MaxVisibleWordsProperty);
@@ -255,8 +256,8 @@ namespace Delight
             set { FontSizeProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<System.Int32, TMPro.TextMeshProUGUI, Label> FontWeightProperty = new MappedDependencyProperty<System.Int32, TMPro.TextMeshProUGUI, Label>("FontWeight", x => x.TextMeshProUGUI, x => x.fontWeight, (x, y) => x.fontWeight = y);
-        public System.Int32 FontWeight
+        public readonly static MappedDependencyProperty<TMPro.FontWeight, TMPro.TextMeshProUGUI, Label> FontWeightProperty = new MappedDependencyProperty<TMPro.FontWeight, TMPro.TextMeshProUGUI, Label>("FontWeight", x => x.TextMeshProUGUI, x => x.fontWeight, (x, y) => x.fontWeight = y);
+        public TMPro.FontWeight FontWeight
         {
             get { return FontWeightProperty.GetValue(this); }
             set { FontWeightProperty.SetValue(this, value); }
@@ -470,6 +471,13 @@ namespace Delight
         {
             get { return GeometrySortingOrderProperty.GetValue(this); }
             set { GeometrySortingOrderProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> VertexBufferAutoSizeReductionProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("VertexBufferAutoSizeReduction", x => x.TextMeshProUGUI, x => x.vertexBufferAutoSizeReduction, (x, y) => x.vertexBufferAutoSizeReduction = y);
+        public System.Boolean VertexBufferAutoSizeReduction
+        {
+            get { return VertexBufferAutoSizeReductionProperty.GetValue(this); }
+            set { VertexBufferAutoSizeReductionProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TextMeshProUGUI, Label> FirstVisibleCharacterProperty = new MappedDependencyProperty<System.Int32, TMPro.TextMeshProUGUI, Label>("FirstVisibleCharacter", x => x.TextMeshProUGUI, x => x.firstVisibleCharacter, (x, y) => x.firstVisibleCharacter = y);

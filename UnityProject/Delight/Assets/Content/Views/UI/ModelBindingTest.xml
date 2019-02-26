@@ -7,25 +7,10 @@
     <List Id="PlayerList" Items="{player in @Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" IsScrollable="True">
       <Group>
         <Label Text="{player.Name}" />
-        <!--<List Id="AchievementsList" Items="{achievement in player.Achievements}" Orientation="Vertical" Offset="50,0,0,0">
-          <Label Text="{achievement.Title}" />
-        </List>-->
-        
-        <Grid Cells="*,*,*; *,*,*" Width="70" Height="70">
-          <Region Grid.Cell="0,0" Id="Cell00" BackgroundColor="#5389e0" />
-          <Region Grid.Cell="0,1" Id="Cell01" BackgroundColor="#e375f9" />
-          <Region Grid.Cell="0,2" Id="Cell02" BackgroundColor="#74f9d5" />
-
-          <Region Grid.Cell="1,0" Id="Cell10" BackgroundColor="#f9c674" />
-          <Region Grid.Cell="1,1" Id="Cell11" BackgroundColor="#fced2d" />
-          <Region Grid.Cell="1,2" Id="Cell12" BackgroundColor="#2cf72f" />
-
-          <Region Grid.Cell="2,0" Id="Cell20" BackgroundColor="#ef552b" />
-          <Region Grid.Cell="2,1" Id="Cell21" BackgroundColor="#0087ff" />
-          <Region Grid.Cell="2,2" Id="Cell22" BackgroundColor="#8730ad" />
-        </Grid>
-
-      </Group> 
+        <List Id="AchievementsList" Items="{achievement in player.Achievements}" Orientation="Vertical" Offset="50,0,0,0">
+          <Label Text="{achievement.Title}" /> 
+        </List>
+      </Group>  
     </List> 
   </Group>
 </ModelBindingTest>

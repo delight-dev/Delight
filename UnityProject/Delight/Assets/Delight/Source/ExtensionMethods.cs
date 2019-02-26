@@ -563,6 +563,40 @@ namespace Delight
         }
 
         /// <summary>
+        /// Traverses the view object tree and returns the first view that matches the predicate.
+        /// </summary>
+        public static T Find<T>(this View view, Predicate<T> predicate, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            T result = null;
+            view.ForEach<T>(x =>
+            {
+                if (predicate(x))
+                {
+                    result = x;
+                    return false;
+                }
+                return true;
+            }, recursive, parent, traversalAlgorithm);
+            return result;
+        }
+
+        /// <summary>
+        /// Returns first view of type T found.
+        /// </summary>
+        public static T Find<T>(this View view, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            return view.Find<T>(x => true, recursive, parent, traversalAlgorithm);
+        }
+
+        /// <summary>
+        /// Returns first view of type T with the specified ID.
+        /// </summary>
+        public static T Find<T>(this View view, string id, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            return view.Find<T>(x => String.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase), recursive, parent, traversalAlgorithm);
+        }
+
+        /// <summary>
         /// Adds range of items to hash-set.
         /// </summary>
         public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> items)

@@ -51,25 +51,35 @@ namespace Delight
                     () => label1.Text = (tiPlayer.Item as Delight.Player).Name,
                     () => { }
                 ));
-                var grid1 = new LayoutGrid(this, group3.Content, "Grid1", Grid1Template);
-                var cell00 = new Region(this, grid1.Content, "Cell00", Cell00Template);
-                grid1.Cell.SetValue(cell00, new CellIndex(0, 0));
-                var cell01 = new Region(this, grid1.Content, "Cell01", Cell01Template);
-                grid1.Cell.SetValue(cell01, new CellIndex(0, 1));
-                var cell02 = new Region(this, grid1.Content, "Cell02", Cell02Template);
-                grid1.Cell.SetValue(cell02, new CellIndex(0, 2));
-                var cell10 = new Region(this, grid1.Content, "Cell10", Cell10Template);
-                grid1.Cell.SetValue(cell10, new CellIndex(1, 0));
-                var cell11 = new Region(this, grid1.Content, "Cell11", Cell11Template);
-                grid1.Cell.SetValue(cell11, new CellIndex(1, 1));
-                var cell12 = new Region(this, grid1.Content, "Cell12", Cell12Template);
-                grid1.Cell.SetValue(cell12, new CellIndex(1, 2));
-                var cell20 = new Region(this, grid1.Content, "Cell20", Cell20Template);
-                grid1.Cell.SetValue(cell20, new CellIndex(2, 0));
-                var cell21 = new Region(this, grid1.Content, "Cell21", Cell21Template);
-                grid1.Cell.SetValue(cell21, new CellIndex(2, 1));
-                var cell22 = new Region(this, grid1.Content, "Cell22", Cell22Template);
-                grid1.Cell.SetValue(cell22, new CellIndex(2, 2));
+                var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
+
+                // binding <List Items="{achievement in player.Achievements}">
+                playerListContent.Bindings.Add(new Binding(
+                    new List<string> { "Item", "Achievements" },
+                    new List<string> { "Items" },
+                    new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item },
+                    new List<Func<BindableObject>> { () => achievementsList },
+                    () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements,
+                    () => { }
+                ));
+
+                // Template for achievementsList
+                achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
+                {
+                    var achievementsListContent = new ListItem(this, achievementsList.Content, "AchievementsListContent", AchievementsListContentTemplate);
+                    var label2 = new Label(this, achievementsListContent.Content, "Label2", Label2Template);
+
+                    // binding <Label Text="{achievement.Title}">
+                    achievementsListContent.Bindings.Add(new Binding(
+                        new List<string> { "Item", "Title" },
+                        new List<string> { "Text" },
+                        new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item },
+                        new List<Func<BindableObject>> { () => label2 },
+                        () => label2.Text = (tiAchievement.Item as Delight.Achievement).Title,
+                        () => { }
+                    ));
+                    return achievementsListContent;
+                });
                 return playerListContent;
             });
             this.AfterInitializeInternal();
@@ -99,28 +109,14 @@ namespace Delight
             dependencyProperties.Add(Group3TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
-            dependencyProperties.Add(Grid1Property);
-            dependencyProperties.Add(Grid1TemplateProperty);
-            dependencyProperties.Add(Cell00Property);
-            dependencyProperties.Add(Cell00TemplateProperty);
-            dependencyProperties.Add(Cell01Property);
-            dependencyProperties.Add(Cell01TemplateProperty);
-            dependencyProperties.Add(Cell02Property);
-            dependencyProperties.Add(Cell02TemplateProperty);
-            dependencyProperties.Add(Cell10Property);
-            dependencyProperties.Add(Cell10TemplateProperty);
-            dependencyProperties.Add(Cell11Property);
-            dependencyProperties.Add(Cell11TemplateProperty);
-            dependencyProperties.Add(Cell12Property);
-            dependencyProperties.Add(Cell12TemplateProperty);
-            dependencyProperties.Add(Cell20Property);
-            dependencyProperties.Add(Cell20TemplateProperty);
-            dependencyProperties.Add(Cell21Property);
-            dependencyProperties.Add(Cell21TemplateProperty);
-            dependencyProperties.Add(Cell22Property);
-            dependencyProperties.Add(Cell22TemplateProperty);
+            dependencyProperties.Add(AchievementsListProperty);
+            dependencyProperties.Add(AchievementsListTemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(PlayerListContentProperty);
             dependencyProperties.Add(PlayerListContentTemplateProperty);
+            dependencyProperties.Add(AchievementsListContentProperty);
+            dependencyProperties.Add(AchievementsListContentTemplateProperty);
         }
 
         #endregion
@@ -232,144 +228,32 @@ namespace Delight
             set { Label1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<LayoutGrid> Grid1Property = new DependencyProperty<LayoutGrid>("Grid1");
-        public LayoutGrid Grid1
+        public readonly static DependencyProperty<List> AchievementsListProperty = new DependencyProperty<List>("AchievementsList");
+        public List AchievementsList
         {
-            get { return Grid1Property.GetValue(this); }
-            set { Grid1Property.SetValue(this, value); }
+            get { return AchievementsListProperty.GetValue(this); }
+            set { AchievementsListProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Grid1TemplateProperty = new DependencyProperty<Template>("Grid1Template");
-        public Template Grid1Template
+        public readonly static DependencyProperty<Template> AchievementsListTemplateProperty = new DependencyProperty<Template>("AchievementsListTemplate");
+        public Template AchievementsListTemplate
         {
-            get { return Grid1TemplateProperty.GetValue(this); }
-            set { Grid1TemplateProperty.SetValue(this, value); }
+            get { return AchievementsListTemplateProperty.GetValue(this); }
+            set { AchievementsListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Cell00Property = new DependencyProperty<Region>("Cell00");
-        public Region Cell00
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
         {
-            get { return Cell00Property.GetValue(this); }
-            set { Cell00Property.SetValue(this, value); }
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Cell00TemplateProperty = new DependencyProperty<Template>("Cell00Template");
-        public Template Cell00Template
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
         {
-            get { return Cell00TemplateProperty.GetValue(this); }
-            set { Cell00TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell01Property = new DependencyProperty<Region>("Cell01");
-        public Region Cell01
-        {
-            get { return Cell01Property.GetValue(this); }
-            set { Cell01Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell01TemplateProperty = new DependencyProperty<Template>("Cell01Template");
-        public Template Cell01Template
-        {
-            get { return Cell01TemplateProperty.GetValue(this); }
-            set { Cell01TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell02Property = new DependencyProperty<Region>("Cell02");
-        public Region Cell02
-        {
-            get { return Cell02Property.GetValue(this); }
-            set { Cell02Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell02TemplateProperty = new DependencyProperty<Template>("Cell02Template");
-        public Template Cell02Template
-        {
-            get { return Cell02TemplateProperty.GetValue(this); }
-            set { Cell02TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell10Property = new DependencyProperty<Region>("Cell10");
-        public Region Cell10
-        {
-            get { return Cell10Property.GetValue(this); }
-            set { Cell10Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell10TemplateProperty = new DependencyProperty<Template>("Cell10Template");
-        public Template Cell10Template
-        {
-            get { return Cell10TemplateProperty.GetValue(this); }
-            set { Cell10TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell11Property = new DependencyProperty<Region>("Cell11");
-        public Region Cell11
-        {
-            get { return Cell11Property.GetValue(this); }
-            set { Cell11Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell11TemplateProperty = new DependencyProperty<Template>("Cell11Template");
-        public Template Cell11Template
-        {
-            get { return Cell11TemplateProperty.GetValue(this); }
-            set { Cell11TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell12Property = new DependencyProperty<Region>("Cell12");
-        public Region Cell12
-        {
-            get { return Cell12Property.GetValue(this); }
-            set { Cell12Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell12TemplateProperty = new DependencyProperty<Template>("Cell12Template");
-        public Template Cell12Template
-        {
-            get { return Cell12TemplateProperty.GetValue(this); }
-            set { Cell12TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell20Property = new DependencyProperty<Region>("Cell20");
-        public Region Cell20
-        {
-            get { return Cell20Property.GetValue(this); }
-            set { Cell20Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell20TemplateProperty = new DependencyProperty<Template>("Cell20Template");
-        public Template Cell20Template
-        {
-            get { return Cell20TemplateProperty.GetValue(this); }
-            set { Cell20TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell21Property = new DependencyProperty<Region>("Cell21");
-        public Region Cell21
-        {
-            get { return Cell21Property.GetValue(this); }
-            set { Cell21Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell21TemplateProperty = new DependencyProperty<Template>("Cell21Template");
-        public Template Cell21Template
-        {
-            get { return Cell21TemplateProperty.GetValue(this); }
-            set { Cell21TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Cell22Property = new DependencyProperty<Region>("Cell22");
-        public Region Cell22
-        {
-            get { return Cell22Property.GetValue(this); }
-            set { Cell22Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Cell22TemplateProperty = new DependencyProperty<Template>("Cell22Template");
-        public Template Cell22Template
-        {
-            get { return Cell22TemplateProperty.GetValue(this); }
-            set { Cell22TemplateProperty.SetValue(this, value); }
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ListItem> PlayerListContentProperty = new DependencyProperty<ListItem>("PlayerListContent");
@@ -384,6 +268,20 @@ namespace Delight
         {
             get { return PlayerListContentTemplateProperty.GetValue(this); }
             set { PlayerListContentTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ListItem> AchievementsListContentProperty = new DependencyProperty<ListItem>("AchievementsListContent");
+        public ListItem AchievementsListContent
+        {
+            get { return AchievementsListContentProperty.GetValue(this); }
+            set { AchievementsListContentProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> AchievementsListContentTemplateProperty = new DependencyProperty<Template>("AchievementsListContentTemplate");
+        public Template AchievementsListContentTemplate
+        {
+            get { return AchievementsListContentTemplateProperty.GetValue(this); }
+            set { AchievementsListContentTemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -426,16 +324,9 @@ namespace Delight
                     Delight.ModelBindingTest.PlayerListContentTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestPlayerListContent);
                     Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup3);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
-                    Delight.ModelBindingTest.Grid1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGrid1);
-                    Delight.ModelBindingTest.Cell00TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell00);
-                    Delight.ModelBindingTest.Cell01TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell01);
-                    Delight.ModelBindingTest.Cell02TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell02);
-                    Delight.ModelBindingTest.Cell10TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell10);
-                    Delight.ModelBindingTest.Cell11TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell11);
-                    Delight.ModelBindingTest.Cell12TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell12);
-                    Delight.ModelBindingTest.Cell20TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell20);
-                    Delight.ModelBindingTest.Cell21TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell21);
-                    Delight.ModelBindingTest.Cell22TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestCell22);
+                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
+                    Delight.ModelBindingTest.AchievementsListContentTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsListContent);
+                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel2);
                 }
                 return _modelBindingTest;
             }
@@ -675,216 +566,86 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestGrid1;
-        public static Template ModelBindingTestGrid1
+        private static Template _modelBindingTestAchievementsList;
+        public static Template ModelBindingTestAchievementsList
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestGrid1 == null || _modelBindingTestGrid1.CurrentVersion != Template.Version)
+                if (_modelBindingTestAchievementsList == null || _modelBindingTestAchievementsList.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestGrid1 == null)
+                if (_modelBindingTestAchievementsList == null)
 #endif
                 {
-                    _modelBindingTestGrid1 = new Template(LayoutGridTemplates.LayoutGrid);
+                    _modelBindingTestAchievementsList = new Template(ListTemplates.List);
 #if UNITY_EDITOR
-                    _modelBindingTestGrid1.Name = "ModelBindingTestGrid1";
+                    _modelBindingTestAchievementsList.Name = "ModelBindingTestAchievementsList";
 #endif
-                    Delight.LayoutGrid.WidthProperty.SetDefault(_modelBindingTestGrid1, new ElementSize(70f, ElementSizeUnit.Pixels));
-                    Delight.LayoutGrid.HeightProperty.SetDefault(_modelBindingTestGrid1, new ElementSize(70f, ElementSizeUnit.Pixels));
-                    Delight.LayoutGrid.RowDefinitionsProperty.SetDefault(_modelBindingTestGrid1, new RowDefinitions { new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
-                    Delight.LayoutGrid.ColumnDefinitionsProperty.SetDefault(_modelBindingTestGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
+                    Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsList, ModelBindingTestAchievementsListScrollableRegion);
                 }
-                return _modelBindingTestGrid1;
+                return _modelBindingTestAchievementsList;
             }
         }
 
-        private static Template _modelBindingTestCell00;
-        public static Template ModelBindingTestCell00
+        private static Template _modelBindingTestAchievementsListScrollableRegion;
+        public static Template ModelBindingTestAchievementsListScrollableRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestCell00 == null || _modelBindingTestCell00.CurrentVersion != Template.Version)
+                if (_modelBindingTestAchievementsListScrollableRegion == null || _modelBindingTestAchievementsListScrollableRegion.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestCell00 == null)
+                if (_modelBindingTestAchievementsListScrollableRegion == null)
 #endif
                 {
-                    _modelBindingTestCell00 = new Template(RegionTemplates.Region);
+                    _modelBindingTestAchievementsListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
-                    _modelBindingTestCell00.Name = "ModelBindingTestCell00";
+                    _modelBindingTestAchievementsListScrollableRegion.Name = "ModelBindingTestAchievementsListScrollableRegion";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell00, new UnityEngine.Color(0.3254902f, 0.5372549f, 0.8784314f, 1f));
                 }
-                return _modelBindingTestCell00;
+                return _modelBindingTestAchievementsListScrollableRegion;
             }
         }
 
-        private static Template _modelBindingTestCell01;
-        public static Template ModelBindingTestCell01
+        private static Template _modelBindingTestAchievementsListContent;
+        public static Template ModelBindingTestAchievementsListContent
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestCell01 == null || _modelBindingTestCell01.CurrentVersion != Template.Version)
+                if (_modelBindingTestAchievementsListContent == null || _modelBindingTestAchievementsListContent.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestCell01 == null)
+                if (_modelBindingTestAchievementsListContent == null)
 #endif
                 {
-                    _modelBindingTestCell01 = new Template(RegionTemplates.Region);
+                    _modelBindingTestAchievementsListContent = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
-                    _modelBindingTestCell01.Name = "ModelBindingTestCell01";
+                    _modelBindingTestAchievementsListContent.Name = "ModelBindingTestAchievementsListContent";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell01, new UnityEngine.Color(0.8901961f, 0.4588235f, 0.9764706f, 1f));
                 }
-                return _modelBindingTestCell01;
+                return _modelBindingTestAchievementsListContent;
             }
         }
 
-        private static Template _modelBindingTestCell02;
-        public static Template ModelBindingTestCell02
+        private static Template _modelBindingTestLabel2;
+        public static Template ModelBindingTestLabel2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestCell02 == null || _modelBindingTestCell02.CurrentVersion != Template.Version)
+                if (_modelBindingTestLabel2 == null || _modelBindingTestLabel2.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestCell02 == null)
+                if (_modelBindingTestLabel2 == null)
 #endif
                 {
-                    _modelBindingTestCell02 = new Template(RegionTemplates.Region);
+                    _modelBindingTestLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _modelBindingTestCell02.Name = "ModelBindingTestCell02";
+                    _modelBindingTestLabel2.Name = "ModelBindingTestLabel2";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell02, new UnityEngine.Color(0.454902f, 0.9764706f, 0.8352941f, 1f));
                 }
-                return _modelBindingTestCell02;
-            }
-        }
-
-        private static Template _modelBindingTestCell10;
-        public static Template ModelBindingTestCell10
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell10 == null || _modelBindingTestCell10.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell10 == null)
-#endif
-                {
-                    _modelBindingTestCell10 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell10.Name = "ModelBindingTestCell10";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell10, new UnityEngine.Color(0.9764706f, 0.7764706f, 0.454902f, 1f));
-                }
-                return _modelBindingTestCell10;
-            }
-        }
-
-        private static Template _modelBindingTestCell11;
-        public static Template ModelBindingTestCell11
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell11 == null || _modelBindingTestCell11.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell11 == null)
-#endif
-                {
-                    _modelBindingTestCell11 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell11.Name = "ModelBindingTestCell11";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell11, new UnityEngine.Color(0.9882353f, 0.9294118f, 0.1764706f, 1f));
-                }
-                return _modelBindingTestCell11;
-            }
-        }
-
-        private static Template _modelBindingTestCell12;
-        public static Template ModelBindingTestCell12
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell12 == null || _modelBindingTestCell12.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell12 == null)
-#endif
-                {
-                    _modelBindingTestCell12 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell12.Name = "ModelBindingTestCell12";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell12, new UnityEngine.Color(0.172549f, 0.9686275f, 0.1843137f, 1f));
-                }
-                return _modelBindingTestCell12;
-            }
-        }
-
-        private static Template _modelBindingTestCell20;
-        public static Template ModelBindingTestCell20
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell20 == null || _modelBindingTestCell20.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell20 == null)
-#endif
-                {
-                    _modelBindingTestCell20 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell20.Name = "ModelBindingTestCell20";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell20, new UnityEngine.Color(0.9372549f, 0.3333333f, 0.1686275f, 1f));
-                }
-                return _modelBindingTestCell20;
-            }
-        }
-
-        private static Template _modelBindingTestCell21;
-        public static Template ModelBindingTestCell21
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell21 == null || _modelBindingTestCell21.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell21 == null)
-#endif
-                {
-                    _modelBindingTestCell21 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell21.Name = "ModelBindingTestCell21";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell21, new UnityEngine.Color(0f, 0.5294118f, 1f, 1f));
-                }
-                return _modelBindingTestCell21;
-            }
-        }
-
-        private static Template _modelBindingTestCell22;
-        public static Template ModelBindingTestCell22
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestCell22 == null || _modelBindingTestCell22.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestCell22 == null)
-#endif
-                {
-                    _modelBindingTestCell22 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _modelBindingTestCell22.Name = "ModelBindingTestCell22";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_modelBindingTestCell22, new UnityEngine.Color(0.5294118f, 0.1882353f, 0.6784314f, 1f));
-                }
-                return _modelBindingTestCell22;
+                return _modelBindingTestLabel2;
             }
         }
 

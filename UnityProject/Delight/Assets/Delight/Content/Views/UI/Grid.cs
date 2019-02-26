@@ -13,9 +13,60 @@ namespace Delight
     /// </summary>
     public partial class LayoutGrid
     {
+        #region Fields
+
+        private float _actualWidth;
+        private float _actualHeight;
+
+        #endregion
+
+        #region Methods
+
         public override void AfterInitialize()
         {
             base.AfterInitialize();
+        }
+
+        /// <summary>
+        /// Called just before the view and its children are loaded.
+        /// </summary>
+        protected override void BeforeLoad()
+        {
+            // if the grid size isn't fixed track size changes
+            if (Width == null || Width.Unit != ElementSizeUnit.Pixels ||
+                Height == null || Height.Unit != ElementSizeUnit.Pixels)
+            {
+                EnableScriptEvents = true;
+            }
+
+            base.BeforeLoad();
+        }
+
+        /// <summary>
+        /// Called just before the view and its children are loaded.
+        /// </summary>
+        protected override void AfterLoad()
+        {
+            base.AfterLoad();
+            if (EnableScriptEvents)
+            {
+                _actualWidth = ActualWidth;
+                _actualHeight = ActualHeight;
+            }
+        }
+
+        /// <summary>
+        /// Called once per frame if EnableScriptEvents is true.
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+            if (_actualWidth != ActualWidth || _actualHeight != ActualHeight)
+            {
+                _actualWidth = ActualWidth;
+                _actualHeight = ActualHeight;
+                UpdateLayout(false);
+            }
         }
 
         /// <summary>
@@ -24,12 +75,6 @@ namespace Delight
         protected override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
-
-            // the layout of the grid children needs to be updated TODO clean up
-            //LayoutRoot.RegisterNeedLayoutUpdate(this);
-            // we don't necessarily need to change anything based on child layout changes - 
-            // we override their width, height and offset
-            // but we might need some way to be notified if a new child has been loaded/activated
         }
 
         /// <summary>
@@ -56,14 +101,11 @@ namespace Delight
                 {
                     Debug.LogWarning(String.Format("[Delight] {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
                     continue;
-                }               
+                }
 
                 // calculate width, height and offset of view based on cell index
-                int columnIndex = cellIndex.Column < ColumnDefinitions.Count ? cellIndex.Column : ColumnDefinitions.Count - 1;
-                var columnDefinition = ColumnDefinitions[columnIndex];
-
-                int rowIndex = cellIndex.Row < RowDefinitions.Count ? cellIndex.Row : RowDefinitions.Count - 1;
-                var rowDefinition = RowDefinitions[rowIndex];
+                var columnDefinition = GetColumnDefinition(child);
+                var rowDefinition = GetRowDefinition(child);
 
                 ElementMargin cellOffset = new ElementMargin();
                 cellOffset.Left = columnDefinition.ActualOffset;
@@ -92,18 +134,80 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets column definition for the specified view.
+        /// </summary>
+        private ColumnDefinition GetColumnDefinition(UIView child)
+        {
+            var cellIndex = Cell.GetValue(child);
+            int columnIndex = cellIndex.Column < Columns.Count ? cellIndex.Column : Columns.Count - 1;
+            var columnDefinition = Columns[columnIndex];
+
+            var cellSpan = CellSpan.GetValue(child);
+            if (cellSpan == null || cellSpan.Column <= 1)
+                return columnDefinition;
+
+            var columnSpacing = ColumnSpacing ?? (Spacing ?? ElementSize.Default);
+
+            // calculate new column definition based on column span
+            var spannedColumnDefinition = new ColumnDefinition(columnDefinition);
+            for (int i = 1; i <= cellSpan.Column; ++i)
+            {
+                int nextColumnIndex = columnIndex + i;
+                if (nextColumnIndex >= Columns.Count)
+                    break;
+
+                var nextColumnDefinition = Columns[nextColumnIndex];
+
+                // add actual width and spacing of next column
+                spannedColumnDefinition.ActualWidth += nextColumnDefinition.ActualWidth + columnSpacing; 
+            }
+            return spannedColumnDefinition;
+        }
+
+        /// <summary>
+        /// Gets row definition for the specified view.
+        /// </summary>
+        private RowDefinition GetRowDefinition(UIView child)
+        {
+            var cellIndex = Cell.GetValue(child);
+            int rowIndex = cellIndex.Row < Rows.Count ? cellIndex.Row : Rows.Count - 1;
+            var rowDefinition = Rows[rowIndex];
+
+            var cellSpan = CellSpan.GetValue(child);
+            if (cellSpan == null || cellSpan.Row <= 1)
+                return rowDefinition;
+
+            var rowSpacing = RowSpacing ?? (Spacing ?? ElementSize.Default);
+
+            // calculate new row definition based on row span
+            var spannedRowDefinition = new RowDefinition(rowDefinition);
+            for (int i = 1; i <= cellSpan.Row; ++i)
+            {
+                int nextRowIndex = rowIndex + i;
+                if (nextRowIndex >= Rows.Count)
+                    break;
+
+                var nextRowDefinition = Rows[nextRowIndex];
+
+                // add actual width and spacing of next row
+                spannedRowDefinition.ActualHeight += nextRowDefinition.ActualHeight + rowSpacing;
+            }
+            return spannedRowDefinition;
+        }
+
+        /// <summary>
         /// Updates row and column definition sizes and offsets based on grid size.
         /// </summary>
         public void UpdateRowAndColumnDefinitions()
         {
-            if (ColumnDefinitions == null || ColumnDefinitions.Count <= 0)
+            if (Columns == null || Columns.Count <= 0)
             {
-                ColumnDefinitions = new ColumnDefinitions { new ColumnDefinition(ElementSize.FromProportion(1)) };
+                Columns = new ColumnDefinitions { new ColumnDefinition(ElementSize.FromProportion(1)) };
             }
 
-            if (RowDefinitions == null || RowDefinitions.Count <= 0)
+            if (Rows == null || Rows.Count <= 0)
             {
-                RowDefinitions = new RowDefinitions { new RowDefinition(ElementSize.FromProportion(1)) };
+                Rows = new RowDefinitions { new RowDefinition(ElementSize.FromProportion(1)) };
             }
 
             var spacing = Spacing ?? ElementSize.Default;
@@ -111,14 +215,14 @@ namespace Delight
             var columnSpacing = ColumnSpacing ?? spacing;
 
             // calculate column definition actual width and offset
-            float totalColumnSpacing = (ColumnDefinitions.Count - 1) * columnSpacing.Pixels / ColumnDefinitions.Count;
-            float totalFixedColumnWidth = ColumnDefinitions.Sum(x => x.Width.Pixels);
-            float totalColumnProportion = ColumnDefinitions.Sum(x => x.Width.Proportion);
+            float totalColumnSpacing = (Columns.Count - 1) * columnSpacing.Pixels / Columns.Count;
+            float totalFixedColumnWidth = Columns.Sum(x => x.Width.Pixels);
+            float totalColumnProportion = Columns.Sum(x => x.Width.Proportion);
             float currentColumnOffset = 0;
 
-            for (int i = 0; i < ColumnDefinitions.Count; ++i)
+            for (int i = 0; i < Columns.Count; ++i)
             {
-                var columnDefinition = ColumnDefinitions[i];
+                var columnDefinition = Columns[i];
                 if (columnDefinition.Width.Unit == ElementSizeUnit.Pixels)
                 {
                     columnDefinition.ActualWidth = columnDefinition.Width;
@@ -135,14 +239,14 @@ namespace Delight
             }
 
             // calculate row definition actual width and offset
-            float totalRowSpacing = (RowDefinitions.Count - 1) * rowSpacing.Pixels / RowDefinitions.Count;
-            float totalFixedRowHeight = RowDefinitions.Sum(x => x.Height.Pixels);
-            float totalRowProportion = RowDefinitions.Sum(x => x.Height.Proportion);
+            float totalRowSpacing = (Rows.Count - 1) * rowSpacing.Pixels / Rows.Count;
+            float totalFixedRowHeight = Rows.Sum(x => x.Height.Pixels);
+            float totalRowProportion = Rows.Sum(x => x.Height.Proportion);
             float currentRowOffset = 0;
 
-            for (int i = 0; i < RowDefinitions.Count; ++i)
+            for (int i = 0; i < Rows.Count; ++i)
             {
-                var rowDefinition = RowDefinitions[i];
+                var rowDefinition = Rows[i];
                 if (rowDefinition.Height.Unit == ElementSizeUnit.Pixels)
                 {
                     rowDefinition.ActualHeight = rowDefinition.Height;
@@ -158,40 +262,87 @@ namespace Delight
                 currentRowOffset += rowDefinition.ActualHeight + rowSpacing;
             }
         }
+
+        #endregion
     }
 
+    /// <summary>
+    /// List of row definitions.
+    /// </summary>
     public class RowDefinitions : List<RowDefinition>
     {
     }
 
+    /// <summary>
+    /// List of column definitions.
+    /// </summary>
     public class ColumnDefinitions : List<ColumnDefinition>
     {
     }
 
+    /// <summary>
+    /// Contains information about a row in the grid.
+    /// </summary>
     public class RowDefinition
     {
+        #region Fields
+
         public ElementSize Height;
         public float ActualHeight;
         public float ActualOffset;
+
+        #endregion
+
+        #region Constructors
 
         public RowDefinition(ElementSize height)
         {
             Height = height;
         }
+
+        public RowDefinition(RowDefinition rowDefinition)
+        {
+            Height = rowDefinition.Height;
+            ActualHeight = rowDefinition.ActualHeight;
+            ActualOffset = rowDefinition.ActualOffset;
+        }
+
+        #endregion
     }
 
+    /// <summary>
+    /// Contains information about a column in the grid.
+    /// </summary>
     public class ColumnDefinition
     {
+        #region Fields
+
         public ElementSize Width;
         public float ActualWidth;
-        public float ActualOffset; 
+        public float ActualOffset;
+
+        #endregion
+
+        #region Constructors
 
         public ColumnDefinition(ElementSize width)
         {
             Width = width;
         }
+
+        public ColumnDefinition(ColumnDefinition columnDefinition)
+        {
+            Width = columnDefinition.Width;
+            ActualWidth = columnDefinition.ActualWidth;
+            ActualOffset = columnDefinition.ActualOffset;
+        }
+
+        #endregion
     }
 
+    /// <summary>
+    /// Represents cell index (row, column).
+    /// </summary>
     public class CellIndex
     {
         public int Row;

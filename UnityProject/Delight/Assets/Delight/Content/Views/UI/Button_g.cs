@@ -277,7 +277,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty FontWeightProperty = Label.FontWeightProperty;
-        public System.Int32 FontWeight
+        public TMPro.FontWeight FontWeight
         {
             get { return Label.FontWeight; }
             set { Label.FontWeight = value; }
@@ -491,6 +491,13 @@ namespace Delight
         {
             get { return Label.GeometrySortingOrder; }
             set { Label.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
+        public System.Boolean VertexBufferAutoSizeReduction
+        {
+            get { return Label.VertexBufferAutoSizeReduction; }
+            set { Label.VertexBufferAutoSizeReduction = value; }
         }
 
         public readonly static DependencyProperty FirstVisibleCharacterProperty = Label.FirstVisibleCharacterProperty;
