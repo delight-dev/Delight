@@ -1,6 +1,7 @@
 <DelightDesigner xmlns="Delight" BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData">
   
   <Grid Columns="250,*,250" Rows="50,*">
+    
     <!-- Designer Content Region -->
     <Region Grid.Cell="1,1" Id="ContentRegion" BackgroundColor="#fced2d">
       <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
@@ -11,10 +12,8 @@
 
     <!-- Left Panel - Content Explorer -->
     <Region Grid.Cell="0,0" Grid.CellSpan="2,0" BackgroundColor="#dcdcdc">
-      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="0,50,0,5" BackgroundColor="Blue" ContentAlignment="Left" Width="100%">
-        <ListItem Width="100%">
-          <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima SDF" Width="240" EnableWordWrapping="False" Margin="10,0,0,0" OverflowMode="Ellipsis" /> 
-        </ListItem>
+      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="100%">
+        <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima SDF" Width="240" EnableWordWrapping="False" Margin="25,0,0,0" OverflowMode="Ellipsis" ExtraPadding="True" FontColor="#242424" /> 
       </List>
     </Region> 
 

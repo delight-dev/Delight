@@ -9,20 +9,8 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Player : BindableObject
+    public partial class Player : ModelObject
     {
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-            set { SetProperty(ref _name, value); }
-        }
-
-        public BindableCollection<Achievement> Achievements
-        {
-            get { return Models.Achievements.Get(this); }
-        }
-
         public BindableCollection<Highscore> Highscores
         {
             get { return Models.Highscores.Get(this); }
@@ -38,10 +26,5 @@ namespace Delight
             Add(new Player { Id = "Player3", Name = "Player 3" });
             Add(new Player { Id = "Player4", Name = "Player 4" });
         }
-    }
-
-    public static partial class Models
-    {
-        public static PlayerData Players = new PlayerData();
     }
 }

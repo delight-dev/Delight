@@ -38,10 +38,17 @@ namespace Delight.Editor
             // check if any views have been added or changed
             var config = MasterConfig.GetInstance();
             var addedOrUpdatedXmlAssets = new List<string>();
+
             var addedOrUpdatedAssetObjects = new List<string>();
             var deletedAssetObjects = new List<string>();
             var movedAssetObjects = new List<string>();
             var movedFromAssetObjects = new List<string>();
+
+            var addedOrUpdatedSchemaObjects = new List<string>();
+            var deletedSchemaObjects = new List<string>();
+            var movedSchemaObjects = new List<string>();
+            var movedFromSchemaObjects = new List<string>();
+
             bool rebuildViews = false;
 
             // process imported assets
@@ -62,6 +69,16 @@ namespace Delight.Editor
                 if (IsInAssetsFolder(path, contentFolder))
                 {
                     addedOrUpdatedAssetObjects.Add(path);
+                    continue;
+                }
+
+                // is the asset in the models folder?
+                if (IsInContentTypeFolder(path, contentFolder, ContentParser.ModelsFolder))
+                {
+                    if (!path.IContains("Schema"))
+                        continue;
+
+                    addedOrUpdatedSchemaObjects.Add(path);
                     continue;
                 }
 
@@ -97,6 +114,16 @@ namespace Delight.Editor
                 if (IsInAssetsFolder(path, contentFolder))
                 {
                     deletedAssetObjects.Add(path);
+                    continue;
+                }
+
+                // is the asset in the models folder?
+                if (IsInContentTypeFolder(path, contentFolder, ContentParser.ModelsFolder))
+                {
+                    if (!path.IContains("Schema"))
+                        continue;
+
+                    deletedSchemaObjects.Add(path);
                     continue;
                 }
 
@@ -137,6 +164,20 @@ namespace Delight.Editor
                     continue;
                 }
 
+                // is the asset in the models folder?
+                if (IsInContentTypeFolder(movedToPath, toContentFolder, ContentParser.ModelsFolder))
+                {
+                    if (!movedToPath.IContains("Schema"))
+                        continue;
+
+                    movedSchemaObjects.Add(movedToPath);
+                    if (IsInContentTypeFolder(movedFromPath, fromContentFolder, ContentParser.ModelsFolder))
+                    {
+                        movedFromSchemaObjects.Add(movedFromPath);
+                    }
+                    continue;
+                }
+
                 // is it an xml asset?
                 if (movedToPath.IIndexOf(".xml") >= 0)
                 {
@@ -144,9 +185,10 @@ namespace Delight.Editor
                 }
             }
 
-            bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
             bool viewsChanged = addedOrUpdatedXmlAssets.Count() > 0;
-            bool contentChanged = assetsChanged || rebuildViews || viewsChanged;
+            bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
+            bool schemasChanged = addedOrUpdatedSchemaObjects.Count() > 0 || deletedSchemaObjects.Count() > 0 || movedSchemaObjects.Count() > 0;
+            bool contentChanged = assetsChanged || rebuildViews || viewsChanged || schemasChanged;
             bool refreshScripts = false;
 
             // if editor is playing queue assets to be processed after exiting play mode
@@ -166,6 +208,13 @@ namespace Delight.Editor
             if (assetsChanged)
             {
                 ContentParser.ParseAssetFiles(addedOrUpdatedAssetObjects, deletedAssetObjects, movedAssetObjects, movedFromAssetObjects);
+                refreshScripts = true;
+            }
+
+            // any schema files added, moved or deleted?
+            if (schemasChanged)
+            {
+                ContentParser.ParseSchemaFiles(addedOrUpdatedSchemaObjects, deletedSchemaObjects, movedSchemaObjects, movedFromSchemaObjects);
                 refreshScripts = true;
             }
 
@@ -219,6 +268,19 @@ namespace Delight.Editor
             int stylesFolderIndex = path.ILastIndexOf(ContentParser.StylesFolder);
             int contentFolderIndex = path.IIndexOf(contentFolder);
             return stylesFolderIndex >= 0 && stylesFolderIndex >= contentFolderIndex;
+        }
+
+        /// <summary>
+        /// Returns boolean indiciating if file is in the specified content type folder.
+        /// </summary>
+        public static bool IsInContentTypeFolder(string path, string contentFolder, string contentTypeFolder)
+        {
+            if (contentFolder == null)
+                return false;
+
+            int contentTypeFolderIndex = path.ILastIndexOf(contentTypeFolder);
+            int contentFolderIndex = path.IIndexOf(contentFolder);
+            return contentTypeFolderIndex >= 0 && contentTypeFolderIndex >= contentFolderIndex;
         }
 
         #endregion

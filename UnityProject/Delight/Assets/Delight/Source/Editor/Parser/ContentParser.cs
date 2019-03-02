@@ -69,7 +69,7 @@ namespace Delight.Editor.Parser
             var config = MasterConfig.GetInstance();
 
             // clear XML content objects from model
-            _contentObjectModel.ClearParsedContent();
+            _contentObjectModel.ClearXmlParsedContent();
             _contentObjectModel.ClearAssetTypes(false);
 
             // get all XML assets
@@ -999,6 +999,87 @@ namespace Delight.Editor.Parser
             View = 1,
             Scene = 2,
             Unknown
+        }
+
+        #endregion
+
+        #region Models
+
+        /// <summary>
+        /// Parses schema files. 
+        /// </summary>
+        public static void ParseSchemaFiles(List<string> addedOrUpdatedSchemaFiles, List<string> deletedSchemaFiles, List<string> movedSchemaFiles, List<string> movedFromSchemaFiles)
+        {
+            // parse schema files
+            foreach (var newSchemaPath in addedOrUpdatedSchemaFiles.Concat(movedSchemaFiles))
+            {
+                var content = File.ReadAllLines(newSchemaPath);
+                ParseSchemaFile(content, newSchemaPath);
+            }
+
+            // generate code for models
+            CodeGenerator.GenerateModelCode();
+
+            _contentObjectModel.SaveObjectModel();
+        }
+
+        /// <summary>
+        /// Parses schema file. 
+        /// </summary>
+        public static void ParseSchemaFile(string[] fileContent, string path)
+        {
+            // clear all models belonging to schema file
+            _contentObjectModel.ModelObjects.RemoveAll(x => x.SchemaFilePath.IEquals(path));
+
+            ModelObject currentModelObject = null;
+            var filename = Path.GetFileName(path);
+
+            // parse schema file
+            for (int i = 0; i < fileContent.Length; ++i)
+            {
+                var line = fileContent[i].Trim();
+                if (String.IsNullOrWhiteSpace(line) || line.StartsWith("//")) // ignore comments and empty lines
+                    continue;
+                
+                if (line.StartsWith("="))
+                {
+                    // parse model object declaration
+                    var modelName = line.Substring(1).Trim();
+                    currentModelObject = _contentObjectModel.LoadModelObject(modelName);
+                    currentModelObject.Clear();
+                    currentModelObject.SchemaFilePath = path;
+                    continue;                    
+                }
+
+                // TODO parse model data inserts
+
+                // parse model property
+                if (currentModelObject == null)
+                {
+                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. No model object declared.", filename, i+1));
+                    continue;
+                }
+
+                // parse model property declaration
+                string[] args = line.Split(null);
+                if (args.Length > 2)
+                {
+                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.", filename, i+1));
+                    continue;
+                }
+
+                var propertyName = args.Length == 2 ? args[1] : args[0];
+                var propertyType = args[0];                
+                var property = currentModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
+                if (property == null)
+                {
+                    property = new ModelProperty();
+                    currentModelObject.Properties.Add(property);                    
+                }
+                property.Name = propertyName;
+                property.TypeName = propertyType;
+                currentModelObject.NeedUpdate = true;
+            }           
         }
 
         #endregion

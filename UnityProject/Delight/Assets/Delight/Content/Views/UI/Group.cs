@@ -97,7 +97,7 @@ namespace Delight
                 // set desired alignment if it is valid for the orientation otherwise use defaults
                 var alignment = ElementAlignment.Center;
                 var defaultAlignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
-                var desiredAlignment = ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : childView.Alignment;
+                var desiredAlignment = !ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : childView.Alignment;
                 if (isHorizontal && (desiredAlignment == ElementAlignment.Top || desiredAlignment == ElementAlignment.Bottom
                     || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.BottomLeft))
                 {
@@ -142,56 +142,62 @@ namespace Delight
             float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing.Pixels : 0f;
 
             // adjust width to content
-            if (!percentageWidth)
+            if (WidthProperty.IsUndefined(this))
             {
-                // add margins
-                var margin = Margin ?? ElementMargin.Default;
-                totalWidth += isHorizontal ? totalSpacing : 0f;
-                totalWidth += margin.Left.Pixels + margin.Right.Pixels;
-                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+                if (!percentageWidth)
+                {
+                    // add margins
+                    var margin = Margin ?? ElementMargin.Default;
+                    totalWidth += isHorizontal ? totalSpacing : 0f;
+                    totalWidth += margin.Left.Pixels + margin.Right.Pixels;
+                    maxWidth += margin.Left.Pixels + margin.Right.Pixels;
 
-                // adjust width to content
-                var newWidth = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
-                if (!newWidth.Equals(Width))
-                {
-                    Width = newWidth;
-                    hasNewSize = true;
+                    // adjust width to content
+                    var newWidth = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
+                    if (!newWidth.Equals(Width))
+                    {
+                        OverrideWidth = newWidth;
+                        hasNewSize = true;
+                    }
                 }
-            }
-            else
-            {
-                var newWidth = new ElementSize(1, ElementSizeUnit.Percents);
-                if (!newWidth.Equals(Width))
+                else
                 {
-                    Width = newWidth;
-                    hasNewSize = true;
+                    var newWidth = new ElementSize(1, ElementSizeUnit.Percents);
+                    if (!newWidth.Equals(Width))
+                    {
+                        OverrideWidth = newWidth;
+                        hasNewSize = true;
+                    }
                 }
             }
 
             // adjust height to content
-            if (!percentageHeight)
+            if (HeightProperty.IsUndefined(this))
             {
-                // add margins
-                var margin = Margin ?? ElementMargin.Default;
-                totalHeight += !isHorizontal ? totalSpacing : 0f;
-                totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
-                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                if (!percentageHeight)
+                {
+                    // add margins
+                    var margin = Margin ?? ElementMargin.Default;
+                    totalHeight += !isHorizontal ? totalSpacing : 0f;
+                    totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                    maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
 
-                // adjust height to content
-                var newHeight = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
-                if (!newHeight.Equals(Height))
-                {
-                    Height = newHeight;
-                    hasNewSize = true;
+                    // adjust height to content
+                    var newHeight = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
+                    if (!newHeight.Equals(Height))
+                    {
+                        OverrideHeight = newHeight;
+                        hasNewSize = true;
+                    }
                 }
-            }
-            else
-            {
-                var newHeight = new ElementSize(1, ElementSizeUnit.Percents);
-                if (!newHeight.Equals(Height))
+                else
                 {
-                    Height = newHeight;
-                    hasNewSize = true;
+                    var newHeight = new ElementSize(1, ElementSizeUnit.Percents);
+                    if (!newHeight.Equals(Height))
+                    {
+                        OverrideHeight = newHeight;
+                        hasNewSize = true;
+                    }
                 }
             }
                        

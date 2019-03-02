@@ -139,7 +139,7 @@ namespace Delight.Editor.Parser
             }
 
             // create new model object if it doesn't exist
-            modelObject = new ModelObject { Name = modelName };
+            modelObject = new ModelObject { Name = modelName, PluralName = modelName.Pluralize() };
             ModelObjects.Add(modelObject);
             _modelObjects.Add(modelName, modelObject);
             return modelObject;
@@ -231,13 +231,20 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Clears parsed XML content from the object model. 
         /// </summary>
-        public void ClearParsedContent()
+        public void ClearXmlParsedContent()
         {
             ViewObjects = new List<ViewObject>();
-            ModelObjects = new List<ModelObject>();
             StyleObjects = new List<StyleObject>();
             _viewObjects = null;
             _styleObjects = null;
+        }
+
+        /// <summary>
+        /// Clears parsed schema content from the object model. 
+        /// </summary>
+        public void ClearSchemaContent()
+        {
+            ModelObjects = new List<ModelObject>();
             _modelObjects = null;
         }
 
@@ -839,6 +846,48 @@ namespace Delight.Editor.Parser
     {
         [ProtoMember(1)]
         public string Name;
+
+        [ProtoMember(2, AsReference = true)]
+        public List<ModelProperty> Properties;
+
+        [ProtoMember(3)]
+        public bool NeedUpdate;
+
+        [ProtoMember(4)]
+        public string Namespace;
+
+        [ProtoMember(5)]
+        public string SchemaFilePath;
+
+        [ProtoMember(6)]
+        public string PluralName;
+
+        public ModelObject()
+        {
+            Properties = new List<ModelProperty>();
+        }
+
+        public void Clear()
+        {
+            Properties.Clear();
+            Namespace = string.Empty;
+        }
+    }
+
+    [ProtoContract]
+    public class ModelProperty
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public string TypeName;
+
+        [ProtoMember(3)]
+        public string TypeFullName;
+
+        [ProtoMember(4)]
+        public bool IsModelReference;
     }
 
     #endregion

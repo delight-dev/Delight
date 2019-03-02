@@ -43,11 +43,11 @@ namespace Delight
             // Template for List1
             List1.ContentTemplate = new ContentTemplate(tiView => 
             {
-                var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
-                var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
+                var list1Content = new ListItem(this, List1.Content, "List1Content", List1ContentTemplate);
+                var label1 = new Label(this, list1Content.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{view.Name}">
-                listItem1.Bindings.Add(new Binding(
+                list1Content.Bindings.Add(new Binding(
                     new List<string> { "Item", "Name" },
                     new List<string> { "Text" },
                     new List<Func<BindableObject>> { () => tiView, () => tiView.Item },
@@ -55,7 +55,7 @@ namespace Delight
                     () => label1.Text = (tiView.Item as Delight.DesignerView).Name,
                     () => { }
                 ));
-                return listItem1;
+                return list1Content;
             });
             this.AfterInitializeInternal();
         }
@@ -86,10 +86,10 @@ namespace Delight
             dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(List1Property);
             dependencyProperties.Add(List1TemplateProperty);
-            dependencyProperties.Add(ListItem1Property);
-            dependencyProperties.Add(ListItem1TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(List1ContentProperty);
+            dependencyProperties.Add(List1ContentTemplateProperty);
         }
 
         #endregion
@@ -215,20 +215,6 @@ namespace Delight
             set { List1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ListItem> ListItem1Property = new DependencyProperty<ListItem>("ListItem1");
-        public ListItem ListItem1
-        {
-            get { return ListItem1Property.GetValue(this); }
-            set { ListItem1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> ListItem1TemplateProperty = new DependencyProperty<Template>("ListItem1Template");
-        public Template ListItem1Template
-        {
-            get { return ListItem1TemplateProperty.GetValue(this); }
-            set { ListItem1TemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
         public Label Label1
         {
@@ -241,6 +227,20 @@ namespace Delight
         {
             get { return Label1TemplateProperty.GetValue(this); }
             set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ListItem> List1ContentProperty = new DependencyProperty<ListItem>("List1Content");
+        public ListItem List1Content
+        {
+            get { return List1ContentProperty.GetValue(this); }
+            set { List1ContentProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> List1ContentTemplateProperty = new DependencyProperty<Template>("List1ContentTemplate");
+        public Template List1ContentTemplate
+        {
+            get { return List1ContentTemplateProperty.GetValue(this); }
+            set { List1ContentTemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -283,7 +283,7 @@ namespace Delight
                     Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
                     Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
-                    Delight.DelightDesigner.ListItem1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem1);
+                    Delight.DelightDesigner.List1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1Content);
                     Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
                 }
                 return _delightDesigner;
@@ -484,10 +484,10 @@ namespace Delight
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_delightDesignerList1, true);
                     Delight.List.AlignmentProperty.SetDefault(_delightDesignerList1, Delight.ElementAlignment.Top);
-                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
-                    Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerList1, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.List.ContentAlignmentProperty.SetDefault(_delightDesignerList1, Delight.ElementAlignment.Left);
+                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
+                    Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerList1, new UnityEngine.Color(0.9215686f, 0.9215686f, 0.9215686f, 1f));
                     Delight.List.WidthProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.List.HeightProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_delightDesignerList1, DelightDesignerList1ScrollableRegion);
                 }
                 return _delightDesignerList1;
@@ -514,24 +514,23 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerListItem1;
-        public static Template DelightDesignerListItem1
+        private static Template _delightDesignerList1Content;
+        public static Template DelightDesignerList1Content
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerListItem1 == null || _delightDesignerListItem1.CurrentVersion != Template.Version)
+                if (_delightDesignerList1Content == null || _delightDesignerList1Content.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerListItem1 == null)
+                if (_delightDesignerList1Content == null)
 #endif
                 {
-                    _delightDesignerListItem1 = new Template(ListItemTemplates.ListItem);
+                    _delightDesignerList1Content = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
-                    _delightDesignerListItem1.Name = "DelightDesignerListItem1";
+                    _delightDesignerList1Content.Name = "DelightDesignerList1Content";
 #endif
-                    Delight.ListItem.WidthProperty.SetDefault(_delightDesignerListItem1, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
-                return _delightDesignerListItem1;
+                return _delightDesignerList1Content;
             }
         }
 
@@ -555,8 +554,10 @@ namespace Delight
                     Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Ebrima SDF"]);
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(240f, ElementSizeUnit.Pixels));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, TMPro.TextOverflowModes.Ellipsis);
+                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
                 }
                 return _delightDesignerLabel1;
             }

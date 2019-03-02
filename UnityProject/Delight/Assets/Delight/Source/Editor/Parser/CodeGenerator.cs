@@ -29,7 +29,7 @@ namespace Delight.Editor.Parser
 
         #endregion
 
-        #region Methods
+        #region Views
 
         /// <summary>
         /// Generates view code from object model.
@@ -87,253 +87,6 @@ namespace Delight.Editor.Parser
 #if UNITY_EDITOR
             ++Template.Version;
 #endif
-        }
-
-        /// <summary>
-        /// Validates view declarations in the view object.
-        /// </summary>
-        private static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
-        {
-            foreach (var childViewDeclaration in childViewDeclarations)
-            {
-                // update attached assignments 
-                var attachedAssignmentsNeedUpdate = childViewDeclaration.PropertyAssignments.Where(x => x.AttachedNeedUpdate).ToList();
-                foreach (var attachedAssignment in attachedAssignmentsNeedUpdate)
-                {
-                    attachedAssignment.AttachedNeedUpdate = false;
-                    int indexOfDot = attachedAssignment.PropertyName.IndexOf('.');
-                    var parentViewName = attachedAssignment.PropertyName.Substring(0, indexOfDot);
-                    var parentPropertyName = attachedAssignment.PropertyName.Substring(indexOfDot + 1);
-
-                    // see if we can find a view object of specified type as a parent to this view
-                    var parentViewDeclaration = childViewDeclaration.ParentDeclaration;
-                    while (parentViewDeclaration != null)
-                    {
-                        if (parentViewDeclaration.ViewName.IEquals(parentViewName))
-                        {
-                            // see if view actually has attached property declared
-                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
-                            var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
-                            if (attachedPropertyDeclaration != null)
-                            {
-                                // remove property assignment and add attached property assignment to declaration
-                                childViewDeclaration.PropertyAssignments.Remove(attachedAssignment);
-                                childViewDeclaration.AttachedPropertyAssignments.Add(new AttachedPropertyAssignment
-                                {
-                                    LineNumber = attachedAssignment.LineNumber,
-                                    PropertyName = parentPropertyName,
-                                    PropertyValue = attachedAssignment.PropertyValue,
-                                    ParentId = parentViewDeclaration.Id,
-                                    PropertyTypeName = attachedPropertyDeclaration.PropertyTypeName,
-                                    ParentViewName = parentViewName
-                                });
-
-                                break;
-                            }
-                        }
-
-                        parentViewDeclaration = parentViewDeclaration.ParentDeclaration;
-                    }
-                }
-
-                // validate template content
-                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
-                bool templateContent = childViewObject.HasContentTemplate;
-                if (templateContent)
-                {
-                    var childId = childViewDeclaration.Id;
-                    var contentTemplateType = childViewObject.ContentTemplate?.TypeName;
-                    bool wrapContent = false;
-
-                    // see if template child is of appropriate type
-                    if (!String.IsNullOrEmpty(contentTemplateType) && childViewDeclaration.ChildDeclarations.Count() == 1)
-                    {
-                        var templateChildObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ChildDeclarations[0].ViewName);
-                        wrapContent = true;
-                        while (templateChildObject != null)
-                        {
-                            if (templateChildObject.TypeName.IEquals(contentTemplateType))
-                            {
-                                wrapContent = false;
-                                break;
-                            }
-
-                            templateChildObject = templateChildObject.BasedOn;
-                        }
-                    }
-
-                    if (wrapContent)
-                    {
-                        // children is not of appropriate type, so we need to wrap them
-                        string viewName = !String.IsNullOrEmpty(contentTemplateType) ? contentTemplateType : "Region";
-                        var wrappingRegionDeclaration = new ViewDeclaration
-                        {
-                            Id = childId + "Content",
-                            ViewName = viewName,
-                            ChildDeclarations = childViewDeclaration.ChildDeclarations,
-                            ParentDeclaration = childViewDeclaration
-                        };
-                        wrappingRegionDeclaration.ChildDeclarations.ForEach(x => x.ParentDeclaration = wrappingRegionDeclaration);
-
-                        childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
-                        childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
-
-                        // add property declarations for the wrapping region
-                        viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
-                    }
-                }
-
-                UpdateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
-            }
-        }
-
-        /// <summary>
-        /// Generates asset code. 
-        /// </summary>
-        public static void GenerateAssetCode()
-        {
-            Debug.Log("Generating asset code.");
-            var sb = new StringBuilder();
-
-            // open the view class
-            sb.AppendLine("// Asset data and providers generated from asset content");
-            sb.AppendLine("#region Using Statements");
-            sb.AppendLine("using System;");
-            sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using System.Collections.Generic;");
-            sb.AppendLine("using System.Runtime.CompilerServices;");
-            sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using UnityEngine.UI;");
-            // TODO allow configuration of namespaces to be included
-            sb.AppendLine("#endregion");
-            sb.AppendLine();
-            sb.AppendLine("namespace {0}", DefaultNamespace);
-            sb.AppendLine("{");
-
-            // generate asset bundle data
-
-            var bundles = _contentObjectModel.AssetBundleObjects.Where(x => !x.IsResource).OrderBy(x => x.Name).ToList();
-            if (bundles.Count() > 0)
-            {
-                sb.AppendLine("    #region Asset Bundles");
-                sb.AppendLine();
-                sb.AppendLine("    public partial class AssetBundleData : DataProvider<AssetBundle>");
-                sb.AppendLine("    {");
-                sb.AppendLine("        #region Fields");
-                sb.AppendLine();
-
-                foreach (var assetBundle in bundles)
-                {
-                    sb.AppendLine("        public readonly AssetBundle {0};", assetBundle.Name.ToPropertyName());
-                }
-
-                sb.AppendLine();
-                sb.AppendLine("        #endregion");
-                sb.AppendLine();
-                sb.AppendLine("        #region Constructor");
-                sb.AppendLine();
-                sb.AppendLine("        public AssetBundleData()");
-                sb.AppendLine("        {");
-
-                foreach (var assetBundle in bundles)
-                {
-                    sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, assetBundle.StorageMode.ToString());
-                }
-                sb.AppendLine();
-                foreach (var assetBundle in bundles)
-                {
-                    sb.AppendLine("            Add({0});", assetBundle.Name.ToPropertyName());
-                }
-
-                sb.AppendLine("        }");
-                sb.AppendLine();
-                sb.AppendLine("        #endregion");
-                sb.AppendLine("    }");
-                sb.AppendLine();
-                sb.AppendLine("    #endregion");
-            }
-
-            // generate asset object data
-            List<UnityAssetObject> assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
-            foreach (var assetType in _contentObjectModel.AssetTypes)
-            {
-                if (assetType.Name == "DefaultAsset")
-                    continue; // ignore default assets
-
-                var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
-                var assetTypeName = assetType.FormattedTypeName;
-                var assetTypeNamePlural = assetType.Name.Pluralize();
-
-                sb.AppendLine();
-                sb.AppendLine("    #region {0}", assetTypeNamePlural);
-                sb.AppendLine();
-                sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetTypeName, assetType.FullName);
-                sb.AppendLine("    {");
-                sb.AppendLine("    }");
-                sb.AppendLine();
-                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
-                sb.AppendLine("    {");
-
-                if (assetObjectsOfType.Count > 0)
-                {
-
-                    sb.AppendLine("        #region Fields");
-                    sb.AppendLine();
-
-                    foreach (var assetObject in assetObjectsOfType)
-                    {
-                        sb.AppendLine("        public readonly {0} {1};", assetTypeName, assetObject.Name.ToPropertyName());
-                    }
-
-                    sb.AppendLine();
-                    sb.AppendLine("        #endregion");
-                    sb.AppendLine();
-                    sb.AppendLine("        #region Constructor");
-                    sb.AppendLine();
-                    sb.AppendLine("        public {0}Data()", assetTypeName);
-                    sb.AppendLine("        {");
-
-                    foreach (var assetObject in assetObjectsOfType)
-                    {
-                        if (!assetObject.IsResource)
-                        {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\", RelativePath = \"{4}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName, assetObject.RelativePath);
-                        }
-                        else
-                        {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true, RelativePath = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.RelativePath);
-                        }
-                    }
-                    sb.AppendLine();
-                    foreach (var assetObject in assetObjectsOfType)
-                    {
-                        sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
-                    }
-
-                    sb.AppendLine("        }");
-                    sb.AppendLine();
-                    sb.AppendLine("        #endregion");
-                }
-                sb.AppendLine("    }");
-                sb.AppendLine();
-
-                sb.AppendLine("    public static partial class Assets");
-                sb.AppendLine("    {");
-                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetTypeName, assetTypeNamePlural);
-                sb.AppendLine("    }");
-                sb.AppendLine();
-                sb.AppendLine("    #endregion");
-            }
-
-            // close namespace
-            sb.AppendLine("}");
-
-            // write file
-            string path = String.Format("{0}/Delight/Content{1}", Application.dataPath, ContentParser.AssetsFolder);
-            var sourceFile = String.Format("{0}Assets_g.cs", path);
-
-            Debug.Log("Creating " + sourceFile);
-            File.WriteAllText(sourceFile, sb.ToString());
         }
 
         /// <summary>
@@ -560,6 +313,104 @@ namespace Delight.Editor.Parser
 
             Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+        }
+
+        /// <summary>
+        /// Validates view declarations in the view object.
+        /// </summary>
+        private static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
+        {
+            foreach (var childViewDeclaration in childViewDeclarations)
+            {
+                // update attached assignments 
+                var attachedAssignmentsNeedUpdate = childViewDeclaration.PropertyAssignments.Where(x => x.AttachedNeedUpdate).ToList();
+                foreach (var attachedAssignment in attachedAssignmentsNeedUpdate)
+                {
+                    attachedAssignment.AttachedNeedUpdate = false;
+                    int indexOfDot = attachedAssignment.PropertyName.IndexOf('.');
+                    var parentViewName = attachedAssignment.PropertyName.Substring(0, indexOfDot);
+                    var parentPropertyName = attachedAssignment.PropertyName.Substring(indexOfDot + 1);
+
+                    // see if we can find a view object of specified type as a parent to this view
+                    var parentViewDeclaration = childViewDeclaration.ParentDeclaration;
+                    while (parentViewDeclaration != null)
+                    {
+                        if (parentViewDeclaration.ViewName.IEquals(parentViewName))
+                        {
+                            // see if view actually has attached property declared
+                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
+                            var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
+                            if (attachedPropertyDeclaration != null)
+                            {
+                                // remove property assignment and add attached property assignment to declaration
+                                childViewDeclaration.PropertyAssignments.Remove(attachedAssignment);
+                                childViewDeclaration.AttachedPropertyAssignments.Add(new AttachedPropertyAssignment
+                                {
+                                    LineNumber = attachedAssignment.LineNumber,
+                                    PropertyName = parentPropertyName,
+                                    PropertyValue = attachedAssignment.PropertyValue,
+                                    ParentId = parentViewDeclaration.Id,
+                                    PropertyTypeName = attachedPropertyDeclaration.PropertyTypeName,
+                                    ParentViewName = parentViewName
+                                });
+
+                                break;
+                            }
+                        }
+
+                        parentViewDeclaration = parentViewDeclaration.ParentDeclaration;
+                    }
+                }
+
+                // validate template content
+                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
+                bool templateContent = childViewObject.HasContentTemplate;
+                if (templateContent)
+                {
+                    var childId = childViewDeclaration.Id;
+                    var contentTemplateType = childViewObject.ContentTemplate?.TypeName;
+                    bool wrapContent = false;
+
+                    // see if template child is of appropriate type
+                    if (!String.IsNullOrEmpty(contentTemplateType) && childViewDeclaration.ChildDeclarations.Count() == 1)
+                    {
+                        var templateChildObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ChildDeclarations[0].ViewName);
+                        wrapContent = true;
+                        while (templateChildObject != null)
+                        {
+                            if (templateChildObject.TypeName.IEquals(contentTemplateType))
+                            {
+                                wrapContent = false;
+                                break;
+                            }
+
+                            templateChildObject = templateChildObject.BasedOn;
+                        }
+                    }
+
+                    if (wrapContent)
+                    {
+                        // children is not of appropriate type, so we need to wrap them
+                        string viewName = !String.IsNullOrEmpty(contentTemplateType) ? contentTemplateType : "Region";
+                        var wrappingRegionDeclaration = new ViewDeclaration
+                        {
+                            Id = childId + "Content",
+                            ViewName = viewName,
+                            ChildDeclarations = childViewDeclaration.ChildDeclarations,
+                            ParentDeclaration = childViewDeclaration
+                        };
+                        wrappingRegionDeclaration.ChildDeclarations.ForEach(x => x.ParentDeclaration = wrappingRegionDeclaration);
+
+                        childViewDeclaration.ChildDeclarations = new List<ViewDeclaration>();
+                        childViewDeclaration.ChildDeclarations.Add(wrappingRegionDeclaration);
+
+                        // add property declarations for the wrapping region
+                        viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
+                    }
+                }
+
+                UpdateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
+            }
         }
 
         /// <summary>
@@ -1170,7 +1021,7 @@ namespace Delight.Editor.Parser
                             PropertyTypeName = mappedProperty.TargetPropertyTypeFullName,
                             PropertyTypeFullName = mappedProperty.TargetPropertyTypeFullName,
                             DeclarationType = mappedProperty.IsViewReference ? PropertyDeclarationType.View : PropertyDeclarationType.Default,
-                            AssemblyQualifiedType = mappedProperty.TargetAssemblyQualifiedType                            
+                            AssemblyQualifiedType = mappedProperty.TargetAssemblyQualifiedType
                         }
                     });
                 }
@@ -1439,6 +1290,316 @@ namespace Delight.Editor.Parser
             public string VariableName;
             public string ItemType;
             public PropertyBinding ItemIdDeclaration;
+        }
+
+        #endregion
+
+        #region Assets
+
+        /// <summary>
+        /// Generates asset code. 
+        /// </summary>
+        public static void GenerateAssetCode()
+        {
+            Debug.Log("Generating asset code.");
+            var sb = new StringBuilder();
+
+            // open the view class
+            sb.AppendLine("// Asset data and providers generated from asset content");
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Linq;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            // TODO allow configuration of namespaces to be included
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", DefaultNamespace);
+            sb.AppendLine("{");
+
+            // generate asset bundle data
+
+            var bundles = _contentObjectModel.AssetBundleObjects.Where(x => !x.IsResource).OrderBy(x => x.Name).ToList();
+            if (bundles.Count() > 0)
+            {
+                sb.AppendLine("    #region Asset Bundles");
+                sb.AppendLine();
+                sb.AppendLine("    public partial class AssetBundleData : DataProvider<AssetBundle>");
+                sb.AppendLine("    {");
+                sb.AppendLine("        #region Fields");
+                sb.AppendLine();
+
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("        public readonly AssetBundle {0};", assetBundle.Name.ToPropertyName());
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine();
+                sb.AppendLine("        #region Constructor");
+                sb.AppendLine();
+                sb.AppendLine("        public AssetBundleData()");
+                sb.AppendLine("        {");
+
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, assetBundle.StorageMode.ToString());
+                }
+                sb.AppendLine();
+                foreach (var assetBundle in bundles)
+                {
+                    sb.AppendLine("            Add({0});", assetBundle.Name.ToPropertyName());
+                }
+
+                sb.AppendLine("        }");
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    #endregion");
+            }
+
+            // generate asset object data
+            List<UnityAssetObject> assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
+            foreach (var assetType in _contentObjectModel.AssetTypes)
+            {
+                if (assetType.Name == "DefaultAsset")
+                    continue; // ignore default assets
+
+                var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
+                var assetTypeName = assetType.FormattedTypeName;
+                var assetTypeNamePlural = assetType.Name.Pluralize();
+
+                sb.AppendLine();
+                sb.AppendLine("    #region {0}", assetTypeNamePlural);
+                sb.AppendLine();
+                sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetTypeName, assetType.FullName);
+                sb.AppendLine("    {");
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
+                sb.AppendLine("    {");
+
+                if (assetObjectsOfType.Count > 0)
+                {
+
+                    sb.AppendLine("        #region Fields");
+                    sb.AppendLine();
+
+                    foreach (var assetObject in assetObjectsOfType)
+                    {
+                        sb.AppendLine("        public readonly {0} {1};", assetTypeName, assetObject.Name.ToPropertyName());
+                    }
+
+                    sb.AppendLine();
+                    sb.AppendLine("        #endregion");
+                    sb.AppendLine();
+                    sb.AppendLine("        #region Constructor");
+                    sb.AppendLine();
+                    sb.AppendLine("        public {0}Data()", assetTypeName);
+                    sb.AppendLine("        {");
+
+                    foreach (var assetObject in assetObjectsOfType)
+                    {
+                        if (!assetObject.IsResource)
+                        {
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\", RelativePath = \"{4}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName, assetObject.RelativePath);
+                        }
+                        else
+                        {
+                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true, RelativePath = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.RelativePath);
+                        }
+                    }
+                    sb.AppendLine();
+                    foreach (var assetObject in assetObjectsOfType)
+                    {
+                        sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
+                    }
+
+                    sb.AppendLine("        }");
+                    sb.AppendLine();
+                    sb.AppendLine("        #endregion");
+                }
+                sb.AppendLine("    }");
+                sb.AppendLine();
+
+                sb.AppendLine("    public static partial class Assets");
+                sb.AppendLine("    {");
+                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetTypeName, assetTypeNamePlural);
+                sb.AppendLine("    }");
+                sb.AppendLine();
+                sb.AppendLine("    #endregion");
+            }
+
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            string path = String.Format("{0}/Delight/Content{1}", Application.dataPath, ContentParser.AssetsFolder);
+            var sourceFile = String.Format("{0}Assets_g.cs", path);
+
+            Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
+        }
+
+        #endregion
+
+        #region Models
+
+        /// <summary>
+        /// Generates model code.
+        /// </summary>
+        public static void GenerateModelCode()
+        {
+            // update all model objects that are changed            
+            foreach (var modelObject in _contentObjectModel.ModelObjects)
+            {
+                if (!modelObject.NeedUpdate)
+                    continue;
+
+                // generate model code    
+                GenerateModelCode(modelObject);
+
+                modelObject.NeedUpdate = false;
+            }
+        }
+
+        /// <summary>
+        /// Generates model code.
+        /// </summary>
+        public static void GenerateModelCode(ModelObject modelObject)
+        {
+            Debug.Log("Generating code for model \"" + modelObject.Name +"\"");
+
+            string schemaFilename = Path.GetFileName(modelObject.SchemaFilePath);
+            var ns = !String.IsNullOrEmpty(modelObject.Namespace) ? modelObject.Namespace : DefaultNamespace;
+
+            // build the internal codebehind for the view
+            var sb = new StringBuilder();
+
+            // open the view class
+            sb.AppendLine("// Model generated from \"{0}\"", schemaFilename);
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            // TODO allow configuration of namespaces to be included
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", ns);
+            sb.AppendLine("{");
+            sb.AppendLine("    public partial class {0} : ModelObject", modelObject.Name);
+            sb.AppendLine("    {");
+
+            // generate model properties
+
+            sb.AppendLine("        #region Properties");
+
+            foreach (var property in modelObject.Properties)
+            {
+                var field = property.Name.ToPrivateMemberName();
+                var typeName = property.TypeName;
+
+                // see if property references a model or collection of models
+                bool isModelReference = _contentObjectModel.ModelObjects.Any(x => x.Name.IEquals(typeName));
+                var modelCollectionObject = _contentObjectModel.ModelObjects.FirstOrDefault(x => x.PluralName.IEquals(typeName));
+                bool isAssetReference = _contentObjectModel.AssetTypes.Any(x => x.Name.IEquals(typeName));
+
+                if (isModelReference)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public {0} {1}", typeName, property.Name);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get {{ return Models.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
+                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+                    sb.AppendLine("        }");
+                }
+                else if (modelCollectionObject != null)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("        public BindableCollection<{0}> {1}", modelCollectionObject.Name, property.Name);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get {{ return Models.{0}.Get(this); }}", property.Name);
+                    sb.AppendLine("        }");
+                }
+                else if (isAssetReference)
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public {0}Asset {1}", typeName, property.Name);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get {{ return Assets.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
+                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+                    sb.AppendLine("        }");
+                }
+                else
+                {
+                    sb.AppendLine();
+                    sb.AppendLine("        private {0} {1};", typeName, field);
+                    sb.AppendLine("        public {0} {1}", typeName, property.Name);
+                    sb.AppendLine("        {");
+                    sb.AppendLine("            get {{ return {0}; }}", field);
+                    sb.AppendLine("            set {{ SetProperty(ref {0}, value); }}", field);
+                    sb.AppendLine("        }");
+                }
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("        #endregion");
+
+            // close the view class
+            sb.AppendLine("    }");
+
+            // generate data provider
+            sb.AppendLine();
+            sb.AppendLine("    #region Data Provider");
+            sb.AppendLine();
+
+            sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", modelObject.Name);
+            sb.AppendLine("    {");
+
+            // generate template fields
+            sb.AppendLine("        #region Constructor");
+            sb.AppendLine();
+
+            //sb.AppendLine("        public {0}Data()", modelObject.Name);
+            //sb.AppendLine("        {");
+
+            //// TODO generate data
+
+            //sb.AppendLine("        }");
+            sb.AppendLine();
+
+            sb.AppendLine("        #endregion");
+
+            // TODO generate Get methods
+
+            sb.AppendLine("    }");
+
+            sb.AppendLine();
+            sb.AppendLine("    public static partial class Models", modelObject.Name);
+            sb.AppendLine("    {");
+            sb.AppendLine("        public static {0}Data {1} = new {0}Data();", modelObject.Name, modelObject.Name.Pluralize());
+            sb.AppendLine("    }");
+
+            sb.AppendLine();
+            sb.AppendLine("    #endregion");
+
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(modelObject.SchemaFilePath));
+            var sourceFile = String.Format("{0}/{1}_g.cs", dir, modelObject.Name);
+
+            Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
         }
 
         #endregion

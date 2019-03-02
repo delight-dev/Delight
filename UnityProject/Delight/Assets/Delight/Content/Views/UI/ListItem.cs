@@ -76,18 +76,18 @@ namespace Delight
                 if (childView == null)
                     continue;
 
-                var childWidth = childView.Width ?? ElementSize.Default;
-                var childHeight = childView.Height ?? ElementSize.Default;
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
 
                 // get size of content
                 if (childWidth.Unit != ElementSizeUnit.Percents)
                 {
-                    maxWidth = childView.Width.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
+                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
                 }
 
                 if (childHeight.Unit != ElementSizeUnit.Percents)
                 {
-                    maxHeight = childHeight.Pixels > maxHeight ? childView.Height.Pixels : maxHeight;
+                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
                 }
             }
 

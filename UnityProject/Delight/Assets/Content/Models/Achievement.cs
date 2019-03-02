@@ -10,28 +10,8 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Achievement : BindableObject
+    public partial class Achievement : ModelObject
     {
-        public string AchievementSpriteId { get; set; }
-        public SpriteAsset AchievementSprite
-        {
-            get { return Assets.Sprites[AchievementSpriteId]; }
-            set { AchievementSpriteId = value?.Id; }
-        }
-
-        public string PlayerId { get; set; }
-        public Player Player
-        {
-            get { return Models.Players[PlayerId]; }
-            set { PlayerId = value?.Id; }
-        }
-
-        private string _title;
-        public string Title
-        {
-            get { return _title; }
-            set { SetProperty(ref _title, value); }
-        }
     }
 
     public partial class AchievementData : DataProvider<Achievement>
@@ -65,10 +45,5 @@ namespace Delight
             _playerAchievements.Add(playerId, playerAchievements);
             return playerAchievements;
         }
-    }
-
-    public static partial class Models
-    {
-        public static AchievementData Achievements = new AchievementData();
     }
 }
