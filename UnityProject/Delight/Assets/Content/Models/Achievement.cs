@@ -29,21 +29,5 @@ namespace Delight
             Add(new Achievement { PlayerId = "Player3", Title = "A3-2" });
             Add(new Achievement { PlayerId = "Player4", Title = "A4-1" });
         }
-
-        protected Dictionary<string, BindableCollectionSubset<Achievement>> _playerAchievements = new Dictionary<string, BindableCollectionSubset<Achievement>>(); 
-        public virtual BindableCollectionSubset<Achievement> Get(Player player)
-        {
-            if (player == null)
-                return null;
-
-            string playerId = player.Id;
-            BindableCollectionSubset<Achievement> playerAchievements;
-            if (_playerAchievements.TryGetValue(playerId, out playerAchievements))
-                return playerAchievements;
-
-            playerAchievements = new BindableCollectionSubset<Achievement>(this, x => x.PlayerId == playerId, x => x.PlayerId = playerId);
-            _playerAchievements.Add(playerId, playerAchievements);
-            return playerAchievements;
-        }
     }
 }

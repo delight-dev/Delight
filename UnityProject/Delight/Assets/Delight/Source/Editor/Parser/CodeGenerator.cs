@@ -1577,15 +1577,67 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
 
             sb.AppendLine("        #endregion");
+            sb.AppendLine();
 
-            // TODO generate Get methods
+            var sb2 = new StringBuilder();
+            sb2.AppendLine("        #region Methods");
+            sb2.AppendLine();
+            bool referencedInOtherModels = false;
+
+            // check if this data model is referenced in other models, if so add Get methods retrieve a collection subset
+            var modelReferences = new List<ModelObject>();
+            foreach (var model in _contentObjectModel.ModelObjects)
+            {
+                var sourceProperty = model.Properties.FirstOrDefault(x => x.TypeName.IEquals(modelObject.PluralName));
+                if (sourceProperty == null)
+                    continue;
+
+                referencedInOtherModels = true;
+                var localModelName = model.Name.ToLocalVariableName();
+                var localCollectionSubsetName = String.Format("{0}{1}", localModelName, modelObject.PluralName);
+                var collectionSubsetName = String.Format("_{0}", localCollectionSubsetName);
+
+                // TODO see if filter method or target property is specified
+
+                var targetProperty = modelObject.Properties.FirstOrDefault(x => x.TypeName.IEquals(model.Name));
+                string targetPropertyFilter = targetProperty != null ? 
+                    String.Format("x.{0}Id == {1}Id", targetProperty.Name, localModelName) : "true";
+                string targetPropertySetter = targetProperty != null ?
+                    String.Format("x.{0}Id = {1}Id", targetProperty.Name, localModelName) : "{{ }}";
+
+                sb2.AppendLine(2, "protected Dictionary<string, BindableCollectionSubset<{0}>> {1} = new Dictionary<string, BindableCollectionSubset<{0}>>();", modelObject.Name, collectionSubsetName);
+                sb2.AppendLine(2, "public virtual BindableCollectionSubset<{0}> Get({1} {2})", modelObject.Name, model.Name, model.Name.ToLocalVariableName());
+                sb2.AppendLine(2, "{{");
+                sb2.AppendLine(2, "    if ({0} == null)", localModelName);
+                sb2.AppendLine(2, "        return null;");
+                sb2.AppendLine();
+                sb2.AppendLine(2, "    string {0}Id = {0}.Id;", localModelName);
+                sb2.AppendLine(2, "    BindableCollectionSubset<{0}> {1};", modelObject.Name, localCollectionSubsetName);
+                sb2.AppendLine(2, "    if ({0}.TryGetValue({1}Id, out {2}))", collectionSubsetName, localModelName, localCollectionSubsetName);
+                sb2.AppendLine(2, "        return {0};", localCollectionSubsetName);
+                sb2.AppendLine();
+                sb2.AppendLine(2, "    {0} = new BindableCollectionSubset<{1}>(this, x => {2}, x => {3});", localCollectionSubsetName, modelObject.Name,
+                    targetPropertyFilter, targetPropertySetter);
+                sb2.AppendLine(2, "    {0}.Add({1}Id, {2});", collectionSubsetName, localModelName, localCollectionSubsetName);
+                sb2.AppendLine(2, "    return {0};", localCollectionSubsetName);
+                sb2.AppendLine(2, "}}");
+                sb2.AppendLine();
+            }
+
+
+            sb2.AppendLine("        #endregion");
+
+            if (referencedInOtherModels)
+                sb.Append(sb2.ToString());
+
+            // TODO generate Get methods by checking if any other model references this one 
 
             sb.AppendLine("    }");
 
             sb.AppendLine();
             sb.AppendLine("    public static partial class Models", modelObject.Name);
             sb.AppendLine("    {");
-            sb.AppendLine("        public static {0}Data {1} = new {0}Data();", modelObject.Name, modelObject.Name.Pluralize());
+            sb.AppendLine("        public static {0}Data {1} = new {0}Data();", modelObject.Name, modelObject.PluralName);
             sb.AppendLine("    }");
 
             sb.AppendLine();

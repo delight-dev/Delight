@@ -45,6 +45,26 @@ namespace Delight
 
 
         #endregion
+
+        #region Methods
+
+        protected Dictionary<string, BindableCollectionSubset<Achievement>> _playerAchievements = new Dictionary<string, BindableCollectionSubset<Achievement>>();
+        public virtual BindableCollectionSubset<Achievement> Get(Player player)
+        {
+            if (player == null)
+                return null;
+
+            string playerId = player.Id;
+            BindableCollectionSubset<Achievement> playerAchievements;
+            if (_playerAchievements.TryGetValue(playerId, out playerAchievements))
+                return playerAchievements;
+
+            playerAchievements = new BindableCollectionSubset<Achievement>(this, x => x.PlayerId == playerId, x => x.PlayerId = playerId);
+            _playerAchievements.Add(playerId, playerAchievements);
+            return playerAchievements;
+        }
+
+        #endregion
     }
 
     public static partial class Models
