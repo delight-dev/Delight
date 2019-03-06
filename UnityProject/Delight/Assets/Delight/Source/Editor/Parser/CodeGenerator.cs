@@ -1564,7 +1564,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", modelObject.Name);
             sb.AppendLine("    {");
 
-            // generate template fields
+            // generate data inserts
             sb.AppendLine("        #region Constructor");
             sb.AppendLine();
 

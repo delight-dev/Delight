@@ -40,7 +40,9 @@ namespace Delight.Editor.Parser
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         private static XmlFile _currentXmlFile;
-        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
+        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");        
+        private static Regex _dataInsertRegex = new Regex(@"[^\s,""']+|""(?<str>[^""]*)"":?|'(?<str>[^']*)':?");
+        //private static Regex _dataInsertRegex = new Regex(@"[ ]*((?<id>[A-Za-z0-9_#!=@\.\[\]]+)[ ]*:[ ]*)?[ ]*((?<propertyData>""[^""]*""|[^,#]+)[, ]*)+(?<buildTarget>#[^# ]+[ ]*)+"); // TODO cleanup
 
         #endregion
 
@@ -1031,8 +1033,13 @@ namespace Delight.Editor.Parser
             // clear all models belonging to schema file
             _contentObjectModel.ModelObjects.RemoveAll(x => x.SchemaFilePath.IEquals(path));
 
-            ModelObject currentModelObject = null;
+            ModelObject newModelObject = null;
+            ModelObject insertModelObject = null;
             var filename = Path.GetFileName(path);
+            bool inModelDeclaration = false;
+            bool inDataInsertDeclaration = false;
+            List<ModelProperty> insertProperties = new List<ModelProperty>();
+            List<string> insertBuildTargets = new List<string>();
 
             // parse schema file
             for (int i = 0; i < fileContent.Length; ++i)
@@ -1043,42 +1050,145 @@ namespace Delight.Editor.Parser
                 
                 if (line.StartsWith("="))
                 {
+                    inDataInsertDeclaration = false;
+                    inModelDeclaration = false;
+
                     // parse model object declaration
                     var modelName = line.Substring(1).Trim();
-                    currentModelObject = _contentObjectModel.LoadModelObject(modelName);
-                    currentModelObject.Clear();
-                    currentModelObject.SchemaFilePath = path;
-                    continue;                    
-                }
-
-                // TODO parse model data inserts
-
-                // parse model property
-                if (currentModelObject == null)
-                {
-                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. No model object declared.", filename, i+1));
+                    newModelObject = _contentObjectModel.LoadModelObject(modelName);
+                    newModelObject.Clear();
+                    newModelObject.SchemaFilePath = path;
+                    inModelDeclaration = true;
                     continue;
                 }
 
-                // parse model property declaration
-                string[] args = line.Split(null);
-                if (args.Length > 2)
+                if (line.StartsWith("+"))
                 {
-                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.", filename, i+1));
+                    inModelDeclaration = false;
+                    inDataInsertDeclaration = false;
+
+                    // parse data insert declaration
+                    var insertDecl = line.Substring(1).Split(new char[] { ' ', '(', ')', ',' }, StringSplitOptions.RemoveEmptyEntries);
+                    if (insertDecl.Length < 1)
+                    {
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. No model object specified.\nError line:\n{2}", filename, i + 1, line));
+                        continue;
+                    }
+
+                    var insertModelName = insertDecl[0];
+                    insertModelObject = _contentObjectModel.LoadModelObject(insertModelName, false);
+                    if (insertModelObject == null)
+                    {
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. Model object \"{2}\" not found. Make sure data inserts appears after model declaration.\nError line:\n{3}", filename, i + 1, insertModelName, line));
+                        continue;
+                    }
+
+                    insertProperties.Clear();
+                    insertBuildTargets.Clear();
+
+                    // parse insert properties
+                    for (int j = 1; j < insertDecl.Length; ++j)
+                    {
+                        var propertyName = insertDecl[j];
+
+                        if (propertyName.StartsWith("#"))
+                        {
+                            // build target declaration
+                            insertBuildTargets.Add(propertyName.Substring(1));
+                            continue;
+                        }
+
+                        var property = insertModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
+                        if (property == null)
+                        {
+                            Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. Property \"{2}\" not found.\nError line:\n{3}", filename, i + 1, propertyName, line));
+                            continue;
+                        }
+
+                        insertProperties.Add(property);
+                    }
+                    
+                    inDataInsertDeclaration = true;
                     continue;
                 }
 
-                var propertyName = args.Length == 2 ? args[1] : args[0];
-                var propertyType = args[0];                
-                var property = currentModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
-                if (property == null)
+                if (inModelDeclaration)
                 {
-                    property = new ModelProperty();
-                    currentModelObject.Properties.Add(property);                    
+                    // parse model property declaration
+                    string[] args = line.Split(null);
+                    if (args.Length > 2)
+                    {
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.\nError line:\n{2}", filename, i + 1, line));
+                        continue;
+                    }
+
+                    var propertyName = args.Length == 2 ? args[1] : args[0];
+                    var propertyType = args[0];
+                    var property = newModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
+                    if (property == null)
+                    {
+                        property = new ModelProperty();
+                        newModelObject.Properties.Add(property);
+                    }
+                    property.Name = propertyName;
+                    property.TypeName = propertyType;
+                    newModelObject.NeedUpdate = true;
                 }
-                property.Name = propertyName;
-                property.TypeName = propertyType;
-                currentModelObject.NeedUpdate = true;
+                else if (inDataInsertDeclaration)
+                {
+                    // parse data insert
+                    var matches = _dataInsertRegex.Matches(line).OfType<Match>().ToList();
+                    if (matches.Count <= 0)
+                    {
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse data insert. Specify a comma separated list of values with an optional ID and build target specifier, example: \"dataId: value, \"value string\", value3 #dev\". \nError line:\n{2}", filename, i + 1, line));
+                        continue;
+                    }
+
+                    ModelObjectData modelObjectData = new ModelObjectData();
+                    modelObjectData.BuildTargets.AddRange(insertBuildTargets);
+
+                    // see if first match contains id
+                    var firstValue = matches[0].Value;
+                    if (firstValue.EndsWith(":"))
+                    {
+                        var strGroup = matches[0].Groups["str"]?.Value;
+                        modelObjectData.Id = String.IsNullOrWhiteSpace(strGroup) ? firstValue.Substring(0, firstValue.Length - 1) : strGroup;
+                        matches.RemoveAt(0);
+                    }
+
+                    // get all build target specifiers
+                    var buildTargetMatches = matches.Where(x => x.Value.StartsWith("#")).ToList();
+                    foreach (var buildTargetMatch in buildTargetMatches)
+                    {
+                        modelObjectData.BuildTargets.Add(buildTargetMatch.Value.Substring(1));
+                        matches.Remove(buildTargetMatch);
+                    }
+
+                    // the rest are property values
+                    if (matches.Count > insertProperties.Count)
+                    {
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse data insert. Number of values greater than properties specified in the data insert declaration. \nError line:\n{2}", filename, i + 1, line));
+                        continue;
+                    }
+
+                    for (int j = 0; j < matches.Count; ++j)
+                    {
+                        var match = matches[j];
+                        var strGroup = matches[j].Groups["str"]?.Value;
+                        modelObjectData.PropertyData.Add(new ModelObjectPropertyData
+                        {
+                            Property = insertProperties[j],
+                            PropertyValue = String.IsNullOrWhiteSpace(strGroup) ? match.Value : strGroup
+                        });
+                    }                  
+
+                    insertModelObject.NeedUpdate = true;
+                }
+                else
+                {
+                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse line. Line is not in a valid model or data insert declaration.\nError line:\n{2}", filename, i + 1, line));
+                    continue;
+                }
             }           
         }
 

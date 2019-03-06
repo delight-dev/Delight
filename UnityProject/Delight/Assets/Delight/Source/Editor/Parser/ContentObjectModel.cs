@@ -121,7 +121,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Loads specified model object, creates new one if it doesn't exist.
         /// </summary>
-        public ModelObject LoadModelObject(string modelName)
+        public ModelObject LoadModelObject(string modelName, bool createIfNotExist = true)
         {
             if (_modelObjects == null)
             {
@@ -137,6 +137,9 @@ namespace Delight.Editor.Parser
             {
                 return modelObject;
             }
+
+            if (!createIfNotExist)
+                return null;
 
             // create new model object if it doesn't exist
             modelObject = new ModelObject { Name = modelName, PluralName = modelName.Pluralize() };
@@ -862,14 +865,19 @@ namespace Delight.Editor.Parser
         [ProtoMember(6)]
         public string PluralName;
 
+        [ProtoMember(8, AsReference = true)]
+        public List<ModelObjectData> DataInserts;
+
         public ModelObject()
         {
             Properties = new List<ModelProperty>();
+            DataInserts = new List<ModelObjectData>();
         }
 
         public void Clear()
         {
             Properties.Clear();
+            DataInserts.Clear();
             Namespace = string.Empty;
         }
     }
@@ -888,6 +896,35 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(4)]
         public bool IsModelReference;
+    }
+
+    [ProtoContract]
+    public class ModelObjectData
+    {
+        [ProtoMember(1)]
+        public string Id;
+
+        [ProtoMember(2, AsReference = true)]
+        public List<ModelObjectPropertyData> PropertyData;
+
+        [ProtoMember(3)]
+        public List<string> BuildTargets;
+
+        public ModelObjectData()
+        {
+            PropertyData = new List<ModelObjectPropertyData>();
+            BuildTargets = new List<string>();
+        }
+    }
+
+    [ProtoContract]
+    public class ModelObjectPropertyData
+    {
+        [ProtoMember(1, AsReference = true)]
+        public ModelProperty Property;
+
+        [ProtoMember(2)]
+        public string PropertyValue;
     }
 
     #endregion
