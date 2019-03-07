@@ -16,7 +16,7 @@ namespace Delight
     {
         #region Fields
 
-        public static string AssetBundlesServerUri = AssetBundle.SimulatedUri;
+        public static string DefaultAssetBundlesServerUri = AssetBundle.SimulatedUri;
         public static ServerUriLocator AssetBundlesServerUriLocator = new ServerUriLocator();
 
         #endregion

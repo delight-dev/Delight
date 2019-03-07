@@ -866,18 +866,18 @@ namespace Delight.Editor.Parser
         public string PluralName;
 
         [ProtoMember(8, AsReference = true)]
-        public List<ModelObjectData> DataInserts;
+        public List<ModelObjectData> Data;
 
         public ModelObject()
         {
             Properties = new List<ModelProperty>();
-            DataInserts = new List<ModelObjectData>();
+            Data = new List<ModelObjectData>();
         }
 
         public void Clear()
         {
             Properties.Clear();
-            DataInserts.Clear();
+            Data.Clear();
             Namespace = string.Empty;
         }
     }
@@ -925,6 +925,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(2)]
         public string PropertyValue;
+
+        [ProtoMember(3)]
+        public int Line;
     }
 
     #endregion

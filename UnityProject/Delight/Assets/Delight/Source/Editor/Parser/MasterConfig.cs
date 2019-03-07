@@ -30,8 +30,11 @@ namespace Delight.Editor.Parser
         [ProtoMember(1)]
         public string Name;
 
+        /// <summary>
+        /// Build targets the configuration applies to.
+        /// </summary>
         [ProtoMember(2)]
-        public BuildConfiguration BuildConfiguration;
+        public List<string> BuildTargets;
 
         [ProtoMember(3)]
         public List<string> ContentFolders;
@@ -55,6 +58,7 @@ namespace Delight.Editor.Parser
         {
             ContentFolders = new List<string>();
             Views = new List<string>();
+            BuildTargets = new List<string>();
         }
 
         #endregion

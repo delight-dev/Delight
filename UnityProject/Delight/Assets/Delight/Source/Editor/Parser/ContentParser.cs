@@ -1178,9 +1178,12 @@ namespace Delight.Editor.Parser
                         modelObjectData.PropertyData.Add(new ModelObjectPropertyData
                         {
                             Property = insertProperties[j],
-                            PropertyValue = String.IsNullOrWhiteSpace(strGroup) ? match.Value : strGroup
+                            PropertyValue = String.IsNullOrWhiteSpace(strGroup) ? match.Value : strGroup,
+                            Line = i + 1
                         });
-                    }                  
+                    }
+
+                    insertModelObject.Data.Add(modelObjectData);
 
                     insertModelObject.NeedUpdate = true;
                 }

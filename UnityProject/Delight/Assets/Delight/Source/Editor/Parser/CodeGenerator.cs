@@ -1472,7 +1472,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateModelCode(ModelObject modelObject)
         {
-            Debug.Log("Generating code for model \"" + modelObject.Name +"\"");
+            Debug.Log("Generating code for model \"" + modelObject.Name + "\"");
 
             string schemaFilename = Path.GetFileName(modelObject.SchemaFilePath);
             var ns = !String.IsNullOrEmpty(modelObject.Namespace) ? modelObject.Namespace : DefaultNamespace;
@@ -1509,6 +1509,7 @@ namespace Delight.Editor.Parser
                 bool isModelReference = _contentObjectModel.ModelObjects.Any(x => x.Name.IEquals(typeName));
                 var modelCollectionObject = _contentObjectModel.ModelObjects.FirstOrDefault(x => x.PluralName.IEquals(typeName));
                 bool isAssetReference = _contentObjectModel.AssetTypes.Any(x => x.Name.IEquals(typeName));
+                property.IsModelReference = isModelReference;
 
                 if (isModelReference)
                 {
@@ -1564,22 +1565,66 @@ namespace Delight.Editor.Parser
             sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", modelObject.Name);
             sb.AppendLine("    {");
 
-            // generate data inserts
-            sb.AppendLine("        #region Constructor");
-            sb.AppendLine();
+            if (modelObject.Data.Any())
+            {
+                // generate data inserts
+                sb.AppendLine("        #region Constructor");
+                sb.AppendLine();
 
-            //sb.AppendLine("        public {0}Data()", modelObject.Name);
-            //sb.AppendLine("        {");
+                sb.AppendLine("        public {0}Data()", modelObject.Name);
+                sb.AppendLine("        {");
 
-            //// TODO generate data
+                var config = MasterConfig.GetInstance();
+                foreach (var modelData in modelObject.Data)
+                {
+                    // make sure data applies to active build target
+                    if (modelData.BuildTargets.Any())
+                    {
+                        if (!config.BuildTargets.Any(x => modelData.BuildTargets.Contains(x)))
+                        {
+                            continue; // build target don't match
+                        }
+                    }
 
-            //sb.AppendLine("        }");
-            sb.AppendLine();
+                    // add data
+                    var propertySetters = new List<string>();
+                    if (!String.IsNullOrEmpty(modelData.Id))
+                    {
+                        propertySetters.Add(String.Format("Id = \"{0}\"", modelData.Id));
+                    }
 
-            sb.AppendLine("        #endregion");
-            sb.AppendLine();
+                    foreach (var propertyData in modelData.PropertyData)
+                    {                      
+                        if (propertyData.Property.IsModelReference)
+                        {
+                            propertySetters.Add(String.Format("{0}Id = \"{1}\"", propertyData.Property.Name, propertyData.PropertyValue));
+                            continue;
+                        }
+                        
+                        // get initializer for property type
+                        string typeInitializer = GetInitializerForType(propertyData.Property.TypeName, propertyData.PropertyValue);
+                        if (typeInitializer == null)
+                        {
+                            // no initializer found for the type being assigned to
+                            Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to insert data for property \"{2}\". No value initializer found for property type \"{3}\".",
+                                modelObject.SchemaFilePath, propertyData.Line, propertyData.Property.Name, propertyData.Property.TypeName));
+                            continue;
+                        }
+
+                        propertySetters.Add(String.Format("{0} = {1}", propertyData.Property.Name, typeInitializer));
+                    }
+
+                    sb.AppendLine("            Add(new {0} {{ {1} }});", modelObject.Name, String.Join(", ", propertySetters));
+                }
+
+                sb.AppendLine("        }");
+                sb.AppendLine();
+
+                sb.AppendLine("        #endregion");
+            }
 
             var sb2 = new StringBuilder();
+            if (modelObject.Data.Any()) sb2.AppendLine();
             sb2.AppendLine("        #region Methods");
             sb2.AppendLine();
             bool referencedInOtherModels = false;
@@ -1600,7 +1645,7 @@ namespace Delight.Editor.Parser
                 // TODO see if filter method or target property is specified
 
                 var targetProperty = modelObject.Properties.FirstOrDefault(x => x.TypeName.IEquals(model.Name));
-                string targetPropertyFilter = targetProperty != null ? 
+                string targetPropertyFilter = targetProperty != null ?
                     String.Format("x.{0}Id == {1}Id", targetProperty.Name, localModelName) : "true";
                 string targetPropertySetter = targetProperty != null ?
                     String.Format("x.{0}Id = {1}Id", targetProperty.Name, localModelName) : "{{ }}";
@@ -1652,6 +1697,34 @@ namespace Delight.Editor.Parser
 
             Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+        }
+
+        /// <summary>
+        /// Gets initializer for the specified type.
+        /// </summary>
+        private static string GetInitializerForType(string typeName, string propertyValue)
+        {
+            var typeValueInitializer = ValueConverters.GetInitializer(typeName, propertyValue);
+            if (!String.IsNullOrEmpty(typeValueInitializer))
+                return typeValueInitializer;
+
+            // see if type name refers to an asset type
+            var assetType = _contentObjectModel.AssetTypes.FirstOrDefault(x => x.Name.IEquals(typeName));
+            if (assetType != null)
+            {
+                // use default initializer for asset types
+                return String.Format("Assets.{0}[\"{1}\"]", assetType.Name.Pluralize(), propertyValue);
+            }
+
+            // see if type is enum
+            var type = TypeHelper.GetType(typeName);
+            if (type != null && type.IsEnum)
+            {
+                // generate generic initializer for enum type
+                return String.Format("{0}.{1}", typeName, Enum.Parse(type, propertyValue, true));
+            }
+
+            return null; // no initializer found for type
         }
 
         #endregion
