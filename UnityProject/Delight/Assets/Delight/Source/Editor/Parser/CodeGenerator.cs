@@ -1321,6 +1321,7 @@ namespace Delight.Editor.Parser
 
             // generate asset bundle data
 
+            var config = MasterConfig.GetInstance();
             var bundles = _contentObjectModel.AssetBundleObjects.Where(x => !x.IsResource).OrderBy(x => x.Name).ToList();
             if (bundles.Count() > 0)
             {
@@ -1346,7 +1347,8 @@ namespace Delight.Editor.Parser
 
                 foreach (var assetBundle in bundles)
                 {
-                    sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, assetBundle.StorageMode.ToString());
+                    bool isStreamed = config.StreamedBundles.IContains(assetBundle.Name);
+                    sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, isStreamed ? "Local" : "Remote");
                 }
                 sb.AppendLine();
                 foreach (var assetBundle in bundles)
@@ -1580,7 +1582,7 @@ namespace Delight.Editor.Parser
                     // make sure data applies to active build target
                     if (modelData.BuildTargets.Any())
                     {
-                        if (!config.BuildTargets.Any(x => modelData.BuildTargets.Contains(x)))
+                        if (!config.BuildTargets.Any(x => modelData.BuildTargets.IContains(x)))
                         {
                             continue; // build target don't match
                         }
@@ -1725,6 +1727,18 @@ namespace Delight.Editor.Parser
             }
 
             return null; // no initializer found for type
+        }
+
+        #endregion
+
+        #region Config
+
+        /// <summary>
+        /// Generates model code.
+        /// </summary>
+        public static void GenerateConfigCode()
+        {
+            // TODO implement
         }
 
         #endregion

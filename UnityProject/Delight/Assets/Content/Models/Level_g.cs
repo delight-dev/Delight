@@ -43,14 +43,14 @@ namespace Delight
 
         public LevelData()
         {
-            Add(new Level { Id = "Level1-1", WorldId = "World1", Name = "Level 1-1" });
-            Add(new Level { Id = "Level1-2", WorldId = "World1", Name = "Level 1-2" });
-            Add(new Level { Id = "Level1-3", WorldId = "World1", Name = "Level 1-3" });
-            Add(new Level { Id = "Level2-1", WorldId = "World2", Name = "Level 2-1" });
-            Add(new Level { Id = "Level2-2", WorldId = "World2", Name = "Level 2-2" });
-            Add(new Level { Id = "Level2-3", WorldId = "World2", Name = "Level 2-3" });
-            Add(new Level { Id = "Level3-1", WorldId = "World3", Name = "Level 3-1" });
-            Add(new Level { Id = "Level3-2", WorldId = "World3", Name = "Level 3-2" });
+            Add(new Level { Id = "Level1_1", WorldId = "World1", Name = "Level 1-1" });
+            Add(new Level { Id = "Level1_2", WorldId = "World1", Name = "Level 1-2" });
+            Add(new Level { Id = "Level1_3", WorldId = "World1", Name = "Level 1-3" });
+            Add(new Level { Id = "Level2_1", WorldId = "World2", Name = "Level 2-1" });
+            Add(new Level { Id = "Level2_2", WorldId = "World2", Name = "Level 2-2" });
+            Add(new Level { Id = "Level2_3", WorldId = "World2", Name = "Level 2-3" });
+            Add(new Level { Id = "Level3_1", WorldId = "World3", Name = "Level 3-1" });
+            Add(new Level { Id = "Level3_2", WorldId = "World3", Name = "Level 3-2" });
         }
 
         #endregion

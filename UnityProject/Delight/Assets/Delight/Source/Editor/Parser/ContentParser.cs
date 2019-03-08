@@ -40,13 +40,39 @@ namespace Delight.Editor.Parser
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         private static XmlFile _currentXmlFile;
-        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");        
+        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
         private static Regex _dataInsertRegex = new Regex(@"[^\s,""']+|""(?<str>[^""]*)"":?|'(?<str>[^']*)':?");
-        //private static Regex _dataInsertRegex = new Regex(@"[ ]*((?<id>[A-Za-z0-9_#!=@\.\[\]]+)[ ]*:[ ]*)?[ ]*((?<propertyData>""[^""]*""|[^,#]+)[, ]*)+(?<buildTarget>#[^# ]+[ ]*)+"); // TODO cleanup
 
         #endregion
 
         #region Views, Scenes and Styles
+
+        /// <summary>
+        /// Processes all content and generates code.
+        /// </summary>
+        public static void RebuildAll(bool buildAssetBundles)
+        {
+            // wait for any uncompiled scripts to be compiled first
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
+            // parse all config files
+            ParseAllConfigFiles();
+
+            // parse all assets
+            if (buildAssetBundles)
+            {
+                RebuildAssets();
+            }
+
+            // parse all schema files
+            ParseAllSchemaFiles();
+
+            // parse all views 
+            ParseAllXmlFiles();
+
+            // refresh generated scripts
+            AssetDatabase.Refresh();
+        }
 
         /// <summary>
         /// Processes all XML assets and generates code.
@@ -552,7 +578,7 @@ namespace Delight.Editor.Parser
 
                 int commaIndex = attributeValue.IndexOf(",");
                 int assignmentIndex = attributeValue.IndexOf("=");
-                
+
                 if (assignmentIndex > 0)
                 {
                     Debug.LogError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Assignment not allowed in declaration.", GetLineInfo(element), attributeName, attributeValue));
@@ -685,7 +711,7 @@ namespace Delight.Editor.Parser
                 if (IsUnityAssetType(propertyType))
                 {
                     propertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
-                    propertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(propertyType, false);                    
+                    propertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(propertyType, false);
                 }
 
                 propertyDeclaration.AssemblyQualifiedType = propertyType.AssemblyQualifiedName;
@@ -1008,6 +1034,38 @@ namespace Delight.Editor.Parser
         #region Models
 
         /// <summary>
+        /// Parses all schema files.
+        /// </summary>
+        public static void ParseAllSchemaFiles()
+        {
+            var config = MasterConfig.GetInstance();
+
+            // clear parsed model object from content model
+            _contentObjectModel.ClearSchemaContent();
+
+            // get all assets
+            var ignoreFiles = new HashSet<string>();
+            var schemaFiles = new List<string>();
+            foreach (var localPath in config.ContentFolders)
+            {
+                string path = String.Format("{0}/{1}{2}", Application.dataPath,
+                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
+                    ModelsFolder.Substring(1));
+
+                foreach (var schemaFile in GetSchemaFilesAtPath(path, ignoreFiles))
+                {
+                    schemaFiles.Add(schemaFile);
+                    ignoreFiles.Add(schemaFile);
+                }
+            }
+
+            var emptyList = new List<string>();
+            ParseSchemaFiles(schemaFiles, emptyList, emptyList, emptyList);
+
+            Debug.Log("[Delight] Schema rebuild completed.");
+        }
+
+        /// <summary>
         /// Parses schema files. 
         /// </summary>
         public static void ParseSchemaFiles(List<string> addedOrUpdatedSchemaFiles, List<string> deletedSchemaFiles, List<string> movedSchemaFiles, List<string> movedFromSchemaFiles)
@@ -1044,10 +1102,10 @@ namespace Delight.Editor.Parser
             // parse schema file
             for (int i = 0; i < fileContent.Length; ++i)
             {
-                var line = fileContent[i].Trim();
-                if (String.IsNullOrWhiteSpace(line) || line.StartsWith("//")) // ignore comments and empty lines
+                var line = fileContent[i].Trim().RemoveComments();
+                if (String.IsNullOrWhiteSpace(line)) // ignore comments and empty lines
                     continue;
-                
+
                 if (line.StartsWith("="))
                 {
                     inDataInsertDeclaration = false;
@@ -1107,7 +1165,7 @@ namespace Delight.Editor.Parser
 
                         insertProperties.Add(property);
                     }
-                    
+
                     inDataInsertDeclaration = true;
                     continue;
                 }
@@ -1192,7 +1250,35 @@ namespace Delight.Editor.Parser
                     Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse line. Line is not in a valid model or data insert declaration.\nError line:\n{2}", filename, i + 1, line));
                     continue;
                 }
-            }           
+            }
+        }
+
+        /// <summary>
+        /// Gets all schema files at a path.
+        /// </summary>
+        private static List<string> GetSchemaFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        {
+            var files = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] filePaths = Directory.GetFiles(path, "*.txt", SearchOption.AllDirectories);
+                foreach (string unformattedFilePath in filePaths)
+                {
+                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
+                        continue;
+
+                    if (!unformattedFilePath.IContains("Schema"))
+                        continue;
+
+                    var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);
+                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
+                        continue;
+
+                    files.Add(filePath);
+                }
+            }
+
+            return files;
         }
 
         #endregion
@@ -1260,13 +1346,12 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Rebuilds assets bundles. 
         /// </summary>
-        public static void RebuildAssetBundles()
+        public static void RebuildAssets()
         {
             var config = MasterConfig.GetInstance();
 
-            // clear parsed assets from model
-            _contentObjectModel.AssetBundleObjects.Clear();
-            _contentObjectModel.ClearAssetTypes(true);
+            // clear parsed asset content from model
+            _contentObjectModel.ClearAssetContent();
 
             // get all assets
             var ignoreFiles = new HashSet<string>();
@@ -1299,7 +1384,7 @@ namespace Delight.Editor.Parser
             }
 
             _contentObjectModel.SaveObjectModel();
-
+                        
             // ask to clear output folders
             var outputPath = GetRemoteBundlePath();
             string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
@@ -1385,6 +1470,7 @@ namespace Delight.Editor.Parser
             if (bundles.Count <= 0)
                 return;
 
+            var config = MasterConfig.GetInstance();
             var streamedBundles = new List<AssetBundleBuild>();
             var remoteBundles = new List<AssetBundleBuild>();
             foreach (var bundle in bundles)
@@ -1395,17 +1481,11 @@ namespace Delight.Editor.Parser
 
                 Debug.Log(String.Format("[Delight] Building asset bundle \"{0}\".", bundle.Name));
 
-                // TODO remove
-                if (bundle.Name.IEquals("Bundle2"))
-                {
-                    bundle.StorageMode = StorageMode.Remote;
-                }
-
                 var build = new AssetBundleBuild();
                 build.assetBundleName = bundle.Name.ToLower();
                 build.assetBundleVariant = String.Empty;
                 build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
-                if (bundle.StorageMode == StorageMode.Local)
+                if (config.StreamedBundles.IContains(bundle.Name))
                 {
                     streamedBundles.Add(build);
                 }
@@ -1416,8 +1496,6 @@ namespace Delight.Editor.Parser
             }
 
             _contentObjectModel.SaveObjectModel();
-
-            var config = MasterConfig.GetInstance();            
             if (!_contentObjectModel.AssetBundleObjects.Any(x => x.NeedBuild))
             {
                 config.AssetsNeedBuild = false;
@@ -1494,6 +1572,225 @@ namespace Delight.Editor.Parser
 
             var bundleName = paths[0];
             return _contentObjectModel.LoadAssetBundleObject(bundleName, newAssetPath.Substring(0, assetFolderIndex + AssetsFolder.Length));
+        }
+
+        #endregion
+
+        #region Config
+
+        /// <summary>
+        /// Parses config files.
+        /// </summary>
+        public static void ParseAllConfigFiles()
+        {
+            var config = MasterConfig.GetInstance();
+
+            // clear configuration
+            config.Clear();
+
+            // get all assets
+            var ignoreFiles = new HashSet<string>();
+            var configFiles = new List<string>();
+            foreach (var localPath in config.ContentFolders)
+            {
+                string path = String.Format("{0}/{1}", Application.dataPath,
+                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath);
+
+                foreach (var configFile in GetConfigFilesAtPath(path, ignoreFiles))
+                {
+                    configFiles.Add(configFile);
+                    ignoreFiles.Add(configFile);
+                }
+            }
+
+            ParseConfigFiles(configFiles);
+
+            Debug.Log("[Delight] Config rebuild completed.");
+        }
+
+        /// <summary>
+        /// Parses config files. 
+        /// </summary>
+        public static void ParseConfigFiles(List<string> configFiles)
+        {
+            // parse config files
+            foreach (var configFile in configFiles)
+            {
+                var content = File.ReadAllLines(configFile);
+                ParseConfigFile(content, configFile);
+            }
+
+            // generate code for config
+            CodeGenerator.GenerateConfigCode();           
+
+            var config = MasterConfig.GetInstance();
+            config.SaveConfig();
+        }
+
+        /// <summary>
+        /// Parses config file. 
+        /// </summary>
+        public static void ParseConfigFile(string[] fileContent, string path)
+        {
+            var config = MasterConfig.GetInstance();
+            var filename = Path.GetFileName(path);
+
+            // parse config file
+            for (int i = 0; i < fileContent.Length; ++i)
+            {
+                // remove comments from file
+                var line = fileContent[i].Trim().RemoveComments();
+                if (String.IsNullOrWhiteSpace(line)) // ignore comments and empty lines
+                    continue;
+
+                var colonIndex = line.IndexOf(':');
+                if (colonIndex < 0)
+                {
+                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{2}", filename, i + 1, line));
+                    continue;
+                }
+
+                var configOption = line.Substring(0, colonIndex).Trim();
+                var configValue = line.Substring(colonIndex + 1).Trim();
+                if (String.IsNullOrWhiteSpace(configOption))
+                {
+                    Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{2}", filename, i + 1, line));
+                    continue;
+                }
+
+                int linesParsed = 0;
+                switch (configOption.ToLower())
+                {
+                    case "serveruri":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.ServerUri = values.FirstOrDefault();
+                            }
+                        }
+                        else
+                        {
+                            config.ServerUri = configValue;
+                        }
+                        break;
+
+                    case "buildtargets":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.BuildTargets.AddRange(values);
+                            }
+                        }
+                        else
+                        {
+                            config.BuildTargets.Add(configValue);
+                        }
+                        break;
+
+                    case "contentfolders":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.ContentFolders.AddRange(values);
+                            }
+                        }
+                        else
+                        {
+                            config.ContentFolders.Add(configValue);
+                        }
+                        break;
+
+                    case "streamedbundles":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.StreamedBundles.AddRange(values);
+                            }
+                        }
+                        else
+                        {
+                            config.StreamedBundles.Add(configValue);
+                        }
+                        break;
+
+                    default:
+                        Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Option \"{2}\" not recognized.\nError line:\n{3}", filename, i + 1, configOption, line));
+                        continue;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses config values from file.
+        /// </summary>
+        public static List<string> ParseConfigValues(string[] fileContent, int startIndex, out int linesParsed)
+        {
+            var values = new List<string>();
+            linesParsed = 0;
+
+            // parse config file
+            for (int i = startIndex; i < fileContent.Length; ++i)
+            {
+                var line = fileContent[i].RemoveComments();
+                if (String.IsNullOrWhiteSpace(line)) // ignore comments and empty lines
+                {
+                    ++linesParsed;
+                    continue;
+                }
+
+                // values need to start with indentation 
+                if (!line.StartsWith(" "))
+                    break;
+
+                values.Add(line.Trim());
+                ++linesParsed;
+            }
+
+            return values;
+        }
+
+        /// <summary>
+        /// Gets all config files at a path.
+        /// </summary>
+        private static List<string> GetConfigFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        {
+            var files = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] filePaths = Directory.GetFiles(path, "*.txt", SearchOption.AllDirectories);
+                foreach (string unformattedFilePath in filePaths)
+                {
+                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
+                        continue;
+
+                    if (!unformattedFilePath.IContains("Config"))
+                        continue;
+
+                    var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);
+                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
+                        continue;
+
+                    files.Add(filePath);
+                }
+            }
+
+            return files;
         }
 
         #endregion

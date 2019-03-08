@@ -1,0 +1,16 @@
+﻿## Configuration file. Available options:
+##    ServerUri - URI that points to where remote asset bundles are stored
+##    BuildTargets - controls which model data is included in build
+##    ContentFolders - specifies where Delight content (views, models, etc) resides (besides the default folders)
+##    StreamedBundles - specifies which bundles (by name) should be streamed locally rather than from remote URI
+## Example configuration, remove "#" to uncomment configuration options:
+
+ServerUri: http://example.com
+BuildTargets: 
+  Dev
+ContentFolders:
+  MyContent/
+  Example/Content/
+StreamedBundles:
+  Bundle2
+  Bundle3

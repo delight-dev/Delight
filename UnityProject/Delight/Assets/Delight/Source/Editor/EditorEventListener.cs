@@ -82,7 +82,8 @@ namespace Delight.Editor
 
                 case PlayModeStateChange.ExitingEditMode:
                     // generate bundles if necessary
-                    var needBuild = MasterConfig.GetInstance().AssetsNeedBuild;
+                    var config = MasterConfig.GetInstance();
+                    var needBuild = config.AssetsNeedBuild;
                     if (!needBuild)
                         break;
 

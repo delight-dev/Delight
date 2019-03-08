@@ -252,6 +252,16 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Clears parsed asset content from the object model.
+        /// </summary>
+        public void ClearAssetContent()
+        {
+            AssetBundleObjects.Clear();
+            _assetBundleObjects = null;
+            ClearAssetTypes(true);
+        }
+
+        /// <summary>
         /// Gets object model file path.
         /// </summary>
         private static string GetContentObjectModelFilePath()

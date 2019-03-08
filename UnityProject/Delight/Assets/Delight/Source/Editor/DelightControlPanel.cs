@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Xml.Linq;
 using UnityEditor;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -18,6 +19,9 @@ namespace Delight.Editor
     /// </summary>
     public class DelightControlPanel : UnityEditor.EditorWindow
     {
+        #region Fields
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -34,25 +38,26 @@ namespace Delight.Editor
         /// </summary>
         public void OnGUI()
         {
-            // rebuild views
-            GUIContent rebuildViews = new GUIContent("Rebuild Views", "Rebuilds all views.");
-            if (GUILayout.Button(rebuildViews))
+            bool buildAssetBundles = EditorPrefs.GetBool("Delight_BuildAssetBundles");
+
+            // rebuild all
+            GUIContent rebuildAll = new GUIContent("Rebuild All", "Rebuilds all delight content (views, assets, etc).");
+            if (GUILayout.Button(rebuildAll))
             {
-                ContentParser.RebuildViews();
+                ContentParser.RebuildAll(buildAssetBundles);
             }
 
-            // rebuild asset bundles
-            GUIContent rebuildAssetBundles = new GUIContent("Rebuild Asset Bundles", "Rebuilds all asset bundles.");
-            if (GUILayout.Button(rebuildAssetBundles))
+            var newBuildAssetBundles = EditorGUILayout.Toggle("Build Asset Bundles", EditorPrefs.GetBool("Delight_BuildAssetBundles"));
+            if (newBuildAssetBundles != buildAssetBundles)
             {
-                ContentParser.RebuildAssetBundles();
+                EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
-
-            // open editor
-            GUIContent openEditor = new GUIContent("Open Editor", "Opens delight editor.");
-            if (GUILayout.Button(openEditor))
+            
+            // open designer
+            GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
+            if (GUILayout.Button(openDesigner))
             {
-                DelightEditor.Open();
+                EditorSceneManager.OpenScene("Assets/Delight/Scenes/DelightDesigner.unity");
             }
 
             // TODO show list of asset bundles show name, version, storage mode, load mode and a rebuild button

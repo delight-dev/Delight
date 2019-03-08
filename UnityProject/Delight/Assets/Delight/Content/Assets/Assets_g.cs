@@ -25,8 +25,8 @@ namespace Delight
 
         public AssetBundleData()
         {
-            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
-            Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
+            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Remote };
+            Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Local };
 
             Add(Bundle1);
             Add(Bundle2);
@@ -124,12 +124,12 @@ namespace Delight
 
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
-        public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
+        public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame4;
         public readonly SpriteAsset DesignerGrid;
-        public readonly SpriteAsset EditorGrid;
         public readonly SpriteAsset DesignerGrid2;
+        public readonly SpriteAsset EditorGrid;
 
         #endregion
 
@@ -139,21 +139,21 @@ namespace Delight
         {
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
-            BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
+            BigSprite = new SpriteAsset { Id = "BigSprite", IsResource = true, RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true, RelativePath = "" };
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
-            EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
+            EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Frame1);
             Add(Frame2);
-            Add(BigSprite);
             Add(Frame3);
+            Add(BigSprite);
             Add(Frame4);
             Add(DesignerGrid);
-            Add(EditorGrid);
             Add(DesignerGrid2);
+            Add(EditorGrid);
         }
 
         #endregion
@@ -208,39 +208,6 @@ namespace Delight
 
     #endregion
 
-    #region Shaders
-
-    public partial class ShaderAsset : AssetObject<UnityEngine.Shader>
-    {
-    }
-
-    public partial class ShaderAssetData : DataProvider<ShaderAsset>
-    {
-        #region Fields
-
-        public readonly ShaderAsset UIFastDefault;
-
-        #endregion
-
-        #region Constructor
-
-        public ShaderAssetData()
-        {
-            UIFastDefault = new ShaderAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Shaders/" };
-
-            Add(UIFastDefault);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static ShaderAssetData Shaders = new ShaderAssetData();
-    }
-
-    #endregion
-
     #region Fonts
 
     public partial class FontAsset : AssetObject<UnityEngine.Font>
@@ -270,6 +237,39 @@ namespace Delight
     public static partial class Assets
     {
         public static FontAssetData Fonts = new FontAssetData();
+    }
+
+    #endregion
+
+    #region Shaders
+
+    public partial class ShaderAsset : AssetObject<UnityEngine.Shader>
+    {
+    }
+
+    public partial class ShaderAssetData : DataProvider<ShaderAsset>
+    {
+        #region Fields
+
+        public readonly ShaderAsset UIFastDefault;
+
+        #endregion
+
+        #region Constructor
+
+        public ShaderAssetData()
+        {
+            UIFastDefault = new ShaderAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Shaders/" };
+
+            Add(UIFastDefault);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static ShaderAssetData Shaders = new ShaderAssetData();
     }
 
     #endregion

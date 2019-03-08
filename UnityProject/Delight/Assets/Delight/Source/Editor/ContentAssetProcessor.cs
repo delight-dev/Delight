@@ -37,18 +37,23 @@ namespace Delight.Editor
         {
             // check if any views have been added or changed
             var config = MasterConfig.GetInstance();
+
+            // xml content
             var addedOrUpdatedXmlAssets = new List<string>();
 
+            // assets
             var addedOrUpdatedAssetObjects = new List<string>();
             var deletedAssetObjects = new List<string>();
             var movedAssetObjects = new List<string>();
             var movedFromAssetObjects = new List<string>();
 
+            // schemas
             var addedOrUpdatedSchemaObjects = new List<string>();
             var deletedSchemaObjects = new List<string>();
             var movedSchemaObjects = new List<string>();
             var movedFromSchemaObjects = new List<string>();
 
+            bool rebuildConfig = false;
             bool rebuildViews = false;
 
             // process imported assets
@@ -82,11 +87,20 @@ namespace Delight.Editor
                     continue;
                 }
 
+                // is the asset a config file? 
+                if (path.IContains(".txt") && path.IContains("Config"))
+                {
+                    // rebuild config
+                    rebuildConfig = true;
+                    continue;
+                }
+
                 // is the asset in a styles folder?
                 if (IsInStylesFolder(path, contentFolder))
                 {
                     // yes. rebuild all views
                     rebuildViews = true;
+                    continue;
                 }
 
                 // is it an xml asset?
@@ -124,6 +138,14 @@ namespace Delight.Editor
                         continue;
 
                     deletedSchemaObjects.Add(path);
+                    continue;
+                }
+
+                // is the asset a config file? 
+                if (path.IContains(".txt") && path.IContains("Config"))
+                {
+                    // rebuild config
+                    rebuildConfig = true;
                     continue;
                 }
 
@@ -178,6 +200,14 @@ namespace Delight.Editor
                     continue;
                 }
 
+                // is the asset a config file? 
+                if (movedToPath.IContains(".txt") && movedToPath.IContains("Config"))
+                {
+                    // rebuild config
+                    rebuildConfig = true;
+                    continue;
+                }
+
                 // is it an xml asset?
                 if (movedToPath.IIndexOf(".xml") >= 0)
                 {
@@ -203,6 +233,13 @@ namespace Delight.Editor
             }
 
             var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO for tracking processing time
+
+            // any config changed? 
+            if (rebuildConfig)
+            {
+                ContentParser.ParseAllConfigFiles();
+                refreshScripts = true;
+            }
 
             // any asset objects added, moved or deleted?
             if (assetsChanged)

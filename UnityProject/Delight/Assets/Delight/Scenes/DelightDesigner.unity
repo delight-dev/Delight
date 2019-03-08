@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObject: {fileID: 0}
-  ViewTypeName: ModelBindingTest
+  ViewTypeName: DelightDesigner
   ViewTypeNamespace: Delight
   LoadMode: 0
 --- !u!4 &1956482394

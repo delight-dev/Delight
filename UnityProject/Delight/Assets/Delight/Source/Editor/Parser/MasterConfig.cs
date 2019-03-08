@@ -45,6 +45,12 @@ namespace Delight.Editor.Parser
         [ProtoMember(5)]
         public bool AssetsNeedBuild;
 
+        [ProtoMember(6)]
+        public string ServerUri;
+
+        [ProtoMember(7)]
+        public List<string> StreamedBundles;
+
         private static MasterConfig _config;
 
         #endregion
@@ -59,6 +65,7 @@ namespace Delight.Editor.Parser
             ContentFolders = new List<string>();
             Views = new List<string>();
             BuildTargets = new List<string>();
+            StreamedBundles = new List<string>();
         }
 
         #endregion
@@ -83,8 +90,7 @@ namespace Delight.Editor.Parser
         public static MasterConfig CreateDefault()
         {
             var defaultConfig = new MasterConfig();
-            defaultConfig.ContentFolders.Add("Assets/Content/");
-            defaultConfig.ContentFolders.Add("Assets/Delight/Content/");
+            defaultConfig.Clear(); // set default values
             return defaultConfig;
         }
 
@@ -185,14 +191,19 @@ namespace Delight.Editor.Parser
             return path.Replace("\\", "/");
         }
 
-        #endregion
-    }
+        /// <summary>
+        /// Clears the configuration. 
+        /// </summary>
+        public void Clear()
+        {
+            ContentFolders = new List<string>();
+            BuildTargets = new List<string>();
+            StreamedBundles = new List<string>();
+            ContentFolders.Add("Assets/Content/");
+            ContentFolders.Add("Assets/Delight/Content/");
+        }
 
-    public enum BuildConfiguration
-    {
-        Dev = 0,
-        Staging = 1,
-        Production = 2
+        #endregion
     }
 }
 

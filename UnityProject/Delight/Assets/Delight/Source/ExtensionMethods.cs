@@ -202,6 +202,26 @@ namespace Delight
         }
 
         /// <summary>
+        /// List.Contains ignoring case.
+        /// </summary>
+        public static bool IContains(this List<string> strList, string str)
+        {
+            if (strList == null) return false;
+            return strList.Contains(str, StringComparer.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Removes comments from a line.
+        /// </summary>
+        public static string RemoveComments(this string line)
+        {
+            if (String.IsNullOrWhiteSpace(line)) return line;
+            if (line.StartsWith("//") || line.StartsWith("#"))
+                return String.Empty;
+            return line;
+        }
+
+        /// <summary>
         /// Pluralizes a table name.
         /// </summary>
         public static string Pluralize(this string text, string pluralWhenEndsWithS = null)
