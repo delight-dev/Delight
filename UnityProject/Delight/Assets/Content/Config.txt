@@ -3,14 +3,21 @@
 ##    BuildTargets - controls which model data is included in build
 ##    ContentFolders - specifies where Delight content (views, models, etc) resides (besides the default folders)
 ##    StreamedBundles - specifies which bundles (by name) should be streamed locally rather than from remote URI
+##    ServerUriLocator - name of class that locates server URI based on bundle name
+##    UseSimulatedUriInEditor - uses a simulated URI in the editor
 ## Example configuration, remove "#" to uncomment configuration options:
 
 ServerUri: http://example.com
+UseSimulatedUriInEditor: true
 BuildTargets: 
   Dev
 ContentFolders:
   MyContent/
   Example/Content/
 StreamedBundles:
+  Bundle1
   Bundle2
   Bundle3
+
+
+

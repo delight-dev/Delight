@@ -218,7 +218,7 @@ namespace Delight.Editor
             bool viewsChanged = addedOrUpdatedXmlAssets.Count() > 0;
             bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
             bool schemasChanged = addedOrUpdatedSchemaObjects.Count() > 0 || deletedSchemaObjects.Count() > 0 || movedSchemaObjects.Count() > 0;
-            bool contentChanged = assetsChanged || rebuildViews || viewsChanged || schemasChanged;
+            bool contentChanged = assetsChanged || rebuildViews || viewsChanged || schemasChanged || rebuildConfig;
             bool refreshScripts = false;
 
             // if editor is playing queue assets to be processed after exiting play mode
@@ -237,7 +237,33 @@ namespace Delight.Editor
             // any config changed? 
             if (rebuildConfig)
             {
-                ContentParser.ParseAllConfigFiles();
+                var result = ContentParser.ParseAllConfigFiles();
+                if (result.HasFlag(ConfigParseResult.RebuildAll))
+                {
+                    Debug.Log("****** Rebuilding All *******"); // TODO remove
+                    ContentParser.RebuildAll(true, true);
+                    assetsChanged = false;
+                    schemasChanged = false;
+                    rebuildViews = false;
+                }
+                else 
+                {
+                    if (result.HasFlag(ConfigParseResult.RebuildSchemas))
+                    {
+                        Debug.Log("****** Rebuilding Schemas *******"); // TODO remove
+                        ContentParser.ParseAllSchemaFiles();
+                        schemasChanged = false;
+                    }
+
+                    if (result.HasFlag(ConfigParseResult.RebuildBundles))
+                    {
+                        Debug.Log("****** Rebuilding Bundles *******"); // TODO remove
+
+                        ContentParser.RebuildAssets(true);
+                        assetsChanged = false;
+                    }
+                }
+
                 refreshScripts = true;
             }
 

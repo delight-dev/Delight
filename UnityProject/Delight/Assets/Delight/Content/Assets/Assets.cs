@@ -14,11 +14,5 @@ namespace Delight
     /// </summary>
     public static partial class Assets
     {
-        #region Fields
-
-        public static string DefaultAssetBundlesServerUri = AssetBundle.SimulatedUri;
-        public static ServerUriLocator AssetBundlesServerUriLocator = new ServerUriLocator();
-
-        #endregion
     }
 }

@@ -11,7 +11,10 @@ namespace Delight
     {
         public virtual string GetServerUri(string bundleName)
         {
-            return Assets.DefaultAssetBundlesServerUri;
+            if (Config.UseSimulatedUriInEditor)
+                return AssetBundle.SimulatedUri;
+
+            return Config.ServerUri;
         }
     }
 }

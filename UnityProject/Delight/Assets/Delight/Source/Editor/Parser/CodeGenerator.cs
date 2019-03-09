@@ -1738,7 +1738,53 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateConfigCode()
         {
-            // TODO implement
+            Debug.Log("Generating config code.");
+
+            var sb = new StringBuilder();
+            var config = MasterConfig.GetInstance();
+
+            // generate the config class
+            sb.AppendLine("// Configuration generated from config files");
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Linq;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", DefaultNamespace);
+            sb.AppendLine("{");
+            sb.AppendLine("    public static partial class Config");
+            sb.AppendLine("    {");
+            sb.AppendLine("        static Config()");
+            sb.AppendLine("        {");
+
+            if (!String.IsNullOrEmpty(config.ServerUri))
+            {
+                sb.AppendLine("            ServerUri = \"{0}\";", config.ServerUri);
+            }
+
+            if (!String.IsNullOrEmpty(config.ServerUriLocator))
+            {
+                sb.AppendLine("            ServerUriLocator = new {0}();", config.ServerUriLocator);
+            }
+
+            sb.AppendLine("            UseSimulatedUriInEditor = {0};", config.UseSimulatedUriInEditor.ToString().ToLower());
+
+            sb.AppendLine("        }");
+            sb.AppendLine("    }");
+
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            string path = String.Format("{0}/Delight/Content/", Application.dataPath);
+            var sourceFile = String.Format("{0}Config_g.cs", path);
+
+            Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
         }
 
         #endregion

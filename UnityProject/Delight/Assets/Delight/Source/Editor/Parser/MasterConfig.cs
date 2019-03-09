@@ -51,6 +51,12 @@ namespace Delight.Editor.Parser
         [ProtoMember(7)]
         public List<string> StreamedBundles;
 
+        [ProtoMember(8)]
+        public string ServerUriLocator;
+
+        [ProtoMember(9)]
+        public bool UseSimulatedUriInEditor;
+
         private static MasterConfig _config;
 
         #endregion
@@ -199,6 +205,8 @@ namespace Delight.Editor.Parser
             ContentFolders = new List<string>();
             BuildTargets = new List<string>();
             StreamedBundles = new List<string>();
+            ServerUri = String.Empty;
+            ServerUriLocator = String.Empty;
             ContentFolders.Add("Assets/Content/");
             ContentFolders.Add("Assets/Delight/Content/");
         }

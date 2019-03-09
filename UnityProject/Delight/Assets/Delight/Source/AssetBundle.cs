@@ -117,7 +117,7 @@ namespace Delight
 
                 // get bundle URI 
                 var bundleBaseUri = StorageMode == StorageMode.Remote ?
-                    Assets.AssetBundlesServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
+                    Config.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
                 if (!bundleBaseUri.EndsWith("/"))
                 {
                     bundleBaseUri += "/";

@@ -50,7 +50,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Processes all content and generates code.
         /// </summary>
-        public static void RebuildAll(bool buildAssetBundles)
+        public static void RebuildAll(bool buildAssets, bool buildBundlesLater = false)
         {
             // wait for any uncompiled scripts to be compiled first
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -59,9 +59,9 @@ namespace Delight.Editor.Parser
             ParseAllConfigFiles();
 
             // parse all assets
-            if (buildAssetBundles)
+            if (buildAssets)
             {
-                RebuildAssets();
+                RebuildAssets(buildBundlesLater);
             }
 
             // parse all schema files
@@ -1346,9 +1346,10 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Rebuilds assets bundles. 
         /// </summary>
-        public static void RebuildAssets()
+        public static void RebuildAssets(bool buildBundlesLater = false)
         {
             var config = MasterConfig.GetInstance();
+            bool assetsNeedBuild = false;
 
             // clear parsed asset content from model
             _contentObjectModel.ClearAssetContent();
@@ -1380,35 +1381,47 @@ namespace Delight.Editor.Parser
                     continue;
 
                 AddAssetToBundle(bundle, relativeAssetFilePath);
-                bundle.NeedBuild = true;
+                bundle.NeedBuild = !bundle.IsResource;
+                assetsNeedBuild |= bundle.NeedBuild;
             }
 
             _contentObjectModel.SaveObjectModel();
-                        
-            // ask to clear output folders
-            var outputPath = GetRemoteBundlePath();
-            string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
-            if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
+
+            if (!buildBundlesLater)
             {
-                try
+                // ask to clear output folders
+                var outputPath = GetRemoteBundlePath();
+                string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
+                if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
                 {
-                    if (Directory.Exists(outputPath))
+                    try
                     {
-                        Directory.Delete(outputPath, true);
+                        if (Directory.Exists(outputPath))
+                        {
+                            Directory.Delete(outputPath, true);
+                        }
+                        if (Directory.Exists(StreamingPath))
+                        {
+                            Directory.Delete(StreamingPath, true);
+                        }
                     }
-                    if (Directory.Exists(StreamingPath))
+                    catch (System.Exception e)
                     {
-                        Directory.Delete(StreamingPath, true);
+                        Debug.LogException(e);
                     }
                 }
-                catch (System.Exception e)
+
+                // build asset bundles
+                BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
+            }
+            else
+            {
+                if (assetsNeedBuild && !config.AssetsNeedBuild)
                 {
-                    Debug.LogException(e);
+                    config.AssetsNeedBuild = true;
+                    config.SaveConfig();
                 }
             }
-
-            // build asset bundles
-            BuildAssetBundles(_contentObjectModel.AssetBundleObjects);
 
             // generate asset code
             CodeGenerator.GenerateAssetCode();
@@ -1581,9 +1594,14 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses config files.
         /// </summary>
-        public static void ParseAllConfigFiles()
+        public static ConfigParseResult ParseAllConfigFiles()
         {
             var config = MasterConfig.GetInstance();
+
+            // store away old configurations for comparison
+            var oldBuildTargets = config.BuildTargets.ToList();
+            var oldStreamedBundles = config.StreamedBundles.ToList();
+            var oldContentFolders = config.ContentFolders.ToList();
 
             // clear configuration
             config.Clear();
@@ -1604,8 +1622,27 @@ namespace Delight.Editor.Parser
             }
 
             ParseConfigFiles(configFiles);
-
             Debug.Log("[Delight] Config rebuild completed.");
+
+            // compare old settings with new
+            ConfigParseResult result = ConfigParseResult.RebuildNothing;
+            if (!oldBuildTargets.Same(config.BuildTargets))
+            {
+                // if build-targets change we need to rebuild schemas
+                result |= ConfigParseResult.RebuildSchemas;
+            }
+
+            if (!oldStreamedBundles.Same(config.StreamedBundles))
+            {
+                result |= ConfigParseResult.RebuildBundles;
+            }
+
+            if (!oldContentFolders.Same(config.ContentFolders))
+            {
+                result |= ConfigParseResult.RebuildAll;
+            }
+
+            return result;            
         }
 
         /// <summary>
@@ -1613,6 +1650,8 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void ParseConfigFiles(List<string> configFiles)
         {
+            var config = MasterConfig.GetInstance();
+                       
             // parse config files
             foreach (var configFile in configFiles)
             {
@@ -1621,9 +1660,7 @@ namespace Delight.Editor.Parser
             }
 
             // generate code for config
-            CodeGenerator.GenerateConfigCode();           
-
-            var config = MasterConfig.GetInstance();
+            CodeGenerator.GenerateConfigCode();     
             config.SaveConfig();
         }
 
@@ -1675,6 +1712,47 @@ namespace Delight.Editor.Parser
                         else
                         {
                             config.ServerUri = configValue;
+                        }
+                        break;
+
+                    case "usesimulateduriineditor":
+                        var value = configValue;
+                        if (String.IsNullOrWhiteSpace(value))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                value = values.FirstOrDefault();
+                            }
+                        }
+                        
+                        if (!String.IsNullOrWhiteSpace(value))
+                        {
+                            if (value.IEquals("true"))
+                                config.UseSimulatedUriInEditor = true;
+                            else if (value.IEquals("false"))
+                                config.UseSimulatedUriInEditor = true;
+                            else
+                                Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option UseSimulatedUriInEditor. Value need to be either true or false.\nError line:\n{2}", filename, i + 1, line));
+                        }
+                        break;
+
+                    case "serverurilocator":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.ServerUriLocator = values.FirstOrDefault();
+                            }
+                        }
+                        else
+                        {
+                            config.ServerUriLocator = configValue;
                         }
                         break;
 
@@ -1794,6 +1872,18 @@ namespace Delight.Editor.Parser
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Specifies what needs to be rebuilt after config has been parsed. 
+    /// </summary>
+    [Flags]
+    public enum ConfigParseResult
+    {
+        RebuildNothing = 0,
+        RebuildAll = 1,
+        RebuildSchemas = 2,
+        RebuildBundles = 4
     }
 }
 

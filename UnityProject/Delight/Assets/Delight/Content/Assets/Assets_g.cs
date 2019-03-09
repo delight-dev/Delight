@@ -25,7 +25,7 @@ namespace Delight
 
         public AssetBundleData()
         {
-            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Remote };
+            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
             Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Local };
 
             Add(Bundle1);

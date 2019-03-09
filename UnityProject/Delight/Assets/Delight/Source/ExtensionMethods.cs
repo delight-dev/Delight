@@ -222,6 +222,22 @@ namespace Delight
         }
 
         /// <summary>
+        /// Compares two lists of strings are the same ignoring case by default.
+        /// </summary>
+        public static bool Same(this List<string> first, List<string> second, IEqualityComparer<string> stringComparer = null)
+        {
+            var comparer = stringComparer ?? StringComparer.OrdinalIgnoreCase;
+            if (first == second) return true;
+            if (first == null) return second == null;
+            if (second == null) return false;
+            if (first.Count != second.Count) return false;
+
+            var firstNotSecond = first.Except(second, stringComparer).ToList();
+            var secondNotFirst = second.Except(first, stringComparer).ToList();
+            return !firstNotSecond.Any() && !secondNotFirst.Any();
+        }
+
+        /// <summary>
         /// Pluralizes a table name.
         /// </summary>
         public static string Pluralize(this string text, string pluralWhenEndsWithS = null)
