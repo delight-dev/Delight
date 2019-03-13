@@ -501,8 +501,29 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestPlayerListScrollableRegion.Name = "ModelBindingTestPlayerListScrollableRegion";
 #endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionContentRegion);
                 }
                 return _modelBindingTestPlayerListScrollableRegion;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionContentRegion;
+        public static Template ModelBindingTestPlayerListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionContentRegion == null || _modelBindingTestPlayerListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionContentRegion.Name = "ModelBindingTestPlayerListScrollableRegionContentRegion";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionContentRegion;
             }
         }
 
@@ -604,8 +625,29 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestAchievementsListScrollableRegion.Name = "ModelBindingTestAchievementsListScrollableRegion";
 #endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionContentRegion);
                 }
                 return _modelBindingTestAchievementsListScrollableRegion;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionContentRegion;
+        public static Template ModelBindingTestAchievementsListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionContentRegion == null || _modelBindingTestAchievementsListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionContentRegion.Name = "ModelBindingTestAchievementsListScrollableRegionContentRegion";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionContentRegion;
             }
         }
 

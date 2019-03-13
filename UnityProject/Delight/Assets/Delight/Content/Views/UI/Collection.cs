@@ -86,16 +86,18 @@ namespace Delight
         /// <summary>
         /// Generates list item.
         /// </summary>
-        private void GenerateItem(BindableObject item)
+        protected virtual View GenerateItem(BindableObject item)
         {
             if (ContentTemplate == null)
-                return;
+                return null;
 
             var templateData = new ContentTemplateData { Item = item };
             _contentTemplateData.Add(templateData);
 
             var itemView = ContentTemplate.Activator(templateData);
             itemView.Load();
+
+            return itemView;
         }
 
         /// <summary>

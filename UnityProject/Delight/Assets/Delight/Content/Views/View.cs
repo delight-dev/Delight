@@ -77,10 +77,24 @@ namespace Delight
         /// <summary>
         /// Gets or sets content container.
         /// </summary>
-        public View Content
+        public View ContentContainer
         {
             get { return _content; }
             set { _content = value; }
+        }
+
+        /// <summary>
+        /// Gets content container.
+        /// </summary>
+        public View Content
+        {
+            get
+            {
+                var content = ContentContainer;
+                while (content != content.ContentContainer)
+                    content = content.ContentContainer;
+                return content;
+            }
         }
 
         /// <summary>

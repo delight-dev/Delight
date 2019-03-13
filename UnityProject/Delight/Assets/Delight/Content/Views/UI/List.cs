@@ -13,6 +13,28 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            if (IgnoreObject)
+                return;
+
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(Orientation):
+                    ListOrientationChanged();
+                    break;                    
+            }
+        }
+                
+        public void ListOrientationChanged()
+        {
+            // TODO implement rearrangement of list
+        }
+
+        /// <summary>
         /// Called just before the view and its children are loaded.
         /// </summary>
         protected override void BeforeLoad()
@@ -23,7 +45,12 @@ namespace Delight
             if (!IsScrollable)
             {
                 ScrollableRegion.IgnoreObject = true;
+                ScrollableRegion.ContentRegion.IgnoreObject = true;
             }
+
+            var scrollsHorizontally = OverflowMode == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
+            ScrollableRegion.CanScrollHorizontally = scrollsHorizontally;
+            ScrollableRegion.CanScrollVertically = !scrollsHorizontally;
         }
 
         /// <summary>
@@ -35,6 +62,19 @@ namespace Delight
 
             // the layout of the group needs to be updated
             LayoutRoot.RegisterNeedLayoutUpdate(this);
+        }
+
+        /// <summary>
+        /// Called when a new item is to be generated.
+        /// </summary>
+        protected override View GenerateItem(BindableObject item)
+        {
+            var view = base.GenerateItem(item);
+            if (IsScrollable && view != null)
+            {
+                ScrollableRegion.UnblockDragEvents(view as SceneObjectView);
+            }
+            return view;
         }
 
         /// <summary>

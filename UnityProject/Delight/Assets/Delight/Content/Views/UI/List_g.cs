@@ -18,7 +18,7 @@ namespace Delight
         {
             // constructing ScrollableRegion (ScrollableRegion)
             ScrollableRegion = new ScrollableRegion(this, this, "ScrollableRegion", ScrollableRegionTemplate);
-            Content = ScrollableRegion;
+            ContentContainer = ScrollableRegion;
             this.AfterInitializeInternal();
         }
 
@@ -37,6 +37,7 @@ namespace Delight
             dependencyProperties.Add(AlternateItemsProperty);
             dependencyProperties.Add(IsScrollableProperty);
             dependencyProperties.Add(IsVirtualizedProperty);
+            dependencyProperties.Add(OverflowModeProperty);
             dependencyProperties.Add(CanSelectProperty);
             dependencyProperties.Add(CanDeselectProperty);
             dependencyProperties.Add(CanMultiSelectProperty);
@@ -91,6 +92,13 @@ namespace Delight
         {
             get { return IsVirtualizedProperty.GetValue(this); }
             set { IsVirtualizedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.OverflowMode> OverflowModeProperty = new DependencyProperty<Delight.OverflowMode>("OverflowMode");
+        public Delight.OverflowMode OverflowMode
+        {
+            get { return OverflowModeProperty.GetValue(this); }
+            set { OverflowModeProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
@@ -149,6 +157,391 @@ namespace Delight
             set { ScrollableRegionTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty MaskContentProperty = ScrollableRegion.MaskContentProperty;
+        public System.Boolean MaskContent
+        {
+            get { return ScrollableRegion.MaskContent; }
+            set { ScrollableRegion.MaskContent = value; }
+        }
+
+        public readonly static DependencyProperty DecelerationRateProperty = ScrollableRegion.DecelerationRateProperty;
+        public System.Single DecelerationRate
+        {
+            get { return ScrollableRegion.DecelerationRate; }
+            set { ScrollableRegion.DecelerationRate = value; }
+        }
+
+        public readonly static DependencyProperty ElasticityProperty = ScrollableRegion.ElasticityProperty;
+        public System.Single Elasticity
+        {
+            get { return ScrollableRegion.Elasticity; }
+            set { ScrollableRegion.Elasticity = value; }
+        }
+
+        public readonly static DependencyProperty CanScrollHorizontallyProperty = ScrollableRegion.CanScrollHorizontallyProperty;
+        public System.Boolean CanScrollHorizontally
+        {
+            get { return ScrollableRegion.CanScrollHorizontally; }
+            set { ScrollableRegion.CanScrollHorizontally = value; }
+        }
+
+        public readonly static DependencyProperty CanScrollVerticallyProperty = ScrollableRegion.CanScrollVerticallyProperty;
+        public System.Boolean CanScrollVertically
+        {
+            get { return ScrollableRegion.CanScrollVertically; }
+            set { ScrollableRegion.CanScrollVertically = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionContentAlignmentProperty = ScrollableRegion.ContentAlignmentProperty;
+        public Delight.ElementAlignment ScrollableRegionContentAlignment
+        {
+            get { return ScrollableRegion.ContentAlignment; }
+            set { ScrollableRegion.ContentAlignment = value; }
+        }
+
+        public readonly static DependencyProperty AutoSizeContentRegionProperty = ScrollableRegion.AutoSizeContentRegionProperty;
+        public System.Boolean AutoSizeContentRegion
+        {
+            get { return ScrollableRegion.AutoSizeContentRegion; }
+            set { ScrollableRegion.AutoSizeContentRegion = value; }
+        }
+
+        public readonly static DependencyProperty RenderCameraProperty = ScrollableRegion.RenderCameraProperty;
+        public System.String RenderCamera
+        {
+            get { return ScrollableRegion.RenderCamera; }
+            set { ScrollableRegion.RenderCamera = value; }
+        }
+
+        public readonly static DependencyProperty RenderModeProperty = ScrollableRegion.RenderModeProperty;
+        public UnityEngine.RenderMode RenderMode
+        {
+            get { return ScrollableRegion.RenderMode; }
+            set { ScrollableRegion.RenderMode = value; }
+        }
+
+        public readonly static DependencyProperty ScaleFactorProperty = ScrollableRegion.ScaleFactorProperty;
+        public System.Single ScaleFactor
+        {
+            get { return ScrollableRegion.ScaleFactor; }
+            set { ScrollableRegion.ScaleFactor = value; }
+        }
+
+        public readonly static DependencyProperty ReferencePixelsPerUnitProperty = ScrollableRegion.ReferencePixelsPerUnitProperty;
+        public System.Single ReferencePixelsPerUnit
+        {
+            get { return ScrollableRegion.ReferencePixelsPerUnit; }
+            set { ScrollableRegion.ReferencePixelsPerUnit = value; }
+        }
+
+        public readonly static DependencyProperty OverridePixelPerfectProperty = ScrollableRegion.OverridePixelPerfectProperty;
+        public System.Boolean OverridePixelPerfect
+        {
+            get { return ScrollableRegion.OverridePixelPerfect; }
+            set { ScrollableRegion.OverridePixelPerfect = value; }
+        }
+
+        public readonly static DependencyProperty PixelPerfectProperty = ScrollableRegion.PixelPerfectProperty;
+        public System.Boolean PixelPerfect
+        {
+            get { return ScrollableRegion.PixelPerfect; }
+            set { ScrollableRegion.PixelPerfect = value; }
+        }
+
+        public readonly static DependencyProperty PlaneDistanceProperty = ScrollableRegion.PlaneDistanceProperty;
+        public System.Single PlaneDistance
+        {
+            get { return ScrollableRegion.PlaneDistance; }
+            set { ScrollableRegion.PlaneDistance = value; }
+        }
+
+        public readonly static DependencyProperty OverrideSortingProperty = ScrollableRegion.OverrideSortingProperty;
+        public System.Boolean OverrideSorting
+        {
+            get { return ScrollableRegion.OverrideSorting; }
+            set { ScrollableRegion.OverrideSorting = value; }
+        }
+
+        public readonly static DependencyProperty SortingOrderProperty = ScrollableRegion.SortingOrderProperty;
+        public System.Int32 SortingOrder
+        {
+            get { return ScrollableRegion.SortingOrder; }
+            set { ScrollableRegion.SortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty TargetDisplayProperty = ScrollableRegion.TargetDisplayProperty;
+        public System.Int32 TargetDisplay
+        {
+            get { return ScrollableRegion.TargetDisplay; }
+            set { ScrollableRegion.TargetDisplay = value; }
+        }
+
+        public readonly static DependencyProperty SortingLayerIDProperty = ScrollableRegion.SortingLayerIDProperty;
+        public System.Int32 SortingLayerID
+        {
+            get { return ScrollableRegion.SortingLayerID; }
+            set { ScrollableRegion.SortingLayerID = value; }
+        }
+
+        public readonly static DependencyProperty AdditionalShaderChannelsProperty = ScrollableRegion.AdditionalShaderChannelsProperty;
+        public UnityEngine.AdditionalCanvasShaderChannels AdditionalShaderChannels
+        {
+            get { return ScrollableRegion.AdditionalShaderChannels; }
+            set { ScrollableRegion.AdditionalShaderChannels = value; }
+        }
+
+        public readonly static DependencyProperty SortingLayerNameProperty = ScrollableRegion.SortingLayerNameProperty;
+        public System.String SortingLayerName
+        {
+            get { return ScrollableRegion.SortingLayerName; }
+            set { ScrollableRegion.SortingLayerName = value; }
+        }
+
+        public readonly static DependencyProperty WorldCameraProperty = ScrollableRegion.WorldCameraProperty;
+        public UnityEngine.Camera WorldCamera
+        {
+            get { return ScrollableRegion.WorldCamera; }
+            set { ScrollableRegion.WorldCamera = value; }
+        }
+
+        public readonly static DependencyProperty NormalizedSortingGridSizeProperty = ScrollableRegion.NormalizedSortingGridSizeProperty;
+        public System.Single NormalizedSortingGridSize
+        {
+            get { return ScrollableRegion.NormalizedSortingGridSize; }
+            set { ScrollableRegion.NormalizedSortingGridSize = value; }
+        }
+
+        public readonly static DependencyProperty UiScaleModeProperty = ScrollableRegion.UiScaleModeProperty;
+        public UnityEngine.UI.CanvasScaler.ScaleMode UiScaleMode
+        {
+            get { return ScrollableRegion.UiScaleMode; }
+            set { ScrollableRegion.UiScaleMode = value; }
+        }
+
+        public readonly static DependencyProperty CanvasScalerReferencePixelsPerUnitProperty = ScrollableRegion.CanvasScalerReferencePixelsPerUnitProperty;
+        public System.Single CanvasScalerReferencePixelsPerUnit
+        {
+            get { return ScrollableRegion.CanvasScalerReferencePixelsPerUnit; }
+            set { ScrollableRegion.CanvasScalerReferencePixelsPerUnit = value; }
+        }
+
+        public readonly static DependencyProperty CanvasScalerScaleFactorProperty = ScrollableRegion.CanvasScalerScaleFactorProperty;
+        public System.Single CanvasScalerScaleFactor
+        {
+            get { return ScrollableRegion.CanvasScalerScaleFactor; }
+            set { ScrollableRegion.CanvasScalerScaleFactor = value; }
+        }
+
+        public readonly static DependencyProperty ReferenceResolutionProperty = ScrollableRegion.ReferenceResolutionProperty;
+        public UnityEngine.Vector2 ReferenceResolution
+        {
+            get { return ScrollableRegion.ReferenceResolution; }
+            set { ScrollableRegion.ReferenceResolution = value; }
+        }
+
+        public readonly static DependencyProperty ScreenMatchModeProperty = ScrollableRegion.ScreenMatchModeProperty;
+        public UnityEngine.UI.CanvasScaler.ScreenMatchMode ScreenMatchMode
+        {
+            get { return ScrollableRegion.ScreenMatchMode; }
+            set { ScrollableRegion.ScreenMatchMode = value; }
+        }
+
+        public readonly static DependencyProperty MatchWidthOrHeightProperty = ScrollableRegion.MatchWidthOrHeightProperty;
+        public System.Single MatchWidthOrHeight
+        {
+            get { return ScrollableRegion.MatchWidthOrHeight; }
+            set { ScrollableRegion.MatchWidthOrHeight = value; }
+        }
+
+        public readonly static DependencyProperty PhysicalUnitProperty = ScrollableRegion.PhysicalUnitProperty;
+        public UnityEngine.UI.CanvasScaler.Unit PhysicalUnit
+        {
+            get { return ScrollableRegion.PhysicalUnit; }
+            set { ScrollableRegion.PhysicalUnit = value; }
+        }
+
+        public readonly static DependencyProperty FallbackScreenDPIProperty = ScrollableRegion.FallbackScreenDPIProperty;
+        public System.Single FallbackScreenDPI
+        {
+            get { return ScrollableRegion.FallbackScreenDPI; }
+            set { ScrollableRegion.FallbackScreenDPI = value; }
+        }
+
+        public readonly static DependencyProperty DefaultSpriteDPIProperty = ScrollableRegion.DefaultSpriteDPIProperty;
+        public System.Single DefaultSpriteDPI
+        {
+            get { return ScrollableRegion.DefaultSpriteDPI; }
+            set { ScrollableRegion.DefaultSpriteDPI = value; }
+        }
+
+        public readonly static DependencyProperty DynamicPixelsPerUnitProperty = ScrollableRegion.DynamicPixelsPerUnitProperty;
+        public System.Single DynamicPixelsPerUnit
+        {
+            get { return ScrollableRegion.DynamicPixelsPerUnit; }
+            set { ScrollableRegion.DynamicPixelsPerUnit = value; }
+        }
+
+        public readonly static DependencyProperty IgnoreReversedGraphicsProperty = ScrollableRegion.IgnoreReversedGraphicsProperty;
+        public System.Boolean IgnoreReversedGraphics
+        {
+            get { return ScrollableRegion.IgnoreReversedGraphics; }
+            set { ScrollableRegion.IgnoreReversedGraphics = value; }
+        }
+
+        public readonly static DependencyProperty BlockingObjectsProperty = ScrollableRegion.BlockingObjectsProperty;
+        public UnityEngine.UI.GraphicRaycaster.BlockingObjects BlockingObjects
+        {
+            get { return ScrollableRegion.BlockingObjects; }
+            set { ScrollableRegion.BlockingObjects = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionWidthProperty = ScrollableRegion.WidthProperty;
+        public Delight.ElementSize ScrollableRegionWidth
+        {
+            get { return ScrollableRegion.Width; }
+            set { ScrollableRegion.Width = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionHeightProperty = ScrollableRegion.HeightProperty;
+        public Delight.ElementSize ScrollableRegionHeight
+        {
+            get { return ScrollableRegion.Height; }
+            set { ScrollableRegion.Height = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionOverrideWidthProperty = ScrollableRegion.OverrideWidthProperty;
+        public Delight.ElementSize ScrollableRegionOverrideWidth
+        {
+            get { return ScrollableRegion.OverrideWidth; }
+            set { ScrollableRegion.OverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionOverrideHeightProperty = ScrollableRegion.OverrideHeightProperty;
+        public Delight.ElementSize ScrollableRegionOverrideHeight
+        {
+            get { return ScrollableRegion.OverrideHeight; }
+            set { ScrollableRegion.OverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionAlignmentProperty = ScrollableRegion.AlignmentProperty;
+        public Delight.ElementAlignment ScrollableRegionAlignment
+        {
+            get { return ScrollableRegion.Alignment; }
+            set { ScrollableRegion.Alignment = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionMarginProperty = ScrollableRegion.MarginProperty;
+        public Delight.ElementMargin ScrollableRegionMargin
+        {
+            get { return ScrollableRegion.Margin; }
+            set { ScrollableRegion.Margin = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionOffsetProperty = ScrollableRegion.OffsetProperty;
+        public Delight.ElementMargin ScrollableRegionOffset
+        {
+            get { return ScrollableRegion.Offset; }
+            set { ScrollableRegion.Offset = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionOffsetFromParentProperty = ScrollableRegion.OffsetFromParentProperty;
+        public Delight.ElementMargin ScrollableRegionOffsetFromParent
+        {
+            get { return ScrollableRegion.OffsetFromParent; }
+            set { ScrollableRegion.OffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionPivotProperty = ScrollableRegion.PivotProperty;
+        public UnityEngine.Vector2 ScrollableRegionPivot
+        {
+            get { return ScrollableRegion.Pivot; }
+            set { ScrollableRegion.Pivot = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionLayoutRootProperty = ScrollableRegion.LayoutRootProperty;
+        public Delight.LayoutRoot ScrollableRegionLayoutRoot
+        {
+            get { return ScrollableRegion.LayoutRoot; }
+            set { ScrollableRegion.LayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionDisableLayoutUpdateProperty = ScrollableRegion.DisableLayoutUpdateProperty;
+        public System.Boolean ScrollableRegionDisableLayoutUpdate
+        {
+            get { return ScrollableRegion.DisableLayoutUpdate; }
+            set { ScrollableRegion.DisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionAlphaProperty = ScrollableRegion.AlphaProperty;
+        public System.Single ScrollableRegionAlpha
+        {
+            get { return ScrollableRegion.Alpha; }
+            set { ScrollableRegion.Alpha = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIsVisibleProperty = ScrollableRegion.IsVisibleProperty;
+        public System.Boolean ScrollableRegionIsVisible
+        {
+            get { return ScrollableRegion.IsVisible; }
+            set { ScrollableRegion.IsVisible = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionRaycastBlockModeProperty = ScrollableRegion.RaycastBlockModeProperty;
+        public Delight.RaycastBlockMode ScrollableRegionRaycastBlockMode
+        {
+            get { return ScrollableRegion.RaycastBlockMode; }
+            set { ScrollableRegion.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionUseFastShaderProperty = ScrollableRegion.UseFastShaderProperty;
+        public System.Boolean ScrollableRegionUseFastShader
+        {
+            get { return ScrollableRegion.UseFastShader; }
+            set { ScrollableRegion.UseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionBubbleNotifyChildLayoutChangedProperty = ScrollableRegion.BubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean ScrollableRegionBubbleNotifyChildLayoutChanged
+        {
+            get { return ScrollableRegion.BubbleNotifyChildLayoutChanged; }
+            set { ScrollableRegion.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionGameObjectProperty = ScrollableRegion.GameObjectProperty;
+        public UnityEngine.GameObject ScrollableRegionGameObject
+        {
+            get { return ScrollableRegion.GameObject; }
+            set { ScrollableRegion.GameObject = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionEnableScriptEventsProperty = ScrollableRegion.EnableScriptEventsProperty;
+        public System.Boolean ScrollableRegionEnableScriptEvents
+        {
+            get { return ScrollableRegion.EnableScriptEvents; }
+            set { ScrollableRegion.EnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIgnoreObjectProperty = ScrollableRegion.IgnoreObjectProperty;
+        public System.Boolean ScrollableRegionIgnoreObject
+        {
+            get { return ScrollableRegion.IgnoreObject; }
+            set { ScrollableRegion.IgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIsActiveProperty = ScrollableRegion.IsActiveProperty;
+        public System.Boolean ScrollableRegionIsActive
+        {
+            get { return ScrollableRegion.IsActive; }
+            set { ScrollableRegion.IsActive = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionLoadModeProperty = ScrollableRegion.LoadModeProperty;
+        public Delight.LoadMode ScrollableRegionLoadMode
+        {
+            get { return ScrollableRegion.LoadMode; }
+            set { ScrollableRegion.LoadMode = value; }
+        }
+
         #endregion
     }
 
@@ -202,9 +595,32 @@ namespace Delight
 #if UNITY_EDITOR
                     _listScrollableRegion.Name = "ListScrollableRegion";
 #endif
+                    Delight.ScrollableRegion.MaskContentProperty.SetDefault(_listScrollableRegion, true);
                     Delight.ScrollableRegion.BubbleNotifyChildLayoutChangedProperty.SetDefault(_listScrollableRegion, true);
+                    Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_listScrollableRegion, false);
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionContentRegion);
                 }
                 return _listScrollableRegion;
+            }
+        }
+
+        private static Template _listScrollableRegionContentRegion;
+        public static Template ListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionContentRegion == null || _listScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionContentRegion == null)
+#endif
+                {
+                    _listScrollableRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _listScrollableRegionContentRegion.Name = "ListScrollableRegionContentRegion";
+#endif
+                }
+                return _listScrollableRegionContentRegion;
             }
         }
 

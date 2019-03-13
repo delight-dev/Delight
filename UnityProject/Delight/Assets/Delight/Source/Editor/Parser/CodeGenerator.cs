@@ -163,7 +163,7 @@ namespace Delight.Editor.Parser
                 // set content container
                 if (viewObject.ContentContainer != null)
                 {
-                    sb.AppendLine("            Content = {0};", viewObject.ContentContainer.Id);
+                    sb.AppendLine("            ContentContainer = {0};", viewObject.ContentContainer.Id);
                 }
 
                 sb.AppendLine("            this.AfterInitializeInternal();");

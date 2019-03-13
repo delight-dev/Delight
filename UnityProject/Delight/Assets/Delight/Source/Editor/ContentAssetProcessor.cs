@@ -240,7 +240,6 @@ namespace Delight.Editor
                 var result = ContentParser.ParseAllConfigFiles();
                 if (result.HasFlag(ConfigParseResult.RebuildAll))
                 {
-                    Debug.Log("****** Rebuilding All *******"); // TODO remove
                     ContentParser.RebuildAll(true, true);
                     assetsChanged = false;
                     schemasChanged = false;
@@ -250,15 +249,12 @@ namespace Delight.Editor
                 {
                     if (result.HasFlag(ConfigParseResult.RebuildSchemas))
                     {
-                        Debug.Log("****** Rebuilding Schemas *******"); // TODO remove
                         ContentParser.ParseAllSchemaFiles();
                         schemasChanged = false;
                     }
 
                     if (result.HasFlag(ConfigParseResult.RebuildBundles))
                     {
-                        Debug.Log("****** Rebuilding Bundles *******"); // TODO remove
-
                         ContentParser.RebuildAssets(true);
                         assetsChanged = false;
                     }

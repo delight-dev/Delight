@@ -4,7 +4,7 @@
 ##    ContentFolders - specifies where Delight content (views, models, etc) resides (besides the default folders)
 ##    StreamedBundles - specifies which bundles (by name) should be streamed locally rather than from remote URI
 ##    ServerUriLocator - name of class that locates server URI based on bundle name
-##    UseSimulatedUriInEditor - uses a simulated URI in the editor
+##    UseSimulatedUriInEditor - set to true/false indicating if a simulated server URI should be used in the editor
 ## Example configuration, remove "#" to uncomment configuration options:
 
 ServerUri: http://example.com

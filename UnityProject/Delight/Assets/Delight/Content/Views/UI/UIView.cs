@@ -148,7 +148,7 @@ namespace Delight
         /// </summary>
         protected override void AfterInitiatedLoad()
         {
-            NotifyParentOfLayoutUpdate();
+            NotifyParentOfChildLayoutChanged();
             base.AfterInitiatedLoad();
         }
 
@@ -157,8 +157,16 @@ namespace Delight
         /// </summary>
         protected override void AfterInitiatedUnload()
         {
-            NotifyParentOfLayoutUpdate();
+            NotifyParentOfChildLayoutChanged();
             base.AfterInitiatedUnload();
+        }
+
+        /// <summary>
+        /// Updates layout without notifying parent.
+        /// </summary>
+        public virtual void UpdateLayoutWithoutNotifyingParent()
+        {
+            UpdateLayout(false);
         }
 
         /// <summary>
@@ -172,14 +180,14 @@ namespace Delight
 
             if (notifyParent)
             {
-                NotifyParentOfLayoutUpdate();
+                NotifyParentOfChildLayoutChanged();
             }
         }
 
         /// <summary>
         /// Notifies parent that the layout of a child has been updated.
         /// </summary>
-        protected void NotifyParentOfLayoutUpdate()
+        protected void NotifyParentOfChildLayoutChanged()
         {
             // notify parent of layout update
             var uiViewParent = this.FindParent<UIView>();
@@ -194,9 +202,10 @@ namespace Delight
         /// </summary>
         protected virtual void ChildLayoutChanged()
         {
-            if (BubbleNotifyChildLayoutChanged || IgnoreObject)
+            // notify parents if this view is ignored
+            if (BubbleNotifyChildLayoutChanged || IgnoreObject) 
             {
-                NotifyParentOfLayoutUpdate();
+                NotifyParentOfChildLayoutChanged();
             }
         }
 
