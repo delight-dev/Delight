@@ -25,10 +25,10 @@ namespace Delight
             {
                 case nameof(Orientation):
                     ListOrientationChanged();
-                    break;                    
+                    break;
             }
         }
-                
+
         public void ListOrientationChanged()
         {
             // TODO implement rearrangement of list
@@ -59,9 +59,23 @@ namespace Delight
         protected override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
+            if (IgnoreObject)
+                return;
 
-            // the layout of the group needs to be updated
-            LayoutRoot.RegisterNeedLayoutUpdate(this);
+            // the layout of the list needs to be updated
+            LayoutRoot.RegisterChangeHandler(OnListChildLayoutChanged);
+        }
+
+        /// <summary>
+        /// Called when the layout of a child has been changed. 
+        /// </summary>
+        public void OnListChildLayoutChanged()
+        {
+            // update layout and notify parents if size has changed
+            if (UpdateLayout(false))
+            {
+                NotifyParentOfChildLayoutChanged();
+            }
         }
 
         /// <summary>
@@ -80,7 +94,7 @@ namespace Delight
         /// <summary>
         /// Updates the layout of the group. 
         /// </summary>
-        public override void UpdateLayout(bool notifyParent = true)
+        public override bool UpdateLayout(bool notifyParent = true)
         {
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
@@ -189,71 +203,66 @@ namespace Delight
 
             // set width and height 
             float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing.Pixels : 0f;
+            var newWidth = !percentageWidth ? new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels) :
+                new ElementSize(1, ElementSizeUnit.Percents);
+            var newHeight = !percentageHeight ? new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels) :
+                new ElementSize(1, ElementSizeUnit.Percents);
 
-            // adjust width to content
+            // add margins
+            if (!percentageWidth)
+            {
+                var margin = Margin ?? ElementMargin.Default;
+                totalWidth += isHorizontal ? totalSpacing : 0f;
+                totalWidth += margin.Left.Pixels + margin.Right.Pixels;
+                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+            }
+
+            if (!percentageHeight)
+            {
+                var margin = Margin ?? ElementMargin.Default;
+                totalHeight += !isHorizontal ? totalSpacing : 0f;
+                totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+            }
+
+            // if width not specified, adjust width to content
             if (WidthProperty.IsUndefined(this))
             {
-                if (!percentageWidth)
+                if (!newWidth.Equals(OverrideWidth))
                 {
-                    // add margins
-                    var margin = Margin ?? ElementMargin.Default;
-                    totalWidth += isHorizontal ? totalSpacing : 0f;
-                    totalWidth += margin.Left.Pixels + margin.Right.Pixels;
-                    maxWidth += margin.Left.Pixels + margin.Right.Pixels;
-
-                    // adjust width to content
-                    var newWidth = new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels);
-                    if (!newWidth.Equals(OverrideWidth))
-                    {
-                        OverrideWidth = newWidth;
-                        hasNewSize = true;
-                    }
-                }
-                else
-                {
-                    var newWidth = new ElementSize(1, ElementSizeUnit.Percents);
-                    if (!newWidth.Equals(OverrideWidth))
-                    {
-                        OverrideWidth = newWidth;
-                        hasNewSize = true;
-                    }
+                    OverrideWidth = newWidth;
+                    hasNewSize = true;
                 }
             }
 
-            // adjust height to content
+            // if height not specified, adjust height to content
             if (HeightProperty.IsUndefined(this))
             {
-                if (!percentageHeight)
+                if (!newHeight.Equals(OverrideHeight))
                 {
-                    // add margins
-                    var margin = Margin ?? ElementMargin.Default;
-                    totalHeight += !isHorizontal ? totalSpacing : 0f;
-                    totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
-                    maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
-
-                    // adjust height to content
-                    var newHeight = new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels);
-                    if (!newHeight.Equals(OverrideHeight))
-                    {
-                        OverrideHeight = newHeight;
-                        hasNewSize = true;
-                    }
+                    OverrideHeight = newHeight;
+                    hasNewSize = true;
                 }
-                else
+            }
+
+            // update size of content region
+            if (IsScrollable)
+            {
+                if (!newWidth.Equals(ScrollableRegion.ContentRegion.Width) ||
+                    !newHeight.Equals(ScrollableRegion.ContentRegion.Height))
                 {
-                    var newHeight = new ElementSize(1, ElementSizeUnit.Percents);
-                    if (!newHeight.Equals(OverrideHeight))
-                    {
-                        OverrideHeight = newHeight;
-                        hasNewSize = true;
-                    }
+                    bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                    ScrollableRegion.ContentRegion.Width = newWidth;
+                    ScrollableRegion.ContentRegion.Height = newHeight;
+                    ScrollableRegion.UpdateLayout(false);
+                    ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
                 }
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
-            base.UpdateLayout(notifyParent && hasNewSize);
+            return base.UpdateLayout(notifyParent) || hasNewSize;
         }
-        
+
         ///// <summary>
         ///// Selects item in the list.
         ///// </summary>

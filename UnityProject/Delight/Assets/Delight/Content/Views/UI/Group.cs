@@ -23,15 +23,29 @@ namespace Delight
         protected override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
+            if (IgnoreObject)
+                return;
 
             // the layout of the group needs to be updated
-            LayoutRoot.RegisterNeedLayoutUpdate(this);
+            LayoutRoot.RegisterChangeHandler(OnGroupChildLayoutChanged);
+        }
+
+        /// <summary>
+        /// Called when the layout of a child has been changed. 
+        /// </summary>
+        public void OnGroupChildLayoutChanged()
+        {
+            // here we want to update the layout but only if size has changed
+            if (UpdateLayout(false))
+            {
+                NotifyParentOfChildLayoutChanged();
+            }
         }
 
         /// <summary>
         /// Updates the layout of the group. 
         /// </summary>
-        public override void UpdateLayout(bool notifyParent = true)
+        public override bool UpdateLayout(bool notifyParent = true)
         {
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
@@ -202,7 +216,8 @@ namespace Delight
             }
                        
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
-            base.UpdateLayout(notifyParent && hasNewSize); 
+
+            return base.UpdateLayout(notifyParent) || hasNewSize; 
         }
 
         #endregion

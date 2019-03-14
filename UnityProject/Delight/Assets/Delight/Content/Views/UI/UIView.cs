@@ -78,7 +78,7 @@ namespace Delight
                 case nameof(Height):
                 case nameof(OverrideWidth):
                 case nameof(OverrideHeight):
-                    LayoutChanged();
+                    SizeChanged();
                     break;
 
                 case nameof(Offset):
@@ -121,9 +121,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called when a property affecting the layout of the view has been changed.
+        /// Called when size of the view has been changed.
         /// </summary>
-        protected void LayoutChanged()
+        protected void SizeChanged()
         {
             if (IgnoreObject)
                 return;
@@ -132,7 +132,15 @@ namespace Delight
                 return;
 
             //Debug.Log(String.Format("{0}.LayoutChanged()", Name));            
-            LayoutRoot.RegisterNeedLayoutUpdate(this);
+            LayoutRoot.RegisterChangeHandler(OnSizeChanged);
+        }
+
+        /// <summary>
+        /// Called when size of the view has been changed.
+        /// </summary>
+        protected void OnSizeChanged()
+        {
+            UpdateLayout();
         }
 
         /// <summary>
@@ -162,17 +170,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Updates layout without notifying parent.
-        /// </summary>
-        public virtual void UpdateLayoutWithoutNotifyingParent()
-        {
-            UpdateLayout(false);
-        }
-
-        /// <summary>
         /// Updates layout.
         /// </summary>
-        public virtual void UpdateLayout(bool notifyParent = true)
+        public virtual bool UpdateLayout(bool notifyParent = true)
         {
             //Debug.Log(String.Format("{0}.UpdateLayout()", Name));
 
@@ -182,6 +182,8 @@ namespace Delight
             {
                 NotifyParentOfChildLayoutChanged();
             }
+
+            return false;
         }
 
         /// <summary>

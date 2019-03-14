@@ -9,6 +9,20 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    // TODO move to separate file
+    /// <summary>
+    /// Determines how scrolling should be restricted. 
+    /// </summary>
+    public enum ScrollBounds
+    {
+        Clamped = 0,
+        Elastic = 1,
+        None = 2
+    }
+
+    /// <summary>
+    /// Scrollable region. 
+    /// </summary>
     public partial class ScrollableRegion
     {
         #region Fields
@@ -20,6 +34,7 @@ namespace Delight
         // determines initial origin position of the scrollable content: TopLeft, Top, etc.
                                                   //public ViewAction NormalizedPostionChanged;
 
+
         private float _actualWidth;
         private float _actualHeight;
         private bool _isDragging;
@@ -27,6 +42,15 @@ namespace Delight
         private Vector2 _velocity;
         private Vector2 _dragStartPosition;
         private Vector2 _contentStartOffset;
+        private bool _isOutOfBounds;
+        //private bool _hasStartedToScroll;
+
+        // so what we need to do is to calculate initial offset of content based on
+        // its alignment, viewport size and content size so we need to map this out 
+        // how we calculate this offset. And we need to do this when the viewport changes
+        // size, and when content changes size - but we don't want to reset it always, 
+        // only if it falls outside the bounds, or the user hasn't started to scroll yet.
+        // 
 
         // public int ScrollSensitivity = 1; // I think it's pixels per scrollwheel scroll
         // public bool HasInertia = true; // if false ignore velocity and deceleration
@@ -55,9 +79,146 @@ namespace Delight
             {
                 _actualWidth = ActualWidth;
                 _actualHeight = ActualHeight;
-                                
-                //UpdateLayout(false);
+
+                // here we want to clamp offset if necessary 
+                if (ContentRegion.OffsetFromParent == null)
+                    return;
+
+                Vector2 contentOffset = GetContentOffset();
+                if (ScrollBounds != ScrollBounds.None)
+                {
+                    var clampedContentOffset = GetClampedOffset(contentOffset);
+                    if (!clampedContentOffset.Equals(contentOffset))
+                    {
+                        if (CanScrollHorizontally)
+                        {
+                            ContentRegion.OffsetFromParent.Left.Pixels = clampedContentOffset.x;
+                        }
+
+                        if (CanScrollVertically)
+                        {
+                            ContentRegion.OffsetFromParent.Top.Pixels = clampedContentOffset.y;
+                        }
+                    }
+                }
             }
+        }
+
+        /// <summary>
+        /// Gets offset clamped to bounds.
+        /// </summary>
+        public Vector2 GetClampedOffset(Vector2 offset)
+        {
+            Vector2 clampedOffset = offset;
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            if (cx < vpx)
+            {
+                // if content is smaller than viewport we reset x offset to 0
+                clampedOffset.x = 0;
+            }
+            else
+            {
+                // clamp x offset to bounds
+                clampedOffset.x = Mathf.Max(clampedOffset.x, max.x);
+                clampedOffset.x = Mathf.Min(clampedOffset.x, min.x);
+            }
+
+            if (cy < vpy)
+            {
+                // if content is smaller than viewport we reset y offset to 0
+                clampedOffset.y = 0;
+            }
+            else
+            {
+                // clamp y offset to bounds
+                clampedOffset.y = Mathf.Max(clampedOffset.y, max.y);
+                clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
+            }
+
+            return clampedOffset;
+        }
+
+        /// <summary>
+        /// Get bounds. 
+        /// </summary>
+        public void GetBounds(out Vector2 min, out Vector2 max)
+        {
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            float maxX = vpx - cx;
+            float maxY = vpy - cy;
+            float minX = 0;
+            float minY = 0;
+            float halfMaxX = maxX / 2f;
+            float halfMaxY = maxY / 2f;
+
+            // adjust min/max offset depending on content alignment
+            switch (ContentAlignment)
+            {
+                case ElementAlignment.TopLeft:
+                    break;
+
+                case ElementAlignment.Top:
+                    minX = -halfMaxX;
+                    maxX = halfMaxX;
+                    break;
+
+                case ElementAlignment.TopRight:
+                    minX = -maxX;
+                    maxX = 0;
+                    break;
+
+                case ElementAlignment.Left:
+                    minY = -halfMaxY;
+                    maxY = halfMaxY;
+                    break;
+
+                case ElementAlignment.Center:
+                    minX = -halfMaxX;
+                    maxX = halfMaxX;
+                    minY = -halfMaxY;
+                    maxY = halfMaxY;
+                    break;
+
+                case ElementAlignment.Right:
+                    minX = -maxX;
+                    maxX = 0;
+                    minY = -halfMaxY;
+                    maxY = halfMaxY;
+                    break;
+
+                case ElementAlignment.BottomLeft:
+                    minY = -maxY;
+                    maxY = 0;
+                    break;
+
+                case ElementAlignment.Bottom:
+                    minX = -halfMaxX;
+                    maxX = halfMaxX;
+                    minY = -maxY;
+                    maxY = 0;
+                    break;
+
+                case ElementAlignment.BottomRight:
+                    minX = -maxX;
+                    maxX = 0;
+                    minY = -maxY;
+                    maxY = 0;
+                    break;
+            }
+
+            min = new Vector2(minX, minY);
+            max = new Vector2(maxX, maxY);
         }
 
         /// <summary>
@@ -66,23 +227,21 @@ namespace Delight
         protected override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
-
             if (AutoSizeContentRegion)
             {
                 // update size and layout of the content region if necessary
-                UpdateContentRegion();
+                LayoutRoot.RegisterChangeHandler(AdjustContentRegionSizeToChildren);
             }
-            //LayoutRoot.RegisterNeedLayoutUpdate(this);
         }
 
         /// <summary>
         /// Updates the size of the content region. 
         /// </summary>
-        public void UpdateContentRegion()
+        public void AdjustContentRegionSizeToChildren()
         {
             bool hasNewSize = false;
 
-            // the default behavior of the list-item is to adjust its height and width to its content
+            // the default behavior of the scrollable region is to adjust its height and width to its content
             float maxWidth = 0f;
             float maxHeight = 0f;
             int childCount = ContentRegion.LayoutChildren.Count;
@@ -156,8 +315,16 @@ namespace Delight
         {
             base.AfterLoad();
             UnblockDragEvents();
+
+            if (AutoSizeContentRegion)
+            {
+                AdjustContentRegionSizeToChildren();
+            }
         }
 
+        /// <summary>
+        /// Called when the content is dragged.
+        /// </summary>
         public void OnDrag(DependencyObject sender, object eventArgs)
         {
             PointerEventData pointerData = eventArgs as PointerEventData;
@@ -173,54 +340,94 @@ namespace Delight
             if (ContentRegion.OffsetFromParent == null)
                 ContentRegion.OffsetFromParent = new ElementMargin();
 
-            //ContentRegion.RectTransform.anchoredPosition = new Vector2(_contentStartOffset.x + dragDelta.x, _contentStartOffset.y + dragDelta.y);
+            // adjust content offset
+            Vector2 contentOffset = new Vector2(_contentStartOffset.x + dragDelta.x, _contentStartOffset.y - dragDelta.y);
+            if (ScrollBounds == ScrollBounds.Clamped)
+            {
+                contentOffset = GetClampedOffset(contentOffset);
+            }
+            else if (ScrollBounds == ScrollBounds.Elastic)
+            {
+                contentOffset = GetElasticOffset(contentOffset);
+            }
 
             if (CanScrollHorizontally)
             {
-                ContentRegion.OffsetFromParent.Left.Pixels = _contentStartOffset.x + dragDelta.x; //- RubberDelta(contentPosition.x, _actualWidth);
+                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
             }
 
             if (CanScrollVertically)
             {
-                ContentRegion.OffsetFromParent.Top.Pixels = _contentStartOffset.y - dragDelta.y; //- RubberDelta(-contentPosition.y, _actualHeight);
+                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
             }
         }
 
-        private static float RubberDelta(float position, float viewSize)
-        {
-            return (1 - (1 / ((Mathf.Abs(position) * 0.55f / viewSize) + 1))) * viewSize * Mathf.Sign(position);
-        }
-
+        /// <summary>
+        /// Called when the content is starting to be dragged.
+        /// </summary>
         public void OnBeginDrag(DependencyObject sender, object eventArgs)
         {
             PointerEventData pointerData = eventArgs as PointerEventData;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, pointerData.position, pointerData.pressEventCamera, out _dragStartPosition);
 
-            if (ContentRegion.OffsetFromParent == null)
-                ContentRegion.OffsetFromParent = new ElementMargin();
-
-            _contentStartOffset.x = ContentRegion.OffsetFromParent.Left.Pixels;
-            _contentStartOffset.y = ContentRegion.OffsetFromParent.Top.Pixels;
-
-            //_contentStartOffset = ContentRegion.RectTransform.anchoredPosition;
-
-            //Debug.Log("Content start offset = " + _contentStartOffset.x);
-
+            _contentStartOffset = GetContentOffset();           
             _isDragging = true;
         }
 
+        /// <summary>
+        /// Called when the content is stopped being dragged.
+        /// </summary>
         public void OnEndDrag(DependencyObject sender, object eventArgs)
         {
             _isDragging = false;
         }
 
+        /// <summary>
+        /// Called when the content is potentially started to be dragged.
+        /// </summary>
         public void OnInitializePotentialDrag(DependencyObject sender, object eventArgs)
         {
             _velocity = Vector2.zero;
         }
 
+        /// <summary>
+        /// Called when the content is scrolled using mouse wheel or track pad.
+        /// </summary>
         public void OnScroll(DependencyObject sender, object eventArgs)
         {
+            PointerEventData pointerData = eventArgs as PointerEventData;
+            Vector2 delta = pointerData.scrollDelta;
+
+            //delta.y *= -1;
+            if (CanScrollVertically && !CanScrollHorizontally)
+            {
+                if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+                    delta.y = delta.x;
+                delta.x = 0;
+            }
+            if (CanScrollHorizontally && !CanScrollVertically)
+            {
+                if (Mathf.Abs(delta.y) > Mathf.Abs(delta.x))
+                    delta.x = delta.y;
+                delta.y = 0;
+            }
+
+            Vector2 contentOffset = GetContentOffset();
+            contentOffset += delta * ScrollSensitivity;
+            if (ScrollBounds == ScrollBounds.Clamped)
+            {
+                contentOffset = GetClampedOffset(contentOffset);
+            }
+
+            if (CanScrollHorizontally)
+            {
+                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+            }
+
+            if (CanScrollVertically)
+            {
+                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
+            }
         }
 
         /// <summary>
@@ -316,166 +523,63 @@ namespace Delight
 
         }
 
+        /// <summary>
+        /// Calculate rubber delta.
+        /// </summary>
+        private static float RubberDelta(float offset, float viewSize)
+        {
+            return (1.0f - (1.0f / ((offset * 0.55f / viewSize) + 1.0f))) * viewSize;
+        }
+
+        private Vector2 GetElasticOffset(Vector2 offset)
+        {
+            Vector2 min, max;
+            GetBounds(out min, out max);
+            _isOutOfBounds = false;
+
+            Vector2 elasticOffset = offset;
+
+            // if offset is out of bounds apply rubber band effect
+            if (offset.x > min.x)
+            {
+                _isOutOfBounds = true;
+                elasticOffset.x = min.x + RubberDelta(-min.x + offset.x, ActualWidth);
+            }
+
+            if (offset.x < max.x)
+            {
+                _isOutOfBounds = true;
+                elasticOffset.x = max.x - RubberDelta(max.x - offset.x, ActualWidth);
+            }
+
+            if (offset.y > min.y)
+            {
+                _isOutOfBounds = true;
+                elasticOffset.y = min.y + RubberDelta(-min.y + offset.y, ActualHeight);
+            }
+
+            if (offset.y < max.y)
+            {
+                _isOutOfBounds = true;
+                elasticOffset.y = max.y - RubberDelta(max.y - offset.y, ActualHeight);
+            }
+
+            return elasticOffset;
+        }
+
+        /// <summary>
+        /// Gets current content offset as vector.
+        /// </summary>
+        /// <returns></returns>
+        private Vector2 GetContentOffset()
+        {
+            if (ContentRegion.OffsetFromParent == null)
+                ContentRegion.OffsetFromParent = new ElementMargin();
+
+            return new Vector2(ContentRegion.OffsetFromParent.Left.Pixels,
+                ContentRegion.OffsetFromParent.Top.Pixels);
+        }
+
         #endregion
-
-        //private Camera mainCamera;
-        //private RectTransform canvasRect;
-        //public RectTransform viewport;
-        //public RectTransform content;
-        //private Rect viewportOld;
-        //private Rect contentOld;
-
-        //private List<Vector2> dragCoordinates = new List<Vector2>();
-        //private List<float> offsets = new List<float>();
-        //private int offsetsAveraged = 4;
-        //private float offset;
-        //private float velocity = 0;
-        //private bool changesMade = false;
-
-        //public float decelration = 0.135f;
-        //public float scrollSensitivity;
-        //public OnValueChanged onValueChanged;
-
-        //[HideInInspector]
-        //public float verticalNormalizedPosition
-        //{
-        //    get
-        //    {
-        //        float sizeDelta = CaculateDeltaSize();
-        //        if (sizeDelta == 0)
-        //        {
-        //            return 0;
-        //        }
-        //        else
-        //        {
-        //            return 1 - content.transform.localPosition.y / sizeDelta;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        float o_verticalNormalizedPosition = verticalNormalizedPosition;
-        //        float m_verticalNormalizedPosition = Mathf.Max(0, Mathf.Min(1, value));
-        //        float maxY = CaculateDeltaSize();
-        //        content.transform.localPosition = new Vector3(content.transform.localPosition.x, Mathf.Max(0, (1 - m_verticalNormalizedPosition) * maxY), content.transform.localPosition.z);
-        //        float n_verticalNormalizedPosition = verticalNormalizedPosition;
-        //        if (o_verticalNormalizedPosition != n_verticalNormalizedPosition)
-        //        {
-        //            onValueChanged.Invoke();
-        //        }
-        //    }
-        //}
-
-        //private float CaculateDeltaSize()
-        //{
-        //    return Mathf.Max(0, content.rect.height - viewport.rect.height); ;
-        //}
-
-
-        //private void Awake()
-        //{
-        //    mainCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-        //    canvasRect = transform.root.GetComponent<RectTransform>();
-        //}
-
-        //private Vector2 ConvertEventDataDrag(PointerEventData eventData)
-        //{
-        //    return new Vector2(eventData.position.x / mainCamera.pixelWidth * canvasRect.rect.width, eventData.position.y / mainCamera.pixelHeight * canvasRect.rect.height);
-        //}
-
-        //private Vector2 ConvertEventDataScroll(PointerEventData eventData)
-        //{
-        //    return new Vector2(eventData.scrollDelta.x / mainCamera.pixelWidth * canvasRect.rect.width, eventData.scrollDelta.y / mainCamera.pixelHeight * canvasRect.rect.height) * scrollSensitivity;
-        //}
-
-        //public void OnPointerDown(PointerEventData eventData)
-        //{
-        //    velocity = 0;
-        //    dragCoordinates.Clear();
-        //    offsets.Clear();
-        //    dragCoordinates.Add(ConvertEventDataDrag(eventData));
-        //}
-
-        //public void OnScroll(PointerEventData eventData)
-        //{
-        //    UpdateOffsetsScroll(ConvertEventDataScroll(eventData));
-        //    OffsetContent(offsets[offsets.Count - 1]);
-        //}
-
-        //public void OnDrag(PointerEventData eventData)
-        //{
-        //    dragCoordinates.Add(ConvertEventDataDrag(eventData));
-        //    UpdateOffsetsDrag();
-        //    OffsetContent(offsets[offsets.Count - 1]);
-        //}
-
-        //public void OnPointerUp(PointerEventData eventData)
-        //{
-        //    dragCoordinates.Add(ConvertEventDataDrag(eventData));
-        //    UpdateOffsetsDrag();
-        //    OffsetContent(offsets[offsets.Count - 1]);
-        //    float totalOffsets = 0;
-        //    foreach (float offset in offsets)
-        //    {
-        //        totalOffsets += offset;
-        //    }
-        //    velocity = totalOffsets / offsetsAveraged;
-        //    dragCoordinates.Clear();
-        //    offsets.Clear();
-        //}
-
-        //private void OffsetContent(float givenOffset)
-        //{
-        //    float newY = Mathf.Max(0, Mathf.Min(CaculateDeltaSize(), content.transform.localPosition.y + givenOffset));
-        //    if (content.transform.localPosition.y != newY)
-        //    {
-        //        content.transform.localPosition = new Vector3(content.transform.localPosition.x, newY, content.transform.localPosition.z);
-        //    }
-        //    onValueChanged.Invoke();
-        //}
-
-        //private void UpdateOffsetsDrag()
-        //{
-        //    offsets.Add(dragCoordinates[dragCoordinates.Count - 1].y - dragCoordinates[dragCoordinates.Count - 2].y);
-        //    if (offsets.Count > offsetsAveraged)
-        //    {
-        //        offsets.RemoveAt(0);
-        //    }
-        //}
-
-        //private void UpdateOffsetsScroll(Vector2 givenScrollDelta)
-        //{
-        //    offsets.Add(givenScrollDelta.y);
-        //    if (offsets.Count > offsetsAveraged)
-        //    {
-        //        offsets.RemoveAt(0);
-        //    }
-        //}
-
-        //private void LateUpdate()
-        //{
-        //    if (viewport.rect != viewportOld)
-        //    {
-        //        changesMade = true;
-        //        viewportOld = new Rect(viewport.rect);
-        //    }
-        //    if (content.rect != contentOld)
-        //    {
-        //        changesMade = true;
-        //        contentOld = new Rect(content.rect);
-        //    }
-        //    if (velocity != 0)
-        //    {
-        //        changesMade = true;
-        //        velocity = (velocity / Mathf.Abs(velocity)) * Mathf.FloorToInt(Mathf.Abs(velocity) * (1 - decelration));
-        //        offset = velocity;
-        //    }
-        //    if (changesMade)
-        //    {
-        //        OffsetContent(offset);
-        //        changesMade = false;
-        //        offset = 0;
-        //    }
-        //}
-
     }
 }

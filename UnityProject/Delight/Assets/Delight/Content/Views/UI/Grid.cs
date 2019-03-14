@@ -70,17 +70,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called when a child changes its layout.
-        /// </summary>
-        protected override void ChildLayoutChanged()
-        {
-            base.ChildLayoutChanged();
-        }
-
-        /// <summary>
         /// Updates the layout of the grid. 
         /// </summary>
-        public override void UpdateLayout(bool notifyParent = true)
+        public override bool UpdateLayout(bool notifyParent = true)
         {
             base.UpdateLayout(notifyParent);
 
@@ -131,6 +123,8 @@ namespace Delight
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
+
+            return false;
         }
 
         /// <summary>

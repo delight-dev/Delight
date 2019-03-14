@@ -121,6 +121,13 @@ namespace Delight
         {
         }
 
+        /// <summary>
+        /// Called once per frame if EnableScriptEvents is true.
+        /// </summary>
+        public virtual void LateUpdate()
+        {
+        }
+
         #endregion
 
         #region Properties
@@ -162,6 +169,11 @@ namespace Delight
         public void Update()
         {
             SceneObjectView?.Update();
+        }
+
+        public void LateUpdate()
+        {
+            SceneObjectView?.LateUpdate();
         }
 
         #endregion

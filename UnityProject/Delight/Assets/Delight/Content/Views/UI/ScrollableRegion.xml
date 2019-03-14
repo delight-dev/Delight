@@ -1,12 +1,15 @@
 <ScrollableRegion xmlns="Delight" BasedOn="UICanvas" MaskContent="t:bool = True"
                   Mask="t:UnityEngine.UI.RectMask2D, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
                   Drag="OnDrag" BeginDrag="OnBeginDrag" InitializePotentialDrag="OnInitializePotentialDrag" EndDrag="OnEndDrag" Scroll="OnScroll"
-                  DecelerationRate="t:float = 0.135" Elasticity="t:float"
+                  HasInertia="t:bool" DecelerationRate="t:float = 0.135" Elasticity="t:float = 0.1"
                   CanScrollHorizontally="t:bool = True"
                   CanScrollVertically="t:bool = True"
                   EnableScriptEvents="True"
-                  ContentAlignment="t:ElementAlignment"
-                  AutoSizeContentRegion="t:bool = True">
-  <Region Id="ContentRegion" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True">
-  </Region> 
+                  ContentAlignment="t:ElementAlignment = TopLeft"
+                  AutoSizeContentRegion="t:bool = True"
+                  ScrollBounds="t:ScrollBounds"
+                  DebugOffsetText="t:string">
+  <Region Id="ContentRegion" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True" Alignment="{ContentAlignment}">
+  </Region>
+  <Label Text="{DebugOffsetText}" />
 </ScrollableRegion> 

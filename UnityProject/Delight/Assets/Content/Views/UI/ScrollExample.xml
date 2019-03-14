@@ -1,0 +1,95 @@
+<ScrollExample xmlns="Delight" BasedOn="LayoutRoot">
+  <Grid Columns="50%,50%, 50%" Rows="50%,50%,50%" Spacing="20">
+    <ScrollableRegion Grid.Cell="0,0" ContentAlignment="TopLeft" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="0,1" ContentAlignment="Top" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="0,2" ContentAlignment="TopRight" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="1,0" ContentAlignment="Left" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="1,1" ContentAlignment="Center" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="1,2" ContentAlignment="Right" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="2,0" ContentAlignment="BottomLeft" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="2,1" ContentAlignment="Bottom" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+    <ScrollableRegion Grid.Cell="2,2" ContentAlignment="BottomRight" CanScrollVertically="True"
+                      ScrollBounds="Elastic">
+      <Region Width="600" Height="600" BackgroundColor="White">
+        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
+        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
+        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
+      </Region>
+    </ScrollableRegion>
+
+
+  </Grid>
+</ScrollExample>

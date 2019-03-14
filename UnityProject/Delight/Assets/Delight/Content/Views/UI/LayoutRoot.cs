@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using UnityEngine;
 #endregion
 
 namespace Delight
@@ -13,8 +14,8 @@ namespace Delight
     {
         #region Fields
 
-        private HashSet<UIView> _needLayoutUpdate = new HashSet<UIView>();
-        private List<UIView> _toBeUpdated = new List<UIView>();
+        private HashSet<ChangeHandler> _registeredChangeHandlers = new HashSet<ChangeHandler>();
+        private List<ChangeHandler> _changeHandlers = new List<ChangeHandler>();
 
         #endregion
 
@@ -23,30 +24,27 @@ namespace Delight
         /// <summary>
         /// Updates the view. Called once each frame. 
         /// </summary>
-        public override void Update()
+        public override void LateUpdate()
         {
-            base.Update();
-            while (_needLayoutUpdate.Count > 0)
+            base.LateUpdate();
+            while (_registeredChangeHandlers.Count > 0)
             {
-                _toBeUpdated.AddRange(_needLayoutUpdate);
-                _needLayoutUpdate.Clear();
-                for (int i = 0; i < _toBeUpdated.Count; ++i)
+                _changeHandlers.AddRange(_registeredChangeHandlers);
+                _registeredChangeHandlers.Clear();
+                for (int i = 0; i < _changeHandlers.Count; ++i)
                 {
-                    if (_toBeUpdated[i].IsLoaded)
-                    {
-                        _toBeUpdated[i].UpdateLayout();
-                    }
+                    _changeHandlers[i]?.Invoke();
                 }
-                _toBeUpdated.Clear();
+                _changeHandlers.Clear();
             }
         }
 
         /// <summary>
-        /// Registers the specified view to have its layout updated.
+        /// Registers a change handler to be triggered on next late update.
         /// </summary>
-        public void RegisterNeedLayoutUpdate(UIView uiView)
+        public void RegisterChangeHandler(ChangeHandler changeHandler)
         {
-            _needLayoutUpdate.Add(uiView);
+            _registeredChangeHandlers.Add(changeHandler);
         }
 
         #endregion

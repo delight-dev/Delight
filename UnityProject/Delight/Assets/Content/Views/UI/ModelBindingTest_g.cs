@@ -502,6 +502,7 @@ namespace Delight
                     _modelBindingTestPlayerListScrollableRegion.Name = "ModelBindingTestPlayerListScrollableRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionLabel1);
                 }
                 return _modelBindingTestPlayerListScrollableRegion;
             }
@@ -524,6 +525,26 @@ namespace Delight
 #endif
                 }
                 return _modelBindingTestPlayerListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionLabel1;
+        public static Template ModelBindingTestPlayerListScrollableRegionLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionLabel1 == null || _modelBindingTestPlayerListScrollableRegionLabel1.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionLabel1 == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionLabel1.Name = "ModelBindingTestPlayerListScrollableRegionLabel1";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionLabel1;
             }
         }
 
@@ -626,6 +647,7 @@ namespace Delight
                     _modelBindingTestAchievementsListScrollableRegion.Name = "ModelBindingTestAchievementsListScrollableRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionLabel1);
                 }
                 return _modelBindingTestAchievementsListScrollableRegion;
             }
@@ -648,6 +670,26 @@ namespace Delight
 #endif
                 }
                 return _modelBindingTestAchievementsListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionLabel1;
+        public static Template ModelBindingTestAchievementsListScrollableRegionLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionLabel1 == null || _modelBindingTestAchievementsListScrollableRegionLabel1.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionLabel1 == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionLabel1.Name = "ModelBindingTestAchievementsListScrollableRegionLabel1";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionLabel1;
             }
         }
 

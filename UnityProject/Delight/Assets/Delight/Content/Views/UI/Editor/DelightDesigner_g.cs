@@ -610,6 +610,7 @@ namespace Delight
                     _delightDesignerTestRegion.Name = "DelightDesignerTestRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionContentRegion);
+                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionLabel1);
                 }
                 return _delightDesignerTestRegion;
             }
@@ -635,6 +636,26 @@ namespace Delight
             }
         }
 
+        private static Template _delightDesignerTestRegionLabel1;
+        public static Template DelightDesignerTestRegionLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerTestRegionLabel1 == null || _delightDesignerTestRegionLabel1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerTestRegionLabel1 == null)
+#endif
+                {
+                    _delightDesignerTestRegionLabel1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
+#if UNITY_EDITOR
+                    _delightDesignerTestRegionLabel1.Name = "DelightDesignerTestRegionLabel1";
+#endif
+                }
+                return _delightDesignerTestRegionLabel1;
+            }
+        }
+
         private static Template _delightDesignerRegion1;
         public static Template DelightDesignerRegion1
         {
@@ -650,8 +671,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerRegion1.Name = "DelightDesignerRegion1";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_delightDesignerRegion1, new ElementSize(2000f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(2000f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _delightDesignerRegion1;
@@ -818,6 +839,7 @@ namespace Delight
                     _delightDesignerList1ScrollableRegion.Name = "DelightDesignerList1ScrollableRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionLabel1);
                 }
                 return _delightDesignerList1ScrollableRegion;
             }
@@ -840,6 +862,26 @@ namespace Delight
 #endif
                 }
                 return _delightDesignerList1ScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _delightDesignerList1ScrollableRegionLabel1;
+        public static Template DelightDesignerList1ScrollableRegionLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerList1ScrollableRegionLabel1 == null || _delightDesignerList1ScrollableRegionLabel1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerList1ScrollableRegionLabel1 == null)
+#endif
+                {
+                    _delightDesignerList1ScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
+#if UNITY_EDITOR
+                    _delightDesignerList1ScrollableRegionLabel1.Name = "DelightDesignerList1ScrollableRegionLabel1";
+#endif
+                }
+                return _delightDesignerList1ScrollableRegionLabel1;
             }
         }
 

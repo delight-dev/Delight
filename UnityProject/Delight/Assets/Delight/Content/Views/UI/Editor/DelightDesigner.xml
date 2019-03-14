@@ -11,7 +11,7 @@
     </Region>
 
     <ScrollableRegion Grid.Cell="1,1" Id="TestRegion">
-      <Region Width="2000" Height="2000" BackgroundColor="White">
+      <Region Width="1000" Height="1000" BackgroundColor="White">
         <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
         <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
         <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />

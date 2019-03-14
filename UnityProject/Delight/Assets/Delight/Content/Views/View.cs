@@ -17,6 +17,7 @@ namespace Delight
     {
         #region Fields
 
+        public delegate void ChangeHandler();
         public delegate void ViewAction(DependencyObject sender, object eventArgs);
         public delegate void LoadedEventHandler(object source);
         public event LoadedEventHandler Loaded;

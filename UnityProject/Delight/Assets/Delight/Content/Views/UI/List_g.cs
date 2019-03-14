@@ -164,6 +164,13 @@ namespace Delight
             set { ScrollableRegion.MaskContent = value; }
         }
 
+        public readonly static DependencyProperty HasInertiaProperty = ScrollableRegion.HasInertiaProperty;
+        public System.Boolean HasInertia
+        {
+            get { return ScrollableRegion.HasInertia; }
+            set { ScrollableRegion.HasInertia = value; }
+        }
+
         public readonly static DependencyProperty DecelerationRateProperty = ScrollableRegion.DecelerationRateProperty;
         public System.Single DecelerationRate
         {
@@ -204,6 +211,20 @@ namespace Delight
         {
             get { return ScrollableRegion.AutoSizeContentRegion; }
             set { ScrollableRegion.AutoSizeContentRegion = value; }
+        }
+
+        public readonly static DependencyProperty ScrollBoundsProperty = ScrollableRegion.ScrollBoundsProperty;
+        public Delight.ScrollBounds ScrollBounds
+        {
+            get { return ScrollableRegion.ScrollBounds; }
+            set { ScrollableRegion.ScrollBounds = value; }
+        }
+
+        public readonly static DependencyProperty DebugOffsetTextProperty = ScrollableRegion.DebugOffsetTextProperty;
+        public System.String DebugOffsetText
+        {
+            get { return ScrollableRegion.DebugOffsetText; }
+            set { ScrollableRegion.DebugOffsetText = value; }
         }
 
         public readonly static DependencyProperty RenderCameraProperty = ScrollableRegion.RenderCameraProperty;
@@ -599,6 +620,7 @@ namespace Delight
                     Delight.ScrollableRegion.BubbleNotifyChildLayoutChangedProperty.SetDefault(_listScrollableRegion, true);
                     Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_listScrollableRegion, false);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionLabel1);
                 }
                 return _listScrollableRegion;
             }
@@ -621,6 +643,26 @@ namespace Delight
 #endif
                 }
                 return _listScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _listScrollableRegionLabel1;
+        public static Template ListScrollableRegionLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionLabel1 == null || _listScrollableRegionLabel1.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionLabel1 == null)
+#endif
+                {
+                    _listScrollableRegionLabel1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
+#if UNITY_EDITOR
+                    _listScrollableRegionLabel1.Name = "ListScrollableRegionLabel1";
+#endif
+                }
+                return _listScrollableRegionLabel1;
             }
         }
 
