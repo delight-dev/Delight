@@ -227,6 +227,13 @@ namespace Delight
             set { ScrollableRegion.DebugOffsetText = value; }
         }
 
+        public readonly static DependencyProperty ScrollSensitivityProperty = ScrollableRegion.ScrollSensitivityProperty;
+        public System.Single ScrollSensitivity
+        {
+            get { return ScrollableRegion.ScrollSensitivity; }
+            set { ScrollableRegion.ScrollSensitivity = value; }
+        }
+
         public readonly static DependencyProperty RenderCameraProperty = ScrollableRegion.RenderCameraProperty;
         public System.String RenderCamera
         {

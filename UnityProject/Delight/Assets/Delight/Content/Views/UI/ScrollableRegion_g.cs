@@ -70,6 +70,7 @@ namespace Delight
             dependencyProperties.Add(AutoSizeContentRegionProperty);
             dependencyProperties.Add(ScrollBoundsProperty);
             dependencyProperties.Add(DebugOffsetTextProperty);
+            dependencyProperties.Add(ScrollSensitivityProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
             dependencyProperties.Add(Label1Property);
@@ -157,6 +158,13 @@ namespace Delight
             set { DebugOffsetTextProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Single> ScrollSensitivityProperty = new DependencyProperty<System.Single>("ScrollSensitivity");
+        public System.Single ScrollSensitivity
+        {
+            get { return ScrollSensitivityProperty.GetValue(this); }
+            set { ScrollSensitivityProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> ContentRegionProperty = new DependencyProperty<Region>("ContentRegion");
         public Region ContentRegion
         {
@@ -218,6 +226,7 @@ namespace Delight
                     _scrollableRegion.Name = "ScrollableRegion";
 #endif
                     Delight.ScrollableRegion.MaskContentProperty.SetDefault(_scrollableRegion, true);
+                    Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.DecelerationRateProperty.SetDefault(_scrollableRegion, 0.135f);
                     Delight.ScrollableRegion.ElasticityProperty.SetDefault(_scrollableRegion, 0.1f);
                     Delight.ScrollableRegion.CanScrollHorizontallyProperty.SetDefault(_scrollableRegion, true);
@@ -225,6 +234,7 @@ namespace Delight
                     Delight.ScrollableRegion.EnableScriptEventsProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollableRegion, Delight.ElementAlignment.TopLeft);
                     Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_scrollableRegion, true);
+                    Delight.ScrollableRegion.ScrollSensitivityProperty.SetDefault(_scrollableRegion, 60f);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionLabel1);
                 }

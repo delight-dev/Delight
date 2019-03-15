@@ -1174,8 +1174,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion1.Name = "ScrollExampleRegion1";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion1, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion1, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion1, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion1, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion1;
@@ -1358,8 +1358,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion6.Name = "ScrollExampleRegion6";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion6, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion6, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion6, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion6, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion6, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion6;
@@ -1542,8 +1542,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion11.Name = "ScrollExampleRegion11";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion11, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion11, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion11, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion11, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion11, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion11;
@@ -1663,7 +1663,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion4, Delight.ElementAlignment.Left);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion4, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion4, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion4, Delight.ScrollBounds.None);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4Label1);
                 }
@@ -1726,8 +1726,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion16.Name = "ScrollExampleRegion16";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion16, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion16, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion16, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion16, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion16, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion16;
@@ -1847,7 +1847,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion5, Delight.ElementAlignment.Center);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion5, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion5, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion5, Delight.ScrollBounds.None);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5Label1);
                 }
@@ -1910,8 +1910,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion21.Name = "ScrollExampleRegion21";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion21, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion21, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion21, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion21, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion21, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion21;
@@ -2031,7 +2031,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion6, Delight.ElementAlignment.Right);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion6, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion6, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion6, Delight.ScrollBounds.None);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6Label1);
                 }
@@ -2094,8 +2094,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion26.Name = "ScrollExampleRegion26";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion26, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion26, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion26, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion26, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion26, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion26;
@@ -2215,7 +2215,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion7, Delight.ElementAlignment.BottomLeft);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion7, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion7, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion7, Delight.ScrollBounds.Clamped);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7Label1);
                 }
@@ -2278,8 +2278,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion31.Name = "ScrollExampleRegion31";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion31, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion31, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion31, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion31, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion31, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion31;
@@ -2399,7 +2399,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion8, Delight.ElementAlignment.Bottom);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion8, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion8, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion8, Delight.ScrollBounds.Clamped);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8Label1);
                 }
@@ -2462,8 +2462,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion36.Name = "ScrollExampleRegion36";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion36, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion36, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion36, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion36, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion36, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion36;
@@ -2583,7 +2583,7 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollExampleScrollableRegion9, Delight.ElementAlignment.BottomRight);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollExampleScrollableRegion9, true);
-                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion9, Delight.ScrollBounds.Elastic);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollExampleScrollableRegion9, Delight.ScrollBounds.Clamped);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9ContentRegion);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9Label1);
                 }
@@ -2646,8 +2646,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollExampleRegion41.Name = "ScrollExampleRegion41";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion41, new ElementSize(600f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion41, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_scrollExampleRegion41, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_scrollExampleRegion41, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.BackgroundColorProperty.SetDefault(_scrollExampleRegion41, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _scrollExampleRegion41;

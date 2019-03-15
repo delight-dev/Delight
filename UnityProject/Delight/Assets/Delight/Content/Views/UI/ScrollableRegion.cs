@@ -29,11 +29,7 @@ namespace Delight
 
         public Vector2 NormalizedPosition;
         public Vector2 AbsolutePosition;
-        public float ScrollSensitivity = 60f; // how sensitive the scrolling is to scroll wheel and track pad movement
-        public float DisableInteractionScrollDelta; // If set any interaction with child views (clicks, etc) is disabled when the specified amount of pixels has been scrolled. This is used e.g. to disable clicks while scrolling a selectable list of items.
-        // determines initial origin position of the scrollable content: TopLeft, Top, etc.
-                                                  //public ViewAction NormalizedPostionChanged;
-
+        public float DisableInteractionScrollDelta; 
 
         private float _actualWidth;
         private float _actualHeight;
@@ -42,28 +38,12 @@ namespace Delight
         private Vector2 _velocity;
         private Vector2 _dragStartPosition;
         private Vector2 _contentStartOffset;
-        private bool _isOutOfBounds;
-        //private bool _hasStartedToScroll;
-
-        // so what we need to do is to calculate initial offset of content based on
-        // its alignment, viewport size and content size so we need to map this out 
-        // how we calculate this offset. And we need to do this when the viewport changes
-        // size, and when content changes size - but we don't want to reset it always, 
-        // only if it falls outside the bounds, or the user hasn't started to scroll yet.
-        // 
-
-        // public int ScrollSensitivity = 1; // I think it's pixels per scrollwheel scroll
-        // public bool HasInertia = true; // if false ignore velocity and deceleration
-        // public MovementType MovementType = Elastic, Clamped, Unrestricted... not sure unrestricted ever makes sense. 
-        // But here we can have maybe looping or infinite scroll... for that to work we need to be able to duplicate
-        // content that logic can be handled by parent list. But if we want infinite scroll we want to also be able 
-        // to control the scrollbars... we also might want to snap to items when scrolling in list or even just allow
-        // to scroll in item increments... all that can be handled by the list above, which means
+        private Vector2 _previousContentOffset;
+        private bool _isOutOfBoundsElastic;
+        private bool _offsetChangedFromStartPosition;
 
         // public ScrollbarVisibility HorizontalScrollbarVisibility;
         // public ScrollbarVisibility VerticalScrollbarVisibility;
-
-        // so this view simply needs to notify parents when content is moved
 
         #endregion
 
@@ -75,41 +55,89 @@ namespace Delight
         public override void Update()
         {
             base.Update();
+
+            Vector2 contentOffset = GetContentOffset();
+            float deltaTime = Time.unscaledDeltaTime;
+
+            //  calculate velocity if dragging and inertia is activated
+            if (_isDragging && HasInertia)
+            {
+                Vector3 newVelocity = (contentOffset - _previousContentOffset) / deltaTime;
+                _velocity = Vector3.Lerp(_velocity, newVelocity, deltaTime * 10);
+            }
+
+            // calculate inertia and elastic movement
+            if (!_isDragging && (_isOutOfBoundsElastic || _velocity != Vector2.zero))
+            {
+                if (HasInertia)
+                {
+                    _velocity *= Mathf.Pow(DecelerationRate, deltaTime);
+                    if (Mathf.Abs(_velocity.x) < 1)
+                        _velocity.x = 0;
+                    if (Mathf.Abs(_velocity.y) < 1)
+                        _velocity.y = 0;
+                    contentOffset += _velocity * deltaTime;
+
+                    // check if content is out of bounds 
+                    if (ScrollBounds != ScrollBounds.None && IsOutOfBounds(contentOffset))
+                    {
+                        if (ScrollBounds == ScrollBounds.Elastic)
+                        {
+                            _isOutOfBoundsElastic = true;
+                        }
+                        else if (ScrollBounds == ScrollBounds.Clamped)
+                        {
+                            var clampedOffset = GetClampedOffset(contentOffset);
+                            SetContentOffset(clampedOffset);
+                        }
+                    }
+                    else
+                    {
+                        _isOutOfBoundsElastic = false;
+                        SetContentOffset(contentOffset);
+                    }
+                    
+                }
+
+                if (_isOutOfBoundsElastic)
+                {
+                    var elasticOffset = GetElasticOffset(contentOffset, true);
+                    SetContentOffset(elasticOffset);
+                }
+            }
+
+            // has the size of the scrollable region changed?
             if (_actualWidth != ActualWidth || _actualHeight != ActualHeight)
             {
+                // yes. adjust content region to bounds
                 _actualWidth = ActualWidth;
                 _actualHeight = ActualHeight;
 
-                // here we want to clamp offset if necessary 
-                if (ContentRegion.OffsetFromParent == null)
-                    return;
-
-                Vector2 contentOffset = GetContentOffset();
-                if (ScrollBounds != ScrollBounds.None)
+                if (_offsetChangedFromStartPosition)
                 {
-                    var clampedContentOffset = GetClampedOffset(contentOffset);
-                    if (!clampedContentOffset.Equals(contentOffset))
+                    if (ScrollBounds != ScrollBounds.None)
                     {
-                        if (CanScrollHorizontally)
-                        {
-                            ContentRegion.OffsetFromParent.Left.Pixels = clampedContentOffset.x;
-                        }
+                        // stop movement
+                        _velocity = Vector2.zero;
 
-                        if (CanScrollVertically)
+                        // clamp offset
+                        var clampedContentOffset = GetClampedOffset(contentOffset);
+                        if (!clampedContentOffset.Equals(contentOffset))
                         {
-                            ContentRegion.OffsetFromParent.Top.Pixels = clampedContentOffset.y;
+                            SetContentOffset(clampedContentOffset);
                         }
                     }
                 }
             }
+
+            _previousContentOffset = contentOffset;
         }
 
         /// <summary>
-        /// Gets offset clamped to bounds.
+        /// Returns true if content offset is out of bounds.
         /// </summary>
-        public Vector2 GetClampedOffset(Vector2 offset)
+        private bool IsOutOfBounds(Vector2 offset)
         {
-            Vector2 clampedOffset = offset;
             Vector2 min, max;
             GetBounds(out min, out max);
 
@@ -118,32 +146,21 @@ namespace Delight
             float vpx = ActualWidth;
             float vpy = ActualHeight;
 
+            // adjust min/max if content is smaller than viewport
             if (cx < vpx)
             {
-                // if content is smaller than viewport we reset x offset to 0
-                clampedOffset.x = 0;
-            }
-            else
-            {
-                // clamp x offset to bounds
-                clampedOffset.x = Mathf.Max(clampedOffset.x, max.x);
-                clampedOffset.x = Mathf.Min(clampedOffset.x, min.x);
+                min.x = 0;
+                max.x = 0;
             }
 
             if (cy < vpy)
             {
-                // if content is smaller than viewport we reset y offset to 0
-                clampedOffset.y = 0;
-            }
-            else
-            {
-                // clamp y offset to bounds
-                clampedOffset.y = Mathf.Max(clampedOffset.y, max.y);
-                clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
+                min.y = 0;
+                max.y = 0;
             }
 
-            return clampedOffset;
-        }
+            return (offset.x > min.x) || (offset.x < max.x) || (offset.y > min.y) || (offset.y < max.y);
+        }    
 
         /// <summary>
         /// Get bounds. 
@@ -340,6 +357,8 @@ namespace Delight
             if (ContentRegion.OffsetFromParent == null)
                 ContentRegion.OffsetFromParent = new ElementMargin();
 
+            _offsetChangedFromStartPosition = true;
+
             // adjust content offset
             Vector2 contentOffset = new Vector2(_contentStartOffset.x + dragDelta.x, _contentStartOffset.y - dragDelta.y);
             if (ScrollBounds == ScrollBounds.Clamped)
@@ -351,15 +370,7 @@ namespace Delight
                 contentOffset = GetElasticOffset(contentOffset);
             }
 
-            if (CanScrollHorizontally)
-            {
-                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
-            }
-
-            if (CanScrollVertically)
-            {
-                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
-            }
+            SetContentOffset(contentOffset);            
         }
 
         /// <summary>
@@ -398,7 +409,6 @@ namespace Delight
             PointerEventData pointerData = eventArgs as PointerEventData;
             Vector2 delta = pointerData.scrollDelta;
 
-            //delta.y *= -1;
             if (CanScrollVertically && !CanScrollHorizontally)
             {
                 if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
@@ -419,16 +429,147 @@ namespace Delight
                 contentOffset = GetClampedOffset(contentOffset);
             }
 
-            if (CanScrollHorizontally)
+            _offsetChangedFromStartPosition = true;
+            SetContentOffset(contentOffset);
+        }
+
+        /// <summary>
+        /// Gets offset clamped to bounds.
+        /// </summary>
+        public Vector2 GetClampedOffset(Vector2 offset)
+        {
+            Vector2 clampedOffset = offset;
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            if (cx < vpx)
             {
-                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+                // if content is smaller than viewport we reset x offset to 0
+                clampedOffset.x = 0;
+            }
+            else
+            {
+                // clamp x offset to bounds
+                clampedOffset.x = Mathf.Max(clampedOffset.x, max.x);
+                clampedOffset.x = Mathf.Min(clampedOffset.x, min.x);
             }
 
-            if (CanScrollVertically)
+            if (cy < vpy)
             {
-                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
+                // if content is smaller than viewport we reset y offset to 0
+                clampedOffset.y = 0;
             }
+            else
+            {
+                // clamp y offset to bounds
+                clampedOffset.y = Mathf.Max(clampedOffset.y, max.y);
+                clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
+            }
+
+            return clampedOffset;
         }
+
+        /// <summary>
+        /// Gets elastic offset.
+        /// </summary>
+        private Vector2 GetElasticOffset(Vector2 offset, bool step = false)
+        {
+            Vector2 min, max;
+            GetBounds(out min, out max);
+            _isOutOfBoundsElastic = false;
+
+            Vector2 elasticOffset = offset;
+
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            // adjust min/max if content is smaller than viewport
+            if (cx < vpx)
+            {
+                vpx = cx;
+                min.x = 0;
+                max.x = 0;
+            }
+
+            if (cy < vpy)
+            {
+                vpy = cy;
+                min.y = 0;
+                max.y = 0;
+            }
+
+            float speedX = _velocity.x;
+            float speedY = _velocity.y;            
+
+            // if offset is out of bounds apply rubber band effect
+            if (offset.x > min.x)
+            {
+                _isOutOfBoundsElastic = true;
+                if (step)
+                {
+                    elasticOffset.x = Mathf.SmoothDamp(offset.x, min.x, ref speedX, Elasticity, Mathf.Infinity, Time.unscaledDeltaTime);
+                }
+                else
+                {
+                    elasticOffset.x = min.x + RubberDelta(-min.x + offset.x, vpx);
+                }
+            }
+
+            if (offset.x < max.x)
+            {
+                _isOutOfBoundsElastic = true;
+                if (step)
+                {
+                    elasticOffset.x = Mathf.SmoothDamp(offset.x, max.x, ref speedX, Elasticity, Mathf.Infinity, Time.unscaledDeltaTime);
+                }
+                else
+                {
+                    elasticOffset.x = max.x - RubberDelta(max.x - offset.x, vpx);
+                }
+            }
+
+            if (offset.y > min.y)
+            {
+                _isOutOfBoundsElastic = true;
+                if (step)
+                {
+                    elasticOffset.y = Mathf.SmoothDamp(offset.y, min.y, ref speedY, Elasticity, Mathf.Infinity, Time.unscaledDeltaTime);
+                }
+                else
+                {
+                    elasticOffset.y = min.y + RubberDelta(-min.y + offset.y, vpy);
+                }
+            }
+
+            if (offset.y < max.y)
+            {
+                _isOutOfBoundsElastic = true;
+                if (step)
+                {
+                    elasticOffset.y = Mathf.SmoothDamp(offset.y, max.y, ref speedY, Elasticity, Mathf.Infinity, Time.unscaledDeltaTime);
+                }
+                else
+                {
+                    elasticOffset.y = max.y - RubberDelta(max.y - offset.y, vpy);
+                }
+            }
+
+            if (step)
+            {
+                _velocity.x = Mathf.Abs(speedX) < 1 ? 0 : speedX;
+                _velocity.y = Mathf.Abs(speedY) < 1 ? 0 : speedY;
+            }
+
+            return elasticOffset;
+        }
+
 
         /// <summary>
         /// Makes it so draggable child views aren't blocking the region from being dragged. 
@@ -531,46 +672,9 @@ namespace Delight
             return (1.0f - (1.0f / ((offset * 0.55f / viewSize) + 1.0f))) * viewSize;
         }
 
-        private Vector2 GetElasticOffset(Vector2 offset)
-        {
-            Vector2 min, max;
-            GetBounds(out min, out max);
-            _isOutOfBounds = false;
-
-            Vector2 elasticOffset = offset;
-
-            // if offset is out of bounds apply rubber band effect
-            if (offset.x > min.x)
-            {
-                _isOutOfBounds = true;
-                elasticOffset.x = min.x + RubberDelta(-min.x + offset.x, ActualWidth);
-            }
-
-            if (offset.x < max.x)
-            {
-                _isOutOfBounds = true;
-                elasticOffset.x = max.x - RubberDelta(max.x - offset.x, ActualWidth);
-            }
-
-            if (offset.y > min.y)
-            {
-                _isOutOfBounds = true;
-                elasticOffset.y = min.y + RubberDelta(-min.y + offset.y, ActualHeight);
-            }
-
-            if (offset.y < max.y)
-            {
-                _isOutOfBounds = true;
-                elasticOffset.y = max.y - RubberDelta(max.y - offset.y, ActualHeight);
-            }
-
-            return elasticOffset;
-        }
-
         /// <summary>
         /// Gets current content offset as vector.
         /// </summary>
-        /// <returns></returns>
         private Vector2 GetContentOffset()
         {
             if (ContentRegion.OffsetFromParent == null)
@@ -578,6 +682,21 @@ namespace Delight
 
             return new Vector2(ContentRegion.OffsetFromParent.Left.Pixels,
                 ContentRegion.OffsetFromParent.Top.Pixels);
+        }
+
+        /// <summary>
+        /// Sets content offset as vector.
+        /// </summary>
+        private void SetContentOffset(Vector2 contentOffset)
+        {
+            if (ContentRegion.OffsetFromParent == null)
+                ContentRegion.OffsetFromParent = new ElementMargin();
+
+            if (CanScrollHorizontally)
+                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+
+            if (CanScrollVertically)
+                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
         }
 
         #endregion
