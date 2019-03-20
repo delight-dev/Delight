@@ -234,6 +234,20 @@ namespace Delight
             set { ScrollableRegion.ScrollSensitivity = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarVisibilityProperty = ScrollableRegion.HorizontalScrollbarVisibilityProperty;
+        public Delight.ScrollbarVisibilityMode HorizontalScrollbarVisibility
+        {
+            get { return ScrollableRegion.HorizontalScrollbarVisibility; }
+            set { ScrollableRegion.HorizontalScrollbarVisibility = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarVisibilityProperty = ScrollableRegion.VerticalScrollbarVisibilityProperty;
+        public Delight.ScrollbarVisibilityMode VerticalScrollbarVisibility
+        {
+            get { return ScrollableRegion.VerticalScrollbarVisibility; }
+            set { ScrollableRegion.VerticalScrollbarVisibility = value; }
+        }
+
         public readonly static DependencyProperty RenderCameraProperty = ScrollableRegion.RenderCameraProperty;
         public System.String RenderCamera
         {
@@ -627,6 +641,8 @@ namespace Delight
                     Delight.ScrollableRegion.BubbleNotifyChildLayoutChangedProperty.SetDefault(_listScrollableRegion, true);
                     Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_listScrollableRegion, false);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionVerticalScrollbar);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionLabel1);
                 }
                 return _listScrollableRegion;
@@ -650,6 +666,130 @@ namespace Delight
 #endif
                 }
                 return _listScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _listScrollableRegionHorizontalScrollbar;
+        public static Template ListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionHorizontalScrollbar == null || _listScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _listScrollableRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _listScrollableRegionHorizontalScrollbar.Name = "ListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_listScrollableRegionHorizontalScrollbar, ListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_listScrollableRegionHorizontalScrollbar, ListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _listScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _listScrollableRegionHorizontalScrollbarBar;
+        public static Template ListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionHorizontalScrollbarBar == null || _listScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _listScrollableRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _listScrollableRegionHorizontalScrollbarBar.Name = "ListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _listScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _listScrollableRegionHorizontalScrollbarHandle;
+        public static Template ListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionHorizontalScrollbarHandle == null || _listScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _listScrollableRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _listScrollableRegionHorizontalScrollbarHandle.Name = "ListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _listScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _listScrollableRegionVerticalScrollbar;
+        public static Template ListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionVerticalScrollbar == null || _listScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _listScrollableRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _listScrollableRegionVerticalScrollbar.Name = "ListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_listScrollableRegionVerticalScrollbar, ListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_listScrollableRegionVerticalScrollbar, ListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _listScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _listScrollableRegionVerticalScrollbarBar;
+        public static Template ListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionVerticalScrollbarBar == null || _listScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _listScrollableRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _listScrollableRegionVerticalScrollbarBar.Name = "ListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _listScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _listScrollableRegionVerticalScrollbarHandle;
+        public static Template ListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listScrollableRegionVerticalScrollbarHandle == null || _listScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_listScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _listScrollableRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _listScrollableRegionVerticalScrollbarHandle.Name = "ListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _listScrollableRegionVerticalScrollbarHandle;
             }
         }
 

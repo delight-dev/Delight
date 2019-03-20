@@ -9,17 +9,6 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    // TODO move to separate file
-    /// <summary>
-    /// Determines how scrolling should be restricted. 
-    /// </summary>
-    public enum ScrollBounds
-    {
-        Clamped = 0,
-        Elastic = 1,
-        None = 2
-    }
-
     /// <summary>
     /// Scrollable region. 
     /// </summary>
@@ -41,9 +30,6 @@ namespace Delight
         private Vector2 _previousContentOffset;
         private bool _isOutOfBoundsElastic;
         private bool _offsetChangedFromStartPosition;
-
-        // public ScrollbarVisibility HorizontalScrollbarVisibility;
-        // public ScrollbarVisibility VerticalScrollbarVisibility;
 
         #endregion
 
@@ -311,6 +297,17 @@ namespace Delight
         }
 
         /// <summary>
+        /// Sets view to be ignored (must be called before load). Ignored objects are disabled/ignored in the object hierarchy (but their children aren't).
+        /// </summary>
+        public override void Ignore()
+        {
+            base.Ignore();
+            ContentRegion.IgnoreObject = true;
+            HorizontalScrollbar.Ignore();
+            VerticalScrollbar.Ignore();
+        }
+
+        /// <summary>
         /// Called just before the view and its children are loaded.
         /// </summary>
         protected override void BeforeLoad()
@@ -322,7 +319,17 @@ namespace Delight
             if (MaskContent)
             {
                 Mask = GameObject.AddComponent<UnityEngine.UI.RectMask2D>();
-            }            
+            }
+
+            if (!CanScrollHorizontally || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
+            {
+                HorizontalScrollbar.Ignore();
+            }
+
+            if (!CanScrollVertically || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
+            {
+                VerticalScrollbar.Ignore();
+            }
         }
 
         /// <summary>
@@ -427,6 +434,10 @@ namespace Delight
             if (ScrollBounds == ScrollBounds.Clamped)
             {
                 contentOffset = GetClampedOffset(contentOffset);
+            }
+            else if (ScrollBounds == ScrollBounds.Elastic && IsOutOfBounds(contentOffset))
+            {
+                _isOutOfBoundsElastic = true;
             }
 
             _offsetChangedFromStartPosition = true;

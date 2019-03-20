@@ -16,6 +16,9 @@ namespace Delight
         /// </summary>
         public override void OnPropertyChanged(object source, string property)
         {
+            if (IgnoreObject)
+                return;
+
             base.OnPropertyChanged(source, property);
             switch (property)
             {
@@ -31,6 +34,8 @@ namespace Delight
         protected override void BeforeLoad()
         {
             base.BeforeLoad();
+            if (IgnoreObject)
+                return;
 
             // always add image component
             if (ImageComponent == null)

@@ -7,6 +7,6 @@
       CanSelect="t:bool" CanDeselect="t:bool" CanMultiSelect="t:bool" CanReselect="t:bool" DeselectAfterSelect="t:bool" SelectOnMouseUp="t:bool"
       m.ScrollableRegion="">
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"
-                    AutoSizeContentRegion="False"> 
+                    AutoSizeContentRegion="False">
   </ScrollableRegion>
 </List>  

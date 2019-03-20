@@ -22,11 +22,6 @@ namespace Delight
 
         #region Methods
 
-        public override void AfterInitialize()
-        {
-            base.AfterInitialize();
-        }
-
         /// <summary>
         /// Called just before the view and its children are loaded.
         /// </summary>

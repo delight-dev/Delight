@@ -28,6 +28,9 @@ namespace Delight
         /// </summary>
         public override void OnPropertyChanged(object source, string property)
         {
+            if (IgnoreObject)
+                return;
+
             base.OnPropertyChanged(source, property);
             if (property == ItemsProperty.PropertyName)
             {

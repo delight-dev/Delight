@@ -97,6 +97,9 @@ namespace Delight
         /// </summary>
         public override void OnPropertyChanged(object source, string property)
         {
+            if (IgnoreObject)
+                return;
+
             base.OnPropertyChanged(source, property);
             switch (property)
             {
@@ -126,6 +129,14 @@ namespace Delight
         /// </summary>
         public virtual void LateUpdate()
         {
+        }
+
+        /// <summary>
+        /// Sets view to be ignored (must be called before load). Ignored objects are disabled/ignored in the object hierarchy (but their children aren't).
+        /// </summary>
+        public virtual void Ignore()
+        {
+            IgnoreObject = true;
         }
 
         #endregion

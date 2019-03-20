@@ -40,7 +40,7 @@ namespace Delight.Editor.Parser
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         private static XmlFile _currentXmlFile;
-        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}]+)?[ ]*}");
+        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}\|]+)?([ ]*\|[ ]*(?<converter>[^}]+))?[ ]*}");
         private static Regex _dataInsertRegex = new Regex(@"[^\s,""']+|""(?<str>[^""]*)"":?|'(?<str>[^']*)':?");
 
         #endregion
@@ -880,7 +880,8 @@ namespace Delight.Editor.Parser
             {
                 var bindingSourceString = match.Groups["field"].Value.Trim();
                 var bindingSource = ParseBindingSource(bindingSourceString);
-                propertyBinding.ItemId = match.Groups["item"].Value.Trim();
+                bindingSource.Converter = match.Groups["converter"].Value.Trim();
+                propertyBinding.ItemId = match.Groups["item"].Value.Trim();                
                 propertyBinding.Sources.Add(bindingSource);
             }
 

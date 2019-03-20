@@ -29,6 +29,12 @@ namespace Delight
                 () => { }
             ));
 
+            // constructing Scrollbar (HorizontalScrollbar)
+            HorizontalScrollbar = new Scrollbar(this, this, "HorizontalScrollbar", HorizontalScrollbarTemplate);
+
+            // constructing Scrollbar (VerticalScrollbar)
+            VerticalScrollbar = new Scrollbar(this, this, "VerticalScrollbar", VerticalScrollbarTemplate);
+
             // constructing Label (Label1)
             Label1 = new Label(this, this, "Label1", Label1Template);
 
@@ -71,8 +77,14 @@ namespace Delight
             dependencyProperties.Add(ScrollBoundsProperty);
             dependencyProperties.Add(DebugOffsetTextProperty);
             dependencyProperties.Add(ScrollSensitivityProperty);
+            dependencyProperties.Add(HorizontalScrollbarVisibilityProperty);
+            dependencyProperties.Add(VerticalScrollbarVisibilityProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
+            dependencyProperties.Add(HorizontalScrollbarProperty);
+            dependencyProperties.Add(HorizontalScrollbarTemplateProperty);
+            dependencyProperties.Add(VerticalScrollbarProperty);
+            dependencyProperties.Add(VerticalScrollbarTemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
         }
@@ -165,6 +177,20 @@ namespace Delight
             set { ScrollSensitivityProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Delight.ScrollbarVisibilityMode> HorizontalScrollbarVisibilityProperty = new DependencyProperty<Delight.ScrollbarVisibilityMode>("HorizontalScrollbarVisibility");
+        public Delight.ScrollbarVisibilityMode HorizontalScrollbarVisibility
+        {
+            get { return HorizontalScrollbarVisibilityProperty.GetValue(this); }
+            set { HorizontalScrollbarVisibilityProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ScrollbarVisibilityMode> VerticalScrollbarVisibilityProperty = new DependencyProperty<Delight.ScrollbarVisibilityMode>("VerticalScrollbarVisibility");
+        public Delight.ScrollbarVisibilityMode VerticalScrollbarVisibility
+        {
+            get { return VerticalScrollbarVisibilityProperty.GetValue(this); }
+            set { VerticalScrollbarVisibilityProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> ContentRegionProperty = new DependencyProperty<Region>("ContentRegion");
         public Region ContentRegion
         {
@@ -177,6 +203,34 @@ namespace Delight
         {
             get { return ContentRegionTemplateProperty.GetValue(this); }
             set { ContentRegionTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Scrollbar> HorizontalScrollbarProperty = new DependencyProperty<Scrollbar>("HorizontalScrollbar");
+        public Scrollbar HorizontalScrollbar
+        {
+            get { return HorizontalScrollbarProperty.GetValue(this); }
+            set { HorizontalScrollbarProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> HorizontalScrollbarTemplateProperty = new DependencyProperty<Template>("HorizontalScrollbarTemplate");
+        public Template HorizontalScrollbarTemplate
+        {
+            get { return HorizontalScrollbarTemplateProperty.GetValue(this); }
+            set { HorizontalScrollbarTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Scrollbar> VerticalScrollbarProperty = new DependencyProperty<Scrollbar>("VerticalScrollbar");
+        public Scrollbar VerticalScrollbar
+        {
+            get { return VerticalScrollbarProperty.GetValue(this); }
+            set { VerticalScrollbarProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> VerticalScrollbarTemplateProperty = new DependencyProperty<Template>("VerticalScrollbarTemplate");
+        public Template VerticalScrollbarTemplate
+        {
+            get { return VerticalScrollbarTemplateProperty.GetValue(this); }
+            set { VerticalScrollbarTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -232,10 +286,15 @@ namespace Delight
                     Delight.ScrollableRegion.CanScrollHorizontallyProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.EnableScriptEventsProperty.SetDefault(_scrollableRegion, true);
-                    Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollableRegion, Delight.ElementAlignment.TopLeft);
+                    Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollableRegion, Delight.ElementAlignment.Center);
                     Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_scrollableRegion, true);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollableRegion, Delight.ScrollBounds.Elastic);
                     Delight.ScrollableRegion.ScrollSensitivityProperty.SetDefault(_scrollableRegion, 60f);
+                    Delight.ScrollableRegion.HorizontalScrollbarVisibilityProperty.SetDefault(_scrollableRegion, Delight.ScrollbarVisibilityMode.Auto);
+                    Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_scrollableRegion, Delight.ScrollbarVisibilityMode.Auto);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionVerticalScrollbar);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionLabel1);
                 }
                 return _scrollableRegion;
@@ -260,6 +319,134 @@ namespace Delight
                     Delight.Region.BubbleNotifyChildLayoutChangedProperty.SetDefault(_scrollableRegionContentRegion, true);
                 }
                 return _scrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _scrollableRegionHorizontalScrollbar;
+        public static Template ScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionHorizontalScrollbar == null || _scrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _scrollableRegionHorizontalScrollbar = new Template(ScrollbarTemplates.Scrollbar);
+#if UNITY_EDITOR
+                    _scrollableRegionHorizontalScrollbar.Name = "ScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementOrientation.Horizontal);
+                    Delight.Scrollbar.AlignmentProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementAlignment.Bottom);
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _scrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _scrollableRegionHorizontalScrollbarBar;
+        public static Template ScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionHorizontalScrollbarBar == null || _scrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _scrollableRegionHorizontalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
+#if UNITY_EDITOR
+                    _scrollableRegionHorizontalScrollbarBar.Name = "ScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _scrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _scrollableRegionHorizontalScrollbarHandle;
+        public static Template ScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionHorizontalScrollbarHandle == null || _scrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _scrollableRegionHorizontalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
+#if UNITY_EDITOR
+                    _scrollableRegionHorizontalScrollbarHandle.Name = "ScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _scrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _scrollableRegionVerticalScrollbar;
+        public static Template ScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionVerticalScrollbar == null || _scrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _scrollableRegionVerticalScrollbar = new Template(ScrollbarTemplates.Scrollbar);
+#if UNITY_EDITOR
+                    _scrollableRegionVerticalScrollbar.Name = "ScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementOrientation.Vertical);
+                    Delight.Scrollbar.AlignmentProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementAlignment.Right);
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarHandle);
+                }
+                return _scrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _scrollableRegionVerticalScrollbarBar;
+        public static Template ScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionVerticalScrollbarBar == null || _scrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _scrollableRegionVerticalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
+#if UNITY_EDITOR
+                    _scrollableRegionVerticalScrollbarBar.Name = "ScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _scrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _scrollableRegionVerticalScrollbarHandle;
+        public static Template ScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_scrollableRegionVerticalScrollbarHandle == null || _scrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_scrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _scrollableRegionVerticalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
+#if UNITY_EDITOR
+                    _scrollableRegionVerticalScrollbarHandle.Name = "ScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _scrollableRegionVerticalScrollbarHandle;
             }
         }
 

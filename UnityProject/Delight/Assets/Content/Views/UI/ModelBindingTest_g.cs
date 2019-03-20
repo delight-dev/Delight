@@ -502,6 +502,8 @@ namespace Delight
                     _modelBindingTestPlayerListScrollableRegion.Name = "ModelBindingTestPlayerListScrollableRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionLabel1);
                 }
                 return _modelBindingTestPlayerListScrollableRegion;
@@ -525,6 +527,130 @@ namespace Delight
 #endif
                 }
                 return _modelBindingTestPlayerListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
+        public static Template ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null || _modelBindingTestPlayerListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbar.Name = "ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _modelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
+        public static Template ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null || _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.Name = "ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null || _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.Name = "ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionVerticalScrollbar;
+        public static Template ModelBindingTestPlayerListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbar == null || _modelBindingTestPlayerListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbar.Name = "ModelBindingTestPlayerListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegionVerticalScrollbar, ModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegionVerticalScrollbar, ModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _modelBindingTestPlayerListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
+        public static Template ModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null || _modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.Name = "ModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
+        public static Template ModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null || _modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.Name = "ModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _modelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
             }
         }
 
@@ -647,6 +773,8 @@ namespace Delight
                     _modelBindingTestAchievementsListScrollableRegion.Name = "ModelBindingTestAchievementsListScrollableRegion";
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
                     Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionLabel1);
                 }
                 return _modelBindingTestAchievementsListScrollableRegion;
@@ -670,6 +798,130 @@ namespace Delight
 #endif
                 }
                 return _modelBindingTestAchievementsListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
+        public static Template ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null || _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.Name = "ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
+        public static Template ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null || _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.Name = "ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null || _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.Name = "ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
+        public static Template ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null || _modelBindingTestAchievementsListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbar.Name = "ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _modelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
+        public static Template ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null || _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.Name = "ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
+        public static Template ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null || _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.Name = "ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
             }
         }
 

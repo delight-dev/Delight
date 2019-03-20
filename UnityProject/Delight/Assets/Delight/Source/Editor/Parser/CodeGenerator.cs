@@ -831,9 +831,22 @@ namespace Delight.Editor.Parser
 
                         string sourceProperty = string.Join(".", sourcePath);
                         string targetProperty = string.Join(".", targetPath);
+                        string convertedSourceProperty = sourceProperty;
+                        string convertedTargetProperty = targetProperty;
+                        
+                        // add converter
+                        if (!String.IsNullOrEmpty(bindingSource.Converter))
+                        {
+                            convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, sourceProperty);
+                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay))
+                            {
+                                convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, targetProperty);
+                            }
+                        }
 
+                        string sourceToTarget = String.Format("{0} = {1}", targetProperty, convertedSourceProperty);
                         string targetToSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay) ?
-                            String.Format("{0} = {1}", sourceProperty, targetProperty) : "{ }";
+                            String.Format("{0} = {1}", sourceProperty, convertedTargetProperty) : "{ }";
 
                         // TODO in one-way bindings we don't need to listen to changes in target object
 
@@ -845,7 +858,7 @@ namespace Delight.Editor.Parser
                         sb.AppendLine(indent, "    new List<string> {{ {0} }},", targetProperties);
                         sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
                         sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
-                        sb.AppendLine(indent, "    () => {0} = {1},", targetProperty, sourceProperty);
+                        sb.AppendLine(indent, "    () => {0},", sourceToTarget);
                         sb.AppendLine(indent, "    () => {0}", targetToSource);
                         sb.AppendLine(indent, "));");
                     }

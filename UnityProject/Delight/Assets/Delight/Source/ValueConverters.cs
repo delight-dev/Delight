@@ -9,10 +9,11 @@ namespace Delight
     /// <summary>
     /// Helper class for value converters.
     /// </summary>
-    public class ValueConverters
+    public partial class ValueConverters
     {
         #region Fields
 
+        public static ScrollbarVisibilityConverter ScrollbarVisibilityConverter = new ScrollbarVisibilityConverter();
         public static Dictionary<string, ValueConverter> Converters;
                    
         #endregion
@@ -46,6 +47,7 @@ namespace Delight
 
         static ValueConverters()
         {
+            // initialize default converters for types
             Converters = new Dictionary<string, ValueConverter>();
             Converters.Add("string", new StringValueConverter());
             Converters.Add("System.String", new StringValueConverter());

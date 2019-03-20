@@ -5,12 +5,17 @@
                   CanScrollHorizontally="t:bool = True"
                   CanScrollVertically="t:bool = True"
                   EnableScriptEvents="True"
-                  ContentAlignment="t:ElementAlignment = TopLeft"
+                  ContentAlignment="t:ElementAlignment = Center"
                   AutoSizeContentRegion="t:bool = True"
-                  ScrollBounds="t:ScrollBounds"
+                  ScrollBounds="t:ScrollBounds = Elastic"
                   DebugOffsetText="t:string"
-                  ScrollSensitivity="t:float = 60">
+                  ScrollSensitivity="t:float = 60"
+                  HorizontalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto"
+                  VerticalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto">
   <Region Id="ContentRegion" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True" Alignment="{ContentAlignment}">
   </Region>
+  <Scrollbar Id="HorizontalScrollbar" Orientation="Horizontal" Alignment="Bottom" />
+  <Scrollbar Id="VerticalScrollbar" Orientation="Vertical" Alignment="Right" />
+
   <Label Text="{DebugOffsetText}" />
-</ScrollableRegion> 
+</ScrollableRegion>

@@ -6,22 +6,19 @@
     <Region Grid.Cell="1,1" Id="ContentRegion" BackgroundColor="#fced2d">
       <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
       <Image Color="#3f3f3d" Size="1,100%" />
-      <Image Color="#3f3f3d" Size="100%,1" />
-      <Button Click="Test1" Text="Test" />
+      <Image Color="#3f3f3d" Size="100%,1" />      
     </Region>
 
     <ScrollableRegion Grid.Cell="1,1" Id="TestRegion">
       <Region Width="1000" Height="1000" BackgroundColor="White">
-        <Region Width="50%" Height="50%" BackgroundColor="Blue" Alignment="TopLeft" />
-        <Region Width="50%" Height="50%" BackgroundColor="Red" Alignment="TopRight" />
-        <Region Width="50%" Height="50%" BackgroundColor="Green" Alignment="BottomLeft" />
-        <Region Width="50%" Height="50%" BackgroundColor="Yellow" Alignment="BottomRight" />
-      </Region>     
+        <Button Click="Test1" Text="Test" />
+      </Region>
     </ScrollableRegion>
 
     <!-- Left Panel - Content Explorer -->
     <Region Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#b3b3b3">
-      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="50%">
+      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="50%"
+            ScrollableRegionContentAlignment="Top">
         <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima SDF" Width="240" EnableWordWrapping="False" Margin="25,0,0,0" OverflowMode="Ellipsis" ExtraPadding="True" FontColor="#242424" /> 
       </List>
     </Region> 

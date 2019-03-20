@@ -17,6 +17,9 @@ namespace Delight
         /// </summary>
         public override void OnPropertyChanged(object source, string property)
         {
+            if (IgnoreObject)
+                return;
+
             base.OnPropertyChanged(source, property);
             switch (property)
             {
@@ -34,6 +37,9 @@ namespace Delight
         /// </summary>
         protected override void BeforeLoad()
         {
+            if (IgnoreObject)
+                return;
+
             base.BeforeLoad();
             ImageChanged();
         }
@@ -43,6 +49,9 @@ namespace Delight
         /// </summary>
         protected virtual void SpriteChanged()
         {
+            if (IgnoreObject)
+                return;
+
             if (GameObject == null)
                 return;
 
@@ -74,6 +83,9 @@ namespace Delight
         /// </summary>
         public virtual void ImageChanged()
         {
+            if (IgnoreObject)
+                return;
+
             if (ImageComponent == null)
             {
                 // add image component if background color is defined

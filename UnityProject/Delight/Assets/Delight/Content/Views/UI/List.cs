@@ -44,13 +44,11 @@ namespace Delight
             // if the list isn't scrollable, disable the scrollable region
             if (!IsScrollable)
             {
-                ScrollableRegion.IgnoreObject = true;
-                ScrollableRegion.ContentRegion.IgnoreObject = true;
+                ScrollableRegion.Ignore();
             }
 
-            var scrollsHorizontally = OverflowMode == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
-            ScrollableRegion.CanScrollHorizontally = scrollsHorizontally;
-            ScrollableRegion.CanScrollVertically = !scrollsHorizontally;
+            ScrollableRegion.CanScrollHorizontally = ScrollsHorizontally;
+            ScrollableRegion.CanScrollVertically = !ScrollsHorizontally;
         }
 
         /// <summary>
@@ -257,6 +255,12 @@ namespace Delight
                     ScrollableRegion.UpdateLayout(false);
                     ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
                 }
+
+                if (ScrollableRegionContentAlignmentProperty.IsUndefined(ScrollableRegion))
+                {
+                    // adjust content alignment based on orientation
+                    ScrollableRegionContentAlignment = ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top;
+                }
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
@@ -375,6 +379,21 @@ namespace Delight
         //        }
         //    }
         //}
+
+        #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Returns boolean indicating if list scrolls horizontally. 
+        /// </summary>
+        public bool ScrollsHorizontally
+        {
+            get
+            {
+                return OverflowMode == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
+            }
+        }
 
         #endregion
     }
