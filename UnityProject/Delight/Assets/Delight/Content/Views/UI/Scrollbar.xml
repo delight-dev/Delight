@@ -1,6 +1,9 @@
 <Scrollbar xmlns="Delight" BasedOn="UIView" m.Bar="" m.Handle="Handle" 
-           Length="t:ElementSize = 100%" Breadth="t:ElementSize = 50"
-           Width="20" Height="100%" Orientation="t:ElementOrientation">
-  <Image Id="Bar" Color="Grey" IsVisible="False" />
-  <Image Id="Handle" Color="Brown" IsVisible="False" />
+           Length="t:ElementSize = 100%" Breadth="t:ElementSize = 10"
+           Orientation="t:ElementOrientation"
+           ScrollPosition="t:float"
+           ViewportRatio="t:float = 0.1">
+  <Image Id="Bar" Color="Grey">
+    <Image Id="Handle" Color="Brown" />
+  </Image>
 </Scrollbar> 

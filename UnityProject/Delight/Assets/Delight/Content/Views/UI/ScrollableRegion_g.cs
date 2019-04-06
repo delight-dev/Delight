@@ -338,7 +338,6 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbar.Name = "ScrollableRegionHorizontalScrollbar";
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementOrientation.Horizontal);
-                    Delight.Scrollbar.AlignmentProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementAlignment.Bottom);
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarHandle);
                 }
@@ -402,7 +401,6 @@ namespace Delight
                     _scrollableRegionVerticalScrollbar.Name = "ScrollableRegionVerticalScrollbar";
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementOrientation.Vertical);
-                    Delight.Scrollbar.AlignmentProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementAlignment.Right);
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarHandle);
                 }

@@ -48,7 +48,7 @@ namespace Delight
         /// <summary>
         /// Sets dependency property value for specified instance.
         /// </summary>
-        public virtual void SetValue(DependencyObject key, T value)
+        public virtual void SetValue(DependencyObject key, T value, bool notifyPropertyChangedListeners = true)
         {
             // get old value
             T oldValue;
@@ -106,12 +106,15 @@ namespace Delight
             }
 
             // trigger property-changed event
-            key.OnPropertyChanged(PropertyName); // TODO see if we can use CallerMemberName here so we don't have to store property name for each property (although again its just one per type so no huge deal)
-
-            // trigger asset change if asset
-            if (IsAssetType)
+            if (notifyPropertyChangedListeners)
             {
-                OnAssetChanged(key);
+                key.OnPropertyChanged(PropertyName); // TODO see if we can use CallerMemberName here so we don't have to store property name for each property (although again its just one per type so no huge deal)
+
+                // trigger asset change if asset
+                if (IsAssetType)
+                {
+                    OnAssetChanged(key);
+                }
             }
         }
 

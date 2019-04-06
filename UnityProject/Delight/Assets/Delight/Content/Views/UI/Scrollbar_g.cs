@@ -18,9 +18,7 @@ namespace Delight
         {
             // constructing Image (Bar)
             Bar = new Image(this, this, "Bar", BarTemplate);
-
-            // constructing Image (Handle)
-            Handle = new Image(this, this, "Handle", HandleTemplate);
+            Handle = new Image(this, Bar.Content, "Handle", HandleTemplate);
             this.AfterInitializeInternal();
         }
 
@@ -36,6 +34,8 @@ namespace Delight
             dependencyProperties.Add(LengthProperty);
             dependencyProperties.Add(BreadthProperty);
             dependencyProperties.Add(OrientationProperty);
+            dependencyProperties.Add(ScrollPositionProperty);
+            dependencyProperties.Add(ViewportRatioProperty);
             dependencyProperties.Add(BarProperty);
             dependencyProperties.Add(BarTemplateProperty);
             dependencyProperties.Add(HandleProperty);
@@ -65,6 +65,20 @@ namespace Delight
         {
             get { return OrientationProperty.GetValue(this); }
             set { OrientationProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Single> ScrollPositionProperty = new DependencyProperty<System.Single>("ScrollPosition");
+        public System.Single ScrollPosition
+        {
+            get { return ScrollPositionProperty.GetValue(this); }
+            set { ScrollPositionProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Single> ViewportRatioProperty = new DependencyProperty<System.Single>("ViewportRatio");
+        public System.Single ViewportRatio
+        {
+            get { return ViewportRatioProperty.GetValue(this); }
+            set { ViewportRatioProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> BarProperty = new DependencyProperty<Image>("Bar");
@@ -646,9 +660,8 @@ namespace Delight
                     _scrollbar.Name = "Scrollbar";
 #endif
                     Delight.Scrollbar.LengthProperty.SetDefault(_scrollbar, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Scrollbar.BreadthProperty.SetDefault(_scrollbar, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Scrollbar.WidthProperty.SetDefault(_scrollbar, new ElementSize(20f, ElementSizeUnit.Pixels));
-                    Delight.Scrollbar.HeightProperty.SetDefault(_scrollbar, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Scrollbar.BreadthProperty.SetDefault(_scrollbar, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Scrollbar.ViewportRatioProperty.SetDefault(_scrollbar, 0.1f);
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollbar, ScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollbar, ScrollbarHandle);
                 }
@@ -672,7 +685,6 @@ namespace Delight
                     _scrollbarBar.Name = "ScrollbarBar";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarBar, new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f));
-                    Delight.Image.IsVisibleProperty.SetDefault(_scrollbarBar, false);
                 }
                 return _scrollbarBar;
             }
@@ -694,7 +706,6 @@ namespace Delight
                     _scrollbarHandle.Name = "ScrollbarHandle";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarHandle, new UnityEngine.Color(0.6470588f, 0.1647059f, 0.1647059f, 1f));
-                    Delight.Image.IsVisibleProperty.SetDefault(_scrollbarHandle, false);
                 }
                 return _scrollbarHandle;
             }

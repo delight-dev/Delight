@@ -98,6 +98,7 @@ namespace Delight
                 // yes. adjust content region to bounds
                 _actualWidth = ActualWidth;
                 _actualHeight = ActualHeight;
+                bool scrollbarsNeedUpdate = true;
 
                 if (_offsetChangedFromStartPosition)
                 {
@@ -111,8 +112,14 @@ namespace Delight
                         if (!clampedContentOffset.Equals(contentOffset))
                         {
                             SetContentOffset(clampedContentOffset);
+                            scrollbarsNeedUpdate = false;
                         }
                     }
+                }
+
+                if (scrollbarsNeedUpdate)
+                {
+                    UpdateScrollbars();
                 }
             }
 
@@ -704,10 +711,66 @@ namespace Delight
                 ContentRegion.OffsetFromParent = new ElementMargin();
 
             if (CanScrollHorizontally)
+            {
                 ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+            }
 
             if (CanScrollVertically)
+            {
                 ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
+            }
+
+            UpdateScrollbars();
+        }
+
+        /// <summary>
+        /// Updates scrollbars based on content offset.
+        /// </summary>
+        public void UpdateScrollbars()
+        {
+            Vector2 offset = GetContentOffset();
+            Vector2 clampedOffset = offset;
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            if (cx < vpx)
+            {
+                // if content is smaller than viewport we reset x offset to 0
+                clampedOffset.x = 0;
+            }
+            else
+            {
+                // clamp x offset to bounds
+                clampedOffset.x = Mathf.Max(clampedOffset.x, max.x);
+                clampedOffset.x = Mathf.Min(clampedOffset.x, min.x);
+            }
+
+            if (cy < vpy)
+            {
+                // if content is smaller than viewport we reset y offset to 0
+                clampedOffset.y = 0;
+            }
+            else
+            {
+                // clamp y offset to bounds
+                clampedOffset.y = Mathf.Max(clampedOffset.y, max.y);
+                clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
+            }
+            
+            if (CanScrollHorizontally && !HorizontalScrollbar.IgnoreObject)
+            {
+                HorizontalScrollbar.SetScrollPosition((clampedOffset.x - min.x) / (max.x - min.x), vpx / cx);
+            }
+
+            if (CanScrollVertically && !VerticalScrollbar.IgnoreObject)
+            {
+                VerticalScrollbar.SetScrollPosition((clampedOffset.y - min.y) / (max.y - min.y), vpy / cy);
+            }
         }
 
         #endregion

@@ -19,14 +19,23 @@ namespace Delight
             // constructing Grid (Grid1)
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             Cell00 = new Region(this, Grid1.Content, "Cell00", Cell00Template);
+            Grid1.Cell.SetValue(Cell00, new CellIndex(0, 0));
             Cell01 = new Region(this, Grid1.Content, "Cell01", Cell01Template);
+            Grid1.Cell.SetValue(Cell01, new CellIndex(0, 1));
             Cell02 = new Region(this, Grid1.Content, "Cell02", Cell02Template);
+            Grid1.Cell.SetValue(Cell02, new CellIndex(0, 2));
             Cell10 = new Region(this, Grid1.Content, "Cell10", Cell10Template);
+            Grid1.Cell.SetValue(Cell10, new CellIndex(1, 0));
             Cell11 = new Region(this, Grid1.Content, "Cell11", Cell11Template);
+            Grid1.Cell.SetValue(Cell11, new CellIndex(1, 1));
             Cell12 = new Region(this, Grid1.Content, "Cell12", Cell12Template);
+            Grid1.Cell.SetValue(Cell12, new CellIndex(1, 2));
             Cell20 = new Region(this, Grid1.Content, "Cell20", Cell20Template);
+            Grid1.Cell.SetValue(Cell20, new CellIndex(2, 0));
             Cell21 = new Region(this, Grid1.Content, "Cell21", Cell21Template);
+            Grid1.Cell.SetValue(Cell21, new CellIndex(2, 1));
             Cell22 = new Region(this, Grid1.Content, "Cell22", Cell22Template);
+            Grid1.Cell.SetValue(Cell22, new CellIndex(2, 2));
             this.AfterInitializeInternal();
         }
 
