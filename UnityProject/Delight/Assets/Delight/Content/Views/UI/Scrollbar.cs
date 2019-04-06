@@ -74,8 +74,12 @@ namespace Delight
         {
             ScrollPositionProperty.SetValue(this, position, false);
 
+            position = Mathf.Clamp(position, 0, 1);
             if (viewportRatio.HasValue)
-                ViewportRatioProperty.SetValue(this, viewportRatio.Value, false);
+            {
+                float ratio = Mathf.Clamp(viewportRatio.Value, 0, 1);
+                ViewportRatioProperty.SetValue(this, ratio, false);
+            }
 
             if (Handle.OffsetFromParent == null)
                 Handle.OffsetFromParent = new ElementMargin();
