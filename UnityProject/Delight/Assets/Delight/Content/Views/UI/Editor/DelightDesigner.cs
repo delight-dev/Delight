@@ -46,7 +46,7 @@ namespace Delight
         {
             var label = this.Find<Label>();
 
-            Debug.Log("Label font = " + label.Font.UnityObject);
+            //Debug.Log("Label font = " + label.Font.UnityObject);
 
             //Button1.SetState("Highlighted");            
         }

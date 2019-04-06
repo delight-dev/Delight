@@ -153,7 +153,40 @@ namespace Delight
             }
 
             return (offset.x > min.x) || (offset.x < max.x) || (offset.y > min.y) || (offset.y < max.y);
-        }    
+        }
+
+        /// <summary>
+        /// Resets velocity if out of bounds.
+        /// </summary>
+        private void ResetVelocityIfOutOfBounds(Vector2 offset)
+        {
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            // adjust min/max if content is smaller than viewport
+            if (cx < vpx)
+            {
+                min.x = 0;
+                max.x = 0;
+            }
+
+            if (cy < vpy)
+            {
+                min.y = 0;
+                max.y = 0;
+            }
+
+            if ((offset.x > min.x) || (offset.x < max.x))
+                _velocity.x = 0;
+
+            if ((offset.y > min.y) || (offset.y < max.y))
+                _velocity.y = 0;
+        }
 
         /// <summary>
         /// Get bounds. 
@@ -336,7 +369,7 @@ namespace Delight
             if (!CanScrollVertically || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
                 VerticalScrollbar.Ignore();
-            }
+            }            
         }
 
         /// <summary>
@@ -350,6 +383,19 @@ namespace Delight
             if (AutoSizeContentRegion)
             {
                 AdjustContentRegionSizeToChildren();
+            }
+
+            // if both scrollbars are visible, add margin
+            if (!HorizontalScrollbar.IgnoreObject && !VerticalScrollbar.IgnoreObject)
+            {
+                if (HorizontalScrollbar.Margin == null)
+                    HorizontalScrollbar.Margin = new ElementMargin();
+
+                if (VerticalScrollbar.Margin == null)
+                    VerticalScrollbar.Margin = new ElementMargin();
+
+                HorizontalScrollbar.Margin.Right = VerticalScrollbar.Breadth;
+                VerticalScrollbar.Margin.Bottom = HorizontalScrollbar.Breadth;
             }
         }
 
@@ -404,6 +450,13 @@ namespace Delight
         /// </summary>
         public void OnEndDrag(DependencyObject sender, object eventArgs)
         {
+            var contentOffset = GetContentOffset();
+            if (ScrollBounds == ScrollBounds.Elastic)
+            {
+                // set velocity to zero when releasing drag out of elastic bounds to avoid slingshot effect
+                ResetVelocityIfOutOfBounds(contentOffset);
+            }
+
             _isDragging = false;
         }
 
