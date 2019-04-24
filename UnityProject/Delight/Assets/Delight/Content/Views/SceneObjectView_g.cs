@@ -234,6 +234,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _sceneObjectView.Name = "SceneObjectView";
 #endif
+                    Delight.SceneObjectView.IsActiveProperty.SetDefault(_sceneObjectView, true);
                 }
                 return _sceneObjectView;
             }

@@ -636,10 +636,11 @@ namespace Delight.Editor.Parser
                 propertyDeclaration.LineNumber = element.GetLineNumber();
 
                 int commaIndex = attributeValue.IndexOf(",");
-                int assignmentIndex = attributeValue.IndexOf("=");
+                int assignmentIndex = attributeValue.IndexOf("=");               
+                bool isAssemblyQualifiedType = commaIndex > 0 && (assignmentIndex < 0 || (assignmentIndex > commaIndex));
 
                 // parse property value if any
-                if (assignmentIndex > 0 && commaIndex <= 0)
+                if (assignmentIndex > 0 && !isAssemblyQualifiedType)
                 {
                     var propertyAssignment = new PropertyAssignment();
                     propertyExpressions.Add(propertyAssignment);
@@ -684,7 +685,7 @@ namespace Delight.Editor.Parser
                     return propertyExpressions;
                 }
 
-                if (commaIndex > 0)
+                if (isAssemblyQualifiedType)
                 {
                     // assembly qualified type is specified
                     propertyType = Type.GetType(propertyTypeName);

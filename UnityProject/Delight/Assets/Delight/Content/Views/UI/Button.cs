@@ -31,6 +31,66 @@ namespace Delight
 
         #region Methods
 
+        public override void AfterInitialize()
+        {
+            base.AfterInitialize();
+
+            // listens to label 
+            Label.PropertyChanged += Label_PropertyChanged;
+        }
+
+        private void Label_PropertyChanged(object source, string propertyName)
+        {
+            if (propertyName == nameof(Label.Text))
+            {
+                TextChanged();
+            }
+        }
+
+        public virtual void TextChanged()
+        {
+            // adjust button size to text
+            if (AutoSize == AutoSize.Width || AutoSize == AutoSize.Default)
+            {
+                Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
+            }
+            else if (AutoSize == AutoSize.Height)
+            {
+                Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
+            }
+            else if (AutoSize == AutoSize.WidthAndHeight)
+            {
+                Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
+                Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
+            }
+        }
+
+        protected override void BeforeLoad()
+        {
+            if (IgnoreObject)
+                return;
+            base.BeforeLoad();
+
+            if (AutoSize == AutoSize.None && WidthProperty.IsUndefined(this))
+            {
+                // if size isn't specified and the button doesn't adjust to label size, then set default width
+                WidthProperty.SetValue(this, DefaultWidth, false);
+            }
+        }
+
+        protected override void AfterLoad()
+        {
+            if (IgnoreObject)
+                return;
+            base.AfterLoad();
+
+            if (AutoSize != AutoSize.None)
+            {
+                // adjust size initially to text
+                TextChanged();
+            }
+        }
+
         /// <summary>
         /// Called when mouse is clicked.
         /// </summary>

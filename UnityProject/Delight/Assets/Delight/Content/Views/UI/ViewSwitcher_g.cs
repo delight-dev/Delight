@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class ViewSwitcher : SceneObjectView
+    public partial class ViewSwitcher : UIView
     {
         #region Constructors
 
@@ -27,11 +27,36 @@ namespace Delight
         {
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ViewSwitcherTemplates.Default, dependencyProperties);
+
+            dependencyProperties.Add(SwitchModeProperty);
+            dependencyProperties.Add(StartViewProperty);
+            dependencyProperties.Add(SwitchToDefaultProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.SwitchMode> SwitchModeProperty = new DependencyProperty<Delight.SwitchMode>("SwitchMode");
+        public Delight.SwitchMode SwitchMode
+        {
+            get { return SwitchModeProperty.GetValue(this); }
+            set { SwitchModeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.String> StartViewProperty = new DependencyProperty<System.String>("StartView");
+        public System.String StartView
+        {
+            get { return StartViewProperty.GetValue(this); }
+            set { StartViewProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> SwitchToDefaultProperty = new DependencyProperty<System.Boolean>("SwitchToDefault");
+        public System.Boolean SwitchToDefault
+        {
+            get { return SwitchToDefaultProperty.GetValue(this); }
+            set { SwitchToDefaultProperty.SetValue(this, value); }
+        }
 
         #endregion
     }
@@ -61,10 +86,12 @@ namespace Delight
                 if (_viewSwitcher == null)
 #endif
                 {
-                    _viewSwitcher = new Template(SceneObjectViewTemplates.SceneObjectView);
+                    _viewSwitcher = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _viewSwitcher.Name = "ViewSwitcher";
 #endif
+                    Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcher, Delight.SwitchMode.Load);
+                    Delight.ViewSwitcher.SwitchToDefaultProperty.SetDefault(_viewSwitcher, true);
                 }
                 return _viewSwitcher;
             }

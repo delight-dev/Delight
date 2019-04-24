@@ -34,19 +34,6 @@ namespace Delight
 
             // constructing Scrollbar (VerticalScrollbar)
             VerticalScrollbar = new Scrollbar(this, this, "VerticalScrollbar", VerticalScrollbarTemplate);
-
-            // constructing Label (Label1)
-            Label1 = new Label(this, this, "Label1", Label1Template);
-
-            // binding <Label Text="{DebugOffsetText}">
-            Bindings.Add(new Binding(
-                new List<string> { "DebugOffsetText" },
-                new List<string> { "Label1", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label1 },
-                () => Label1.Text = DebugOffsetText,
-                () => { }
-            ));
             Drag += ResolveActionHandler(this, "OnDrag");
             BeginDrag += ResolveActionHandler(this, "OnBeginDrag");
             InitializePotentialDrag += ResolveActionHandler(this, "OnInitializePotentialDrag");
@@ -85,8 +72,6 @@ namespace Delight
             dependencyProperties.Add(HorizontalScrollbarTemplateProperty);
             dependencyProperties.Add(VerticalScrollbarProperty);
             dependencyProperties.Add(VerticalScrollbarTemplateProperty);
-            dependencyProperties.Add(Label1Property);
-            dependencyProperties.Add(Label1TemplateProperty);
         }
 
         #endregion
@@ -233,20 +218,6 @@ namespace Delight
             set { VerticalScrollbarTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
-        public Label Label1
-        {
-            get { return Label1Property.GetValue(this); }
-            set { Label1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
-        public Template Label1Template
-        {
-            get { return Label1TemplateProperty.GetValue(this); }
-            set { Label1TemplateProperty.SetValue(this, value); }
-        }
-
         #endregion
     }
 
@@ -295,7 +266,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionLabel1);
                 }
                 return _scrollableRegion;
             }
@@ -445,26 +415,6 @@ namespace Delight
 #endif
                 }
                 return _scrollableRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _scrollableRegionLabel1;
-        public static Template ScrollableRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollableRegionLabel1 == null || _scrollableRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_scrollableRegionLabel1 == null)
-#endif
-                {
-                    _scrollableRegionLabel1 = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _scrollableRegionLabel1.Name = "ScrollableRegionLabel1";
-#endif
-                }
-                return _scrollableRegionLabel1;
             }
         }
 

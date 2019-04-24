@@ -1,0 +1,2 @@
+<ViewSwitcher xmlns="Delight" BasedOn="UIView" SwitchMode="t:SwitchMode = Load" StartView="t:string" SwitchToDefault="t:bool = True">
+</ViewSwitcher>

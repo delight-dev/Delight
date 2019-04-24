@@ -643,7 +643,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_listScrollableRegion, ListScrollableRegionLabel1);
                 }
                 return _listScrollableRegion;
             }
@@ -790,26 +789,6 @@ namespace Delight
 #endif
                 }
                 return _listScrollableRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _listScrollableRegionLabel1;
-        public static Template ListScrollableRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_listScrollableRegionLabel1 == null || _listScrollableRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_listScrollableRegionLabel1 == null)
-#endif
-                {
-                    _listScrollableRegionLabel1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _listScrollableRegionLabel1.Name = "ListScrollableRegionLabel1";
-#endif
-                }
-                return _listScrollableRegionLabel1;
             }
         }
 

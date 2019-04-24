@@ -29,6 +29,7 @@ namespace Delight
             DependencyProperties.Add(LabelTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(TextMeshProUGUIProperty);
+            dependencyProperties.Add(AutoSizeProperty);
             dependencyProperties.Add(AutoSizeTextContainerProperty);
             dependencyProperties.Add(MaskOffsetProperty);
             dependencyProperties.Add(TextProperty);
@@ -107,6 +108,13 @@ namespace Delight
         {
             get { return TextMeshProUGUIProperty.GetValue(this); }
             set { TextMeshProUGUIProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");
+        public Delight.AutoSize AutoSize
+        {
+            get { return AutoSizeProperty.GetValue(this); }
+            set { AutoSizeProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> AutoSizeTextContainerProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("AutoSizeTextContainer", x => x.TextMeshProUGUI, x => x.autoSizeTextContainer, (x, y) => x.autoSizeTextContainer = y);

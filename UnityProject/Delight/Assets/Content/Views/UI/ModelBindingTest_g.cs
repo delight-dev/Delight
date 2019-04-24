@@ -504,7 +504,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestPlayerListScrollableRegion, ModelBindingTestPlayerListScrollableRegionLabel1);
                 }
                 return _modelBindingTestPlayerListScrollableRegion;
             }
@@ -654,26 +653,6 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestPlayerListScrollableRegionLabel1;
-        public static Template ModelBindingTestPlayerListScrollableRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestPlayerListScrollableRegionLabel1 == null || _modelBindingTestPlayerListScrollableRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestPlayerListScrollableRegionLabel1 == null)
-#endif
-                {
-                    _modelBindingTestPlayerListScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _modelBindingTestPlayerListScrollableRegionLabel1.Name = "ModelBindingTestPlayerListScrollableRegionLabel1";
-#endif
-                }
-                return _modelBindingTestPlayerListScrollableRegionLabel1;
-            }
-        }
-
         private static Template _modelBindingTestPlayerListContent;
         public static Template ModelBindingTestPlayerListContent
         {
@@ -775,7 +754,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_modelBindingTestAchievementsListScrollableRegion, ModelBindingTestAchievementsListScrollableRegionLabel1);
                 }
                 return _modelBindingTestAchievementsListScrollableRegion;
             }
@@ -922,26 +900,6 @@ namespace Delight
 #endif
                 }
                 return _modelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _modelBindingTestAchievementsListScrollableRegionLabel1;
-        public static Template ModelBindingTestAchievementsListScrollableRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_modelBindingTestAchievementsListScrollableRegionLabel1 == null || _modelBindingTestAchievementsListScrollableRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_modelBindingTestAchievementsListScrollableRegionLabel1 == null)
-#endif
-                {
-                    _modelBindingTestAchievementsListScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _modelBindingTestAchievementsListScrollableRegionLabel1.Name = "ModelBindingTestAchievementsListScrollableRegionLabel1";
-#endif
-                }
-                return _modelBindingTestAchievementsListScrollableRegionLabel1;
             }
         }
 

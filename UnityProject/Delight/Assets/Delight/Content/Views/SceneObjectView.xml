@@ -1,5 +1,5 @@
 <SceneObjectView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool" IgnoreObject="t:bool" 
-           IsActive="t:bool"
+           IsActive="t:bool = True"
            BeginDrag="t:Action"
            Cancel="t:Action"
            Click="t:Action"

@@ -498,7 +498,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionLabel1);
                 }
                 return _delightDesignerTestRegion;
             }
@@ -648,26 +647,6 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerTestRegionLabel1;
-        public static Template DelightDesignerTestRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionLabel1 == null || _delightDesignerTestRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionLabel1 == null)
-#endif
-                {
-                    _delightDesignerTestRegionLabel1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionLabel1.Name = "DelightDesignerTestRegionLabel1";
-#endif
-                }
-                return _delightDesignerTestRegionLabel1;
-            }
-        }
-
         private static Template _delightDesignerRegion1;
         public static Template DelightDesignerRegion1
         {
@@ -800,7 +779,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionVerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionLabel1);
                 }
                 return _delightDesignerList1ScrollableRegion;
             }
@@ -947,26 +925,6 @@ namespace Delight
 #endif
                 }
                 return _delightDesignerList1ScrollableRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _delightDesignerList1ScrollableRegionLabel1;
-        public static Template DelightDesignerList1ScrollableRegionLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerList1ScrollableRegionLabel1 == null || _delightDesignerList1ScrollableRegionLabel1.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerList1ScrollableRegionLabel1 == null)
-#endif
-                {
-                    _delightDesignerList1ScrollableRegionLabel1 = new Template(ListTemplates.ListScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _delightDesignerList1ScrollableRegionLabel1.Name = "DelightDesignerList1ScrollableRegionLabel1";
-#endif
-                }
-                return _delightDesignerList1ScrollableRegionLabel1;
             }
         }
 

@@ -16,6 +16,4 @@
   </Region>
   <Scrollbar Id="HorizontalScrollbar" Orientation="Horizontal" />
   <Scrollbar Id="VerticalScrollbar" Orientation="Vertical" />
-
-  <Label Text="{DebugOffsetText}" />
 </ScrollableRegion>

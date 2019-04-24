@@ -1115,7 +1115,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion1, ScrollExampleScrollableRegion1ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion1, ScrollExampleScrollableRegion1HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion1, ScrollExampleScrollableRegion1VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion1, ScrollExampleScrollableRegion1Label1);
                 }
                 return _scrollExampleScrollableRegion1;
             }
@@ -1265,26 +1264,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion1Label1;
-        public static Template ScrollExampleScrollableRegion1Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion1Label1 == null || _scrollExampleScrollableRegion1Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion1Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion1Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion1Label1.Name = "ScrollExampleScrollableRegion1Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion1Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion1;
         public static Template ScrollExampleRegion1
         {
@@ -1425,7 +1404,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion2, ScrollExampleScrollableRegion2ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion2, ScrollExampleScrollableRegion2HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion2, ScrollExampleScrollableRegion2VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion2, ScrollExampleScrollableRegion2Label1);
                 }
                 return _scrollExampleScrollableRegion2;
             }
@@ -1575,26 +1553,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion2Label1;
-        public static Template ScrollExampleScrollableRegion2Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion2Label1 == null || _scrollExampleScrollableRegion2Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion2Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion2Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion2Label1.Name = "ScrollExampleScrollableRegion2Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion2Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion6;
         public static Template ScrollExampleRegion6
         {
@@ -1735,7 +1693,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion3, ScrollExampleScrollableRegion3ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion3, ScrollExampleScrollableRegion3HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion3, ScrollExampleScrollableRegion3VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion3, ScrollExampleScrollableRegion3Label1);
                 }
                 return _scrollExampleScrollableRegion3;
             }
@@ -1885,26 +1842,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion3Label1;
-        public static Template ScrollExampleScrollableRegion3Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion3Label1 == null || _scrollExampleScrollableRegion3Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion3Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion3Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion3Label1.Name = "ScrollExampleScrollableRegion3Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion3Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion11;
         public static Template ScrollExampleRegion11
         {
@@ -2045,7 +1982,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion4, ScrollExampleScrollableRegion4Label1);
                 }
                 return _scrollExampleScrollableRegion4;
             }
@@ -2195,26 +2131,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion4Label1;
-        public static Template ScrollExampleScrollableRegion4Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion4Label1 == null || _scrollExampleScrollableRegion4Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion4Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion4Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion4Label1.Name = "ScrollExampleScrollableRegion4Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion4Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion16;
         public static Template ScrollExampleRegion16
         {
@@ -2355,7 +2271,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion5, ScrollExampleScrollableRegion5Label1);
                 }
                 return _scrollExampleScrollableRegion5;
             }
@@ -2505,26 +2420,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion5Label1;
-        public static Template ScrollExampleScrollableRegion5Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion5Label1 == null || _scrollExampleScrollableRegion5Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion5Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion5Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion5Label1.Name = "ScrollExampleScrollableRegion5Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion5Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion21;
         public static Template ScrollExampleRegion21
         {
@@ -2665,7 +2560,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion6, ScrollExampleScrollableRegion6Label1);
                 }
                 return _scrollExampleScrollableRegion6;
             }
@@ -2815,26 +2709,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion6Label1;
-        public static Template ScrollExampleScrollableRegion6Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion6Label1 == null || _scrollExampleScrollableRegion6Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion6Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion6Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion6Label1.Name = "ScrollExampleScrollableRegion6Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion6Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion26;
         public static Template ScrollExampleRegion26
         {
@@ -2975,7 +2849,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion7, ScrollExampleScrollableRegion7Label1);
                 }
                 return _scrollExampleScrollableRegion7;
             }
@@ -3125,26 +2998,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion7Label1;
-        public static Template ScrollExampleScrollableRegion7Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion7Label1 == null || _scrollExampleScrollableRegion7Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion7Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion7Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion7Label1.Name = "ScrollExampleScrollableRegion7Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion7Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion31;
         public static Template ScrollExampleRegion31
         {
@@ -3285,7 +3138,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion8, ScrollExampleScrollableRegion8Label1);
                 }
                 return _scrollExampleScrollableRegion8;
             }
@@ -3435,26 +3287,6 @@ namespace Delight
             }
         }
 
-        private static Template _scrollExampleScrollableRegion8Label1;
-        public static Template ScrollExampleScrollableRegion8Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion8Label1 == null || _scrollExampleScrollableRegion8Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion8Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion8Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion8Label1.Name = "ScrollExampleScrollableRegion8Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion8Label1;
-            }
-        }
-
         private static Template _scrollExampleRegion36;
         public static Template ScrollExampleRegion36
         {
@@ -3595,7 +3427,6 @@ namespace Delight
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9ContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9HorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9VerticalScrollbar);
-                    Delight.ScrollableRegion.Label1TemplateProperty.SetDefault(_scrollExampleScrollableRegion9, ScrollExampleScrollableRegion9Label1);
                 }
                 return _scrollExampleScrollableRegion9;
             }
@@ -3742,26 +3573,6 @@ namespace Delight
 #endif
                 }
                 return _scrollExampleScrollableRegion9VerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _scrollExampleScrollableRegion9Label1;
-        public static Template ScrollExampleScrollableRegion9Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_scrollExampleScrollableRegion9Label1 == null || _scrollExampleScrollableRegion9Label1.CurrentVersion != Template.Version)
-#else
-                if (_scrollExampleScrollableRegion9Label1 == null)
-#endif
-                {
-                    _scrollExampleScrollableRegion9Label1 = new Template(ScrollableRegionTemplates.ScrollableRegionLabel1);
-#if UNITY_EDITOR
-                    _scrollExampleScrollableRegion9Label1.Name = "ScrollExampleScrollableRegion9Label1";
-#endif
-                }
-                return _scrollExampleScrollableRegion9Label1;
             }
         }
 

@@ -35,6 +35,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(ButtonTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(DefaultWidthProperty);
             dependencyProperties.Add(IsToggleButtonProperty);
             dependencyProperties.Add(IsDisabledProperty);
             dependencyProperties.Add(ToggleValueProperty);
@@ -44,6 +45,7 @@ namespace Delight
             dependencyProperties.Add(ToggleClickProperty);
             dependencyProperties.Add(IsMouseOverProperty);
             dependencyProperties.Add(IsPressedProperty);
+            dependencyProperties.Add(AutoSizeProperty);
             dependencyProperties.Add(LabelProperty);
             dependencyProperties.Add(LabelTemplateProperty);
         }
@@ -51,6 +53,13 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.ElementSize> DefaultWidthProperty = new DependencyProperty<Delight.ElementSize>("DefaultWidth");
+        public Delight.ElementSize DefaultWidth
+        {
+            get { return DefaultWidthProperty.GetValue(this); }
+            set { DefaultWidthProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<System.Boolean> IsToggleButtonProperty = new DependencyProperty<System.Boolean>("IsToggleButton");
         public System.Boolean IsToggleButton
@@ -115,6 +124,13 @@ namespace Delight
             set { IsPressedProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");
+        public Delight.AutoSize AutoSize
+        {
+            get { return AutoSizeProperty.GetValue(this); }
+            set { AutoSizeProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>("Label");
         public Label Label
         {
@@ -127,6 +143,13 @@ namespace Delight
         {
             get { return LabelTemplateProperty.GetValue(this); }
             set { LabelTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty LabelAutoSizeProperty = Label.AutoSizeProperty;
+        public Delight.AutoSize LabelAutoSize
+        {
+            get { return Label.AutoSize; }
+            set { Label.AutoSize = value; }
         }
 
         public readonly static DependencyProperty AutoSizeTextContainerProperty = Label.AutoSizeTextContainerProperty;
@@ -777,9 +800,11 @@ namespace Delight
 #if UNITY_EDITOR
                     _button.Name = "Button";
 #endif
-                    Delight.Button.WidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
+                    Delight.Button.DefaultWidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
+                    Delight.Button.TextPaddingProperty.SetDefault(_button, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
+                    Delight.Button.AutoSizeProperty.SetDefault(_button, Delight.AutoSize.Default);
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));

@@ -71,6 +71,8 @@ namespace Delight
             GameObject.AddEventTrigger(this, Select, EventTriggerType.Select);
             GameObject.AddEventTrigger(this, Submit, EventTriggerType.Submit);
             GameObject.AddEventTrigger(this, UpdateSelected, EventTriggerType.UpdateSelected);
+
+            IsActiveChanged();
         }
 
         /// <summary>
