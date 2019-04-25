@@ -41,6 +41,8 @@ namespace Delight
         public override void Update()
         {
             base.Update();
+            if (IgnoreObject)
+                return;
 
             Vector2 contentOffset = GetContentOffset();
             float deltaTime = Time.unscaledDeltaTime;
@@ -270,11 +272,16 @@ namespace Delight
         protected override void ChildLayoutChanged()
         {
             base.ChildLayoutChanged();
+            if (IgnoreObject)
+                return;
+
             if (AutoSizeContentRegion)
             {
                 // update size and layout of the content region if necessary
                 LayoutRoot.RegisterChangeHandler(AdjustContentRegionSizeToChildren);
             }
+
+            UpdateScrollbars();
         }
 
         /// <summary>
