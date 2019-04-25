@@ -1,0 +1,6 @@
+<Mask xmlns="Delight" BasedOn="UIImageView"
+      MaskComponent="t:UnityEngine.UI.Mask, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
+      m.MaskComponent=""
+      ShowMaskGraphic="True"> 
+</Mask>
+

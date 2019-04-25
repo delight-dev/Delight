@@ -73,7 +73,7 @@ namespace Delight
         /// <summary>
         /// Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
         /// </summary>
-        public bool IsUndefined(DependencyObject key, bool checkAllStates = false)
+        public override bool IsUndefined(DependencyObject key, bool checkAllStates = false)
         {
             bool valueSet = false;
             ValueSet.TryGetValue(key, out valueSet);

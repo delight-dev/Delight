@@ -181,10 +181,10 @@ namespace Delight
                 max.y = 0;
             }
 
-            if ((offset.x > min.x) || (offset.x < max.x))
+            if ((offset.x >= min.x) || (offset.x <= max.x))
                 _velocity.x = 0;
 
-            if ((offset.y > min.y) || (offset.y < max.y))
+            if ((offset.y >= min.y) || (offset.y <= max.y))
                 _velocity.y = 0;
         }
 
@@ -369,7 +369,14 @@ namespace Delight
             if (!CanScrollVertically || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
                 VerticalScrollbar.Ignore();
-            }            
+            }
+
+            if (CanScrollHorizontally || CanScrollVertically)
+            {
+                // add image component to block raycasts
+                ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                ImageComponent.color = Color.clear;
+            }
         }
 
         /// <summary>
@@ -640,8 +647,7 @@ namespace Delight
 
             return elasticOffset;
         }
-
-
+        
         /// <summary>
         /// Makes it so draggable child views aren't blocking the region from being dragged. 
         /// </summary>
@@ -790,11 +796,14 @@ namespace Delight
             float cy = ContentRegion.ActualHeight;
             float vpx = ActualWidth;
             float vpy = ActualHeight;
+            bool hideHorizontal = false;
+            bool hideVertical = false;
 
-            if (cx < vpx)
+            if (cx <= vpx)
             {
                 // if content is smaller than viewport we reset x offset to 0
                 clampedOffset.x = 0;
+                hideHorizontal = true;
             }
             else
             {
@@ -803,10 +812,11 @@ namespace Delight
                 clampedOffset.x = Mathf.Min(clampedOffset.x, min.x);
             }
 
-            if (cy < vpy)
+            if (cy <= vpy)
             {
                 // if content is smaller than viewport we reset y offset to 0
                 clampedOffset.y = 0;
+                hideVertical = true;
             }
             else
             {
@@ -817,11 +827,41 @@ namespace Delight
             
             if (CanScrollHorizontally && !HorizontalScrollbar.IgnoreObject)
             {
+                switch (HorizontalScrollbarVisibility)
+                {
+                    case ScrollbarVisibilityMode.Always:
+                        HorizontalScrollbar.IsVisible = true;
+                        break;
+                    case ScrollbarVisibilityMode.Auto:
+                        HorizontalScrollbar.IsVisible = !hideHorizontal;
+                        break;
+                    case ScrollbarVisibilityMode.Never:
+                        HorizontalScrollbar.IsVisible = false;
+                        break;
+                    case ScrollbarVisibilityMode.Manual:
+                        break;
+                }
+
                 HorizontalScrollbar.SetScrollPosition((clampedOffset.x - min.x) / (max.x - min.x), vpx / cx);
             }
 
             if (CanScrollVertically && !VerticalScrollbar.IgnoreObject)
             {
+                switch (VerticalScrollbarVisibility)
+                {
+                    case ScrollbarVisibilityMode.Always:
+                        VerticalScrollbar.IsVisible = true;
+                        break;
+                    case ScrollbarVisibilityMode.Auto:
+                        VerticalScrollbar.IsVisible = !hideVertical;
+                        break;
+                    case ScrollbarVisibilityMode.Never:
+                        VerticalScrollbar.IsVisible = false;
+                        break;
+                    case ScrollbarVisibilityMode.Manual:
+                        break;
+                }
+
                 VerticalScrollbar.SetScrollPosition((clampedOffset.y - min.y) / (max.y - min.y), vpy / cy);
             }
         }

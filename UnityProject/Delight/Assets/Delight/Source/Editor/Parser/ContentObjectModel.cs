@@ -48,7 +48,6 @@ namespace Delight.Editor.Parser
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, StyleObject> _styleObjects;
-        private Dictionary<string, AssetBundleObject> _assetBundleObjects;
         private Dictionary<string, AssetType> _assetTypes;
         private static ContentObjectModel _contentObjectModel;
 
@@ -257,7 +256,6 @@ namespace Delight.Editor.Parser
         public void ClearAssetContent()
         {
             AssetBundleObjects.Clear();
-            _assetBundleObjects = null;
             ClearAssetTypes(true);
         }
 

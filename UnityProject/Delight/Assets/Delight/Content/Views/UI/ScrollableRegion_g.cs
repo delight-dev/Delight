@@ -54,6 +54,7 @@ namespace Delight
 
             dependencyProperties.Add(MaskContentProperty);
             dependencyProperties.Add(MaskProperty);
+            dependencyProperties.Add(ImageComponentProperty);
             dependencyProperties.Add(HasInertiaProperty);
             dependencyProperties.Add(DecelerationRateProperty);
             dependencyProperties.Add(ElasticityProperty);
@@ -90,6 +91,13 @@ namespace Delight
         {
             get { return MaskProperty.GetValue(this); }
             set { MaskProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.UI.Image> ImageComponentProperty = new DependencyProperty<UnityEngine.UI.Image>("ImageComponent");
+        public UnityEngine.UI.Image ImageComponent
+        {
+            get { return ImageComponentProperty.GetValue(this); }
+            set { ImageComponentProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> HasInertiaProperty = new DependencyProperty<System.Boolean>("HasInertia");
@@ -257,7 +265,6 @@ namespace Delight
                     Delight.ScrollableRegion.CanScrollHorizontallyProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.EnableScriptEventsProperty.SetDefault(_scrollableRegion, true);
-                    Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_scrollableRegion, Delight.ElementAlignment.Center);
                     Delight.ScrollableRegion.AutoSizeContentRegionProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_scrollableRegion, Delight.ScrollBounds.Elastic);
                     Delight.ScrollableRegion.ScrollSensitivityProperty.SetDefault(_scrollableRegion, 60f);

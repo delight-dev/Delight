@@ -113,10 +113,28 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called when the view has been unloaded.
+        /// </summary>
+        protected override void AfterUnload()
+        {
+            base.AfterUnload();
+            if (Items != null)
+            {
+                // unsubscribe to change events in the old list
+                Items.CollectionChanged -= OnCollectionChanged;
+            }
+        }
+
+        /// <summary>
         /// Called when the list of items has been changed.
         /// </summary>
         private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                Debug.Log("OnCollectionChanged called on unloaded list!");
+            }
+
             Debug.Log("Collection changed");
 
             if (e.ChangeAction == CollectionChangeAction.Add)

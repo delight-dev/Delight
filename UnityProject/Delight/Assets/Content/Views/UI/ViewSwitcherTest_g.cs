@@ -424,7 +424,7 @@ namespace Delight
                     _viewSwitcherTestViewSwitcher1.Name = "ViewSwitcherTestViewSwitcher1";
 #endif
                     Delight.ViewSwitcher.MarginProperty.SetDefault(_viewSwitcherTestViewSwitcher1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcherTestViewSwitcher1, Delight.SwitchMode.Enable);
+                    Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcherTestViewSwitcher1, Delight.SwitchMode.Load);
                 }
                 return _viewSwitcherTestViewSwitcher1;
             }

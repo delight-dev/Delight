@@ -86,6 +86,10 @@ namespace Delight
             {
                 ScrollableRegion.UnblockDragEvents(view as SceneObjectView);
             }
+
+            // TOOD unblock drag-events in parent scrollable regions, this can be done through a better mechanism 
+            // as we need to do this anytime new children are added to an hierarchy not just here
+            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(view as SceneObjectView));
             return view;
         }
 
@@ -199,14 +203,10 @@ namespace Delight
                 childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
             }
 
-            // set width and height 
+            // calculate total width and height
             float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing.Pixels : 0f;
-            var newWidth = !percentageWidth ? new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels) :
-                new ElementSize(1, ElementSizeUnit.Percents);
-            var newHeight = !percentageHeight ? new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels) :
-                new ElementSize(1, ElementSizeUnit.Percents);
 
-            // add margins
+            // .. add margins
             if (!percentageWidth)
             {
                 var margin = Margin ?? ElementMargin.Default;
@@ -222,6 +222,11 @@ namespace Delight
                 totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
                 maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
             }
+            
+            var newWidth = !percentageWidth ? new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels) :
+                new ElementSize(1, ElementSizeUnit.Percents);
+            var newHeight = !percentageHeight ? new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels) :
+                new ElementSize(1, ElementSizeUnit.Percents);
 
             // if width not specified, adjust width to content
             if (WidthProperty.IsUndefined(this))
@@ -257,7 +262,7 @@ namespace Delight
                 }
 
                 if (ScrollableRegionContentAlignmentProperty.IsUndefined(ScrollableRegion))
-                {
+                {                    
                     // adjust content alignment based on orientation
                     ScrollableRegionContentAlignment = ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top;
                 }

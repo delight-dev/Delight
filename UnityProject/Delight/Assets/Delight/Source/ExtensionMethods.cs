@@ -569,6 +569,23 @@ namespace Delight
         }
 
         /// <summary>
+        /// Performs an action on all ascendants of a view.
+        /// </summary>
+        public static void ForEachParent<T>(this View view, Action<T> action) where T : View
+        {
+            if (view.LayoutParent == null)
+                return;
+
+            var parent = view.LayoutParent as T;
+            if (parent != null)
+            {
+                action(parent);                
+            }
+
+            view.LayoutParent.ForEachParent(action);
+        }
+
+        /// <summary>
         /// Returns first ascendant of type T found that matches the predicate.
         /// </summary>
         public static T FindParent<T>(this View view, Predicate<T> predicate) where T : View
