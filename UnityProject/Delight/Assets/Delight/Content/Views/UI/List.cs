@@ -222,7 +222,7 @@ namespace Delight
                 totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
                 maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
             }
-            
+
             var newWidth = !percentageWidth ? new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels) :
                 new ElementSize(1, ElementSizeUnit.Percents);
             var newHeight = !percentageHeight ? new ElementSize(!isHorizontal ? totalHeight : maxHeight, ElementSizeUnit.Pixels) :
@@ -262,7 +262,7 @@ namespace Delight
                 }
 
                 if (ScrollableRegionContentAlignmentProperty.IsUndefined(ScrollableRegion))
-                {                    
+                {
                     // adjust content alignment based on orientation
                     ScrollableRegionContentAlignment = ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top;
                 }
@@ -272,118 +272,97 @@ namespace Delight
             return base.UpdateLayout(notifyParent) || hasNewSize;
         }
 
-        ///// <summary>
-        ///// Selects item in the list.
-        ///// </summary>
-        //public void SelectItem(VirtualizedListItem virtualizedItem, bool triggeredByClick = false)
-        //{
-        //    if (virtualizedItem == null || (triggeredByClick && !CanSelect))
-        //        return;
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
+        public void SelectItem(ListItem listItem, bool triggeredByClick = false)
+        {
+            if (listItem == null || (triggeredByClick && !CanSelect))
+                return;
 
-        //    // is item already selected?
-        //    if (virtualizedItem.IsSelected)
-        //    {
-        //        // yes. can it be deselected?
-        //        if (triggeredByClick && !CanDeselect)
-        //        {
-        //            // no. should it be re-selected?
-        //            if (CanReselect)
-        //            {
-        //                // yes. select it again
-        //                SetSelected(virtualizedItem, true);
-        //            }
+            // is item already selected?
+            if (listItem.IsSelected)
+            {
+                // yes. can it be deselected?
+                if (triggeredByClick && !CanDeselect)
+                {
+                    // no. should it be re-selected?
+                    if (CanReselect)
+                    {
+                        // yes. select it again
+                        SetSelected(listItem, true);
+                    }
 
-        //            return; // no.
-        //        }
+                    return; // no.
+                }
 
-        //        // deselect and trigger actions
-        //        SetSelected(virtualizedItem, false);
-        //    }
-        //    else
-        //    {
-        //        // select
-        //        SetSelected(virtualizedItem, true);
+                // deselect and trigger actions
+                SetSelected(listItem, false);
+            }
+            else
+            {
+                // select
+                SetSelected(listItem, true);
 
-        //        // deselect other items
-        //        foreach (var item in _virtualizedItems)
-        //        {
-        //            if (item == virtualizedItem)
-        //                continue;
+                // deselect other items
+                foreach (ListItem item in Content.LayoutChildren)
+                {
+                    if (item == listItem)
+                        continue;
 
-        //            // deselect and trigger actions
-        //            SetSelected(item, false);
-        //        }
+                    // deselect and trigger actions
+                    SetSelected(item, false);
+                }
 
-        //        // should this item immediately be deselected?
-        //        if (DeselectAfterSelect)
-        //        {
-        //            // yes.
-        //            SetSelected(virtualizedItem, false);
-        //        }
-        //    }
-        //}
+                // should this item immediately be deselected?
+                if (DeselectAfterSelect)
+                {
+                    // yes.
+                    SetSelected(listItem, false);
+                }
+            }
+        }
 
-        ///// <summary>
-        ///// Selects item in the list.
-        ///// </summary>
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
         //public void SelectItem(int index)
         //{
-        //    if (Items.Value == null || index < 0 || index >= Items.Value.Count)
+        //    if (Items == null || index < 0 || index >= Items.Count)
         //        return;
 
-        //    _selectedItem = Items.Value[index];
-        //    int startIndex = _previousFirstRowIndex * ItemsPerVirtualizedRow;
-        //    int endIndex = startIndex + (VirtualizedItemsCount - 1);
-
-        //    // is item outside viewport? 
-        //    if (index < startIndex || index > endIndex)
-        //        return; // yes. no need to update
-
-        //    // select virtualized list item
-        //    var virtualizedItem = _virtualizedItems[index - startIndex];
-        //    SelectItem(virtualizedItem, false);
-        //}
-
-        ///// <summary>
-        ///// Selects or deselects a list item.
-        ///// </summary>
-        //private void SetSelected(VirtualizedListItem virtualizedItem, bool selected)
-        //{
-        //    if (virtualizedItem == null)
-        //        return;
-
-        //    virtualizedItem.IsSelected.Value = selected;
-        //    if (selected)
+        //    if (IsVirtualized)
         //    {
-        //        // item selected
-        //        _selectedItem = virtualizedItem.Item.Value;
-        //        IsItemSelected.Value = true;
-        //        if (Items.Value != null)
-        //        {
-        //            Items.Value.SetSelected(_selectedItem);
-        //        }
+        //        // TODO implement virtualized selection logic
+        //        //_selectedItem = Items[index];
+        //        //int startIndex = _previousFirstRowIndex * ItemsPerVirtualizedRow;
+        //        //int endIndex = startIndex + (VirtualizedItemsCount - 1);
 
-        //        // trigger item selected action
-        //        if (ItemSelected.HasEntries)
-        //        {
-        //            ItemSelected.Trigger(new VirtualizedItemSelectionActionData { IsSelected = true, ItemView = virtualizedItem, Item = virtualizedItem.Item.Value });
-        //        }
+        //        //// is item outside viewport? 
+        //        //if (index < startIndex || index > endIndex)
+        //        //    return; // yes. no need to update
+
+        //        //// select virtualized list item
+        //        //var virtualizedItem = _virtualizedItems[index - startIndex];
+        //        //SelectItem(virtualizedItem, false);
         //    }
         //    else
         //    {
-        //        if (_selectedItem == virtualizedItem.Item.Value)
-        //        {
-        //            _selectedItem = null;
-        //            IsItemSelected.Value = false;
-        //        }
-
-        //        // trigger item deselected action
-        //        if (ItemDeselected.HasEntries)
-        //        {
-        //            ItemDeselected.Trigger(new VirtualizedItemSelectionActionData { IsSelected = selected, ItemView = virtualizedItem, Item = virtualizedItem.Item.Value });
-        //        }
+        //        SelectItem(_presentedListItems[index] as ListItem, false);
         //    }
         //}
+
+        /// <summary>
+        /// Selects or deselects a list item.
+        /// </summary>
+        private void SetSelected(ListItem listItem, bool selected)
+        {
+            if (listItem == null)
+                return;
+
+            Debug.Log("ListItem.Selected = " + selected); // TODO cleanup
+            listItem.IsSelected = selected;
+        }
 
         #endregion
 

@@ -616,6 +616,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _list.Name = "List";
 #endif
+                    Delight.List.CanSelectProperty.SetDefault(_list, true);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;

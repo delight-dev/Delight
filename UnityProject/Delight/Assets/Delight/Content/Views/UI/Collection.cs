@@ -130,11 +130,6 @@ namespace Delight
         /// </summary>
         private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
-            if (!IsLoaded)
-            {
-                Debug.Log("OnCollectionChanged called on unloaded list!");
-            }
-
             Debug.Log("Collection changed");
 
             if (e.ChangeAction == CollectionChangeAction.Add)
@@ -144,6 +139,7 @@ namespace Delight
 
             UpdateLayout();
 
+            // TODO implement collection change actions
             //// update list of items
             //if (e.ListChangeAction == ListChangeAction.Clear)
             //{

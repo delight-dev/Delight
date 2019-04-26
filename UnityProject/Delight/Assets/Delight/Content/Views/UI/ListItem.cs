@@ -31,6 +31,23 @@ namespace Delight
         #endregion
 
         #region Methods
+        
+        /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            if (IgnoreObject)
+                return;
+
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(IsSelected):
+                    IsSelectedChanged();
+                    break;
+            }
+        }
 
         /// <summary>
         /// Called once in the object's lifetime after construction of children and before load.
@@ -140,8 +157,8 @@ namespace Delight
             if (!ParentList.SelectOnMouseUp)
                 return;
 
-            SetState("Selected"); // TODO implement
-            //ParentList.SelectItem(this, true);
+            SetState("Selected");
+            ParentList.SelectItem(this, true);
         }
 
         /// <summary>
@@ -191,8 +208,8 @@ namespace Delight
 
             if (!ParentList.SelectOnMouseUp)
             {
-                SetState("Selected"); // TODO implement
-                //ParentList.SelectItem(this, true);
+                SetState("Selected");
+                ParentList.SelectItem(this, true);
             }
             else
             {
@@ -219,6 +236,24 @@ namespace Delight
             if (IsMouseOver)
             {
                 SetState("Highlighted");
+            }
+            else
+            {
+                SetState(DefaultItemStyle);
+            }
+        }
+
+        /// <summary>
+        /// Called when the IsSelected field changes.
+        /// </summary>
+        public virtual void IsSelectedChanged()
+        {
+            if (State == "Disabled")
+                return;
+
+            if (IsSelected)
+            {
+                SetState("Selected");
             }
             else
             {

@@ -193,7 +193,7 @@ namespace Delight
         {
             // notify parent of layout update
             var uiViewParent = this.FindParent<UIView>();
-            if (uiViewParent != null)
+            if (uiViewParent != null && uiViewParent.IsLoaded)
             {
                 uiViewParent.ChildLayoutChanged();
             }
