@@ -434,7 +434,6 @@ namespace Delight
         /// </summary>
         public virtual void SetState(string newState)
         {
-            Debug.Log("Setting state to:" + newState); // TODO cleanup
             if (newState.IEquals(_previousState))
                 return;
 

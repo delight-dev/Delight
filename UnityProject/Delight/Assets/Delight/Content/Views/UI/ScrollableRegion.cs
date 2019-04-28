@@ -36,7 +36,7 @@ namespace Delight
         #region Methods
 
         /// <summary>
-        /// Called once per frame if EnableScriptEvents is true.
+        /// Called once per frame.
         /// </summary>
         public override void Update()
         {
@@ -126,6 +126,16 @@ namespace Delight
             }
 
             _previousContentOffset = contentOffset;
+        }
+
+        /// <summary>
+        /// Called after the view has been unloaded.
+        /// </summary>
+        protected override void AfterUnload()
+        {
+            base.AfterUnload();
+            _actualWidth = 0;
+            _actualHeight = 0;
         }
 
         /// <summary>
@@ -340,7 +350,9 @@ namespace Delight
             if (hasNewSize)
             {
                 ContentRegion.UpdateLayout(false);
-            }            
+            }
+
+            UpdateScrollbars();
         }
 
         /// <summary>

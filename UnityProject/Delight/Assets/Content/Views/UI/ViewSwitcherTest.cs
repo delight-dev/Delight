@@ -24,5 +24,10 @@ namespace Delight
         {
             ViewSwitcher1.SwitchTo(2);
         }
+
+        public void ShowInputFieldExample()
+        {
+            ViewSwitcher1.SwitchTo(3);
+        }
     }
 }

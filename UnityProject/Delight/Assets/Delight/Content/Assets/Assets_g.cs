@@ -124,6 +124,14 @@ namespace Delight
 
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
+        public readonly SpriteAsset CheckBox;
+        public readonly SpriteAsset RadioButtonPressed;
+        public readonly SpriteAsset ComboBoxButton;
+        public readonly SpriteAsset CloseButton;
+        public readonly SpriteAsset RadioButton;
+        public readonly SpriteAsset ComboBoxButtonPressed;
+        public readonly SpriteAsset CheckBoxPressed;
+        public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame4;
@@ -139,6 +147,14 @@ namespace Delight
         {
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            CheckBox = new SpriteAsset { Id = "CheckBox", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            CloseButton = new SpriteAsset { Id = "CloseButton", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            RadioButton = new SpriteAsset { Id = "RadioButton", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            RainbowSquare = new SpriteAsset { Id = "RainbowSquare", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", IsResource = true, RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", IsResource = true, RelativePath = "" };
@@ -148,6 +164,14 @@ namespace Delight
 
             Add(Frame1);
             Add(Frame2);
+            Add(CheckBox);
+            Add(RadioButtonPressed);
+            Add(ComboBoxButton);
+            Add(CloseButton);
+            Add(RadioButton);
+            Add(ComboBoxButtonPressed);
+            Add(CheckBoxPressed);
+            Add(RainbowSquare);
             Add(Frame3);
             Add(BigSprite);
             Add(Frame4);
@@ -304,6 +328,23 @@ namespace Delight
     public static partial class Assets
     {
         public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
+    }
+
+    #endregion
+
+    #region TMP_InputValidators
+
+    public partial class TMP_InputValidatorAsset : AssetObject<TMPro.TMP_InputValidator>
+    {
+    }
+
+    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_InputValidatorAssetData TMP_InputValidators = new TMP_InputValidatorAssetData();
     }
 
     #endregion

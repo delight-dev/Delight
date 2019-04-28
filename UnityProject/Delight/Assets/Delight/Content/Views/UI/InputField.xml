@@ -1,0 +1,15 @@
+<InputField xmlns="Delight" BasedOn="UIImageView"
+            Mask="t:UnityEngine.UI.RectMask2D, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
+            TMP_InputFieldComponent="t:TMPro.TMP_InputField, Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+            m.TMP_InputFieldComponent="" m.InputText=""
+            SetValueOnEndEdit="t:bool"
+            OnlyTriggerValueChangedFromUI="t:bool"
+            EndEdit="t:Action"
+            ValueChanged="t:Action"
+            Width="120" Height="40"
+            TextMargin="t:ElementMargin = 9">
+  <RectMask2D Id="TextArea" Margin="{TextMargin}">
+    <Region Id="InputFieldPlaceholder" IsContentContainer="True" />
+    <Label Id="InputText" Width="100%" Height="100%" TextAlignment="TopLeft" />
+  </RectMask2D>
+</InputField>

@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3930439197
+CRC: 215211719
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: f4b0b380222b86b7c7d6fcd8ffaabf95
+    Hash: a51a11938e2a128d0c0027f8bc65d0d6
   TypeTreeHash:
     serializedVersion: 2
     Hash: 86f85b91e001280b03470a0b1e60175e
@@ -24,12 +24,20 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/Content/Assets/Bundle1/Sprites/CheckBox.psd
 - Assets/Content/Assets/Bundle1/Sprites/LiberationSans SDF - Drop Shadow.mat
+- Assets/Content/Assets/Bundle1/Sprites/RadioButtonPressed.psd
 - Assets/Content/Assets/Bundle1/Sprites/Frame2.psd
 - Assets/Content/Assets/Bundle1/Materials/Net 01/preview.jpg
 - Assets/Content/Assets/Bundle1/Materials/Net 01/diffuse.tga
 - Assets/Content/Assets/Bundle1/Materials/Net 01/Net pattern 01.mat
 - Assets/Content/Assets/Bundle1/Materials/Net 01/normal.tga
 - Assets/Content/Assets/Bundle1/Sprites/LiberationSans SDF.asset
+- Assets/Content/Assets/Bundle1/Sprites/ComboBoxButton.psd
+- Assets/Content/Assets/Bundle1/Sprites/CloseButton.psd
+- Assets/Content/Assets/Bundle1/Sprites/RadioButton.psd
+- Assets/Content/Assets/Bundle1/Sprites/ComboBoxButtonPressed.psd
+- Assets/Content/Assets/Bundle1/Sprites/CheckBoxPressed.psd
 - Assets/Content/Assets/Bundle1/Sprites/Frame1.psd
+- Assets/Content/Assets/Bundle1/Sprites/RainbowSquare.psd
 Dependencies: []

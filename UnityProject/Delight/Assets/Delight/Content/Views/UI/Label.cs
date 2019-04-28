@@ -11,6 +11,8 @@ namespace Delight
     /// </summary>
     public partial class Label
     {
+        #region Methods
+
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -29,11 +31,27 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called before the view is loaded.
+        /// </summary>
         protected override void BeforeLoad()
         {
+            if (IgnoreObject)
+                return;
             base.BeforeLoad();
 
             TextMeshProUGUI = GameObject.AddComponent<TMPro.TextMeshProUGUI>();
+        }
+
+        /// <summary>
+        /// Called after the view is loaded.
+        /// </summary>
+        protected override void AfterLoad()
+        {
+            if (IgnoreObject)
+                return;
+            base.AfterLoad();
+
             if (AutoSize != AutoSize.None)
             {
                 // adjust size initially to text
@@ -41,6 +59,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Callend when label text changes.
+        /// </summary>
         public virtual void TextChanged()
         {
             // adjust label size to text
@@ -59,6 +80,9 @@ namespace Delight
             }
         }
 
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// Preferred width of text.
@@ -81,5 +105,7 @@ namespace Delight
                 return TextMeshProUGUI != null ? TextMeshProUGUI.preferredHeight : 0;
             }
         }
+
+        #endregion
     }
 }

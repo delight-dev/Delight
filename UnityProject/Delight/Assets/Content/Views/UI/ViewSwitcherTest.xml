@@ -1,12 +1,14 @@
 <ViewSwitcherTest xmlns="Delight" BasedOn="LayoutRoot">
   <Region>
-    <Group Height="50" Spacing="10" Orientation="Horizontal" Alignment="Top">
+    <ToggleGroup Height="50" Spacing="10" Orientation="Horizontal" Alignment="Top">
       <Button Text="ModelBindingTest" Click="ShowModelBindingTest" />
       <Button Text="ScrollExample" Click="ShowScrollExample" />
-      <Button Text="AssetManagementTest" Click="ShowAssetManagementTest" Width="300" />
-    </Group>
+      <Button Text="AssetManagementTest" Click="ShowAssetManagementTest" />
+      <Button Text="InputFieldExample" Click="ShowInputFieldExample" />
+    </ToggleGroup>
     
     <ViewSwitcher Margin="0,50,0,0" SwitchMode="Load">
+      <InputFieldExample Id="InputFieldExample" />
       <ModelBindingTest Id="ModelBindingTest" /> <!-- ViewSwitcher.ChildSwitchMode="Load" -->
       <ScrollExample Id="ScrollExample" />
       <AssetManagementTest Id="AssetManagementTest" />

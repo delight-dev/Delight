@@ -87,7 +87,7 @@ namespace Delight
                 ScrollableRegion.UnblockDragEvents(view as SceneObjectView);
             }
 
-            // TOOD unblock drag-events in parent scrollable regions, this can be done through a better mechanism 
+            // TODO unblock drag-events in parent scrollable regions, this can be done through a better mechanism 
             // as we need to do this anytime new children are added to an hierarchy not just here
             this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(view as SceneObjectView));
             return view;
@@ -360,7 +360,6 @@ namespace Delight
             if (listItem == null)
                 return;
 
-            Debug.Log("ListItem.Selected = " + selected); // TODO cleanup
             listItem.IsSelected = selected;
         }
 

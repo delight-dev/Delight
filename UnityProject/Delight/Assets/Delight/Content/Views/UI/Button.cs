@@ -31,6 +31,9 @@ namespace Delight
 
         #region Methods
 
+        /// <summary>
+        /// Called once in the object's lifetime after construction of children and before load.
+        /// </summary>
         public override void AfterInitialize()
         {
             base.AfterInitialize();
@@ -39,6 +42,46 @@ namespace Delight
             Label.PropertyChanged += Label_PropertyChanged;
         }
 
+        /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            if (IgnoreObject)
+                return;
+
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(ToggleValue):
+                    ToggleValueChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when toggle value changes.
+        /// </summary>
+        public void ToggleValueChanged()
+        {
+            if (!IsToggleButton)
+                return;
+
+            if (ToggleValue)
+            {
+                SetState("Pressed");
+            }
+            else
+            {
+                SetState(DefaultStateName);
+            }
+
+            ToggleClick?.Invoke(this, ToggleValue);
+        }
+
+        /// <summary>
+        /// Called when property on button label is changed.
+        /// </summary>
         private void Label_PropertyChanged(object source, string propertyName)
         {
             if (propertyName == nameof(Label.Text))
@@ -47,6 +90,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called when label text changes.
+        /// </summary>
         public virtual void TextChanged()
         {
             // adjust button size to text
@@ -65,6 +111,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called just before the view and its children are loaded.
+        /// </summary>
         protected override void BeforeLoad()
         {
             if (IgnoreObject)
@@ -76,8 +125,18 @@ namespace Delight
                 // if size isn't specified and the button doesn't adjust to label size, then set default width
                 WidthProperty.SetValue(this, DefaultWidth, false);
             }
+
+            if (LayoutParent is ToggleGroup)
+            {
+                // default to toggle-button if in toggle-group
+                IsToggleButton = true;
+                CanToggleOff = false;
+            }
         }
 
+        /// <summary>
+        /// Called after the view is loaded.
+        /// </summary>
         protected override void AfterLoad()
         {
             if (IgnoreObject)
@@ -96,17 +155,27 @@ namespace Delight
         /// </summary>
         public void ButtonMouseClick()
         {
-            Debug.Log("ButtonMouseClick() called");
-
             if (!IsToggleButton)
                 return;
 
             // if toggle-button change state
-            if (ToggleValue == true && !CanToggleOff)
+            if (ToggleValue && !CanToggleOff)
                 return;
-            if (ToggleValue == false && !CanToggleOn)
+            if (!ToggleValue && !CanToggleOn)
                 return;
             ToggleValue = !ToggleValue;
+
+            // if in toggle-group untoggle all other buttons
+            if (LayoutParent is ToggleGroup)
+            {
+                LayoutParent.ForEach<Button>(x =>
+                {
+                    if (x.IsToggleButton && x != this)
+                    {
+                        x.ToggleValue = false;
+                    }
+                });
+            }
         }
 
         /// <summary>
@@ -176,6 +245,9 @@ namespace Delight
         /// </summary>
         public override void SetState(string state)
         {
+            if (state.IEquals(_previousState))
+                return;
+
             base.SetState(state);
             Label.SetState(state);
         }

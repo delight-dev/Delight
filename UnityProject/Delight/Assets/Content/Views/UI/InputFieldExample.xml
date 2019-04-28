@@ -1,0 +1,20 @@
+<InputFieldExample xmlns="Delight">
+  <Group Orientation="Horizontal" Spacing="30px" ContentAlignment="Top">
+    <Group Orientation="Vertical" Spacing="6px">
+      <Label Text="Single Line" AutoSize="Width" />
+      <Label Text="Normal" AutoSize="Width" FontSize="12" Height="20" />
+      <InputField Width="200px" />
+      <Label Text="Password" AutoSize="True" FontSize="12" Height="20" />
+      <InputField Width="200px" ContentType="Password" />
+      <Label Text="With placeholder content" AutoSize="True" FontSize="12" Height="20" />
+      <InputField Width="200px">
+        <Image Sprite="RainbowSquare" Alignment="Left" Offset="10,0,0,0" />
+      </InputField>
+    </Group>
+
+    <Group Orientation="Vertical" Spacing="15"> 
+      <Label Text="Multi Line" Alignment="Top" AutoSize="Width" />
+      <InputField Width="200px" Height="200px" LineType="MultiLineNewline" />
+    </Group> 
+  </Group>
+</InputFieldExample>
