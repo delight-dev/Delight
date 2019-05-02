@@ -49,6 +49,7 @@ namespace Delight
             }
 
             _initializer = initializer;
+            _previousState = string.Empty;
             _content = this;
             BeforeInitialize();
         }
@@ -265,7 +266,7 @@ namespace Delight
             // update bindings to target object
             foreach (var binding in _bindings)
             {
-                if (binding.TargetObjects.Contains(targetObject))
+                if (binding.Target.Objects.Contains(targetObject))
                 {
                     binding.UpdateBinding();
                 }
@@ -436,6 +437,8 @@ namespace Delight
         {
             if (newState.IEquals(_previousState))
                 return;
+
+            //Debug.Log(Id + ": Setting state to: " + newState);
 
             var stateChangingProperties = GetStateChangingProperties(newState);
             if (stateChangingProperties != null)

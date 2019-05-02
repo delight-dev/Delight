@@ -413,31 +413,11 @@ namespace Delight
                     _inputFieldExampleInputField1.Name = "InputFieldExampleInputField1";
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField1, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField1, InputFieldExampleInputField1TextArea);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField1, InputFieldExampleInputField1InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField1, InputFieldExampleInputField1TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField1, InputFieldExampleInputField1InputText);
                 }
                 return _inputFieldExampleInputField1;
-            }
-        }
-
-        private static Template _inputFieldExampleInputField1TextArea;
-        public static Template InputFieldExampleInputField1TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_inputFieldExampleInputField1TextArea == null || _inputFieldExampleInputField1TextArea.CurrentVersion != Template.Version)
-#else
-                if (_inputFieldExampleInputField1TextArea == null)
-#endif
-                {
-                    _inputFieldExampleInputField1TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
-#if UNITY_EDITOR
-                    _inputFieldExampleInputField1TextArea.Name = "InputFieldExampleInputField1TextArea";
-#endif
-                }
-                return _inputFieldExampleInputField1TextArea;
             }
         }
 
@@ -458,6 +438,26 @@ namespace Delight
 #endif
                 }
                 return _inputFieldExampleInputField1InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _inputFieldExampleInputField1TextArea;
+        public static Template InputFieldExampleInputField1TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_inputFieldExampleInputField1TextArea == null || _inputFieldExampleInputField1TextArea.CurrentVersion != Template.Version)
+#else
+                if (_inputFieldExampleInputField1TextArea == null)
+#endif
+                {
+                    _inputFieldExampleInputField1TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
+#if UNITY_EDITOR
+                    _inputFieldExampleInputField1TextArea.Name = "InputFieldExampleInputField1TextArea";
+#endif
+                }
+                return _inputFieldExampleInputField1TextArea;
             }
         }
 
@@ -522,31 +522,11 @@ namespace Delight
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField2, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.ContentTypeProperty.SetDefault(_inputFieldExampleInputField2, TMPro.TMP_InputField.ContentType.Password);
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2TextArea);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2InputText);
                 }
                 return _inputFieldExampleInputField2;
-            }
-        }
-
-        private static Template _inputFieldExampleInputField2TextArea;
-        public static Template InputFieldExampleInputField2TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_inputFieldExampleInputField2TextArea == null || _inputFieldExampleInputField2TextArea.CurrentVersion != Template.Version)
-#else
-                if (_inputFieldExampleInputField2TextArea == null)
-#endif
-                {
-                    _inputFieldExampleInputField2TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
-#if UNITY_EDITOR
-                    _inputFieldExampleInputField2TextArea.Name = "InputFieldExampleInputField2TextArea";
-#endif
-                }
-                return _inputFieldExampleInputField2TextArea;
             }
         }
 
@@ -567,6 +547,26 @@ namespace Delight
 #endif
                 }
                 return _inputFieldExampleInputField2InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _inputFieldExampleInputField2TextArea;
+        public static Template InputFieldExampleInputField2TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_inputFieldExampleInputField2TextArea == null || _inputFieldExampleInputField2TextArea.CurrentVersion != Template.Version)
+#else
+                if (_inputFieldExampleInputField2TextArea == null)
+#endif
+                {
+                    _inputFieldExampleInputField2TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
+#if UNITY_EDITOR
+                    _inputFieldExampleInputField2TextArea.Name = "InputFieldExampleInputField2TextArea";
+#endif
+                }
+                return _inputFieldExampleInputField2TextArea;
             }
         }
 
@@ -630,31 +630,11 @@ namespace Delight
                     _inputFieldExampleInputField3.Name = "InputFieldExampleInputField3";
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField3, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField3, InputFieldExampleInputField3TextArea);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField3, InputFieldExampleInputField3InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField3, InputFieldExampleInputField3TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField3, InputFieldExampleInputField3InputText);
                 }
                 return _inputFieldExampleInputField3;
-            }
-        }
-
-        private static Template _inputFieldExampleInputField3TextArea;
-        public static Template InputFieldExampleInputField3TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_inputFieldExampleInputField3TextArea == null || _inputFieldExampleInputField3TextArea.CurrentVersion != Template.Version)
-#else
-                if (_inputFieldExampleInputField3TextArea == null)
-#endif
-                {
-                    _inputFieldExampleInputField3TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
-#if UNITY_EDITOR
-                    _inputFieldExampleInputField3TextArea.Name = "InputFieldExampleInputField3TextArea";
-#endif
-                }
-                return _inputFieldExampleInputField3TextArea;
             }
         }
 
@@ -675,6 +655,26 @@ namespace Delight
 #endif
                 }
                 return _inputFieldExampleInputField3InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _inputFieldExampleInputField3TextArea;
+        public static Template InputFieldExampleInputField3TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_inputFieldExampleInputField3TextArea == null || _inputFieldExampleInputField3TextArea.CurrentVersion != Template.Version)
+#else
+                if (_inputFieldExampleInputField3TextArea == null)
+#endif
+                {
+                    _inputFieldExampleInputField3TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
+#if UNITY_EDITOR
+                    _inputFieldExampleInputField3TextArea.Name = "InputFieldExampleInputField3TextArea";
+#endif
+                }
+                return _inputFieldExampleInputField3TextArea;
             }
         }
 
@@ -784,31 +784,11 @@ namespace Delight
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.HeightProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.LineTypeProperty.SetDefault(_inputFieldExampleInputField4, TMPro.TMP_InputField.LineType.MultiLineNewline);
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4TextArea);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4InputText);
                 }
                 return _inputFieldExampleInputField4;
-            }
-        }
-
-        private static Template _inputFieldExampleInputField4TextArea;
-        public static Template InputFieldExampleInputField4TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_inputFieldExampleInputField4TextArea == null || _inputFieldExampleInputField4TextArea.CurrentVersion != Template.Version)
-#else
-                if (_inputFieldExampleInputField4TextArea == null)
-#endif
-                {
-                    _inputFieldExampleInputField4TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
-#if UNITY_EDITOR
-                    _inputFieldExampleInputField4TextArea.Name = "InputFieldExampleInputField4TextArea";
-#endif
-                }
-                return _inputFieldExampleInputField4TextArea;
             }
         }
 
@@ -829,6 +809,26 @@ namespace Delight
 #endif
                 }
                 return _inputFieldExampleInputField4InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _inputFieldExampleInputField4TextArea;
+        public static Template InputFieldExampleInputField4TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_inputFieldExampleInputField4TextArea == null || _inputFieldExampleInputField4TextArea.CurrentVersion != Template.Version)
+#else
+                if (_inputFieldExampleInputField4TextArea == null)
+#endif
+                {
+                    _inputFieldExampleInputField4TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
+#if UNITY_EDITOR
+                    _inputFieldExampleInputField4TextArea.Name = "InputFieldExampleInputField4TextArea";
+#endif
+                }
+                return _inputFieldExampleInputField4TextArea;
             }
         }
 

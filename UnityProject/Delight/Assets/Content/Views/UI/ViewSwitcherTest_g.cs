@@ -27,11 +27,17 @@ namespace Delight
             Button3.Click += ResolveActionHandler(this, "ShowAssetManagementTest");
             Button4 = new Button(this, ToggleGroup1.Content, "Button4", Button4Template);
             Button4.Click += ResolveActionHandler(this, "ShowInputFieldExample");
+            Button5 = new Button(this, ToggleGroup1.Content, "Button5", Button5Template);
+            Button5.Click += ResolveActionHandler(this, "ShowSliderExample");
+            Button6 = new Button(this, ToggleGroup1.Content, "Button6", Button6Template);
+            Button6.Click += ResolveActionHandler(this, "ShowBindingTest");
             ViewSwitcher1 = new ViewSwitcher(this, Region1.Content, "ViewSwitcher1", ViewSwitcher1Template);
-            InputFieldExample = new InputFieldExample(this, ViewSwitcher1.Content, "InputFieldExample", InputFieldExampleTemplate);
             ModelBindingTest = new ModelBindingTest(this, ViewSwitcher1.Content, "ModelBindingTest", ModelBindingTestTemplate);
+            InputFieldExample = new InputFieldExample(this, ViewSwitcher1.Content, "InputFieldExample", InputFieldExampleTemplate);
             ScrollExample = new ScrollExample(this, ViewSwitcher1.Content, "ScrollExample", ScrollExampleTemplate);
             AssetManagementTest = new AssetManagementTest(this, ViewSwitcher1.Content, "AssetManagementTest", AssetManagementTestTemplate);
+            SliderExample = new SliderExample(this, ViewSwitcher1.Content, "SliderExample", SliderExampleTemplate);
+            BindingTest = new BindingTest(this, ViewSwitcher1.Content, "BindingTest", BindingTestTemplate);
             this.AfterInitializeInternal();
         }
 
@@ -56,16 +62,24 @@ namespace Delight
             dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(Button4Property);
             dependencyProperties.Add(Button4TemplateProperty);
+            dependencyProperties.Add(Button5Property);
+            dependencyProperties.Add(Button5TemplateProperty);
+            dependencyProperties.Add(Button6Property);
+            dependencyProperties.Add(Button6TemplateProperty);
             dependencyProperties.Add(ViewSwitcher1Property);
             dependencyProperties.Add(ViewSwitcher1TemplateProperty);
-            dependencyProperties.Add(InputFieldExampleProperty);
-            dependencyProperties.Add(InputFieldExampleTemplateProperty);
             dependencyProperties.Add(ModelBindingTestProperty);
             dependencyProperties.Add(ModelBindingTestTemplateProperty);
+            dependencyProperties.Add(InputFieldExampleProperty);
+            dependencyProperties.Add(InputFieldExampleTemplateProperty);
             dependencyProperties.Add(ScrollExampleProperty);
             dependencyProperties.Add(ScrollExampleTemplateProperty);
             dependencyProperties.Add(AssetManagementTestProperty);
             dependencyProperties.Add(AssetManagementTestTemplateProperty);
+            dependencyProperties.Add(SliderExampleProperty);
+            dependencyProperties.Add(SliderExampleTemplateProperty);
+            dependencyProperties.Add(BindingTestProperty);
+            dependencyProperties.Add(BindingTestTemplateProperty);
         }
 
         #endregion
@@ -156,6 +170,34 @@ namespace Delight
             set { Button4TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
+        public Button Button5
+        {
+            get { return Button5Property.GetValue(this); }
+            set { Button5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
+        public Template Button5Template
+        {
+            get { return Button5TemplateProperty.GetValue(this); }
+            set { Button5TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button6Property = new DependencyProperty<Button>("Button6");
+        public Button Button6
+        {
+            get { return Button6Property.GetValue(this); }
+            set { Button6Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button6TemplateProperty = new DependencyProperty<Template>("Button6Template");
+        public Template Button6Template
+        {
+            get { return Button6TemplateProperty.GetValue(this); }
+            set { Button6TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<ViewSwitcher> ViewSwitcher1Property = new DependencyProperty<ViewSwitcher>("ViewSwitcher1");
         public ViewSwitcher ViewSwitcher1
         {
@@ -170,20 +212,6 @@ namespace Delight
             set { ViewSwitcher1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<InputFieldExample> InputFieldExampleProperty = new DependencyProperty<InputFieldExample>("InputFieldExample");
-        public InputFieldExample InputFieldExample
-        {
-            get { return InputFieldExampleProperty.GetValue(this); }
-            set { InputFieldExampleProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> InputFieldExampleTemplateProperty = new DependencyProperty<Template>("InputFieldExampleTemplate");
-        public Template InputFieldExampleTemplate
-        {
-            get { return InputFieldExampleTemplateProperty.GetValue(this); }
-            set { InputFieldExampleTemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<ModelBindingTest> ModelBindingTestProperty = new DependencyProperty<ModelBindingTest>("ModelBindingTest");
         public ModelBindingTest ModelBindingTest
         {
@@ -196,6 +224,20 @@ namespace Delight
         {
             get { return ModelBindingTestTemplateProperty.GetValue(this); }
             set { ModelBindingTestTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<InputFieldExample> InputFieldExampleProperty = new DependencyProperty<InputFieldExample>("InputFieldExample");
+        public InputFieldExample InputFieldExample
+        {
+            get { return InputFieldExampleProperty.GetValue(this); }
+            set { InputFieldExampleProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> InputFieldExampleTemplateProperty = new DependencyProperty<Template>("InputFieldExampleTemplate");
+        public Template InputFieldExampleTemplate
+        {
+            get { return InputFieldExampleTemplateProperty.GetValue(this); }
+            set { InputFieldExampleTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollExample> ScrollExampleProperty = new DependencyProperty<ScrollExample>("ScrollExample");
@@ -224,6 +266,34 @@ namespace Delight
         {
             get { return AssetManagementTestTemplateProperty.GetValue(this); }
             set { AssetManagementTestTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<SliderExample> SliderExampleProperty = new DependencyProperty<SliderExample>("SliderExample");
+        public SliderExample SliderExample
+        {
+            get { return SliderExampleProperty.GetValue(this); }
+            set { SliderExampleProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> SliderExampleTemplateProperty = new DependencyProperty<Template>("SliderExampleTemplate");
+        public Template SliderExampleTemplate
+        {
+            get { return SliderExampleTemplateProperty.GetValue(this); }
+            set { SliderExampleTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<BindingTest> BindingTestProperty = new DependencyProperty<BindingTest>("BindingTest");
+        public BindingTest BindingTest
+        {
+            get { return BindingTestProperty.GetValue(this); }
+            set { BindingTestProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> BindingTestTemplateProperty = new DependencyProperty<Template>("BindingTestTemplate");
+        public Template BindingTestTemplate
+        {
+            get { return BindingTestTemplateProperty.GetValue(this); }
+            set { BindingTestTemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -264,11 +334,15 @@ namespace Delight
                     Delight.ViewSwitcherTest.Button2TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton2);
                     Delight.ViewSwitcherTest.Button3TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton3);
                     Delight.ViewSwitcherTest.Button4TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton4);
+                    Delight.ViewSwitcherTest.Button5TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton5);
+                    Delight.ViewSwitcherTest.Button6TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton6);
                     Delight.ViewSwitcherTest.ViewSwitcher1TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestViewSwitcher1);
-                    Delight.ViewSwitcherTest.InputFieldExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestInputFieldExample);
                     Delight.ViewSwitcherTest.ModelBindingTestTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestModelBindingTest);
+                    Delight.ViewSwitcherTest.InputFieldExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestInputFieldExample);
                     Delight.ViewSwitcherTest.ScrollExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestScrollExample);
                     Delight.ViewSwitcherTest.AssetManagementTestTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestAssetManagementTest);
+                    Delight.ViewSwitcherTest.SliderExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestSliderExample);
+                    Delight.ViewSwitcherTest.BindingTestTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestBindingTest);
                 }
                 return _viewSwitcherTest;
             }
@@ -333,6 +407,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _viewSwitcherTestButton1.Name = "ViewSwitcherTestButton1";
 #endif
+                    Delight.Button.ToggleValueProperty.SetDefault(_viewSwitcherTestButton1, true);
                     Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestButton1, ViewSwitcherTestButton1Label);
                 }
                 return _viewSwitcherTestButton1;
@@ -486,6 +561,90 @@ namespace Delight
             }
         }
 
+        private static Template _viewSwitcherTestButton5;
+        public static Template ViewSwitcherTestButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestButton5 == null || _viewSwitcherTestButton5.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestButton5 == null)
+#endif
+                {
+                    _viewSwitcherTestButton5 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _viewSwitcherTestButton5.Name = "ViewSwitcherTestButton5";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestButton5, ViewSwitcherTestButton5Label);
+                }
+                return _viewSwitcherTestButton5;
+            }
+        }
+
+        private static Template _viewSwitcherTestButton5Label;
+        public static Template ViewSwitcherTestButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestButton5Label == null || _viewSwitcherTestButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestButton5Label == null)
+#endif
+                {
+                    _viewSwitcherTestButton5Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestButton5Label.Name = "ViewSwitcherTestButton5Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_viewSwitcherTestButton5Label, "ShowSliderExample");
+                }
+                return _viewSwitcherTestButton5Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestButton6;
+        public static Template ViewSwitcherTestButton6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestButton6 == null || _viewSwitcherTestButton6.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestButton6 == null)
+#endif
+                {
+                    _viewSwitcherTestButton6 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _viewSwitcherTestButton6.Name = "ViewSwitcherTestButton6";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestButton6, ViewSwitcherTestButton6Label);
+                }
+                return _viewSwitcherTestButton6;
+            }
+        }
+
+        private static Template _viewSwitcherTestButton6Label;
+        public static Template ViewSwitcherTestButton6Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestButton6Label == null || _viewSwitcherTestButton6Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestButton6Label == null)
+#endif
+                {
+                    _viewSwitcherTestButton6Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestButton6Label.Name = "ViewSwitcherTestButton6Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_viewSwitcherTestButton6Label, "ShowBindingTest");
+                }
+                return _viewSwitcherTestButton6Label;
+            }
+        }
+
         private static Template _viewSwitcherTestViewSwitcher1;
         public static Template ViewSwitcherTestViewSwitcher1
         {
@@ -505,551 +664,6 @@ namespace Delight
                     Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcherTestViewSwitcher1, Delight.SwitchMode.Load);
                 }
                 return _viewSwitcherTestViewSwitcher1;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExample;
-        public static Template ViewSwitcherTestInputFieldExample
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExample == null || _viewSwitcherTestInputFieldExample.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExample == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExample = new Template(InputFieldExampleTemplates.InputFieldExample);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExample.Name = "ViewSwitcherTestInputFieldExample";
-#endif
-                    Delight.InputFieldExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup1);
-                    Delight.InputFieldExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup2);
-                    Delight.InputFieldExample.Label1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel1);
-                    Delight.InputFieldExample.Label2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel2);
-                    Delight.InputFieldExample.InputField1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField1);
-                    Delight.InputFieldExample.Label3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel3);
-                    Delight.InputFieldExample.InputField2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField2);
-                    Delight.InputFieldExample.Label4TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel4);
-                    Delight.InputFieldExample.InputField3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField3);
-                    Delight.InputFieldExample.Image1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleImage1);
-                    Delight.InputFieldExample.Group3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup3);
-                    Delight.InputFieldExample.Label5TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel5);
-                    Delight.InputFieldExample.InputField4TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField4);
-                }
-                return _viewSwitcherTestInputFieldExample;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleGroup1;
-        public static Template ViewSwitcherTestInputFieldExampleGroup1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleGroup1 == null || _viewSwitcherTestInputFieldExampleGroup1.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleGroup1 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleGroup1 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup1);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleGroup1.Name = "ViewSwitcherTestInputFieldExampleGroup1";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleGroup1;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleGroup2;
-        public static Template ViewSwitcherTestInputFieldExampleGroup2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleGroup2 == null || _viewSwitcherTestInputFieldExampleGroup2.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleGroup2 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleGroup2 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup2);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleGroup2.Name = "ViewSwitcherTestInputFieldExampleGroup2";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleGroup2;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleLabel1;
-        public static Template ViewSwitcherTestInputFieldExampleLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleLabel1 == null || _viewSwitcherTestInputFieldExampleLabel1.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleLabel1 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleLabel1 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel1);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleLabel1.Name = "ViewSwitcherTestInputFieldExampleLabel1";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleLabel1;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleLabel2;
-        public static Template ViewSwitcherTestInputFieldExampleLabel2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleLabel2 == null || _viewSwitcherTestInputFieldExampleLabel2.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleLabel2 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleLabel2 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel2);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleLabel2.Name = "ViewSwitcherTestInputFieldExampleLabel2";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleLabel2;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField1;
-        public static Template ViewSwitcherTestInputFieldExampleInputField1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField1 == null || _viewSwitcherTestInputFieldExampleInputField1.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField1 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField1 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField1.Name = "ViewSwitcherTestInputFieldExampleInputField1";
-#endif
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1TextArea);
-                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder);
-                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1InputText);
-                }
-                return _viewSwitcherTestInputFieldExampleInputField1;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField1TextArea;
-        public static Template ViewSwitcherTestInputFieldExampleInputField1TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField1TextArea == null || _viewSwitcherTestInputFieldExampleInputField1TextArea.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField1TextArea == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField1TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1TextArea);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField1TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField1TextArea";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField1TextArea;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder;
-        public static Template ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1InputFieldPlaceholder);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField1InputText;
-        public static Template ViewSwitcherTestInputFieldExampleInputField1InputText
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField1InputText == null || _viewSwitcherTestInputFieldExampleInputField1InputText.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField1InputText == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField1InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1InputText);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField1InputText.Name = "ViewSwitcherTestInputFieldExampleInputField1InputText";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField1InputText;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleLabel3;
-        public static Template ViewSwitcherTestInputFieldExampleLabel3
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleLabel3 == null || _viewSwitcherTestInputFieldExampleLabel3.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleLabel3 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleLabel3 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel3);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleLabel3.Name = "ViewSwitcherTestInputFieldExampleLabel3";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleLabel3;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField2;
-        public static Template ViewSwitcherTestInputFieldExampleInputField2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField2 == null || _viewSwitcherTestInputFieldExampleInputField2.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField2 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField2 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField2.Name = "ViewSwitcherTestInputFieldExampleInputField2";
-#endif
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2TextArea);
-                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder);
-                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2InputText);
-                }
-                return _viewSwitcherTestInputFieldExampleInputField2;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField2TextArea;
-        public static Template ViewSwitcherTestInputFieldExampleInputField2TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField2TextArea == null || _viewSwitcherTestInputFieldExampleInputField2TextArea.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField2TextArea == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField2TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2TextArea);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField2TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField2TextArea";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField2TextArea;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder;
-        public static Template ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2InputFieldPlaceholder);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField2InputText;
-        public static Template ViewSwitcherTestInputFieldExampleInputField2InputText
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField2InputText == null || _viewSwitcherTestInputFieldExampleInputField2InputText.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField2InputText == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField2InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2InputText);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField2InputText.Name = "ViewSwitcherTestInputFieldExampleInputField2InputText";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField2InputText;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleLabel4;
-        public static Template ViewSwitcherTestInputFieldExampleLabel4
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleLabel4 == null || _viewSwitcherTestInputFieldExampleLabel4.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleLabel4 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleLabel4 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel4);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleLabel4.Name = "ViewSwitcherTestInputFieldExampleLabel4";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleLabel4;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField3;
-        public static Template ViewSwitcherTestInputFieldExampleInputField3
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField3 == null || _viewSwitcherTestInputFieldExampleInputField3.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField3 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField3 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField3.Name = "ViewSwitcherTestInputFieldExampleInputField3";
-#endif
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3TextArea);
-                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder);
-                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3InputText);
-                }
-                return _viewSwitcherTestInputFieldExampleInputField3;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField3TextArea;
-        public static Template ViewSwitcherTestInputFieldExampleInputField3TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField3TextArea == null || _viewSwitcherTestInputFieldExampleInputField3TextArea.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField3TextArea == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField3TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3TextArea);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField3TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField3TextArea";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField3TextArea;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder;
-        public static Template ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3InputFieldPlaceholder);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField3InputText;
-        public static Template ViewSwitcherTestInputFieldExampleInputField3InputText
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField3InputText == null || _viewSwitcherTestInputFieldExampleInputField3InputText.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField3InputText == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField3InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3InputText);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField3InputText.Name = "ViewSwitcherTestInputFieldExampleInputField3InputText";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField3InputText;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleImage1;
-        public static Template ViewSwitcherTestInputFieldExampleImage1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleImage1 == null || _viewSwitcherTestInputFieldExampleImage1.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleImage1 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleImage1 = new Template(InputFieldExampleTemplates.InputFieldExampleImage1);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleImage1.Name = "ViewSwitcherTestInputFieldExampleImage1";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleImage1;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleGroup3;
-        public static Template ViewSwitcherTestInputFieldExampleGroup3
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleGroup3 == null || _viewSwitcherTestInputFieldExampleGroup3.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleGroup3 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleGroup3 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup3);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleGroup3.Name = "ViewSwitcherTestInputFieldExampleGroup3";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleGroup3;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleLabel5;
-        public static Template ViewSwitcherTestInputFieldExampleLabel5
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleLabel5 == null || _viewSwitcherTestInputFieldExampleLabel5.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleLabel5 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleLabel5 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel5);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleLabel5.Name = "ViewSwitcherTestInputFieldExampleLabel5";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleLabel5;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField4;
-        public static Template ViewSwitcherTestInputFieldExampleInputField4
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField4 == null || _viewSwitcherTestInputFieldExampleInputField4.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField4 == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField4 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField4.Name = "ViewSwitcherTestInputFieldExampleInputField4";
-#endif
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4TextArea);
-                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder);
-                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4InputText);
-                }
-                return _viewSwitcherTestInputFieldExampleInputField4;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField4TextArea;
-        public static Template ViewSwitcherTestInputFieldExampleInputField4TextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField4TextArea == null || _viewSwitcherTestInputFieldExampleInputField4TextArea.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField4TextArea == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField4TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4TextArea);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField4TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField4TextArea";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField4TextArea;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder;
-        public static Template ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4InputFieldPlaceholder);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder;
-            }
-        }
-
-        private static Template _viewSwitcherTestInputFieldExampleInputField4InputText;
-        public static Template ViewSwitcherTestInputFieldExampleInputField4InputText
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestInputFieldExampleInputField4InputText == null || _viewSwitcherTestInputFieldExampleInputField4InputText.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestInputFieldExampleInputField4InputText == null)
-#endif
-                {
-                    _viewSwitcherTestInputFieldExampleInputField4InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4InputText);
-#if UNITY_EDITOR
-                    _viewSwitcherTestInputFieldExampleInputField4InputText.Name = "ViewSwitcherTestInputFieldExampleInputField4InputText";
-#endif
-                }
-                return _viewSwitcherTestInputFieldExampleInputField4InputText;
             }
         }
 
@@ -1679,6 +1293,551 @@ namespace Delight
 #endif
                 }
                 return _viewSwitcherTestModelBindingTestLabel2;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExample;
+        public static Template ViewSwitcherTestInputFieldExample
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExample == null || _viewSwitcherTestInputFieldExample.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExample == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExample = new Template(InputFieldExampleTemplates.InputFieldExample);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExample.Name = "ViewSwitcherTestInputFieldExample";
+#endif
+                    Delight.InputFieldExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup1);
+                    Delight.InputFieldExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup2);
+                    Delight.InputFieldExample.Label1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel1);
+                    Delight.InputFieldExample.Label2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel2);
+                    Delight.InputFieldExample.InputField1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField1);
+                    Delight.InputFieldExample.Label3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel3);
+                    Delight.InputFieldExample.InputField2TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField2);
+                    Delight.InputFieldExample.Label4TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel4);
+                    Delight.InputFieldExample.InputField3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField3);
+                    Delight.InputFieldExample.Image1TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleImage1);
+                    Delight.InputFieldExample.Group3TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleGroup3);
+                    Delight.InputFieldExample.Label5TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleLabel5);
+                    Delight.InputFieldExample.InputField4TemplateProperty.SetDefault(_viewSwitcherTestInputFieldExample, ViewSwitcherTestInputFieldExampleInputField4);
+                }
+                return _viewSwitcherTestInputFieldExample;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleGroup1;
+        public static Template ViewSwitcherTestInputFieldExampleGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleGroup1 == null || _viewSwitcherTestInputFieldExampleGroup1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleGroup1 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleGroup1 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleGroup1.Name = "ViewSwitcherTestInputFieldExampleGroup1";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleGroup1;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleGroup2;
+        public static Template ViewSwitcherTestInputFieldExampleGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleGroup2 == null || _viewSwitcherTestInputFieldExampleGroup2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleGroup2 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleGroup2 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleGroup2.Name = "ViewSwitcherTestInputFieldExampleGroup2";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleLabel1;
+        public static Template ViewSwitcherTestInputFieldExampleLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleLabel1 == null || _viewSwitcherTestInputFieldExampleLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleLabel1 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleLabel1.Name = "ViewSwitcherTestInputFieldExampleLabel1";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleLabel1;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleLabel2;
+        public static Template ViewSwitcherTestInputFieldExampleLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleLabel2 == null || _viewSwitcherTestInputFieldExampleLabel2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleLabel2 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleLabel2 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleLabel2.Name = "ViewSwitcherTestInputFieldExampleLabel2";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleLabel2;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField1;
+        public static Template ViewSwitcherTestInputFieldExampleInputField1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField1 == null || _viewSwitcherTestInputFieldExampleInputField1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField1 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField1 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField1.Name = "ViewSwitcherTestInputFieldExampleInputField1";
+#endif
+                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1TextArea);
+                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField1, ViewSwitcherTestInputFieldExampleInputField1InputText);
+                }
+                return _viewSwitcherTestInputFieldExampleInputField1;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder;
+        public static Template ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1InputFieldPlaceholder);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField1InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField1TextArea;
+        public static Template ViewSwitcherTestInputFieldExampleInputField1TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField1TextArea == null || _viewSwitcherTestInputFieldExampleInputField1TextArea.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField1TextArea == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField1TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1TextArea);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField1TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField1TextArea";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField1TextArea;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField1InputText;
+        public static Template ViewSwitcherTestInputFieldExampleInputField1InputText
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField1InputText == null || _viewSwitcherTestInputFieldExampleInputField1InputText.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField1InputText == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField1InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField1InputText);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField1InputText.Name = "ViewSwitcherTestInputFieldExampleInputField1InputText";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField1InputText;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleLabel3;
+        public static Template ViewSwitcherTestInputFieldExampleLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleLabel3 == null || _viewSwitcherTestInputFieldExampleLabel3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleLabel3 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleLabel3 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleLabel3.Name = "ViewSwitcherTestInputFieldExampleLabel3";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleLabel3;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField2;
+        public static Template ViewSwitcherTestInputFieldExampleInputField2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField2 == null || _viewSwitcherTestInputFieldExampleInputField2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField2 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField2 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField2.Name = "ViewSwitcherTestInputFieldExampleInputField2";
+#endif
+                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2TextArea);
+                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField2, ViewSwitcherTestInputFieldExampleInputField2InputText);
+                }
+                return _viewSwitcherTestInputFieldExampleInputField2;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder;
+        public static Template ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2InputFieldPlaceholder);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField2InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField2TextArea;
+        public static Template ViewSwitcherTestInputFieldExampleInputField2TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField2TextArea == null || _viewSwitcherTestInputFieldExampleInputField2TextArea.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField2TextArea == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField2TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2TextArea);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField2TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField2TextArea";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField2TextArea;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField2InputText;
+        public static Template ViewSwitcherTestInputFieldExampleInputField2InputText
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField2InputText == null || _viewSwitcherTestInputFieldExampleInputField2InputText.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField2InputText == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField2InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField2InputText);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField2InputText.Name = "ViewSwitcherTestInputFieldExampleInputField2InputText";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField2InputText;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleLabel4;
+        public static Template ViewSwitcherTestInputFieldExampleLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleLabel4 == null || _viewSwitcherTestInputFieldExampleLabel4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleLabel4 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleLabel4 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleLabel4.Name = "ViewSwitcherTestInputFieldExampleLabel4";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleLabel4;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField3;
+        public static Template ViewSwitcherTestInputFieldExampleInputField3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField3 == null || _viewSwitcherTestInputFieldExampleInputField3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField3 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField3 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField3.Name = "ViewSwitcherTestInputFieldExampleInputField3";
+#endif
+                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3TextArea);
+                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField3, ViewSwitcherTestInputFieldExampleInputField3InputText);
+                }
+                return _viewSwitcherTestInputFieldExampleInputField3;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder;
+        public static Template ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3InputFieldPlaceholder);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField3InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField3TextArea;
+        public static Template ViewSwitcherTestInputFieldExampleInputField3TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField3TextArea == null || _viewSwitcherTestInputFieldExampleInputField3TextArea.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField3TextArea == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField3TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3TextArea);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField3TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField3TextArea";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField3TextArea;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField3InputText;
+        public static Template ViewSwitcherTestInputFieldExampleInputField3InputText
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField3InputText == null || _viewSwitcherTestInputFieldExampleInputField3InputText.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField3InputText == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField3InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField3InputText);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField3InputText.Name = "ViewSwitcherTestInputFieldExampleInputField3InputText";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField3InputText;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleImage1;
+        public static Template ViewSwitcherTestInputFieldExampleImage1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleImage1 == null || _viewSwitcherTestInputFieldExampleImage1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleImage1 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleImage1 = new Template(InputFieldExampleTemplates.InputFieldExampleImage1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleImage1.Name = "ViewSwitcherTestInputFieldExampleImage1";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleImage1;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleGroup3;
+        public static Template ViewSwitcherTestInputFieldExampleGroup3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleGroup3 == null || _viewSwitcherTestInputFieldExampleGroup3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleGroup3 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleGroup3 = new Template(InputFieldExampleTemplates.InputFieldExampleGroup3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleGroup3.Name = "ViewSwitcherTestInputFieldExampleGroup3";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleGroup3;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleLabel5;
+        public static Template ViewSwitcherTestInputFieldExampleLabel5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleLabel5 == null || _viewSwitcherTestInputFieldExampleLabel5.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleLabel5 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleLabel5 = new Template(InputFieldExampleTemplates.InputFieldExampleLabel5);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleLabel5.Name = "ViewSwitcherTestInputFieldExampleLabel5";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleLabel5;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField4;
+        public static Template ViewSwitcherTestInputFieldExampleInputField4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField4 == null || _viewSwitcherTestInputFieldExampleInputField4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField4 == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField4 = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField4.Name = "ViewSwitcherTestInputFieldExampleInputField4";
+#endif
+                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4TextArea);
+                    Delight.InputField.InputTextTemplateProperty.SetDefault(_viewSwitcherTestInputFieldExampleInputField4, ViewSwitcherTestInputFieldExampleInputField4InputText);
+                }
+                return _viewSwitcherTestInputFieldExampleInputField4;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder;
+        public static Template ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder == null || _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4InputFieldPlaceholder);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder.Name = "ViewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField4InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField4TextArea;
+        public static Template ViewSwitcherTestInputFieldExampleInputField4TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField4TextArea == null || _viewSwitcherTestInputFieldExampleInputField4TextArea.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField4TextArea == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField4TextArea = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4TextArea);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField4TextArea.Name = "ViewSwitcherTestInputFieldExampleInputField4TextArea";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField4TextArea;
+            }
+        }
+
+        private static Template _viewSwitcherTestInputFieldExampleInputField4InputText;
+        public static Template ViewSwitcherTestInputFieldExampleInputField4InputText
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestInputFieldExampleInputField4InputText == null || _viewSwitcherTestInputFieldExampleInputField4InputText.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestInputFieldExampleInputField4InputText == null)
+#endif
+                {
+                    _viewSwitcherTestInputFieldExampleInputField4InputText = new Template(InputFieldExampleTemplates.InputFieldExampleInputField4InputText);
+#if UNITY_EDITOR
+                    _viewSwitcherTestInputFieldExampleInputField4InputText.Name = "ViewSwitcherTestInputFieldExampleInputField4InputText";
+#endif
+                }
+                return _viewSwitcherTestInputFieldExampleInputField4InputText;
             }
         }
 
@@ -4869,6 +5028,802 @@ namespace Delight
 #endif
                 }
                 return _viewSwitcherTestAssetManagementTestLabel4;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExample;
+        public static Template ViewSwitcherTestSliderExample
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExample == null || _viewSwitcherTestSliderExample.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExample == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExample = new Template(SliderExampleTemplates.SliderExample);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExample.Name = "ViewSwitcherTestSliderExample";
+#endif
+                    Delight.SliderExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleGroup1);
+                    Delight.SliderExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleGroup2);
+                    Delight.SliderExample.Slider1TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleSlider1);
+                    Delight.SliderExample.Label1TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleLabel1);
+                    Delight.SliderExample.Group3TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleGroup3);
+                    Delight.SliderExample.Slider2TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleSlider2);
+                    Delight.SliderExample.Label2TemplateProperty.SetDefault(_viewSwitcherTestSliderExample, ViewSwitcherTestSliderExampleLabel2);
+                }
+                return _viewSwitcherTestSliderExample;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleGroup1;
+        public static Template ViewSwitcherTestSliderExampleGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleGroup1 == null || _viewSwitcherTestSliderExampleGroup1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleGroup1 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleGroup1 = new Template(SliderExampleTemplates.SliderExampleGroup1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleGroup1.Name = "ViewSwitcherTestSliderExampleGroup1";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleGroup1;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleGroup2;
+        public static Template ViewSwitcherTestSliderExampleGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleGroup2 == null || _viewSwitcherTestSliderExampleGroup2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleGroup2 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleGroup2 = new Template(SliderExampleTemplates.SliderExampleGroup2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleGroup2.Name = "ViewSwitcherTestSliderExampleGroup2";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1;
+        public static Template ViewSwitcherTestSliderExampleSlider1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1 == null || _viewSwitcherTestSliderExampleSlider1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1 = new Template(SliderExampleTemplates.SliderExampleSlider1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1.Name = "ViewSwitcherTestSliderExampleSlider1";
+#endif
+                    Delight.Slider.SliderRegionTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider1, ViewSwitcherTestSliderExampleSlider1SliderRegion);
+                    Delight.Slider.SliderBackgroundImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider1, ViewSwitcherTestSliderExampleSlider1SliderBackgroundImageView);
+                    Delight.Slider.SliderFillRegionTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider1, ViewSwitcherTestSliderExampleSlider1SliderFillRegion);
+                    Delight.Slider.SliderFillImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider1, ViewSwitcherTestSliderExampleSlider1SliderFillImageView);
+                    Delight.Slider.SliderHandleImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider1, ViewSwitcherTestSliderExampleSlider1SliderHandleImageView);
+                }
+                return _viewSwitcherTestSliderExampleSlider1;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1SliderRegion;
+        public static Template ViewSwitcherTestSliderExampleSlider1SliderRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1SliderRegion == null || _viewSwitcherTestSliderExampleSlider1SliderRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1SliderRegion == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1SliderRegion = new Template(SliderExampleTemplates.SliderExampleSlider1SliderRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1SliderRegion.Name = "ViewSwitcherTestSliderExampleSlider1SliderRegion";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider1SliderRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider1SliderBackgroundImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView == null || _viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView = new Template(SliderExampleTemplates.SliderExampleSlider1SliderBackgroundImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView.Name = "ViewSwitcherTestSliderExampleSlider1SliderBackgroundImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider1SliderBackgroundImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1SliderFillRegion;
+        public static Template ViewSwitcherTestSliderExampleSlider1SliderFillRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1SliderFillRegion == null || _viewSwitcherTestSliderExampleSlider1SliderFillRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1SliderFillRegion == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1SliderFillRegion = new Template(SliderExampleTemplates.SliderExampleSlider1SliderFillRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1SliderFillRegion.Name = "ViewSwitcherTestSliderExampleSlider1SliderFillRegion";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider1SliderFillRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1SliderFillImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider1SliderFillImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1SliderFillImageView == null || _viewSwitcherTestSliderExampleSlider1SliderFillImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1SliderFillImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1SliderFillImageView = new Template(SliderExampleTemplates.SliderExampleSlider1SliderFillImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1SliderFillImageView.Name = "ViewSwitcherTestSliderExampleSlider1SliderFillImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider1SliderFillImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider1SliderHandleImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider1SliderHandleImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider1SliderHandleImageView == null || _viewSwitcherTestSliderExampleSlider1SliderHandleImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider1SliderHandleImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider1SliderHandleImageView = new Template(SliderExampleTemplates.SliderExampleSlider1SliderHandleImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider1SliderHandleImageView.Name = "ViewSwitcherTestSliderExampleSlider1SliderHandleImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider1SliderHandleImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleLabel1;
+        public static Template ViewSwitcherTestSliderExampleLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleLabel1 == null || _viewSwitcherTestSliderExampleLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleLabel1 = new Template(SliderExampleTemplates.SliderExampleLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleLabel1.Name = "ViewSwitcherTestSliderExampleLabel1";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleLabel1;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleGroup3;
+        public static Template ViewSwitcherTestSliderExampleGroup3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleGroup3 == null || _viewSwitcherTestSliderExampleGroup3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleGroup3 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleGroup3 = new Template(SliderExampleTemplates.SliderExampleGroup3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleGroup3.Name = "ViewSwitcherTestSliderExampleGroup3";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleGroup3;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2;
+        public static Template ViewSwitcherTestSliderExampleSlider2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2 == null || _viewSwitcherTestSliderExampleSlider2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2 = new Template(SliderExampleTemplates.SliderExampleSlider2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2.Name = "ViewSwitcherTestSliderExampleSlider2";
+#endif
+                    Delight.Slider.SliderRegionTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider2, ViewSwitcherTestSliderExampleSlider2SliderRegion);
+                    Delight.Slider.SliderBackgroundImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider2, ViewSwitcherTestSliderExampleSlider2SliderBackgroundImageView);
+                    Delight.Slider.SliderFillRegionTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider2, ViewSwitcherTestSliderExampleSlider2SliderFillRegion);
+                    Delight.Slider.SliderFillImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider2, ViewSwitcherTestSliderExampleSlider2SliderFillImageView);
+                    Delight.Slider.SliderHandleImageViewTemplateProperty.SetDefault(_viewSwitcherTestSliderExampleSlider2, ViewSwitcherTestSliderExampleSlider2SliderHandleImageView);
+                }
+                return _viewSwitcherTestSliderExampleSlider2;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2SliderRegion;
+        public static Template ViewSwitcherTestSliderExampleSlider2SliderRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2SliderRegion == null || _viewSwitcherTestSliderExampleSlider2SliderRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2SliderRegion == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2SliderRegion = new Template(SliderExampleTemplates.SliderExampleSlider2SliderRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2SliderRegion.Name = "ViewSwitcherTestSliderExampleSlider2SliderRegion";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider2SliderRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider2SliderBackgroundImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView == null || _viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView = new Template(SliderExampleTemplates.SliderExampleSlider2SliderBackgroundImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView.Name = "ViewSwitcherTestSliderExampleSlider2SliderBackgroundImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider2SliderBackgroundImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2SliderFillRegion;
+        public static Template ViewSwitcherTestSliderExampleSlider2SliderFillRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2SliderFillRegion == null || _viewSwitcherTestSliderExampleSlider2SliderFillRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2SliderFillRegion == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2SliderFillRegion = new Template(SliderExampleTemplates.SliderExampleSlider2SliderFillRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2SliderFillRegion.Name = "ViewSwitcherTestSliderExampleSlider2SliderFillRegion";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider2SliderFillRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2SliderFillImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider2SliderFillImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2SliderFillImageView == null || _viewSwitcherTestSliderExampleSlider2SliderFillImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2SliderFillImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2SliderFillImageView = new Template(SliderExampleTemplates.SliderExampleSlider2SliderFillImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2SliderFillImageView.Name = "ViewSwitcherTestSliderExampleSlider2SliderFillImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider2SliderFillImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleSlider2SliderHandleImageView;
+        public static Template ViewSwitcherTestSliderExampleSlider2SliderHandleImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleSlider2SliderHandleImageView == null || _viewSwitcherTestSliderExampleSlider2SliderHandleImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleSlider2SliderHandleImageView == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleSlider2SliderHandleImageView = new Template(SliderExampleTemplates.SliderExampleSlider2SliderHandleImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleSlider2SliderHandleImageView.Name = "ViewSwitcherTestSliderExampleSlider2SliderHandleImageView";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleSlider2SliderHandleImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestSliderExampleLabel2;
+        public static Template ViewSwitcherTestSliderExampleLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestSliderExampleLabel2 == null || _viewSwitcherTestSliderExampleLabel2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestSliderExampleLabel2 == null)
+#endif
+                {
+                    _viewSwitcherTestSliderExampleLabel2 = new Template(SliderExampleTemplates.SliderExampleLabel2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestSliderExampleLabel2.Name = "ViewSwitcherTestSliderExampleLabel2";
+#endif
+                }
+                return _viewSwitcherTestSliderExampleLabel2;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTest;
+        public static Template ViewSwitcherTestBindingTest
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTest == null || _viewSwitcherTestBindingTest.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTest == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTest = new Template(BindingTestTemplates.BindingTest);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTest.Name = "ViewSwitcherTestBindingTest";
+#endif
+                    Delight.BindingTest.Region1TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestRegion1);
+                    Delight.BindingTest.Group1TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestGroup1);
+                    Delight.BindingTest.Button1TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestButton1);
+                    Delight.BindingTest.Button2TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestButton2);
+                    Delight.BindingTest.Button3TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestButton3);
+                    Delight.BindingTest.LargeButton1TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestLargeButton1);
+                    Delight.BindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestLabel1);
+                    Delight.BindingTest.Button4TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestButton4);
+                    Delight.BindingTest.Button5TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestButton5);
+                    Delight.BindingTest.RegionOnDemandTemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestRegionOnDemand);
+                    Delight.BindingTest.Group2TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestGroup2);
+                    Delight.BindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestLabel2);
+                    Delight.BindingTest.Label3TemplateProperty.SetDefault(_viewSwitcherTestBindingTest, ViewSwitcherTestBindingTestLabel3);
+                }
+                return _viewSwitcherTestBindingTest;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestRegion1;
+        public static Template ViewSwitcherTestBindingTestRegion1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestRegion1 == null || _viewSwitcherTestBindingTestRegion1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestRegion1 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestRegion1 = new Template(BindingTestTemplates.BindingTestRegion1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestRegion1.Name = "ViewSwitcherTestBindingTestRegion1";
+#endif
+                }
+                return _viewSwitcherTestBindingTestRegion1;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestGroup1;
+        public static Template ViewSwitcherTestBindingTestGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestGroup1 == null || _viewSwitcherTestBindingTestGroup1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestGroup1 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestGroup1 = new Template(BindingTestTemplates.BindingTestGroup1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestGroup1.Name = "ViewSwitcherTestBindingTestGroup1";
+#endif
+                }
+                return _viewSwitcherTestBindingTestGroup1;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton1;
+        public static Template ViewSwitcherTestBindingTestButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton1 == null || _viewSwitcherTestBindingTestButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton1 = new Template(BindingTestTemplates.BindingTestButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton1.Name = "ViewSwitcherTestBindingTestButton1";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestButton1, ViewSwitcherTestBindingTestButton1Label);
+                }
+                return _viewSwitcherTestBindingTestButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton1Label;
+        public static Template ViewSwitcherTestBindingTestButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton1Label == null || _viewSwitcherTestBindingTestButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton1Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton1Label = new Template(BindingTestTemplates.BindingTestButton1Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton1Label.Name = "ViewSwitcherTestBindingTestButton1Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestButton1Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton2;
+        public static Template ViewSwitcherTestBindingTestButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton2 == null || _viewSwitcherTestBindingTestButton2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton2 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton2 = new Template(BindingTestTemplates.BindingTestButton2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton2.Name = "ViewSwitcherTestBindingTestButton2";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestButton2, ViewSwitcherTestBindingTestButton2Label);
+                }
+                return _viewSwitcherTestBindingTestButton2;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton2Label;
+        public static Template ViewSwitcherTestBindingTestButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton2Label == null || _viewSwitcherTestBindingTestButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton2Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton2Label = new Template(BindingTestTemplates.BindingTestButton2Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton2Label.Name = "ViewSwitcherTestBindingTestButton2Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestButton2Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton3;
+        public static Template ViewSwitcherTestBindingTestButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton3 == null || _viewSwitcherTestBindingTestButton3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton3 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton3 = new Template(BindingTestTemplates.BindingTestButton3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton3.Name = "ViewSwitcherTestBindingTestButton3";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestButton3, ViewSwitcherTestBindingTestButton3Label);
+                }
+                return _viewSwitcherTestBindingTestButton3;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton3Label;
+        public static Template ViewSwitcherTestBindingTestButton3Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton3Label == null || _viewSwitcherTestBindingTestButton3Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton3Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton3Label = new Template(BindingTestTemplates.BindingTestButton3Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton3Label.Name = "ViewSwitcherTestBindingTestButton3Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestButton3Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestLargeButton1;
+        public static Template ViewSwitcherTestBindingTestLargeButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestLargeButton1 == null || _viewSwitcherTestBindingTestLargeButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestLargeButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestLargeButton1 = new Template(BindingTestTemplates.BindingTestLargeButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestLargeButton1.Name = "ViewSwitcherTestBindingTestLargeButton1";
+#endif
+                    Delight.LargeButton.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestLargeButton1, ViewSwitcherTestBindingTestLargeButton1Label);
+                }
+                return _viewSwitcherTestBindingTestLargeButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestLargeButton1Label;
+        public static Template ViewSwitcherTestBindingTestLargeButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestLargeButton1Label == null || _viewSwitcherTestBindingTestLargeButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestLargeButton1Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestLargeButton1Label = new Template(BindingTestTemplates.BindingTestLargeButton1Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestLargeButton1Label.Name = "ViewSwitcherTestBindingTestLargeButton1Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestLargeButton1Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestLabel1;
+        public static Template ViewSwitcherTestBindingTestLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestLabel1 == null || _viewSwitcherTestBindingTestLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestLabel1 = new Template(BindingTestTemplates.BindingTestLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestLabel1.Name = "ViewSwitcherTestBindingTestLabel1";
+#endif
+                }
+                return _viewSwitcherTestBindingTestLabel1;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton4;
+        public static Template ViewSwitcherTestBindingTestButton4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton4 == null || _viewSwitcherTestBindingTestButton4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton4 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton4 = new Template(BindingTestTemplates.BindingTestButton4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton4.Name = "ViewSwitcherTestBindingTestButton4";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestButton4, ViewSwitcherTestBindingTestButton4Label);
+                }
+                return _viewSwitcherTestBindingTestButton4;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton4Label;
+        public static Template ViewSwitcherTestBindingTestButton4Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton4Label == null || _viewSwitcherTestBindingTestButton4Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton4Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton4Label = new Template(BindingTestTemplates.BindingTestButton4Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton4Label.Name = "ViewSwitcherTestBindingTestButton4Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestButton4Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton5;
+        public static Template ViewSwitcherTestBindingTestButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton5 == null || _viewSwitcherTestBindingTestButton5.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton5 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton5 = new Template(BindingTestTemplates.BindingTestButton5);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton5.Name = "ViewSwitcherTestBindingTestButton5";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestBindingTestButton5, ViewSwitcherTestBindingTestButton5Label);
+                }
+                return _viewSwitcherTestBindingTestButton5;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestButton5Label;
+        public static Template ViewSwitcherTestBindingTestButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestButton5Label == null || _viewSwitcherTestBindingTestButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestButton5Label == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestButton5Label = new Template(BindingTestTemplates.BindingTestButton5Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestButton5Label.Name = "ViewSwitcherTestBindingTestButton5Label";
+#endif
+                }
+                return _viewSwitcherTestBindingTestButton5Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestRegionOnDemand;
+        public static Template ViewSwitcherTestBindingTestRegionOnDemand
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestRegionOnDemand == null || _viewSwitcherTestBindingTestRegionOnDemand.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestRegionOnDemand == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestRegionOnDemand = new Template(BindingTestTemplates.BindingTestRegionOnDemand);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestRegionOnDemand.Name = "ViewSwitcherTestBindingTestRegionOnDemand";
+#endif
+                }
+                return _viewSwitcherTestBindingTestRegionOnDemand;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestGroup2;
+        public static Template ViewSwitcherTestBindingTestGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestGroup2 == null || _viewSwitcherTestBindingTestGroup2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestGroup2 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestGroup2 = new Template(BindingTestTemplates.BindingTestGroup2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestGroup2.Name = "ViewSwitcherTestBindingTestGroup2";
+#endif
+                }
+                return _viewSwitcherTestBindingTestGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestLabel2;
+        public static Template ViewSwitcherTestBindingTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestLabel2 == null || _viewSwitcherTestBindingTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestLabel2 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestLabel2 = new Template(BindingTestTemplates.BindingTestLabel2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestLabel2.Name = "ViewSwitcherTestBindingTestLabel2";
+#endif
+                }
+                return _viewSwitcherTestBindingTestLabel2;
+            }
+        }
+
+        private static Template _viewSwitcherTestBindingTestLabel3;
+        public static Template ViewSwitcherTestBindingTestLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestBindingTestLabel3 == null || _viewSwitcherTestBindingTestLabel3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestBindingTestLabel3 == null)
+#endif
+                {
+                    _viewSwitcherTestBindingTestLabel3 = new Template(BindingTestTemplates.BindingTestLabel3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestBindingTestLabel3.Name = "ViewSwitcherTestBindingTestLabel3";
+#endif
+                }
+                return _viewSwitcherTestBindingTestLabel3;
             }
         }
 

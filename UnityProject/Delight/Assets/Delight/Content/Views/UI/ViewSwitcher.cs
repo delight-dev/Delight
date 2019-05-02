@@ -13,8 +13,17 @@ namespace Delight
     /// </summary>
     public partial class ViewSwitcher
     {
+        #region Fields
+
         public SceneObjectView ActiveView;
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Called before the view is loaded.
+        /// </summary>
         protected override void BeforeLoad()
         {
             if (IgnoreObject)
@@ -50,6 +59,9 @@ namespace Delight
 
         }
 
+        /// <summary>
+        /// Called after the view is loaded.
+        /// </summary>
         protected override void AfterLoad()
         {
             if (IgnoreObject)
@@ -67,9 +79,20 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Switches to view at index.
+        /// </summary>
         public void SwitchTo(int index)
         {
             var view = Content.LayoutChildren.ElementAtOrDefault(index);
+            SwitchTo(view);
+        }
+
+        /// <summary>
+        /// Switches to the view specified.
+        /// </summary>
+        public void SwitchTo(View view)
+        {
             if (view == ActiveView)
                 return;
 
@@ -98,5 +121,7 @@ namespace Delight
                 ActiveView.Load();
             }
         }
+
+        #endregion
     }
 }

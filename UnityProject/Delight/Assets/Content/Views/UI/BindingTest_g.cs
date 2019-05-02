@@ -26,48 +26,20 @@ namespace Delight
             Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
 
             // binding <Button BackgroundColor="{TestBinding2}">
-            Bindings.Add(new Binding(
-                new List<string> { "TestBinding2" },
-                new List<string> { "Button3", "BackgroundColor" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Button3 },
-                () => Button3.BackgroundColor = TestBinding2,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestBinding2" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Button3", "BackgroundColor" }, new List<Func<BindableObject>> { () => this, () => Button3 }), () => Button3.BackgroundColor = TestBinding2, () => { }, false));
             LargeButton1 = new LargeButton(this, Group1.Content, "LargeButton1", LargeButton1Template);
             Label1 = new Label(this, Group1.Content, "Label1", Label1Template);
 
             // binding <Label Text="{TestBinding}">
-            Bindings.Add(new Binding(
-                new List<string> { "TestBinding" },
-                new List<string> { "Label1", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label1 },
-                () => Label1.Text = TestBinding,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestBinding" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = TestBinding, () => { }, false));
             Button4 = new Button(this, Group1.Content, "Button4", Button4Template);
 
             // binding <Button Text="{TestBinding}">
-            Bindings.Add(new Binding(
-                new List<string> { "TestBinding" },
-                new List<string> { "Button4", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Button4 },
-                () => Button4.Text = TestBinding,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestBinding" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Button4", "Text" }, new List<Func<BindableObject>> { () => this, () => Button4 }), () => Button4.Text = TestBinding, () => { }, false));
             Button5 = new Button(this, Group1.Content, "Button5", Button5Template);
 
             // binding <Button Text="{Player1.Name}">
-            Bindings.Add(new Binding(
-                new List<string> { "Player1", "Name" },
-                new List<string> { "Button5", "Text" },
-                new List<Func<BindableObject>> { () => this, () => Player1 },
-                new List<Func<BindableObject>> { () => this, () => Button5 },
-                () => Button5.Text = Player1.Name,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Player1", "Name" }, new List<Func<BindableObject>> { () => this, () => Player1 }) }, new BindingPath(new List<string> { "Button5", "Text" }, new List<Func<BindableObject>> { () => this, () => Button5 }), () => Button5.Text = Player1.Name, () => { }, false));
 
             // constructing Region (RegionOnDemand)
             RegionOnDemand = new Region(this, this, "RegionOnDemand", RegionOnDemandTemplate);
@@ -75,25 +47,11 @@ namespace Delight
             Label2 = new Label(this, Group2.Content, "Label2", Label2Template);
 
             // binding <Label Text="{TestBinding}">
-            Bindings.Add(new Binding(
-                new List<string> { "TestBinding" },
-                new List<string> { "Label2", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label2 },
-                () => Label2.Text = TestBinding,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestBinding" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = TestBinding, () => { }, false));
             Label3 = new Label(this, Group2.Content, "Label3", Label3Template);
 
             // binding <Label Text="{Player1.Name}">
-            Bindings.Add(new Binding(
-                new List<string> { "Player1", "Name" },
-                new List<string> { "Label3", "Text" },
-                new List<Func<BindableObject>> { () => this, () => Player1 },
-                new List<Func<BindableObject>> { () => this, () => Label3 },
-                () => Label3.Text = Player1.Name,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Player1", "Name" }, new List<Func<BindableObject>> { () => this, () => Player1 }) }, new BindingPath(new List<string> { "Label3", "Text" }, new List<Func<BindableObject>> { () => this, () => Label3 }), () => Label3.Text = Player1.Name, () => { }, false));
             this.AfterInitializeInternal();
         }
 

@@ -34,14 +34,7 @@ namespace Delight
             List1 = new List(this, Region2.Content, "List1", List1Template);
 
             // binding <List Items="{view in DesignerViews}">
-            Bindings.Add(new Binding(
-                new List<string> { "DesignerViews" },
-                new List<string> { "List1", "Items" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => List1 },
-                () => List1.Items = DesignerViews,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = DesignerViews, () => { }, false));
 
             // Template for List1
             List1.ContentTemplate = new ContentTemplate(tiView => 
@@ -50,14 +43,7 @@ namespace Delight
                 var label1 = new Label(this, list1Content.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{view.Name}">
-                list1Content.Bindings.Add(new Binding(
-                    new List<string> { "Item", "Name" },
-                    new List<string> { "Text" },
-                    new List<Func<BindableObject>> { () => tiView, () => tiView.Item },
-                    new List<Func<BindableObject>> { () => label1 },
-                    () => label1.Text = (tiView.Item as Delight.DesignerView).Name,
-                    () => { }
-                ));
+                list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => tiView.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
                 return list1Content;
             });
             Region3 = new Region(this, Grid1.Content, "Region3", Region3Template);

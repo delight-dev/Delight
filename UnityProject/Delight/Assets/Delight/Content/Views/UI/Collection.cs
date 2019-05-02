@@ -130,7 +130,7 @@ namespace Delight
         /// </summary>
         private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
-            Debug.Log("Collection changed");
+            // Debug.Log("Collection changed");
 
             if (e.ChangeAction == CollectionChangeAction.Add)
             {

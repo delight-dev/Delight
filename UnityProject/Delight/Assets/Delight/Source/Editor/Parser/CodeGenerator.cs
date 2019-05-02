@@ -764,57 +764,80 @@ namespace Delight.Editor.Parser
                 {
                     foreach (var propertyBinding in childViewDeclaration.PropertyBindings)
                     {
-                        if (propertyBinding.BindingType != BindingType.SingleBinding)
+                        // generate binding path to source
+                        var sourceBindingPathObjects = new List<string>();
+                        var convertedSourceProperties = new List<string>();
+                        var sourceProperties = new List<string>();
+                        foreach (var bindingSource in propertyBinding.Sources)
                         {
-                            Debug.LogError(String.Format("[Delight] {0}: Unable to generate binding to property <{1} {2}=\"{3}\">. Multi-binding not implemented.",
-                                GetLineInfo(fileName, propertyBinding),
-                                viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
-                            continue;
+                            // generate binding path to source
+                            var sourcePath = new List<string>();
+                            sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+                            // get property names along path
+                            var templateItemInfo = templateItems != null
+                                ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
+                                : null;
+                            bool isTemplateItemSource = templateItemInfo != null;
+
+                            if (isTemplateItemSource)
+                            {
+                                if (templateItemInfo.ItemType == null)
+                                    continue; // item type was not inferred so ignore binding
+
+                                sourcePath[0] = templateItemInfo.VariableName;
+                                sourcePath.Insert(1, "Item");
+                            }
+
+                            bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                            string sourcePropertiesStr = string.Join(", ",
+                                sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0))
+                                    .Select(x => "\"" + x + "\""));
+
+                            // get object getters along path
+                            List<string> sourceGetters = new List<string>();
+                            int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
+                            int sourcePathTake = isModelSource ? 2 : 1;
+                            if (!isModelSource && !isTemplateItemSource)
+                            {
+                                sourceGetters.Add("() => this");
+                            }
+
+                            for (int i = 0; i < sourcePathCount; ++i)
+                            {
+                                sourceGetters.Add(String.Format("() => {0}",
+                                    string.Join(".", sourcePath.Take(i + sourcePathTake))));
+                            }
+
+                            if (isTemplateItemSource)
+                            {
+                                // in source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                                sourcePath = sourcePath.Skip(2).ToList();
+                                sourcePath.Insert(0,
+                                    String.Format("({0}.Item as {1})", templateItemInfo.VariableName,
+                                        templateItemInfo.ItemType));
+                            }
+
+                            string sourceGettersString = string.Join(", ", sourceGetters);
+                            string sourceProperty = string.Join(".", sourcePath);
+                            string convertedSourceProperty = sourceProperty;
+
+                            // add converter
+                            if (!String.IsNullOrEmpty(bindingSource.Converter))
+                            {
+                                convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, sourceProperty);
+                            }
+
+                            convertedSourceProperties.Add(convertedSourceProperty);
+                            sourceProperties.Add(sourceProperty);
+                            sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
                         }
 
-                        var bindingSource = propertyBinding.Sources.First();
+                        // generate binding path to target
                         var targetPath = new List<string>();
                         targetPath.Add(childIdVar);
                         targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
-                        var sourcePath = new List<string>();
-                        sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
-
-                        // get property names along path
-                        var templateItemInfo = templateItems != null ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0]) : null;
-                        bool isTemplateItemSource = templateItemInfo != null;
-
-                        if (isTemplateItemSource)
-                        {
-                            if (templateItemInfo.ItemType == null)
-                                continue; // item type was not inferred so ignore binding
-
-                            sourcePath[0] = templateItemInfo.VariableName;
-                            sourcePath.Insert(1, "Item");
-                        }
-                        bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
-                        string sourceProperties = string.Join(", ", sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).Select(x => "\"" + x + "\""));
                         string targetProperties = string.Join(", ", targetPath.Skip(inTemplate ? 1 : 0).Select(x => "\"" + x + "\""));
-
-                        // get object getters along path
-                        List<string> sourceGetters = new List<string>();
-                        int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
-                        int sourcePathTake = isModelSource ? 2 : 1;
-                        if (!isModelSource && !isTemplateItemSource)
-                        {
-                            sourceGetters.Add("() => this");
-                        }
-
-                        for (int i = 0; i < sourcePathCount; ++i)
-                        {
-                            sourceGetters.Add(String.Format("() => {0}", string.Join(".", sourcePath.Take(i + sourcePathTake))));
-                        }
-
-                        if (isTemplateItemSource)
-                        {
-                            // in source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
-                            sourcePath = sourcePath.Skip(2).ToList();
-                            sourcePath.Insert(0, String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemType));
-                        }
 
                         List<string> targetGetters = new List<string>();
                         if (!inTemplate)
@@ -826,41 +849,54 @@ namespace Delight.Editor.Parser
                             targetGetters.Add(String.Format("() => {0}", string.Join(".", targetPath.Take(i + 1))));
                         }
 
-                        string sourceGettersString = string.Join(", ", sourceGetters);
                         string targetGettersString = string.Join(", ", targetGetters);
-
-                        string sourceProperty = string.Join(".", sourcePath);
                         string targetProperty = string.Join(".", targetPath);
-                        string convertedSourceProperty = sourceProperty;
                         string convertedTargetProperty = targetProperty;
-                        
-                        // add converter
-                        if (!String.IsNullOrEmpty(bindingSource.Converter))
+
+                        // if the binding is two-way single binding and is converted, add conversion of target
+                        bool isTwoWay = false;
+                        if (propertyBinding.BindingType == BindingType.SingleBinding)
                         {
-                            convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, sourceProperty);
-                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay))
+                            var bindingSource = propertyBinding.Sources.First();
+                            isTwoWay = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
+                            if (isTwoWay && !String.IsNullOrEmpty(bindingSource.Converter))
                             {
                                 convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, targetProperty);
                             }
                         }
 
-                        string sourceToTarget = String.Format("{0} = {1}", targetProperty, convertedSourceProperty);
-                        string targetToSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay) ?
-                            String.Format("{0} = {1}", sourceProperty, convertedTargetProperty) : "{ }";
+                        string sourceToTarget = "";
+                        string targetToSource = "{ }";
+                        switch (propertyBinding.BindingType)
+                        {
+                            case BindingType.SingleBinding:
+                            default:
+                                sourceToTarget = String.Format("{0} = {1}", targetProperty, convertedSourceProperties.First());
+                                targetToSource = isTwoWay ? string.Format("{0} = {1}", sourceProperties.First(), convertedTargetProperty) : "{ }";
+                                break;
 
-                        // TODO in one-way bindings we don't need to listen to changes in target object
+                            case BindingType.MultiBindingTransform:
+                                sourceToTarget = string.Format("{0} = {1}({2})", targetProperty, propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                                break;
+
+                            case BindingType.MultiBindingFormatString:
+                                sourceToTarget = string.Format("{0} = String.Format(\"{1}\", {2})", targetProperty, propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
+                                break;
+                        }
 
                         // print smart binding
                         sb.AppendLine();
                         sb.AppendLine(indent, "// binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
-                        sb.AppendLine(indent, "{0}Bindings.Add(new Binding(", inTemplate ? firstTemplateChild + "." : "");
-                        sb.AppendLine(indent, "    new List<string> {{ {0} }},", sourceProperties);
-                        sb.AppendLine(indent, "    new List<string> {{ {0} }},", targetProperties);
-                        sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", sourceGettersString);
-                        sb.AppendLine(indent, "    new List<Func<BindableObject>> {{ {0} }},", targetGettersString);
-                        sb.AppendLine(indent, "    () => {0},", sourceToTarget);
-                        sb.AppendLine(indent, "    () => {0}", targetToSource);
-                        sb.AppendLine(indent, "));");
+                        sb.AppendLine(indent,
+                            "{0}Bindings.Add(new Binding(new List<BindingPath> {{ {1} }}, {2}, () => {3}, () => {4}, {5}));",
+                            inTemplate ? firstTemplateChild + "." : "",
+                            string.Join(", ", sourceBindingPathObjects),
+                            String.Format(
+                                "new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})",
+                                targetProperties, targetGettersString),
+                            sourceToTarget,
+                            targetToSource,
+                            isTwoWay ? "true" : "false");
                     }
                 }
 
@@ -1609,13 +1645,13 @@ namespace Delight.Editor.Parser
                     }
 
                     foreach (var propertyData in modelData.PropertyData)
-                    {                      
+                    {
                         if (propertyData.Property.IsModelReference)
                         {
                             propertySetters.Add(String.Format("{0}Id = \"{1}\"", propertyData.Property.Name, propertyData.PropertyValue));
                             continue;
                         }
-                        
+
                         // get initializer for property type
                         string typeInitializer = GetInitializerForType(propertyData.Property.TypeName, propertyData.PropertyValue);
                         if (typeInitializer == null)

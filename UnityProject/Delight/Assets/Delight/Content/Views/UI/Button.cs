@@ -148,6 +148,11 @@ namespace Delight
                 // adjust size initially to text
                 TextChanged();
             }
+
+            if (IsToggleButton)
+            {
+                ToggleValueChanged();
+            }
         }
 
         /// <summary>

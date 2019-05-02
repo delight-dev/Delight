@@ -12,22 +12,32 @@ namespace Delight
     {
         public void ShowModelBindingTest()
         {
-            ViewSwitcher1.SwitchTo(0);
+            ViewSwitcher1.SwitchTo(ModelBindingTest);
         }
 
         public void ShowScrollExample()
         {
-            ViewSwitcher1.SwitchTo(1);
+            ViewSwitcher1.SwitchTo(ScrollExample);
         }
 
         public void ShowAssetManagementTest()
         {
-            ViewSwitcher1.SwitchTo(2);
+            ViewSwitcher1.SwitchTo(AssetManagementTest);
         }
 
         public void ShowInputFieldExample()
         {
-            ViewSwitcher1.SwitchTo(3);
+            ViewSwitcher1.SwitchTo(InputFieldExample);
+        }
+        
+        public void ShowSliderExample()
+        {
+            ViewSwitcher1.SwitchTo(SliderExample);
+        }
+
+        public void ShowBindingTest()
+        {
+            ViewSwitcher1.SwitchTo(BindingTest);
         }
     }
 }

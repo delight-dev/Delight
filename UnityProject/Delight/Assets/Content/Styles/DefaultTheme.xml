@@ -10,4 +10,5 @@
             Alternate-BackgroundColor="Gray95" />
   <InputField BackgroundColor="White" FontSize="18" FontColor="#000000" 
               Width="400" Height="50" SelectionColor="#ef706a" TextMargin="10,12,10,0" />
+  <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22"/>
 </DefaultTheme> 

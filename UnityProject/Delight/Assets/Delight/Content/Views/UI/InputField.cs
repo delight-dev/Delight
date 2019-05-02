@@ -44,7 +44,6 @@ namespace Delight
             base.BeforeLoad();
 
             TMP_InputFieldComponent = GameObject.AddComponent<TMPro.TMP_InputField>();
-            Mask = GameObject.AddComponent<UnityEngine.UI.RectMask2D>();
         }
 
         /// <summary>

@@ -16,19 +16,14 @@ namespace Delight
         public InputField(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? InputFieldTemplates.Default, initializer)
         {
+            // constructing Region (InputFieldPlaceholder)
+            InputFieldPlaceholder = new Region(this, this, "InputFieldPlaceholder", InputFieldPlaceholderTemplate);
+
             // constructing RectMask2D (TextArea)
             TextArea = new RectMask2D(this, this, "TextArea", TextAreaTemplate);
 
             // binding <RectMask2D Margin="{TextMargin}">
-            Bindings.Add(new Binding(
-                new List<string> { "TextMargin" },
-                new List<string> { "TextArea", "Margin" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => TextArea },
-                () => TextArea.Margin = TextMargin,
-                () => { }
-            ));
-            InputFieldPlaceholder = new Region(this, TextArea.Content, "InputFieldPlaceholder", InputFieldPlaceholderTemplate);
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextMargin" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "TextArea", "Margin" }, new List<Func<BindableObject>> { () => this, () => TextArea }), () => TextArea.Margin = TextMargin, () => { }, false));
             InputText = new Label(this, TextArea.Content, "InputText", InputTextTemplate);
             ContentContainer = InputFieldPlaceholder;
             this.AfterInitializeInternal();
@@ -43,17 +38,16 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(InputFieldTemplates.Default, dependencyProperties);
 
-            dependencyProperties.Add(MaskProperty);
             dependencyProperties.Add(TMP_InputFieldComponentProperty);
             dependencyProperties.Add(SetValueOnEndEditProperty);
             dependencyProperties.Add(OnlyTriggerValueChangedFromUIProperty);
             dependencyProperties.Add(EndEditProperty);
             dependencyProperties.Add(ValueChangedProperty);
             dependencyProperties.Add(TextMarginProperty);
-            dependencyProperties.Add(TextAreaProperty);
-            dependencyProperties.Add(TextAreaTemplateProperty);
             dependencyProperties.Add(InputFieldPlaceholderProperty);
             dependencyProperties.Add(InputFieldPlaceholderTemplateProperty);
+            dependencyProperties.Add(TextAreaProperty);
+            dependencyProperties.Add(TextAreaTemplateProperty);
             dependencyProperties.Add(InputTextProperty);
             dependencyProperties.Add(InputTextTemplateProperty);
             dependencyProperties.Add(ShouldHideMobileInputProperty);
@@ -115,13 +109,6 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<UnityEngine.UI.RectMask2D> MaskProperty = new DependencyProperty<UnityEngine.UI.RectMask2D>("Mask");
-        public UnityEngine.UI.RectMask2D Mask
-        {
-            get { return MaskProperty.GetValue(this); }
-            set { MaskProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<TMPro.TMP_InputField> TMP_InputFieldComponentProperty = new DependencyProperty<TMPro.TMP_InputField>("TMP_InputFieldComponent");
         public TMPro.TMP_InputField TMP_InputFieldComponent
         {
@@ -164,20 +151,6 @@ namespace Delight
             set { TextMarginProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<RectMask2D> TextAreaProperty = new DependencyProperty<RectMask2D>("TextArea");
-        public RectMask2D TextArea
-        {
-            get { return TextAreaProperty.GetValue(this); }
-            set { TextAreaProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> TextAreaTemplateProperty = new DependencyProperty<Template>("TextAreaTemplate");
-        public Template TextAreaTemplate
-        {
-            get { return TextAreaTemplateProperty.GetValue(this); }
-            set { TextAreaTemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Region> InputFieldPlaceholderProperty = new DependencyProperty<Region>("InputFieldPlaceholder");
         public Region InputFieldPlaceholder
         {
@@ -190,6 +163,20 @@ namespace Delight
         {
             get { return InputFieldPlaceholderTemplateProperty.GetValue(this); }
             set { InputFieldPlaceholderTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<RectMask2D> TextAreaProperty = new DependencyProperty<RectMask2D>("TextArea");
+        public RectMask2D TextArea
+        {
+            get { return TextAreaProperty.GetValue(this); }
+            set { TextAreaProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> TextAreaTemplateProperty = new DependencyProperty<Template>("TextAreaTemplate");
+        public Template TextAreaTemplate
+        {
+            get { return TextAreaTemplateProperty.GetValue(this); }
+            set { TextAreaTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> InputTextProperty = new DependencyProperty<Label>("InputText");
@@ -1240,31 +1227,11 @@ namespace Delight
                     Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.InputField.SelectionColorProperty.SetDefault(_inputField, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
                     Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(12f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputField, InputFieldTextArea);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputField, InputFieldInputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputField, InputFieldTextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputField, InputFieldInputText);
                 }
                 return _inputField;
-            }
-        }
-
-        private static Template _inputFieldTextArea;
-        public static Template InputFieldTextArea
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_inputFieldTextArea == null || _inputFieldTextArea.CurrentVersion != Template.Version)
-#else
-                if (_inputFieldTextArea == null)
-#endif
-                {
-                    _inputFieldTextArea = new Template(RectMask2DTemplates.RectMask2D);
-#if UNITY_EDITOR
-                    _inputFieldTextArea.Name = "InputFieldTextArea";
-#endif
-                }
-                return _inputFieldTextArea;
             }
         }
 
@@ -1285,6 +1252,26 @@ namespace Delight
 #endif
                 }
                 return _inputFieldInputFieldPlaceholder;
+            }
+        }
+
+        private static Template _inputFieldTextArea;
+        public static Template InputFieldTextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_inputFieldTextArea == null || _inputFieldTextArea.CurrentVersion != Template.Version)
+#else
+                if (_inputFieldTextArea == null)
+#endif
+                {
+                    _inputFieldTextArea = new Template(RectMask2DTemplates.RectMask2D);
+#if UNITY_EDITOR
+                    _inputFieldTextArea.Name = "InputFieldTextArea";
+#endif
+                }
+                return _inputFieldTextArea;
             }
         }
 

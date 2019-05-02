@@ -1,0 +1,16 @@
+<Slider xmlns="Delight" BasedOn="UIImageView" Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag="SliderInitializePotentialDrag"
+        Length="t:ElementSize = 160" Breadth="t:ElementSize = 40" Orientation="t:ElementOrientation = Horizontal"
+        Min="t:float = 0" Max="t:float = 100" Value="t:float" CanSlide="t:bool = True" SetValueOnDragEnded="t:bool" IsReversed="t:bool"
+        Steps="t:float" ValueChanged="t:Action"
+        m.SliderBackgroundImageView="Slider"
+        m.SliderFillImageView="SliderFill"
+        m.SliderHandleImageView="SliderHandle"
+        rename.SliderFillRegionMargin="SliderFillMargin">
+  <Region Id="SliderRegion">
+    <Image Id="SliderBackgroundImageView" />
+    <Region Id="SliderFillRegion" Margin="0">
+      <Image Id="SliderFillImageView" Alignment="Left" />
+    </Region>
+    <Image Id="SliderHandleImageView" Alignment="Left" Width="20" Height="100%" />
+  </Region>
+</Slider>

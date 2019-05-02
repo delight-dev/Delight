@@ -24,6 +24,7 @@ namespace Delight
             base.BeforeLoad();
 
             TestBinding2 = new Color(0.7f, 0.4f, 0.8f);
+            Player1 = Models.Players["Player1"];
         }
 
         protected override void AfterUnload()
@@ -47,6 +48,8 @@ namespace Delight
             ///Label1.Text = "Woho";
             Button4.Text = "Hey!";
             Debug.Log("TestBinding = " + TestBinding);
+
+            Player1 = Models.Players["Player2"];
         }
 
         #endregion

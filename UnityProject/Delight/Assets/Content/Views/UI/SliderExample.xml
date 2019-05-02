@@ -1,0 +1,12 @@
+<SliderExample xmlns="Delight">
+  <Group Orientation="Horizontal" Spacing="30" ContentAlignment="Bottom">
+    <Group Orientation="Vertical">
+      <Slider Id="Slider1" />
+      <Label Text="{Slider1.Value:0} %" Width="100" TextAlignment="Center" />
+    </Group>
+    <Group Orientation="Vertical">
+      <Slider Id="Slider2" Orientation="Vertical" Min="20" Max="180" Value="50" />
+      <Label Text="{Slider2.Value:0.0}" Width="100" TextAlignment="Center" />
+    </Group> 
+  </Group> 
+</SliderExample> 

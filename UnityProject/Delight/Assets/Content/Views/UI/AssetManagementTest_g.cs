@@ -20,40 +20,19 @@ namespace Delight
             Label1 = new Label(this, this, "Label1", Label1Template);
 
             // binding <Label Text="{TimeString}">
-            Bindings.Add(new Binding(
-                new List<string> { "TimeString" },
-                new List<string> { "Label1", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label1 },
-                () => Label1.Text = TimeString,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TimeString" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = TimeString, () => { }, false));
 
             // constructing Label (Label2)
             Label2 = new Label(this, this, "Label2", Label2Template);
 
             // binding <Label Text="{LoadedAssetsString}">
-            Bindings.Add(new Binding(
-                new List<string> { "LoadedAssetsString" },
-                new List<string> { "Label2", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label2 },
-                () => Label2.Text = LoadedAssetsString,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "LoadedAssetsString" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = LoadedAssetsString, () => { }, false));
 
             // constructing Label (Label3)
             Label3 = new Label(this, this, "Label3", Label3Template);
 
             // binding <Label Text="{LoadedAssetBundlesString}">
-            Bindings.Add(new Binding(
-                new List<string> { "LoadedAssetBundlesString" },
-                new List<string> { "Label3", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label3 },
-                () => Label3.Text = LoadedAssetBundlesString,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "LoadedAssetBundlesString" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label3", "Text" }, new List<Func<BindableObject>> { () => this, () => Label3 }), () => Label3.Text = LoadedAssetBundlesString, () => { }, false));
 
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
@@ -87,14 +66,7 @@ namespace Delight
             Label4 = new Label(this, Region1.Content, "Label4", Label4Template);
 
             // binding <Label Text="{LoadProgress}">
-            Bindings.Add(new Binding(
-                new List<string> { "LoadProgress" },
-                new List<string> { "Label4", "Text" },
-                new List<Func<BindableObject>> { () => this },
-                new List<Func<BindableObject>> { () => this, () => Label4 },
-                () => Label4.Text = LoadProgress,
-                () => { }
-            ));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "LoadProgress" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label4", "Text" }, new List<Func<BindableObject>> { () => this, () => Label4 }), () => Label4.Text = LoadProgress, () => { }, false));
             this.AfterInitializeInternal();
         }
 
