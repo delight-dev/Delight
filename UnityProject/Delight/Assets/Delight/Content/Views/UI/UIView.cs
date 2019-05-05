@@ -205,7 +205,7 @@ namespace Delight
         protected virtual void ChildLayoutChanged()
         {
             // notify parents if this view is ignored
-            if (BubbleNotifyChildLayoutChanged || IgnoreObject) 
+            if (BubbleNotifyChildLayoutChanged || IgnoreObject)
             {
                 NotifyParentOfChildLayoutChanged();
             }
@@ -297,14 +297,14 @@ namespace Delight
                 RectTransform.offsetMin.x / 2.0f + RectTransform.offsetMax.x / 2.0f,
                 RectTransform.offsetMin.y / 2.0f + RectTransform.offsetMax.y / 2.0f);
         }
-        
+
         /// <summary>
         /// Called when the visibility of the view has changed. 
         /// </summary>
         protected virtual void VisibilityChanged()
         {
-            if (AlphaProperty.IsUndefined(this) && 
-                IsVisibleProperty.IsUndefined(this) && 
+            if (AlphaProperty.IsUndefined(this) &&
+                IsVisibleProperty.IsUndefined(this) &&
                 RaycastBlockModeProperty.IsUndefined(this))
                 return;
 
@@ -352,6 +352,43 @@ namespace Delight
         {
         }
 
+        /// <summary>
+        /// Tests if mouse is over this view. 
+        /// </summary>
+        public bool ContainsMouse(Vector3 mousePosition, bool testChildren = false, bool ignoreFullScreenViews = false)
+        {
+            // get root canvas
+            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
+
+            // alpha transparent
+            bool alphaTest = AlphaProperty.IsUndefined(this) ? true : Alpha > 0.99f;
+
+            // for screen space overlay the camera should be null
+            Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+            if (RectTransformUtility.RectangleContainsScreenPoint(this.RectTransform, mousePosition, worldCamera)
+                && (!ignoreFullScreenViews || !IsFullScreen)
+                && GameObject.activeInHierarchy
+                && alphaTest)
+            {
+                return true;
+            }
+
+            if (!testChildren)
+                return false;
+
+            foreach (var child in LayoutChildren)
+            {
+                UIView view = child as UIView;
+                if (view == null)
+                    continue;
+
+                if (view.ContainsMouse(mousePosition, true, ignoreFullScreenViews))
+                    return true;
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region Properties
@@ -375,6 +412,17 @@ namespace Delight
             get
             {
                 return Mathf.Abs(RectTransform.rect.height);
+            }
+        }
+
+        /// <summary>
+        /// Gets boolean indicating if view takes up the entire screen.
+        /// </summary>
+        public bool IsFullScreen
+        {
+            get
+            {
+                return RectTransform.rect.width >= Screen.width && RectTransform.rect.height >= Screen.height;
             }
         }
 

@@ -18,7 +18,6 @@ namespace Delight
 
         public Vector2 NormalizedPosition;
         public Vector2 AbsolutePosition;
-        public float DisableInteractionScrollDelta; 
 
         private float _actualWidth;
         private float _actualHeight;
@@ -84,7 +83,7 @@ namespace Delight
                         _isOutOfBoundsElastic = false;
                         SetContentOffset(contentOffset);
                     }
-                    
+
                 }
 
                 if (_isOutOfBoundsElastic)
@@ -456,7 +455,19 @@ namespace Delight
                 contentOffset = GetElasticOffset(contentOffset);
             }
 
-            SetContentOffset(contentOffset);            
+            SetContentOffset(contentOffset);
+
+            // disable interaction with children if DisableInteractionScrollDelta is set
+            if (!DisableInteractionScrollDeltaProperty.IsUndefined(this) && !_hasDisabledInteraction)
+            {
+                // disable interaction if scrolled specified delta distance
+                var pos = pointerData.position - pointerData.pressPosition;
+                if (pos.magnitude > DisableInteractionScrollDelta)
+                {
+                    Content.ForEach<UIView>(x => x.RaycastBlockMode = RaycastBlockMode.Never, false);
+                    _hasDisabledInteraction = true;
+                }
+            }
         }
 
         /// <summary>
@@ -467,7 +478,7 @@ namespace Delight
             PointerEventData pointerData = eventArgs as PointerEventData;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, pointerData.position, pointerData.pressEventCamera, out _dragStartPosition);
 
-            _contentStartOffset = GetContentOffset();           
+            _contentStartOffset = GetContentOffset();
             _isDragging = true;
         }
 
@@ -476,6 +487,14 @@ namespace Delight
         /// </summary>
         public void OnEndDrag(DependencyObject sender, object eventArgs)
         {
+            // if interaction with child views has been disabled during scroll, enable it again
+            if (_hasDisabledInteraction)
+            {
+                // unblock raycasts
+                Content.ForEach<UIView>(x => x.RaycastBlockMode = RaycastBlockMode.Default, false);
+                _hasDisabledInteraction = false;
+            }
+
             var contentOffset = GetContentOffset();
             if (ScrollBounds == ScrollBounds.Elastic)
             {
@@ -603,7 +622,7 @@ namespace Delight
             }
 
             float speedX = _velocity.x;
-            float speedY = _velocity.y;            
+            float speedY = _velocity.y;
 
             // if offset is out of bounds apply rubber band effect
             if (offset.x > min.x)
@@ -666,7 +685,7 @@ namespace Delight
 
             return elasticOffset;
         }
-        
+
         /// <summary>
         /// Makes it so draggable child views aren't blocking the region from being dragged. 
         /// </summary>
@@ -843,7 +862,7 @@ namespace Delight
                 clampedOffset.y = Mathf.Max(clampedOffset.y, max.y);
                 clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
             }
-            
+
             if (CanScrollHorizontally && !HorizontalScrollbar.IgnoreObject)
             {
                 switch (HorizontalScrollbarVisibility)
@@ -861,7 +880,8 @@ namespace Delight
                         break;
                 }
 
-                HorizontalScrollbar.SetScrollPosition((clampedOffset.x - min.x) / (max.x - min.x), vpx / cx);
+                var viewportRatio = cx != 0 ? vpx / cx : 1;
+                HorizontalScrollbar.SetScrollPosition((clampedOffset.x - min.x) / (max.x - min.x), viewportRatio);
             }
 
             if (CanScrollVertically && !VerticalScrollbar.IgnoreObject)
@@ -881,7 +901,8 @@ namespace Delight
                         break;
                 }
 
-                VerticalScrollbar.SetScrollPosition((clampedOffset.y - min.y) / (max.y - min.y), vpy / cy);
+                var viewportRatio = cy != 0 ? vpy / cy : 1;
+                VerticalScrollbar.SetScrollPosition((clampedOffset.y - min.y) / (max.y - min.y), viewportRatio);
             }
         }
 

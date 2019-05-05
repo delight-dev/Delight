@@ -57,6 +57,7 @@ namespace Delight
             dependencyProperties.Add(AutoSizeContentRegionProperty);
             dependencyProperties.Add(ScrollBoundsProperty);
             dependencyProperties.Add(DebugOffsetTextProperty);
+            dependencyProperties.Add(DisableInteractionScrollDeltaProperty);
             dependencyProperties.Add(ScrollSensitivityProperty);
             dependencyProperties.Add(HorizontalScrollbarVisibilityProperty);
             dependencyProperties.Add(VerticalScrollbarVisibilityProperty);
@@ -154,6 +155,13 @@ namespace Delight
         {
             get { return DebugOffsetTextProperty.GetValue(this); }
             set { DebugOffsetTextProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Single> DisableInteractionScrollDeltaProperty = new DependencyProperty<System.Single>("DisableInteractionScrollDelta");
+        public System.Single DisableInteractionScrollDelta
+        {
+            get { return DisableInteractionScrollDeltaProperty.GetValue(this); }
+            set { DisableInteractionScrollDeltaProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Single> ScrollSensitivityProperty = new DependencyProperty<System.Single>("ScrollSensitivity");

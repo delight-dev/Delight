@@ -10,7 +10,10 @@
     </ToggleGroup>
     
     <ViewSwitcher Margin="0,50,0,0" SwitchMode="Load">
-      <ModelBindingTest Id="ModelBindingTest" />
+
+      <ComboBoxExample Id="ModelBindingTest" />
+
+      <!--<ModelBindingTest Id="ModelBindingTest" />-->
       <!-- ViewSwitcher.ChildSwitchMode="Load" -->
       <InputFieldExample Id="InputFieldExample" />
       <ScrollExample Id="ScrollExample" />

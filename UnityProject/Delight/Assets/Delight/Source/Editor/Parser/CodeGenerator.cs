@@ -925,7 +925,7 @@ namespace Delight.Editor.Parser
 
                     sb.AppendLine();
                     sb.AppendLine(indent, "// Template for {0}", childIdVar);
-                    sb.AppendLine(indent, "{0}.ContentTemplate = new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : templateDepth.ToString());
+                    sb.AppendLine(indent, "{0}.ContentTemplate = new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
                     sb.AppendLine(indent, "{{");
                 }
 

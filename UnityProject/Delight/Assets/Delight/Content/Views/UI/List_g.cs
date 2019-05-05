@@ -38,6 +38,7 @@ namespace Delight
             dependencyProperties.Add(IsScrollableProperty);
             dependencyProperties.Add(IsVirtualizedProperty);
             dependencyProperties.Add(OverflowModeProperty);
+            dependencyProperties.Add(ItemSelectedProperty);
             dependencyProperties.Add(CanSelectProperty);
             dependencyProperties.Add(CanDeselectProperty);
             dependencyProperties.Add(CanMultiSelectProperty);
@@ -99,6 +100,13 @@ namespace Delight
         {
             get { return OverflowModeProperty.GetValue(this); }
             set { OverflowModeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected");
+        public ViewAction ItemSelected
+        {
+            get { return ItemSelectedProperty.GetValue(this); }
+            set { ItemSelectedProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
@@ -225,6 +233,13 @@ namespace Delight
         {
             get { return ScrollableRegion.DebugOffsetText; }
             set { ScrollableRegion.DebugOffsetText = value; }
+        }
+
+        public readonly static DependencyProperty DisableInteractionScrollDeltaProperty = ScrollableRegion.DisableInteractionScrollDeltaProperty;
+        public System.Single DisableInteractionScrollDelta
+        {
+            get { return ScrollableRegion.DisableInteractionScrollDelta; }
+            set { ScrollableRegion.DisableInteractionScrollDelta = value; }
         }
 
         public readonly static DependencyProperty ScrollSensitivityProperty = ScrollableRegion.ScrollSensitivityProperty;

@@ -120,6 +120,23 @@ namespace Delight
                 return;
             base.BeforeLoad();
 
+            bool autoSizeUndefined = AutoSizeProperty.IsUndefined(this);
+            if (autoSizeUndefined)
+            {
+                // if autosize is undefined, set default value depending if width and height is set
+                bool widthUndefined = WidthProperty.IsUndefined(this);
+                bool heightUndefined = HeightProperty.IsUndefined(this);
+
+                if (widthUndefined && !heightUndefined)
+                    AutoSize = AutoSize.Width;
+                else if (!widthUndefined && heightUndefined)
+                    AutoSize = AutoSize.Height;
+                else if (widthUndefined && heightUndefined)
+                    AutoSize = AutoSize.WidthAndHeight;
+                else
+                    AutoSize = AutoSize.None;
+            }
+
             if (AutoSize == AutoSize.None && WidthProperty.IsUndefined(this))
             {
                 // if size isn't specified and the button doesn't adjust to label size, then set default width

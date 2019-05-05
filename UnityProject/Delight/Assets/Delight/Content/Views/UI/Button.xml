@@ -4,7 +4,7 @@
         MouseDown="ButtonMouseDown" MouseUp="ButtonMouseUp"
         IsToggleButton="t:bool" IsDisabled="t:bool" ToggleValue="t:bool" TextPadding="t:ElementMargin = 20,10,20,10"
         CanToggleOn="t:bool = True" CanToggleOff="t:bool = True" ToggleClick="t:Action" IsMouseOver="t:bool" IsPressed="t:bool"
-        AutoSize="t:AutoSize = True"> 
+        AutoSize="t:AutoSize"> 
   <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" /> 
 </Button>
 

@@ -806,7 +806,6 @@ namespace Delight
                     Delight.Button.TextPaddingProperty.SetDefault(_button, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
                     Delight.Button.CanToggleOnProperty.SetDefault(_button, true);
                     Delight.Button.CanToggleOffProperty.SetDefault(_button, true);
-                    Delight.Button.AutoSizeProperty.SetDefault(_button, Delight.AutoSize.Default);
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));

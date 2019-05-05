@@ -1,0 +1,15 @@
+<ComboBox xmlns="Delight" 
+          Width="160" Height="40"
+          IsDropUp="t:bool"
+          HasContentTemplate="True" ContentTemplateType="ComboBoxListItem"
+          EnableScriptEvents="True"
+          m.ComboBoxList=""
+          m.ComboBoxButton="Button"
+          ItemSelected="t:Action"> 
+  <Button Id="ComboBoxButton" IsToggleButton="True" Width="100%" Height="100%" AutoSize="False" Click="ComboBoxButtonClick" />
+  <UICanvas Id="ComboBoxListCanvas" Alignment="Top" OverrideSorting="True" SortingOrder="10"> 
+    <List Id="ComboBoxList" Width="100%" Alignment="Top" IsActive="False" CanReselect="True" ItemSelected="ComboBoxListSelectionChanged"
+          IsContentContainer="True">
+    </List>
+  </UICanvas> 
+</ComboBox> 

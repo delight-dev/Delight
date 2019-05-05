@@ -74,6 +74,9 @@ namespace Delight
         {
             ScrollPositionProperty.SetValue(this, position, false);
 
+            if (float.IsNaN(position))
+                position = 0;
+
             position = Mathf.Clamp(position, 0, 1);
             if (viewportRatio.HasValue)
             {
@@ -102,6 +105,10 @@ namespace Delight
 
                 Handle.Height = handleLength;
                 Handle.OffsetFromParent.Top = position * scrollLength;
+
+                //Debug.Log(Handle.Height);
+                Debug.Log("Position = " + position + ", TotalLength = " + totalLength + ", HandleLength = " + handleLength + ", ScrollLength = " + scrollLength);
+                Debug.Log(Handle.OffsetFromParent);
             }
         }
     }

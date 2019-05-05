@@ -60,7 +60,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Callend when label text changes.
+        /// Called when label text changes.
         /// </summary>
         public virtual void TextChanged()
         {

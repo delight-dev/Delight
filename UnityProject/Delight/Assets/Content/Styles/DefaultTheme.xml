@@ -5,10 +5,18 @@
           Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" />
   <Button Style="BlueButton" BackgroundColor="Blue" />
   <Button Style="LargeBlueButton" BasedOn="BlueButton" Height="100" Width="200" />
-  <ListItem Breadth="50" BackgroundColor="Clear" Selected-BackgroundColor="#cacaca" 
+  <ListItem Breadth="50" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a" 
             Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a" 
             Alternate-BackgroundColor="Gray95" />
   <InputField BackgroundColor="White" FontSize="18" FontColor="#000000" 
               Width="400" Height="50" SelectionColor="#ef706a" TextMargin="10,12,10,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22"/>
+
+  <ComboBox Height="52" Width="300" ButtonMargin="0,2,0,0" ButtonFontSize="18" ButtonFontColor="#000000"
+            ButtonTextAlignment="Left" ButtonLabelMargin="10,0,10,0"
+            Pressed-ButtonFontColor="#000000" Highlighted-ButtonFontColor="#000000" ButtonBackgroundSprite="ComboBoxButton"
+            ButtonBackgroundColor="#ffffff" Pressed-ButtonBackgroundSprite="ComboBoxButtonPressed" Highlighted-ButtonBackgroundColor="#dddddd" Pressed-ButtonBackgroundColor="#eeeeee"
+            BackgroundColor="#ffffff" ComboBoxList.Margin="1,0,1,0" />
+  <ComboBoxItem Breadth="50px" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
+
 </DefaultTheme> 

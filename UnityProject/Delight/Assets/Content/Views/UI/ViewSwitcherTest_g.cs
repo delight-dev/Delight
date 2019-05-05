@@ -32,7 +32,7 @@ namespace Delight
             Button6 = new Button(this, ToggleGroup1.Content, "Button6", Button6Template);
             Button6.Click += ResolveActionHandler(this, "ShowBindingTest");
             ViewSwitcher1 = new ViewSwitcher(this, Region1.Content, "ViewSwitcher1", ViewSwitcher1Template);
-            ModelBindingTest = new ModelBindingTest(this, ViewSwitcher1.Content, "ModelBindingTest", ModelBindingTestTemplate);
+            ModelBindingTest = new ComboBoxExample(this, ViewSwitcher1.Content, "ModelBindingTest", ModelBindingTestTemplate);
             InputFieldExample = new InputFieldExample(this, ViewSwitcher1.Content, "InputFieldExample", InputFieldExampleTemplate);
             ScrollExample = new ScrollExample(this, ViewSwitcher1.Content, "ScrollExample", ScrollExampleTemplate);
             AssetManagementTest = new AssetManagementTest(this, ViewSwitcher1.Content, "AssetManagementTest", AssetManagementTestTemplate);
@@ -212,8 +212,8 @@ namespace Delight
             set { ViewSwitcher1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ModelBindingTest> ModelBindingTestProperty = new DependencyProperty<ModelBindingTest>("ModelBindingTest");
-        public ModelBindingTest ModelBindingTest
+        public readonly static DependencyProperty<ComboBoxExample> ModelBindingTestProperty = new DependencyProperty<ComboBoxExample>("ModelBindingTest");
+        public ComboBoxExample ModelBindingTest
         {
             get { return ModelBindingTestProperty.GetValue(this); }
             set { ModelBindingTestProperty.SetValue(this, value); }
@@ -678,21 +678,17 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTest == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTest = new Template(ModelBindingTestTemplates.ModelBindingTest);
+                    _viewSwitcherTestModelBindingTest = new Template(ComboBoxExampleTemplates.ComboBoxExample);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTest.Name = "ViewSwitcherTestModelBindingTest";
 #endif
-                    Delight.ModelBindingTest.Group1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup1);
-                    Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup2);
-                    Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton1);
-                    Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton2);
-                    Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerList);
-                    Delight.ModelBindingTest.PlayerListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerListContent);
-                    Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup3);
-                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
-                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsList);
-                    Delight.ModelBindingTest.AchievementsListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsListContent);
-                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel2);
+                    Delight.ComboBoxExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup1);
+                    Delight.ComboBoxExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup2);
+                    Delight.ComboBoxExample.Button1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton1);
+                    Delight.ComboBoxExample.Button2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton2);
+                    Delight.ComboBoxExample.ComboBoxTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestComboBox);
+                    Delight.ComboBoxExample.ComboBoxContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestComboBoxContent);
+                    Delight.ComboBoxExample.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
                 }
                 return _viewSwitcherTestModelBindingTest;
             }
@@ -709,7 +705,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestGroup1 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestGroup1 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup1);
+                    _viewSwitcherTestModelBindingTestGroup1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup1);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestGroup1.Name = "ViewSwitcherTestModelBindingTestGroup1";
 #endif
@@ -729,7 +725,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestGroup2 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestGroup2 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup2);
+                    _viewSwitcherTestModelBindingTestGroup2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup2);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestGroup2.Name = "ViewSwitcherTestModelBindingTestGroup2";
 #endif
@@ -749,7 +745,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestButton1 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestButton1 = new Template(ModelBindingTestTemplates.ModelBindingTestButton1);
+                    _viewSwitcherTestModelBindingTestButton1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton1);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestButton1.Name = "ViewSwitcherTestModelBindingTestButton1";
 #endif
@@ -770,7 +766,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestButton1Label == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestButton1Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton1Label);
+                    _viewSwitcherTestModelBindingTestButton1Label = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton1Label);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestButton1Label.Name = "ViewSwitcherTestModelBindingTestButton1Label";
 #endif
@@ -790,7 +786,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestButton2 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestButton2 = new Template(ModelBindingTestTemplates.ModelBindingTestButton2);
+                    _viewSwitcherTestModelBindingTestButton2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton2);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestButton2.Name = "ViewSwitcherTestModelBindingTestButton2";
 #endif
@@ -811,7 +807,7 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestButton2Label == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestButton2Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton2Label);
+                    _viewSwitcherTestModelBindingTestButton2Label = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton2Label);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestButton2Label.Name = "ViewSwitcherTestModelBindingTestButton2Label";
 #endif
@@ -820,231 +816,295 @@ namespace Delight
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerList;
-        public static Template ViewSwitcherTestModelBindingTestPlayerList
+        private static Template _viewSwitcherTestModelBindingTestComboBox;
+        public static Template ViewSwitcherTestModelBindingTestComboBox
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerList == null || _viewSwitcherTestModelBindingTestPlayerList.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBox == null || _viewSwitcherTestModelBindingTestComboBox.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerList == null)
+                if (_viewSwitcherTestModelBindingTestComboBox == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerList = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerList);
+                    _viewSwitcherTestModelBindingTestComboBox = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBox);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerList.Name = "ViewSwitcherTestModelBindingTestPlayerList";
+                    _viewSwitcherTestModelBindingTestComboBox.Name = "ViewSwitcherTestModelBindingTestComboBox";
 #endif
-                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerList, ViewSwitcherTestModelBindingTestPlayerListScrollableRegion);
+                    Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBox, ViewSwitcherTestModelBindingTestComboBoxComboBoxButton);
+                    Delight.ComboBox.ComboBoxListCanvasTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBox, ViewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas);
+                    Delight.ComboBox.ComboBoxListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBox, ViewSwitcherTestModelBindingTestComboBoxComboBoxList);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerList;
+                return _viewSwitcherTestModelBindingTestComboBox;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegion;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegion
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxButton;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxButton
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegion == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegion.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxButton == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxButton.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegion == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxButton == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegion = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegion);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxButton = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxButton);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegion.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegion";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxButton.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxButton";
 #endif
-                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion);
-                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
-                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxButton, ViewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegion;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxButton;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionContentRegion);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxButtonLabel);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxButtonLabel;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListCanvas);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas";
 #endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListCanvas;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxList;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxList
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxList == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxList.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxList == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxList = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxList);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxList.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxList";
 #endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxList, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxList;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion";
 #endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegion;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion";
 #endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionContentRegion;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar";
 #endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbar;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestPlayerListContent;
-        public static Template ViewSwitcherTestModelBindingTestPlayerListContent
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestPlayerListContent == null || _viewSwitcherTestModelBindingTestPlayerListContent.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestPlayerListContent == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestPlayerListContent = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListContent);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestPlayerListContent.Name = "ViewSwitcherTestModelBindingTestPlayerListContent";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestPlayerListContent;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestGroup3;
-        public static Template ViewSwitcherTestModelBindingTestGroup3
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestGroup3 == null || _viewSwitcherTestModelBindingTestGroup3.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestGroup3 == null)
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestGroup3 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup3);
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestGroup3.Name = "ViewSwitcherTestModelBindingTestGroup3";
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestGroup3;
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestComboBoxContent;
+        public static Template ViewSwitcherTestModelBindingTestComboBoxContent
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestComboBoxContent == null || _viewSwitcherTestModelBindingTestComboBoxContent.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestComboBoxContent == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestComboBoxContent = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxContent);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestComboBoxContent.Name = "ViewSwitcherTestModelBindingTestComboBoxContent";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestComboBoxContent;
             }
         }
 
@@ -1059,240 +1119,12 @@ namespace Delight
                 if (_viewSwitcherTestModelBindingTestLabel1 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestLabel1 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel1);
+                    _viewSwitcherTestModelBindingTestLabel1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleLabel1);
 #if UNITY_EDITOR
                     _viewSwitcherTestModelBindingTestLabel1.Name = "ViewSwitcherTestModelBindingTestLabel1";
 #endif
                 }
                 return _viewSwitcherTestModelBindingTestLabel1;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsList;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsList
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsList == null || _viewSwitcherTestModelBindingTestAchievementsList.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsList == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsList = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsList);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsList.Name = "ViewSwitcherTestModelBindingTestAchievementsList";
-#endif
-                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsList, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion);
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsList;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegion);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion";
-#endif
-                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion);
-                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
-                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionContentRegion);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar";
-#endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle);
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar";
-#endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle);
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestAchievementsListContent;
-        public static Template ViewSwitcherTestModelBindingTestAchievementsListContent
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestAchievementsListContent == null || _viewSwitcherTestModelBindingTestAchievementsListContent.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestAchievementsListContent == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestAchievementsListContent = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListContent);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestAchievementsListContent.Name = "ViewSwitcherTestModelBindingTestAchievementsListContent";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestAchievementsListContent;
-            }
-        }
-
-        private static Template _viewSwitcherTestModelBindingTestLabel2;
-        public static Template ViewSwitcherTestModelBindingTestLabel2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestLabel2 == null || _viewSwitcherTestModelBindingTestLabel2.CurrentVersion != Template.Version)
-#else
-                if (_viewSwitcherTestModelBindingTestLabel2 == null)
-#endif
-                {
-                    _viewSwitcherTestModelBindingTestLabel2 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel2);
-#if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestLabel2.Name = "ViewSwitcherTestModelBindingTestLabel2";
-#endif
-                }
-                return _viewSwitcherTestModelBindingTestLabel2;
             }
         }
 

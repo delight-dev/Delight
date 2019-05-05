@@ -31,7 +31,7 @@ namespace Delight
         #endregion
 
         #region Methods
-        
+
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -93,48 +93,38 @@ namespace Delight
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
 
-            bool hasNewSize = false;
+            ElementSize newWidth = Width;
+            ElementSize newHeight = Height;
 
-            // the default behavior of the list-item is to adjust its height and width to its content
-            float maxWidth = 0f;
-            float maxHeight = 0f;
-            int childCount = LayoutChildren.Count;
-
-            // get size of content and set content offsets and alignment
-            for (int i = 0; i < childCount; ++i)
+            // adjust width and height to ParentList
+            if (ParentList == null || ParentList.Orientation == ElementOrientation.Horizontal)
             {
-                var childView = LayoutChildren[i] as UIView;
-                if (childView == null)
-                    continue;
+                newWidth = Width != null && Width.Unit != ElementSizeUnit.Percents ? Width : new ElementSize(Length);
 
-                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
-                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
-
-                // get size of content
-                if (childWidth.Unit != ElementSizeUnit.Percents)
+                if (Height == null)
                 {
-                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
-                }
-
-                if (childHeight.Unit != ElementSizeUnit.Percents)
-                {
-                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
+                    newHeight = Breadth != null ? new ElementSize(Breadth) : ElementSize.FromPercents(1);
                 }
             }
+            else
+            {
+                // if neither width nor length is set, use 100% width                
+                if (Width == null)
+                {
+                    newWidth = Length != null ? new ElementSize(Length) : ElementSize.FromPercents(1);
+                }
 
-            // add margins
-            var margin = Margin ?? ElementMargin.Default;
-            maxWidth += margin.Left.Pixels + margin.Right.Pixels;
-            maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                newHeight = Height != null && Height.Unit != ElementSizeUnit.Percents ? Height : new ElementSize(Breadth);
+            }
+
+            bool hasNewSize = false;
 
             // adjust size to content unless it has been set
-            var newWidth = new ElementSize(maxWidth);            
             if (!newWidth.Equals(Width))
             {
                 Width = newWidth;
                 hasNewSize = true;
             }
-            var newHeight = new ElementSize(maxHeight);
             if (!newHeight.Equals(Height))
             {
                 Height = newHeight;
@@ -142,7 +132,6 @@ namespace Delight
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
-
             return base.UpdateLayout(notifyParent) || hasNewSize;
         }
 

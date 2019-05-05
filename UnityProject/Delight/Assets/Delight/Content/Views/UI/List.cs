@@ -361,6 +361,7 @@ namespace Delight
                 return;
 
             listItem.IsSelected = selected;
+            ItemSelected?.Invoke(this, listItem);
         }
 
         #endregion
