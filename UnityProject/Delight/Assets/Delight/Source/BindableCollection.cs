@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 #endregion
@@ -26,6 +27,9 @@ namespace Delight
                 return _data;
             }
         }
+
+        protected bool _batchNotifications = false;
+        protected List<CollectionChangedEventArgs> _collectionChangedEventArgsBatch = new List<CollectionChangedEventArgs>(); 
 
         #endregion
 
@@ -78,7 +82,15 @@ namespace Delight
         {
             // TODO here we want to implement batch edit of collection so just a single change 
             // notification is sent, by setting a internal bool _batchNotifications and letting Add, Remove, etc. check the bool and queue the notifications
+            _batchNotifications = true;
             edit();
+            _batchNotifications = false;
+            OnCollectionChanged(new BatchedCollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Batch,
+                CollectionChangedEventArgsBatch = _collectionChangedEventArgsBatch.ToList()
+            });
+            _collectionChangedEventArgsBatch.Clear();
         }
 
         public virtual void Add(T item)
@@ -94,7 +106,7 @@ namespace Delight
             }
 
             Data.Add(item.Id, item);
-            OnCollectionChanged(new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
                 Item = item
@@ -104,10 +116,18 @@ namespace Delight
         public virtual void Clear()
         {
             Data.Clear();
-            OnCollectionChanged(new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Clear
             });
+        }
+
+        private void Notify(CollectionChangedEventArgs eventArgs)
+        {
+            if (_batchNotifications)
+                _collectionChangedEventArgsBatch.Add(eventArgs);
+            else
+                OnCollectionChanged(eventArgs);
         }
 
         public virtual void Replace(IEnumerable<T> items)
@@ -117,7 +137,7 @@ namespace Delight
             {
                 Data.Add(item.Id, item);
             }
-            OnCollectionChanged(new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Replace
             });
@@ -133,7 +153,7 @@ namespace Delight
             bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
-                OnCollectionChanged(new CollectionChangedEventArgs
+                Notify(new CollectionChangedEventArgs
                 {
                     ChangeAction = CollectionChangeAction.Remove,
                     Item = item
@@ -148,9 +168,8 @@ namespace Delight
         {
             foreach (var item in items)
             {
-                // TODO implement batch removes
                 Remove(item);
-            }            
+            }
         }
 
         public virtual IEnumerator<T> GetEnumerator()

@@ -4,7 +4,7 @@
       IsScrollable="t:bool"
       IsVirtualized="t:bool"
       OverflowMode="t:OverflowMode"
-      ItemSelected="t:Action"
+      ItemSelected="t:Action" ItemDeselected="t:Action"
       CanSelect="t:bool = True" CanDeselect="t:bool" CanMultiSelect="t:bool" CanReselect="t:bool" DeselectAfterSelect="t:bool" SelectOnMouseUp="t:bool"
       m.ScrollableRegion=""> 
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"

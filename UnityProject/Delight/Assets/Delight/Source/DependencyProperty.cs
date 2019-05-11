@@ -68,6 +68,7 @@ namespace Delight
                 return; // no.
             }
 
+            bool isLoadingAsset = false; // TODO cleanup if not needed
             if (IsAtomicBindableObjectType)
             {
                 // detach old property changed listeners
@@ -90,6 +91,7 @@ namespace Delight
                     {
                         // register reference if its an asset object
                         var assetObject = value as AssetObject;
+                        isLoadingAsset = !assetObject.IsLoaded;
                         assetObject.RegisterReference(key);
                     }
                 }
@@ -106,11 +108,11 @@ namespace Delight
             }
 
             // trigger property-changed event
-            if (notifyPropertyChangedListeners)
+            if (notifyPropertyChangedListeners && !isLoadingAsset)
             {
                 key.OnPropertyChanged(PropertyName); // TODO see if we can use CallerMemberName here so we don't have to store property name for each property (although again its just one per type so no huge deal)
 
-                // trigger asset change if asset
+                // trigger asset change if asset (and not loaded) 
                 if (IsAssetType)
                 {
                     OnAssetChanged(key);
@@ -181,19 +183,24 @@ namespace Delight
             AttachPropertyChangedHandler(key, value);
 
             // register reference if its an asset object
+            bool isLoadingAsset = false;
             if (IsAssetType)
             {
                 var assetObject = value as AssetObject;
+                isLoadingAsset = !assetObject.IsLoaded;
                 assetObject.RegisterReference(key);
             }
 
-            // trigger initial property changed on load
-            key.OnPropertyChanged(PropertyName);
-
-            // trigger asset change if asset
-            if (IsAssetType)
+            if (!isLoadingAsset)
             {
-                OnAssetChanged(key);
+                // trigger initial property changed on load
+                key.OnPropertyChanged(PropertyName);
+
+                // trigger asset change if asset
+                if (IsAssetType)
+                {
+                    OnAssetChanged(key);
+                }
             }
         }
 

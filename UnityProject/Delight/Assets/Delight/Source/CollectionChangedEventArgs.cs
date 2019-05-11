@@ -15,31 +15,14 @@ namespace Delight
     {
         public CollectionChangeAction ChangeAction;
         public BindableObject Item;
+        public List<BindableObject> Items;
     }
 
     /// <summary>
-    /// Enum indicating how the collection has changed.
+    /// Contains a batch of collection changed event arguments.
     /// </summary>
-    public enum CollectionChangeAction
+    public class BatchedCollectionChangedEventArgs : CollectionChangedEventArgs
     {
-        /// <summary>
-        /// Item added to collection.
-        /// </summary>
-        Add = 0,
-
-        /// <summary>
-        /// Item removed from collection.
-        /// </summary>
-        Remove = 1,
-
-        /// <summary>
-        /// All items in collection replaced with new set of items.
-        /// </summary>
-        Replace = 2,
-
-        /// <summary>
-        /// All items cleared from collection.
-        /// </summary>
-        Clear = 3
+        public List<CollectionChangedEventArgs> CollectionChangedEventArgsBatch;
     }
 }

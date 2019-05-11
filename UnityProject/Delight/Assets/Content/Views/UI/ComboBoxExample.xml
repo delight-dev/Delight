@@ -8,6 +8,5 @@
     <ComboBox Id="ComboBox" Items="{player in @Players}" ItemSelected="ItemSelected" IsDropUp="False">
       <Label Text="{player.Name}" Width="100%" Margin="10,0,0,0" />
     </ComboBox>
-
   </Group>
 </ComboBoxExample>

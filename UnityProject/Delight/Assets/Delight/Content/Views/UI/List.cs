@@ -10,7 +10,157 @@ namespace Delight
 {
     public partial class List
     {
+        #region Fields
+
+        private BindableCollection _oldCollection;
+        private Dictionary<BindableObject, ListItem> _presentedItems = new Dictionary<BindableObject, ListItem>();
+
+        #endregion
+
         #region Methods
+
+        /// <summary>
+        /// Generates views from data in collection. 
+        /// </summary>
+        protected void CreateItems()
+        {
+            if (Items == null)
+                return;
+
+            foreach (var item in Items.GetDataEnumerator())
+            {
+                CreateItem(item);
+            }
+
+            UpdateLayout();
+        }
+
+        /// <summary>
+        /// Called after the view and its children has been loaded.
+        /// </summary>
+        protected override void AfterLoad()
+        {
+            base.AfterLoad();
+            CreateItems();
+        }
+
+        /// <summary>
+        /// Called when the view has been unloaded.
+        /// </summary>
+        protected override void AfterUnload()
+        {
+            base.AfterUnload();
+            if (Items != null)
+            {
+                // unsubscribe to change events in the old list
+                Items.CollectionChanged -= OnCollectionChanged;
+            }
+
+            _presentedItems.Clear();
+        }
+
+        /// <summary>
+        /// Called when the list of items has been changed.
+        /// </summary>
+        private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
+        {
+            // Debug.Log("Collection changed");
+            bool updateLayout = false;
+            if (e.ChangeAction == CollectionChangeAction.Batch)
+            {
+                var eventArgsBatch = (e as BatchedCollectionChangedEventArgs).CollectionChangedEventArgsBatch;
+                foreach (var eventArgs in eventArgsBatch)
+                {
+                    updateLayout |= OnCollectionChanged(eventArgs);
+                }
+            }
+            else
+            {
+                updateLayout = OnCollectionChanged(e);
+            }
+
+            if (updateLayout)
+            {
+                UpdateLayout();
+            }
+        }
+
+        /// <summary>
+        /// Handles collection changed events.
+        /// </summary>
+        private bool OnCollectionChanged(CollectionChangedEventArgs e)
+        {
+            bool updateLayout = false;
+            switch (e.ChangeAction)
+            {
+                case CollectionChangeAction.Add:
+                    CreateItem(e.Item);
+                    updateLayout = true;
+                    break;
+                case CollectionChangeAction.Remove:
+                    DestroyItem(e.Item);
+                    updateLayout = true;
+                    break;
+                case CollectionChangeAction.Replace:
+                    break;
+                case CollectionChangeAction.Clear:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return updateLayout;
+
+            // TODO implement collection change actions
+            //// update list of items
+            //else if (e.ListChangeAction == ListChangeAction.Remove)
+            //{
+            //    UpdateItems();
+            //}
+            //else if (e.ListChangeAction == ListChangeAction.Replace)
+            //{
+            //    _updateVirtualization = true;
+            //}
+            //else if (e.ListChangeAction == ListChangeAction.ScrollTo)
+            //{
+            //    ScrollTo(e.StartIndex, e.Alignment);
+            //}
+            //else if (e.ListChangeAction == ListChangeAction.Modify)
+            //{
+            //    ItemsModified(e.StartIndex, e.EndIndex, e.FieldPath);
+            //}
+            //else if (e.ListChangeAction == ListChangeAction.Select)
+            //{
+            //    SelectItem(e.StartIndex);
+            //}
+            //else if (e.ListChangeAction == ListChangeAction.Move)
+            //{
+            //    _updateVirtualization = true;
+            //}
+
+            //if (ListChanged.HasEntries)
+            //{
+            //    ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex, FieldPath = e.FieldPath });
+            //}
+        }
+
+        /// <summary>
+        /// Destroys item in list.
+        /// </summary>
+        protected virtual void DestroyItem(BindableObject item)
+        {
+            if (IsVirtualized)
+            {
+                // TODO implement
+                throw new NotImplementedException();
+            }
+
+            ListItem listItem;
+            if (_presentedItems.TryGetValue(item, out listItem))
+            {
+                // TODO to be continued
+            }
+        }
 
         /// <summary>
         /// Called when a property has been changed. 
@@ -26,7 +176,52 @@ namespace Delight
                 case nameof(Orientation):
                     ListOrientationChanged();
                     break;
+
+                case nameof(Items):
+                    ItemsChanged();
+                    break;
             }
+        }
+
+        /// <summary>
+        /// Called when the list of items has been replaced.
+        /// </summary>
+        public virtual void ItemsChanged()
+        {
+            if (_oldCollection != null)
+            {
+                // unsubscribe from change events in the old list
+                _oldCollection.CollectionChanged -= OnCollectionChanged;
+            }
+            _oldCollection = Items;
+
+            // add new list
+            if (Items != null)
+            {
+                // subscribe to change events in the new list
+                Items.CollectionChanged += OnCollectionChanged;
+            }
+
+            // clear list items
+            ClearItems();
+
+            if (IsLoaded)
+            {
+                CreateItems();
+            }
+        }
+
+        /// <summary>
+        /// Clears the list. 
+        /// </summary>
+        private void ClearItems()
+        {
+            // unload and clear existing children
+            foreach (var child in Content.LayoutChildren)
+            {
+                child.Unload();
+            }
+            Content.LayoutChildren.Clear();
         }
 
         public void ListOrientationChanged()
@@ -79,18 +274,28 @@ namespace Delight
         /// <summary>
         /// Called when a new item is to be generated.
         /// </summary>
-        protected override View GenerateItem(BindableObject item)
+        protected override View CreateItem(BindableObject item)
         {
-            var view = base.GenerateItem(item);
-            if (IsScrollable && view != null)
+            if (IsVirtualized)
             {
-                ScrollableRegion.UnblockDragEvents(view as SceneObjectView);
+                // TODO implement
+                return null;
             }
 
-            // TODO unblock drag-events in parent scrollable regions, this can be done through a better mechanism 
-            // as we need to do this anytime new children are added to an hierarchy not just here
-            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(view as SceneObjectView));
-            return view;
+            var listItem = base.CreateItem(item) as ListItem;
+            if (IsScrollable && listItem != null)
+            {
+                ScrollableRegion.UnblockDragEvents(listItem as SceneObjectView);
+            }
+
+            // unblock drag-events in parent scrollable regions
+            // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here
+            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(listItem as SceneObjectView));
+            _presentedItems.Add(item, listItem);
+
+            // set item data on list item for easy reference
+            listItem.Item = item;
+            return listItem;
         }
 
         /// <summary>
@@ -361,7 +566,16 @@ namespace Delight
                 return;
 
             listItem.IsSelected = selected;
-            ItemSelected?.Invoke(this, listItem);
+
+            ItemSelectionActionData data = new ItemSelectionActionData { IsSelected = selected, ListItem = listItem, Item = listItem.Item };
+            if (selected)
+            {
+                ItemSelected?.Invoke(this, data);
+            }
+            else
+            {
+                ItemDeselected?.Invoke(this, data);
+            }
         }
 
         #endregion

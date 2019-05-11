@@ -2008,7 +2008,7 @@ namespace Delight
                     Delight.List.IsActiveProperty.SetDefault(_comboBoxComboBoxList, false);
                     Delight.List.CanReselectProperty.SetDefault(_comboBoxComboBoxList, true);
                     Delight.List.BackgroundColorProperty.SetDefault(_comboBoxComboBoxList, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.List.MarginProperty.SetDefault(_comboBoxComboBoxList, new ElementMargin(new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.MarginProperty.SetDefault(_comboBoxComboBoxList, new ElementMargin(new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_comboBoxComboBoxList, ComboBoxComboBoxListScrollableRegion);
                 }
                 return _comboBoxComboBoxList;

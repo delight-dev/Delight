@@ -122,12 +122,20 @@ namespace Delight
         /// <summary>
         /// Called when combo box list selection changes.
         /// </summary>
-        public void ComboBoxListSelectionChanged(List sender, ListItem listItem)
+        public void ComboBoxListSelectionChanged(List sender, ItemSelectionActionData selectionData)
         {
             // close list and set selected item text
             ComboBoxButton.ToggleValue = false;
-            //ComboBoxButton.Text = listItem != null ? actionData.ItemView.Text.Value : String.Empty;
-            // TODO implement getting item text data using reflection 
+
+            // take the text data from the first label in the list item
+            if (selectionData.ListItem == null)
+                ComboBoxButton.Text = string.Empty;
+            else
+            {
+                var label = selectionData.ListItem.Find<Label>();
+                ComboBoxButton.Text = label.Text;
+            }
+
             ComboBoxList.IsActive = false;
         }
 

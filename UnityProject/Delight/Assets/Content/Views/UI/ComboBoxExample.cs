@@ -12,12 +12,14 @@ namespace Delight
     {
         public void Add()
         {
-
         }
 
         public void Remove()
         {
+        }
 
+        public void ItemSelected()
+        {
         }
     }
 }

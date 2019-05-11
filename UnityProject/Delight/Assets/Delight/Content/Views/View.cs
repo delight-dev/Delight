@@ -479,7 +479,7 @@ namespace Delight
                     List<DependencyProperty> dependencyProperties;
                     if (DependencyProperties.TryGetValue(template, out dependencyProperties))
                     {
-                        // iterate through all dependency properties and clear run-time values
+                        // iterate through all dependency properties and check if it has state
                         for (int i = 0; i < dependencyProperties.Count; ++i)
                         {
                             var dependencyProperty = dependencyProperties[i];
@@ -507,18 +507,19 @@ namespace Delight
 
             if (stateChangingProperties == null)
                 return null;
-
+            
             // filter properties and return those affected by the state change
-            for (int i = stateChangingProperties.Count - 1; i >= 0; --i)
+            var filteredStateChangingProperties = new List<DependencyProperty>();
+            for (int i = 0; i < stateChangingProperties.Count; ++i)
             {
                 var property = stateChangingProperties[i];
-                if (property.HasState(_template, _previousState) || property.HasState(_template, newState))
+                if (!property.HasState(_template, _previousState) && !property.HasState(_template, newState))
                     continue;
 
-                stateChangingProperties.RemoveAt(i);
+                filteredStateChangingProperties.Add(stateChangingProperties[i]);
             }
 
-            return stateChangingProperties;
+            return filteredStateChangingProperties;
         }
 
         #endregion

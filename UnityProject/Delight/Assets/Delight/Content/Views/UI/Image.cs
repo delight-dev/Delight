@@ -61,6 +61,7 @@ namespace Delight
             if (ImageComponent != null)
             {
                 ImageComponent.sprite = sprite;
+
                 if (sprite != null && TypeProperty.IsUndefined(this))
                 {
                     // if type is undefined auto-detect if sprite is sliced

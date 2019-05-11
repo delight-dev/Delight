@@ -15,6 +15,7 @@ namespace Delight
     {
         #region Fields
 
+        public virtual bool IsLoaded { get; }
         public bool IsResource { get; set; }
         public string RelativePath { get; set; }
 
@@ -34,7 +35,6 @@ namespace Delight
                 return RelativePath + Id;
             }
         }
-
 
         #endregion
 
@@ -146,6 +146,11 @@ namespace Delight
     {
         #region Fields
 
+        public override bool IsLoaded
+        {
+            get { return UnityObject != null; }
+        }
+
         private T _unityObject;
         public T UnityObject
         {
@@ -187,6 +192,7 @@ namespace Delight
                     if (resourceObject == null)
                     {
                         Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", FullPath));
+                        OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                         return;
                     }
 
@@ -198,6 +204,7 @@ namespace Delight
                 if (assetBundle == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset bundle \"{1}\" not found.", Id, AssetBundleId));
+                    OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
 
@@ -206,11 +213,12 @@ namespace Delight
                 if (unityAssetBundle == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
+                    OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
 
                 // simulate slow load
-                //await Task.Delay(1500); // TODO add option to simulate network lag in editor
+                //await Task.Delay(2000); // TODO add option to simulate network lag in editor
 
                 // see if sprite is in bundle 
                 //var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id); // bug in Unity makes it so assets loaded asynchronously does not get unloaded when Resources.UnloadAsset() is called
@@ -218,6 +226,7 @@ namespace Delight
                 if (unityObject == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
+                    OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
 

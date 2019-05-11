@@ -39,6 +39,7 @@ namespace Delight
             dependencyProperties.Add(IsVirtualizedProperty);
             dependencyProperties.Add(OverflowModeProperty);
             dependencyProperties.Add(ItemSelectedProperty);
+            dependencyProperties.Add(ItemDeselectedProperty);
             dependencyProperties.Add(CanSelectProperty);
             dependencyProperties.Add(CanDeselectProperty);
             dependencyProperties.Add(CanMultiSelectProperty);
@@ -107,6 +108,13 @@ namespace Delight
         {
             get { return ItemSelectedProperty.GetValue(this); }
             set { ItemSelectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected");
+        public ViewAction ItemDeselected
+        {
+            get { return ItemDeselectedProperty.GetValue(this); }
+            set { ItemDeselectedProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
