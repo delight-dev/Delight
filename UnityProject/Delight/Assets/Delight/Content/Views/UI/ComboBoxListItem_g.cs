@@ -65,6 +65,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _comboBoxListItem.Name = "ComboBoxListItem";
 #endif
+                    Delight.ComboBoxListItem.AutoSizeToContentProperty.SetDefault(_comboBoxListItem, false);
                 }
                 return _comboBoxListItem;
             }

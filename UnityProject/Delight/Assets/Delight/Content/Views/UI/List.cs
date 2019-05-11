@@ -20,6 +20,27 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            if (IgnoreObject)
+                return;
+
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(Orientation):
+                    ListOrientationChanged();
+                    break;
+
+                case nameof(Items):
+                    ItemsChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Generates views from data in collection. 
         /// </summary>
         protected void CreateItems()
@@ -159,27 +180,6 @@ namespace Delight
             if (_presentedItems.TryGetValue(item, out listItem))
             {
                 // TODO to be continued
-            }
-        }
-
-        /// <summary>
-        /// Called when a property has been changed. 
-        /// </summary>
-        public override void OnPropertyChanged(object source, string property)
-        {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
-            switch (property)
-            {
-                case nameof(Orientation):
-                    ListOrientationChanged();
-                    break;
-
-                case nameof(Items):
-                    ItemsChanged();
-                    break;
             }
         }
 

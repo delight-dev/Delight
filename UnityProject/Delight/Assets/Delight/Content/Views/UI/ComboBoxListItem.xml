@@ -1,2 +1,2 @@
-<ComboBoxListItem xmlns="Delight" BasedOn="ListItem">
+<ComboBoxListItem xmlns="Delight" BasedOn="ListItem" AutoSizeToContent="False">
 </ComboBoxListItem> 

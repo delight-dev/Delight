@@ -93,46 +93,110 @@ namespace Delight
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
 
-            ElementSize newWidth = Width;
-            ElementSize newHeight = Height;
-
-            // adjust width and height to ParentList
-            if (ParentList == null || ParentList.Orientation == ElementOrientation.Horizontal)
+            bool hasNewSize = false;
+            if (AutoSizeToContent)
             {
-                newWidth = Width != null && Width.Unit != ElementSizeUnit.Percents ? Width : new ElementSize(Length);
-
-                if (Height == null)
-                {
-                    newHeight = Breadth != null ? new ElementSize(Breadth) : ElementSize.FromPercents(1);
-                }
+                hasNewSize = AdjustSizeToContent();
             }
             else
             {
-                // if neither width nor length is set, use 100% width                
-                if (Width == null)
+                ElementSize newWidth = Width;
+                ElementSize newHeight = Height;
+
+                // adjust width and height to ParentList
+                if (ParentList == null || ParentList.Orientation == ElementOrientation.Horizontal)
                 {
-                    newWidth = Length != null ? new ElementSize(Length) : ElementSize.FromPercents(1);
+                    newWidth = Width != null && Width.Unit != ElementSizeUnit.Percents
+                        ? Width
+                        : new ElementSize(Length);
+
+                    if (Height == null)
+                    {
+                        newHeight = Breadth != null ? new ElementSize(Breadth) : ElementSize.FromPercents(1);
+                    }
+                }
+                else
+                {
+                    // if neither width nor length is set, use 100% width                
+                    if (Width == null)
+                    {
+                        newWidth = Length != null ? new ElementSize(Length) : ElementSize.FromPercents(1);
+                    }
+
+                    newHeight = Height != null && Height.Unit != ElementSizeUnit.Percents
+                        ? Height
+                        : new ElementSize(Breadth);
                 }
 
-                newHeight = Height != null && Height.Unit != ElementSizeUnit.Percents ? Height : new ElementSize(Breadth);
+                // adjust size to content unless it has been set
+                if (!newWidth.Equals(Width))
+                {
+                    Width = newWidth;
+                    hasNewSize = true;
+                }
+
+                if (!newHeight.Equals(Height))
+                {
+                    Height = newHeight;
+                    hasNewSize = true;
+                }
             }
 
+            DisableLayoutUpdate = defaultDisableLayoutUpdate;
+            return base.UpdateLayout(notifyParent) || hasNewSize;
+        }
+
+        private bool AdjustSizeToContent()
+        {
             bool hasNewSize = false;
 
+            // the default behavior of the list-item is to adjust its height and width to its content
+            float maxWidth = 0f;
+            float maxHeight = 0f;
+            int childCount = LayoutChildren.Count;
+
+            // get size of content and set content offsets and alignment
+            for (int i = 0; i < childCount; ++i)
+            {
+                var childView = LayoutChildren[i] as UIView;
+                if (childView == null)
+                    continue;
+
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
+
+                // get size of content
+                if (childWidth.Unit != ElementSizeUnit.Percents)
+                {
+                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
+                }
+
+                if (childHeight.Unit != ElementSizeUnit.Percents)
+                {
+                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
+                }
+            }
+
+            // add margins
+            var margin = Margin ?? ElementMargin.Default;
+            maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+            maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+
             // adjust size to content unless it has been set
+            var newWidth = new ElementSize(maxWidth);
             if (!newWidth.Equals(Width))
             {
                 Width = newWidth;
                 hasNewSize = true;
             }
+            var newHeight = new ElementSize(maxHeight);
             if (!newHeight.Equals(Height))
             {
                 Height = newHeight;
                 hasNewSize = true;
             }
 
-            DisableLayoutUpdate = defaultDisableLayoutUpdate;
-            return base.UpdateLayout(notifyParent) || hasNewSize;
+            return hasNewSize;
         }
 
         /// <summary>

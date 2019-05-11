@@ -39,6 +39,7 @@ namespace Delight
             dependencyProperties.Add(IsSelectedProperty);
             dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(IsMouseOverProperty);
+            dependencyProperties.Add(AutoSizeToContentProperty);
             dependencyProperties.Add(LengthProperty);
             dependencyProperties.Add(BreadthProperty);
         }
@@ -89,6 +90,13 @@ namespace Delight
             set { IsMouseOverProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Boolean> AutoSizeToContentProperty = new DependencyProperty<System.Boolean>("AutoSizeToContent");
+        public System.Boolean AutoSizeToContent
+        {
+            get { return AutoSizeToContentProperty.GetValue(this); }
+            set { AutoSizeToContentProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Delight.ElementSize> LengthProperty = new DependencyProperty<Delight.ElementSize>("Length");
         public Delight.ElementSize Length
         {
@@ -135,6 +143,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listItem.Name = "ListItem";
 #endif
+                    Delight.ListItem.AutoSizeToContentProperty.SetDefault(_listItem, true);
                     Delight.ListItem.BreadthProperty.SetDefault(_listItem, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.ListItem.BackgroundColorProperty.SetDefault(_listItem, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _listItem, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));

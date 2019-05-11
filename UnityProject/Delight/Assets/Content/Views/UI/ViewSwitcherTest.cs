@@ -39,5 +39,10 @@ namespace Delight
         {
             ViewSwitcher1.SwitchTo(BindingTest);
         }
+
+        public void ShowComboBoxExample()
+        {
+            ViewSwitcher1.SwitchTo(ComboBoxExample);
+        }
     }
 }

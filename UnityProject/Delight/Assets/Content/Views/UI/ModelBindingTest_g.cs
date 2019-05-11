@@ -342,7 +342,7 @@ namespace Delight
                     _modelBindingTestGroup2.Name = "ModelBindingTestGroup2";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.WidthProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.Group.WidthProperty.SetDefault(_modelBindingTestGroup2, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _modelBindingTestGroup2;
             }

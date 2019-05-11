@@ -1,6 +1,6 @@
 <ModelBindingTest xmlns="Delight" BasedOn="LayoutRoot" SomeParentProperty="t:string">
   <Group Orientation="Horizontal" Spacing="10">
-    <Group Spacing="10" Width="500">
+    <Group Spacing="10" Width="100">
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Test 2" Click="Test2" />
     </Group>
