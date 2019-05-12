@@ -1401,6 +1401,15 @@ namespace Delight
 #endif
                     Delight.ComboBoxExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup1);
                     Delight.ComboBoxExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup2);
+                    Delight.ComboBoxExample.Group3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup3);
+                    Delight.ComboBoxExample.CheckBox1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox1);
+                    Delight.ComboBoxExample.CheckBox2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox2);
+                    Delight.ComboBoxExample.CheckBox3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox3);
+                    Delight.ComboBoxExample.Group4TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup4);
+                    Delight.ComboBoxExample.RadioButton1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton1);
+                    Delight.ComboBoxExample.RadioButton2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton2);
+                    Delight.ComboBoxExample.RadioButton3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton3);
+                    Delight.ComboBoxExample.Group5TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup5);
                     Delight.ComboBoxExample.Button1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleButton1);
                     Delight.ComboBoxExample.Button2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleButton2);
                     Delight.ComboBoxExample.ComboBoxTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleComboBox);
@@ -1448,6 +1457,564 @@ namespace Delight
 #endif
                 }
                 return _viewSwitcherTestComboBoxExampleGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup3;
+        public static Template ViewSwitcherTestComboBoxExampleGroup3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup3 == null || _viewSwitcherTestComboBoxExampleGroup3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup3.Name = "ViewSwitcherTestComboBoxExampleGroup3";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1 == null || _viewSwitcherTestComboBoxExampleCheckBox1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1.Name = "ViewSwitcherTestComboBoxExampleCheckBox1";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2 == null || _viewSwitcherTestComboBoxExampleCheckBox2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2.Name = "ViewSwitcherTestComboBoxExampleCheckBox2";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3 == null || _viewSwitcherTestComboBoxExampleCheckBox3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3.Name = "ViewSwitcherTestComboBoxExampleCheckBox3";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup4;
+        public static Template ViewSwitcherTestComboBoxExampleGroup4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup4 == null || _viewSwitcherTestComboBoxExampleGroup4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup4 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup4 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup4.Name = "ViewSwitcherTestComboBoxExampleGroup4";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup4;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1 == null || _viewSwitcherTestComboBoxExampleRadioButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1.Name = "ViewSwitcherTestComboBoxExampleRadioButton1";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2 == null || _viewSwitcherTestComboBoxExampleRadioButton2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2.Name = "ViewSwitcherTestComboBoxExampleRadioButton2";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3 == null || _viewSwitcherTestComboBoxExampleRadioButton3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3.Name = "ViewSwitcherTestComboBoxExampleRadioButton3";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup5;
+        public static Template ViewSwitcherTestComboBoxExampleGroup5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup5 == null || _viewSwitcherTestComboBoxExampleGroup5.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup5 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup5 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup5);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup5.Name = "ViewSwitcherTestComboBoxExampleGroup5";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup5;
             }
         }
 

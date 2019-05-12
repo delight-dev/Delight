@@ -20,9 +20,9 @@
   <ComboBoxItem Breadth="50px" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
 
   <CheckBox CheckBoxSprite="CheckBox" Checked-CheckBoxSprite="CheckBoxPressed" Height="25" CheckBoxWidth="24" CheckBoxHeight="24" 
-            CheckBoxColor="#ffffff" FontSize="18" FontStyle="Normal" FontColor="#ffffff" Spacing="10px"
+            CheckBoxColor="#ffffff" FontSize="18" FontStyle="Normal" FontColor="#ffffff" Spacing="10"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
-  <!--<RadioButton RadioButtonImage="Sprites/RadioButton.psd" Checked-RadioButtonImage="Sprites/RadioButtonPressed.psd" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"
-               RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" Font="Fonts/Roboto-Regular.ttf" FontSize="18" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
-               Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />-->
+  <RadioButton RadioButtonSprite="RadioButton" Checked-RadioButtonSprite="RadioButtonPressed" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"
+               RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" FontSize="18" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
+               Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
 </DefaultTheme> 

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -40,7 +39,7 @@ namespace Delight
             else
             {
                 ImageSet1.Unload();
-                Load1Button.Text = "Load Set 1";                
+                Load1Button.Text = "Load Set 1";
             }
         }
 
@@ -94,39 +93,57 @@ namespace Delight
 
             BigSpriteImage.Sprite = Assets.Sprites.Frame1;
         }
-       
-        public StringBuilder sb = new StringBuilder();
-        private IDisposable _updateTimer;
-        private IDisposable _updateLoadedAssets;
-        protected override void AfterLoad()
-        {            
-            base.AfterLoad();
 
-            _updateTimer = Observable.Interval(TimeSpan.FromMilliseconds(10)).Subscribe(x =>
+        private float _timer1;
+        private float _timer2;
+        private StringBuilder _sb = new StringBuilder();
+
+        /// <summary>
+        /// Called once per frame if EnableScriptEvents is true.
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+
+            if (_timer1 <= 0)
             {
-                // print timer to see if UI thread stalls or not
                 TimeString = String.Format("<mspace=13>{0}</mspace>", DateTime.Now.ToString("mm:ss.ff"));
-            });
+            }
 
-            _updateLoadedAssets = Observable.Interval(TimeSpan.FromMilliseconds(500)).Subscribe(x =>
+            if (_timer2 <= 0)
             {
                 // print loaded sprites
-                sb.Clear();
+                _sb.Clear();
                 foreach (var sprite in Assets.Sprites)
                 {
-                    sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId ?? "Resources", sprite.UnityObject != null ? "yes" : "no");
+                    _sb.AppendLine("{0} ({1}) : {2}", sprite.Id, sprite.AssetBundleId ?? "Resources",
+                        sprite.UnityObject != null ? "yes" : "no");
                 }
 
-                LoadedAssetsString = sb.ToString();
+                LoadedAssetsString = _sb.ToString();
 
                 // print loaded asset bundles
-                sb.Clear();
+                _sb.Clear();
                 foreach (var assetBundle in Assets.AssetBundles)
                 {
-                    sb.AppendLine("{0} : {1}", assetBundle.Id, assetBundle.UnityAssetBundle != null ? "yes" : "no");
+                    _sb.AppendLine("{0} : {1}", assetBundle.Id, assetBundle.UnityAssetBundle != null ? "yes" : "no");
                 }
-                LoadedAssetBundlesString = sb.ToString();
-            });
+
+                LoadedAssetBundlesString = _sb.ToString();
+            }
+
+            _timer1 += Time.deltaTime;
+            _timer2 += Time.deltaTime;
+
+            if (_timer1 >= 0.01)
+            {
+                _timer1 = 0;
+            }
+
+            if (_timer2 >= 0.5)
+            {
+                _timer2 = 0;
+            }
         }
     }
 }

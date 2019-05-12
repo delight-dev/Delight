@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
@@ -29,16 +28,16 @@ namespace Delight
             base.BeforeLoad();
         }
 
-        private IDisposable _update;
-        protected override void AfterLoad()
-        {
-            base.AfterLoad();
+        //private IDisposable _update;
+        //protected override void AfterLoad()
+        //{
+        //    base.AfterLoad();
 
-            // add one player every second
-            _update = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
-            {
-                //Models.Players.Add(new Player { Id = "Player " + x, Name = "Player " + x });
-            });
-        }
+        //    // add one player every second
+        //    _update = Observable.Interval(TimeSpan.FromMilliseconds(1000)).Subscribe(x =>
+        //    {
+        //        //Models.Players.Add(new Player { Id = "Player " + x, Name = "Player " + x });
+        //    });
+        //}
     }
 }

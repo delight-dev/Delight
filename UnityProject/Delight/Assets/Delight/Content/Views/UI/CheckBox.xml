@@ -1,8 +1,9 @@
 <CheckBox xmlns="Delight" BasedOn="UIImageView" IsChecked="t:bool" IsDisabled="t:bool" IsInteractable="t:bool = True"
-          Spacing="t:ElementSize" 
+          Spacing="t:ElementSize = 10" 
           m.CheckBoxImageView="CheckBox"
           m.CheckBoxLabel=""
-          Height="40">
+          Height="40"
+          Click="CheckBoxClick">
   <Group Id="CheckBoxGroup" Orientation="Horizontal" Spacing="{Spacing}">
     <Image Id="CheckBoxImageView" Width="40" Height="40" />
     <Label Id="CheckBoxLabel" AutoSize="Width" Height="100%" />

@@ -23,6 +23,7 @@ namespace Delight
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Spacing" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "CheckBoxGroup", "Spacing" }, new List<Func<BindableObject>> { () => this, () => CheckBoxGroup }), () => CheckBoxGroup.Spacing = Spacing, () => { }, false));
             CheckBoxImageView = new Image(this, CheckBoxGroup.Content, "CheckBoxImageView", CheckBoxImageViewTemplate);
             CheckBoxLabel = new Label(this, CheckBoxGroup.Content, "CheckBoxLabel", CheckBoxLabelTemplate);
+            Click += ResolveActionHandler(this, "CheckBoxClick");
             this.AfterInitializeInternal();
         }
 
@@ -1036,6 +1037,7 @@ namespace Delight
                     _checkBox.Name = "CheckBox";
 #endif
                     Delight.CheckBox.IsInteractableProperty.SetDefault(_checkBox, true);
+                    Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(25f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));

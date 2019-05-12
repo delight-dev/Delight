@@ -549,6 +549,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _assetManagementTest.Name = "AssetManagementTest";
 #endif
+                    Delight.AssetManagementTest.EnableScriptEventsProperty.SetDefault(_assetManagementTest, true);
                     Delight.AssetManagementTest.Label1TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel1);
                     Delight.AssetManagementTest.Label2TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel2);
                     Delight.AssetManagementTest.Label3TemplateProperty.SetDefault(_assetManagementTest, AssetManagementTestLabel3);

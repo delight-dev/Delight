@@ -438,8 +438,6 @@ namespace Delight
             if (newState.IEquals(_previousState))
                 return;
 
-            //Debug.Log(Id + ": Setting state to: " + newState);
-
             var stateChangingProperties = GetStateChangingProperties(newState);
             if (stateChangingProperties != null)
             {
@@ -458,6 +456,12 @@ namespace Delight
                 {
                     stateChangingProperties[i].Load(this);
                 }
+            }
+            else
+            {
+                // set state
+                _state = newState;
+                _previousState = newState;
             }
         }
 

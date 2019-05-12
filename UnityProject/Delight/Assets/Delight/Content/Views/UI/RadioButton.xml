@@ -1,0 +1,12 @@
+<RadioButton xmlns="Delight" BasedOn="UIImageView" IsChecked="t:bool" IsDisabled="t:bool" IsInteractable="t:bool = True"
+          Spacing="t:ElementSize = 10"
+          m.RadioButtonImageView="RadioButton"
+          m.RadioButtonLabel=""
+          Height="40"
+          Click="RadioButtonClick">
+  <Group Id="RadioButtonGroup" Orientation="Horizontal" Spacing="{Spacing}">
+    <Image Id="RadioButtonImageView" Width="40" Height="40" />
+    <Label Id="RadioButtonLabel" AutoSize="Width" Height="100%" />
+  </Group>
+</RadioButton>
+

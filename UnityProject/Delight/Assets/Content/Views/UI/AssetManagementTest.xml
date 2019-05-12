@@ -1,4 +1,5 @@
 <AssetManagementTest xmlns="Delight" BasedOn="LayoutRoot" TimeString="t:string" 
+                     EnableScriptEvents="True"
                      LoadedAssetsString="t:string" LoadedAssetBundlesString="t:string" LoadProgress="t:string">
   
   <Label Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
