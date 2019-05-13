@@ -117,7 +117,10 @@ namespace Delight
             // deselect all radio buttons
             if (LayoutParent != null)
             {
-                LayoutParent.Content.ForEach<RadioButton>(x => x.IsChecked = false, false);
+                LayoutParent.Content.ForEach<RadioButton>(x =>
+                {
+                    x.IsChecked = false;
+                }, false);
             }
 
             // select this radio button
