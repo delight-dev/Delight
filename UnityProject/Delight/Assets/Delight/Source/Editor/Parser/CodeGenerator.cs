@@ -774,6 +774,17 @@ namespace Delight.Editor.Parser
                             var sourcePath = new List<string>();
                             sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
 
+                            bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+
+                            // handle special case when source is localization dictionary
+                            if (isModelSource && sourcePath.Count == 3 && sourcePath[1].IEquals("Loc"))
+                            {
+                                // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
+                                var locId = sourcePath[2];
+                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], sourcePath[2]);
+                                sourcePath[2] = "Label";
+                            }
+
                             // get property names along path
                             var templateItemInfo = templateItems != null
                                 ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
@@ -788,8 +799,7 @@ namespace Delight.Editor.Parser
                                 sourcePath[0] = templateItemInfo.VariableName;
                                 sourcePath.Insert(1, "Item");
                             }
-
-                            bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                            
                             string sourcePropertiesStr = string.Join(", ",
                                 sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0))
                                     .Select(x => "\"" + x + "\""));

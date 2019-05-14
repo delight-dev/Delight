@@ -23,6 +23,14 @@ namespace Delight
             Button1.Click += ResolveActionHandler(this, "Test1");
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
             Button2.Click += ResolveActionHandler(this, "Test2");
+            Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
+
+            // binding <Label Text="{@Loc.Greeting1}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Label" }, new List<Func<BindableObject>> { () => Models.Loc["Greeting1"] }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = Models.Loc["Greeting1"].Label, () => { }, false));
+            Label2 = new Label(this, Group2.Content, "Label2", Label2Template);
+
+            // binding <Label Text="{@Loc.Greeting2}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Label" }, new List<Func<BindableObject>> { () => Models.Loc["Greeting2"] }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = Models.Loc["Greeting2"].Label, () => { }, false));
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in @Players}">
@@ -33,10 +41,10 @@ namespace Delight
             {
                 var playerListContent = new ListItem(this, PlayerList.Content, "PlayerListContent", PlayerListContentTemplate);
                 var group3 = new Group(this, playerListContent.Content, "Group3", Group3Template);
-                var label1 = new Label(this, group3.Content, "Label1", Label1Template);
+                var label3 = new Label(this, group3.Content, "Label3", Label3Template);
 
                 // binding <Label Text="{player.Name}">
-                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
 
                 // binding <List Items="{achievement in player.Achievements}">
@@ -46,10 +54,10 @@ namespace Delight
                 achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
                 {
                     var achievementsListContent = new ListItem(this, achievementsList.Content, "AchievementsListContent", AchievementsListContentTemplate);
-                    var label2 = new Label(this, achievementsListContent.Content, "Label2", Label2Template);
+                    var label4 = new Label(this, achievementsListContent.Content, "Label4", Label4Template);
 
                     // binding <Label Text="{achievement.Title}">
-                    achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
+                    achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
                     return achievementsListContent;
                 });
                 return playerListContent;
@@ -75,16 +83,20 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(PlayerListProperty);
             dependencyProperties.Add(PlayerListTemplateProperty);
             dependencyProperties.Add(Group3Property);
             dependencyProperties.Add(Group3TemplateProperty);
-            dependencyProperties.Add(Label1Property);
-            dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label3Property);
+            dependencyProperties.Add(Label3TemplateProperty);
             dependencyProperties.Add(AchievementsListProperty);
             dependencyProperties.Add(AchievementsListTemplateProperty);
-            dependencyProperties.Add(Label2Property);
-            dependencyProperties.Add(Label2TemplateProperty);
+            dependencyProperties.Add(Label4Property);
+            dependencyProperties.Add(Label4TemplateProperty);
             dependencyProperties.Add(PlayerListContentProperty);
             dependencyProperties.Add(PlayerListContentTemplateProperty);
             dependencyProperties.Add(AchievementsListContentProperty);
@@ -158,6 +170,34 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
+        {
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
+        {
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<List> PlayerListProperty = new DependencyProperty<List>("PlayerList");
         public List PlayerList
         {
@@ -186,18 +226,18 @@ namespace Delight
             set { Group3TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
-        public Label Label1
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
         {
-            get { return Label1Property.GetValue(this); }
-            set { Label1Property.SetValue(this, value); }
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
-        public Template Label1Template
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
         {
-            get { return Label1TemplateProperty.GetValue(this); }
-            set { Label1TemplateProperty.SetValue(this, value); }
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<List> AchievementsListProperty = new DependencyProperty<List>("AchievementsList");
@@ -214,18 +254,18 @@ namespace Delight
             set { AchievementsListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
-        public Label Label2
+        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
+        public Label Label4
         {
-            get { return Label2Property.GetValue(this); }
-            set { Label2Property.SetValue(this, value); }
+            get { return Label4Property.GetValue(this); }
+            set { Label4Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
-        public Template Label2Template
+        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
+        public Template Label4Template
         {
-            get { return Label2TemplateProperty.GetValue(this); }
-            set { Label2TemplateProperty.SetValue(this, value); }
+            get { return Label4TemplateProperty.GetValue(this); }
+            set { Label4TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ListItem> PlayerListContentProperty = new DependencyProperty<ListItem>("PlayerListContent");
@@ -292,13 +332,15 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
+                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
+                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel2);
                     Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestPlayerList);
                     Delight.ModelBindingTest.PlayerListContentTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestPlayerListContent);
                     Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup3);
-                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
+                    Delight.ModelBindingTest.Label3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel3);
                     Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsList);
                     Delight.ModelBindingTest.AchievementsListContentTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestAchievementsListContent);
-                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel2);
+                    Delight.ModelBindingTest.Label4TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel4);
                 }
                 return _modelBindingTest;
             }
@@ -429,6 +471,46 @@ namespace Delight
                     Delight.Label.TextProperty.SetDefault(_modelBindingTestButton2Label, "Test 2");
                 }
                 return _modelBindingTestButton2Label;
+            }
+        }
+
+        private static Template _modelBindingTestLabel1;
+        public static Template ModelBindingTestLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestLabel1 == null || _modelBindingTestLabel1.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestLabel1 == null)
+#endif
+                {
+                    _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _modelBindingTestLabel1.Name = "ModelBindingTestLabel1";
+#endif
+                }
+                return _modelBindingTestLabel1;
+            }
+        }
+
+        private static Template _modelBindingTestLabel2;
+        public static Template ModelBindingTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestLabel2 == null || _modelBindingTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestLabel2 == null)
+#endif
+                {
+                    _modelBindingTestLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _modelBindingTestLabel2.Name = "ModelBindingTestLabel2";
+#endif
+                }
+                return _modelBindingTestLabel2;
             }
         }
 
@@ -665,23 +747,23 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestLabel1;
-        public static Template ModelBindingTestLabel1
+        private static Template _modelBindingTestLabel3;
+        public static Template ModelBindingTestLabel3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestLabel1 == null || _modelBindingTestLabel1.CurrentVersion != Template.Version)
+                if (_modelBindingTestLabel3 == null || _modelBindingTestLabel3.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestLabel1 == null)
+                if (_modelBindingTestLabel3 == null)
 #endif
                 {
-                    _modelBindingTestLabel1 = new Template(LabelTemplates.Label);
+                    _modelBindingTestLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _modelBindingTestLabel1.Name = "ModelBindingTestLabel1";
+                    _modelBindingTestLabel3.Name = "ModelBindingTestLabel3";
 #endif
                 }
-                return _modelBindingTestLabel1;
+                return _modelBindingTestLabel3;
             }
         }
 
@@ -895,23 +977,23 @@ namespace Delight
             }
         }
 
-        private static Template _modelBindingTestLabel2;
-        public static Template ModelBindingTestLabel2
+        private static Template _modelBindingTestLabel4;
+        public static Template ModelBindingTestLabel4
         {
             get
             {
 #if UNITY_EDITOR
-                if (_modelBindingTestLabel2 == null || _modelBindingTestLabel2.CurrentVersion != Template.Version)
+                if (_modelBindingTestLabel4 == null || _modelBindingTestLabel4.CurrentVersion != Template.Version)
 #else
-                if (_modelBindingTestLabel2 == null)
+                if (_modelBindingTestLabel4 == null)
 #endif
                 {
-                    _modelBindingTestLabel2 = new Template(LabelTemplates.Label);
+                    _modelBindingTestLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _modelBindingTestLabel2.Name = "ModelBindingTestLabel2";
+                    _modelBindingTestLabel4.Name = "ModelBindingTestLabel4";
 #endif
                 }
-                return _modelBindingTestLabel2;
+                return _modelBindingTestLabel4;
             }
         }
 

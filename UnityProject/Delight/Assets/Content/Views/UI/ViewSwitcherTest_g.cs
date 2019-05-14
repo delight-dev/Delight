@@ -774,13 +774,15 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton2);
+                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
+                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel2);
                     Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerList);
                     Delight.ModelBindingTest.PlayerListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerListContent);
                     Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup3);
-                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
+                    Delight.ModelBindingTest.Label3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel3);
                     Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsList);
                     Delight.ModelBindingTest.AchievementsListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsListContent);
-                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel2);
+                    Delight.ModelBindingTest.Label4TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel4);
                 }
                 return _viewSwitcherTestModelBindingTest;
             }
@@ -905,6 +907,46 @@ namespace Delight
 #endif
                 }
                 return _viewSwitcherTestModelBindingTestButton2Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel1;
+        public static Template ViewSwitcherTestModelBindingTestLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel1 == null || _viewSwitcherTestModelBindingTestLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel1 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel1.Name = "ViewSwitcherTestModelBindingTestLabel1";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel1;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel2;
+        public static Template ViewSwitcherTestModelBindingTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel2 == null || _viewSwitcherTestModelBindingTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel2 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel2 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel2.Name = "ViewSwitcherTestModelBindingTestLabel2";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel2;
             }
         }
 
@@ -1136,23 +1178,23 @@ namespace Delight
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestLabel1;
-        public static Template ViewSwitcherTestModelBindingTestLabel1
+        private static Template _viewSwitcherTestModelBindingTestLabel3;
+        public static Template ViewSwitcherTestModelBindingTestLabel3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestLabel1 == null || _viewSwitcherTestModelBindingTestLabel1.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestLabel3 == null || _viewSwitcherTestModelBindingTestLabel3.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestLabel1 == null)
+                if (_viewSwitcherTestModelBindingTestLabel3 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestLabel1 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel1);
+                    _viewSwitcherTestModelBindingTestLabel3 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel3);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestLabel1.Name = "ViewSwitcherTestModelBindingTestLabel1";
+                    _viewSwitcherTestModelBindingTestLabel3.Name = "ViewSwitcherTestModelBindingTestLabel3";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestLabel1;
+                return _viewSwitcherTestModelBindingTestLabel3;
             }
         }
 
@@ -1364,23 +1406,23 @@ namespace Delight
             }
         }
 
-        private static Template _viewSwitcherTestModelBindingTestLabel2;
-        public static Template ViewSwitcherTestModelBindingTestLabel2
+        private static Template _viewSwitcherTestModelBindingTestLabel4;
+        public static Template ViewSwitcherTestModelBindingTestLabel4
         {
             get
             {
 #if UNITY_EDITOR
-                if (_viewSwitcherTestModelBindingTestLabel2 == null || _viewSwitcherTestModelBindingTestLabel2.CurrentVersion != Template.Version)
+                if (_viewSwitcherTestModelBindingTestLabel4 == null || _viewSwitcherTestModelBindingTestLabel4.CurrentVersion != Template.Version)
 #else
-                if (_viewSwitcherTestModelBindingTestLabel2 == null)
+                if (_viewSwitcherTestModelBindingTestLabel4 == null)
 #endif
                 {
-                    _viewSwitcherTestModelBindingTestLabel2 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel2);
+                    _viewSwitcherTestModelBindingTestLabel4 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel4);
 #if UNITY_EDITOR
-                    _viewSwitcherTestModelBindingTestLabel2.Name = "ViewSwitcherTestModelBindingTestLabel2";
+                    _viewSwitcherTestModelBindingTestLabel4.Name = "ViewSwitcherTestModelBindingTestLabel4";
 #endif
                 }
-                return _viewSwitcherTestModelBindingTestLabel2;
+                return _viewSwitcherTestModelBindingTestLabel4;
             }
         }
 

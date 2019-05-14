@@ -25,7 +25,6 @@ Player
 Sprite Icon
 string Title
 
-
 // Data
 
 + World (Order, Name)
