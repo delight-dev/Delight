@@ -80,8 +80,6 @@ namespace Delight
 
         public virtual void Edit(Action edit)
         {
-            // TODO here we want to implement batch edit of collection so just a single change 
-            // notification is sent, by setting a internal bool _batchNotifications and letting Add, Remove, etc. check the bool and queue the notifications
             _batchNotifications = true;
             edit();
             _batchNotifications = false;

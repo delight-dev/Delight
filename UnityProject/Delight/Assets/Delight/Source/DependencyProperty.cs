@@ -68,7 +68,7 @@ namespace Delight
                 return; // no.
             }
 
-            bool isLoadingAsset = false; // TODO cleanup if not needed
+            bool isLoadingAsset = false;
             if (IsAtomicBindableObjectType)
             {
                 // detach old property changed listeners

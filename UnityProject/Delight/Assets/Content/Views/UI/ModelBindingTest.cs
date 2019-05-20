@@ -33,9 +33,22 @@ namespace Delight
             Models.Loc["Greeting1"].Label = "Hello!!";
         }
 
-        public void Test2()
+        public void Add()
         {
             Models.Players["Player1"].Achievements.Add(new Achievement { Title = "Hello" });
+        }
+
+        public void Remove()
+        {
+            // remove selected item
+            if (SelectedAchievement != null)
+            Models.Players["Player1"].Achievements.Remove(SelectedAchievement);
+        }
+
+        public Achievement SelectedAchievement;
+        public void AchievementSelectionChanged(object sender, ItemSelectionActionData args)
+        {
+            SelectedAchievement = args.Item as Achievement;
         }
 
         protected override void BeforeLoad()

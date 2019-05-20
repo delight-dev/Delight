@@ -118,14 +118,19 @@ namespace Delight
                     CreateItem(e.Item);
                     updateLayout = true;
                     break;
+
                 case CollectionChangeAction.Remove:
                     DestroyItem(e.Item);
                     updateLayout = true;
                     break;
+
                 case CollectionChangeAction.Replace:
                     break;
+
                 case CollectionChangeAction.Clear:
+                    updateLayout = true;
                     break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -179,7 +184,8 @@ namespace Delight
             ListItem listItem;
             if (_presentedItems.TryGetValue(item, out listItem))
             {
-                // TODO to be continued
+                listItem.Unload();
+                Content.LayoutChildren.Remove(listItem);
             }
         }
 

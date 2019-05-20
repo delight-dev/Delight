@@ -738,7 +738,7 @@ namespace Delight.Editor.Parser
                     // yes. add initializer for action handlers
                     foreach (var actionAssignment in actionAssignments)
                     {
-                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childId, actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionAssignment.PropertyValue);
                     }
                 }
 

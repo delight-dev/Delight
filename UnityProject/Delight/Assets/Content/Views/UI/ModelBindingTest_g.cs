@@ -22,7 +22,9 @@ namespace Delight
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
             Button1.Click += ResolveActionHandler(this, "Test1");
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
-            Button2.Click += ResolveActionHandler(this, "Test2");
+            Button2.Click += ResolveActionHandler(this, "Add");
+            Button3 = new Button(this, Group2.Content, "Button3", Button3Template);
+            Button3.Click += ResolveActionHandler(this, "Remove");
             Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
 
             // binding <Label Text="{@Loc.Greeting1}">
@@ -46,6 +48,7 @@ namespace Delight
                 // binding <Label Text="{player.Name}">
                 playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
+                achievementsList.ItemSelected += ResolveActionHandler(this, "AchievementSelectionChanged");
 
                 // binding <List Items="{achievement in player.Achievements}">
                 playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Achievements" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => achievementsList }), () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements, () => { }, false));
@@ -83,6 +86,8 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
+            dependencyProperties.Add(Button3Property);
+            dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Label2Property);
@@ -168,6 +173,20 @@ namespace Delight
         {
             get { return Button2TemplateProperty.GetValue(this); }
             set { Button2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button3Property = new DependencyProperty<Button>("Button3");
+        public Button Button3
+        {
+            get { return Button3Property.GetValue(this); }
+            set { Button3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button3TemplateProperty = new DependencyProperty<Template>("Button3Template");
+        public Template Button3Template
+        {
+            get { return Button3TemplateProperty.GetValue(this); }
+            set { Button3TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -332,6 +351,7 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton2);
+                    Delight.ModelBindingTest.Button3TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestButton3);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel1);
                     Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestLabel2);
                     Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_modelBindingTest, ModelBindingTestPlayerList);
@@ -468,9 +488,51 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestButton2Label.Name = "ModelBindingTestButton2Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_modelBindingTestButton2Label, "Test 2");
+                    Delight.Label.TextProperty.SetDefault(_modelBindingTestButton2Label, "Add");
                 }
                 return _modelBindingTestButton2Label;
+            }
+        }
+
+        private static Template _modelBindingTestButton3;
+        public static Template ModelBindingTestButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestButton3 == null || _modelBindingTestButton3.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestButton3 == null)
+#endif
+                {
+                    _modelBindingTestButton3 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _modelBindingTestButton3.Name = "ModelBindingTestButton3";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton3, ModelBindingTestButton3Label);
+                }
+                return _modelBindingTestButton3;
+            }
+        }
+
+        private static Template _modelBindingTestButton3Label;
+        public static Template ModelBindingTestButton3Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_modelBindingTestButton3Label == null || _modelBindingTestButton3Label.CurrentVersion != Template.Version)
+#else
+                if (_modelBindingTestButton3Label == null)
+#endif
+                {
+                    _modelBindingTestButton3Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _modelBindingTestButton3Label.Name = "ModelBindingTestButton3Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_modelBindingTestButton3Label, "Remove");
+                }
+                return _modelBindingTestButton3Label;
             }
         }
 

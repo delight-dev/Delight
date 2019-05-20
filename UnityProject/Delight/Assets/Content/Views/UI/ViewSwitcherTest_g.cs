@@ -774,6 +774,7 @@ namespace Delight
                     Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup2);
                     Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton1);
                     Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton2);
+                    Delight.ModelBindingTest.Button3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton3);
                     Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
                     Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel2);
                     Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerList);
@@ -907,6 +908,47 @@ namespace Delight
 #endif
                 }
                 return _viewSwitcherTestModelBindingTestButton2Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton3;
+        public static Template ViewSwitcherTestModelBindingTestButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton3 == null || _viewSwitcherTestModelBindingTestButton3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton3 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton3 = new Template(ModelBindingTestTemplates.ModelBindingTestButton3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton3.Name = "ViewSwitcherTestModelBindingTestButton3";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestButton3, ViewSwitcherTestModelBindingTestButton3Label);
+                }
+                return _viewSwitcherTestModelBindingTestButton3;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton3Label;
+        public static Template ViewSwitcherTestModelBindingTestButton3Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton3Label == null || _viewSwitcherTestModelBindingTestButton3Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton3Label == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton3Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton3Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton3Label.Name = "ViewSwitcherTestModelBindingTestButton3Label";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestButton3Label;
             }
         }
 
