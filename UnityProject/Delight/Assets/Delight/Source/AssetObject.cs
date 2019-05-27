@@ -184,6 +184,9 @@ namespace Delight
                     return;
                 }
 
+                // simulate slow load
+                //await Task.Delay(2000); // TODO add option to simulate network lag in editor
+
                 // is asset included in build?
                 if (IsResource)
                 {
@@ -216,9 +219,6 @@ namespace Delight
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
-
-                // simulate slow load
-                //await Task.Delay(2000); // TODO add option to simulate network lag in editor
 
                 // see if sprite is in bundle 
                 //var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id); // bug in Unity makes it so assets loaded asynchronously does not get unloaded when Resources.UnloadAsset() is called

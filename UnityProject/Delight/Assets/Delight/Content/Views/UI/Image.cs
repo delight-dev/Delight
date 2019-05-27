@@ -41,7 +41,10 @@ namespace Delight
             if (ImageComponent == null)
             {
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                FastMaterialChanged(); // apply fast material if specified
             }
+
+            SpriteChanged();
         }
 
         /// <summary>
@@ -56,6 +59,7 @@ namespace Delight
             if (sprite != null && ImageComponent == null)
             {
                 ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                FastMaterialChanged(); // apply fast material if specified
             }
 
             if (ImageComponent != null)
@@ -82,7 +86,7 @@ namespace Delight
         {
             if (ImageComponent == null)
                 return;
-
+                        
             if (ColorProperty.IsUndefined(this))
             {
                 if (ImageComponent.sprite != null || ImageComponent.overrideSprite != null)
@@ -97,10 +101,10 @@ namespace Delight
                 }
             }
 
+            var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
             if (Width == null && Height == null)
             {
-                // if width and height is undefined, adjust size to native size of sprite
-                var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
+                // if width and height is undefined, adjust size to native size of sprite                
                 if (sprite != null)
                 {
                     ImageComponent.SetNativeSize();
@@ -108,9 +112,18 @@ namespace Delight
                     OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
                 }
             }
-
-            // disable raycast blocks if image is transparent
-            ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+            
+            bool isLoading = Sprite != null && !Sprite.IsLoaded;
+            if (isLoading && sprite == null)
+            {
+                // always disable image while loading
+                ImageComponent.enabled = false;
+            }
+            else
+            {
+                // disable raycast blocks if image is transparent
+                ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+            }
         }
 
         /// <summary>

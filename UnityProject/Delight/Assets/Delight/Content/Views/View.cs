@@ -480,8 +480,7 @@ namespace Delight
                 var template = _template;
                 while (true)
                 {
-                    List<DependencyProperty> dependencyProperties;
-                    if (DependencyProperties.TryGetValue(template, out dependencyProperties))
+                    if (DependencyProperties.TryGetValue(template, out var dependencyProperties))
                     {
                         // iterate through all dependency properties and check if it has state
                         for (int i = 0; i < dependencyProperties.Count; ++i)

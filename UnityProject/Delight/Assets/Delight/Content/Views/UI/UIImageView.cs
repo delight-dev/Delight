@@ -41,7 +41,7 @@ namespace Delight
                 return;
 
             base.BeforeLoad();
-            ImageChanged();
+            SpriteChanged();
         }
 
         /// <summary>
@@ -109,10 +109,10 @@ namespace Delight
                 }
             }
 
+            var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
             if (Width == null && Height == null)
             {
-                // if width and height is undefined, adjust size to native size of sprite
-                var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
+                // if width and height is undefined, adjust size to native size of sprite                
                 if (sprite != null)
                 {
                     ImageComponent.SetNativeSize();
@@ -121,8 +121,17 @@ namespace Delight
                 }
             }
 
-            // disable raycast blocks if image is transparent
-            ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+            bool isLoading = BackgroundSprite != null && !BackgroundSprite.IsLoaded;
+            if (isLoading && sprite == null)
+            {
+                // always disable image while loading if current sprite isn't set
+                ImageComponent.enabled = false;
+            }
+            else
+            {
+                // disable raycast blocks if image is transparent
+                ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+            }
         }
 
         /// <summary>
