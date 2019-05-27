@@ -29,8 +29,7 @@ namespace Delight
             Models.Players["Player1"].Name = "Julia " + i++;
             SomeParentProperty = "Yo " + i;
 
-            //Models.Loc["Greeting1"].Label = "Hello!!!";
-            Models.Loc["Greeting1"].Label = "Hello!!";
+            Models.Loc["Greeting1"].Label = "New Label!!";
         }
 
         public void Add()

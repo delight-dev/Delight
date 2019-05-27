@@ -125,9 +125,12 @@ namespace Delight
                     break;
 
                 case CollectionChangeAction.Replace:
+                    ReplaceItems();
+                    updateLayout = true;
                     break;
 
                 case CollectionChangeAction.Clear:
+                    ClearItems();
                     updateLayout = true;
                     break;
 
@@ -171,6 +174,16 @@ namespace Delight
         }
 
         /// <summary>
+        /// Replaces presented items. 
+        /// </summary>
+        private void ReplaceItems()
+        {
+            // TODO loop through list items and replace them
+            // item = Content.LayoutChildren[i]
+            // _presentedListItems.TryGetValue(item, out listItem) ...
+        }
+
+        /// <summary>
         /// Destroys item in list.
         /// </summary>
         protected virtual void DestroyItem(BindableObject item)
@@ -186,6 +199,7 @@ namespace Delight
             {
                 listItem.Unload();
                 Content.LayoutChildren.Remove(listItem);
+                _presentedItems.Remove(item);
             }
         }
 
@@ -228,6 +242,7 @@ namespace Delight
                 child.Unload();
             }
             Content.LayoutChildren.Clear();
+            _presentedItems.Clear();
         }
 
         public void ListOrientationChanged()

@@ -15,7 +15,6 @@ namespace Delight
     {
         public CollectionChangeAction ChangeAction;
         public BindableObject Item;
-        public List<BindableObject> Items;
     }
 
     /// <summary>
