@@ -26,6 +26,7 @@ namespace Delight.Editor.Parser
         #region Fields
 
         public static string ContentObjectModelFile = "DelightContent.bin";
+        private static readonly object _fileLock = new object();
 
         [ProtoMember(1, AsReference = true)]
         public List<ViewObject> ViewObjects;
@@ -63,7 +64,7 @@ namespace Delight.Editor.Parser
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
             StyleObjects = new List<StyleObject>();
-            AssetBundleObjects = new List<AssetBundleObject>();            
+            AssetBundleObjects = new List<AssetBundleObject>();
             AssetTypes = new List<AssetType>();
         }
 
@@ -200,21 +201,41 @@ namespace Delight.Editor.Parser
             }
 
             // deserialize file
-            using (var file = File.OpenRead(modelFilePath))
+            lock (_fileLock)
             {
-                Debug.Log("Deserializing " + modelFilePath);
-                try
+                using (var file = File.OpenRead(modelFilePath))
                 {
-                    _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    Debug.LogError(String.Format("[Delight] Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
-                    _contentObjectModel = new ContentObjectModel();
-                    return;
+                    //Debug.Log("Deserializing " + modelFilePath);
+                    try
+                    {
+                        _contentObjectModel = Serializer.Deserialize<ContentObjectModel>(file);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                        Debug.LogError(String.Format("[Delight] Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
+                        _contentObjectModel = new ContentObjectModel();
+                        return;
+                    }
+                    finally
+                    {
+                        file.Close();
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// For printing view declaration hieararchy.
+        /// </summary>
+        public StringBuilder PrintViewDeclaration(StringBuilder sb, ViewDeclaration viewDeclaration, int depth)
+        {
+            sb.AppendLine(depth, "{0} ({1})", viewDeclaration.Id, viewDeclaration.ParentDeclaration?.Id);
+            foreach (var child in viewDeclaration.ChildDeclarations)
+            {
+                PrintViewDeclaration(sb, child, depth + 1);
+            }
+            return sb;
         }
 
         /// <summary>
@@ -223,10 +244,14 @@ namespace Delight.Editor.Parser
         public void SaveObjectModel()
         {
             var modelFilePath = GetContentObjectModelFilePath();
-            using (var file = File.Open(modelFilePath, FileMode.Create))
+            lock (_fileLock)
             {
-                Debug.Log("Serializing " + modelFilePath);
-                Serializer.Serialize(file, _contentObjectModel);
+                using (var file = File.Open(modelFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    //Debug.Log("Serializing " + modelFilePath);
+                    Serializer.Serialize(file, _contentObjectModel);
+                    file.Close();
+                }
             }
         }
 
@@ -317,11 +342,12 @@ namespace Delight.Editor.Parser
         /// </summary>
         public void ClearAssetTypes(bool addedFromAssetFiles)
         {
-            // remove asset types no longer references from files or views
+            // TODO sometimes assets are removed when they shouldn't, the bug might be here
+            // remove asset types no longer referenced from files or views
             for (int i = AssetTypes.Count - 1; i >= 0; --i)
             {
                 var item = AssetTypes[i];
-                if ((addedFromAssetFiles && !item.AddedFromView) || 
+                if ((addedFromAssetFiles && !item.AddedFromView) ||
                     (!addedFromAssetFiles && !item.AddedFromAssetFile))
                 {
                     AssetTypes.RemoveAt(i);
@@ -334,6 +360,20 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Gets all style declarations belonging to the specified view object. 
+        /// </summary>
+        public static List<StyleDeclaration> GetStyleDeclarations(string viewName)
+        {
+            var model = GetInstance();
+
+            // get all style declarations belonging to specified view
+            var styleDeclarations = model.StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => y.ViewName.IEquals(viewName)));
+
+            return styleDeclarations.ToList();
+        }
+
+        /// <summary>
         /// Gets all style property assignments for the specified view object. 
         /// </summary>
         public static List<PropertyAssignment> GetViewObjectStylePropertyAssignments(string viewName)
@@ -341,8 +381,8 @@ namespace Delight.Editor.Parser
             var model = GetInstance();
 
             // get all default style declarations belonging to specified view
-            var styleDeclarations = model.StyleObjects.SelectMany(x => 
-                x.StyleDeclarations.Where(y => String.IsNullOrEmpty(y.StyleName) && 
+            var styleDeclarations = model.StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => String.IsNullOrEmpty(y.StyleName) &&
                                                y.ViewName.IEquals(viewName)));
 
             var propertyAssignments = styleDeclarations.SelectMany(x => x.PropertyAssignments);
@@ -352,7 +392,44 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets all style property assignments for the specified view declaration and style. 
         /// </summary>
-        public static List<PropertyAssignment> GetStylePropertyAssignments(string viewName, string styleName)
+        public static List<PropertyAssignment> GetStylePropertyAssignments(string viewName, string styleName, out bool styleMissing)
+        {
+            var model = GetInstance();
+
+            // get all styles belonging to specified view and styleId
+            var styleDeclarations = model.StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => y.StyleName.IEquals(styleName) &&
+                                               y.ViewName.IEquals(viewName)));
+
+            var propertyAssignments = new List<PropertyAssignment>();
+            styleMissing = !styleDeclarations.Any();
+
+            foreach (var styleDeclaration in styleDeclarations)
+            {
+                // add property assignments from the styles this style is based on
+                var basedOnDeclaration = styleDeclaration.BasedOn;
+                var basedOnPropertyAssignments = new List<PropertyAssignment>();
+                while (basedOnDeclaration != null)
+                {
+                    basedOnPropertyAssignments.AddRange(basedOnDeclaration.PropertyAssignments);
+                    basedOnDeclaration = basedOnDeclaration.BasedOn;
+                }
+
+                // reverse so base style assignments comes before most derived style assignments
+                basedOnPropertyAssignments.Reverse();
+                propertyAssignments.AddRange(basedOnPropertyAssignments);
+
+                // add property assignments from this style
+                propertyAssignments.AddRange(styleDeclaration.PropertyAssignments);
+            }
+
+            return propertyAssignments;
+        }
+
+        /// <summary>
+        /// Gets all style property bindings for the specified view declaration and style. 
+        /// </summary>
+        public static List<PropertyBinding> GetStylePropertyBindings(string viewName, string styleName)
         {
             var model = GetInstance();
 
@@ -361,22 +438,26 @@ namespace Delight.Editor.Parser
                 x.StyleDeclarations.Where(y => y.StyleName.IEquals(styleName) &&
                                                y.ViewName.IEquals(viewName)));
 
-            var propertyAssignments = new List<PropertyAssignment>();                        
+            var propertyBindings = new List<PropertyBinding>();
             foreach (var styleDeclaration in styleDeclarations)
             {
-                // add property assignments from the styles this style is based on
+                // add property bindings from the styles this style is based on
                 var basedOnDeclaration = styleDeclaration.BasedOn;
+                var basedOnPropertyBindings = new List<PropertyBinding>();
                 while (basedOnDeclaration != null)
                 {
-                    propertyAssignments.AddRange(basedOnDeclaration.PropertyAssignments);
+                    basedOnPropertyBindings.AddRange(basedOnDeclaration.PropertyBindings);
                     basedOnDeclaration = basedOnDeclaration.BasedOn;
                 }
 
+                basedOnPropertyBindings.Reverse();
+                propertyBindings.AddRange(basedOnPropertyBindings);
+
                 // add property assignments from this style
-                propertyAssignments.AddRange(styleDeclaration.PropertyAssignments);                
+                propertyBindings.AddRange(styleDeclaration.PropertyBindings);
             }
 
-            return propertyAssignments;
+            return propertyBindings;
         }
 
         #endregion
@@ -407,10 +488,10 @@ namespace Delight.Editor.Parser
         [ProtoMember(6)]
         public bool NeedUpdate;
 
-        [ProtoMember(7)]
+        [ProtoMember(7, AsReference = true)]
         public List<PropertyExpression> PropertyExpressions;
 
-        [ProtoMember(8)]
+        [ProtoMember(8, AsReference = true)]
         public List<ViewDeclaration> ViewDeclarations;
 
         [ProtoMember(9)]
@@ -544,6 +625,7 @@ namespace Delight.Editor.Parser
     [ProtoInclude(6, typeof(InitializerProperty))]
     [ProtoInclude(7, typeof(AttachedProperty))]
     [ProtoInclude(8, typeof(AttachedPropertyAssignment))]
+    [ProtoInclude(9, typeof(DefaultPropertyBinding))]
     public class PropertyExpression
     {
         [ProtoMember(101)]
@@ -573,6 +655,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(9, AsReference = true)]
         public AssetType AssetType;
+
+        [ProtoMember(10)]
+        public bool TwoWayImplicit;
     }
 
     /// <summary>
@@ -625,6 +710,18 @@ namespace Delight.Editor.Parser
         public string NewPropertyName;
     }
 
+    /// <summary>
+    /// Specifies default property binding.
+    /// </summary>
+    [ProtoContract]
+    public class DefaultPropertyBinding : PropertyExpression
+    {
+        [ProtoMember(1)]
+        public string TargetPropertyName;
+
+        [ProtoMember(2)]
+        public bool IsTwoWay;
+    }
 
     /// <summary>
     /// Stores information about a initializer property.
@@ -676,6 +773,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(4)]
         public bool AttachedNeedUpdate;
 
+        [ProtoMember(5, AsReference = true)]
+        public StyleDeclaration StyleDeclaration;
+
         public PropertyDeclarationInfo PropertyDeclarationInfo;
     }
 
@@ -699,6 +799,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(5)]
         public string ParentViewName;
+
+        [ProtoMember(6)]
+        public string PropertyTypeFullName;
     }
 
     /// <summary>
@@ -727,6 +830,21 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(7)]
         public string ItemId;
+
+        [ProtoMember(8)]
+        public bool AttachedNeedUpdate;
+
+        [ProtoMember(9)]
+        public bool IsAttached;
+
+        [ProtoMember(10, AsReference = true)]
+        public ViewDeclaration AttachedToParentViewDeclaration;
+
+        [ProtoMember(11, AsReference = true)]
+        public StyleDeclaration StyleDeclaration;
+
+        [ProtoMember(12)]
+        public bool BindingNeedUpdate;
     }
 
     /// <summary>
@@ -759,13 +877,13 @@ namespace Delight.Editor.Parser
         [ProtoMember(2)]
         public string Id;
 
-        [ProtoMember(3)]
+        [ProtoMember(3, AsReference = true)]
         public List<PropertyAssignment> PropertyAssignments;
 
-        [ProtoMember(4)]
+        [ProtoMember(4, AsReference = true)]
         public List<PropertyBinding> PropertyBindings;
 
-        [ProtoMember(5)]
+        [ProtoMember(5, AsReference = true)]
         public List<ViewDeclaration> ChildDeclarations;
 
         [ProtoMember(6)]
@@ -774,7 +892,7 @@ namespace Delight.Editor.Parser
         [ProtoMember(7)]
         public string Style;
 
-        [ProtoMember(8)]
+        [ProtoMember(8, AsReference = true)]
         public List<AttachedPropertyAssignment> AttachedPropertyAssignments;
 
         [ProtoMember(9, AsReference = true)]
@@ -799,18 +917,44 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets property assignments, including those set by styles. 
         /// </summary>
-        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle()
+        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle(out bool styleMissing)
         {
             var propertyAssignments = new List<PropertyAssignment>();
-            propertyAssignments.AddRange(PropertyAssignments);
+            styleMissing = false;
 
             if (!String.IsNullOrEmpty(Style))
             {
-                var stylePropertyAssignments = ContentObjectModel.GetStylePropertyAssignments(ViewName, Style);
+                var stylePropertyAssignments = ContentObjectModel.GetStylePropertyAssignments(ViewName, Style, out styleMissing);
                 propertyAssignments.AddRange(stylePropertyAssignments);
             }
 
-            return propertyAssignments;
+            propertyAssignments.AddRange(PropertyAssignments);
+            if (propertyAssignments.Count <= 0)
+                return propertyAssignments;
+
+            return propertyAssignments.GroupBy(x => x.StateName + ":" + x.PropertyName).Select(y => y.LastOrDefault()).ToList();
+        }
+
+        /// <summary>
+        /// Gets property bindings, including those set by styles. 
+        /// </summary>
+        public List<PropertyBinding> GetPropertyBindingsWithStyle(out bool styleMissing)
+        {
+            var propertyBindings = new List<PropertyBinding>();
+            styleMissing = false;
+
+            if (!String.IsNullOrEmpty(Style))
+            {
+                var stylePropertyBindings = ContentObjectModel.GetStylePropertyBindings(ViewName, Style);
+                propertyBindings.AddRange(stylePropertyBindings);
+                styleMissing = !stylePropertyBindings.Any();
+            }
+
+            propertyBindings.AddRange(PropertyBindings);
+            if (propertyBindings.Count <= 0)
+                return propertyBindings;
+
+            return propertyBindings.GroupBy(x => x.PropertyName).Select(y => y.LastOrDefault()).ToList();
         }
 
         #endregion
@@ -834,8 +978,10 @@ namespace Delight.Editor.Parser
     {
         Default = 0,
         TwoWay = 1,
-        Negated = 2 | TwoWay,
-        Model = 4
+        Negated = 2,
+        Model = 4,
+        Internal = 8,
+        OneWayExplicit = 16
     }
 
     /// <summary>
@@ -1003,10 +1149,18 @@ namespace Delight.Editor.Parser
         [ProtoMember(3)]
         public List<PropertyAssignment> PropertyAssignments;
 
+        [ProtoMember(4)]
+        public List<PropertyBinding> PropertyBindings;
+
         [ProtoMember(5)]
         public int LineNumber;
 
-        [ProtoMember(6, AsReference = true)]
+        [ProtoMember(7)]
+        public string StylePath;
+
+        [ProtoMember(8)]
+        public string BasedOnName;
+
         public StyleDeclaration BasedOn;
 
         #endregion
@@ -1016,6 +1170,7 @@ namespace Delight.Editor.Parser
         public StyleDeclaration()
         {
             PropertyAssignments = new List<PropertyAssignment>();
+            PropertyBindings = new List<PropertyBinding>();
         }
 
         #endregion

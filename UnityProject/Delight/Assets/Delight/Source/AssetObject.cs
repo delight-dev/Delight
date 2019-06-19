@@ -16,8 +16,10 @@ namespace Delight
         #region Fields
 
         public virtual bool IsLoaded { get; }
+        
         public bool IsResource { get; set; }
         public string RelativePath { get; set; }
+        public bool IsUnmanaged { get; set; }
 
         public string AssetBundleId { get; set; }
         public AssetBundle AssetBundle
@@ -28,11 +30,20 @@ namespace Delight
 
         public Dictionary<int, WeakReference> _referenceObjects;
 
+        public string Name
+        {
+            get
+            {
+                int separatorIndex = Id.LastIndexOf("/");
+                return separatorIndex < 0 ? Id : Id.Substring(separatorIndex + 1);
+            }
+        }
+
         public string FullPath
         {
             get
             {
-                return RelativePath + Id;
+                return RelativePath + Name;
             }
         }
 
@@ -68,7 +79,27 @@ namespace Delight
             }
 
             // trigger load 
-            LoadAsync();
+            //LoadGenericAsync(); 
+            Load(); // loads resources synchronously to fix with with pop-ins
+        }
+
+        /// <summary>
+        /// Registers that an object references the asset.
+        /// </summary>
+        public async Task RegisterReferenceAsync(object referenceObject)
+        {
+            // register reference
+            _referenceObjects[referenceObject.GetHashCode()] = new WeakReference(referenceObject);
+
+            // register reference on asset bundle
+            var assetBundle = AssetBundle;
+            if (assetBundle != null)
+            {
+                assetBundle.RegisterReference(referenceObject);
+            }
+
+            // trigger load 
+            await LoadGenericAsync();
         }
 
         /// <summary>
@@ -114,10 +145,18 @@ namespace Delight
         }
 
         /// <summary>
+        /// Loads asset synchronously. 
+        /// </summary>
+        public virtual void Load()
+        {
+        }
+
+        /// <summary>
         /// Loads the asset asynchronously. 
         /// </summary>
-        public virtual void LoadAsync()
+        public virtual async Task LoadGenericAsync()
         {
+            await Task.FromResult(0); // just to prevent compiler warning
         }
 
         /// <summary>
@@ -165,23 +204,54 @@ namespace Delight
         #region Methods
 
         /// <summary>
-        /// Loads the asset asynchronously. 
+        /// Load the asset synchronously. 
         /// </summary>
-        public override async void LoadAsync()
+        public override void Load()
         {
-            await GetAsync();
+            if (UnityObject != null || IsUnmanaged)
+                return;
+
+            // is asset included in build?
+            if (IsResource)
+            {
+                // yes. load from resources folder
+                var resourceObject = Resources.Load<T>(FullPath);
+                if (resourceObject == null)
+                {
+                    Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", FullPath));
+                    OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
+                    return;
+                }
+
+                UnityObject = resourceObject as T;
+                return;
+            }
+            else
+            {
+                // if asset is in bundle, load it asynchronously
+                LoadGenericAsync();
+            }
         }
 
         /// <summary>
         /// Loads the asset asynchronously. 
         /// </summary>
-        public async Task<T> GetAsync()
+        public override async Task LoadGenericAsync()
+        {
+            await LoadAsync();
+        }
+
+        /// <summary>
+        /// Loads the asset asynchronously. 
+        /// </summary>
+        public async Task<T> LoadAsync()
         {
             await _locker.LockAsync(async () =>
             {
-                if (UnityObject != null)
+                // is the asset already loaded or managed elsewhere? 
+                if (UnityObject != null || IsUnmanaged)
                 {
-                    return;
+                    return; // yes.
                 }
 
                 // simulate slow load
@@ -212,7 +282,7 @@ namespace Delight
                 }
 
                 // get unity asset bundle
-                var unityAssetBundle = await assetBundle.GetAsync();
+                var unityAssetBundle = await assetBundle.LoadAsync();
                 if (unityAssetBundle == null)
                 {
                     Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
@@ -241,7 +311,7 @@ namespace Delight
         /// </summary>
         public override void Unload()
         {
-            if (UnityObject == null)
+            if (UnityObject == null || IsUnmanaged)
                 return;
 
             if (IsResource)
@@ -251,7 +321,7 @@ namespace Delight
             else
             {
                 Resources.UnloadAsset(UnityObject);
-                Resources.UnloadUnusedAssets(); // TODO potentially expensive call but asset from bundle isn't freed from memory without calling it
+                //Resources.UnloadUnusedAssets(); // expensive call as it goes through the entire hierarchy, but asset from bundle isn't freed from memory without calling it
             }
 
             UnityObject = null;

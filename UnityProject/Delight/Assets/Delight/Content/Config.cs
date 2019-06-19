@@ -19,6 +19,7 @@ namespace Delight
         public static bool UseSimulatedUriInEditor = true;
         public static string ServerUri = AssetBundle.SimulatedUri;
         public static ServerUriLocator ServerUriLocator = new ServerUriLocator();
+        public static uint AssetBundleVersion = 0;
 
         #endregion
     }

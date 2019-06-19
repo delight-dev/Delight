@@ -28,11 +28,11 @@ namespace Delight
             Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
 
             // binding <Label Text="{@Loc.Greeting1}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Label" }, new List<Func<BindableObject>> { () => Models.Loc["Greeting1"] }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = Models.Loc["Greeting1"].Label, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Greeting1", "Label" }, new List<Func<BindableObject>> { () => Models.Loc, () => Models.Loc["Greeting1"] }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = Models.Loc["Greeting1"].Label, () => { }, false));
             Label2 = new Label(this, Group2.Content, "Label2", Label2Template);
 
             // binding <Label Text="{@Loc.Greeting2}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Label" }, new List<Func<BindableObject>> { () => Models.Loc["Greeting2"] }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = Models.Loc["Greeting2"].Label, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Greeting2", "Label" }, new List<Func<BindableObject>> { () => Models.Loc, () => Models.Loc["Greeting2"] }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = Models.Loc["Greeting2"].Label, () => { }, false));
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in @Players}">
@@ -61,8 +61,10 @@ namespace Delight
 
                     // binding <Label Text="{achievement.Title}">
                     achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
+                    achievementsListContent.ContentTemplateData = tiAchievement;
                     return achievementsListContent;
                 });
+                playerListContent.ContentTemplateData = tiPlayer;
                 return playerListContent;
             });
             this.AfterInitializeInternal();

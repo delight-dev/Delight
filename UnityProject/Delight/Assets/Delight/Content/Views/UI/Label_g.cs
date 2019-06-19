@@ -89,7 +89,7 @@ namespace Delight
             dependencyProperties.Add(MaxVisibleLinesProperty);
             dependencyProperties.Add(UseMaxVisibleDescenderProperty);
             dependencyProperties.Add(PageToDisplayProperty);
-            dependencyProperties.Add(TextMeshProUGUIMarginProperty);
+            dependencyProperties.Add(TextMarginProperty);
             dependencyProperties.Add(HavePropertiesChangedProperty);
             dependencyProperties.Add(IsUsingLegacyAnimationComponentProperty);
             dependencyProperties.Add(IsVolumetricTextProperty);
@@ -530,11 +530,11 @@ namespace Delight
             set { PageToDisplayProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label> TextMeshProUGUIMarginProperty = new MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label>("TextMeshProUGUIMargin", x => x.TextMeshProUGUI, x => x.margin, (x, y) => x.margin = y);
-        public UnityEngine.Vector4 TextMeshProUGUIMargin
+        public readonly static MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label> TextMarginProperty = new MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label>("TextMargin", x => x.TextMeshProUGUI, x => x.margin, (x, y) => x.margin = y);
+        public UnityEngine.Vector4 TextMargin
         {
-            get { return TextMeshProUGUIMarginProperty.GetValue(this); }
-            set { TextMeshProUGUIMarginProperty.SetValue(this, value); }
+            get { return TextMarginProperty.GetValue(this); }
+            set { TextMarginProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> HavePropertiesChangedProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("HavePropertiesChanged", x => x.TextMeshProUGUI, x => x.havePropertiesChanged, (x, y) => x.havePropertiesChanged = y);

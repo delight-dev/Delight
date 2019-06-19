@@ -42,6 +42,7 @@ namespace Delight
             dependencyProperties.Add(AutoSizeToContentProperty);
             dependencyProperties.Add(LengthProperty);
             dependencyProperties.Add(BreadthProperty);
+            dependencyProperties.Add(ContentTemplateDataProperty);
         }
 
         #endregion
@@ -109,6 +110,13 @@ namespace Delight
         {
             get { return BreadthProperty.GetValue(this); }
             set { BreadthProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ContentTemplateData> ContentTemplateDataProperty = new DependencyProperty<Delight.ContentTemplateData>("ContentTemplateData");
+        public Delight.ContentTemplateData ContentTemplateData
+        {
+            get { return ContentTemplateDataProperty.GetValue(this); }
+            set { ContentTemplateDataProperty.SetValue(this, value); }
         }
 
         #endregion

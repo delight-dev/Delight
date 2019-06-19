@@ -14,6 +14,7 @@ namespace Delight
         #region Fields
 
         public static ScrollbarVisibilityConverter ScrollbarVisibilityConverter = new ScrollbarVisibilityConverter();
+        public static StringValueConverter StringValueConverter = new StringValueConverter();
         public static Dictionary<string, ValueConverter> Converters;
                    
         #endregion

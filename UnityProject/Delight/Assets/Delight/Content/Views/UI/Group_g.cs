@@ -16,6 +16,7 @@ namespace Delight
         public Group(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? GroupTemplates.Default, initializer)
         {
+            SortIndex = new AttachedProperty<System.Int32>(this, "SortIndex");
             this.AfterInitializeInternal();
         }
 
@@ -57,6 +58,8 @@ namespace Delight
             get { return ContentAlignmentProperty.GetValue(this); }
             set { ContentAlignmentProperty.SetValue(this, value); }
         }
+
+        public AttachedProperty<System.Int32> SortIndex { get; private set; }
 
         #endregion
     }

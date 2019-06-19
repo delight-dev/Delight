@@ -352,6 +352,13 @@ namespace Delight
             set { SliderBackgroundImageView.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty SliderScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 SliderScale
+        {
+            get { return SliderBackgroundImageView.Scale; }
+            set { SliderBackgroundImageView.Scale = value; }
+        }
+
         public readonly static DependencyProperty SliderAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment SliderAlignment
         {
@@ -434,6 +441,13 @@ namespace Delight
         {
             get { return SliderBackgroundImageView.BubbleNotifyChildLayoutChanged; }
             set { SliderBackgroundImageView.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty SliderIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean SliderIgnoreFlip
+        {
+            get { return SliderBackgroundImageView.IgnoreFlip; }
+            set { SliderBackgroundImageView.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty SliderGameObjectProperty = Image.GameObjectProperty;
@@ -611,6 +625,13 @@ namespace Delight
             set { SliderFillImageView.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty SliderFillScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 SliderFillScale
+        {
+            get { return SliderFillImageView.Scale; }
+            set { SliderFillImageView.Scale = value; }
+        }
+
         public readonly static DependencyProperty SliderFillAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment SliderFillAlignment
         {
@@ -693,6 +714,13 @@ namespace Delight
         {
             get { return SliderFillImageView.BubbleNotifyChildLayoutChanged; }
             set { SliderFillImageView.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty SliderFillIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean SliderFillIgnoreFlip
+        {
+            get { return SliderFillImageView.IgnoreFlip; }
+            set { SliderFillImageView.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty SliderFillGameObjectProperty = Image.GameObjectProperty;
@@ -870,6 +898,13 @@ namespace Delight
             set { SliderHandleImageView.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty SliderHandleScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 SliderHandleScale
+        {
+            get { return SliderHandleImageView.Scale; }
+            set { SliderHandleImageView.Scale = value; }
+        }
+
         public readonly static DependencyProperty SliderHandleAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment SliderHandleAlignment
         {
@@ -952,6 +987,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.BubbleNotifyChildLayoutChanged; }
             set { SliderHandleImageView.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandleIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean SliderHandleIgnoreFlip
+        {
+            get { return SliderHandleImageView.IgnoreFlip; }
+            set { SliderHandleImageView.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty SliderHandleGameObjectProperty = Image.GameObjectProperty;
@@ -1074,6 +1116,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _sliderSliderBackgroundImageView.Name = "SliderSliderBackgroundImageView";
 #endif
+                    Delight.Image.WidthProperty.SetDefault(_sliderSliderBackgroundImageView, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_sliderSliderBackgroundImageView, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _sliderSliderBackgroundImageView;
             }
@@ -1116,6 +1160,8 @@ namespace Delight
                     _sliderSliderFillImageView.Name = "SliderSliderFillImageView";
 #endif
                     Delight.Image.AlignmentProperty.SetDefault(_sliderSliderFillImageView, Delight.ElementAlignment.Left);
+                    Delight.Image.WidthProperty.SetDefault(_sliderSliderFillImageView, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_sliderSliderFillImageView, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.ColorProperty.SetDefault(_sliderSliderFillImageView, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
                 }
                 return _sliderSliderFillImageView;

@@ -155,11 +155,11 @@ namespace Delight
             set { ComboBoxList.IsVirtualized = value; }
         }
 
-        public readonly static DependencyProperty OverflowModeProperty = List.OverflowModeProperty;
-        public Delight.OverflowMode OverflowMode
+        public readonly static DependencyProperty OverflowProperty = List.OverflowProperty;
+        public Delight.OverflowMode Overflow
         {
-            get { return ComboBoxList.OverflowMode; }
-            set { ComboBoxList.OverflowMode = value; }
+            get { return ComboBoxList.Overflow; }
+            set { ComboBoxList.Overflow = value; }
         }
 
         public readonly static DependencyProperty CanSelectProperty = List.CanSelectProperty;
@@ -519,6 +519,13 @@ namespace Delight
             set { ComboBoxList.ScrollableRegionOverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty ScrollableRegionScaleProperty = List.ScrollableRegionScaleProperty;
+        public UnityEngine.Vector3 ScrollableRegionScale
+        {
+            get { return ComboBoxList.ScrollableRegionScale; }
+            set { ComboBoxList.ScrollableRegionScale = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionAlignmentProperty = List.ScrollableRegionAlignmentProperty;
         public Delight.ElementAlignment ScrollableRegionAlignment
         {
@@ -601,6 +608,13 @@ namespace Delight
         {
             get { return ComboBoxList.ScrollableRegionBubbleNotifyChildLayoutChanged; }
             set { ComboBoxList.ScrollableRegionBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIgnoreFlipProperty = List.ScrollableRegionIgnoreFlipProperty;
+        public System.Boolean ScrollableRegionIgnoreFlip
+        {
+            get { return ComboBoxList.ScrollableRegionIgnoreFlip; }
+            set { ComboBoxList.ScrollableRegionIgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionGameObjectProperty = List.ScrollableRegionGameObjectProperty;
@@ -792,6 +806,13 @@ namespace Delight
             set { ComboBoxList.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty ComboBoxListScaleProperty = List.ScaleProperty;
+        public UnityEngine.Vector3 ComboBoxListScale
+        {
+            get { return ComboBoxList.Scale; }
+            set { ComboBoxList.Scale = value; }
+        }
+
         public readonly static DependencyProperty ComboBoxListAlignmentProperty = List.AlignmentProperty;
         public Delight.ElementAlignment ComboBoxListAlignment
         {
@@ -874,6 +895,13 @@ namespace Delight
         {
             get { return ComboBoxList.BubbleNotifyChildLayoutChanged; }
             set { ComboBoxList.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ComboBoxListIgnoreFlipProperty = List.IgnoreFlipProperty;
+        public System.Boolean ComboBoxListIgnoreFlip
+        {
+            get { return ComboBoxList.IgnoreFlip; }
+            set { ComboBoxList.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty ComboBoxListGameObjectProperty = List.GameObjectProperty;
@@ -979,6 +1007,27 @@ namespace Delight
         {
             get { return ComboBoxButton.AutoSize; }
             set { ComboBoxButton.AutoSize = value; }
+        }
+
+        public readonly static DependencyProperty ButtonTextOffsetProperty = Button.TextOffsetProperty;
+        public Delight.ElementMargin ButtonTextOffset
+        {
+            get { return ComboBoxButton.TextOffset; }
+            set { ComboBoxButton.TextOffset = value; }
+        }
+
+        public readonly static DependencyProperty ButtonIsCloseButtonProperty = Button.IsCloseButtonProperty;
+        public System.Boolean ButtonIsCloseButton
+        {
+            get { return ComboBoxButton.IsCloseButton; }
+            set { ComboBoxButton.IsCloseButton = value; }
+        }
+
+        public readonly static DependencyProperty ButtonIsBackButtonProperty = Button.IsBackButtonProperty;
+        public System.Boolean ButtonIsBackButton
+        {
+            get { return ComboBoxButton.IsBackButton; }
+            set { ComboBoxButton.IsBackButton = value; }
         }
 
         public readonly static DependencyProperty ButtonLabelAutoSizeProperty = Button.LabelAutoSizeProperty;
@@ -1401,11 +1450,11 @@ namespace Delight
             set { ComboBoxButton.PageToDisplay = value; }
         }
 
-        public readonly static DependencyProperty ButtonTextMeshProUGUIMarginProperty = Button.TextMeshProUGUIMarginProperty;
-        public UnityEngine.Vector4 ButtonTextMeshProUGUIMargin
+        public readonly static DependencyProperty ButtonTextMarginProperty = Button.TextMarginProperty;
+        public UnityEngine.Vector4 ButtonTextMargin
         {
-            get { return ComboBoxButton.TextMeshProUGUIMargin; }
-            set { ComboBoxButton.TextMeshProUGUIMargin = value; }
+            get { return ComboBoxButton.TextMargin; }
+            set { ComboBoxButton.TextMargin = value; }
         }
 
         public readonly static DependencyProperty ButtonHavePropertiesChangedProperty = Button.HavePropertiesChangedProperty;
@@ -1483,6 +1532,13 @@ namespace Delight
         {
             get { return ComboBoxButton.LabelOverrideHeight; }
             set { ComboBoxButton.LabelOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty ButtonLabelScaleProperty = Button.LabelScaleProperty;
+        public UnityEngine.Vector3 ButtonLabelScale
+        {
+            get { return ComboBoxButton.LabelScale; }
+            set { ComboBoxButton.LabelScale = value; }
         }
 
         public readonly static DependencyProperty ButtonLabelAlignmentProperty = Button.LabelAlignmentProperty;
@@ -1567,6 +1623,13 @@ namespace Delight
         {
             get { return ComboBoxButton.LabelBubbleNotifyChildLayoutChanged; }
             set { ComboBoxButton.LabelBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ButtonLabelIgnoreFlipProperty = Button.LabelIgnoreFlipProperty;
+        public System.Boolean ButtonLabelIgnoreFlip
+        {
+            get { return ComboBoxButton.LabelIgnoreFlip; }
+            set { ComboBoxButton.LabelIgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty ButtonLabelGameObjectProperty = Button.LabelGameObjectProperty;
@@ -1744,6 +1807,13 @@ namespace Delight
             set { ComboBoxButton.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty ButtonScaleProperty = Button.ScaleProperty;
+        public UnityEngine.Vector3 ButtonScale
+        {
+            get { return ComboBoxButton.Scale; }
+            set { ComboBoxButton.Scale = value; }
+        }
+
         public readonly static DependencyProperty ButtonAlignmentProperty = Button.AlignmentProperty;
         public Delight.ElementAlignment ButtonAlignment
         {
@@ -1826,6 +1896,13 @@ namespace Delight
         {
             get { return ComboBoxButton.BubbleNotifyChildLayoutChanged; }
             set { ComboBoxButton.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ButtonIgnoreFlipProperty = Button.IgnoreFlipProperty;
+        public System.Boolean ButtonIgnoreFlip
+        {
+            get { return ComboBoxButton.IgnoreFlip; }
+            set { ComboBoxButton.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty ButtonGameObjectProperty = Button.GameObjectProperty;

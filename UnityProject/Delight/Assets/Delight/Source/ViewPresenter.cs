@@ -23,7 +23,9 @@ namespace Delight
 
         [HideInInspector]
         public string ViewTypeNamespace = "Delight";
+
         public LoadMode LoadMode = LoadMode.Automatic;
+        public bool UseAsyncLoad = true;
         private View _view;
 
         #endregion
@@ -32,7 +34,7 @@ namespace Delight
 
         public async void Start()
         {
-            if (LoadMode == LoadMode.Automatic)
+            if (!LoadMode.HasFlag(LoadMode.Manual))
             {
                 await Load();
             }
@@ -56,10 +58,32 @@ namespace Delight
  
             var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
-            await _view.LoadAsync();
+            if (UseAsyncLoad)
+            {
+                await _view.LoadAsync();
+            }
+            else
+            {
+                _view.Load();
+            }
 
             sw2.Stop();
             Debug.Log(String.Format("Initialize view {0}: {1}", ViewTypeName, sw2.ElapsedMilliseconds));
+
+            GameObject go = null;
+            if (_view is UIView)
+            {
+                go = (_view as UIView)?.LayoutRoot?.GameObject;
+            }
+            else if (_view is SceneObjectView)
+            {
+                go = (_view as SceneObjectView)?.GameObject;
+            }
+
+            if (go != null)
+            {
+                go.transform.SetParent(gameObject.transform, false);
+            }
 
 #if UNITY_EDITOR
             if (!Application.isPlaying)

@@ -52,15 +52,21 @@ namespace Delight.Editor
             {
                 EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
-            
-            // open designer
-            GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
-            if (GUILayout.Button(openDesigner))
-            {
-                EditorSceneManager.OpenScene("Assets/Delight/Scenes/DelightDesigner.unity");
-            }
 
-            // TODO show list of asset bundles show name, version, storage mode, load mode and a rebuild button
+            // open designer
+            //GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
+            //if (GUILayout.Button(openDesigner))
+            //{
+            //    EditorSceneManager.OpenScene("Assets/Delight/Scenes/DelightDesigner.unity");
+            //}
+
+            // TODO cleanup
+            //GUIContent test = new GUIContent("Test", "");
+            //if (GUILayout.Button(test))
+            //{
+            //    //var config = MasterConfig.GetInstance();
+            //    //config.SaveConfig();
+            //}
         }
 
         #endregion

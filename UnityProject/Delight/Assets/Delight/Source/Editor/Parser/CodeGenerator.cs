@@ -26,6 +26,7 @@ namespace Delight.Editor.Parser
         public static string DefaultViewType = "UIView";
         public static string DefaultNamespace = "Delight";
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
+        private static readonly char[] ActionDelimiterChars = { ' ', ',', '(', ')' };
 
         #endregion
 
@@ -63,6 +64,21 @@ namespace Delight.Editor.Parser
                 }
             }
 
+            // update style declarations
+            var styleDeclarations = _contentObjectModel.StyleObjects.SelectMany(x => x.StyleDeclarations).ToList();
+            foreach (var styleDeclaration in _contentObjectModel.StyleObjects.SelectMany(x => x.StyleDeclarations))
+            {
+                if (String.IsNullOrEmpty(styleDeclaration.BasedOnName))
+                    continue;
+
+                // update BasedOn 
+                styleDeclaration.BasedOn = styleDeclarations.FirstOrDefault(x => x.ViewName.IEquals(styleDeclaration.ViewName) && x.StyleName.IEquals(styleDeclaration.BasedOnName));
+                if (styleDeclaration.BasedOn == null)
+                {
+                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style <{1} BasedOn=\"{2}\">. Couldn't find the style \"{2}\" this style is based on.", GetLineInfo(styleDeclaration.StylePath, styleDeclaration), styleDeclaration.ViewName, styleDeclaration.BasedOnName));
+                }
+            }
+                       
             // validate and update view declarations - template content, attached properties, etc.
             foreach (var viewObject in viewObjects)
             {
@@ -94,7 +110,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateViewCode(ViewObject viewObject)
         {
-            Debug.Log("Generating code for " + viewObject.FilePath);
+            //Debug.Log("Generating code for " + viewObject.FilePath);
 
             var viewTypeName = viewObject.TypeName;
             bool isBaseView = viewObject.TypeName.IEquals("View");
@@ -311,7 +327,7 @@ namespace Delight.Editor.Parser
             var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
             var sourceFile = String.Format("{0}/{1}_g.cs", dir, viewObject.Name);
 
-            Debug.Log("Creating " + sourceFile);
+            //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
@@ -351,9 +367,42 @@ namespace Delight.Editor.Parser
                                     PropertyValue = attachedAssignment.PropertyValue,
                                     ParentId = parentViewDeclaration.Id,
                                     PropertyTypeName = attachedPropertyDeclaration.PropertyTypeName,
+                                    PropertyTypeFullName = attachedPropertyDeclaration.PropertyTypeFullName,
                                     ParentViewName = parentViewName
                                 });
 
+                                break;
+                            }
+                        }
+
+                        parentViewDeclaration = parentViewDeclaration.ParentDeclaration;
+                    }
+                }
+
+                // update attached bindings
+                var attachedBindingsNeedUpdate = childViewDeclaration.PropertyBindings.Where(x => x.AttachedNeedUpdate).ToList();
+                foreach (var attachedBinding in attachedBindingsNeedUpdate)
+                {
+                    attachedBinding.AttachedNeedUpdate = false;
+                    int indexOfDot = attachedBinding.PropertyName.IndexOf('.');
+                    var parentViewName = attachedBinding.PropertyName.Substring(0, indexOfDot);
+                    var parentPropertyName = attachedBinding.PropertyName.Substring(indexOfDot + 1);
+
+                    // see if we can find a view object of specified type as a parent to this view
+                    var parentViewDeclaration = childViewDeclaration.ParentDeclaration;
+                    while (parentViewDeclaration != null)
+                    {
+                        if (parentViewDeclaration.ViewName.IEquals(parentViewName))
+                        {
+                            // see if view actually has attached property declared
+                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
+                            var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
+                            if (attachedPropertyDeclaration != null)
+                            {
+                                // add attached property info to binding
+                                attachedBinding.IsAttached = true;
+                                attachedBinding.AttachedToParentViewDeclaration = parentViewDeclaration;
+                                attachedBinding.PropertyName = parentPropertyName;
                                 break;
                             }
                         }
@@ -406,6 +455,23 @@ namespace Delight.Editor.Parser
 
                         // add property declarations for the wrapping region
                         viewObject.PropertyExpressions.AddRange(ContentParser.GetPropertyDeclarations(wrappingRegionDeclaration));
+                    }
+                }
+
+                // update bindings - check if two-way binding is implicit
+                var bindingsNeedUpdate = childViewDeclaration.PropertyBindings.Where(x => x.BindingNeedUpdate).ToList();
+                var propertyBindingDefaults = childViewObject.PropertyExpressions.OfType<DefaultPropertyBinding>().ToList();
+                foreach (var binding in bindingsNeedUpdate)
+                {                    
+                    binding.BindingNeedUpdate = false;
+                    var bindingDefault = propertyBindingDefaults.FirstOrDefault(x => x.TargetPropertyName == binding.PropertyName);
+                    if (bindingDefault != null && bindingDefault.IsTwoWay)
+                    {
+                        var source = binding.Sources.FirstOrDefault();
+                        if (source != null && !source.SourceTypes.HasFlag(BindingSourceTypes.OneWayExplicit))
+                        {
+                            source.SourceTypes |= BindingSourceTypes.TwoWay;
+                        }
                     }
                 }
 
@@ -473,8 +539,13 @@ namespace Delight.Editor.Parser
 
             if (viewDeclaration != null)
             {
-                // add assignments set by parent <Parent><ThisView Property="Value"></Parent>
-                propertyAssignments.AddRange(viewDeclaration.GetPropertyAssignmentsWithStyle());
+                // add assignments set by parent <Parent><ThisView Property="Value"></Parent>                
+                propertyAssignments.AddRange(viewDeclaration.GetPropertyAssignmentsWithStyle(out var styleMissing));
+                if (styleMissing)
+                {
+                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style declaration <{1} Style=\"{2}\">. The style \"{2}\" couldn't be found.",
+                        GetLineInfo(fileName, viewDeclaration), viewObject.Name, viewDeclaration.Style));
+                }
             }
 
             if (nestedPropertyExpressions != null)
@@ -543,8 +614,9 @@ namespace Delight.Editor.Parser
                     {
                         // no. which means this is an invalid assignment
                         // value is set for a property that isn't declared, 
-                        Debug.LogError(String.Format("[Delight] {0}: Invalid property assignment <{1} {2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
-                            GetLineInfo(fileName, propertyAssignment),
+                        var path = propertyAssignment.StyleDeclaration == null ? fileName : propertyAssignment.StyleDeclaration.StylePath; // if assignment comes from style filepath is different
+                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property assignment <{1} {2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
+                            GetLineInfo(path, propertyAssignment),
                             viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
                         continue;
                     }
@@ -597,7 +669,7 @@ namespace Delight.Editor.Parser
                     if (decl.IsAssetReference)
                     {
                         // if asset initializer not found, use default initializer for asset types
-                        typeValueInitializer = String.Format("Assets.{0}[\"{1}\"]", decl.AssetType.Name.Pluralize(), propertyAssignment.PropertyValue);
+                        typeValueInitializer = AssetObjectValueConverter.GetInitializer(decl.AssetType.Name, propertyAssignment.PropertyValue);
                     }
                     else
                     {
@@ -616,7 +688,7 @@ namespace Delight.Editor.Parser
                         else
                         {
                             // no initializer found for the type being assigned to
-                            Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
+                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
                                 GetLineInfo(fileName, propertyAssignment),
                                 viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                             continue;
@@ -673,11 +745,35 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets formatted line information from element.
+        /// Gets formatted line information from property expression.
         /// </summary>
         private static string GetLineInfo(string fileName, PropertyExpression property)
         {
-            return String.Format("{0} ({1})", fileName, property.LineNumber);
+            return GetLineInfo(fileName, property.LineNumber);
+        }
+
+        /// <summary>
+        /// Gets formatted line information from view declaration.
+        /// </summary>
+        private static string GetLineInfo(string fileName, ViewDeclaration viewDeclaration)
+        {
+            return GetLineInfo(fileName, viewDeclaration.LineNumber);
+        }
+
+        /// <summary>
+        /// Gets formatted line information from view declaration.
+        /// </summary>
+        private static string GetLineInfo(string fileName, StyleDeclaration styleDeclaration)
+        {
+            return GetLineInfo(fileName, styleDeclaration.LineNumber);
+        }
+
+        /// <summary>
+        /// Gets formatted line information.
+        /// </summary>
+        private static string GetLineInfo(string fileName, int lineNumber)
+        {
+            return String.Format("{0} ({1})", fileName, lineNumber);
         }
 
         /// <summary>
@@ -727,7 +823,7 @@ namespace Delight.Editor.Parser
                 sb.AppendLine(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template);", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
 
                 // do we have action handlers?
-                var actionAssignments = childViewDeclaration.PropertyAssignments.Where(x =>
+                var actionAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy).Where(x =>
                 {
                     if (x.PropertyDeclarationInfo == null)
                         return false;
@@ -738,7 +834,51 @@ namespace Delight.Editor.Parser
                     // yes. add initializer for action handlers
                     foreach (var actionAssignment in actionAssignments)
                     {
-                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                        var actionValue = actionAssignment.PropertyValue;
+                        var actionName = actionValue;
+
+                        // does the action have parameters?
+                        if (actionValue.Contains("("))
+                        {
+                            // yes. parse the parameters
+                            string[] actionParameters = actionValue.Split(ActionDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                            actionName = actionParameters[0];
+                            if (actionParameters.Length > 1)
+                            {
+                                var formattedActionParameters = new List<string>();
+                                foreach (var actionParameter in actionParameters.Skip(1))
+                                {
+                                    var actionParameterPath = new List<string>();
+                                    actionParameterPath.AddRange(actionParameter.Split('.'));
+
+                                    // get property names along path
+                                    var templateItemInfo = templateItems != null
+                                        ? templateItems.FirstOrDefault(x => x.Name == actionParameterPath[0])
+                                        : null;
+                                    bool isTemplateItemSource = templateItemInfo != null;
+                                    if (isTemplateItemSource)
+                                    {
+                                        if (templateItemInfo.ItemType == null)
+                                        {
+                                            formattedActionParameters.Add(actionParameter);
+                                            continue; // item type was not inferred so ignore parameter
+                                        }
+
+                                        actionParameterPath[0] = templateItemInfo.VariableName;
+                                        actionParameterPath.Insert(1, "Item");
+                                    }
+
+                                    formattedActionParameters.Add("() => " + String.Join("?.", actionParameterPath));
+                                }
+
+                                // generate action assignment with parameters
+                                sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
+                                continue;
+                            }
+                        }
+
+                        // generate action assignment without parameters
+                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionName);
                     }
                 }
 
@@ -746,10 +886,10 @@ namespace Delight.Editor.Parser
                 foreach (var attachedProperty in childViewDeclaration.AttachedPropertyAssignments)
                 {
                     // yes. add initializer for attached property
-                    var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeName, attachedProperty.PropertyValue);
+                    var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeFullName, attachedProperty.PropertyValue);
                     if (String.IsNullOrEmpty(typeValueInitializer))
                     {
-                        Debug.LogError(String.Format("[Delight] {0}: Unable to assign value to attached property <{1} {5}.{2}=\"{3}\">. Unable to convert value to property of type \"{4}\". Makes sure to include the namespace in the attached property declaration.",
+                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign value to attached property <{1} {5}.{2}=\"{3}\">. Unable to convert value to property of type \"{4}\". Makes sure to include the namespace in the attached property declaration.",
                             GetLineInfo(fileName, attachedProperty),
                             viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
                         continue;
@@ -759,10 +899,12 @@ namespace Delight.Editor.Parser
                     sb.AppendLine(indent, "{0}.{1}.SetValue({2}, {3});", attachedParentIdVar, attachedProperty.PropertyName, childIdVar, typeValueInitializer);
                 }
 
+                var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
+
                 // generate bindings
-                if (childViewDeclaration.PropertyBindings.Any())
+                if (propertyBindings.Any())
                 {
-                    foreach (var propertyBinding in childViewDeclaration.PropertyBindings)
+                    foreach (var propertyBinding in propertyBindings)
                     {
                         // generate binding path to source
                         var sourceBindingPathObjects = new List<string>();
@@ -775,14 +917,22 @@ namespace Delight.Editor.Parser
                             sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
 
                             bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                            bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
+                            string negatedString = isNegated ? "!" : string.Empty;
+                            bool isLoc = false;
+                            string locId = string.Empty;
 
                             // handle special case when source is localization dictionary
-                            if (isModelSource && sourcePath.Count == 3 && sourcePath[1].IEquals("Loc"))
+                            if (isModelSource && sourcePath.Count == 3 &&
+                                (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
                             {
+                                sourcePath[1] = "Loc";
+
                                 // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
-                                var locId = sourcePath[2];
-                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], sourcePath[2]);
+                                locId = sourcePath[2];
+                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
                                 sourcePath[2] = "Label";
+                                isLoc = true;
                             }
 
                             // get property names along path
@@ -799,10 +949,14 @@ namespace Delight.Editor.Parser
                                 sourcePath[0] = templateItemInfo.VariableName;
                                 sourcePath.Insert(1, "Item");
                             }
-                            
-                            string sourcePropertiesStr = string.Join(", ",
-                                sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0))
-                                    .Select(x => "\"" + x + "\""));
+
+                            var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
+                            if (isLoc)
+                            {
+                                properties.Insert(0, locId);
+                            }
+
+                            string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
 
                             // get object getters along path
                             List<string> sourceGetters = new List<string>();
@@ -811,6 +965,11 @@ namespace Delight.Editor.Parser
                             if (!isModelSource && !isTemplateItemSource)
                             {
                                 sourceGetters.Add("() => this");
+                            }
+
+                            if (isLoc)
+                            {
+                                sourceGetters.Add("() => Models.Loc");
                             }
 
                             for (int i = 0; i < sourcePathCount; ++i)
@@ -835,7 +994,11 @@ namespace Delight.Editor.Parser
                             // add converter
                             if (!String.IsNullOrEmpty(bindingSource.Converter))
                             {
-                                convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, sourceProperty);
+                                convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
+                            }
+                            else if (isNegated)
+                            {
+                                convertedSourceProperty = "!" + convertedSourceProperty;
                             }
 
                             convertedSourceProperties.Add(convertedSourceProperty);
@@ -845,7 +1008,16 @@ namespace Delight.Editor.Parser
 
                         // generate binding path to target
                         var targetPath = new List<string>();
-                        targetPath.Add(childIdVar);
+                        if (propertyBinding.IsAttached)
+                        {
+                            var parentId = propertyBinding.AttachedToParentViewDeclaration.Id;
+                            var parentIdVar = inTemplate ? parentId.ToLocalVariableName() : parentId;
+                            targetPath.Add(parentIdVar);
+                        }
+                        else
+                        {
+                            targetPath.Add(childIdVar);
+                        }
                         targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
                         string targetProperties = string.Join(", ", targetPath.Skip(inTemplate ? 1 : 0).Select(x => "\"" + x + "\""));
 
@@ -871,27 +1043,58 @@ namespace Delight.Editor.Parser
                             isTwoWay = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
                             if (isTwoWay && !String.IsNullOrEmpty(bindingSource.Converter))
                             {
-                                convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertTo({1})", bindingSource.Converter, targetProperty);
+                                convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertFrom({1})", bindingSource.Converter, targetProperty);
+                            }
+
+                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated))
+                            {
+                                convertedTargetProperty = "!" + convertedTargetProperty;
                             }
                         }
 
-                        string sourceToTarget = "";
-                        string targetToSource = "{ }";
+                        string sourceToTargetValue = null;
+                        string targetToSourceValue = null;
                         switch (propertyBinding.BindingType)
                         {
                             case BindingType.SingleBinding:
                             default:
-                                sourceToTarget = String.Format("{0} = {1}", targetProperty, convertedSourceProperties.First());
-                                targetToSource = isTwoWay ? string.Format("{0} = {1}", sourceProperties.First(), convertedTargetProperty) : "{ }";
+                                if (convertedSourceProperties.Count <= 0)
+                                {
+                                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Something wrong with binding <{1} {2}=\"{3}\">.",
+                                        GetLineInfo(fileName, propertyBinding),
+                                        viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                                    continue;
+                                }
+
+                                sourceToTargetValue = String.Format("{0}", convertedSourceProperties.First());
+                                if (isTwoWay)
+                                {
+                                    targetToSourceValue = string.Format("{0}", convertedTargetProperty);
+                                }
                                 break;
 
                             case BindingType.MultiBindingTransform:
-                                sourceToTarget = string.Format("{0} = {1}({2})", targetProperty, propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                                sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
                                 break;
 
                             case BindingType.MultiBindingFormatString:
-                                sourceToTarget = string.Format("{0} = String.Format(\"{1}\", {2})", targetProperty, propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
+                                sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
                                 break;
+                        }
+
+                        string sourceToTarget = !propertyBinding.IsAttached ?
+                            String.Format("{0} = {1}", targetProperty, sourceToTargetValue) :
+                            String.Format("{0}.SetValue({1}, {2})", targetProperty, childIdVar, sourceToTargetValue);
+                        string targetToSource;
+                        if (targetToSourceValue != null)
+                        {
+                            targetToSource = !propertyBinding.IsAttached ?
+                                String.Format("{0} = {1}", sourceProperties.First(), convertedTargetProperty) :
+                                String.Format("{0} = {1}.GetValue({2})", sourceProperties.First(), targetProperty, childIdVar);
+                        }
+                        else
+                        {
+                            targetToSource = "{ }";
                         }
 
                         // print smart binding
@@ -911,6 +1114,7 @@ namespace Delight.Editor.Parser
                 }
 
                 var childTemplateDepth = templateDepth;
+                TemplateItemInfo ti = null;
                 if (templateContent)
                 {
                     ++childTemplateDepth;
@@ -919,8 +1123,7 @@ namespace Delight.Editor.Parser
                     {
                         templateItems = new List<TemplateItemInfo>();
                     }
-
-                    TemplateItemInfo ti = null;
+                                        
                     var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
                     if (itemIdDeclaration != null)
                     {
@@ -951,6 +1154,11 @@ namespace Delight.Editor.Parser
 
                 if (templateContent)
                 {
+                    if (firstChildInTemplate != null)
+                    {
+                        sb.AppendLine(indent, "    {0}.ContentTemplateData = {1};", childFirstTemplateChild, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                    }
+
                     sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? childFirstTemplateChild : "null");
                     sb.AppendLine(indent, "}});");
                 }
@@ -983,7 +1191,7 @@ namespace Delight.Editor.Parser
             int startIndex = 1;
             if (sourcePath[0] != "Models")
             {
-                sourceType = TypeHelper.GetType(viewObject.TypeName);
+                sourceType = MasterConfig.GetType(viewObject.TypeName);
                 startIndex = 0;
             }
 
@@ -994,7 +1202,7 @@ namespace Delight.Editor.Parser
                 var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
                 if (memberInfo == null)
                 {
-                    Debug.LogError(String.Format("[Delight] {0}: Unable to infer item type in binding <{1} {2}=\"{3}\">. Member \"{4}\" not found in type \"{5}\".",
+                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to infer item type in binding <{1} {2}=\"{3}\">. Member \"{4}\" not found in type \"{5}\".",
                         GetLineInfo(fileName, itemIdDeclaration),
                         viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
                         sourcePath[i], sourceType.Name));
@@ -1018,7 +1226,7 @@ namespace Delight.Editor.Parser
                 }
             }
 
-            return sourceType.FullName;
+            return sourceType.TypeName();
         }
 
         /// <summary>
@@ -1119,7 +1327,8 @@ namespace Delight.Editor.Parser
                 var propertyDeclaration = propertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName.IEquals(propertyMapping.TargetObjectName));
                 if (propertyDeclaration == null)
                 {
-                    Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The property \"{2}\" does not exist in this view.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
+                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
+                        GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
                     continue;
                 }
 
@@ -1160,7 +1369,7 @@ namespace Delight.Editor.Parser
                     var targetObjectType = Type.GetType(propertyDeclaration.Declaration.AssemblyQualifiedType);
                     if (targetObjectType == null)
                     {
-                        Debug.LogError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The mapped target object of type \"{4}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
+                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The mapped target object of type \"{4}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
                         continue;
                     }
 
@@ -1360,7 +1569,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateAssetCode()
         {
-            Debug.Log("Generating asset code.");
+            //ConsoleLogger.Log("[Delight] Generating asset code.");
             var sb = new StringBuilder();
 
             // open the view class
@@ -1446,13 +1655,19 @@ namespace Delight.Editor.Parser
 
                 if (assetObjectsOfType.Count > 0)
                 {
-
                     sb.AppendLine("        #region Fields");
                     sb.AppendLine();
 
-                    foreach (var assetObject in assetObjectsOfType)
+                    var assetObjectGroups = assetObjectsOfType.GroupBy(x => x.Name.ToLower());
+                    foreach (var assetObjectGroup in assetObjectGroups)
                     {
-                        sb.AppendLine("        public readonly {0} {1};", assetTypeName, assetObject.Name.ToPropertyName());
+                        bool hasDuplicates = assetObjectGroup.Count() > 1;
+                        foreach (var assetObject in assetObjectGroup)
+                        {
+                            var assetPropertyName = hasDuplicates ? String.Format("{0}_{1}", assetObject.AssetBundleName.ToPropertyName(), assetObject.Name.ToPropertyName()) :
+                                assetObject.Name.ToPropertyName();
+                            sb.AppendLine("        public readonly {0} {1};", assetTypeName, assetPropertyName);
+                        }
                     }
 
                     sb.AppendLine();
@@ -1463,21 +1678,36 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("        public {0}Data()", assetTypeName);
                     sb.AppendLine("        {");
 
-                    foreach (var assetObject in assetObjectsOfType)
+                    foreach (var assetObjectGroup in assetObjectGroups)
                     {
-                        if (!assetObject.IsResource)
+                        bool hasDuplicates = assetObjectGroup.Count() > 1;
+                        foreach (var assetObject in assetObjectGroup)
                         {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\", RelativePath = \"{4}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.AssetBundleName, assetObject.RelativePath);
-                        }
-                        else
-                        {
-                            sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true, RelativePath = \"{3}\" }};", assetObject.Name.ToPropertyName(), assetObject.Name, assetTypeName, assetObject.RelativePath);
+                            var assetPropertyName = hasDuplicates ? String.Format("{0}_{1}", assetObject.AssetBundleName.ToPropertyName(), assetObject.Name.ToPropertyName()) :
+                                assetObject.Name.ToPropertyName();
+                            var assetKeyName = hasDuplicates ? String.Format("{0}/{1}", assetObject.AssetBundleName, assetObject.Name) :
+                                assetObject.Name;
+
+                            if (!assetObject.IsResource)
+                            {
+                                sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", AssetBundleId = \"{3}\", RelativePath = \"{4}\" }};", assetPropertyName, assetKeyName, assetTypeName, assetObject.AssetBundleName, assetObject.RelativePath);
+                            }
+                            else
+                            {
+                                sb.AppendLine("            {0} = new {2} {{ Id = \"{1}\", IsResource = true, RelativePath = \"{3}\" }};", assetPropertyName, assetKeyName, assetTypeName, assetObject.RelativePath);
+                            }
                         }
                     }
                     sb.AppendLine();
-                    foreach (var assetObject in assetObjectsOfType)
+                    foreach (var assetObjectGroup in assetObjectGroups)
                     {
-                        sb.AppendLine("            Add({0});", assetObject.Name.ToPropertyName());
+                        bool hasDuplicates = assetObjectGroup.Count() > 1;
+                        foreach (var assetObject in assetObjectGroup)
+                        {
+                            var assetPropertyName = hasDuplicates ? String.Format("{0}_{1}", assetObject.AssetBundleName.ToPropertyName(), assetObject.Name.ToPropertyName()) :
+                                assetObject.Name.ToPropertyName();
+                            sb.AppendLine("            Add({0});", assetPropertyName);
+                        }
                     }
 
                     sb.AppendLine("        }");
@@ -1499,10 +1729,10 @@ namespace Delight.Editor.Parser
             sb.AppendLine("}");
 
             // write file
-            string path = String.Format("{0}/Delight/Content{1}", Application.dataPath, ContentParser.AssetsFolder);
+            string path = String.Format("{0}/{1}Delight/Content{2}", Application.dataPath, config.DelightPath, ContentParser.AssetsFolder);
             var sourceFile = String.Format("{0}Assets_g.cs", path);
 
-            Debug.Log("Creating " + sourceFile);
+            //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
@@ -1533,7 +1763,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateModelCode(ModelObject modelObject)
         {
-            Debug.Log("Generating code for model \"" + modelObject.Name + "\"");
+            //Debug.Log("Generating code for model \"" + modelObject.Name + "\"");
 
             string schemaFilename = Path.GetFileName(modelObject.SchemaFilePath);
             var ns = !String.IsNullOrEmpty(modelObject.Namespace) ? modelObject.Namespace : DefaultNamespace;
@@ -1667,7 +1897,7 @@ namespace Delight.Editor.Parser
                         if (typeInitializer == null)
                         {
                             // no initializer found for the type being assigned to
-                            Debug.LogError(String.Format("[Delight] {0} ({1}): Unable to insert data for property \"{2}\". No value initializer found for property type \"{3}\".",
+                            ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to insert data for property \"{2}\". No value initializer found for property type \"{3}\".",
                                 modelObject.SchemaFilePath, propertyData.Line, propertyData.Property.Name, propertyData.Property.TypeName));
                             continue;
                         }
@@ -1756,7 +1986,7 @@ namespace Delight.Editor.Parser
             var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(modelObject.SchemaFilePath));
             var sourceFile = String.Format("{0}/{1}_g.cs", dir, modelObject.Name);
 
-            Debug.Log("Creating " + sourceFile);
+            //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
@@ -1778,7 +2008,7 @@ namespace Delight.Editor.Parser
             }
 
             // see if type is enum
-            var type = TypeHelper.GetType(typeName);
+            var type = MasterConfig.GetType(typeName);
             if (type != null && type.IsEnum)
             {
                 // generate generic initializer for enum type
@@ -1786,6 +2016,206 @@ namespace Delight.Editor.Parser
             }
 
             return null; // no initializer found for type
+        }
+
+        /// <summary>
+        /// Generates XSD schema from view type data.
+        /// </summary>
+        public static void GenerateXsdSchema()
+        {
+            var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO for tracking processing time
+            var config = MasterConfig.GetInstance();
+
+            var sb = new StringBuilder();
+            sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+            sb.AppendLine("<xs:schema id=\"Delight\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"Delight\" xmlns=\"Delight\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\">");
+
+            var viewTypes = TypeHelper.FindDerivedTypes(typeof(View));
+            var enums = new HashSet<Type>();
+            var templateType = typeof(Template);
+            var viewBaseType = typeof(View);
+            var assetObjectBaseType = typeof(AssetObject);
+            var viewNames = new List<string>();
+            var processedViews = new HashSet<string>();
+
+            // generate XSD schema elements
+            // .. for views
+            foreach (var viewType in viewTypes)
+            {
+                viewNames.Clear();
+
+                // check first if type name is different from view name
+                string defaultViewName = viewType.Name;
+                foreach (var viewObject in _contentObjectModel.ViewObjects)
+                {
+                    if (viewObject.TypeName == viewType.Name)
+                    {
+                        defaultViewName = viewObject.Name;
+                    }
+                }
+
+                if (processedViews.Contains(defaultViewName))
+                    continue;
+
+                viewNames.Add(defaultViewName);
+                processedViews.Add(defaultViewName);
+
+                // check if view-type has an alias
+                foreach (var alias in Aliases.ViewAliases)
+                {
+                    if (alias.Value == defaultViewName)
+                    {
+                        if (!processedViews.Contains(alias.Key))
+                        {
+                            viewNames.Add(alias.Key);
+                            processedViews.Add(alias.Key);
+                        }
+                    }
+                }
+
+                sb.AppendLine();
+
+                // add schema for view and any alias
+                foreach (var viewName in viewNames)
+                {
+                    sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", viewName, Environment.NewLine);
+                    sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", viewName, Environment.NewLine);
+                    sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
+                    sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+                    sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+
+                    var properties = viewType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                    // create attributes for dependency properties
+                    foreach (var property in properties)
+                    {
+                        bool isEnum = false;
+                        bool isAsset = false;
+
+                        var propertyType = property.PropertyType;
+
+                        // ignore templates and view references
+                        if (propertyType == templateType || viewBaseType.IsAssignableFrom(propertyType))
+                            continue;
+
+                        if (propertyType.IsEnum)
+                        {
+                            isEnum = true;
+                            enums.Add(propertyType);
+                        }
+                        else
+                        {
+                            isAsset = assetObjectBaseType.IsAssignableFrom(propertyType);
+                        }
+
+                        string type = string.Empty;
+                        if (isEnum)
+                        {
+                            type = "Enum_" + propertyType.Name;
+                        }
+                        else if (isAsset)
+                        {
+                            type = "Asset_" + propertyType.Name;
+                        }
+                        else
+                        {
+                            type = "xs:string";
+                        }
+
+                        sb.AppendFormat("    <xs:attribute name=\"{0}\" type=\"{1}\" />{2}", property.Name, type, Environment.NewLine);
+                    }
+
+                    // add style attribute
+                    sb.AppendFormat("    <xs:attribute name=\"Style\" type=\"Style_{0}\" />{1}", viewType.Name, Environment.NewLine);
+                    sb.AppendFormat("    <xs:anyAttribute processContents=\"skip\" />{0}", Environment.NewLine);
+                    sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+                }
+
+                // add simple type for styles belonging to view
+                sb.AppendLine();
+                sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Style_" + viewType.Name, Environment.NewLine);
+                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
+
+                foreach (var style in ContentObjectModel.GetStyleDeclarations(viewType.Name))
+                {
+                    if (String.IsNullOrEmpty(style.StyleName))
+                        continue;
+                    sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", style.StyleName, Environment.NewLine);
+                }
+
+                sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
+                sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
+            }
+
+            // .. for styles
+            foreach (var style in _contentObjectModel.StyleObjects)
+            {
+                sb.AppendLine();
+                sb.AppendFormat("  <xs:element name=\"{0}\" type=\"{0}\" />{1}", style.Name, Environment.NewLine);
+                sb.AppendFormat("  <xs:complexType name=\"{0}\">{1}", style.Name, Environment.NewLine);
+                sb.AppendFormat("    <xs:sequence>{0}", Environment.NewLine);
+                sb.AppendFormat("      <xs:any processContents=\"lax\" minOccurs=\"0\" maxOccurs=\"unbounded\" />{0}", Environment.NewLine);
+                sb.AppendFormat("    </xs:sequence>{0}", Environment.NewLine);
+                sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
+            }
+
+            // .. for enums
+            foreach (var enumType in enums)
+            {
+                sb.AppendLine();
+                sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Enum_" + enumType.Name, Environment.NewLine);
+                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
+
+                foreach (var enumTypeName in Enum.GetNames(enumType))
+                {
+                    sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", enumTypeName, Environment.NewLine);
+                }
+
+                sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
+                sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
+            }
+
+            // .. for assets
+            var assetObjects = _contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).ToList();
+            foreach (var assetType in _contentObjectModel.AssetTypes)
+            {
+                sb.AppendLine();
+                sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Asset_" + assetType.FormattedTypeName, Environment.NewLine);
+                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
+
+                var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
+                var assetObjectGroups = assetObjectsOfType.GroupBy(x => x.Name.ToLower());
+                foreach (var assetObjectGroup in assetObjectGroups)
+                {
+                    bool hasDuplicates = assetObjectGroup.Count() > 1;
+                    foreach (var assetObject in assetObjectGroup)
+                    {
+                        var assetKeyName = hasDuplicates ? String.Format("{0}/{1}", assetObject.AssetBundleName, assetObject.Name) :
+                            assetObject.Name;
+                        sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", assetKeyName, Environment.NewLine);                        
+                    }
+                }
+
+                sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
+                sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
+            }
+
+            sb.AppendLine("</xs:schema>");
+
+            // save XSD schema in each content folder
+            foreach (var contentFolder in config.ContentFolders)
+            {
+                var contentFolderPath = String.Format("{0}/{1}", Application.dataPath, contentFolder.Substring(7));
+                if (Directory.Exists(contentFolderPath))
+                {
+                    var sourceFile = String.Format("{0}Delight.xsd", contentFolderPath);
+                    File.WriteAllText(sourceFile, sb.ToString());
+                }
+            }
+
+            // print result
+            //Debug.Log("[Delight] XSD schema generated.");
+            //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
         }
 
         #endregion
@@ -1797,7 +2227,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateConfigCode()
         {
-            Debug.Log("Generating config code.");
+            //ConsoleLogger.Log("[Delight] Generating config code.");
 
             var sb = new StringBuilder();
             var config = MasterConfig.GetInstance();
@@ -1831,6 +2261,7 @@ namespace Delight.Editor.Parser
             }
 
             sb.AppendLine("            UseSimulatedUriInEditor = {0};", config.UseSimulatedUriInEditor.ToString().ToLower());
+            sb.AppendLine("            AssetBundleVersion = {0};", config.AssetBundleVersion.ToString());
 
             sb.AppendLine("        }");
             sb.AppendLine("    }");
@@ -1839,10 +2270,10 @@ namespace Delight.Editor.Parser
             sb.AppendLine("}");
 
             // write file
-            string path = String.Format("{0}/Delight/Content/", Application.dataPath);
+            string path = String.Format("{0}/{1}Delight/Content/", Application.dataPath, config.DelightPath);
             var sourceFile = String.Format("{0}Config_g.cs", path);
 
-            Debug.Log("Creating " + sourceFile);
+            //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 

@@ -262,6 +262,13 @@ namespace Delight
             set { RadioButtonImageView.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 RadioButtonScale
+        {
+            get { return RadioButtonImageView.Scale; }
+            set { RadioButtonImageView.Scale = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment RadioButtonAlignment
         {
@@ -344,6 +351,13 @@ namespace Delight
         {
             get { return RadioButtonImageView.BubbleNotifyChildLayoutChanged; }
             set { RadioButtonImageView.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean RadioButtonIgnoreFlip
+        {
+            get { return RadioButtonImageView.IgnoreFlip; }
+            set { RadioButtonImageView.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty RadioButtonGameObjectProperty = Image.GameObjectProperty;
@@ -801,11 +815,11 @@ namespace Delight
             set { RadioButtonLabel.PageToDisplay = value; }
         }
 
-        public readonly static DependencyProperty TextMeshProUGUIMarginProperty = Label.TextMeshProUGUIMarginProperty;
-        public UnityEngine.Vector4 TextMeshProUGUIMargin
+        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
+        public UnityEngine.Vector4 TextMargin
         {
-            get { return RadioButtonLabel.TextMeshProUGUIMargin; }
-            set { RadioButtonLabel.TextMeshProUGUIMargin = value; }
+            get { return RadioButtonLabel.TextMargin; }
+            set { RadioButtonLabel.TextMargin = value; }
         }
 
         public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
@@ -883,6 +897,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.OverrideHeight; }
             set { RadioButtonLabel.OverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelScaleProperty = Label.ScaleProperty;
+        public UnityEngine.Vector3 RadioButtonLabelScale
+        {
+            get { return RadioButtonLabel.Scale; }
+            set { RadioButtonLabel.Scale = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelAlignmentProperty = Label.AlignmentProperty;
@@ -967,6 +988,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.BubbleNotifyChildLayoutChanged; }
             set { RadioButtonLabel.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelIgnoreFlipProperty = Label.IgnoreFlipProperty;
+        public System.Boolean RadioButtonLabelIgnoreFlip
+        {
+            get { return RadioButtonLabel.IgnoreFlip; }
+            set { RadioButtonLabel.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelGameObjectProperty = Label.GameObjectProperty;

@@ -249,6 +249,13 @@ namespace Delight
             set { Bar.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty BarScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 BarScale
+        {
+            get { return Bar.Scale; }
+            set { Bar.Scale = value; }
+        }
+
         public readonly static DependencyProperty BarAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment BarAlignment
         {
@@ -331,6 +338,13 @@ namespace Delight
         {
             get { return Bar.BubbleNotifyChildLayoutChanged; }
             set { Bar.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty BarIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean BarIgnoreFlip
+        {
+            get { return Bar.IgnoreFlip; }
+            set { Bar.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty BarGameObjectProperty = Image.GameObjectProperty;
@@ -508,6 +522,13 @@ namespace Delight
             set { Handle.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty HandleScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 HandleScale
+        {
+            get { return Handle.Scale; }
+            set { Handle.Scale = value; }
+        }
+
         public readonly static DependencyProperty HandleAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment HandleAlignment
         {
@@ -590,6 +611,13 @@ namespace Delight
         {
             get { return Handle.BubbleNotifyChildLayoutChanged; }
             set { Handle.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty HandleIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean HandleIgnoreFlip
+        {
+            get { return Handle.IgnoreFlip; }
+            set { Handle.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty HandleGameObjectProperty = Image.GameObjectProperty;

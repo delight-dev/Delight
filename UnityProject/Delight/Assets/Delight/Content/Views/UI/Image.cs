@@ -47,6 +47,21 @@ namespace Delight
             SpriteChanged();
         }
 
+        protected override void AfterLoad()
+        {
+            base.AfterLoad();
+
+            // enable to have fonts pop in instead
+            if (this.LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                if (Sprite != null && !Sprite.IsLoaded)
+                {
+                    // hide image while loading
+                    ImageComponent.enabled = false;
+                }
+            }
+        }
+
         /// <summary>
         /// Called when the sprite is changed. 
         /// </summary>
@@ -54,6 +69,18 @@ namespace Delight
         {
             if (GameObject == null)
                 return;
+
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                if (Sprite != null && Sprite.IsLoaded)
+                {
+                    ImageComponent.enabled = true;
+                }
+            }
+
+            // uncomment for tracking sprite sets
+            //var spriteInfo = Sprite == null ? "null" : String.Format("{0} (IsLoaded: {1})", Sprite.Id, Sprite.IsLoaded);
+            //Debug.Log(String.Format("#Delight# {0}: Setting Sprite = {1}", Name, spriteInfo));
 
             var sprite = Sprite?.UnityObject;
             if (sprite != null && ImageComponent == null)

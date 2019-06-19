@@ -44,6 +44,7 @@ namespace Delight
 
                 // binding <Label Text="{view.Name}">
                 list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => tiView.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
+                list1Content.ContentTemplateData = tiView;
                 return list1Content;
             });
             Region3 = new Region(this, Grid1.Content, "Region3", Region3Template);

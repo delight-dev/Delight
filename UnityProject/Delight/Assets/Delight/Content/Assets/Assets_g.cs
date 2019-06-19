@@ -37,81 +37,6 @@ namespace Delight
 
     #endregion
 
-    #region TMP_FontAssets
-
-    public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
-    {
-    }
-
-    public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
-    {
-        #region Fields
-
-        public readonly TMP_FontAsset LiberationSansSDF;
-        public readonly TMP_FontAsset EbrimaSDF;
-
-        #endregion
-
-        #region Constructor
-
-        public TMP_FontAssetData()
-        {
-            LiberationSansSDF = new TMP_FontAsset { Id = "LiberationSans SDF", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
-            EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
-
-            Add(LiberationSansSDF);
-            Add(EbrimaSDF);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_FontAssetData TMP_FontAssets = new TMP_FontAssetData();
-    }
-
-    #endregion
-
-    #region Materials
-
-    public partial class MaterialAsset : AssetObject<UnityEngine.Material>
-    {
-    }
-
-    public partial class MaterialAssetData : DataProvider<MaterialAsset>
-    {
-        #region Fields
-
-        public readonly MaterialAsset Netpattern01;
-        public readonly MaterialAsset LiberationSansSDFDropShadow;
-        public readonly MaterialAsset UIFastDefault;
-
-        #endregion
-
-        #region Constructor
-
-        public MaterialAssetData()
-        {
-            Netpattern01 = new MaterialAsset { Id = "Net pattern 01", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
-            LiberationSansSDFDropShadow = new MaterialAsset { Id = "LiberationSans SDF - Drop Shadow", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
-            UIFastDefault = new MaterialAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Materials/" };
-
-            Add(Netpattern01);
-            Add(LiberationSansSDFDropShadow);
-            Add(UIFastDefault);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static MaterialAssetData Materials = new MaterialAssetData();
-    }
-
-    #endregion
-
     #region Sprites
 
     public partial class SpriteAsset : AssetObject<UnityEngine.Sprite>
@@ -124,16 +49,16 @@ namespace Delight
 
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
+        public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
-        public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset CheckBox;
-        public readonly SpriteAsset RadioButtonPressed;
-        public readonly SpriteAsset ComboBoxButton;
-        public readonly SpriteAsset CloseButton;
-        public readonly SpriteAsset RadioButton;
-        public readonly SpriteAsset ComboBoxButtonPressed;
         public readonly SpriteAsset CheckBoxPressed;
+        public readonly SpriteAsset CloseButton;
+        public readonly SpriteAsset ComboBoxButton;
+        public readonly SpriteAsset ComboBoxButtonPressed;
+        public readonly SpriteAsset RadioButton;
+        public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
@@ -147,16 +72,16 @@ namespace Delight
         {
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
-            BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             CheckBox = new SpriteAsset { Id = "CheckBox", IsResource = true, RelativePath = "" };
-            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "" };
-            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "" };
-            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "" };
-            RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "" };
-            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "" };
             CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", IsResource = true, RelativePath = "" };
+            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "" };
+            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "" };
+            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "" };
+            RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "" };
+            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "" };
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
@@ -164,16 +89,16 @@ namespace Delight
 
             Add(Frame1);
             Add(Frame2);
+            Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
-            Add(BigSprite);
             Add(CheckBox);
-            Add(RadioButtonPressed);
-            Add(ComboBoxButton);
-            Add(CloseButton);
-            Add(RadioButton);
-            Add(ComboBoxButtonPressed);
             Add(CheckBoxPressed);
+            Add(CloseButton);
+            Add(ComboBoxButton);
+            Add(ComboBoxButtonPressed);
+            Add(RadioButton);
+            Add(RadioButtonPressed);
             Add(RainbowSquare);
             Add(DesignerGrid);
             Add(DesignerGrid2);
@@ -200,9 +125,6 @@ namespace Delight
     {
         #region Fields
 
-        public readonly Texture2DAsset Diffuse;
-        public readonly Texture2DAsset Normal;
-        public readonly Texture2DAsset Preview;
         public readonly Texture2DAsset Bluefloral01;
 
         #endregion
@@ -211,14 +133,8 @@ namespace Delight
 
         public Texture2DAssetData()
         {
-            Diffuse = new Texture2DAsset { Id = "diffuse", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
-            Normal = new Texture2DAsset { Id = "normal", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
-            Preview = new Texture2DAsset { Id = "preview", AssetBundleId = "Bundle1", RelativePath = "Materials/Net 01/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
 
-            Add(Diffuse);
-            Add(Normal);
-            Add(Preview);
             Add(Bluefloral01);
         }
 
@@ -228,6 +144,39 @@ namespace Delight
     public static partial class Assets
     {
         public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
+    #region TMP_FontAssets
+
+    public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
+    {
+    }
+
+    public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
+    {
+        #region Fields
+
+        public readonly TMP_FontAsset EbrimaSDF;
+
+        #endregion
+
+        #region Constructor
+
+        public TMP_FontAssetData()
+        {
+            EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
+
+            Add(EbrimaSDF);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_FontAssetData TMP_FontAssets = new TMP_FontAssetData();
     }
 
     #endregion
@@ -261,6 +210,39 @@ namespace Delight
     public static partial class Assets
     {
         public static FontAssetData Fonts = new FontAssetData();
+    }
+
+    #endregion
+
+    #region Materials
+
+    public partial class MaterialAsset : AssetObject<UnityEngine.Material>
+    {
+    }
+
+    public partial class MaterialAssetData : DataProvider<MaterialAsset>
+    {
+        #region Fields
+
+        public readonly MaterialAsset UIFastDefault;
+
+        #endregion
+
+        #region Constructor
+
+        public MaterialAssetData()
+        {
+            UIFastDefault = new MaterialAsset { Id = "UI-Fast-Default", IsResource = true, RelativePath = "Materials/" };
+
+            Add(UIFastDefault);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static MaterialAssetData Materials = new MaterialAssetData();
     }
 
     #endregion

@@ -92,21 +92,15 @@ namespace Delight
                 // unload bundle
                 UnityAssetBundle.Unload(true);
                 UnityAssetBundle = null;
-            }
-        }
 
-        /// <summary>
-        /// Loads the asset bundle asynchronously. 
-        /// </summary>
-        public async void LoadAsync()
-        {
-            await GetAsync();
+                Debug.Log("#Delight# Unloading asset bundle: " + Id);
+            }
         }
 
         /// <summary>
         /// Loads the asset bundle asynchronously, returns the loaded object.
         /// </summary>
-        public async Task<UnityEngine.AssetBundle> GetAsync()
+        public async Task<UnityEngine.AssetBundle> LoadAsync()
         {
             await _locker.LockAsync(async () =>
             {
@@ -114,6 +108,8 @@ namespace Delight
                 {
                     return;
                 }
+
+                Debug.Log("#Delight# Loading asset bundle: " + Id);
 
                 // get bundle URI 
                 var bundleBaseUri = StorageMode == StorageMode.Remote ?
@@ -134,7 +130,8 @@ namespace Delight
                 }
 
                 // get asset bundle
-                var getBundleRequest = Version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, Version, 0) : 
+                var version = Version > 0 ? Version : Config.AssetBundleVersion;
+                var getBundleRequest = version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, version, 0) : 
                     UnityWebRequestAssetBundle.GetAssetBundle(bundleUri);
                 var response = (await getBundleRequest.SendWebRequest()) as UnityWebRequestAsyncOperation;
                 if (response.webRequest.isNetworkError || response.webRequest.isHttpError)
@@ -146,7 +143,7 @@ namespace Delight
                 // simulate slow load
                 // await Task.Delay(1500); // TODO remove
 
-                UnityAssetBundle = DownloadHandlerAssetBundle.GetContent(response.webRequest);               
+                UnityAssetBundle = DownloadHandlerAssetBundle.GetContent(response.webRequest);
             });
 
             return UnityAssetBundle;

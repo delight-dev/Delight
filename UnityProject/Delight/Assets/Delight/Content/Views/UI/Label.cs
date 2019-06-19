@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using UnityEngine;
 #endregion
 
 namespace Delight
@@ -24,6 +25,10 @@ namespace Delight
             base.OnPropertyChanged(source, property);
             switch (property)
             {
+                case nameof(Font):
+                    FontChanged();
+                    break;
+
                 case nameof(AutoSize):
                 case nameof(Text):
                     TextChanged();
@@ -52,10 +57,34 @@ namespace Delight
                 return;
             base.AfterLoad();
 
+            // enable to have fonts pop in instead
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                if (Font != null && !Font.IsLoaded)
+                {
+                    // hide text while loading
+                    TextMeshProUGUI.enabled = false;
+                }
+            }
+
             if (AutoSize != AutoSize.None)
             {
                 // adjust size initially to text
                 TextChanged();
+            }
+        }
+
+        /// <summary>
+        /// Enables font when loaded.
+        /// </summary>
+        public virtual void FontChanged()
+        {
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                if (Font != null && Font.IsLoaded)
+                {
+                    TextMeshProUGUI.enabled = true;
+                }
             }
         }
 

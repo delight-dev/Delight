@@ -337,9 +337,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d867224532984744854fda615a5cc75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ViewTypeName: AssetManagementTest
+  GameObject: {fileID: 0}
+  ViewTypeName: SearchView
   ViewTypeNamespace: Delight
-  LoadOnStart: 1
+  LoadMode: 0
 --- !u!1 &1503426672
 GameObject:
   m_ObjectHideFlags: 0

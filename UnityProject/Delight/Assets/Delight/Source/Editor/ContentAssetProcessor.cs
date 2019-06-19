@@ -47,7 +47,7 @@ namespace Delight.Editor
             var movedAssetObjects = new List<string>();
             var movedFromAssetObjects = new List<string>();
 
-            // schemas
+            // data schemas
             var addedOrUpdatedSchemaObjects = new List<string>();
             var deletedSchemaObjects = new List<string>();
             var movedSchemaObjects = new List<string>();
@@ -220,6 +220,7 @@ namespace Delight.Editor
             bool schemasChanged = addedOrUpdatedSchemaObjects.Count() > 0 || deletedSchemaObjects.Count() > 0 || movedSchemaObjects.Count() > 0;
             bool contentChanged = assetsChanged || rebuildViews || viewsChanged || schemasChanged || rebuildConfig;
             bool refreshScripts = false;
+            bool generateXsdSchema = false;
 
             // if editor is playing queue assets to be processed after exiting play mode
             if (Application.isPlaying)
@@ -244,6 +245,7 @@ namespace Delight.Editor
                     assetsChanged = false;
                     schemasChanged = false;
                     rebuildViews = false;
+                    generateXsdSchema = false;
                 }
                 else 
                 {
@@ -257,6 +259,7 @@ namespace Delight.Editor
                     {
                         ContentParser.RebuildAssets(true);
                         assetsChanged = false;
+                        generateXsdSchema = true;
                     }
                 }
 
@@ -268,6 +271,7 @@ namespace Delight.Editor
             {
                 ContentParser.ParseAssetFiles(addedOrUpdatedAssetObjects, deletedAssetObjects, movedAssetObjects, movedFromAssetObjects);
                 refreshScripts = true;
+                generateXsdSchema = true;
             }
 
             // any schema files added, moved or deleted?
@@ -275,6 +279,7 @@ namespace Delight.Editor
             {
                 ContentParser.ParseSchemaFiles(addedOrUpdatedSchemaObjects, deletedSchemaObjects, movedSchemaObjects, movedFromSchemaObjects);
                 refreshScripts = true;
+                generateXsdSchema = true;
             }
 
             // any xml content moved or deleted? 
@@ -282,18 +287,26 @@ namespace Delight.Editor
             {
                 // yes. rebuild all views
                 ContentParser.RebuildViews();
+                refreshScripts = false;
+                generateXsdSchema = false;
             }
             else if (viewsChanged)
             {
                 // parse new content and generate code
                 ContentParser.ParseXmlFiles(addedOrUpdatedXmlAssets);
                 refreshScripts = true;
+                generateXsdSchema = true;
             }
 
             if (refreshScripts)
             {
                 // refresh generated scripts
                 AssetDatabase.Refresh();
+            }
+
+            if (generateXsdSchema)
+            {
+                CodeGenerator.GenerateXsdSchema();
             }
 
             // TODO for tracking processing time

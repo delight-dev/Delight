@@ -30,6 +30,9 @@ namespace Delight
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             BindingTest1 = new BindingTest(this, Region1.Content, "BindingTest1", BindingTest1Template);
+
+            // binding <BindingTest Player1.Name="{Test}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Test" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "BindingTest1", "Player1", "Name" }, new List<Func<BindableObject>> { () => this, () => BindingTest1, () => BindingTest1.Player1 }), () => BindingTest1.Player1.Name = Test, () => { }, false));
             this.AfterInitializeInternal();
         }
 
@@ -42,6 +45,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(TestSceneTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(TestProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Button1Property);
@@ -61,6 +65,13 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<System.String> TestProperty = new DependencyProperty<System.String>("Test");
+        public System.String Test
+        {
+            get { return TestProperty.GetValue(this); }
+            set { TestProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
@@ -192,6 +203,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _testScene.Name = "TestScene";
 #endif
+                    Delight.TestScene.TestProperty.SetDefault(_testScene, "Example");
                     Delight.TestScene.Group1TemplateProperty.SetDefault(_testScene, TestSceneGroup1);
                     Delight.TestScene.Button1TemplateProperty.SetDefault(_testScene, TestSceneButton1);
                     Delight.TestScene.Button2TemplateProperty.SetDefault(_testScene, TestSceneButton2);

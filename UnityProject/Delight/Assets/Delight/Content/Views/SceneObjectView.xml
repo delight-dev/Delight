@@ -1,4 +1,5 @@
-<SceneObjectView xmlns="Delight" BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool" IgnoreObject="t:bool" 
+<SceneObjectView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd"
+           BasedOn="View" GameObject="t:GameObject" EnableScriptEvents="t:bool" IgnoreObject="t:bool"
            IsActive="t:bool = True"
            BeginDrag="t:Action"
            Cancel="t:Action"
@@ -16,8 +17,8 @@
            Scroll="t:Action"
            Select="t:Action"
            Submit="t:Action"
-           UpdateSelected="t:Action"            
-           > 
+           UpdateSelected="t:Action"
+           >
 </SceneObjectView>
 
 <!-- 

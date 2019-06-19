@@ -45,7 +45,7 @@ namespace Delight
             {
                 return new Vector4(valueList[0], valueList[1], valueList[2]);
             }
-            else if (valueList.Length == 3)
+            else if (valueList.Length == 4)
             {
                 return new Vector4(valueList[0], valueList[1], valueList[2], valueList[3]);
             }

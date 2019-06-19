@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 #endregion
 
 namespace Delight
@@ -32,7 +33,7 @@ namespace Delight
 
             var firstChild = Content.LayoutChildren.FirstOrDefault();
 
-            // make sure load-mode is set to Manual in children
+            // make sure load-mode is set to Manual in children if we're loading them
             foreach (SceneObjectView child in Content.LayoutChildren)
             {
                 if (!String.IsNullOrEmpty(StartView) && child.Id.IEquals(StartView))
@@ -41,7 +42,7 @@ namespace Delight
                     continue;
                 }
 
-                if (SwitchToDefault && child == firstChild)
+                if (ShowFirstByDefault && child == firstChild)
                 {
                     ActiveView = child;
                     continue;
@@ -49,10 +50,12 @@ namespace Delight
 
                 if (SwitchMode != SwitchMode.Enable)
                 {
-                    child.LoadMode = LoadMode.Manual;
+                    var loadMode = ViewsHiddenWhileLoading ? LoadMode.ManualHiddenWhileLoading : LoadMode.Manual;
+                    child.LoadMode = loadMode;
                 }
                 else
                 {
+                    child.LoadMode = LoadMode.Automatic; // force automatic if we're activating them
                     child.IsActive = false;
                 }
             }
@@ -82,16 +85,16 @@ namespace Delight
         /// <summary>
         /// Switches to view at index.
         /// </summary>
-        public void SwitchTo(int index)
+        public async Task SwitchTo(int index)
         {
             var view = Content.LayoutChildren.ElementAtOrDefault(index);
-            SwitchTo(view);
+            await SwitchTo(view);
         }
 
         /// <summary>
         /// Switches to the view specified.
         /// </summary>
-        public void SwitchTo(View view)
+        public async Task SwitchTo(View view)
         {
             if (view == ActiveView)
                 return;
@@ -111,14 +114,11 @@ namespace Delight
             ActiveView = view as SceneObjectView;
             if (ActiveView == null)
                 return;
-
-            if (SwitchMode == SwitchMode.Enable)
+            
+            if (SwitchMode == SwitchMode.Load)
             {
+                await ActiveView.LoadAsync();
                 ActiveView.IsActive = true;
-            }
-            else
-            {
-                ActiveView.Load();
             }
         }
 

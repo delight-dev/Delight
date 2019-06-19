@@ -46,6 +46,7 @@ namespace Delight
 
                 // binding <Label Text="{player.Name}">
                 comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                comboBoxContent.ContentTemplateData = tiPlayer;
                 return comboBoxContent;
             });
             this.AfterInitializeInternal();

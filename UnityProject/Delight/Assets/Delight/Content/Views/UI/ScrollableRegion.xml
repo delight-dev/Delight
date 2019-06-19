@@ -1,4 +1,5 @@
-<ScrollableRegion xmlns="Delight" BasedOn="UICanvas" MaskContent="t:bool = True"
+<ScrollableRegion xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+                  BasedOn="UICanvas" MaskContent="t:bool = True"
                   Mask="t:UnityEngine.UI.RectMask2D, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
                   ImageComponent="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
                   Drag="OnDrag" BeginDrag="OnBeginDrag" InitializePotentialDrag="OnInitializePotentialDrag" EndDrag="OnEndDrag" Scroll="OnScroll"

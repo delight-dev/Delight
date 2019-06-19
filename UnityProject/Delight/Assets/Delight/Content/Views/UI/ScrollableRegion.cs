@@ -382,9 +382,9 @@ namespace Delight
             if (!CanScrollHorizontally || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
                 HorizontalScrollbar.Ignore();
-            }
+            } 
 
-            if (!CanScrollVertically || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
+            if (!CanScrollVertically || VerticalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
                 VerticalScrollbar.Ignore();
             }

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class RectMask2D 
+    public partial class RectMask2D
     {
         /// <summary>
         /// Called just before the view and its children are loaded.

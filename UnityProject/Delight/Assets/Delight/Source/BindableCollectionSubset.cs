@@ -20,24 +20,6 @@ namespace Delight
         protected BindableCollection<T> _parentCollection;
         protected Func<T, bool> _filter;
         protected Action<T> _fkSetter;
-
-        #endregion
-
-        #region Properties
-
-        protected override Dictionary<string, T> Data
-        {
-            get
-            {
-                if (_needUpdate)
-                {
-                    Update();
-                }
-
-                return _data;
-            }
-        }
-
         private bool _needUpdate = true;
 
         #endregion
@@ -55,22 +37,6 @@ namespace Delight
         #endregion
 
         #region Methods
-
-        /// <summary>
-        /// Updates collection.
-        /// </summary>
-        private void Update()
-        {
-            _needUpdate = false;
-            Data.Clear();
-            foreach (var item in _parentCollection)
-            {
-                if (_filter(item))
-                {
-                    Data.Add(item.Id, item);
-                }
-            }
-        }
 
         /// <summary>
         /// Called when the parent collection has been modified. 
@@ -170,16 +136,25 @@ namespace Delight
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
-        public override IEnumerator<T> GetEnumerator()
+        /// <summary>
+        /// Updates collection if necessary.
+        /// </summary>
+        protected override void UpdateData()
         {
-            return Data.Values.GetEnumerator();
-        }
+            base.UpdateData();
+            if (!_needUpdate)
+                return;
 
-        public override IEnumerable<BindableObject> GetDataEnumerator()
-        {
-            foreach (var data in Data.Values)
+            _needUpdate = false;
+            Data.Clear();
+            DataList.Clear();
+            foreach (var item in _parentCollection)
             {
-                yield return data;
+                if (_filter(item))
+                {
+                    Data.Add(item.Id, item);
+                    DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+                }
             }
         }
 

@@ -66,6 +66,7 @@ namespace Delight
                     _layoutRoot.Name = "LayoutRoot";
 #endif
                     Delight.LayoutRoot.EnableScriptEventsProperty.SetDefault(_layoutRoot, true);
+                    Delight.LayoutRoot.RenderModeProperty.SetDefault(_layoutRoot, UnityEngine.RenderMode.ScreenSpaceOverlay);
                 }
                 return _layoutRoot;
             }

@@ -40,7 +40,7 @@ namespace Delight
 
                         if (!IgnoreObject)
                         {
-                            GameObject.transform.SetParent(layoutRoot.GameObject.transform);
+                            GameObject.transform.SetParent(layoutRoot.GameObject.transform, false);
                         }
                     }
                 }
@@ -61,6 +61,19 @@ namespace Delight
                 rectTransform = GameObject.AddComponent<RectTransform>();
             }
             RectTransform = rectTransform;
+
+            // if hidden while loading set canvas alpha to zero
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                // to change alpha we need a canvas group attached
+                if (CanvasGroup == null)
+                {
+                    var canvasGroup = GameObject.GetComponent<CanvasGroup>();
+                    CanvasGroup = canvasGroup == null ? GameObject.AddComponent<CanvasGroup>() : canvasGroup;
+                }
+
+                CanvasGroup.alpha = 0;
+            }
         }
 
         /// <summary>
@@ -81,8 +94,11 @@ namespace Delight
                     SizeChanged();
                     break;
 
+                case nameof(Margin):
                 case nameof(Offset):
                 case nameof(OffsetFromParent):
+                case nameof(Pivot):
+                case nameof(Scale):
                     OffsetChanged();
                     break;
 
@@ -107,6 +123,11 @@ namespace Delight
             if (IgnoreObject)
                 return;
 
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                CanvasGroup.alpha = 1; // revert to default
+            }
+
             // update layout and visibility
             VisibilityChanged();
             UpdateLayout(false);
@@ -125,10 +146,7 @@ namespace Delight
         /// </summary>
         protected void SizeChanged()
         {
-            if (IgnoreObject)
-                return;
-
-            if (DisableLayoutUpdate)
+            if (IgnoreObject || DisableLayoutUpdate)
                 return;
 
             //Debug.Log(String.Format("{0}.LayoutChanged()", Name));            
@@ -140,6 +158,9 @@ namespace Delight
         /// </summary>
         protected void OnSizeChanged()
         {
+            if (IgnoreObject || DisableLayoutUpdate)
+                return;
+
             UpdateLayout();
         }
 
@@ -148,6 +169,9 @@ namespace Delight
         /// </summary>
         protected void OffsetChanged()
         {
+            if (IgnoreObject || DisableLayoutUpdate)
+                return;
+
             UpdateRectTransform();
         }
 
@@ -296,6 +320,12 @@ namespace Delight
             RectTransform.anchoredPosition = new Vector2(
                 RectTransform.offsetMin.x / 2.0f + RectTransform.offsetMax.x / 2.0f,
                 RectTransform.offsetMin.y / 2.0f + RectTransform.offsetMax.y / 2.0f);
+
+            RectTransform.pivot = Pivot;
+            if (!ScaleProperty.IsUndefined(this))
+            {
+                RectTransform.localScale = Scale;
+            }
         }
 
         /// <summary>
@@ -334,6 +364,22 @@ namespace Delight
             }
 
             CanvasGroup.interactable = IsVisible && alpha > 0;
+        }
+
+        /// <summary>
+        /// Gets canvas group (adds it to the view if it doesn't exist).
+        /// </summary>
+        /// <returns></returns>
+        public CanvasGroup GetCanvasGroup()
+        {
+            if (CanvasGroup == null)
+            {
+                if (GameObject == null)
+                    return null;
+                CanvasGroup = GameObject.AddComponent<CanvasGroup>();
+            }
+
+            return CanvasGroup;
         }
 
         /// <summary>

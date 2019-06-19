@@ -18,6 +18,9 @@ namespace Delight
         {
             // constructing Label (Label)
             Label = new Label(this, this, "Label", LabelTemplate);
+
+            // binding <Label Offset="{TextOffset}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextOffset" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "Offset" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.Offset = TextOffset, () => { }, false));
             Click += ResolveActionHandler(this, "ButtonMouseClick");
             MouseEnter += ResolveActionHandler(this, "ButtonMouseEnter");
             MouseExit += ResolveActionHandler(this, "ButtonMouseExit");
@@ -46,6 +49,9 @@ namespace Delight
             dependencyProperties.Add(IsMouseOverProperty);
             dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(AutoSizeProperty);
+            dependencyProperties.Add(TextOffsetProperty);
+            dependencyProperties.Add(IsCloseButtonProperty);
+            dependencyProperties.Add(IsBackButtonProperty);
             dependencyProperties.Add(LabelProperty);
             dependencyProperties.Add(LabelTemplateProperty);
         }
@@ -129,6 +135,27 @@ namespace Delight
         {
             get { return AutoSizeProperty.GetValue(this); }
             set { AutoSizeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementMargin> TextOffsetProperty = new DependencyProperty<Delight.ElementMargin>("TextOffset");
+        public Delight.ElementMargin TextOffset
+        {
+            get { return TextOffsetProperty.GetValue(this); }
+            set { TextOffsetProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsCloseButtonProperty = new DependencyProperty<System.Boolean>("IsCloseButton");
+        public System.Boolean IsCloseButton
+        {
+            get { return IsCloseButtonProperty.GetValue(this); }
+            set { IsCloseButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsBackButtonProperty = new DependencyProperty<System.Boolean>("IsBackButton");
+        public System.Boolean IsBackButton
+        {
+            get { return IsBackButtonProperty.GetValue(this); }
+            set { IsBackButtonProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>("Label");
@@ -565,11 +592,11 @@ namespace Delight
             set { Label.PageToDisplay = value; }
         }
 
-        public readonly static DependencyProperty TextMeshProUGUIMarginProperty = Label.TextMeshProUGUIMarginProperty;
-        public UnityEngine.Vector4 TextMeshProUGUIMargin
+        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
+        public UnityEngine.Vector4 TextMargin
         {
-            get { return Label.TextMeshProUGUIMargin; }
-            set { Label.TextMeshProUGUIMargin = value; }
+            get { return Label.TextMargin; }
+            set { Label.TextMargin = value; }
         }
 
         public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
@@ -647,6 +674,13 @@ namespace Delight
         {
             get { return Label.OverrideHeight; }
             set { Label.OverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty LabelScaleProperty = Label.ScaleProperty;
+        public UnityEngine.Vector3 LabelScale
+        {
+            get { return Label.Scale; }
+            set { Label.Scale = value; }
         }
 
         public readonly static DependencyProperty LabelAlignmentProperty = Label.AlignmentProperty;
@@ -733,6 +767,13 @@ namespace Delight
             set { Label.BubbleNotifyChildLayoutChanged = value; }
         }
 
+        public readonly static DependencyProperty LabelIgnoreFlipProperty = Label.IgnoreFlipProperty;
+        public System.Boolean LabelIgnoreFlip
+        {
+            get { return Label.IgnoreFlip; }
+            set { Label.IgnoreFlip = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {
@@ -801,11 +842,11 @@ namespace Delight
                     _button.Name = "Button";
 #endif
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
-                    Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.7450981f, 0.7450981f, 0.7450981f, 1f));
                     Delight.Button.DefaultWidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Button.TextPaddingProperty.SetDefault(_button, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
                     Delight.Button.CanToggleOnProperty.SetDefault(_button, true);
                     Delight.Button.CanToggleOffProperty.SetDefault(_button, true);
+                    Delight.Button.TextOffsetProperty.SetDefault(_button, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));

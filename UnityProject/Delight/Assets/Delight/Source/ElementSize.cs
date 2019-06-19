@@ -227,7 +227,7 @@ namespace Delight
         {
             if (Unit == ElementSizeUnit.Percents)
             {
-                return Value.ToString() + "%";
+                return (Value * 100).ToString() + "%";
             }
             else
             {

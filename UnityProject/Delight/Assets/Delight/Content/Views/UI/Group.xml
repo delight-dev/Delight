@@ -1,2 +1,4 @@
-<Group xmlns="Delight" BasedOn="UIImageView" Spacing="t:ElementSize" Orientation="t:ElementOrientation" ContentAlignment="t:ElementAlignment">
+<Group xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+       BasedOn="UIImageView" Spacing="t:ElementSize" Orientation="t:ElementOrientation" 
+       ContentAlignment="t:ElementAlignment" SortIndex="at:int">
 </Group>

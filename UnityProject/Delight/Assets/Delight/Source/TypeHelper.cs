@@ -112,7 +112,7 @@ namespace Delight
         /// <summary>
         /// Gets type with the specified name and namespace. 
         /// </summary>
-        public static Type GetType(string typeName, string typeNamespace = null)
+        public static Type GetType(string typeName, string typeNamespace = null, List<string> defaultNamespaces = null)
         {
             if (_typeDictionary == null)
             {
@@ -125,6 +125,17 @@ namespace Delight
 
             if (String.IsNullOrEmpty(typeNamespace))
             {
+                // prioritize types in the namespaces provided in the config file (that always includes the Delight namespace)
+                if (types.Count > 1 && defaultNamespaces != null)
+                {
+                    foreach (var type in types)
+                    {
+                        if (defaultNamespaces.Any(x => type.Namespace.StartsWith(x)))
+                        {
+                            return type;
+                        }
+                    }
+                }
                 return types.FirstOrDefault();
             }
 

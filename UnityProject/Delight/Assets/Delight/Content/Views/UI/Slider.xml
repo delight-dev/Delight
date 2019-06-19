@@ -1,4 +1,5 @@
-<Slider xmlns="Delight" BasedOn="UIImageView" Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag="SliderInitializePotentialDrag"
+<Slider xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+        BasedOn="UIImageView" Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag="SliderInitializePotentialDrag"
         Length="t:ElementSize = 160" Breadth="t:ElementSize = 40" Orientation="t:ElementOrientation = Horizontal"
         Min="t:float = 0" Max="t:float = 100" Value="t:float" CanSlide="t:bool = True" SetValueOnDragEnded="t:bool" IsReversed="t:bool"
         Steps="t:float" ValueChanged="t:Action"
@@ -7,9 +8,9 @@
         m.SliderHandleImageView="SliderHandle"
         rename.SliderFillRegionMargin="SliderFillMargin">
   <Region Id="SliderRegion">
-    <Image Id="SliderBackgroundImageView" />
+    <Image Id="SliderBackgroundImageView" Width="100%" Height="100%" />
     <Region Id="SliderFillRegion" Margin="0">
-      <Image Id="SliderFillImageView" Alignment="Left" />
+      <Image Id="SliderFillImageView" Alignment="Left" Width="100%" Height="100%" />
     </Region>
     <Image Id="SliderHandleImageView" Alignment="Left" Width="20" Height="100%" />
   </Region>

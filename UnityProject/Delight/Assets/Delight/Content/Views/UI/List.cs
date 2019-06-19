@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -48,7 +49,7 @@ namespace Delight
             if (Items == null)
                 return;
 
-            foreach (var item in Items.GetDataEnumerator())
+            foreach (var item in Items)
             {
                 CreateItem(item);
             }
@@ -62,7 +63,7 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            CreateItems();
+            ItemsChanged(); 
         }
 
         /// <summary>
@@ -142,14 +143,6 @@ namespace Delight
 
             // TODO implement collection change actions
             //// update list of items
-            //else if (e.ListChangeAction == ListChangeAction.Remove)
-            //{
-            //    UpdateItems();
-            //}
-            //else if (e.ListChangeAction == ListChangeAction.Replace)
-            //{
-            //    _updateVirtualization = true;
-            //}
             //else if (e.ListChangeAction == ListChangeAction.ScrollTo)
             //{
             //    ScrollTo(e.StartIndex, e.Alignment);
@@ -178,9 +171,54 @@ namespace Delight
         /// </summary>
         private void ReplaceItems()
         {
-            // TODO loop through list items and replace them
-            // item = Content.LayoutChildren[i]
-            // _presentedListItems.TryGetValue(item, out listItem) ...
+            if (IsVirtualized)
+            {
+                // TODO implement
+            }
+
+            int newItemsCount = Items.Count;
+            if (newItemsCount <= 0)
+            {
+                ClearItems();
+                return;
+            }
+
+            _presentedItems.Clear();
+
+            // we assume layout sibling index corresponds to item index
+            var childCount = Content.LayoutChildren.Count;
+            int replaceCount = newItemsCount >= childCount ? childCount : newItemsCount;
+            for (int i = 0; i < replaceCount; ++i)
+            {
+                // replace items
+                var listItem = Content.LayoutChildren[i] as ListItem;
+                var newItem = Items.Get(i);
+                listItem.Item = newItem;
+                if (listItem.ContentTemplateData != null)
+                {
+                    listItem.ContentTemplateData.Item = newItem;
+                }
+                _presentedItems.Add(newItem, listItem);
+            }
+
+            if (newItemsCount > childCount)
+            {
+                // old list smaller than new - add items
+                for (int i = childCount; i < newItemsCount; ++i)
+                {
+                    CreateItem(Items.Get(i));
+                }                
+            }
+            else if (newItemsCount < childCount)
+            {
+                // old list larger than new - remove items
+                for (int i = childCount - 1; i >= newItemsCount; --i)
+                {
+                    var listItem = Content.LayoutChildren[i];
+                    listItem.Unload();
+                    Content.LayoutChildren.RemoveAt(i);
+                }
+            }
         }
 
         /// <summary>
@@ -191,11 +229,9 @@ namespace Delight
             if (IsVirtualized)
             {
                 // TODO implement
-                throw new NotImplementedException();
             }
 
-            ListItem listItem;
-            if (_presentedItems.TryGetValue(item, out listItem))
+            if (_presentedItems.TryGetValue(item, out var listItem))
             {
                 listItem.Unload();
                 Content.LayoutChildren.Remove(listItem);
@@ -300,7 +336,6 @@ namespace Delight
             if (IsVirtualized)
             {
                 // TODO implement
-                return null;
             }
 
             var listItem = base.CreateItem(item) as ListItem;
@@ -312,7 +347,10 @@ namespace Delight
             // unblock drag-events in parent scrollable regions
             // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here
             this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(listItem as SceneObjectView));
-            _presentedItems.Add(item, listItem);
+            if (!_presentedItems.ContainsKey(item))
+            {
+                _presentedItems.Add(item, listItem);
+            }
 
             // set item data on list item for easy reference
             listItem.Item = item;
@@ -610,7 +648,7 @@ namespace Delight
         {
             get
             {
-                return OverflowMode == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
+                return Overflow == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
             }
         }
 

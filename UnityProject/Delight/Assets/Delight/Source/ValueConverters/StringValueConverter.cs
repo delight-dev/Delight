@@ -44,6 +44,16 @@ namespace Delight
             return System.Convert.ToString(objectValue, CultureInfo.InvariantCulture);
         }
 
+        public string ConvertTo(object value)
+        {
+            return Convert(value);
+        }
+
+        public object ConvertFrom(string value)
+        {
+            return null;
+        }
+
         #endregion
     }
 }

@@ -1,5 +1,6 @@
-<InputField xmlns="Delight" BasedOn="UIImageView"
-            TMP_InputFieldComponent="t:TMPro.TMP_InputField, Unity.TextMeshPro, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+<InputField xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+            BasedOn="UIImageView"
+            TMP_InputFieldComponent="t:TMPro.TMP_InputField"
             m.TMP_InputFieldComponent="" m.InputText=""
             SetValueOnEndEdit="t:bool"
             OnlyTriggerValueChangedFromUI="t:bool"

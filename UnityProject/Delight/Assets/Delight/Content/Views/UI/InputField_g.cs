@@ -984,11 +984,11 @@ namespace Delight
             set { InputText.PageToDisplay = value; }
         }
 
-        public readonly static DependencyProperty TextMeshProUGUIMarginProperty = Label.TextMeshProUGUIMarginProperty;
-        public UnityEngine.Vector4 TextMeshProUGUIMargin
+        public readonly static DependencyProperty InputTextTextMarginProperty = Label.TextMarginProperty;
+        public UnityEngine.Vector4 InputTextTextMargin
         {
-            get { return InputText.TextMeshProUGUIMargin; }
-            set { InputText.TextMeshProUGUIMargin = value; }
+            get { return InputText.TextMargin; }
+            set { InputText.TextMargin = value; }
         }
 
         public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
@@ -1066,6 +1066,13 @@ namespace Delight
         {
             get { return InputText.OverrideHeight; }
             set { InputText.OverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty InputTextScaleProperty = Label.ScaleProperty;
+        public UnityEngine.Vector3 InputTextScale
+        {
+            get { return InputText.Scale; }
+            set { InputText.Scale = value; }
         }
 
         public readonly static DependencyProperty InputTextAlignmentProperty = Label.AlignmentProperty;
@@ -1150,6 +1157,13 @@ namespace Delight
         {
             get { return InputText.BubbleNotifyChildLayoutChanged; }
             set { InputText.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty InputTextIgnoreFlipProperty = Label.IgnoreFlipProperty;
+        public System.Boolean InputTextIgnoreFlip
+        {
+            get { return InputText.IgnoreFlip; }
+            set { InputText.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty InputTextGameObjectProperty = Label.GameObjectProperty;

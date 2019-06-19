@@ -26,6 +26,7 @@ namespace Delight.Editor.Parser
         #region Fields
 
         public static string ConfigFile = "DelightConfig.bin";
+        private static readonly object _fileLock = new object();
 
         [ProtoMember(1)]
         public string Name;
@@ -57,6 +58,21 @@ namespace Delight.Editor.Parser
         [ProtoMember(9)]
         public bool UseSimulatedUriInEditor;
 
+        [ProtoMember(10)]
+        public List<string> Namespaces;
+
+        [ProtoMember(11)]
+        public string DelightPath;
+
+        [ProtoMember(12)]
+        public string DefaultBasedOn;
+
+        [ProtoMember(13)]
+        public string BaseView;
+
+        [ProtoMember(14)]
+        public int AssetBundleVersion;
+
         private static MasterConfig _config;
 
         #endregion
@@ -72,6 +88,7 @@ namespace Delight.Editor.Parser
             Views = new List<string>();
             BuildTargets = new List<string>();
             StreamedBundles = new List<string>();
+            Namespaces = new List<string>();
         }
 
         #endregion
@@ -113,20 +130,27 @@ namespace Delight.Editor.Parser
                 return;
             }
 
-            // deserialize file
-            using (var file = File.OpenRead(configFilePath))
+            lock (_fileLock)
             {
-                Debug.Log("Deserializing " + configFilePath);
-                try
+                // deserialize file
+                using (var file = File.OpenRead(configFilePath))
                 {
-                    _config = Serializer.Deserialize<MasterConfig>(file);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    Debug.LogError(String.Format("[Delight] Failed to deserialize config file \"{0}\". Creating new config.", ConfigFile));
-                    _config = CreateDefault();
-                    return;
+                    //Debug.Log("Deserializing " + configFilePath);
+                    try
+                    {
+                        _config = Serializer.Deserialize<MasterConfig>(file);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                        Debug.LogError(String.Format("[Delight] Failed to deserialize config file \"{0}\". Creating new config.", ConfigFile));
+                        _config = CreateDefault();
+                        return;
+                    }
+                    finally
+                    {
+                        file.Close();
+                    }
                 }
             }
         }
@@ -139,10 +163,14 @@ namespace Delight.Editor.Parser
             var configFilePath = GetConfigFilePath();
             Sanitize();
 
-            using (var file = File.Open(configFilePath, FileMode.Create))
+            lock (_fileLock)
             {
-                Debug.Log("Serializing " + configFilePath);
-                Serializer.Serialize(file, _config);
+                using (var file = File.Open(configFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    //Debug.Log("Serializing " + configFilePath);
+                    Serializer.Serialize(file, _config);
+                    file.Close();
+                }
             }
         }
 
@@ -161,30 +189,46 @@ namespace Delight.Editor.Parser
         /// </summary>
         public void Sanitize()
         {
-            var invalidPathChars = Path.GetInvalidPathChars();
-
             // make sure paths are consistantly formatted
             for (int i = ContentFolders.Count - 1; i >= 0; --i)
             {
                 var path = ContentFolders[i];
-                if (String.IsNullOrEmpty(path) || path.IndexOfAny(invalidPathChars) >= 0)
+                var sanitizedPath = SanitizePath(path);
+
+                if (String.IsNullOrEmpty(sanitizedPath))
                 {
                     Debug.LogWarning(String.Format("[Delight] Improperly formatted content folder path \"{0}\" removed from configuration.", path));
                     ContentFolders.RemoveAt(i);
                     continue;
                 }
 
-                // make sure directory separators are uniform
-                path = GetFormattedPath(path);
-
-                // make sure path ends with a directory separator
-                if (!path.EndsWith("/"))
-                {
-                    path += "/";
-                }
-
-                ContentFolders[i] = path;
+                ContentFolders[i] = sanitizedPath;
             }
+
+            DelightPath = SanitizePath(DelightPath);
+        }
+
+        /// <summary>
+        /// Sanitizes path. 
+        /// </summary>
+        public static string SanitizePath(string path)
+        {
+            var invalidPathChars = Path.GetInvalidPathChars();
+            if (String.IsNullOrEmpty(path) || path.IndexOfAny(invalidPathChars) >= 0)
+            {
+                return String.Empty;
+            }
+
+            // make sure directory separators are uniform
+            var sanitizedPath = GetFormattedPath(path);
+
+            // make sure path ends with a directory separator
+            if (!sanitizedPath.EndsWith("/"))
+            {
+                sanitizedPath += "/";
+            }
+
+            return sanitizedPath;
         }
 
         /// <summary>
@@ -205,10 +249,27 @@ namespace Delight.Editor.Parser
             ContentFolders = new List<string>();
             BuildTargets = new List<string>();
             StreamedBundles = new List<string>();
+            Namespaces = new List<string>();
             ServerUri = String.Empty;
             ServerUriLocator = String.Empty;
+            UseSimulatedUriInEditor = true;
             ContentFolders.Add("Assets/Content/");
             ContentFolders.Add("Assets/Delight/Content/");
+            ContentFolders.Add("Assets/Plugins/Content/");
+            ContentFolders.Add("Assets/Plugins/Delight/Content/");
+            Namespaces.Add("Delight");
+            DelightPath = "/";
+            DefaultBasedOn = String.Empty;
+            BaseView = String.Empty;
+            AssetBundleVersion = 0;
+        }
+
+        /// <summary>
+        /// Gets type with the specified name and namespace. 
+        /// </summary>
+        public static Type GetType(string typeName, string typeNamespace = null)
+        {
+            return TypeHelper.GetType(typeName, typeNamespace, !String.IsNullOrEmpty(typeNamespace) ? null : GetInstance().Namespaces);
         }
 
         #endregion

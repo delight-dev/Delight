@@ -163,7 +163,7 @@ namespace Delight
 
             if (IsReversed)
             {
-                // if we slide from left to right then the slide percentage is inverted
+                // if sliding is reversed then the slide percentage is inverted
                 p = 1 - p;
             }
 
@@ -199,9 +199,12 @@ namespace Delight
             float p = (value - Min) / (Max - Min);
             var fillTransform = SliderFillRegion.RectTransform;
 
+            float sliderHandleWidth = SliderHandleImageView.Sprite == null && SliderHandleImageView.Color.a <= 0
+                ? 0 : SliderHandleImageView.Width.Value;
+
             // set handle offset
             float fillWidth = fillTransform.rect.width;
-            float slideAreaWidth = fillWidth - SliderHandleImageView.Width.Value;
+            float slideAreaWidth = fillWidth - sliderHandleWidth;
             float sliderFillMargin = IsReversed ? SliderFillRegion.Margin.Right.Pixels : SliderFillRegion.Margin.Left.Pixels;
             float handleOffset = p * slideAreaWidth + sliderFillMargin;
 
@@ -213,7 +216,7 @@ namespace Delight
             SliderHandleImageView.DisableLayoutUpdate = false;
 
             // set fill percentage as to match the offset of the handle
-            float fillP = (handleOffset + SliderHandleImageView.Width.Pixels / 2f) / fillWidth;
+            float fillP = (handleOffset + sliderHandleWidth / 2f) / fillWidth;
             SliderFillImageView.DisableLayoutUpdate = true;
             SliderFillImageView.Width = new ElementSize(fillP, ElementSizeUnit.Percents);
             SliderFillImageView.UpdateLayout(false);

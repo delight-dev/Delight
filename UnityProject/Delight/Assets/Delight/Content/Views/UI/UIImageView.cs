@@ -49,10 +49,7 @@ namespace Delight
         /// </summary>
         protected virtual void SpriteChanged()
         {
-            if (IgnoreObject)
-                return;
-
-            if (GameObject == null)
+            if (IgnoreObject || GameObject == null)
                 return;
 
             var sprite = BackgroundSprite?.UnityObject;

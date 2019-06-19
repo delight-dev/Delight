@@ -158,20 +158,29 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (LoadMode == LoadMode.Manual && !initiatedLoad)
+            if (LoadMode.HasFlag(LoadMode.Manual) && !initiatedLoad)
                 return;
 
             BeforeLoad();
-            LoadDependencyProperties();
 
             await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
 
+            AfterChildrenLoaded();
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            {
+                await LoadDependencyPropertiesAsync();
+            }
+            else
+            {
+                LoadDependencyProperties();
+            }
             UpdateBindings();
 
             _initializer?.Invoke(this);
-
             _isLoaded = true;
+
             AfterLoad();
+            Initialize();
 
             Loaded?.Invoke(this);
         }
@@ -196,23 +205,25 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            if (LoadMode == LoadMode.Manual && !initiatedLoad)
+            if (LoadMode.HasFlag(LoadMode.Manual) && !initiatedLoad)
                 return;
 
             BeforeLoad();
-            LoadDependencyProperties();
 
             foreach (var child in LayoutChildren)
             {
                 child.LoadInternal(false);
             }
 
+            AfterChildrenLoaded();
+            LoadDependencyProperties();
             UpdateBindings();
 
             _initializer?.Invoke(this);
-
             _isLoaded = true;
+
             AfterLoad();
+            Initialize();
 
             Loaded?.Invoke(this);
         }
@@ -225,10 +236,25 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called just after the children are loaded, but before dependency properties are loaded.
+        /// </summary>
+        protected virtual void AfterChildrenLoaded()
+        {
+        }
+
+        /// <summary>
         /// Called after the view and its children has been loaded.
         /// </summary>
         protected virtual void AfterLoad()
         {
+        }
+
+        /// <summary>
+        /// Called after the view and its children has been loaded.
+        /// </summary>
+        public virtual void Initialize()
+        {
+            // TODO rivality alias
         }
 
         /// <summary>
@@ -300,6 +326,30 @@ namespace Delight
                     {
                         dependencyProperties[i].Load(this);
                     }
+                }
+
+                // do the same for properties in base class
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Loads dependency asynchronously. 
+        /// </summary>
+        protected async Task LoadDependencyPropertiesAsync()
+        {
+            var template = _template;
+            while (true)
+            {
+                List<DependencyProperty> dependencyProperties;
+                if (DependencyProperties.TryGetValue(template, out dependencyProperties))
+                {
+                    // initialize all dependency properties asynchronously
+                    await Task.WhenAll(dependencyProperties.Select(x => x.LoadAsync(this)));
                 }
 
                 // do the same for properties in base class
@@ -403,7 +453,7 @@ namespace Delight
         /// <summary>
         /// Resolves action handler from name. 
         /// </summary>
-        protected ViewAction ResolveActionHandler(View parent, string actionHandlerName)
+        protected ViewAction ResolveActionHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
         {
             // look for a method with the same name as the entry
             var parentType = parent.GetType();
@@ -420,9 +470,50 @@ namespace Delight
             {
                 return (x, y) => actionHandler.Invoke(parent, null);
             }
-            else if (parameterCount == 1)
+
+            if (paramGetters.Length > 0)
             {
-                return (x, y) => actionHandler.Invoke(parent, new object[] { x });
+                switch (paramGetters.Length)
+                {
+                    case 1:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0]() });
+                    case 2:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1]() });
+                    case 3:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2]() });
+                    case 4:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
+                    case 5:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
+                    case 6:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
+                    case 7:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
+                    case 8:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
+                    case 9:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
+                    case 10:
+                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
+                    default:
+                        Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                        return (x, y) => { };
+                }                
+            }
+
+            if (parameterCount == 1)
+            {
+                // check if first parameter is a reference to the sender or view action
+                if (typeof(View).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
+                {
+                    // parameter is the sender
+                    return (x, y) => actionHandler.Invoke(parent, new object[] { x });
+                }
+                else
+                {
+                    // parameter is the view action data
+                    return (x, y) => actionHandler.Invoke(parent, new object[] { y });
+                }
             }
             else
             {
@@ -510,7 +601,7 @@ namespace Delight
 
             if (stateChangingProperties == null)
                 return null;
-            
+
             // filter properties and return those affected by the state change
             var filteredStateChangingProperties = new List<DependencyProperty>();
             for (int i = 0; i < stateChangingProperties.Count; ++i)

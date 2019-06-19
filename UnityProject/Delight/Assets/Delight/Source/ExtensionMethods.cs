@@ -306,7 +306,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Converts a variable name to property name.
+        /// Converts a name to property name.
         /// </summary>
         public static string ToPropertyName(this string str)
         {
@@ -314,6 +314,12 @@ namespace Delight
 
             // capitalize the first letter
             var str2 = char.ToUpper(str[0]) + str.Substring(1);
+
+            // add prefix 'N' if starting with a digit
+            if (char.IsDigit(str[0]))
+            {
+                str2 = "N" + str2;
+            }
 
             // return string containing only letters, digits and underscore characters
             return new string((from c in str2

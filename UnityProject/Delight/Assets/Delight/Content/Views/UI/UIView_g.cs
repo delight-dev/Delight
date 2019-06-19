@@ -33,6 +33,7 @@ namespace Delight
             dependencyProperties.Add(HeightProperty);
             dependencyProperties.Add(OverrideWidthProperty);
             dependencyProperties.Add(OverrideHeightProperty);
+            dependencyProperties.Add(ScaleProperty);
             dependencyProperties.Add(AlignmentProperty);
             dependencyProperties.Add(MarginProperty);
             dependencyProperties.Add(OffsetProperty);
@@ -47,6 +48,7 @@ namespace Delight
             dependencyProperties.Add(UseFastShaderProperty);
             dependencyProperties.Add(FastMaterialProperty);
             dependencyProperties.Add(BubbleNotifyChildLayoutChangedProperty);
+            dependencyProperties.Add(IgnoreFlipProperty);
         }
 
         #endregion
@@ -86,6 +88,13 @@ namespace Delight
         {
             get { return OverrideHeightProperty.GetValue(this); }
             set { OverrideHeightProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.Vector3> ScaleProperty = new DependencyProperty<UnityEngine.Vector3>("Scale");
+        public UnityEngine.Vector3 Scale
+        {
+            get { return ScaleProperty.GetValue(this); }
+            set { ScaleProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> AlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("Alignment");
@@ -186,6 +195,13 @@ namespace Delight
             set { BubbleNotifyChildLayoutChangedProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Boolean> IgnoreFlipProperty = new DependencyProperty<System.Boolean>("IgnoreFlip");
+        public System.Boolean IgnoreFlip
+        {
+            get { return IgnoreFlipProperty.GetValue(this); }
+            set { IgnoreFlipProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -218,6 +234,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _uIView.Name = "UIView";
 #endif
+                    Delight.UIView.PivotProperty.SetDefault(_uIView, new Vector2(0.5f, 0.5f));
                     Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);
                     Delight.UIView.FastMaterialProperty.SetDefault(_uIView, Assets.Materials["UI-Fast-Default"]);
                 }

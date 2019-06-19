@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -203,6 +204,34 @@ namespace Delight
             // trigger initial property changed on load
             key.OnPropertyChanged(PropertyName);
         }
+
+        /// <summary>
+        /// Initializes the mapped dependency property.
+        /// </summary>
+        public override async Task LoadAsync(DependencyObject key)
+        {
+            await base.LoadAsync(key);
+
+            var target = ObjectGetter((TParent)key);
+            if (target == null)
+                return;
+
+            bool valueSet = false;
+            ValueSet.TryGetValue(key, out valueSet);
+            if (valueSet) // if value already has been set, don't overwrite it with default value
+                return;
+
+            // map default value to target
+            T defaultValue;
+            if (TryGetDefault(key, out defaultValue))
+            {
+                Setter(target, defaultValue);
+            }
+
+            // trigger initial property changed on load
+            key.OnPropertyChanged(PropertyName);
+        }
+
 
         /// <summary>
         /// Clears run-time values for the specified instance.

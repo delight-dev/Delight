@@ -10,6 +10,12 @@ namespace Delight
 {
     public partial class ListItem
     {
+        #region Fields
+
+        private bool _sizeSet = false;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -61,6 +67,19 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called before the view is loaded.
+        /// </summary>
+        protected override void BeforeLoad()
+        {
+            base.BeforeLoad();
+
+            if (Width != null || Height != null)
+            {
+                _sizeSet = true;
+            }
+        }
+
+        /// <summary>
         /// Called when a child changes its layout.
         /// </summary>
         protected override void ChildLayoutChanged()
@@ -94,7 +113,7 @@ namespace Delight
             DisableLayoutUpdate = true;
 
             bool hasNewSize = false;
-            if (AutoSizeToContent)
+            if (AutoSizeToContent && !_sizeSet)
             {
                 hasNewSize = AdjustSizeToContent();
             }
@@ -146,6 +165,9 @@ namespace Delight
             return base.UpdateLayout(notifyParent) || hasNewSize;
         }
 
+        /// <summary>
+        /// Adjusts the size of the list item to its content. 
+        /// </summary>
         private bool AdjustSizeToContent()
         {
             bool hasNewSize = false;

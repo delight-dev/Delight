@@ -37,7 +37,7 @@ namespace Delight
             dependencyProperties.Add(AlternateItemsProperty);
             dependencyProperties.Add(IsScrollableProperty);
             dependencyProperties.Add(IsVirtualizedProperty);
-            dependencyProperties.Add(OverflowModeProperty);
+            dependencyProperties.Add(OverflowProperty);
             dependencyProperties.Add(ItemSelectedProperty);
             dependencyProperties.Add(ItemDeselectedProperty);
             dependencyProperties.Add(CanSelectProperty);
@@ -96,11 +96,11 @@ namespace Delight
             set { IsVirtualizedProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.OverflowMode> OverflowModeProperty = new DependencyProperty<Delight.OverflowMode>("OverflowMode");
-        public Delight.OverflowMode OverflowMode
+        public readonly static DependencyProperty<Delight.OverflowMode> OverflowProperty = new DependencyProperty<Delight.OverflowMode>("Overflow");
+        public Delight.OverflowMode Overflow
         {
-            get { return OverflowModeProperty.GetValue(this); }
-            set { OverflowModeProperty.SetValue(this, value); }
+            get { return OverflowProperty.GetValue(this); }
+            set { OverflowProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected");
@@ -488,6 +488,13 @@ namespace Delight
             set { ScrollableRegion.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty ScrollableRegionScaleProperty = ScrollableRegion.ScaleProperty;
+        public UnityEngine.Vector3 ScrollableRegionScale
+        {
+            get { return ScrollableRegion.Scale; }
+            set { ScrollableRegion.Scale = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionAlignmentProperty = ScrollableRegion.AlignmentProperty;
         public Delight.ElementAlignment ScrollableRegionAlignment
         {
@@ -570,6 +577,13 @@ namespace Delight
         {
             get { return ScrollableRegion.BubbleNotifyChildLayoutChanged; }
             set { ScrollableRegion.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIgnoreFlipProperty = ScrollableRegion.IgnoreFlipProperty;
+        public System.Boolean ScrollableRegionIgnoreFlip
+        {
+            get { return ScrollableRegion.IgnoreFlip; }
+            set { ScrollableRegion.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionGameObjectProperty = ScrollableRegion.GameObjectProperty;

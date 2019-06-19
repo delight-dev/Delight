@@ -23,6 +23,24 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            if (IgnoreObject)
+                return;
+
+            base.OnPropertyChanged(source, property);
+            switch (property)
+            {
+                case nameof(Cell):
+                case nameof(CellSpan):
+                    CellChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Called just before the view and its children are loaded.
         /// </summary>
         protected override void BeforeLoad()
@@ -252,6 +270,26 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called when the cell index or span of a child has been changed.
+        /// </summary>
+        private void CellChanged()
+        {
+            if (IgnoreObject || DisableLayoutUpdate)
+                return;
+
+            //Debug.Log(String.Format("{0}.LayoutChanged()", Name));            
+            LayoutRoot?.RegisterChangeHandler(OnCellChanged);
+        }
+
+        /// <summary>
+        /// Called when the cell index or span of a child has been changed. 
+        /// </summary>
+        public void OnCellChanged()
+        {
+            UpdateLayout(false);
+        }
+
         #endregion
     }
 
@@ -334,13 +372,21 @@ namespace Delight
     /// </summary>
     public class CellIndex
     {
+        #region Fields
+
         public int Row;
-        public int Column; 
+        public int Column;
+
+        #endregion
+
+        #region Constructor
 
         public CellIndex(int row, int column)
         {
             Row = row;
             Column = column;
         }
+
+        #endregion
     }
 }

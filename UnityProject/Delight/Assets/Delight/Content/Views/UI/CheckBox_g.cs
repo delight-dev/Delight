@@ -262,6 +262,13 @@ namespace Delight
             set { CheckBoxImageView.OverrideHeight = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxScaleProperty = Image.ScaleProperty;
+        public UnityEngine.Vector3 CheckBoxScale
+        {
+            get { return CheckBoxImageView.Scale; }
+            set { CheckBoxImageView.Scale = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxAlignmentProperty = Image.AlignmentProperty;
         public Delight.ElementAlignment CheckBoxAlignment
         {
@@ -344,6 +351,13 @@ namespace Delight
         {
             get { return CheckBoxImageView.BubbleNotifyChildLayoutChanged; }
             set { CheckBoxImageView.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxIgnoreFlipProperty = Image.IgnoreFlipProperty;
+        public System.Boolean CheckBoxIgnoreFlip
+        {
+            get { return CheckBoxImageView.IgnoreFlip; }
+            set { CheckBoxImageView.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty CheckBoxGameObjectProperty = Image.GameObjectProperty;
@@ -801,11 +815,11 @@ namespace Delight
             set { CheckBoxLabel.PageToDisplay = value; }
         }
 
-        public readonly static DependencyProperty TextMeshProUGUIMarginProperty = Label.TextMeshProUGUIMarginProperty;
-        public UnityEngine.Vector4 TextMeshProUGUIMargin
+        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
+        public UnityEngine.Vector4 TextMargin
         {
-            get { return CheckBoxLabel.TextMeshProUGUIMargin; }
-            set { CheckBoxLabel.TextMeshProUGUIMargin = value; }
+            get { return CheckBoxLabel.TextMargin; }
+            set { CheckBoxLabel.TextMargin = value; }
         }
 
         public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
@@ -883,6 +897,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.OverrideHeight; }
             set { CheckBoxLabel.OverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelScaleProperty = Label.ScaleProperty;
+        public UnityEngine.Vector3 CheckBoxLabelScale
+        {
+            get { return CheckBoxLabel.Scale; }
+            set { CheckBoxLabel.Scale = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelAlignmentProperty = Label.AlignmentProperty;
@@ -967,6 +988,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.BubbleNotifyChildLayoutChanged; }
             set { CheckBoxLabel.BubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelIgnoreFlipProperty = Label.IgnoreFlipProperty;
+        public System.Boolean CheckBoxLabelIgnoreFlip
+        {
+            get { return CheckBoxLabel.IgnoreFlip; }
+            set { CheckBoxLabel.IgnoreFlip = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelGameObjectProperty = Label.GameObjectProperty;

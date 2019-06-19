@@ -10,7 +10,6 @@ using UnityEngine;
 
 namespace Delight
 {
-
     /// <summary>
     /// Base class for bindable generic collections.
     /// </summary>
@@ -20,16 +19,9 @@ namespace Delight
         #region Fields
 
         protected Dictionary<string, T> _data = new Dictionary<string, T>();
-        protected virtual Dictionary<string, T> Data
-        {
-            get
-            {
-                return _data;
-            }
-        }
-
+        protected List<KeyValuePair<string, T>> _dataList = new List<KeyValuePair<string, T>>();
         protected bool _batchNotifications = false;
-        protected List<CollectionChangedEventArgs> _collectionChangedEventArgsBatch = new List<CollectionChangedEventArgs>(); 
+        protected List<CollectionChangedEventArgs> _collectionChangedEventArgsBatch = new List<CollectionChangedEventArgs>();
 
         #endregion
 
@@ -51,6 +43,35 @@ namespace Delight
             }
         }
 
+        public virtual T this[int index]
+        {
+            get
+            {
+                if (index < 0 || index >= Count)
+                    return null;
+
+                return DataList[index].Value;
+            }
+        }
+
+        protected virtual Dictionary<string, T> Data
+        {
+            get
+            {
+                UpdateData();
+                return _data;
+            }
+        }
+
+        protected virtual List<KeyValuePair<string, T>> DataList
+        {
+            get
+            {
+                UpdateData();
+                return _dataList;
+            }
+        }
+
         public override int Count => Data.Count;
 
         #endregion
@@ -63,10 +84,7 @@ namespace Delight
 
         public BindableCollection(IEnumerable<T> items)
         {
-            foreach (var item in items)
-            {
-                Add(item); // TODO replace with AddRange
-            }
+            AddRange(items);
         }
 
         #endregion
@@ -76,6 +94,11 @@ namespace Delight
         public override BindableObject Get(string id)
         {
             return this[id];
+        }
+
+        public override BindableObject Get(int index)
+        {
+            return this[index];
         }
 
         public virtual void Edit(Action edit)
@@ -91,6 +114,14 @@ namespace Delight
             _collectionChangedEventArgsBatch.Clear();
         }
 
+        public virtual void AddRange(IEnumerable<T> items)
+        {
+            foreach (var item in items)
+            {
+                Add(item);
+            }
+        }
+
         public virtual void Add(T item)
         {
             if (String.IsNullOrEmpty(item.Id))
@@ -104,16 +135,20 @@ namespace Delight
             }
 
             Data.Add(item.Id, item);
+            DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+
             Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
                 Item = item
             });
+            OnPropertyChanged(item.Id);
         }
 
         public virtual void Clear()
         {
             Data.Clear();
+            DataList.Clear();
             Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Clear
@@ -131,9 +166,11 @@ namespace Delight
         public virtual void Replace(IEnumerable<T> items)
         {
             Data.Clear();
+            DataList.Clear();
             foreach (var item in items)
             {
                 Data.Add(item.Id, item);
+                DataList.Add(new KeyValuePair<string, T>(item.Id, item));
             }
             Notify(new CollectionChangedEventArgs
             {
@@ -151,6 +188,15 @@ namespace Delight
             bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
+                for (int i = 0; i < Count; ++i)
+                {
+                    if (_dataList[i].Value == item)
+                    {
+                        DataList.RemoveAt(i);
+                        break;
+                    }
+                }
+
                 Notify(new CollectionChangedEventArgs
                 {
                     ChangeAction = CollectionChangeAction.Remove,
@@ -170,21 +216,12 @@ namespace Delight
             }
         }
 
-        public virtual IEnumerator<T> GetEnumerator()
+        public new virtual IEnumerator<T> GetEnumerator()
         {
-            return Data.Values.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public override IEnumerable<BindableObject> GetDataEnumerator()
-        {
-            foreach (var data in Data.Values)
+            UpdateData();
+            foreach (var data in DataList)
             {
-                yield return data;
+                yield return data.Value;
             }
         }
 
@@ -194,7 +231,7 @@ namespace Delight
     /// <summary>
     /// Base class for bindable collections.
     /// </summary>
-    public abstract class BindableCollection : BindableObject, INotifyCollectionChanged
+    public abstract class BindableCollection : BindableObject, IEnumerable<BindableObject>, INotifyCollectionChanged
     {
         #region Fields
 
@@ -210,8 +247,11 @@ namespace Delight
 
         #region Methods
 
-        public abstract IEnumerable<BindableObject> GetDataEnumerator();
         public abstract BindableObject Get(string id);
+        public abstract BindableObject Get(int index);
+        protected virtual void UpdateData()
+        {
+        }
 
         /// <summary>
         /// Notifies listeners that collection has been changed.
@@ -219,6 +259,20 @@ namespace Delight
         public void OnCollectionChanged(CollectionChangedEventArgs eventArgs)
         {
             CollectionChanged?.Invoke(this, eventArgs);
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public IEnumerator<BindableObject> GetEnumerator()
+        {
+            UpdateData();
+            for (int i = 0; i < Count; ++i)
+            {
+                yield return Get(i);
+            }
         }
 
         #endregion

@@ -1032,7 +1032,7 @@ namespace Delight
                     _assetManagementTestImageSet1.Name = "AssetManagementTestImageSet1";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet1, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet1, Delight.LoadMode.Manual);
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet1, Delight.LoadMode.OnDemand);
                 }
                 return _assetManagementTestImageSet1;
             }
@@ -1100,7 +1100,7 @@ namespace Delight
                     _assetManagementTestImageSet2.Name = "AssetManagementTestImageSet2";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet2, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet2, Delight.LoadMode.Manual);
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet2, Delight.LoadMode.OnDemand);
                 }
                 return _assetManagementTestImageSet2;
             }
@@ -1168,7 +1168,7 @@ namespace Delight
                     _assetManagementTestImageSet3.Name = "AssetManagementTestImageSet3";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet3, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet3, Delight.LoadMode.Manual);
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet3, Delight.LoadMode.OnDemand);
                 }
                 return _assetManagementTestImageSet3;
             }
@@ -1236,7 +1236,7 @@ namespace Delight
                     _assetManagementTestImageSet4.Name = "AssetManagementTestImageSet4";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_assetManagementTestImageSet4, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet4, Delight.LoadMode.Manual);
+                    Delight.Group.LoadModeProperty.SetDefault(_assetManagementTestImageSet4, Delight.LoadMode.OnDemand);
                 }
                 return _assetManagementTestImageSet4;
             }

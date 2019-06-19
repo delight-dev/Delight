@@ -47,6 +47,22 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called just after the children are loaded, but before dependency properties are loaded.
+        /// </summary>
+        protected override void AfterChildrenLoaded()
+        {
+            if (IgnoreObject)
+                return;
+            base.AfterChildrenLoaded();
+
+            // set default values
+            TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI;
+            TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
+            TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
+            TMP_InputFieldComponent.transition = Selectable.Transition.None;
+        }
+
+        /// <summary>
         /// Called after the view is loaded.
         /// </summary>
         protected override void AfterLoad()
@@ -61,12 +77,6 @@ namespace Delight
 
             TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
             TMP_InputFieldComponent.onValueChanged.AddListener(TMProInputFieldValueChanged);
-
-            // set default values
-            TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI;
-            TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
-            TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
-            TMP_InputFieldComponent.transition = Selectable.Transition.None;
 
             // set initial text
             TextChanged();
@@ -101,7 +111,7 @@ namespace Delight
         {
             if (SetValueOnEndEdit)
             {
-                Text = TMP_InputFieldComponent.text;
+                TextChanged();
             }
 
             TMProUpdatePlaceholder();
@@ -115,7 +125,7 @@ namespace Delight
         {
             if (!SetValueOnEndEdit)
             {
-                Text = TMP_InputFieldComponent.text;
+                TextChanged();
             }
 
             TMProUpdatePlaceholder();

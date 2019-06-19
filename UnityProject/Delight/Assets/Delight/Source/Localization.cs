@@ -35,8 +35,6 @@ namespace Delight
 
     public partial class LocalizationData : DataProvider<LocalizationLabel>
     {
-        public LocalizationLabel Greeting1 = new LocalizationLabel { Id = "Greeting1", Label = "Test 1" };
-        public LocalizationLabel Greeting2 = new LocalizationLabel { Id = "Greeting2", Label = "Test 2" };
     }
 
     public static partial class Models

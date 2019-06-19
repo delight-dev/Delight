@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -53,7 +54,8 @@ namespace Delight
             // get old value
             T oldValue;
             T currentValue;
-            if (Values.TryGetValue(key, out currentValue))
+            bool hasCurrentValue = Values.TryGetValue(key, out currentValue);
+            if (hasCurrentValue)
             {
                 oldValue = currentValue;
             }
@@ -66,6 +68,16 @@ namespace Delight
             if (oldValue != null ? oldValue.Equals(value) : value == null)
             {
                 return; // no.
+            }
+
+            // set value
+            if (hasCurrentValue)
+            {
+                Values[key] = value;
+            }
+            else
+            {
+                Values.Add(key, value);
             }
 
             bool isLoadingAsset = false;
@@ -90,21 +102,11 @@ namespace Delight
                     if (IsAssetType)
                     {
                         // register reference if its an asset object
-                        var assetObject = value as AssetObject;
-                        isLoadingAsset = !assetObject.IsLoaded;
+                        var assetObject = value as AssetObject;                        
                         assetObject.RegisterReference(key);
+                        isLoadingAsset = !assetObject.IsLoaded;
                     }
                 }
-            }
-
-            // set value
-            if (currentValue != null)
-            {
-                Values[key] = value;
-            }
-            else
-            {
-                Values.Add(key, value);
             }
 
             // trigger property-changed event
@@ -189,6 +191,43 @@ namespace Delight
                 var assetObject = value as AssetObject;
                 isLoadingAsset = !assetObject.IsLoaded;
                 assetObject.RegisterReference(key);
+            }
+
+            if (!isLoadingAsset)
+            {
+                // trigger initial property changed on load
+                key.OnPropertyChanged(PropertyName);
+
+                // trigger asset change if asset
+                if (IsAssetType)
+                {
+                    OnAssetChanged(key);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when the dependency object has been loaded.
+        /// </summary>
+        public override async Task LoadAsync(DependencyObject key)
+        {
+            if (!IsAtomicBindableObjectType)
+                return;
+
+            // attach listeners
+            var value = GetValue(key);
+            if (value == null)
+                return;
+
+            AttachPropertyChangedHandler(key, value);
+
+            // register reference if its an asset object
+            bool isLoadingAsset = false;
+            if (IsAssetType)
+            {
+                var assetObject = value as AssetObject;                
+                await assetObject.RegisterReferenceAsync(key);
+                isLoadingAsset = !assetObject.IsLoaded;
             }
 
             if (!isLoadingAsset)
@@ -446,6 +485,14 @@ namespace Delight
         /// </summary>
         public virtual void Load(DependencyObject key)
         {
+        }
+
+        /// <summary>
+        /// Called when the dependency object has been loaded. Used e.g. by mapped dependency properties to propagate initial values.
+        /// </summary>
+        public virtual async Task LoadAsync(DependencyObject key)
+        {
+            await Task.FromResult(0); // just to prevent compiler warning
         }
 
         /// <summary>
