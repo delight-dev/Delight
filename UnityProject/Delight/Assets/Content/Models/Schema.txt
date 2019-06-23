@@ -17,6 +17,7 @@ int Score
 
 = Player 
 string Name
+Color Color
 Highscores
 Achievements
 

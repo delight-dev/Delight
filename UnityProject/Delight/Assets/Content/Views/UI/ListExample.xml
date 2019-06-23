@@ -1,0 +1,15 @@
+<ListExample xmlns="Delight" BasedOn="LayoutRoot" SomeParentProperty="t:string"
+             Players="t:BindableCollection[Player]">
+  <Group Orientation="Horizontal" Spacing="10">
+    <Group Spacing="10" Width="100">
+      <Button Text="Add" Click="Add" />
+      <Button Text="Remove" Click="Remove" />
+    </Group>
+
+    <List Id="PlayerList" Items="{player in Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" IsScrollable="True" Overflow="Wrap">
+      <ListItem Width="100" Height="100" BackgroundColor="{player.Color}">
+        <Label Text="{player.Name}" />
+      </ListItem>  
+    </List>
+  </Group> 
+</ListExample>

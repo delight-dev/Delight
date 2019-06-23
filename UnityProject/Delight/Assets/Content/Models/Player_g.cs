@@ -20,6 +20,13 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
+        private Color _color;
+        public Color Color
+        {
+            get { return _color; }
+            set { SetProperty(ref _color, value); }
+        }
+
         public BindableCollection<Highscore> Highscores
         {
             get { return Models.Highscores.Get(this); }
