@@ -1195,6 +1195,12 @@ namespace Delight.Editor.Parser
                 startIndex = 0;
             }
 
+            if (sourceType == null)
+            {
+                // might happen if binding to a new view which has no code generated for it yet
+                return null;
+            }
+
             // loop through each property and infer their type
             var bindableCollectionBase = typeof(BindableCollection);
             for (int i = startIndex; i < sourcePath.Count; ++i)
