@@ -127,6 +127,20 @@ namespace Delight
             set { ComboBoxList.Spacing = value; }
         }
 
+        public readonly static DependencyProperty HorizontalSpacingProperty = List.HorizontalSpacingProperty;
+        public Delight.ElementSize HorizontalSpacing
+        {
+            get { return ComboBoxList.HorizontalSpacing; }
+            set { ComboBoxList.HorizontalSpacing = value; }
+        }
+
+        public readonly static DependencyProperty VerticalSpacingProperty = List.VerticalSpacingProperty;
+        public Delight.ElementSize VerticalSpacing
+        {
+            get { return ComboBoxList.VerticalSpacing; }
+            set { ComboBoxList.VerticalSpacing = value; }
+        }
+
         public readonly static DependencyProperty ContentAlignmentProperty = List.ContentAlignmentProperty;
         public Delight.ElementAlignment ContentAlignment
         {

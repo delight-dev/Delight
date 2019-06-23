@@ -63,7 +63,7 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            ItemsChanged(); 
+            ItemsChanged();
         }
 
         /// <summary>
@@ -155,10 +155,6 @@ namespace Delight
             //{
             //    SelectItem(e.StartIndex);
             //}
-            //else if (e.ListChangeAction == ListChangeAction.Move)
-            //{
-            //    _updateVirtualization = true;
-            //}
 
             //if (ListChanged.HasEntries)
             //{
@@ -207,7 +203,7 @@ namespace Delight
                 for (int i = childCount; i < newItemsCount; ++i)
                 {
                     CreateItem(Items.Get(i));
-                }                
+                }
             }
             else if (newItemsCount < childCount)
             {
@@ -366,6 +362,25 @@ namespace Delight
             DisableLayoutUpdate = true;
 
             bool hasNewSize = false;
+            if (Overflow == OverflowMode.Overflow)
+            {
+                hasNewSize = UpdateLayoutOverflow();
+            }
+            else
+            {
+                hasNewSize = UpdateLayoutWrapped();
+            }
+
+            DisableLayoutUpdate = defaultDisableLayoutUpdate;
+            return base.UpdateLayout(notifyParent) || hasNewSize;
+        }
+
+        /// <summary>
+        /// Updates layout in overflowing lists (default).
+        /// </summary>
+        private bool UpdateLayoutOverflow()
+        {
+            bool hasNewSize = false;
             float maxWidth = 0f;
             float maxHeight = 0f;
             float totalWidth = 0f;
@@ -373,6 +388,7 @@ namespace Delight
             bool percentageWidth = false;
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
+
             List<UIView> children = new List<UIView>();
             Content.ForEach<UIView>(x =>
             {
@@ -380,7 +396,10 @@ namespace Delight
             }, false);
 
             // get size of content and set content offsets and alignment
-            var spacing = Spacing ?? ElementSize.Default;
+            var spacingSize = Spacing ?? ElementSize.Default;
+            var spacing = isHorizontal ? (HorizontalSpacing != null ? HorizontalSpacing.Pixels : spacingSize.Pixels)
+                 : (VerticalSpacing != null ? VerticalSpacing.Pixels : spacingSize.Pixels);
+
             int childCount = children.Count;
             int childIndex = 0;
             for (int i = 0; i < childCount; ++i)
@@ -420,8 +439,8 @@ namespace Delight
 
                 // set offsets and alignment
                 var offset = new ElementMargin(
-                    new ElementSize(isHorizontal ? totalWidth + spacing.Pixels * childIndex : 0f, ElementSizeUnit.Pixels),
-                    new ElementSize(!isHorizontal ? totalHeight + spacing.Pixels * childIndex : 0f, ElementSizeUnit.Pixels));
+                    new ElementSize(isHorizontal ? totalWidth + spacing * childIndex : 0f, ElementSizeUnit.Pixels),
+                    new ElementSize(!isHorizontal ? totalHeight + spacing * childIndex : 0f, ElementSizeUnit.Pixels));
 
                 // set desired alignment if it is valid for the orientation otherwise use defaults
                 var alignment = ElementAlignment.Center;
@@ -468,7 +487,7 @@ namespace Delight
             }
 
             // calculate total width and height
-            float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing.Pixels : 0f;
+            float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing : 0f;
 
             // .. add margins
             if (!percentageWidth)
@@ -493,28 +512,30 @@ namespace Delight
                 new ElementSize(1, ElementSizeUnit.Percents);
 
             // if width not specified, adjust width to content
-            if (WidthProperty.IsUndefined(this))
+            if (!IsScrollable)
             {
-                if (!newWidth.Equals(OverrideWidth))
+                if (WidthProperty.IsUndefined(this))
                 {
-                    OverrideWidth = newWidth;
-                    hasNewSize = true;
+                    if (!newWidth.Equals(OverrideWidth))
+                    {
+                        OverrideWidth = newWidth;
+                        hasNewSize = true;
+                    }
+                }
+
+                // if height not specified, adjust height to content
+                if (HeightProperty.IsUndefined(this))
+                {
+                    if (!newHeight.Equals(OverrideHeight))
+                    {
+                        OverrideHeight = newHeight;
+                        hasNewSize = true;
+                    }
                 }
             }
-
-            // if height not specified, adjust height to content
-            if (HeightProperty.IsUndefined(this))
+            else
             {
-                if (!newHeight.Equals(OverrideHeight))
-                {
-                    OverrideHeight = newHeight;
-                    hasNewSize = true;
-                }
-            }
-
-            // update size of content region
-            if (IsScrollable)
-            {
+                // update size of content region
                 if (!newWidth.Equals(ScrollableRegion.ContentRegion.Width) ||
                     !newHeight.Equals(ScrollableRegion.ContentRegion.Height))
                 {
@@ -532,8 +553,202 @@ namespace Delight
                 }
             }
 
-            DisableLayoutUpdate = defaultDisableLayoutUpdate;
-            return base.UpdateLayout(notifyParent) || hasNewSize;
+            return hasNewSize;
+        }
+
+        /// <summary>
+        /// Updates layout in wrapped lists.
+        /// </summary>
+        private bool UpdateLayoutWrapped()
+        {
+            bool hasNewSize = false;
+            float maxWidth = 0f;
+            float maxHeight = 0f;
+            bool isHorizontal = Orientation == ElementOrientation.Horizontal;
+            List<UIView> children = new List<UIView>();
+            Content.ForEach<UIView>(x =>
+            {
+                children.Add(x);
+            }, false);
+
+            // get size of content and set content offsets and alignment
+            var spacing = Spacing ?? ElementSize.Default;
+            var horizontalSpacing = HorizontalSpacing != null ? HorizontalSpacing.Pixels : spacing.Pixels;
+            var verticalSpacing = VerticalSpacing != null ? VerticalSpacing.Pixels : spacing.Pixels;
+            float xOffset = 0f;
+            float yOffset = 0f;
+            float maxColumnWidth = 0;
+            float maxRowHeight = 0;
+            int childCount = children.Count;
+            int childIndex = 0;
+            bool firstItem = true;
+
+            for (int i = 0; i < childCount; ++i)
+            {
+                var childView = children[i];
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
+
+                if (childWidth.Unit == ElementSizeUnit.Percents && isHorizontal)
+                {
+                    Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                    continue;
+                }
+
+                if (childHeight.Unit == ElementSizeUnit.Percents && !isHorizontal)
+                {
+                    Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                    continue;
+                }
+
+                bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
+                childView.DisableLayoutUpdate = true;
+                ElementMargin offset = null;
+
+                // set offsets and alignment
+                var alignment = ElementAlignment.TopLeft;
+                if (isHorizontal)
+                {
+                    // set offset on children flowing horizontally
+                    if (firstItem)
+                    {
+                        xOffset = 0;
+                        firstItem = false;
+                    }
+                    else if ((xOffset + childWidth + horizontalSpacing) > ActualWidth)
+                    {
+                        // item overflows to next row
+                        xOffset = 0;
+                        yOffset += maxRowHeight + verticalSpacing;
+                        maxRowHeight = 0;
+                    }
+                    else
+                    {
+                        // item continues on the same row
+                        xOffset += horizontalSpacing;
+                    }
+
+                    // set offsets
+                    offset = new ElementMargin(xOffset, yOffset);
+                    xOffset += childWidth;
+                    maxRowHeight = Mathf.Max(maxRowHeight, childHeight);
+                    maxWidth = Mathf.Max(maxWidth, xOffset);
+                    maxHeight = Mathf.Max(maxHeight, yOffset + childHeight);
+                }
+                else
+                {
+                    // set offset on children flowing vertically
+                    if (firstItem)
+                    {
+                        yOffset = 0;
+                        firstItem = false;
+                    }
+                    else if ((yOffset + childHeight + verticalSpacing) > ActualHeight)
+                    {
+                        // item overflows to next column
+                        yOffset = 0;
+                        xOffset += maxColumnWidth + horizontalSpacing;
+                        maxColumnWidth = 0;
+                    }
+                    else
+                    {
+                        // item continues on the same column
+                        yOffset += verticalSpacing;
+                    }
+
+                    // set offsets
+                    offset = new ElementMargin(xOffset, yOffset);
+                    yOffset += childHeight;
+                    maxColumnWidth = Mathf.Max(maxColumnWidth, childWidth);
+                    maxWidth = Mathf.Max(maxWidth, xOffset + childWidth);
+                    maxHeight = Mathf.Max(maxHeight, yOffset);
+                }
+
+                // update child layout if changed
+                if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                {
+                    childView.OffsetFromParent = offset;
+                    childView.Alignment = alignment;
+                    childView.UpdateLayout(false);
+                }
+
+                ++childIndex;
+                childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
+            }
+
+            var margin = Margin ?? ElementMargin.Default;
+
+            // adjust size to content
+            if (isHorizontal)
+            {
+                // add margins
+                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                var newHeight = new ElementSize(maxHeight);
+                if (IsScrollable)
+                {
+                    if (!newHeight.Equals(ScrollableRegion.ContentRegion.Height))
+                    {
+                        bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                        ScrollableRegion.ContentRegion.Height = newHeight;
+                        ScrollableRegion.UpdateLayout(false);
+                        ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
+                    }
+
+                    if (ScrollableRegionContentAlignmentProperty.IsUndefined(ScrollableRegion))
+                    {
+                        // adjust content alignment based on orientation
+                        ScrollableRegionContentAlignment = ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top;
+                    }
+                }
+                else
+                {
+                    // if height not specified, adjust height to content
+                    if (HeightProperty.IsUndefined(this))
+                    {
+                        if (!newHeight.Equals(OverrideHeight))
+                        {
+                            OverrideHeight = newHeight;
+                            hasNewSize = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // add margins
+                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+                var newWidth = new ElementSize(maxWidth);
+                if (IsScrollable)
+                {
+                    if (!newWidth.Equals(ScrollableRegion.ContentRegion.Width))
+                    {
+                        bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                        ScrollableRegion.ContentRegion.Width = newWidth;
+                        ScrollableRegion.UpdateLayout(false);
+                        ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
+                    }
+
+                    if (ScrollableRegionContentAlignmentProperty.IsUndefined(ScrollableRegion))
+                    {
+                        // adjust content alignment based on orientation
+                        ScrollableRegionContentAlignment = ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top;
+                    }
+                }
+                else
+                {
+                    // if height not specified, adjust height to content
+                    if (WidthProperty.IsUndefined(this))
+                    {
+                        if (!newWidth.Equals(OverrideWidth))
+                        {
+                            OverrideWidth = newWidth;
+                            hasNewSize = true;
+                        }
+                    }
+                }
+            }
+
+            return hasNewSize;
         }
 
         /// <summary>

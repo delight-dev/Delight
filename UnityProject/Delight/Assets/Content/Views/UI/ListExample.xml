@@ -1,4 +1,4 @@
-<ListExample xmlns="Delight" BasedOn="LayoutRoot" SomeParentProperty="t:string"
+<ListExample BasedOn="LayoutRoot" xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
              Players="t:BindableCollection[Player]">
   <Group Orientation="Horizontal" Spacing="10">
     <Group Spacing="10" Width="100">
@@ -6,10 +6,12 @@
       <Button Text="Remove" Click="Remove" />
     </Group>
 
-    <List Id="PlayerList" Items="{player in Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" IsScrollable="True" Overflow="Wrap">
-      <ListItem Width="100" Height="100" BackgroundColor="{player.Color}">
-        <Label Text="{player.Name}" />
-      </ListItem>  
+    <List Id="PlayerList" Items="{player in Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" 
+          IsScrollable="True" Overflow="Wrap" Orientation="Horizontal">
+      <ListItem Width="100" Height="100"> 
+        <Image Color="{player.Color}" Margin="5" />
+        <Label Text="{player.Name}" AutoSize="True" />
+      </ListItem>   
     </List>
   </Group> 
 </ListExample>
