@@ -1,20 +1,16 @@
-﻿#if DELIGHT_MODULE_TEXTMESHPRO
+#if !DELIGHT_MODULE_TEXTMESHPRO
 
+// Internal view logic generated from "InputField.xml"
 #region Using Statements
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
 
 namespace Delight
 {
-    /// <summary>
-    /// Input field view.
-    /// </summary>
     public partial class InputField
     {
         #region Methods
@@ -42,7 +38,7 @@ namespace Delight
                 return;
             base.BeforeLoad();
 
-            TMP_InputFieldComponent = GameObject.AddComponent<TMPro.TMP_InputField>();
+            InputFieldComponent = GameObject.AddComponent<UnityEngine.UI.InputField>();
         }
 
         /// <summary>
@@ -55,10 +51,9 @@ namespace Delight
             base.AfterChildrenLoaded();
 
             // set default values
-            TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI;
-            TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
-            TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
-            TMP_InputFieldComponent.transition = Selectable.Transition.None;
+            InputFieldComponent.textComponent = InputText.TextComponent;
+            InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
+            InputFieldComponent.transition = Selectable.Transition.None;
         }
 
         /// <summary>
@@ -69,19 +64,16 @@ namespace Delight
             if (IgnoreObject)
                 return;
             base.AfterLoad();
-            
+
             // hook up input field event system triggers
-            TMP_InputFieldComponent.onEndEdit.RemoveAllListeners();
-            TMP_InputFieldComponent.onEndEdit.AddListener(TMProInputFieldEndEdit);
+            InputFieldComponent.onEndEdit.RemoveAllListeners();
+            InputFieldComponent.onEndEdit.AddListener(InputFieldEndEdit);
 
-            TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
-            TMP_InputFieldComponent.onValueChanged.AddListener(TMProInputFieldValueChanged);
-
+            InputFieldComponent.onValueChanged.RemoveAllListeners();
+            InputFieldComponent.onValueChanged.AddListener(InputFieldValueChanged);
+             
             // set initial text
             TextChanged();
-
-            // workaround for textmeshpro issue where caret was not being spawned
-            typeof(TMP_InputField).GetMethod("OnEnable", BindingFlags.NonPublic | BindingFlags.Instance).Invoke(TMP_InputFieldComponent, null);
         }
 
         /// <summary>
@@ -91,52 +83,50 @@ namespace Delight
         {
             if (OnlyTriggerValueChangedFromUI)
             {
-                TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
-            }
+                InputFieldComponent.onValueChanged.RemoveAllListeners();
+            }           
 
-            TMP_InputFieldComponent.text = Text ?? String.Empty;
-            
             if (OnlyTriggerValueChangedFromUI)
             {
-                TMP_InputFieldComponent.onValueChanged.AddListener(TMProInputFieldValueChanged);
-                TMProUpdatePlaceholder();
+                InputFieldComponent.onValueChanged.AddListener(InputFieldValueChanged);
+                UpdatePlaceholder();
             }
         }
 
         /// <summary>
         /// Called on input field end edit.
         /// </summary>
-        public void TMProInputFieldEndEdit(string value)
+        public void InputFieldEndEdit(string value)
         {
             if (SetValueOnEndEdit)
             {
                 TextChanged();
             }
 
-            TMProUpdatePlaceholder();
+            UpdatePlaceholder();
             EndEdit?.Invoke(this, null);
         }
 
         /// <summary>
         /// Called when input field value has been updated.
         /// </summary>
-        public void TMProInputFieldValueChanged(string value)
+        public void InputFieldValueChanged(string value)
         {
             if (!SetValueOnEndEdit)
             {
                 TextChanged();
             }
 
-            TMProUpdatePlaceholder();
+            UpdatePlaceholder();
             ValueChanged?.Invoke(this, null);
         }
 
         /// <summary>
         /// Shows or hides placeholder based on text.
         /// </summary>
-        private void TMProUpdatePlaceholder()
+        private void UpdatePlaceholder()
         {
-            if (String.IsNullOrEmpty(TMP_InputFieldComponent.text))
+            if (String.IsNullOrEmpty(InputFieldComponent.text))
             {
                 InputFieldPlaceholder.IsActive = true;
             }
