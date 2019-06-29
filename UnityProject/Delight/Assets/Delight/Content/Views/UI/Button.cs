@@ -45,12 +45,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(ToggleValue):
@@ -109,6 +106,9 @@ namespace Delight
                 Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
                 Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
             }
+
+            // disable label if no text is shown 
+            Label.IsActive = !String.IsNullOrEmpty(Label.Text);
         }
 
         /// <summary>
@@ -160,15 +160,21 @@ namespace Delight
                 return;
             base.AfterLoad();
 
-            if (AutoSize != AutoSize.None)
-            {
-                // adjust size initially to text
-                TextChanged();
-            }
+            // adjust size initially to text
+            TextChanged();
 
             if (IsToggleButton)
             {
                 ToggleValueChanged();
+            }
+
+            if (ImageComponent == null)
+            {
+                // provide raycast target so transparent clicks are tracked
+                if (GameObject?.GetComponent<RaycastTargetGraphic>() == null)
+                {
+                    GameObject?.AddComponent<RaycastTargetGraphic>();
+                }                
             }
         }
 

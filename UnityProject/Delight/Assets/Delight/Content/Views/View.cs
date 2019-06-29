@@ -125,6 +125,26 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called when a property has been changed.
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            base.OnPropertyChanged(source, property);
+            if(!IsLoaded)
+                return;
+
+            // call OnChanged if the view is loaded
+            OnChanged(property);
+        }
+
+        /// <summary>
+        /// Called when a property has been changed.
+        /// </summary>
+        public virtual void OnChanged(string property)
+        {
+        }
+
+        /// <summary>
         /// Called once in the object's lifetime before construction of children and before load.
         /// </summary>
         protected virtual void BeforeInitialize()
@@ -165,7 +185,10 @@ namespace Delight
 
             await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
 
+            _isLoaded = true;
             AfterChildrenLoaded();
+            Initialize();
+
             if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
                 await LoadDependencyPropertiesAsync();
@@ -177,10 +200,8 @@ namespace Delight
             UpdateBindings();
 
             _initializer?.Invoke(this);
-            _isLoaded = true;
 
             AfterLoad();
-            Initialize();
 
             Loaded?.Invoke(this);
         }
@@ -215,15 +236,16 @@ namespace Delight
                 child.LoadInternal(false);
             }
 
+            _isLoaded = true;
             AfterChildrenLoaded();
+            Initialize();
+
             LoadDependencyProperties();
             UpdateBindings();
 
             _initializer?.Invoke(this);
-            _isLoaded = true;
 
             AfterLoad();
-            Initialize();
 
             Loaded?.Invoke(this);
         }
@@ -473,32 +495,65 @@ namespace Delight
 
             if (paramGetters.Length > 0)
             {
-                switch (paramGetters.Length)
+                // check if first parameter is a reference to the sender or view action
+                if (typeof(View).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
                 {
-                    case 1:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0]() });
-                    case 2:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1]() });
-                    case 3:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2]() });
-                    case 4:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
-                    case 5:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
-                    case 6:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
-                    case 7:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
-                    case 8:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
-                    case 9:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
-                    case 10:
-                        return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
-                    default:
-                        Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
-                        return (x, y) => { };
-                }                
+                    switch (paramGetters.Length)
+                    {
+                        case 1:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0]() });
+                        case 2:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1]() });
+                        case 3:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2]() });
+                        case 4:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
+                        case 5:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
+                        case 6:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
+                        case 7:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
+                        case 8:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
+                        case 9:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
+                        case 10:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
+                        default:
+                            Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            return (x, y) => { };
+                    }
+                }
+                else
+                {
+                    switch (paramGetters.Length)
+                    {
+                        case 1:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0]() });
+                        case 2:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1]() });
+                        case 3:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2]() });
+                        case 4:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
+                        case 5:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
+                        case 6:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
+                        case 7:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
+                        case 8:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
+                        case 9:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
+                        case 10:
+                            return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
+                        default:
+                            Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            return (x, y) => { };
+                    }
+                }
             }
 
             if (parameterCount == 1)

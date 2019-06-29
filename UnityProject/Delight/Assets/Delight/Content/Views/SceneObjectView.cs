@@ -37,6 +37,18 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called when a property has been changed.
+        /// </summary>
+        public override void OnPropertyChanged(object source, string property)
+        {
+            base.OnPropertyChanged(source, property);
+            if (!IsLoaded || IgnoreObject)
+                return;
+
+            OnChanged(property);
+        }
+
+        /// <summary>
         /// Called before the view is loaded.
         /// </summary>
         protected override void BeforeLoad()
@@ -116,12 +128,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(IsActive):
@@ -149,6 +158,13 @@ namespace Delight
         /// Called when the script instance is being enabled if EnableScriptEvents is true.
         /// </summary>
         public virtual void Start()
+        {
+        }
+
+        /// <summary>
+        /// Called when the script instance is being enabled if EnableScriptEvents is true.
+        /// </summary>
+        public virtual void OnEnable()
         {
         }
 
@@ -195,6 +211,30 @@ namespace Delight
         public Coroutine StartCoroutine(IEnumerator routine)
         {
             return UnityScript?.StartCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Stops a coroutine.
+        /// </summary>
+        public void StopCoroutine(string methodName)
+        {
+            UnityScript?.StopCoroutine(methodName);
+        }
+
+        /// <summary>
+        /// Stops a coroutine.
+        /// </summary>
+        public void StopCoroutine(IEnumerator routine)
+        {
+            UnityScript?.StopCoroutine(routine);
+        }
+
+        /// <summary>
+        /// Stops a coroutine.
+        /// </summary>
+        public void StopCoroutine(Coroutine coroutine)
+        {
+            UnityScript?.StopCoroutine(coroutine);
         }
 
         /// <summary>
@@ -266,6 +306,17 @@ namespace Delight
         {
             yield return new WaitForSeconds(0);
             SceneObjectView?.Start();
+        }
+
+        public void OnEnable()
+        {
+            StartCoroutine( OnEnableCoroutine() );
+        }
+
+        public IEnumerator OnEnableCoroutine()
+        {
+            yield return new WaitForSeconds( 0 );
+            SceneObjectView?.OnEnable();
         }
 
         public void Update()

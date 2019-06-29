@@ -184,6 +184,12 @@ namespace Delight
                     }
                 }
             }
+            else if (OverrideWidth != null && !OverrideWidth.Equals(Width))
+            {
+                // clear override
+                OverrideWidth = null;
+                hasNewSize = true;
+            }
 
             // adjust height to content
             if (HeightProperty.IsUndefined(this))
@@ -214,7 +220,13 @@ namespace Delight
                     }
                 }
             }
-                       
+            else if (OverrideHeight != null && !OverrideHeight.Equals(Height))
+            {
+                // clear override
+                OverrideHeight = null;
+                hasNewSize = true;
+            }
+
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
 
             return base.UpdateLayout(notifyParent) || hasNewSize; 

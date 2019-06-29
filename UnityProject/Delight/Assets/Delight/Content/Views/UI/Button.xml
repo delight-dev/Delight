@@ -8,7 +8,8 @@
         AutoSize="t:AutoSize"
         TextOffset="t:ElementMargin = 0"
         IsCloseButton="t:bool"
-        IsBackButton="t:bool"> 
+        IsBackButton="t:bool"
+        > 
   <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" Offset="{TextOffset}" /> 
 </Button>
 

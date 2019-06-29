@@ -141,6 +141,13 @@ namespace Delight
             set { ComboBoxList.VerticalSpacing = value; }
         }
 
+        public readonly static DependencyProperty PaddingProperty = List.PaddingProperty;
+        public Delight.ElementMargin Padding
+        {
+            get { return ComboBoxList.Padding; }
+            set { ComboBoxList.Padding = value; }
+        }
+
         public readonly static DependencyProperty ContentAlignmentProperty = List.ContentAlignmentProperty;
         public Delight.ElementAlignment ContentAlignment
         {

@@ -35,6 +35,7 @@ namespace Delight
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(HorizontalSpacingProperty);
             dependencyProperties.Add(VerticalSpacingProperty);
+            dependencyProperties.Add(PaddingProperty);
             dependencyProperties.Add(ContentAlignmentProperty);
             dependencyProperties.Add(AlternateItemsProperty);
             dependencyProperties.Add(IsScrollableProperty);
@@ -83,6 +84,13 @@ namespace Delight
         {
             get { return VerticalSpacingProperty.GetValue(this); }
             set { VerticalSpacingProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementMargin> PaddingProperty = new DependencyProperty<Delight.ElementMargin>("Padding");
+        public Delight.ElementMargin Padding
+        {
+            get { return PaddingProperty.GetValue(this); }
+            set { PaddingProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> ContentAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("ContentAlignment");

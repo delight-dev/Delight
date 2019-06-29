@@ -1,4 +1,4 @@
-#region Using Statements
+﻿#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -23,12 +23,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(Orientation):
@@ -86,6 +83,9 @@ namespace Delight
         /// </summary>
         private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
+            if( !IsLoaded )
+                return;
+
             // Debug.Log("Collection changed");
             bool updateLayout = false;
             if (e.ChangeAction == CollectionChangeAction.Batch)
@@ -488,22 +488,22 @@ namespace Delight
 
             // calculate total width and height
             float totalSpacing = childCount > 1 ? (childIndex - 1) * spacing : 0f;
+            var padding = Padding ?? ElementMargin.Default;
+            var margin = Margin ?? ElementMargin.Default;
 
             // .. add margins
             if (!percentageWidth)
-            {
-                var margin = Margin ?? ElementMargin.Default;
+            {                
                 totalWidth += isHorizontal ? totalSpacing : 0f;
-                totalWidth += margin.Left.Pixels + margin.Right.Pixels;
-                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+                totalWidth += margin.Left.Pixels + margin.Right.Pixels + padding.Left.Pixels + padding.Right.Pixels;
+                maxWidth += margin.Left.Pixels + margin.Right.Pixels + padding.Left.Pixels + padding.Right.Pixels;
             }
 
             if (!percentageHeight)
             {
-                var margin = Margin ?? ElementMargin.Default;
                 totalHeight += !isHorizontal ? totalSpacing : 0f;
-                totalHeight += margin.Top.Pixels + margin.Bottom.Pixels;
-                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                totalHeight += margin.Top.Pixels + margin.Bottom.Pixels + padding.Top.Pixels + padding.Bottom.Pixels;
+                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels + padding.Top.Pixels + padding.Bottom.Pixels;
             }
 
             var newWidth = !percentageWidth ? new ElementSize(isHorizontal ? totalWidth : maxWidth, ElementSizeUnit.Pixels) :
@@ -522,6 +522,12 @@ namespace Delight
                         hasNewSize = true;
                     }
                 }
+                else if (OverrideWidth != null && !OverrideWidth.Equals(Width))
+                {
+                    // clear override
+                    OverrideWidth = null;
+                    hasNewSize = true;
+                }
 
                 // if height not specified, adjust height to content
                 if (HeightProperty.IsUndefined(this))
@@ -531,6 +537,12 @@ namespace Delight
                         OverrideHeight = newHeight;
                         hasNewSize = true;
                     }
+                }
+                else if (OverrideHeight != null && !OverrideHeight.Equals(Height))
+                {
+                    // clear override
+                    OverrideHeight = null;
+                    hasNewSize = true;
                 }
             }
             else
@@ -676,13 +688,14 @@ namespace Delight
                 childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
             }
 
+            var padding = Padding ?? ElementMargin.Default;
             var margin = Margin ?? ElementMargin.Default;
 
             // adjust size to content
             if (isHorizontal)
             {
                 // add margins
-                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels + padding.Top.Pixels + padding.Bottom.Pixels;
                 var newHeight = new ElementSize(maxHeight);
                 if (IsScrollable)
                 {
@@ -711,12 +724,20 @@ namespace Delight
                             hasNewSize = true;
                         }
                     }
+                    else
+                    {
+                        if (!Height.Equals(OverrideHeight))
+                        {
+                            OverrideHeight = Height;
+                            hasNewSize = true;
+                        }
+                    }
                 }
             }
             else
             {
                 // add margins
-                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+                maxWidth += margin.Left.Pixels + margin.Right.Pixels + padding.Left.Pixels + padding.Right.Pixels;
                 var newWidth = new ElementSize(maxWidth);
                 if (IsScrollable)
                 {
@@ -745,10 +766,29 @@ namespace Delight
                             hasNewSize = true;
                         }
                     }
+                    else
+                    {
+                        if (!Width.Equals(OverrideWidth))
+                        {
+                            OverrideWidth = Width;
+                            hasNewSize = true;
+                        }
+                    }
                 }
             }
 
             return hasNewSize;
+        }
+
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
+        public void SelectItem(BindableObject item, bool triggeredByClick = false)
+        {
+            if(_presentedItems.TryGetValue(item, out var listItem))
+            {
+                SelectItem(listItem);
+            }
         }
 
         /// <summary>

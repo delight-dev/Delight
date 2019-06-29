@@ -14,12 +14,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(Color):
@@ -52,7 +49,7 @@ namespace Delight
             base.AfterLoad();
 
             // enable to have fonts pop in instead
-            if (this.LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
                 if (Sprite != null && !Sprite.IsLoaded)
                 {
@@ -80,7 +77,7 @@ namespace Delight
 
             // uncomment for tracking sprite sets
             //var spriteInfo = Sprite == null ? "null" : String.Format("{0} (IsLoaded: {1})", Sprite.Id, Sprite.IsLoaded);
-            //Debug.Log(String.Format("#Delight# {0}: Setting Sprite = {1}", Name, spriteInfo));
+            //Debugger.Info(String.Format("{0}: Setting Sprite = {1}", Name, spriteInfo), LogCategory.Delight);
 
             var sprite = Sprite?.UnityObject;
             if (sprite != null && ImageComponent == null)

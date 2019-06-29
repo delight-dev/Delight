@@ -1,6 +1,6 @@
 <List xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
       BasedOn="Collection" Orientation="t:ElementOrientation" 
-      Spacing="t:ElementSize" HorizontalSpacing="t:ElementSize" VerticalSpacing="t:ElementSize"
+      Spacing="t:ElementSize" HorizontalSpacing="t:ElementSize" VerticalSpacing="t:ElementSize" Padding="t:ElementMargin"
       ContentAlignment="t:ElementAlignment" 
       HasContentTemplate="True" ContentTemplateType="ListItem"
       AlternateItems="t:bool"

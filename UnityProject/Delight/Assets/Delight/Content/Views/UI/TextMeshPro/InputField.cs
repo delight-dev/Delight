@@ -1,4 +1,4 @@
-#if DELIGHT_MODULE_TEXTMESHPRO
+﻿#if DELIGHT_MODULE_TEXTMESHPRO
 
 #region Using Statements
 using System;
@@ -22,12 +22,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(Text):
@@ -51,18 +48,18 @@ namespace Delight
         /// <summary>
         /// Called just after the children are loaded, but before dependency properties are loaded.
         /// </summary>
-        protected override void AfterChildrenLoaded()
-        {
-            if (IgnoreObject)
-                return;
-            base.AfterChildrenLoaded();
+        //protected override void AfterChildrenLoaded() // TODO fix
+        //{
+        //    if (IgnoreObject)
+        //        return;
+        //    base.AfterChildrenLoaded();
 
-            // set default values
-            //TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI; // TODO fix
-            TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
-            TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
-            TMP_InputFieldComponent.transition = Selectable.Transition.None;
-        }
+        //    // set default values
+        //    TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI;
+        //    TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
+        //    TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
+        //    TMP_InputFieldComponent.transition = Selectable.Transition.None;
+        //}
 
         /// <summary>
         /// Called after the view is loaded.

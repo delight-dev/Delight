@@ -114,12 +114,10 @@ namespace Delight
             ActiveView = view as SceneObjectView;
             if (ActiveView == null)
                 return;
-            
-            if (SwitchMode == SwitchMode.Load)
-            {
-                await ActiveView.LoadAsync();
-                ActiveView.IsActive = true;
-            }
+
+            // load/activate view
+            await ActiveView.LoadAsync();
+            ActiveView.IsActive = true;
         }
 
         #endregion

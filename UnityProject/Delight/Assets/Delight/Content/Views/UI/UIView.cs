@@ -1,4 +1,4 @@
-#region Using Statements
+﻿#region Using Statements
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -79,12 +79,9 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnPropertyChanged(object source, string property)
+        public override void OnChanged(string property)
         {
-            if (IgnoreObject)
-                return;
-
-            base.OnPropertyChanged(source, property);
+            base.OnChanged(property);
             switch (property)
             {
                 case nameof(Width):
