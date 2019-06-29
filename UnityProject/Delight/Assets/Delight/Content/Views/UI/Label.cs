@@ -66,6 +66,13 @@ namespace Delight
 
             if (AutoSize != AutoSize.None)
             {
+                // add content size fitter
+                var contentSizeFitter = GameObject.AddComponent<ContentSizeFitter>();
+                if (AutoSize == AutoSize.Width || AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.True)
+                {
+                    contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+                }
+
                 // adjust size initially to text
                 TextChanged();
             }
@@ -100,6 +107,8 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public ContentSizeFitter ContentSizeFitter { get; set; }
 
         public float PreferredWidth
         {

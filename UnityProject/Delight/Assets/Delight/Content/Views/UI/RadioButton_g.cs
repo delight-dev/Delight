@@ -416,6 +416,20 @@ namespace Delight
             set { RadioButtonLabel.AutoSize = value; }
         }
 
+        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
+        public System.String OverflowMode
+        {
+            get { return RadioButtonLabel.OverflowMode; }
+            set { RadioButtonLabel.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
+        public System.Boolean ExtraPadding
+        {
+            get { return RadioButtonLabel.ExtraPadding; }
+            set { RadioButtonLabel.ExtraPadding = value; }
+        }
+
         public readonly static DependencyProperty FontProperty = Label.FontProperty;
         public FontAsset Font
         {

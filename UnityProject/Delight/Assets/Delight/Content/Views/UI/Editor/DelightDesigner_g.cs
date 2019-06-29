@@ -437,6 +437,8 @@ namespace Delight
                     _delightDesignerImage1.Name = "DelightDesignerImage1";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_delightDesignerImage1, new UnityEngine.Color(0.2470588f, 0.2470588f, 0.2392157f, 1f));
+                    Delight.Image.WidthProperty.SetDefault(_delightDesignerImage1, new ElementSize(1f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_delightDesignerImage1, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _delightDesignerImage1;
             }
@@ -458,6 +460,8 @@ namespace Delight
                     _delightDesignerImage2.Name = "DelightDesignerImage2";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_delightDesignerImage2, new UnityEngine.Color(0.2470588f, 0.2470588f, 0.2392157f, 1f));
+                    Delight.Image.WidthProperty.SetDefault(_delightDesignerImage2, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_delightDesignerImage2, new ElementSize(1f, ElementSizeUnit.Pixels));
                 }
                 return _delightDesignerImage2;
             }
@@ -955,6 +959,8 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(240f, ElementSizeUnit.Pixels));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, "Ellipsis");
+                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
                     Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
                     Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
                 }

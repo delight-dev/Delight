@@ -201,6 +201,7 @@ namespace Delight.Editor.Parser
             }
 
             CodeGenerator.GenerateViewCode();
+            CodeGenerator.GenerateScenes();
 
             if (_contentObjectModel.AssetsNeedUpdate)
             {
@@ -246,12 +247,17 @@ namespace Delight.Editor.Parser
                 return;
             }
 
+            // files are parsed in order style -> scene -> view
             if (xumlFile.ContentType == XmlContentType.View)
             {
                 ParseViewXml(xumlFile, rootXmlElement);
             }
-            else if (xumlFile.ContentType == XmlContentType.Style)
+            else if (xumlFile.ContentType == XmlContentType.Scene)
             {
+                ParseSceneXml(xumlFile, rootXmlElement);
+            }
+            else if (xumlFile.ContentType == XmlContentType.Style)
+            {               
                 ParseStyleXml(xumlFile, rootXmlElement);
             }
             else
@@ -397,6 +403,47 @@ namespace Delight.Editor.Parser
 
             viewObject.PropertyExpressions.AddRange(propertyExpressions);
             viewObject.ViewDeclarations.AddRange(viewDeclarations);
+        }
+
+        /// <summary>
+        /// Parses scene XML.
+        /// </summary>
+        private static void ParseSceneXml(XmlFile xumlFile, XElement rootXmlElement)
+        {
+            _currentXmlFile = xumlFile;
+            var config = MasterConfig.GetInstance();
+            var sceneName = rootXmlElement.Name.LocalName;
+            var module = rootXmlElement.Attribute("Module")?.Value;
+
+            // if the scene is in a module ignore it if the module isn't active
+            if (!String.IsNullOrEmpty(module))
+            {
+                if (module.StartsWith("!"))
+                {
+                    if (config.Modules.Any(x => x == module.Substring(1)))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (!config.Modules.Any(x => x == module))
+                    {
+                        return;
+                    }
+                }
+            }
+
+            var sceneObject = _contentObjectModel.LoadSceneObject(sceneName);
+
+            // clear view object 
+            sceneObject.Clear();
+            sceneObject.Name = sceneName;
+            sceneObject.FilePath = xumlFile.Path;
+            sceneObject.NeedUpdate = true;
+
+            // parse scene view
+            ParseViewXml(xumlFile, rootXmlElement);
         }
 
         /// <summary>

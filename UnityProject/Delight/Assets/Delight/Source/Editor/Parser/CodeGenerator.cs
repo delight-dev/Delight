@@ -12,6 +12,7 @@ using System.Xml;
 using Delight.Editor;
 using UnityEngine;
 using System.Xml.Serialization;
+using UnityEditor.SceneManagement;
 #endregion
 
 namespace Delight.Editor.Parser
@@ -1043,7 +1044,7 @@ namespace Delight.Editor.Parser
                                 var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemType);
                                 sourcePath = sourcePath.Skip(2).ToList();
                                 sourcePath.Insert(0, castItemRef);
-                                
+
                                 for (int i = 0; i < sourceGetters.Count; ++i)
                                 {
                                     // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
@@ -1630,9 +1631,60 @@ namespace Delight.Editor.Parser
             public PropertyBinding ItemIdDeclaration;
         }
 
-#endregion
+        #endregion
 
-                #region Assets
+        #region Scenes
+
+        /// <summary>
+        /// Generates view code from object model.
+        /// </summary>
+        public static void GenerateScenes()
+        {
+            var config = MasterConfig.GetInstance();
+
+            var sceneObjects = _contentObjectModel.SceneObjects.ToList();
+            string sceneTemplatePath = String.Format("{0}/{1}Delight/Content{2}SceneTemplate.unity", Application.dataPath, config.DelightPath, ContentParser.ScenesFolder);
+
+            // update all scene objects that are changed            
+            foreach (var sceneObject in sceneObjects)
+            {
+                if (!sceneObject.NeedUpdate)
+                    continue;
+
+                sceneObject.NeedUpdate = false;
+
+                // check if scene file exists
+                var sceneFile = sceneObject.FilePath.Replace(".xml", ".unity");
+                if (File.Exists(sceneFile))
+                    continue;
+
+                // load scene template
+                var sceneTemplate = EditorSceneManager.OpenScene(sceneTemplatePath, OpenSceneMode.Additive);
+
+                // set view presenter to load scene view object
+                foreach (var gameObject in sceneTemplate.GetRootGameObjects())
+                {
+                    if (gameObject.name == "Delight")
+                    {
+                        var viewPresenter = gameObject.GetComponent<ViewPresenter>();
+                        if (viewPresenter == null)
+                            continue;
+
+                        // TODO allow user to specify load mode 
+                        //viewPresenter.LoadMode = ...
+                        viewPresenter.ViewTypeName = sceneObject.Name;
+                    }
+                }
+
+
+                EditorSceneManager.SaveScene(sceneTemplate, sceneFile, true);
+                EditorSceneManager.CloseScene(sceneTemplate, true);
+            }
+        }
+
+        #endregion
+
+        #region Assets
 
         /// <summary>
         /// Generates asset code. 
@@ -1806,9 +1858,9 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-                #endregion
+        #endregion
 
-                #region Models
+        #region Models
 
         /// <summary>
         /// Generates model code.
@@ -2295,9 +2347,9 @@ namespace Delight.Editor.Parser
             //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
         }
 
-                #endregion
+        #endregion
 
-                #region Config
+        #region Config
 
         /// <summary>
         /// Generates model code.
@@ -2354,7 +2406,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-                #endregion
+        #endregion
     }
 }
 

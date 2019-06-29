@@ -193,6 +193,20 @@ namespace Delight
             set { Label.AutoSize = value; }
         }
 
+        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
+        public System.String OverflowMode
+        {
+            get { return Label.OverflowMode; }
+            set { Label.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
+        public System.Boolean ExtraPadding
+        {
+            get { return Label.ExtraPadding; }
+            set { Label.ExtraPadding = value; }
+        }
+
         public readonly static DependencyProperty FontProperty = Label.FontProperty;
         public FontAsset Font
         {

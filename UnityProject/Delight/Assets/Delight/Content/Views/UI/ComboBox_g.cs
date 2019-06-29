@@ -1079,6 +1079,20 @@ namespace Delight
             set { ComboBoxButton.LabelAutoSize = value; }
         }
 
+        public readonly static DependencyProperty ButtonOverflowModeProperty = Button.OverflowModeProperty;
+        public System.String ButtonOverflowMode
+        {
+            get { return ComboBoxButton.OverflowMode; }
+            set { ComboBoxButton.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty ButtonExtraPaddingProperty = Button.ExtraPaddingProperty;
+        public System.Boolean ButtonExtraPadding
+        {
+            get { return ComboBoxButton.ExtraPadding; }
+            set { ComboBoxButton.ExtraPadding = value; }
+        }
+
         public readonly static DependencyProperty ButtonFontProperty = Button.FontProperty;
         public FontAsset ButtonFont
         {

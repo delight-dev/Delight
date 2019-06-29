@@ -34,6 +34,8 @@ namespace Delight
             dependencyProperties.Add(TextAlignmentProperty);
             dependencyProperties.Add(EnableWordWrappingProperty);
             dependencyProperties.Add(AutoSizeProperty);
+            dependencyProperties.Add(OverflowModeProperty);
+            dependencyProperties.Add(ExtraPaddingProperty);
             dependencyProperties.Add(FontProperty);
             dependencyProperties.Add(TextProperty);
             dependencyProperties.Add(SupportRichTextProperty);
@@ -84,6 +86,20 @@ namespace Delight
         {
             get { return AutoSizeProperty.GetValue(this); }
             set { AutoSizeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.String> OverflowModeProperty = new DependencyProperty<System.String>("OverflowMode");
+        public System.String OverflowMode
+        {
+            get { return OverflowModeProperty.GetValue(this); }
+            set { OverflowModeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> ExtraPaddingProperty = new DependencyProperty<System.Boolean>("ExtraPadding");
+        public System.Boolean ExtraPadding
+        {
+            get { return ExtraPaddingProperty.GetValue(this); }
+            set { ExtraPaddingProperty.SetValue(this, value); }
         }
 
         public readonly static MappedAssetDependencyProperty<FontAsset, UnityEngine.UI.Text, Label> FontProperty = new MappedAssetDependencyProperty<FontAsset, UnityEngine.UI.Text, Label>("Font", x => x.TextComponent, (x, y) => x.font = y?.UnityObject);
@@ -245,7 +261,7 @@ namespace Delight
                     _label.Name = "Label";
 #endif
                     Delight.Label.TextAlignmentProperty.SetDefault(_label, Delight.ElementAlignment.Left);
-                    Delight.Label.WidthProperty.SetDefault(_label, new ElementSize(120f, ElementSizeUnit.Pixels));
+                    Delight.Label.WidthProperty.SetDefault(_label, new ElementSize(180f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Label.FontColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24);

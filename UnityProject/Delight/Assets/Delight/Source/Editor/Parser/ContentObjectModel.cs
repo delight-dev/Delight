@@ -46,10 +46,14 @@ namespace Delight.Editor.Parser
         [ProtoMember(7, AsReference = true)]
         public List<AssetType> AssetTypes;
 
+        [ProtoMember(8, AsReference = true)]
+        public List<SceneObject> SceneObjects;
+
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, StyleObject> _styleObjects;
         private Dictionary<string, AssetType> _assetTypes;
+        private Dictionary<string, SceneObject> _sceneObjects;
         private static ContentObjectModel _contentObjectModel;
 
         #endregion
@@ -64,6 +68,7 @@ namespace Delight.Editor.Parser
             ViewObjects = new List<ViewObject>();
             ModelObjects = new List<ModelObject>();
             StyleObjects = new List<StyleObject>();
+            SceneObjects = new List<SceneObject>();
             AssetBundleObjects = new List<AssetBundleObject>();
             AssetTypes = new List<AssetType>();
         }
@@ -97,6 +102,32 @@ namespace Delight.Editor.Parser
             ViewObjects.Add(viewObject);
             _viewObjects.Add(viewName, viewObject);
             return viewObject;
+        }
+
+        /// <summary>
+        /// Loads specified scene object, creates new one if it doesn't exist.
+        /// </summary>
+        public SceneObject LoadSceneObject(string sceneName)
+        {
+            if (_sceneObjects == null)
+            {
+                _sceneObjects = new Dictionary<string, SceneObject>();
+                foreach (var item in SceneObjects)
+                {
+                    _sceneObjects.Add(item.Name, item);
+                }
+            }
+
+            if (_sceneObjects.TryGetValue(sceneName, out var sceneObject))
+            {
+                return sceneObject;
+            }
+
+            // create new view object if it doesn't exist
+            sceneObject = new SceneObject { Name = sceneName };
+            SceneObjects.Add(sceneObject);
+            _sceneObjects.Add(sceneName, sceneObject);
+            return sceneObject;
         }
 
         /// <summary>
@@ -262,8 +293,10 @@ namespace Delight.Editor.Parser
         {
             ViewObjects = new List<ViewObject>();
             StyleObjects = new List<StyleObject>();
+            SceneObjects = new List<SceneObject>();
             _viewObjects = null;
             _styleObjects = null;
+            _sceneObjects = null;
         }
 
         /// <summary>
@@ -1028,6 +1061,53 @@ namespace Delight.Editor.Parser
         View = 3,
         UnityComponent = 4,
         Asset = 5
+    }
+
+    #endregion
+
+    #region Scene Object
+
+    [ProtoContract]
+    public class SceneObject
+    {
+        #region Fields
+
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public string Namespace;
+
+        [ProtoMember(3)]
+        public string FilePath;
+
+        [ProtoMember(4)]
+        public bool NeedUpdate;
+
+        [ProtoMember(5)]
+        public string Module;
+
+        #endregion
+
+        #region Constructor
+
+        public SceneObject()
+        {
+        }
+
+        #endregion
+
+        #region Methods
+
+        public void Clear()
+        {
+            Name = null;
+            Namespace = null;
+            FilePath = null;
+            NeedUpdate = false;
+        }
+
+        #endregion
     }
 
     #endregion

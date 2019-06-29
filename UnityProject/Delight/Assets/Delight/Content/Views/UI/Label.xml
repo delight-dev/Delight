@@ -1,10 +1,12 @@
 <Label xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
        Module="!TextMeshPro"
        BasedOn="UIView" TextComponent="t:UnityEngine.UI.Text" TextAlignment="t:ElementAlignment = Left"
-       m.TextComponent="" rename.TextComponentAlignment="TextAlignment" rename.Color="FontColor" Width="120" Height="40" FontColor="Black" FontSize="24"
+       m.TextComponent="" rename.TextComponentAlignment="TextAlignment" rename.Color="FontColor" Width="180" Height="40" FontColor="Black" FontSize="24"
        EnableWordWrapping="t:bool"
        AutoSize="t:AutoSize"
        HorizontalOverflow="Wrap"
-       VerticalOverflow="Overflow"       
+       VerticalOverflow="Overflow"   
+       OverflowMode="t:string"
+       ExtraPadding="t:bool"
        >  
 </Label>  

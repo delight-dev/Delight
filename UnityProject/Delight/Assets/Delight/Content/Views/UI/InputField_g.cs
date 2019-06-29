@@ -411,6 +411,20 @@ namespace Delight
             set { InputText.AutoSize = value; }
         }
 
+        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
+        public System.String OverflowMode
+        {
+            get { return InputText.OverflowMode; }
+            set { InputText.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
+        public System.Boolean ExtraPadding
+        {
+            get { return InputText.ExtraPadding; }
+            set { InputText.ExtraPadding = value; }
+        }
+
         public readonly static DependencyProperty FontProperty = Label.FontProperty;
         public FontAsset Font
         {

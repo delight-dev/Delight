@@ -416,6 +416,20 @@ namespace Delight
             set { CheckBoxLabel.AutoSize = value; }
         }
 
+        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
+        public System.String OverflowMode
+        {
+            get { return CheckBoxLabel.OverflowMode; }
+            set { CheckBoxLabel.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
+        public System.Boolean ExtraPadding
+        {
+            get { return CheckBoxLabel.ExtraPadding; }
+            set { CheckBoxLabel.ExtraPadding = value; }
+        }
+
         public readonly static DependencyProperty FontProperty = Label.FontProperty;
         public FontAsset Font
         {

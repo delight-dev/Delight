@@ -1,0 +1,21 @@
+ManifestFileVersion: 0
+CRC: 2825735323
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 69a37e990b8137f1b008d2d1482048dd
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: cb3f6df5cbc4a2990c44c2787bc9553a
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/Content/Assets/Bundle2/Frame4.psd
+- Assets/Content/Assets/Bundle2/Frame3.psd
+- Assets/Content/Assets/Bundle2/bluefloral01.png
+- Assets/Content/Assets/Bundle2/BigSprite.psd
+Dependencies: []
