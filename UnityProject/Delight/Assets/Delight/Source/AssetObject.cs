@@ -80,7 +80,7 @@ namespace Delight
 
             // trigger load 
             //LoadGenericAsync(); 
-            Load(); // loads local resources synchronously to fix issue with with pop-ins
+            Load(); // loads resources synchronously to fix with with pop-ins
         }
 
         /// <summary>

@@ -5,12 +5,17 @@
 ##    StreamedBundles - specifies which bundles (by name) should be streamed locally rather than from remote URI
 ##    ServerUriLocator - name of class that locates server URI based on bundle name
 ##    UseSimulatedUriInEditor - set to true/false indicating if a simulated server URI should be used in the editor
+##    Namespaces - Namespaces to be included in the generated code and prioritized when infering types
+##    DelightPath - Delight framework root path
+##    DefaultBasedOn - Default view all views are based on if the BasedOn attribute isn't specified (UIView if not specified)
+##    BaseView - Custom view all views will inherit from.
+##    AssetBundleVersion - Set to non-zero integer to enable caching of asset bundles. Increment to invalidate bundle caches and force new updates
+##    EnableTextMeshPro - To enable TextMeshPro download the latest TextMeshPro package through the package manager and set this setting to true. When enabled the framework uses TextMeshPro labels and input fields instead of UGUI labels and input fields. 
 ## Example configuration, remove "#" to uncomment configuration options:
 
 ServerUri: http://example.com
 UseSimulatedUriInEditor: true
-BuildTargets: 
-  Dev
+BuildTargets: Dev
 ContentFolders:
   MyContent/
   Example/Content/
@@ -18,6 +23,5 @@ StreamedBundles:
   Bundle1
   Bundle2
   Bundle3
-
-
-
+AssetBundleVersion: 1
+EnableTextMeshPro: false

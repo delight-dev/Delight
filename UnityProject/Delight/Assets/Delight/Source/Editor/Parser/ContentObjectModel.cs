@@ -427,6 +427,22 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Gets all style property assignments for the specified view object. 
+        /// </summary>
+        public static List<PropertyBinding> GetViewObjectStylePropertyBindings(string viewName)
+        {
+            var model = GetInstance();
+
+            // get all default style declarations belonging to specified view
+            var styleDeclarations = model.StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => String.IsNullOrEmpty(y.StyleName) &&
+                                               y.ViewName.IEquals(viewName)));
+
+            var propertyBindings = styleDeclarations.SelectMany(x => x.PropertyBindings);
+            return propertyBindings.ToList();
+        }
+
+        /// <summary>
         /// Gets all style property bindings for the specified view declaration and style. 
         /// </summary>
         public static List<PropertyBinding> GetStylePropertyBindings(string viewName, string styleName)
@@ -533,6 +549,20 @@ namespace Delight.Editor.Parser
             propertyAssignments.AddRange(stylePropertyAssignments);
 
             return propertyAssignments;
+        }
+
+        /// <summary>
+        /// Gets property bindings, including those set by styles. 
+        /// </summary>
+        public List<PropertyBinding> GetPropertyBindingsWithStyle()
+        {
+            var propertyBindings = new List<PropertyBinding>();
+            propertyBindings.AddRange(PropertyExpressions.OfType<PropertyBinding>());
+
+            var stylePropertyBindings = ContentObjectModel.GetViewObjectStylePropertyBindings(Name);
+            propertyBindings.AddRange(stylePropertyBindings);
+
+            return propertyBindings;
         }
 
         public void Clear()

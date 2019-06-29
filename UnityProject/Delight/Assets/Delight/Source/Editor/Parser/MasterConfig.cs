@@ -165,11 +165,32 @@ namespace Delight.Editor.Parser
 
             lock (_fileLock)
             {
-                using (var file = File.Open(configFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                try
                 {
-                    //Debug.Log("Serializing " + configFilePath);
-                    Serializer.Serialize(file, _config);
-                    file.Close();
+                    using (var file = File.Open(configFilePath, FileMode.Create, FileAccess.Write, FileShare.None))
+                    {
+                        //Debug.Log("Serializing " + configFilePath);
+                        try
+                        {
+                            Serializer.Serialize(file, _config);
+                        }
+                        catch (Exception e)
+                        {
+                            Debug.LogException(e);
+                            Debug.LogError(String.Format("[Delight] Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
+                            return;
+                        }
+                        finally
+                        {
+                            file.Close();
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.LogError(String.Format("[Delight] Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
+                    return;
                 }
             }
         }

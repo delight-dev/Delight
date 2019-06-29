@@ -18,6 +18,7 @@ namespace Delight
 
         public Dictionary<DependencyObject, bool> ValueSet;
         public Dictionary<Template, T> Defaults;
+        public Dictionary<Template, bool> BindingSet;
         public Func<TParent, TObject> ObjectGetter;
         public Func<TObject, T> Getter;
         public Action<TObject, T> Setter;
@@ -80,6 +81,11 @@ namespace Delight
             ValueSet.TryGetValue(key, out valueSet);
             if (valueSet)
                 return false;
+
+            if(HasBinding(key))
+            {
+                return false;
+            }
 
             T defaultValue;
             if (checkAllStates && StateDefaults != null)
@@ -299,6 +305,44 @@ namespace Delight
         {
             T defaultValue;
             return TryGetStateDefault(key, state, out defaultValue);
+        }
+
+        /// <summary>
+        /// Checks if property has binding.
+        /// </summary>
+        public override bool HasBinding(DependencyObject key)
+        {
+            if (BindingSet == null)
+                return false;
+
+            // try get boolean indicating if the property has binding
+            var template = key.Template;
+            while (true)
+            {
+                if (BindingSet.TryGetValue(template, out var hasBinding))
+                {
+                    return true;
+                }
+
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets boolean indicating if property has binding.
+        /// </summary>
+        public override void SetHasBinding(Template template, bool hasBinding = true)
+        {
+            if (BindingSet == null)
+            {
+                BindingSet = new Dictionary<Template, bool>();
+            }
+
+            BindingSet[template] = hasBinding;
         }
 
         #endregion

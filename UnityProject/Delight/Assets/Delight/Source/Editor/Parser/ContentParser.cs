@@ -479,6 +479,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration)
         {
+            var provider = CodeDomProvider.CreateProvider("C#");
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
             {
@@ -494,17 +495,18 @@ namespace Delight.Editor.Parser
                     string attributeValue = attribute.Value;
 
                     if (attributeName.IEquals("Id"))
-                    {
-                        var provider = CodeDomProvider.CreateProvider("C#");
+                    {                        
                         if (!provider.IsValidIdentifier(attributeValue))
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifier must start with an letter or underscore, followed by letters, numbers or underscores.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            // ignore invalid identifiers
+                            //ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifier must start with an letter or underscore, followed by letters, numbers or underscores.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
                         if (viewIdCount.ContainsKey(attributeValue))
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifiers in the file must be unique to avoid name conflicts, there is already a view with the same Id \"{3}\".", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            // ignore invalid identifiers
+                            //ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifiers in the file must be unique to avoid name conflicts, there is already a view with the same Id \"{3}\".", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 

@@ -78,7 +78,7 @@ namespace Delight.Editor.Parser
                     ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style <{1} BasedOn=\"{2}\">. Couldn't find the style \"{2}\" this style is based on.", GetLineInfo(styleDeclaration.StylePath, styleDeclaration), styleDeclaration.ViewName, styleDeclaration.BasedOnName));
                 }
             }
-                       
+
             // validate and update view declarations - template content, attached properties, etc.
             foreach (var viewObject in viewObjects)
             {
@@ -462,7 +462,7 @@ namespace Delight.Editor.Parser
                 var bindingsNeedUpdate = childViewDeclaration.PropertyBindings.Where(x => x.BindingNeedUpdate).ToList();
                 var propertyBindingDefaults = childViewObject.PropertyExpressions.OfType<DefaultPropertyBinding>().ToList();
                 foreach (var binding in bindingsNeedUpdate)
-                {                    
+                {
                     binding.BindingNeedUpdate = false;
                     var bindingDefault = propertyBindingDefaults.FirstOrDefault(x => x.TargetPropertyName == binding.PropertyName);
                     if (bindingDefault != null && bindingDefault.IsTwoWay)
@@ -531,10 +531,12 @@ namespace Delight.Editor.Parser
             var initializerProperties = GetPropertyInitializers(viewObject);
             var propertyDeclarations = GetPropertyDeclarations(viewObject, true, true, true);
             var propertyAssignments = new List<PropertyAssignment>();
+            var propertyBindings = new List<PropertyBinding>();
             if (isParent)
             {
                 // if this is a parent we add the property assignments in the root element
                 propertyAssignments.AddRange(viewObject.GetPropertyAssignmentsWithStyle());
+                propertyBindings.AddRange(viewObject.GetPropertyBindingsWithStyle().Where(x => !x.IsAttached));
             }
 
             if (viewDeclaration != null)
@@ -546,25 +548,35 @@ namespace Delight.Editor.Parser
                     ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style declaration <{1} Style=\"{2}\">. The style \"{2}\" couldn't be found.",
                         GetLineInfo(fileName, viewDeclaration), viewObject.Name, viewDeclaration.Style));
                 }
+                propertyBindings.AddRange(viewDeclaration.GetPropertyBindingsWithStyle(out var dummy).Where(x => !x.IsAttached));
             }
 
             if (nestedPropertyExpressions != null)
             {
                 // add nested assignments set by parent (that would be expressions like <Button Label.Text="Value">)
                 propertyAssignments.AddRange(nestedPropertyExpressions.OfType<PropertyAssignment>());
+                propertyBindings.AddRange(nestedPropertyExpressions.OfType<PropertyBinding>().Where(x => !x.IsAttached)); // ignore bindings to attached properties
             }
 
             var nestedChildViewPropertyExpressions = new Dictionary<string, List<PropertyExpression>>();
+            List<PropertyExpression> propertyExpressions = new List<PropertyExpression>();
+            propertyExpressions.AddRange(propertyAssignments);
+            propertyExpressions.AddRange(propertyBindings);
 
             // generate value initializers for the property assignments
-            for (int i = 0; i < propertyAssignments.Count; ++i)
+            for (int i = 0; i < propertyExpressions.Count; ++i)
             {
-                var propertyAssignment = propertyAssignments[i];
-                if (String.IsNullOrEmpty(propertyAssignment.PropertyValue))
+                var propertyExpression = propertyExpressions[i];
+                var isAssignment = propertyExpression is PropertyAssignment;
+                var propertyAssignment = isAssignment ? propertyExpression as PropertyAssignment : null;
+                var propertyBinding = isAssignment ? null : propertyExpression as PropertyBinding;
+                var propertyValue = isAssignment ? propertyAssignment.PropertyValue : propertyBinding.PropertyBindingString;
+                var propertyName = isAssignment ? propertyAssignment.PropertyName : propertyBinding.PropertyName;
+
+                if (String.IsNullOrEmpty(propertyValue))
                     continue;
 
                 // if property name contains '.' it refers to a child view property
-                var propertyName = propertyAssignment.PropertyName;
                 int indexOfDot = propertyName.IndexOf('.');
 
                 // if it's not a nested property, check if property-name refers to a mapped property
@@ -598,10 +610,26 @@ namespace Delight.Editor.Parser
                         nestedChildViewPropertyExpressions.Add(childViewName, childPropertyExpressions);
                     }
 
-                    childPropertyExpressions.Add(new PropertyAssignment { PropertyName = childViewPropertyName, PropertyValue = propertyAssignment.PropertyValue, StateName = propertyAssignment.StateName, LineNumber = propertyAssignment.LineNumber });
+                    if (isAssignment)
+                    {
+                        childPropertyExpressions.Add(new PropertyAssignment { PropertyName = childViewPropertyName, PropertyValue = propertyAssignment.PropertyValue, StateName = propertyAssignment.StateName, LineNumber = propertyAssignment.LineNumber });
+                    }
+                    else
+                    {
+                        childPropertyExpressions.Add(new PropertyBinding { PropertyName = childViewPropertyName, AttachedNeedUpdate = propertyBinding.AttachedNeedUpdate, AttachedToParentViewDeclaration = propertyBinding.AttachedToParentViewDeclaration, BindingNeedUpdate = propertyBinding.BindingNeedUpdate, BindingType = propertyBinding.BindingType, FormatString = propertyBinding.FormatString, IsAttached = propertyBinding.IsAttached, ItemId = propertyBinding.ItemId, LineNumber = propertyBinding.LineNumber, PropertyBindingString = propertyBinding.PropertyBindingString, Sources = propertyBinding.Sources.ToList(), StyleDeclaration = propertyBinding.StyleDeclaration, TransformMethod = propertyBinding.TransformMethod });
+                    }
                     continue;
                 }
 
+                // is this a property binding?
+                if (!isAssignment)
+                {
+                    // yes. set boolean indicating that property has binding
+                    sb.AppendLine("                    {0}.{1}Property.SetHasBinding({2});", fullViewTypeName, propertyName, localId);
+                    continue;
+                }
+
+                // handle property assignment
                 // look for property declaration belonging to expression
                 var decl = propertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName == propertyName);
                 if (decl == null)
@@ -864,8 +892,7 @@ namespace Delight.Editor.Parser
                                             continue; // item type was not inferred so ignore parameter
                                         }
 
-                                        actionParameterPath[0] = templateItemInfo.VariableName;
-                                        actionParameterPath.Insert(1, "Item");
+                                        actionParameterPath[0] = String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemType);
                                     }
 
                                     formattedActionParameters.Add("() => " + String.Join("?.", actionParameterPath));
@@ -980,11 +1007,17 @@ namespace Delight.Editor.Parser
 
                             if (isTemplateItemSource)
                             {
-                                // in source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                                // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                                var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
+                                var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemType);
                                 sourcePath = sourcePath.Skip(2).ToList();
-                                sourcePath.Insert(0,
-                                    String.Format("({0}.Item as {1})", templateItemInfo.VariableName,
-                                        templateItemInfo.ItemType));
+                                sourcePath.Insert(0, castItemRef);
+                                
+                                for (int i = 0; i < sourceGetters.Count; ++i)
+                                {
+                                    // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
+                                    sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                                }
                             }
 
                             string sourceGettersString = string.Join(", ", sourceGetters);
@@ -1123,7 +1156,7 @@ namespace Delight.Editor.Parser
                     {
                         templateItems = new List<TemplateItemInfo>();
                     }
-                                        
+
                     var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
                     if (itemIdDeclaration != null)
                     {
@@ -2198,7 +2231,7 @@ namespace Delight.Editor.Parser
                     {
                         var assetKeyName = hasDuplicates ? String.Format("{0}/{1}", assetObject.AssetBundleName, assetObject.Name) :
                             assetObject.Name;
-                        sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", assetKeyName, Environment.NewLine);                        
+                        sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", assetKeyName, Environment.NewLine);
                     }
                 }
 
@@ -2214,8 +2247,15 @@ namespace Delight.Editor.Parser
                 var contentFolderPath = String.Format("{0}/{1}", Application.dataPath, contentFolder.Substring(7));
                 if (Directory.Exists(contentFolderPath))
                 {
-                    var sourceFile = String.Format("{0}Delight.xsd", contentFolderPath);
-                    File.WriteAllText(sourceFile, sb.ToString());
+                    try
+                    {
+                        var sourceFile = String.Format("{0}Delight.xsd", contentFolderPath);
+                        File.WriteAllText(sourceFile, sb.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log(e);
+                    }
                 }
             }
 

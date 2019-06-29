@@ -178,6 +178,42 @@ namespace Delight
             });
         }
 
+        // TODO remove, here for backwards compatilibity with MarkLight
+        public void ItemsModified()
+        {
+            Notify( new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            });
+        }
+
+        // TODO remove, here for backwards compatilibity with MarkLight
+        public void ItemsModified(string fieldPath)
+        {
+            Notify(new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            });
+        }
+
+        // TODO remove, here for backwards compatilibity with MarkLight
+        public void ItemModified(T item, string fieldPath = "")
+        {
+            Notify( new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            } );
+        }
+
+        // TODO remove, here for backwards compatilibity with MarkLight
+        public void ItemModified( int index, string fieldPath = "" )
+        {
+            Notify( new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            } );
+        }
+
         public virtual bool Contains(T item)
         {
             return Data.ContainsKey(item.Id);
@@ -208,12 +244,66 @@ namespace Delight
             return false;
         }
 
+        public virtual void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            // TODO should be called on the list view itself 
+        }
+
         public virtual void RemoveRange(IEnumerable<T> items)
         {
             foreach (var item in items)
             {
                 Remove(item);
             }
+        }
+
+        /// <summary>
+        /// Returns first item matching the predicate.
+        /// </summary>
+        public T Find(Predicate<T> predicate)
+        {
+            foreach (var item in _dataList)
+            {
+                if(predicate(item.Value))
+                    return item.Value;
+            }
+
+            return null;
+        }
+
+        public T First()
+        {
+            return FirstOrDefault();
+        }
+
+        public T First(Func<T, bool> predicate)
+        {
+            return FirstOrDefault(predicate);
+        }
+
+        public T FirstOrDefault()
+        {
+            return this[0];
+        }
+
+        public T FirstOrDefault(Func<T, bool> predicate)
+        {
+            foreach(var item in _dataList)
+            {
+                if(predicate(item.Value))
+                    return item.Value;
+            }
+            return null;
+        }
+
+        public bool Any(Func<T, bool> predicate)
+        {
+            foreach (var item in _dataList)
+            {
+                if (predicate(item.Value))
+                    return true;
+            }
+            return false;
         }
 
         public new virtual IEnumerator<T> GetEnumerator()

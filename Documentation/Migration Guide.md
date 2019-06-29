@@ -8,13 +8,15 @@ This document describes how to migrate from MarkLight to Delight and also highli
 
 ## Setup
 
-1. Make sure Unity editor version 2019.1.6f1 is installed
+1. Make sure Unity editor version 2019.1.8f1 is installed
 
 2. Get the code from branch **feature/Delight_2** (which was branched from release 1.27 at June 22nd, 2019).
 
-3. Open project with Unity 2019.1.6f1. Make sure the platform is set to Android in editor. Everything should compile at this point. 
+3. Open project with Unity 2019.1.8f1. Make sure the platform is set to Android in editor. Everything should compile at this point. 
 
-4. Extract **asset-bundles.zip** into `EAA.Client/AssetBundles/Android` and `EAA.Client/Assets/StreamingAssets/Android`. These are the old bundles used by MarkLight and no more asset bundles will be build through the old menu.
+4. Extract **asset-bundles.zip** available here: https://drive.google.com/open?id=1eJ4PG3yXR9HB2-mbYCDDuJWjDjo_M5Gq
+
+    into `EAA.Client/AssetBundles/Android` and `EAA.Client/Assets/StreamingAssets/Android`. These are the old asset bundles used by MarkLight and no more asset bundles will be build through the old menu.
 
 5. Open the Delight window.
 
@@ -28,7 +30,8 @@ The button **Rebuild All** generates code for all views as well as for assets an
 
 The checkbox *Build Asset Bundles* need to be checked if you've moved assets while the editor was closed and want all the asset bundles and asset code to be rebuilt.
 
-5. Check the box "Build Asset Bundles" and press **Rebuild All**. Press "Yes" on the dialogue that will show up (might take a while). This will take some time to build all asset bundles and generate the code. Do this when you get latest from source control if you want to make sure asset bundles are up to date. 
+5. Check the box "Build Asset Bundles" and press **Rebuild All**. Press "Yes" on the dialogue that will show up (might take a while). This will take some time to build all asset bundles and generate the code. Do this when you get latest from source control if you want to make sure asset bundles are up to date.
+6. Everything should run and the game should play as expected at this point.
 
 ## Overview
 
@@ -165,6 +168,8 @@ Here are the step to migrate views from MarkLight to Delight. This example shows
 
      `xyz does not contain a definition for 'Value'`  - occurs because Delight accesses values directly, so remove ".Value"
 
+     `Cannot convert from 'Delight.ElementSize' to 'MarkLight.ElementSize'` - until you have converted fields such as `public _ElementSize ItemHeight;` to dependency properties (done later) these errors will remain.
+
    - Rename any ObservableList to BindableCollection. And make the below changes to the presentation class used in the observable list. 
 
    - Make sure the presentation class inherit from *BindableObject*:
@@ -192,7 +197,9 @@ Here are the step to migrate views from MarkLight to Delight. This example shows
      
      So copy the field and add the "Asset" postfix to both the type-name and the field-name. 
      
-     It might be the case that the presentation class contains certain methods that works with the old framework. You might need to during this process (as you fix compilation errors) create new methods for Delight that works with the new framework. As a rule just copy the method and add a "DL" postfix to the method name, there will likely be type-name conflicts as so full namespace might need to be specified for types, so for example: `public void DoSomething(ElementSize parameter)`becomes `public void DoSomethingDL(Delight.ElementSize parameter)`. The old methods will be cleaned up once fully migrated to Delight. 
+     There might be ambiguous references e.g. between `MarkLight.ElementSize` and `Delight.ElementSize`. Fix this temporarily by specifying full namespace: `MarkLight.ElementSize`
+     
+     It might be the case that the presentation class contains certain methods that works with the old framework. You might need to during this process (as you fix compilation errors) create new methods for Delight that works with the new framework. As a rule just copy the method/property and add a "DL" postfix, there will likely be type-name conflicts as so full namespace might need to be specified for types, so for example: `public void DoSomething(ElementSize parameter)`becomes `public void DoSomethingDL(Delight.ElementSize parameter)`. The old methods will be cleaned up once fully migrated to Delight.
 
 4. Now it's time to add/uncomment the XML in the root element in SearchView.xml. 
 
@@ -271,8 +278,21 @@ You can inspect your view in the hierarchy (note that the game object will be cr
 
 ![Open Delight Window](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightPresenter.png)
 
+### Misc Fixes
+
+- Change `transform.Find( "Region (ItemsViewRegion)" );` to `ItemsViewRegion.transform`
+- Items can no longer be selected through the bindable collection / observable list, but need to be done through the list view itself.  `MyBindableList.SetSelected(item)` change to `MyListView.SelectItem(item)`. 
+- `MyPanel.ScrollRect.NormalizedPosition` accessed through `Panel.NormalizedPosition`
+- If StartCoroutine is used you might get `Unity Script Relay Missing` error during runtime. Make sure the view has `EnableScriptEvents="True"` set on the root element. 
+
+
+
+
+
 ## Change Log
 
+- List ScrollableContentAlignment renamed to ScrollableRegionContentAlignment
+- Label ResizeTextForBestFit renamed to EnableAutoSizing
 - View UserInterface replaced by UICanvas
 - ViewSwitcher property SwitchToDefault renamed to ShowFirstByDefault
 - Localization dictionary renamed to Loc, {@Loc.123}, however {@Localization.123} still works. 

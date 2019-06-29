@@ -17,6 +17,7 @@ namespace Delight
 
         public Dictionary<Template, T> Defaults;
         public Dictionary<DependencyObject, T> Values; // TODO here we want a weak keyed dictionary, perhaps by 
+        public Dictionary<Template, bool> BindingSet;
         public ValueConverter<T> ValueConverter;
         public Dictionary<string, Dictionary<Template, T>> StateDefaults;
         public Dictionary<Template, bool> HasStateDefaults;
@@ -281,6 +282,11 @@ namespace Delight
             if (Values.ContainsKey(key))
                 return false;
 
+            if (HasBinding(key))
+            {
+                return false;
+            }
+
             T defaultValue;
             if (checkAllStates && StateDefaults != null)
             {
@@ -437,6 +443,44 @@ namespace Delight
             return TryGetStateDefault(key, state, out defaultValue);
         }
 
+        /// <summary>
+        /// Checks if property is bound.
+        /// </summary>
+        public override bool HasBinding(DependencyObject key)
+        {
+            if (BindingSet == null)
+                return false;
+
+            // try get boolean indicating if the property has binding
+            var template = key.Template;
+            while (true)
+            {
+                if (BindingSet.TryGetValue(template, out var hasBinding))
+                {
+                    return true;
+                }
+
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default)
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets boolean indicating if property is bound.
+        /// </summary>
+        public override void SetHasBinding(Template template, bool hasBinding = true)
+        {
+            if (BindingSet == null)
+            {
+                BindingSet = new Dictionary<Template, bool>();
+            }
+
+            BindingSet[template] = hasBinding;
+        }
+
         #endregion
 
         #region Constructor
@@ -524,6 +568,21 @@ namespace Delight
         public virtual bool IsUndefined(DependencyObject key, bool checkAllStates = false)
         {
             return false;
+        }
+
+        /// <summary>
+        /// Checks if property has binding.
+        /// </summary>
+        public virtual bool HasBinding(DependencyObject key)
+        {
+            return false;
+        }
+
+        /// <summary>
+        /// Sets boolean indicating if property has binding.
+        /// </summary>
+        public virtual void SetHasBinding(Template template, bool hasBinding = false)
+        {
         }
 
         #endregion

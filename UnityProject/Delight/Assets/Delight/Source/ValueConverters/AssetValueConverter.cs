@@ -19,6 +19,11 @@ namespace Delight
         /// </summary>
         public static string GetInitializer(string typeName, string stringValue)
         {
+            if (String.IsNullOrEmpty(stringValue))
+            {
+                return "null";
+            }
+
             return String.Format("Assets.{0}[\"{1}\"]", typeName.Pluralize(), stringValue);
         }        
 

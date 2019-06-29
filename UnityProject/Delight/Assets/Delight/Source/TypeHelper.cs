@@ -130,6 +130,9 @@ namespace Delight
                 {
                     foreach (var type in types)
                     {
+                        if(type.Namespace == null)
+                            continue;
+
                         if (defaultNamespaces.Any(x => type.Namespace.StartsWith(x)))
                         {
                             return type;
