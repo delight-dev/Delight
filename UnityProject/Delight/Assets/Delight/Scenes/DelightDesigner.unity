@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObject: {fileID: 0}
-  ViewTypeName: ViewSwitcherTest
+  ViewTypeName: DelightDesigner
   ViewTypeNamespace: Delight
   LoadMode: 0
   UseAsyncLoad: 1

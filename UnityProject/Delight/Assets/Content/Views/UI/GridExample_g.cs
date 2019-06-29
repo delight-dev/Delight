@@ -278,6 +278,8 @@ namespace Delight
 #endif
                     Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels))});
                     Delight.LayoutGrid.ColumnsProperty.SetDefault(_gridExampleGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels))});
+                    Delight.LayoutGrid.WidthProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
+                    Delight.LayoutGrid.HeightProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
                 }
                 return _gridExampleGrid1;
             }

@@ -1,5 +1,5 @@
 <GridExample xmlns="Delight" BasedOn="LayoutRoot">
-  <Grid Rows="200,200,200" Columns="200,200,200"> 
+  <Grid Rows="200,200,200" Columns="200,200,200" Width="600" Height="600"> 
     <Region Id="Cell00" Grid.Cell="0,0" BackgroundColor="#5389e0" />
     <Region Id="Cell01" Grid.Cell="0,1" BackgroundColor="#e375f9" />
     <Region Id="Cell02" Grid.Cell="0,2" BackgroundColor="#74f9d5" />

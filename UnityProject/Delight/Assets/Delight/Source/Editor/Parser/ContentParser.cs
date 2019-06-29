@@ -211,6 +211,9 @@ namespace Delight.Editor.Parser
 
             _contentObjectModel.SaveObjectModel();
 
+            // update view factory
+            CodeGenerator.GenerateAssetActivators();
+
             // update config
             try
             {

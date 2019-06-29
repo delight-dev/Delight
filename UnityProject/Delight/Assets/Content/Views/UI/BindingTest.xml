@@ -6,7 +6,7 @@
       <Button Text="Test 1" BackgroundColor="Blue" FontSize="24" TextAlignment="Center" Click="Test1" />
       <Button Text="Test 2" TextAlignment="Center" Click="Test2" />
       <Button Text="Bg" TextAlignment="Center" BackgroundColor="{TestBinding2}" />
-      <LargeButton Text="Large Button" TextAlignment="Center" />
+      <Button Text="Large Button" TextAlignment="Center" />
       <Label Width="130" Height="50" Text="{TestBinding}" />
       <Button Text="{TestBinding}" />
       <Button Text="{Player1.Name}" /> 

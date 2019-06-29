@@ -106,6 +106,7 @@ namespace Delight
                     _mySceneLabel1.Name = "MySceneLabel1";
 #endif
                     Delight.Label.TextProperty.SetDefault(_mySceneLabel1, "My first scene :)");
+                    Delight.Label.FontColorProperty.SetDefault(_mySceneLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _mySceneLabel1;
             }

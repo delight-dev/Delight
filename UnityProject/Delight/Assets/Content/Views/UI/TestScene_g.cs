@@ -450,10 +450,10 @@ namespace Delight
                     Delight.BindingTest.Button1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button1);
                     Delight.BindingTest.Button2TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button2);
                     Delight.BindingTest.Button3TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button3);
-                    Delight.BindingTest.LargeButton1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1LargeButton1);
-                    Delight.BindingTest.Label1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Label1);
                     Delight.BindingTest.Button4TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button4);
+                    Delight.BindingTest.Label1TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Label1);
                     Delight.BindingTest.Button5TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button5);
+                    Delight.BindingTest.Button6TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Button6);
                     Delight.BindingTest.RegionOnDemandTemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1RegionOnDemand);
                     Delight.BindingTest.Group2TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Group2);
                     Delight.BindingTest.Label2TemplateProperty.SetDefault(_testSceneBindingTest1, TestSceneBindingTest1Label2);
@@ -627,67 +627,6 @@ namespace Delight
             }
         }
 
-        private static Template _testSceneBindingTest1LargeButton1;
-        public static Template TestSceneBindingTest1LargeButton1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneBindingTest1LargeButton1 == null || _testSceneBindingTest1LargeButton1.CurrentVersion != Template.Version)
-#else
-                if (_testSceneBindingTest1LargeButton1 == null)
-#endif
-                {
-                    _testSceneBindingTest1LargeButton1 = new Template(BindingTestTemplates.BindingTestLargeButton1);
-#if UNITY_EDITOR
-                    _testSceneBindingTest1LargeButton1.Name = "TestSceneBindingTest1LargeButton1";
-#endif
-                    Delight.LargeButton.LabelTemplateProperty.SetDefault(_testSceneBindingTest1LargeButton1, TestSceneBindingTest1LargeButton1Label);
-                }
-                return _testSceneBindingTest1LargeButton1;
-            }
-        }
-
-        private static Template _testSceneBindingTest1LargeButton1Label;
-        public static Template TestSceneBindingTest1LargeButton1Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneBindingTest1LargeButton1Label == null || _testSceneBindingTest1LargeButton1Label.CurrentVersion != Template.Version)
-#else
-                if (_testSceneBindingTest1LargeButton1Label == null)
-#endif
-                {
-                    _testSceneBindingTest1LargeButton1Label = new Template(BindingTestTemplates.BindingTestLargeButton1Label);
-#if UNITY_EDITOR
-                    _testSceneBindingTest1LargeButton1Label.Name = "TestSceneBindingTest1LargeButton1Label";
-#endif
-                }
-                return _testSceneBindingTest1LargeButton1Label;
-            }
-        }
-
-        private static Template _testSceneBindingTest1Label1;
-        public static Template TestSceneBindingTest1Label1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_testSceneBindingTest1Label1 == null || _testSceneBindingTest1Label1.CurrentVersion != Template.Version)
-#else
-                if (_testSceneBindingTest1Label1 == null)
-#endif
-                {
-                    _testSceneBindingTest1Label1 = new Template(BindingTestTemplates.BindingTestLabel1);
-#if UNITY_EDITOR
-                    _testSceneBindingTest1Label1.Name = "TestSceneBindingTest1Label1";
-#endif
-                }
-                return _testSceneBindingTest1Label1;
-            }
-        }
-
         private static Template _testSceneBindingTest1Button4;
         public static Template TestSceneBindingTest1Button4
         {
@@ -729,6 +668,26 @@ namespace Delight
             }
         }
 
+        private static Template _testSceneBindingTest1Label1;
+        public static Template TestSceneBindingTest1Label1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testSceneBindingTest1Label1 == null || _testSceneBindingTest1Label1.CurrentVersion != Template.Version)
+#else
+                if (_testSceneBindingTest1Label1 == null)
+#endif
+                {
+                    _testSceneBindingTest1Label1 = new Template(BindingTestTemplates.BindingTestLabel1);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Label1.Name = "TestSceneBindingTest1Label1";
+#endif
+                }
+                return _testSceneBindingTest1Label1;
+            }
+        }
+
         private static Template _testSceneBindingTest1Button5;
         public static Template TestSceneBindingTest1Button5
         {
@@ -767,6 +726,47 @@ namespace Delight
 #endif
                 }
                 return _testSceneBindingTest1Button5Label;
+            }
+        }
+
+        private static Template _testSceneBindingTest1Button6;
+        public static Template TestSceneBindingTest1Button6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testSceneBindingTest1Button6 == null || _testSceneBindingTest1Button6.CurrentVersion != Template.Version)
+#else
+                if (_testSceneBindingTest1Button6 == null)
+#endif
+                {
+                    _testSceneBindingTest1Button6 = new Template(BindingTestTemplates.BindingTestButton6);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button6.Name = "TestSceneBindingTest1Button6";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_testSceneBindingTest1Button6, TestSceneBindingTest1Button6Label);
+                }
+                return _testSceneBindingTest1Button6;
+            }
+        }
+
+        private static Template _testSceneBindingTest1Button6Label;
+        public static Template TestSceneBindingTest1Button6Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testSceneBindingTest1Button6Label == null || _testSceneBindingTest1Button6Label.CurrentVersion != Template.Version)
+#else
+                if (_testSceneBindingTest1Button6Label == null)
+#endif
+                {
+                    _testSceneBindingTest1Button6Label = new Template(BindingTestTemplates.BindingTestButton6Label);
+#if UNITY_EDITOR
+                    _testSceneBindingTest1Button6Label.Name = "TestSceneBindingTest1Button6Label";
+#endif
+                }
+                return _testSceneBindingTest1Button6Label;
             }
         }
 

@@ -12,6 +12,8 @@ namespace Delight
 {
     public partial class DelightDesigner
     {
+        public View _displayedView;
+
         public override void AfterInitialize()
         {
             base.AfterInitialize();
@@ -23,7 +25,7 @@ namespace Delight
             var contentObjectModel = ContentObjectModel.GetInstance();
             foreach (var viewObject in contentObjectModel.ViewObjects)
             {
-                DesignerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name });
+                DesignerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName });
             }
         }
 
@@ -49,6 +51,26 @@ namespace Delight
             //Debug.Log("Label font = " + label.Font.UnityObject);
 
             //Button1.SetState("Highlighted");            
+        }
+
+        public void ViewSelected(DesignerView designerView)
+        {
+            if (_displayedView != null)
+            {
+                _displayedView.Destroy();
+            }
+
+            // add "Designer" prefix to see if there is a dedicated designer wrapper for the view
+
+            _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewRegion);
+
+            var sw2 = System.Diagnostics.Stopwatch.StartNew();
+
+            _displayedView?.Load();
+            _displayedView?.PrepareForDesigner();
+
+            sw2.Stop();
+            Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
         }
     }
 }

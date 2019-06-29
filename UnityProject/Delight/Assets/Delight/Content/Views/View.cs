@@ -457,6 +457,18 @@ namespace Delight
         }
 
         /// <summary>
+        /// Unloads the view and removes it from layout parent. 
+        /// </summary>
+        public virtual void Destroy()
+        {
+            Unload();
+            if (LayoutParent != null)
+            {
+                LayoutParent.LayoutChildren.Remove(this);
+            }
+        }
+
+        /// <summary>
         /// Returns view action.
         /// </summary>
         protected ViewAction Action(ViewAction action)
@@ -564,10 +576,15 @@ namespace Delight
                     // parameter is the sender
                     return (x, y) => actionHandler.Invoke(parent, new object[] { x });
                 }
-                else
+                else if (typeof(ActionData).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
                 {
                     // parameter is the view action data
                     return (x, y) => actionHandler.Invoke(parent, new object[] { y });
+                }
+                else
+                {
+                    // try pass the raw data
+                    return (x, y) => actionHandler.Invoke(parent, new object[] { (y as ActionData).RawData });
                 }
             }
             else
@@ -669,6 +686,13 @@ namespace Delight
             }
 
             return filteredStateChangingProperties;
+        }
+
+        /// <summary>
+        /// Called by designer to make the view presentable in the designer.
+        /// </summary>
+        public virtual void PrepareForDesigner()
+        {
         }
 
         #endregion

@@ -1,3 +1,3 @@
 <MyScene>
-  <Label Text="My first scene :)" />
-</MyScene>   
+  <Label Text="My first scene :)" FontColor="White" />
+</MyScene>    

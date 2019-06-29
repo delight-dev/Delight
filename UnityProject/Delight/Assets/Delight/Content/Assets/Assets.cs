@@ -14,5 +14,39 @@ namespace Delight
     /// </summary>
     public static partial class Assets
     {
+        #region Fields
+
+        private static Dictionary<string, Func<View, View, Template, View>> ViewActivators;
+
+        #endregion
+
+        #region Methods
+
+        public static View CreateView(string viewName)
+        {
+            return CreateView(viewName, null, null, null);
+        }
+
+        public static View CreateView(string viewName, View parent)
+        {
+            return CreateView(viewName, parent, null, null);
+        }
+
+        public static View CreateView(string viewName, View parent, View layoutParent)
+        {
+            return CreateView(viewName, parent, layoutParent, null);
+        }
+
+        public static View CreateView(string viewName, View parent, View layoutParent, Template template)
+        {
+            if (ViewActivators == null) return null;
+            if (ViewActivators.TryGetValue(viewName, out var activator))
+            {
+                return activator(parent, layoutParent, template);
+            }
+            return null;
+        }
+
+        #endregion
     }
 }

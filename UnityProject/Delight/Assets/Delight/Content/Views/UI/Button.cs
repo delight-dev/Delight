@@ -292,6 +292,14 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called by designer to make the view presentable in the designer.
+        /// </summary>
+        public override void PrepareForDesigner()
+        {
+            Text = "Button";
+        }
+
         #endregion
     }
 }

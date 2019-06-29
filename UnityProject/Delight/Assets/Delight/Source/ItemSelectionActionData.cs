@@ -16,13 +16,19 @@ namespace Delight
     /// <summary>
     /// Item selection action data.
     /// </summary>
-    public class ItemSelectionActionData
+    public class ItemSelectionActionData : ActionData
     {
         #region Fields
 
         public ListItem ListItem;
         public object Item;
         public bool IsSelected;
+
+        #endregion
+
+        #region Properties
+
+        public override object RawData { get { return Item; } }
 
         #endregion
     }

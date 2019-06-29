@@ -353,6 +353,61 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Generates asset activators.
+        /// </summary>
+        public static void GenerateAssetActivators()
+        {
+            var config = MasterConfig.GetInstance();
+
+            //ConsoleLogger.Log("[Delight] Generating asset activators.");
+            var sb = new StringBuilder();
+
+            // open the view class
+            sb.AppendLine("// Asset data activators generated from parsed views and assets");
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Linq;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", DefaultNamespace);
+            sb.AppendLine("{");
+
+            // generate asset activators
+
+            sb.AppendLine("    public static partial class Assets");
+            sb.AppendLine("    {");
+            sb.AppendLine("        static Assets()");
+            sb.AppendLine("        {");
+            sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, Template, View>>();");
+
+            var viewObjects = _contentObjectModel.ViewObjects;
+            foreach (var viewObject in viewObjects)
+            {
+                if (viewObject.Name == "View" || viewObject.Name == "DelightDesigner")
+                    continue;
+                sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z) => new {0}(x, y, null, z));", viewObject.TypeName);
+            }
+
+            sb.AppendLine("        }");
+
+            sb.AppendLine("    }");
+            
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            string path = String.Format("{0}/{1}Delight/Content{2}", Application.dataPath, config.DelightPath, ContentParser.AssetsFolder);
+            var sourceFile = String.Format("{0}AssetActivators_g.cs", path);
+
+            Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
+        }
+
+        /// <summary>
         /// Validates view declarations in the view object.
         /// </summary>
         private static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)

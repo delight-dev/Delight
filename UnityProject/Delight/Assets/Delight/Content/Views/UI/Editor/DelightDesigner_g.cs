@@ -18,20 +18,19 @@ namespace Delight
         {
             // constructing Grid (Grid1)
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
-            ContentRegion = new Region(this, Grid1.Content, "ContentRegion", ContentRegionTemplate);
+            ContentRegion = new ScrollableRegion(this, Grid1.Content, "ContentRegion", ContentRegionTemplate);
             Grid1.Cell.SetValue(ContentRegion, new CellIndex(1, 1));
-            GridImage = new Image(this, ContentRegion.Content, "GridImage", GridImageTemplate);
-            Image1 = new Image(this, ContentRegion.Content, "Image1", Image1Template);
-            Image2 = new Image(this, ContentRegion.Content, "Image2", Image2Template);
-            TestRegion = new ScrollableRegion(this, Grid1.Content, "TestRegion", TestRegionTemplate);
-            Grid1.Cell.SetValue(TestRegion, new CellIndex(1, 1));
-            Region1 = new Region(this, TestRegion.Content, "Region1", Region1Template);
-            Button1 = new Button(this, Region1.Content, "Button1", Button1Template);
-            Button1.Click += ResolveActionHandler(this, "Test1");
+            Grid1.CellSpan.SetValue(ContentRegion, new CellIndex(1, 2));
+            Region1 = new Region(this, ContentRegion.Content, "Region1", Region1Template);
+            GridImage = new Image(this, Region1.Content, "GridImage", GridImageTemplate);
+            Image1 = new Image(this, Region1.Content, "Image1", Image1Template);
+            Image2 = new Image(this, Region1.Content, "Image2", Image2Template);
+            ViewRegion = new Region(this, ContentRegion.Content, "ViewRegion", ViewRegionTemplate);
             Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);
             Grid1.Cell.SetValue(Region2, new CellIndex(0, 0));
             Grid1.CellSpan.SetValue(Region2, new CellIndex(2, 1));
             List1 = new List(this, Region2.Content, "List1", List1Template);
+            List1.ItemSelected += ResolveActionHandler(this, "ViewSelected");
 
             // binding <List Items="{view in DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = DesignerViews, () => { }, false));
@@ -50,8 +49,6 @@ namespace Delight
             Region3 = new Region(this, Grid1.Content, "Region3", Region3Template);
             Grid1.Cell.SetValue(Region3, new CellIndex(0, 1));
             Grid1.CellSpan.SetValue(Region3, new CellIndex(1, 2));
-            Region4 = new Region(this, Grid1.Content, "Region4", Region4Template);
-            Grid1.Cell.SetValue(Region4, new CellIndex(1, 2));
             this.AfterInitializeInternal();
         }
 
@@ -69,18 +66,16 @@ namespace Delight
             dependencyProperties.Add(Grid1TemplateProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
+            dependencyProperties.Add(Region1Property);
+            dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(GridImageProperty);
             dependencyProperties.Add(GridImageTemplateProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Image2Property);
             dependencyProperties.Add(Image2TemplateProperty);
-            dependencyProperties.Add(TestRegionProperty);
-            dependencyProperties.Add(TestRegionTemplateProperty);
-            dependencyProperties.Add(Region1Property);
-            dependencyProperties.Add(Region1TemplateProperty);
-            dependencyProperties.Add(Button1Property);
-            dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(ViewRegionProperty);
+            dependencyProperties.Add(ViewRegionTemplateProperty);
             dependencyProperties.Add(Region2Property);
             dependencyProperties.Add(Region2TemplateProperty);
             dependencyProperties.Add(List1Property);
@@ -89,8 +84,6 @@ namespace Delight
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Region3Property);
             dependencyProperties.Add(Region3TemplateProperty);
-            dependencyProperties.Add(Region4Property);
-            dependencyProperties.Add(Region4TemplateProperty);
             dependencyProperties.Add(List1ContentProperty);
             dependencyProperties.Add(List1ContentTemplateProperty);
         }
@@ -120,8 +113,8 @@ namespace Delight
             set { Grid1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> ContentRegionProperty = new DependencyProperty<Region>("ContentRegion");
-        public Region ContentRegion
+        public readonly static DependencyProperty<ScrollableRegion> ContentRegionProperty = new DependencyProperty<ScrollableRegion>("ContentRegion");
+        public ScrollableRegion ContentRegion
         {
             get { return ContentRegionProperty.GetValue(this); }
             set { ContentRegionProperty.SetValue(this, value); }
@@ -132,6 +125,20 @@ namespace Delight
         {
             get { return ContentRegionTemplateProperty.GetValue(this); }
             set { ContentRegionTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
+        public Region Region1
+        {
+            get { return Region1Property.GetValue(this); }
+            set { Region1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
+        public Template Region1Template
+        {
+            get { return Region1TemplateProperty.GetValue(this); }
+            set { Region1TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> GridImageProperty = new DependencyProperty<Image>("GridImage");
@@ -176,46 +183,18 @@ namespace Delight
             set { Image2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ScrollableRegion> TestRegionProperty = new DependencyProperty<ScrollableRegion>("TestRegion");
-        public ScrollableRegion TestRegion
+        public readonly static DependencyProperty<Region> ViewRegionProperty = new DependencyProperty<Region>("ViewRegion");
+        public Region ViewRegion
         {
-            get { return TestRegionProperty.GetValue(this); }
-            set { TestRegionProperty.SetValue(this, value); }
+            get { return ViewRegionProperty.GetValue(this); }
+            set { ViewRegionProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> TestRegionTemplateProperty = new DependencyProperty<Template>("TestRegionTemplate");
-        public Template TestRegionTemplate
+        public readonly static DependencyProperty<Template> ViewRegionTemplateProperty = new DependencyProperty<Template>("ViewRegionTemplate");
+        public Template ViewRegionTemplate
         {
-            get { return TestRegionTemplateProperty.GetValue(this); }
-            set { TestRegionTemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
-        public Region Region1
-        {
-            get { return Region1Property.GetValue(this); }
-            set { Region1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
-        public Template Region1Template
-        {
-            get { return Region1TemplateProperty.GetValue(this); }
-            set { Region1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
-        public Button Button1
-        {
-            get { return Button1Property.GetValue(this); }
-            set { Button1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>("Button1Template");
-        public Template Button1Template
-        {
-            get { return Button1TemplateProperty.GetValue(this); }
-            set { Button1TemplateProperty.SetValue(this, value); }
+            get { return ViewRegionTemplateProperty.GetValue(this); }
+            set { ViewRegionTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
@@ -274,20 +253,6 @@ namespace Delight
             set { Region3TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region4Property = new DependencyProperty<Region>("Region4");
-        public Region Region4
-        {
-            get { return Region4Property.GetValue(this); }
-            set { Region4Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region4TemplateProperty = new DependencyProperty<Template>("Region4Template");
-        public Template Region4Template
-        {
-            get { return Region4TemplateProperty.GetValue(this); }
-            set { Region4TemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<ListItem> List1ContentProperty = new DependencyProperty<ListItem>("List1Content");
         public ListItem List1Content
         {
@@ -336,18 +301,16 @@ namespace Delight
 #endif
                     Delight.DelightDesigner.Grid1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGrid1);
                     Delight.DelightDesigner.ContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentRegion);
+                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
                     Delight.DelightDesigner.GridImageTemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridImage);
                     Delight.DelightDesigner.Image1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage1);
                     Delight.DelightDesigner.Image2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage2);
-                    Delight.DelightDesigner.TestRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerTestRegion);
-                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
-                    Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
+                    Delight.DelightDesigner.ViewRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewRegion);
                     Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
                     Delight.DelightDesigner.List1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1Content);
                     Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
                     Delight.DelightDesigner.Region3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion3);
-                    Delight.DelightDesigner.Region4TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion4);
                 }
                 return _delightDesigner;
             }
@@ -386,13 +349,184 @@ namespace Delight
                 if (_delightDesignerContentRegion == null)
 #endif
                 {
-                    _delightDesignerContentRegion = new Template(RegionTemplates.Region);
+                    _delightDesignerContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerContentRegion.Name = "DelightDesignerContentRegion";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerContentRegion, new UnityEngine.Color(0.9882353f, 0.9294118f, 0.1764706f, 1f));
+                    Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerContentRegion, false);
+                    Delight.ScrollableRegion.HorizontalScrollbarVisibilityProperty.SetDefault(_delightDesignerContentRegion, Delight.ScrollbarVisibilityMode.Remove);
+                    Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_delightDesignerContentRegion, Delight.ScrollbarVisibilityMode.Remove);
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerContentRegion, DelightDesignerContentRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerContentRegion, DelightDesignerContentRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerContentRegion, DelightDesignerContentRegionVerticalScrollbar);
                 }
                 return _delightDesignerContentRegion;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionContentRegion;
+        public static Template DelightDesignerContentRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionContentRegion == null || _delightDesignerContentRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionContentRegion == null)
+#endif
+                {
+                    _delightDesignerContentRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionContentRegion.Name = "DelightDesignerContentRegionContentRegion";
+#endif
+                }
+                return _delightDesignerContentRegionContentRegion;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionHorizontalScrollbar;
+        public static Template DelightDesignerContentRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionHorizontalScrollbar == null || _delightDesignerContentRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _delightDesignerContentRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionHorizontalScrollbar.Name = "DelightDesignerContentRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerContentRegionHorizontalScrollbar, DelightDesignerContentRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerContentRegionHorizontalScrollbar, DelightDesignerContentRegionHorizontalScrollbarHandle);
+                }
+                return _delightDesignerContentRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionHorizontalScrollbarBar;
+        public static Template DelightDesignerContentRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionHorizontalScrollbarBar == null || _delightDesignerContentRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _delightDesignerContentRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionHorizontalScrollbarBar.Name = "DelightDesignerContentRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _delightDesignerContentRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionHorizontalScrollbarHandle;
+        public static Template DelightDesignerContentRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionHorizontalScrollbarHandle == null || _delightDesignerContentRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _delightDesignerContentRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionHorizontalScrollbarHandle.Name = "DelightDesignerContentRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _delightDesignerContentRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionVerticalScrollbar;
+        public static Template DelightDesignerContentRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionVerticalScrollbar == null || _delightDesignerContentRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionVerticalScrollbar == null)
+#endif
+                {
+                    _delightDesignerContentRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionVerticalScrollbar.Name = "DelightDesignerContentRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerContentRegionVerticalScrollbar, DelightDesignerContentRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerContentRegionVerticalScrollbar, DelightDesignerContentRegionVerticalScrollbarHandle);
+                }
+                return _delightDesignerContentRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionVerticalScrollbarBar;
+        public static Template DelightDesignerContentRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionVerticalScrollbarBar == null || _delightDesignerContentRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _delightDesignerContentRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionVerticalScrollbarBar.Name = "DelightDesignerContentRegionVerticalScrollbarBar";
+#endif
+                }
+                return _delightDesignerContentRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _delightDesignerContentRegionVerticalScrollbarHandle;
+        public static Template DelightDesignerContentRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerContentRegionVerticalScrollbarHandle == null || _delightDesignerContentRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerContentRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _delightDesignerContentRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _delightDesignerContentRegionVerticalScrollbarHandle.Name = "DelightDesignerContentRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _delightDesignerContentRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _delightDesignerRegion1;
+        public static Template DelightDesignerRegion1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerRegion1 == null)
+#endif
+                {
+                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
+#endif
+                    Delight.Region.WidthProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                }
+                return _delightDesignerRegion1;
             }
         }
 
@@ -467,235 +601,25 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerTestRegion;
-        public static Template DelightDesignerTestRegion
+        private static Template _delightDesignerViewRegion;
+        public static Template DelightDesignerViewRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerTestRegion == null || _delightDesignerTestRegion.CurrentVersion != Template.Version)
+                if (_delightDesignerViewRegion == null || _delightDesignerViewRegion.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerTestRegion == null)
+                if (_delightDesignerViewRegion == null)
 #endif
                 {
-                    _delightDesignerTestRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
+                    _delightDesignerViewRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerTestRegion.Name = "DelightDesignerTestRegion";
+                    _delightDesignerViewRegion.Name = "DelightDesignerViewRegion";
 #endif
-                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionContentRegion);
-                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionHorizontalScrollbar);
-                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerTestRegion, DelightDesignerTestRegionVerticalScrollbar);
+                    Delight.Region.WidthProperty.SetDefault(_delightDesignerViewRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerViewRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
                 }
-                return _delightDesignerTestRegion;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionContentRegion;
-        public static Template DelightDesignerTestRegionContentRegion
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionContentRegion == null || _delightDesignerTestRegionContentRegion.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionContentRegion == null)
-#endif
-                {
-                    _delightDesignerTestRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionContentRegion.Name = "DelightDesignerTestRegionContentRegion";
-#endif
-                }
-                return _delightDesignerTestRegionContentRegion;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionHorizontalScrollbar;
-        public static Template DelightDesignerTestRegionHorizontalScrollbar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionHorizontalScrollbar == null || _delightDesignerTestRegionHorizontalScrollbar.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionHorizontalScrollbar == null)
-#endif
-                {
-                    _delightDesignerTestRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionHorizontalScrollbar.Name = "DelightDesignerTestRegionHorizontalScrollbar";
-#endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerTestRegionHorizontalScrollbar, DelightDesignerTestRegionHorizontalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerTestRegionHorizontalScrollbar, DelightDesignerTestRegionHorizontalScrollbarHandle);
-                }
-                return _delightDesignerTestRegionHorizontalScrollbar;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionHorizontalScrollbarBar;
-        public static Template DelightDesignerTestRegionHorizontalScrollbarBar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionHorizontalScrollbarBar == null || _delightDesignerTestRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionHorizontalScrollbarBar == null)
-#endif
-                {
-                    _delightDesignerTestRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionHorizontalScrollbarBar.Name = "DelightDesignerTestRegionHorizontalScrollbarBar";
-#endif
-                }
-                return _delightDesignerTestRegionHorizontalScrollbarBar;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionHorizontalScrollbarHandle;
-        public static Template DelightDesignerTestRegionHorizontalScrollbarHandle
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionHorizontalScrollbarHandle == null || _delightDesignerTestRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionHorizontalScrollbarHandle == null)
-#endif
-                {
-                    _delightDesignerTestRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionHorizontalScrollbarHandle.Name = "DelightDesignerTestRegionHorizontalScrollbarHandle";
-#endif
-                }
-                return _delightDesignerTestRegionHorizontalScrollbarHandle;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionVerticalScrollbar;
-        public static Template DelightDesignerTestRegionVerticalScrollbar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionVerticalScrollbar == null || _delightDesignerTestRegionVerticalScrollbar.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionVerticalScrollbar == null)
-#endif
-                {
-                    _delightDesignerTestRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionVerticalScrollbar.Name = "DelightDesignerTestRegionVerticalScrollbar";
-#endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerTestRegionVerticalScrollbar, DelightDesignerTestRegionVerticalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerTestRegionVerticalScrollbar, DelightDesignerTestRegionVerticalScrollbarHandle);
-                }
-                return _delightDesignerTestRegionVerticalScrollbar;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionVerticalScrollbarBar;
-        public static Template DelightDesignerTestRegionVerticalScrollbarBar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionVerticalScrollbarBar == null || _delightDesignerTestRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionVerticalScrollbarBar == null)
-#endif
-                {
-                    _delightDesignerTestRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionVerticalScrollbarBar.Name = "DelightDesignerTestRegionVerticalScrollbarBar";
-#endif
-                }
-                return _delightDesignerTestRegionVerticalScrollbarBar;
-            }
-        }
-
-        private static Template _delightDesignerTestRegionVerticalScrollbarHandle;
-        public static Template DelightDesignerTestRegionVerticalScrollbarHandle
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerTestRegionVerticalScrollbarHandle == null || _delightDesignerTestRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerTestRegionVerticalScrollbarHandle == null)
-#endif
-                {
-                    _delightDesignerTestRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
-#if UNITY_EDITOR
-                    _delightDesignerTestRegionVerticalScrollbarHandle.Name = "DelightDesignerTestRegionVerticalScrollbarHandle";
-#endif
-                }
-                return _delightDesignerTestRegionVerticalScrollbarHandle;
-            }
-        }
-
-        private static Template _delightDesignerRegion1;
-        public static Template DelightDesignerRegion1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerRegion1 == null)
-#endif
-                {
-                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
-#endif
-                    Delight.Region.WidthProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                }
-                return _delightDesignerRegion1;
-            }
-        }
-
-        private static Template _delightDesignerButton1;
-        public static Template DelightDesignerButton1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerButton1 == null || _delightDesignerButton1.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerButton1 == null)
-#endif
-                {
-                    _delightDesignerButton1 = new Template(ButtonTemplates.Button);
-#if UNITY_EDITOR
-                    _delightDesignerButton1.Name = "DelightDesignerButton1";
-#endif
-                    Delight.Button.LabelTemplateProperty.SetDefault(_delightDesignerButton1, DelightDesignerButton1Label);
-                }
-                return _delightDesignerButton1;
-            }
-        }
-
-        private static Template _delightDesignerButton1Label;
-        public static Template DelightDesignerButton1Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerButton1Label == null || _delightDesignerButton1Label.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerButton1Label == null)
-#endif
-                {
-                    _delightDesignerButton1Label = new Template(ButtonTemplates.ButtonLabel);
-#if UNITY_EDITOR
-                    _delightDesignerButton1Label.Name = "DelightDesignerButton1Label";
-#endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton1Label, "Test");
-                }
-                return _delightDesignerButton1Label;
+                return _delightDesignerViewRegion;
             }
         }
 
@@ -766,6 +690,8 @@ namespace Delight
 #endif
                     Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_delightDesignerList1ScrollableRegion, Delight.ElementAlignment.Top);
                     Delight.ScrollableRegion.DisableInteractionScrollDeltaProperty.SetDefault(_delightDesignerList1ScrollableRegion, 1f);
+                    Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerList1ScrollableRegion, false);
+                    Delight.ScrollableRegion.ScrollBoundsProperty.SetDefault(_delightDesignerList1ScrollableRegion, Delight.ScrollBounds.Clamped);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionVerticalScrollbar);
@@ -955,7 +881,7 @@ namespace Delight
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 16);
                     Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(24f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.Fonts["Ebrima SDF"]);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.Fonts["Ebrima"]);
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(240f, ElementSizeUnit.Pixels));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -986,27 +912,6 @@ namespace Delight
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion3, new UnityEngine.Color(0.6392157f, 0.6352941f, 0.6392157f, 1f));
                 }
                 return _delightDesignerRegion3;
-            }
-        }
-
-        private static Template _delightDesignerRegion4;
-        public static Template DelightDesignerRegion4
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerRegion4 == null || _delightDesignerRegion4.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerRegion4 == null)
-#endif
-                {
-                    _delightDesignerRegion4 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _delightDesignerRegion4.Name = "DelightDesignerRegion4";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion4, new UnityEngine.Color(0.8627451f, 0.8627451f, 0.8627451f, 1f));
-                }
-                return _delightDesignerRegion4;
             }
         }
 

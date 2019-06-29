@@ -13,6 +13,7 @@
                   DebugOffsetText="t:string"
                   DisableInteractionScrollDelta="t:float"
                   ScrollSensitivity="t:float = 60"
+                  i.ScrollbarVisibility="HorizontalScrollbarVisibility, VerticalScrollbarVisibility"
                   HorizontalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto"
                   VerticalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto">
   <Region Id="ContentRegion" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True" Alignment="{ContentAlignment}">

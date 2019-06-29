@@ -17,6 +17,13 @@ namespace Delight
             get { return _name; }
             set { SetProperty(ref _name, value); }
         }
+
+        private string _viewTypeName;
+        public string ViewTypeName
+        {
+            get { return _viewTypeName; }
+            set { SetProperty(ref _viewTypeName, value); }
+        }
     }
 
     public class DesignerViewData : BindableCollection<DesignerView>

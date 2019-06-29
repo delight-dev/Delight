@@ -120,7 +120,7 @@ namespace Delight.Editor
 
                 case PlayModeStateChange.EnteredPlayMode:
                     // lock script reloads while playing
-                    EditorApplication.LockReloadAssemblies();
+                    //EditorApplication.LockReloadAssemblies();
 
                     // TODO remove
                     // add sub-scene
@@ -130,7 +130,7 @@ namespace Delight.Editor
 
                 case PlayModeStateChange.ExitingPlayMode:
                     // unlock script reloads when in edit mode
-                    EditorApplication.UnlockReloadAssemblies();
+                    //EditorApplication.UnlockReloadAssemblies();
                     break;
             }
         }
