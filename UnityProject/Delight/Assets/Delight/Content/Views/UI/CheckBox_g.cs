@@ -1093,6 +1093,7 @@ namespace Delight
                     _checkBoxCheckBoxGroup.Name = "CheckBoxCheckBoxGroup";
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_checkBoxCheckBoxGroup, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetHasBinding(_checkBoxCheckBoxGroup);
                 }
                 return _checkBoxCheckBoxGroup;
             }

@@ -1093,6 +1093,7 @@ namespace Delight
                     _radioButtonRadioButtonGroup.Name = "RadioButtonRadioButtonGroup";
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_radioButtonRadioButtonGroup, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetHasBinding(_radioButtonRadioButtonGroup);
                 }
                 return _radioButtonRadioButtonGroup;
             }

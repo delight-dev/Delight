@@ -532,72 +532,24 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
     <xs:attribute name="Text" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
     <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="TextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="LabelWidth" type="xs:string" />
@@ -1378,72 +1330,24 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
     <xs:attribute name="Text" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
     <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="TextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="LabelWidth" type="xs:string" />
@@ -1543,8 +1447,7 @@
 
   <xs:simpleType name="Style_Button">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="BlueButton" />
-      <xs:enumeration value="LargeBlueButton" />
+      <xs:enumeration value="ComboBoxButton" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -1595,72 +1498,24 @@
     <xs:attribute name="CheckBoxIgnoreObject" type="xs:string" />
     <xs:attribute name="CheckBoxIsActive" type="xs:string" />
     <xs:attribute name="CheckBoxLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
     <xs:attribute name="Text" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
     <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="TextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="CheckBoxLabelWidth" type="xs:string" />
@@ -1864,6 +1719,7 @@
     <xs:attribute name="IsScrollable" type="xs:string" />
     <xs:attribute name="IsVirtualized" type="xs:string" />
     <xs:attribute name="Overflow" type="Enum_OverflowMode" />
+    <xs:attribute name="SortDirection" type="Enum_ElementSortDirection" />
     <xs:attribute name="CanSelect" type="xs:string" />
     <xs:attribute name="CanDeselect" type="xs:string" />
     <xs:attribute name="CanMultiSelect" type="xs:string" />
@@ -1986,72 +1842,24 @@
     <xs:attribute name="ButtonTextOffset" type="xs:string" />
     <xs:attribute name="ButtonIsCloseButton" type="xs:string" />
     <xs:attribute name="ButtonIsBackButton" type="xs:string" />
+    <xs:attribute name="ButtonTextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="ButtonLabelAutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="ButtonAutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="ButtonMaskOffset" type="xs:string" />
+    <xs:attribute name="ButtonFont" type="Asset_FontAsset" />
     <xs:attribute name="ButtonText" type="xs:string" />
-    <xs:attribute name="ButtonIsRightToLeftText" type="xs:string" />
-    <xs:attribute name="ButtonFont" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="ButtonFontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="ButtonFontSharedMaterials" type="xs:string" />
-    <xs:attribute name="ButtonFontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="ButtonFontMaterials" type="xs:string" />
-    <xs:attribute name="ButtonFontColor" type="xs:string" />
-    <xs:attribute name="ButtonTextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="ButtonEnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ButtonColorGradient" type="xs:string" />
-    <xs:attribute name="ButtonColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="ButtonSpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="ButtonTintAllSprites" type="xs:string" />
-    <xs:attribute name="ButtonOverrideColorTags" type="xs:string" />
-    <xs:attribute name="ButtonFaceColor" type="xs:string" />
-    <xs:attribute name="ButtonOutlineColor" type="xs:string" />
-    <xs:attribute name="ButtonOutlineWidth" type="xs:string" />
+    <xs:attribute name="ButtonSupportRichText" type="xs:string" />
+    <xs:attribute name="ButtonResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ButtonResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ButtonResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="ButtonTextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="ButtonAlignByGeometry" type="xs:string" />
     <xs:attribute name="ButtonFontSize" type="xs:string" />
-    <xs:attribute name="ButtonFontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="ButtonEnableAutoSizing" type="xs:string" />
-    <xs:attribute name="ButtonFontSizeMin" type="xs:string" />
-    <xs:attribute name="ButtonFontSizeMax" type="xs:string" />
-    <xs:attribute name="ButtonFontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="ButtonTextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="ButtonCharacterSpacing" type="xs:string" />
-    <xs:attribute name="ButtonWordSpacing" type="xs:string" />
+    <xs:attribute name="ButtonHorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="ButtonVerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="ButtonLineSpacing" type="xs:string" />
-    <xs:attribute name="ButtonLineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ButtonParagraphSpacing" type="xs:string" />
-    <xs:attribute name="ButtonCharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="ButtonEnableWordWrapping" type="xs:string" />
-    <xs:attribute name="ButtonWordWrappingRatios" type="xs:string" />
-    <xs:attribute name="ButtonOverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="ButtonLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="ButtonIsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="ButtonEnableKerning" type="xs:string" />
-    <xs:attribute name="ButtonExtraPadding" type="xs:string" />
-    <xs:attribute name="ButtonRichText" type="xs:string" />
-    <xs:attribute name="ButtonParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="ButtonIsOverlay" type="xs:string" />
-    <xs:attribute name="ButtonIsOrthographic" type="xs:string" />
-    <xs:attribute name="ButtonEnableCulling" type="xs:string" />
-    <xs:attribute name="ButtonIgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="ButtonIgnoreVisibility" type="xs:string" />
-    <xs:attribute name="ButtonHorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="ButtonVerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="ButtonMappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="ButtonRenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="ButtonGeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="ButtonVertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="ButtonFirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="ButtonMaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="ButtonMaxVisibleWords" type="xs:string" />
-    <xs:attribute name="ButtonMaxVisibleLines" type="xs:string" />
-    <xs:attribute name="ButtonUseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="ButtonPageToDisplay" type="xs:string" />
-    <xs:attribute name="ButtonTextMargin" type="xs:string" />
-    <xs:attribute name="ButtonHavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="ButtonIsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="ButtonIsVolumetricText" type="xs:string" />
+    <xs:attribute name="ButtonFontStyle" type="Enum_FontStyle" />
     <xs:attribute name="ButtonOnCullStateChanged" type="xs:string" />
     <xs:attribute name="ButtonMaskable" type="xs:string" />
+    <xs:attribute name="ButtonFontColor" type="xs:string" />
     <xs:attribute name="ButtonRaycastTarget" type="xs:string" />
     <xs:attribute name="ButtonMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="ButtonLabelWidth" type="xs:string" />
@@ -2534,57 +2342,35 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="TMP_InputFieldComponent" type="xs:string" />
+    <xs:attribute name="InputFieldComponent" type="xs:string" />
     <xs:attribute name="SetValueOnEndEdit" type="xs:string" />
     <xs:attribute name="OnlyTriggerValueChangedFromUI" type="xs:string" />
     <xs:attribute name="EndEdit" type="xs:string" />
     <xs:attribute name="ValueChanged" type="xs:string" />
     <xs:attribute name="TextMargin" type="xs:string" />
     <xs:attribute name="ShouldHideMobileInput" type="xs:string" />
-    <xs:attribute name="ShouldHideSoftKeyboard" type="xs:string" />
     <xs:attribute name="Text" type="xs:string" />
     <xs:attribute name="CaretBlinkRate" type="xs:string" />
     <xs:attribute name="CaretWidth" type="xs:string" />
-    <xs:attribute name="TextViewport" type="xs:string" />
     <xs:attribute name="TextComponent" type="xs:string" />
     <xs:attribute name="Placeholder" type="xs:string" />
-    <xs:attribute name="VerticalScrollbar" type="xs:string" />
-    <xs:attribute name="ScrollSensitivity" type="xs:string" />
     <xs:attribute name="CaretColor" type="xs:string" />
     <xs:attribute name="CustomCaretColor" type="xs:string" />
     <xs:attribute name="SelectionColor" type="xs:string" />
     <xs:attribute name="OnEndEdit" type="xs:string" />
-    <xs:attribute name="OnSubmit" type="xs:string" />
-    <xs:attribute name="OnSelect" type="xs:string" />
-    <xs:attribute name="OnDeselect" type="xs:string" />
-    <xs:attribute name="OnTextSelection" type="xs:string" />
-    <xs:attribute name="OnEndTextSelection" type="xs:string" />
     <xs:attribute name="OnValueChanged" type="xs:string" />
-    <xs:attribute name="OnTouchScreenKeyboardStatusChanged" type="xs:string" />
     <xs:attribute name="OnValidateInput" type="xs:string" />
     <xs:attribute name="CharacterLimit" type="xs:string" />
-    <xs:attribute name="PointSize" type="xs:string" />
-    <xs:attribute name="FontAsset" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="OnFocusSelectAll" type="xs:string" />
-    <xs:attribute name="ResetOnDeActivation" type="xs:string" />
-    <xs:attribute name="RestoreOriginalTextOnEscape" type="xs:string" />
-    <xs:attribute name="IsRichTextEditingAllowed" type="xs:string" />
     <xs:attribute name="ContentType" type="Enum_ContentType" />
     <xs:attribute name="LineType" type="Enum_LineType" />
-    <xs:attribute name="LineLimit" type="xs:string" />
     <xs:attribute name="InputType" type="Enum_InputType" />
     <xs:attribute name="KeyboardType" type="Enum_TouchScreenKeyboardType" />
     <xs:attribute name="CharacterValidation" type="Enum_CharacterValidation" />
-    <xs:attribute name="InputValidator" type="Asset_TMP_InputValidatorAsset" />
     <xs:attribute name="ReadOnly" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
     <xs:attribute name="AsteriskChar" type="xs:string" />
     <xs:attribute name="CaretPosition" type="xs:string" />
     <xs:attribute name="SelectionAnchorPosition" type="xs:string" />
     <xs:attribute name="SelectionFocusPosition" type="xs:string" />
-    <xs:attribute name="StringPosition" type="xs:string" />
-    <xs:attribute name="SelectionStringAnchorPosition" type="xs:string" />
-    <xs:attribute name="SelectionStringFocusPosition" type="xs:string" />
     <xs:attribute name="Navigation" type="xs:string" />
     <xs:attribute name="Transition" type="Enum_Transition" />
     <xs:attribute name="Colors" type="xs:string" />
@@ -2593,72 +2379,24 @@
     <xs:attribute name="TargetGraphic" type="xs:string" />
     <xs:attribute name="Interactable" type="xs:string" />
     <xs:attribute name="Image" type="xs:string" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
     <xs:attribute name="InputTextText" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
     <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="InputTextRichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="InputTextTextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="InputTextWidth" type="xs:string" />
@@ -2768,73 +2506,26 @@
     </xs:sequence>
     <xs:attribute name="PreferredWidth" type="xs:string" />
     <xs:attribute name="PreferredHeight" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUI" type="xs:string" />
-    <xs:attribute name="AutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
-    <xs:attribute name="Text" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
-    <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
+    <xs:attribute name="TextComponent" type="xs:string" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="TextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="AutoSize" type="Enum_AutoSize" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
+    <xs:attribute name="Text" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
+    <xs:attribute name="FontSize" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
+    <xs:attribute name="LineSpacing" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -3009,6 +2700,7 @@
     <xs:attribute name="IsScrollable" type="xs:string" />
     <xs:attribute name="IsVirtualized" type="xs:string" />
     <xs:attribute name="Overflow" type="Enum_OverflowMode" />
+    <xs:attribute name="SortDirection" type="Enum_ElementSortDirection" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="ItemDeselected" type="xs:string" />
     <xs:attribute name="CanSelect" type="xs:string" />
@@ -3386,72 +3078,24 @@
     <xs:attribute name="RadioButtonIgnoreObject" type="xs:string" />
     <xs:attribute name="RadioButtonIsActive" type="xs:string" />
     <xs:attribute name="RadioButtonLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="TextAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="MaskOffset" type="xs:string" />
+    <xs:attribute name="Font" type="Asset_FontAsset" />
     <xs:attribute name="Text" type="xs:string" />
-    <xs:attribute name="IsRightToLeftText" type="xs:string" />
-    <xs:attribute name="Font" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="FontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontSharedMaterials" type="xs:string" />
-    <xs:attribute name="FontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="FontMaterials" type="xs:string" />
-    <xs:attribute name="FontColor" type="xs:string" />
-    <xs:attribute name="TextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="EnableVertexGradient" type="xs:string" />
-    <xs:attribute name="ColorGradient" type="xs:string" />
-    <xs:attribute name="ColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="TintAllSprites" type="xs:string" />
-    <xs:attribute name="OverrideColorTags" type="xs:string" />
-    <xs:attribute name="FaceColor" type="xs:string" />
-    <xs:attribute name="OutlineColor" type="xs:string" />
-    <xs:attribute name="OutlineWidth" type="xs:string" />
+    <xs:attribute name="SupportRichText" type="xs:string" />
+    <xs:attribute name="ResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="ResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="ResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="TextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="AlignByGeometry" type="xs:string" />
     <xs:attribute name="FontSize" type="xs:string" />
-    <xs:attribute name="FontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="EnableAutoSizing" type="xs:string" />
-    <xs:attribute name="FontSizeMin" type="xs:string" />
-    <xs:attribute name="FontSizeMax" type="xs:string" />
-    <xs:attribute name="FontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="TextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="CharacterSpacing" type="xs:string" />
-    <xs:attribute name="WordSpacing" type="xs:string" />
+    <xs:attribute name="HorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="VerticalOverflow" type="Enum_VerticalWrapMode" />
     <xs:attribute name="LineSpacing" type="xs:string" />
-    <xs:attribute name="LineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="ParagraphSpacing" type="xs:string" />
-    <xs:attribute name="CharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="EnableWordWrapping" type="xs:string" />
-    <xs:attribute name="WordWrappingRatios" type="xs:string" />
-    <xs:attribute name="OverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="LinkedTextComponent" type="xs:string" />
-    <xs:attribute name="IsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="EnableKerning" type="xs:string" />
-    <xs:attribute name="ExtraPadding" type="xs:string" />
-    <xs:attribute name="RichText" type="xs:string" />
-    <xs:attribute name="ParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="IsOverlay" type="xs:string" />
-    <xs:attribute name="IsOrthographic" type="xs:string" />
-    <xs:attribute name="EnableCulling" type="xs:string" />
-    <xs:attribute name="IgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="IgnoreVisibility" type="xs:string" />
-    <xs:attribute name="HorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="VerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="MappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="GeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="VertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="FirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="MaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="MaxVisibleWords" type="xs:string" />
-    <xs:attribute name="MaxVisibleLines" type="xs:string" />
-    <xs:attribute name="UseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="PageToDisplay" type="xs:string" />
-    <xs:attribute name="TextMargin" type="xs:string" />
-    <xs:attribute name="HavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="IsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="IsVolumetricText" type="xs:string" />
+    <xs:attribute name="FontStyle" type="Enum_FontStyle" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="FontColor" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="RadioButtonLabelWidth" type="xs:string" />
@@ -4831,109 +4475,40 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Enum_FontWeight">
+  <xs:simpleType name="Enum_TextAnchor">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Thin" />
-      <xs:enumeration value="ExtraLight" />
-      <xs:enumeration value="Light" />
-      <xs:enumeration value="Regular" />
-      <xs:enumeration value="Medium" />
-      <xs:enumeration value="SemiBold" />
-      <xs:enumeration value="Bold" />
-      <xs:enumeration value="Heavy" />
-      <xs:enumeration value="Black" />
+      <xs:enumeration value="UpperLeft" />
+      <xs:enumeration value="UpperCenter" />
+      <xs:enumeration value="UpperRight" />
+      <xs:enumeration value="MiddleLeft" />
+      <xs:enumeration value="MiddleCenter" />
+      <xs:enumeration value="MiddleRight" />
+      <xs:enumeration value="LowerLeft" />
+      <xs:enumeration value="LowerCenter" />
+      <xs:enumeration value="LowerRight" />
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Enum_FontStyles">
+  <xs:simpleType name="Enum_HorizontalWrapMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Wrap" />
+      <xs:enumeration value="Overflow" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Enum_VerticalWrapMode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Truncate" />
+      <xs:enumeration value="Overflow" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Enum_FontStyle">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Normal" />
       <xs:enumeration value="Bold" />
       <xs:enumeration value="Italic" />
-      <xs:enumeration value="Underline" />
-      <xs:enumeration value="LowerCase" />
-      <xs:enumeration value="UpperCase" />
-      <xs:enumeration value="SmallCaps" />
-      <xs:enumeration value="Strikethrough" />
-      <xs:enumeration value="Superscript" />
-      <xs:enumeration value="Subscript" />
-      <xs:enumeration value="Highlight" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Enum_TextAlignmentOptions">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="TopLeft" />
-      <xs:enumeration value="Top" />
-      <xs:enumeration value="TopRight" />
-      <xs:enumeration value="TopJustified" />
-      <xs:enumeration value="TopFlush" />
-      <xs:enumeration value="TopGeoAligned" />
-      <xs:enumeration value="Left" />
-      <xs:enumeration value="Center" />
-      <xs:enumeration value="Right" />
-      <xs:enumeration value="Justified" />
-      <xs:enumeration value="Flush" />
-      <xs:enumeration value="CenterGeoAligned" />
-      <xs:enumeration value="BottomLeft" />
-      <xs:enumeration value="Bottom" />
-      <xs:enumeration value="BottomRight" />
-      <xs:enumeration value="BottomJustified" />
-      <xs:enumeration value="BottomFlush" />
-      <xs:enumeration value="BottomGeoAligned" />
-      <xs:enumeration value="BaselineLeft" />
-      <xs:enumeration value="Baseline" />
-      <xs:enumeration value="BaselineRight" />
-      <xs:enumeration value="BaselineJustified" />
-      <xs:enumeration value="BaselineFlush" />
-      <xs:enumeration value="BaselineGeoAligned" />
-      <xs:enumeration value="MidlineLeft" />
-      <xs:enumeration value="Midline" />
-      <xs:enumeration value="MidlineRight" />
-      <xs:enumeration value="MidlineJustified" />
-      <xs:enumeration value="MidlineFlush" />
-      <xs:enumeration value="MidlineGeoAligned" />
-      <xs:enumeration value="CaplineLeft" />
-      <xs:enumeration value="Capline" />
-      <xs:enumeration value="CaplineRight" />
-      <xs:enumeration value="CaplineJustified" />
-      <xs:enumeration value="CaplineFlush" />
-      <xs:enumeration value="CaplineGeoAligned" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Enum_TextOverflowModes">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Overflow" />
-      <xs:enumeration value="Ellipsis" />
-      <xs:enumeration value="Masking" />
-      <xs:enumeration value="Truncate" />
-      <xs:enumeration value="ScrollRect" />
-      <xs:enumeration value="Page" />
-      <xs:enumeration value="Linked" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Enum_TextureMappingOptions">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Character" />
-      <xs:enumeration value="Line" />
-      <xs:enumeration value="Paragraph" />
-      <xs:enumeration value="MatchAspect" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Enum_TextRenderFlags">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="DontRender" />
-      <xs:enumeration value="Render" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Enum_VertexSortingOrder">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Normal" />
-      <xs:enumeration value="Reverse" />
+      <xs:enumeration value="BoldAndItalic" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -4948,6 +4523,13 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Overflow" />
       <xs:enumeration value="Wrap" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Enum_ElementSortDirection">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Ascending" />
+      <xs:enumeration value="Descending" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -5020,14 +4602,11 @@
   <xs:simpleType name="Enum_CharacterValidation">
     <xs:restriction base="xs:string">
       <xs:enumeration value="None" />
-      <xs:enumeration value="Digit" />
       <xs:enumeration value="Integer" />
       <xs:enumeration value="Decimal" />
       <xs:enumeration value="Alphanumeric" />
       <xs:enumeration value="Name" />
-      <xs:enumeration value="Regex" />
       <xs:enumeration value="EmailAddress" />
-      <xs:enumeration value="CustomValidator" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -5069,15 +4648,15 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Asset_Texture2DAsset">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="bluefloral01" />
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:simpleType name="Asset_TMP_FontAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Ebrima SDF" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Asset_MaterialAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="UI-Fast-Default" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -5087,9 +4666,9 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Asset_MaterialAsset">
+  <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="UI-Fast-Default" />
+      <xs:enumeration value="bluefloral01" />
     </xs:restriction>
   </xs:simpleType>
 

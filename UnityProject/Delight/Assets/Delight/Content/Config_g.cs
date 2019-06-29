@@ -16,7 +16,7 @@ namespace Delight
         {
             ServerUri = "http://example.com";
             UseSimulatedUriInEditor = true;
-            AssetBundleVersion = 0;
+            AssetBundleVersion = 1;
         }
     }
 }

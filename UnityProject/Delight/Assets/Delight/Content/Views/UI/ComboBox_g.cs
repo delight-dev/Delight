@@ -176,6 +176,13 @@ namespace Delight
             set { ComboBoxList.Overflow = value; }
         }
 
+        public readonly static DependencyProperty SortDirectionProperty = List.SortDirectionProperty;
+        public Delight.ElementSortDirection SortDirection
+        {
+            get { return ComboBoxList.SortDirection; }
+            set { ComboBoxList.SortDirection = value; }
+        }
+
         public readonly static DependencyProperty CanSelectProperty = List.CanSelectProperty;
         public System.Boolean CanSelect
         {

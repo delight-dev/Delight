@@ -40,6 +40,7 @@ namespace Delight
             dependencyProperties.Add(IsScrollableProperty);
             dependencyProperties.Add(IsVirtualizedProperty);
             dependencyProperties.Add(OverflowProperty);
+            dependencyProperties.Add(SortDirectionProperty);
             dependencyProperties.Add(ItemSelectedProperty);
             dependencyProperties.Add(ItemDeselectedProperty);
             dependencyProperties.Add(CanSelectProperty);
@@ -117,6 +118,13 @@ namespace Delight
         {
             get { return OverflowProperty.GetValue(this); }
             set { OverflowProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSortDirection> SortDirectionProperty = new DependencyProperty<Delight.ElementSortDirection>("SortDirection");
+        public Delight.ElementSortDirection SortDirection
+        {
+            get { return SortDirectionProperty.GetValue(this); }
+            set { SortDirectionProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected");

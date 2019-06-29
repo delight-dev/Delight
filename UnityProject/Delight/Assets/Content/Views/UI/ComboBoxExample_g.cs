@@ -45,7 +45,7 @@ namespace Delight
                 var label1 = new Label(this, comboBoxContent.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{player.Name}">
-                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 comboBoxContent.ContentTemplateData = tiPlayer;
                 return comboBoxContent;
             });
@@ -1175,6 +1175,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _comboBoxExampleComboBoxComboBoxList.Name = "ComboBoxExampleComboBoxComboBoxList";
 #endif
+                    Delight.List.ItemsProperty.SetHasBinding(_comboBoxExampleComboBoxComboBoxList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_comboBoxExampleComboBoxComboBoxList, ComboBoxExampleComboBoxComboBoxListScrollableRegion);
                 }
                 return _comboBoxExampleComboBoxComboBoxList;
@@ -1385,6 +1386,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_comboBoxExampleLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.MarginProperty.SetDefault(_comboBoxExampleLabel1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.TextProperty.SetHasBinding(_comboBoxExampleLabel1);
                 }
                 return _comboBoxExampleLabel1;
             }

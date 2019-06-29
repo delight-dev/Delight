@@ -1,3 +1,5 @@
+#if DELIGHT_MODULE_TEXTMESHPRO
+
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -56,7 +58,7 @@ namespace Delight
             base.AfterChildrenLoaded();
 
             // set default values
-            TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI;
+            //TMP_InputFieldComponent.textComponent = InputText.TextMeshProUGUI; // TODO fix
             TMP_InputFieldComponent.textViewport = TextArea.RectTransform;
             TMP_InputFieldComponent.placeholder = InputFieldPlaceholder.ImageComponent;
             TMP_InputFieldComponent.transition = Selectable.Transition.None;
@@ -150,3 +152,5 @@ namespace Delight
         #endregion
     }
 }
+
+#endif

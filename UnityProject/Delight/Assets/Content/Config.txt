@@ -10,7 +10,7 @@
 ##    DefaultBasedOn - Default view all views are based on if the BasedOn attribute isn't specified (UIView if not specified)
 ##    BaseView - Custom view all views will inherit from.
 ##    AssetBundleVersion - Set to non-zero integer to enable caching of asset bundles. Increment to invalidate bundle caches and force new updates
-##    EnableTextMeshPro - To enable TextMeshPro download the latest TextMeshPro package through the package manager and set this setting to true. When enabled the framework uses TextMeshPro labels and input fields instead of UGUI labels and input fields. 
+##    Modules - List of modules to activate. E.g. To enable TextMesh Pro, download the latest package with the package manager and add TextMeshPro to config file.
 ## Example configuration, remove "#" to uncomment configuration options:
 
 ServerUri: http://example.com
@@ -24,4 +24,7 @@ StreamedBundles:
   Bundle2
   Bundle3
 AssetBundleVersion: 1
-EnableTextMeshPro: false
+Modules: 
+  TextMeshPro
+
+

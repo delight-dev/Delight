@@ -43,7 +43,7 @@ namespace Delight
                 var label1 = new Label(this, list1Content.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{view.Name}">
-                list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => tiView.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
+                list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
                 list1Content.ContentTemplateData = tiView;
                 return list1Content;
             });
@@ -437,8 +437,6 @@ namespace Delight
                     _delightDesignerImage1.Name = "DelightDesignerImage1";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_delightDesignerImage1, new UnityEngine.Color(0.2470588f, 0.2470588f, 0.2392157f, 1f));
-                    Delight.Image.WidthProperty.SetDefault(_delightDesignerImage1, new ElementSize(1f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_delightDesignerImage1, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _delightDesignerImage1;
             }
@@ -460,8 +458,6 @@ namespace Delight
                     _delightDesignerImage2.Name = "DelightDesignerImage2";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_delightDesignerImage2, new UnityEngine.Color(0.2470588f, 0.2470588f, 0.2392157f, 1f));
-                    Delight.Image.WidthProperty.SetDefault(_delightDesignerImage2, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Image.HeightProperty.SetDefault(_delightDesignerImage2, new ElementSize(1f, ElementSizeUnit.Pixels));
                 }
                 return _delightDesignerImage2;
             }
@@ -742,6 +738,7 @@ namespace Delight
                     Delight.List.WidthProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.HeightProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.SelectOnMouseUpProperty.SetDefault(_delightDesignerList1, true);
+                    Delight.List.ItemsProperty.SetHasBinding(_delightDesignerList1);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_delightDesignerList1, DelightDesignerList1ScrollableRegion);
                 }
                 return _delightDesignerList1;
@@ -961,6 +958,7 @@ namespace Delight
                     Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, TMPro.TextOverflowModes.Ellipsis);
                     Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
                     Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
                 }
                 return _delightDesignerLabel1;
             }

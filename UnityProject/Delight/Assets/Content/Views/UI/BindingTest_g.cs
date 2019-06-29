@@ -511,6 +511,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingTestButton3.Name = "BindingTestButton3";
 #endif
+                    Delight.Button.BackgroundColorProperty.SetHasBinding(_bindingTestButton3);
                     Delight.Button.LabelTemplateProperty.SetDefault(_bindingTestButton3, BindingTestButton3Label);
                 }
                 return _bindingTestButton3;
@@ -599,6 +600,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_bindingTestLabel1, new ElementSize(130f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel1, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Label.TextProperty.SetHasBinding(_bindingTestLabel1);
                 }
                 return _bindingTestLabel1;
             }
@@ -640,6 +642,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingTestButton4Label.Name = "BindingTestButton4Label";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_bindingTestButton4Label);
                 }
                 return _bindingTestButton4Label;
             }
@@ -681,6 +684,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingTestButton5Label.Name = "BindingTestButton5Label";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_bindingTestButton5Label);
                 }
                 return _bindingTestButton5Label;
             }
@@ -746,6 +750,7 @@ namespace Delight
                     _bindingTestLabel2.Name = "BindingTestLabel2";
 #endif
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel2, new ElementSize(40f, ElementSizeUnit.Pixels));
+                    Delight.Label.TextProperty.SetHasBinding(_bindingTestLabel2);
                 }
                 return _bindingTestLabel2;
             }
@@ -767,6 +772,7 @@ namespace Delight
                     _bindingTestLabel3.Name = "BindingTestLabel3";
 #endif
                     Delight.Label.HeightProperty.SetDefault(_bindingTestLabel3, new ElementSize(40f, ElementSizeUnit.Pixels));
+                    Delight.Label.TextProperty.SetHasBinding(_bindingTestLabel3);
                 }
                 return _bindingTestLabel3;
             }

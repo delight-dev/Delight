@@ -882,6 +882,7 @@ namespace Delight
                     Delight.Label.FontColorProperty.SetStateDefault("Pressed", _buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, TMPro.FontStyles.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _buttonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
+                    Delight.Label.OffsetProperty.SetHasBinding(_buttonLabel);
                 }
                 return _buttonLabel;
             }

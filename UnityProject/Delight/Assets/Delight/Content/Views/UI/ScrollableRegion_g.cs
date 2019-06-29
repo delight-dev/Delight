@@ -295,6 +295,7 @@ namespace Delight
                     _scrollableRegionContentRegion.Name = "ScrollableRegionContentRegion";
 #endif
                     Delight.Region.BubbleNotifyChildLayoutChangedProperty.SetDefault(_scrollableRegionContentRegion, true);
+                    Delight.Region.AlignmentProperty.SetHasBinding(_scrollableRegionContentRegion);
                 }
                 return _scrollableRegionContentRegion;
             }

@@ -46,12 +46,12 @@ namespace Delight
                 var label3 = new Label(this, group3.Content, "Label3", Label3Template);
 
                 // binding <Label Text="{player.Name}">
-                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
                 achievementsList.ItemSelected += ResolveActionHandler(this, "AchievementSelectionChanged");
 
                 // binding <List Items="{achievement in player.Achievements}">
-                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Achievements" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => achievementsList }), () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements, () => { }, false));
+                playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Achievements" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => achievementsList }), () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements, () => { }, false));
 
                 // Template for achievementsList
                 achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
@@ -60,7 +60,7 @@ namespace Delight
                     var label4 = new Label(this, achievementsListContent.Content, "Label4", Label4Template);
 
                     // binding <Label Text="{achievement.Title}">
-                    achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => tiAchievement.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
+                    achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => (tiAchievement.Item as Delight.Achievement) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
                     achievementsListContent.ContentTemplateData = tiAchievement;
                     return achievementsListContent;
                 });
@@ -553,6 +553,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestLabel1.Name = "ModelBindingTestLabel1";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_modelBindingTestLabel1);
                 }
                 return _modelBindingTestLabel1;
             }
@@ -573,6 +574,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestLabel2.Name = "ModelBindingTestLabel2";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_modelBindingTestLabel2);
                 }
                 return _modelBindingTestLabel2;
             }
@@ -598,6 +600,7 @@ namespace Delight
                     Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.List.IsScrollableProperty.SetDefault(_modelBindingTestPlayerList, true);
+                    Delight.List.ItemsProperty.SetHasBinding(_modelBindingTestPlayerList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestPlayerList, ModelBindingTestPlayerListScrollableRegion);
                 }
                 return _modelBindingTestPlayerList;
@@ -826,6 +829,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestLabel3.Name = "ModelBindingTestLabel3";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_modelBindingTestLabel3);
                 }
                 return _modelBindingTestLabel3;
             }
@@ -848,6 +852,7 @@ namespace Delight
 #endif
                     Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
                     Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.ItemsProperty.SetHasBinding(_modelBindingTestAchievementsList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsList, ModelBindingTestAchievementsListScrollableRegion);
                 }
                 return _modelBindingTestAchievementsList;
@@ -1056,6 +1061,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestLabel4.Name = "ModelBindingTestLabel4";
 #endif
+                    Delight.Label.TextProperty.SetHasBinding(_modelBindingTestLabel4);
                 }
                 return _modelBindingTestLabel4;
             }

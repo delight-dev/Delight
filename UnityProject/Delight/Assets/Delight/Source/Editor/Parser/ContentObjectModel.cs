@@ -519,6 +519,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(11, AsReference = true)]
         public ViewDeclaration ContentContainer;
 
+        [ProtoMember(12)]
+        public string Module;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 

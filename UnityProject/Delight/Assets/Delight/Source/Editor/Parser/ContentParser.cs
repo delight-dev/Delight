@@ -38,6 +38,7 @@ namespace Delight.Editor.Parser
         private const string DefaultNamespace = "Delight";
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
+        private static readonly char[] ModuleDelimiterChars = { ' ', ';' };
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
@@ -52,13 +53,16 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Processes all content and generates code.
         /// </summary>
-        public static void RebuildAll(bool buildAssets, bool buildBundlesLater = false)
+        public static void RebuildAll(bool buildAssets, bool buildBundlesLater = false, bool parseConfigFiles = true)
         {
             // wait for any uncompiled scripts to be compiled first
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
             // parse all config files
-            ParseAllConfigFiles();
+            if (parseConfigFiles)
+            {
+                ParseAllConfigFiles();
+            }
 
             // parse all assets
             if (buildAssets)
@@ -77,6 +81,46 @@ namespace Delight.Editor.Parser
 
             // generate XSD schemas
             CodeGenerator.GenerateXsdSchema();
+        }
+
+        /// <summary>
+        /// Updates project settings based on config values.
+        /// </summary>
+        private static void UpdateProjectSettings()
+        {
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(
+                BuildTargetGroup.Standalone);
+            var config = MasterConfig.GetInstance();
+            var newModules = config.Modules.Select(x => String.Format("DELIGHT_MODULE_{0}", x.ToUpper()));
+
+            // see all modules currently defined 
+            var currentModules = symbols.Split(ModuleDelimiterChars, StringSplitOptions.RemoveEmptyEntries).ToList();
+            bool symbolsNeedUpdate = false;
+
+            // see if any aren't in the list and remove them
+            foreach (var currentModule in currentModules)
+            {
+                if (!config.Modules.Any(x => x.Equals(currentModule)))
+                {
+                    symbols = symbols.Replace(currentModule, "");
+                    symbolsNeedUpdate = true;
+                }
+            }
+
+            // see if there are new modules and add them
+            foreach (var newModule in newModules)
+            {
+                if (!symbols.Contains(newModule))
+                {
+                    symbols += ";" + newModule;
+                    symbolsNeedUpdate = true;
+                }
+            }
+
+            if (symbolsNeedUpdate)
+            {
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, symbols);
+            }
         }
 
         /// <summary>
@@ -222,9 +266,30 @@ namespace Delight.Editor.Parser
         private static void ParseViewXml(XmlFile xumlFile, XElement rootXmlElement)
         {
             _currentXmlFile = xumlFile;
-            var viewName = rootXmlElement.Name.LocalName;
-            var viewObject = _contentObjectModel.LoadViewObject(viewName);
             var config = MasterConfig.GetInstance();
+            var viewName = rootXmlElement.Name.LocalName;
+            var module = rootXmlElement.Attribute("Module")?.Value;
+
+            // if the view is in a module ignore it if the module isn't active
+            if (!String.IsNullOrEmpty(module))
+            {
+                if (module.StartsWith("!"))
+                {
+                    if (config.Modules.Any(x => x == module.Substring(1)))
+                    {
+                        return;
+                    }
+                }
+                else
+                {
+                    if (!config.Modules.Any(x => x == module))
+                    {
+                        return;
+                    }
+                }
+            }
+
+            var viewObject = _contentObjectModel.LoadViewObject(viewName);
 
             // clear view object 
             viewObject.Clear();
@@ -254,6 +319,12 @@ namespace Delight.Editor.Parser
                 if (attributeName.IEquals("Namespace"))
                 {
                     viewObject.Namespace = attributeValue;
+                    continue;
+                }
+
+                if (attributeName.IEquals("Module"))
+                {
+                    viewObject.Module = attributeValue;
                     continue;
                 }
 
@@ -1720,6 +1791,7 @@ namespace Delight.Editor.Parser
             var oldStreamedBundles = config.StreamedBundles.ToList();
             var oldContentFolders = config.ContentFolders.ToList();
             var oldBasedOn = config.DefaultBasedOn;
+            var oldModules = config.Modules.ToList();
 
             // clear configuration
             config.Clear();
@@ -1763,6 +1835,12 @@ namespace Delight.Editor.Parser
             if (oldBasedOn != config.DefaultBasedOn)
             {
                 result |= ConfigParseResult.RebuildAll;
+            }
+
+            if (!oldModules.Same(config.Modules))
+            {
+                result |= ConfigParseResult.RebuildAll;
+                UpdateProjectSettings();
             }
 
             return result;
@@ -1856,9 +1934,9 @@ namespace Delight.Editor.Parser
                             if (value.IEquals("true"))
                                 config.UseSimulatedUriInEditor = true;
                             else if (value.IEquals("false"))
-                                config.UseSimulatedUriInEditor = true;
+                                config.UseSimulatedUriInEditor = false;
                             else
-                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option UseSimulatedUriInEditor. Value need to be either true or false.\nError line:\n{2}", path, i + 1, line));
+                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option {2}. Value need to be either true or false.\nError line:\n{2}", path, i + 1, line, configOption));
                         }
                         break;
 
@@ -2019,8 +2097,25 @@ namespace Delight.Editor.Parser
                             }
                             catch
                             {
-                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option AssetBundleVersion. Value need to be an integer.\nError line:\n{2}", path, i + 1, line));
+                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option {2}. Value need to be an integer.\nError line:\n{2}", path, i + 1, line, configOption));
                             }
+                        }
+                        break;
+
+                    case "modules":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.Modules.AddRange(values.Where(x => !String.IsNullOrWhiteSpace(x)));
+                            }
+                        }
+                        else
+                        {
+                            config.Modules.Add(configValue);
                         }
                         break;
 

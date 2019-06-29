@@ -241,7 +241,7 @@ namespace Delight.Editor
                 var result = ContentParser.ParseAllConfigFiles();
                 if (result.HasFlag(ConfigParseResult.RebuildAll))
                 {
-                    ContentParser.RebuildAll(true, true);
+                    ContentParser.RebuildAll(true, true, false);
                     assetsChanged = false;
                     schemasChanged = false;
                     rebuildViews = false;

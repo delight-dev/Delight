@@ -35,11 +35,11 @@ namespace Delight
                 var image1 = new Image(this, listItem1.Content, "Image1", Image1Template);
 
                 // binding <Image Color="{player.Color}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Color" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Color" }, new List<Func<BindableObject>> { () => image1 }), () => image1.Color = (tiPlayer.Item as Delight.Player).Color, () => { }, false));
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Color" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Color" }, new List<Func<BindableObject>> { () => image1 }), () => image1.Color = (tiPlayer.Item as Delight.Player).Color, () => { }, false));
                 var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{player.Name}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => tiPlayer.Item }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 listItem1.ContentTemplateData = tiPlayer;
                 return listItem1;
             });
@@ -392,6 +392,7 @@ namespace Delight
                     Delight.List.IsScrollableProperty.SetDefault(_listExamplePlayerList, true);
                     Delight.List.OverflowProperty.SetDefault(_listExamplePlayerList, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_listExamplePlayerList, Delight.ElementOrientation.Horizontal);
+                    Delight.List.ItemsProperty.SetHasBinding(_listExamplePlayerList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_listExamplePlayerList, ListExamplePlayerListScrollableRegion);
                 }
                 return _listExamplePlayerList;
@@ -603,6 +604,7 @@ namespace Delight
                     _listExampleImage1.Name = "ListExampleImage1";
 #endif
                     Delight.Image.MarginProperty.SetDefault(_listExampleImage1, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels)));
+                    Delight.Image.ColorProperty.SetHasBinding(_listExampleImage1);
                 }
                 return _listExampleImage1;
             }
@@ -624,6 +626,7 @@ namespace Delight
                     _listExampleLabel1.Name = "ListExampleLabel1";
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_listExampleLabel1, Delight.AutoSize.Default);
+                    Delight.Label.TextProperty.SetHasBinding(_listExampleLabel1);
                 }
                 return _listExampleLabel1;
             }

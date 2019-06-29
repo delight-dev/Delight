@@ -73,6 +73,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(14)]
         public int AssetBundleVersion;
 
+        [ProtoMember(15)]
+        public List<string> Modules;
+
         private static MasterConfig _config;
 
         #endregion
@@ -89,6 +92,7 @@ namespace Delight.Editor.Parser
             BuildTargets = new List<string>();
             StreamedBundles = new List<string>();
             Namespaces = new List<string>();
+            Modules = new List<string>();
         }
 
         #endregion
@@ -283,6 +287,7 @@ namespace Delight.Editor.Parser
             DefaultBasedOn = String.Empty;
             BaseView = String.Empty;
             AssetBundleVersion = 0;
+            Modules = new List<string>();
         }
 
         /// <summary>

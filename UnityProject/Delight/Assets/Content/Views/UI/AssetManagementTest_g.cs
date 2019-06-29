@@ -598,6 +598,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel1, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel1, Delight.ElementAlignment.Top);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel1, TMPro.TextAlignmentOptions.Left);
+                    Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel1);
                 }
                 return _assetManagementTestLabel1;
             }
@@ -621,6 +622,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel2, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel2, Delight.ElementAlignment.TopRight);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel2, TMPro.TextAlignmentOptions.TopLeft);
+                    Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel2);
                 }
                 return _assetManagementTestLabel2;
             }
@@ -644,6 +646,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel3, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel3, Delight.ElementAlignment.TopLeft);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel3, TMPro.TextAlignmentOptions.TopLeft);
+                    Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel3);
                 }
                 return _assetManagementTestLabel3;
             }
@@ -1054,8 +1057,6 @@ namespace Delight
                     _assetManagementTestImage1.Name = "AssetManagementTestImage1";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage1, Assets.Sprites["Frame1"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage1;
             }
@@ -1077,8 +1078,6 @@ namespace Delight
                     _assetManagementTestImage2.Name = "AssetManagementTestImage2";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage2, Assets.Sprites["Frame2"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage2;
             }
@@ -1122,8 +1121,6 @@ namespace Delight
                     _assetManagementTestImage3.Name = "AssetManagementTestImage3";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage3, Assets.Sprites["Frame3"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage3;
             }
@@ -1145,8 +1142,6 @@ namespace Delight
                     _assetManagementTestImage4.Name = "AssetManagementTestImage4";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage4, Assets.Sprites["Frame4"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage4;
             }
@@ -1190,8 +1185,6 @@ namespace Delight
                     _assetManagementTestImage5.Name = "AssetManagementTestImage5";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage5, Assets.Sprites["Frame2"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage5;
             }
@@ -1213,8 +1206,6 @@ namespace Delight
                     _assetManagementTestImage6.Name = "AssetManagementTestImage6";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestImage6, Assets.Sprites["Frame3"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestImage6;
             }
@@ -1258,8 +1249,6 @@ namespace Delight
                     _assetManagementTestBigSpriteImage.Name = "AssetManagementTestBigSpriteImage";
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_assetManagementTestBigSpriteImage, Assets.Sprites["BigSprite"]);
-                    Delight.Image.WidthProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_assetManagementTestBigSpriteImage, new ElementSize(205f, ElementSizeUnit.Pixels));
                 }
                 return _assetManagementTestBigSpriteImage;
             }
@@ -1283,6 +1272,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel4, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel4, Delight.ElementAlignment.Center);
                     Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel4, TMPro.TextAlignmentOptions.Center);
+                    Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel4);
                 }
                 return _assetManagementTestLabel4;
             }

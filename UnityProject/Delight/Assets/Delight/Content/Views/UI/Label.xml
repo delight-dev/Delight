@@ -1,5 +1,7 @@
 <Label xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-       BasedOn="UIView" TextMeshProUGUI="t:TMPro.TextMeshProUGUI"
-       m.TextMeshProUGUI="" rename.TextMeshProUGUIAlignment="TextAlignment" rename.TextMeshProUGUIMargin="TextMargin" rename.Color="FontColor" TextAlignment="Left" Width="120" Height="40" FontColor="Black" FontSize="24"
+       Module="!TextMeshPro"
+       BasedOn="UIView" TextComponent="t:UnityEngine.UI.Text" TextAlignment="t:ElementAlignment = Left"
+       m.TextComponent="" rename.TextComponentAlignment="TextAlignment" rename.Color="FontColor" Width="120" Height="40" FontColor="Black" FontSize="24"
+       EnableWordWrapping="t:bool"
        AutoSize="t:AutoSize">  
-</Label> 
+</Label>  

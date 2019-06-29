@@ -128,7 +128,21 @@ namespace Delight.Editor.Parser
             // start by generating data template as we update property assignment expressions with property declaration information as we do
             GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath);
 
-            // open the view class
+            bool addEndIf = false;
+            if (!String.IsNullOrEmpty(viewObject.Module))
+            {
+                if (viewObject.Module.StartsWith("!"))
+                {
+                    sb.AppendLine("#if !DELIGHT_MODULE_{0}", viewObject.Module.Substring(1).ToUpper());
+                }
+                else
+                {
+                    sb.AppendLine("#if DELIGHT_MODULE_{0}", viewObject.Module.ToUpper());
+                }
+                sb.AppendLine();
+                addEndIf = true;
+            }
+
             sb.AppendLine("// Internal view logic generated from \"{0}.xml\"", viewObject.Name);
             sb.AppendLine("#region Using Statements");
             sb.AppendLine("using System;");
@@ -322,6 +336,12 @@ namespace Delight.Editor.Parser
 
             // close namespace
             sb.AppendLine("}");
+
+            if (addEndIf)
+            {
+                sb.AppendLine();
+                sb.AppendLine("#endif");
+            }
 
             // write file
             var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
@@ -711,7 +731,18 @@ namespace Delight.Editor.Parser
                         if (type != null && type.IsEnum)
                         {
                             // generate generic initializer for enum type
-                            typeValueInitializer = String.Format("{0}.{1}", type.FullName.Replace('+', '.'), Enum.Parse(type, propertyAssignment.PropertyValue, true));
+                            try
+                            {
+                                typeValueInitializer = String.Format("{0}.{1}", type.FullName.Replace('+', '.'), Enum.Parse(type, propertyAssignment.PropertyValue, true));
+                            }
+                            catch (Exception e)
+                            {
+                                // invalid enum value
+                                ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign enum value to property <{1} {2}=\"{3}\">. Invalid enum value of type \"{4}\".",
+                                    GetLineInfo(fileName, propertyAssignment),
+                                    viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
+                                continue;
+                            }
                         }
                         else
                         {
@@ -1599,9 +1630,9 @@ namespace Delight.Editor.Parser
             public PropertyBinding ItemIdDeclaration;
         }
 
-        #endregion
+#endregion
 
-        #region Assets
+                #region Assets
 
         /// <summary>
         /// Generates asset code. 
@@ -1775,9 +1806,9 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+                #endregion
 
-        #region Models
+                #region Models
 
         /// <summary>
         /// Generates model code.
@@ -2264,9 +2295,9 @@ namespace Delight.Editor.Parser
             //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
         }
 
-        #endregion
+                #endregion
 
-        #region Config
+                #region Config
 
         /// <summary>
         /// Generates model code.
@@ -2323,7 +2354,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+                #endregion
     }
 }
 
