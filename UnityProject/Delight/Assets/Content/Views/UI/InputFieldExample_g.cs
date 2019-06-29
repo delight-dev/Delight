@@ -390,7 +390,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel2, "Normal");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel2, Delight.AutoSize.Width);
-                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel2, 12f);
+                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel2, 12);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel2, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
                 return _inputFieldExampleLabel2;
@@ -498,7 +498,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel3, "Password");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel3, Delight.AutoSize.Default);
-                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel3, 12f);
+                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel3, 12);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel3, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
                 return _inputFieldExampleLabel3;
@@ -521,7 +521,7 @@ namespace Delight
                     _inputFieldExampleInputField2.Name = "InputFieldExampleInputField2";
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField2, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.InputField.ContentTypeProperty.SetDefault(_inputFieldExampleInputField2, TMPro.TMP_InputField.ContentType.Password);
+                    Delight.InputField.ContentTypeProperty.SetDefault(_inputFieldExampleInputField2, UnityEngine.UI.InputField.ContentType.Password);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2InputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField2, InputFieldExampleInputField2InputText);
@@ -607,7 +607,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel4, "With placeholder content");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel4, Delight.AutoSize.Default);
-                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel4, 12f);
+                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel4, 12);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel4, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
                 return _inputFieldExampleLabel4;
@@ -783,7 +783,7 @@ namespace Delight
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.HeightProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.InputField.LineTypeProperty.SetDefault(_inputFieldExampleInputField4, TMPro.TMP_InputField.LineType.MultiLineNewline);
+                    Delight.InputField.LineTypeProperty.SetDefault(_inputFieldExampleInputField4, UnityEngine.UI.InputField.LineType.MultiLineNewline);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4InputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4TextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputFieldExampleInputField4, InputFieldExampleInputField4InputText);

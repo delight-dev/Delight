@@ -949,14 +949,12 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerLabel1.Name = "DelightDesignerLabel1";
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 16f);
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 16);
                     Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(24f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Ebrima SDF"]);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.Fonts["Ebrima SDF"]);
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(240f, ElementSizeUnit.Pixels));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, TMPro.TextOverflowModes.Ellipsis);
-                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
                     Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
                     Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
                 }

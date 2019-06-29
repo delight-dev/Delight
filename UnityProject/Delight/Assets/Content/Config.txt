@@ -24,7 +24,7 @@ StreamedBundles:
   Bundle2
   Bundle3
 AssetBundleVersion: 1
-Modules: 
-  TextMeshPro
+#Modules: 
+#  TextMeshPro
 
 

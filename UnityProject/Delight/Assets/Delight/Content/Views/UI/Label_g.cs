@@ -249,6 +249,8 @@ namespace Delight
                     Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Label.FontColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24);
+                    Delight.Label.HorizontalOverflowProperty.SetDefault(_label, UnityEngine.HorizontalWrapMode.Wrap);
+                    Delight.Label.VerticalOverflowProperty.SetDefault(_label, UnityEngine.VerticalWrapMode.Overflow);
                 }
                 return _label;
             }

@@ -3,5 +3,8 @@
        BasedOn="UIView" TextComponent="t:UnityEngine.UI.Text" TextAlignment="t:ElementAlignment = Left"
        m.TextComponent="" rename.TextComponentAlignment="TextAlignment" rename.Color="FontColor" Width="120" Height="40" FontColor="Black" FontSize="24"
        EnableWordWrapping="t:bool"
-       AutoSize="t:AutoSize">  
+       AutoSize="t:AutoSize"
+       HorizontalOverflow="Wrap"
+       VerticalOverflow="Overflow"       
+       >  
 </Label>  

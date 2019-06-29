@@ -397,6 +397,13 @@ namespace Delight
             set { InputText.TextAlignment = value; }
         }
 
+        public readonly static DependencyProperty EnableWordWrappingProperty = Label.EnableWordWrappingProperty;
+        public System.Boolean EnableWordWrapping
+        {
+            get { return InputText.EnableWordWrapping; }
+            set { InputText.EnableWordWrapping = value; }
+        }
+
         public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
         public Delight.AutoSize AutoSize
         {

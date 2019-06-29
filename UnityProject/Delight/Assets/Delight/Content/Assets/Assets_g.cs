@@ -214,6 +214,57 @@ namespace Delight
 
     #endregion
 
+    #region TMP_ColorGradients
+
+    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
+    {
+    }
+
+    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
+    }
+
+    #endregion
+
+    #region TMP_SpriteAssets
+
+    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
+    {
+    }
+
+    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
+    }
+
+    #endregion
+
+    #region TMP_InputValidators
+
+    public partial class TMP_InputValidatorAsset : AssetObject<TMPro.TMP_InputValidator>
+    {
+    }
+
+    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_InputValidatorAssetData TMP_InputValidators = new TMP_InputValidatorAssetData();
+    }
+
+    #endregion
+
     #region Texture2Ds
 
     public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
@@ -276,57 +327,6 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
-    }
-
-    #endregion
-
-    #region TMP_ColorGradients
-
-    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
-    {
-    }
-
-    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
-    }
-
-    #endregion
-
-    #region TMP_SpriteAssets
-
-    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
-    {
-    }
-
-    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
-    }
-
-    #endregion
-
-    #region TMP_InputValidators
-
-    public partial class TMP_InputValidatorAsset : AssetObject<TMPro.TMP_InputValidator>
-    {
-    }
-
-    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_InputValidatorAssetData TMP_InputValidators = new TMP_InputValidatorAssetData();
     }
 
     #endregion

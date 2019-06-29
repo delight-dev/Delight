@@ -682,7 +682,7 @@ namespace Delight.Editor.Parser
                                 PropertyName = initializerProperty.Properties[k],
                                 PropertyValue = assignmentValues[0]
                             };
-                            propertyAssignments.Add(newPropertyAssignment);
+                            propertyExpressions.Add(newPropertyAssignment);
                         }
                         else if (k < assignmentValues.Length)
                         {
@@ -692,7 +692,7 @@ namespace Delight.Editor.Parser
                                 PropertyName = initializerProperty.Properties[k],
                                 PropertyValue = assignmentValues[k]
                             };
-                            propertyAssignments.Add(newPropertyAssignment);
+                            propertyExpressions.Add(newPropertyAssignment);
                         }
                         else
                         {

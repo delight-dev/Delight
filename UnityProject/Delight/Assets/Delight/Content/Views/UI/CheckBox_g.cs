@@ -395,242 +395,11 @@ namespace Delight
             set { CheckBoxImageView.LoadMode = value; }
         }
 
-        public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
-        public Delight.AutoSize AutoSize
-        {
-            get { return CheckBoxLabel.AutoSize; }
-            set { CheckBoxLabel.AutoSize = value; }
-        }
-
-        public readonly static DependencyProperty AutoSizeTextContainerProperty = Label.AutoSizeTextContainerProperty;
-        public System.Boolean AutoSizeTextContainer
-        {
-            get { return CheckBoxLabel.AutoSizeTextContainer; }
-            set { CheckBoxLabel.AutoSizeTextContainer = value; }
-        }
-
-        public readonly static DependencyProperty MaskOffsetProperty = Label.MaskOffsetProperty;
-        public UnityEngine.Vector4 MaskOffset
-        {
-            get { return CheckBoxLabel.MaskOffset; }
-            set { CheckBoxLabel.MaskOffset = value; }
-        }
-
-        public readonly static DependencyProperty TextProperty = Label.TextProperty;
-        public System.String Text
-        {
-            get { return CheckBoxLabel.Text; }
-            set { CheckBoxLabel.Text = value; }
-        }
-
-        public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
-        public System.Boolean IsRightToLeftText
-        {
-            get { return CheckBoxLabel.IsRightToLeftText; }
-            set { CheckBoxLabel.IsRightToLeftText = value; }
-        }
-
-        public readonly static DependencyProperty FontProperty = Label.FontProperty;
-        public TMP_FontAsset Font
-        {
-            get { return CheckBoxLabel.Font; }
-            set { CheckBoxLabel.Font = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialProperty = Label.FontSharedMaterialProperty;
-        public MaterialAsset FontSharedMaterial
-        {
-            get { return CheckBoxLabel.FontSharedMaterial; }
-            set { CheckBoxLabel.FontSharedMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialsProperty = Label.FontSharedMaterialsProperty;
-        public UnityEngine.Material[] FontSharedMaterials
-        {
-            get { return CheckBoxLabel.FontSharedMaterials; }
-            set { CheckBoxLabel.FontSharedMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialProperty = Label.FontMaterialProperty;
-        public MaterialAsset FontMaterial
-        {
-            get { return CheckBoxLabel.FontMaterial; }
-            set { CheckBoxLabel.FontMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialsProperty = Label.FontMaterialsProperty;
-        public UnityEngine.Material[] FontMaterials
-        {
-            get { return CheckBoxLabel.FontMaterials; }
-            set { CheckBoxLabel.FontMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
-        public UnityEngine.Color FontColor
-        {
-            get { return CheckBoxLabel.FontColor; }
-            set { CheckBoxLabel.FontColor = value; }
-        }
-
-        public readonly static DependencyProperty TextMeshProUGUIAlphaProperty = Label.TextMeshProUGUIAlphaProperty;
-        public System.Single TextMeshProUGUIAlpha
-        {
-            get { return CheckBoxLabel.TextMeshProUGUIAlpha; }
-            set { CheckBoxLabel.TextMeshProUGUIAlpha = value; }
-        }
-
-        public readonly static DependencyProperty EnableVertexGradientProperty = Label.EnableVertexGradientProperty;
-        public System.Boolean EnableVertexGradient
-        {
-            get { return CheckBoxLabel.EnableVertexGradient; }
-            set { CheckBoxLabel.EnableVertexGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientProperty = Label.ColorGradientProperty;
-        public TMPro.VertexGradient ColorGradient
-        {
-            get { return CheckBoxLabel.ColorGradient; }
-            set { CheckBoxLabel.ColorGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientPresetProperty = Label.ColorGradientPresetProperty;
-        public TMP_ColorGradientAsset ColorGradientPreset
-        {
-            get { return CheckBoxLabel.ColorGradientPreset; }
-            set { CheckBoxLabel.ColorGradientPreset = value; }
-        }
-
-        public readonly static DependencyProperty SpriteAssetProperty = Label.SpriteAssetProperty;
-        public TMP_SpriteAsset SpriteAsset
-        {
-            get { return CheckBoxLabel.SpriteAsset; }
-            set { CheckBoxLabel.SpriteAsset = value; }
-        }
-
-        public readonly static DependencyProperty TintAllSpritesProperty = Label.TintAllSpritesProperty;
-        public System.Boolean TintAllSprites
-        {
-            get { return CheckBoxLabel.TintAllSprites; }
-            set { CheckBoxLabel.TintAllSprites = value; }
-        }
-
-        public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
-        public System.Boolean OverrideColorTags
-        {
-            get { return CheckBoxLabel.OverrideColorTags; }
-            set { CheckBoxLabel.OverrideColorTags = value; }
-        }
-
-        public readonly static DependencyProperty FaceColorProperty = Label.FaceColorProperty;
-        public UnityEngine.Color32 FaceColor
-        {
-            get { return CheckBoxLabel.FaceColor; }
-            set { CheckBoxLabel.FaceColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineColorProperty = Label.OutlineColorProperty;
-        public UnityEngine.Color32 OutlineColor
-        {
-            get { return CheckBoxLabel.OutlineColor; }
-            set { CheckBoxLabel.OutlineColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineWidthProperty = Label.OutlineWidthProperty;
-        public System.Single OutlineWidth
-        {
-            get { return CheckBoxLabel.OutlineWidth; }
-            set { CheckBoxLabel.OutlineWidth = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
-        public System.Single FontSize
-        {
-            get { return CheckBoxLabel.FontSize; }
-            set { CheckBoxLabel.FontSize = value; }
-        }
-
-        public readonly static DependencyProperty FontWeightProperty = Label.FontWeightProperty;
-        public TMPro.FontWeight FontWeight
-        {
-            get { return CheckBoxLabel.FontWeight; }
-            set { CheckBoxLabel.FontWeight = value; }
-        }
-
-        public readonly static DependencyProperty EnableAutoSizingProperty = Label.EnableAutoSizingProperty;
-        public System.Boolean EnableAutoSizing
-        {
-            get { return CheckBoxLabel.EnableAutoSizing; }
-            set { CheckBoxLabel.EnableAutoSizing = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMinProperty = Label.FontSizeMinProperty;
-        public System.Single FontSizeMin
-        {
-            get { return CheckBoxLabel.FontSizeMin; }
-            set { CheckBoxLabel.FontSizeMin = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMaxProperty = Label.FontSizeMaxProperty;
-        public System.Single FontSizeMax
-        {
-            get { return CheckBoxLabel.FontSizeMax; }
-            set { CheckBoxLabel.FontSizeMax = value; }
-        }
-
-        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
-        public TMPro.FontStyles FontStyle
-        {
-            get { return CheckBoxLabel.FontStyle; }
-            set { CheckBoxLabel.FontStyle = value; }
-        }
-
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
-        public TMPro.TextAlignmentOptions TextAlignment
+        public Delight.ElementAlignment TextAlignment
         {
             get { return CheckBoxLabel.TextAlignment; }
             set { CheckBoxLabel.TextAlignment = value; }
-        }
-
-        public readonly static DependencyProperty CharacterSpacingProperty = Label.CharacterSpacingProperty;
-        public System.Single CharacterSpacing
-        {
-            get { return CheckBoxLabel.CharacterSpacing; }
-            set { CheckBoxLabel.CharacterSpacing = value; }
-        }
-
-        public readonly static DependencyProperty WordSpacingProperty = Label.WordSpacingProperty;
-        public System.Single WordSpacing
-        {
-            get { return CheckBoxLabel.WordSpacing; }
-            set { CheckBoxLabel.WordSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
-        public System.Single LineSpacing
-        {
-            get { return CheckBoxLabel.LineSpacing; }
-            set { CheckBoxLabel.LineSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingAdjustmentProperty = Label.LineSpacingAdjustmentProperty;
-        public System.Single LineSpacingAdjustment
-        {
-            get { return CheckBoxLabel.LineSpacingAdjustment; }
-            set { CheckBoxLabel.LineSpacingAdjustment = value; }
-        }
-
-        public readonly static DependencyProperty ParagraphSpacingProperty = Label.ParagraphSpacingProperty;
-        public System.Single ParagraphSpacing
-        {
-            get { return CheckBoxLabel.ParagraphSpacing; }
-            set { CheckBoxLabel.ParagraphSpacing = value; }
-        }
-
-        public readonly static DependencyProperty CharacterWidthAdjustmentProperty = Label.CharacterWidthAdjustmentProperty;
-        public System.Single CharacterWidthAdjustment
-        {
-            get { return CheckBoxLabel.CharacterWidthAdjustment; }
-            set { CheckBoxLabel.CharacterWidthAdjustment = value; }
         }
 
         public readonly static DependencyProperty EnableWordWrappingProperty = Label.EnableWordWrappingProperty;
@@ -640,207 +409,102 @@ namespace Delight
             set { CheckBoxLabel.EnableWordWrapping = value; }
         }
 
-        public readonly static DependencyProperty WordWrappingRatiosProperty = Label.WordWrappingRatiosProperty;
-        public System.Single WordWrappingRatios
+        public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
+        public Delight.AutoSize AutoSize
         {
-            get { return CheckBoxLabel.WordWrappingRatios; }
-            set { CheckBoxLabel.WordWrappingRatios = value; }
+            get { return CheckBoxLabel.AutoSize; }
+            set { CheckBoxLabel.AutoSize = value; }
         }
 
-        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
-        public TMPro.TextOverflowModes OverflowMode
+        public readonly static DependencyProperty FontProperty = Label.FontProperty;
+        public FontAsset Font
         {
-            get { return CheckBoxLabel.OverflowMode; }
-            set { CheckBoxLabel.OverflowMode = value; }
+            get { return CheckBoxLabel.Font; }
+            set { CheckBoxLabel.Font = value; }
         }
 
-        public readonly static DependencyProperty LinkedTextComponentProperty = Label.LinkedTextComponentProperty;
-        public TMPro.TMP_Text LinkedTextComponent
+        public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        public System.String Text
         {
-            get { return CheckBoxLabel.LinkedTextComponent; }
-            set { CheckBoxLabel.LinkedTextComponent = value; }
+            get { return CheckBoxLabel.Text; }
+            set { CheckBoxLabel.Text = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
+        public readonly static DependencyProperty SupportRichTextProperty = Label.SupportRichTextProperty;
+        public System.Boolean SupportRichText
         {
-            get { return CheckBoxLabel.IsLinkedTextComponent; }
-            set { CheckBoxLabel.IsLinkedTextComponent = value; }
+            get { return CheckBoxLabel.SupportRichText; }
+            set { CheckBoxLabel.SupportRichText = value; }
         }
 
-        public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
-        public System.Boolean EnableKerning
+        public readonly static DependencyProperty ResizeTextForBestFitProperty = Label.ResizeTextForBestFitProperty;
+        public System.Boolean ResizeTextForBestFit
         {
-            get { return CheckBoxLabel.EnableKerning; }
-            set { CheckBoxLabel.EnableKerning = value; }
+            get { return CheckBoxLabel.ResizeTextForBestFit; }
+            set { CheckBoxLabel.ResizeTextForBestFit = value; }
         }
 
-        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
-        public System.Boolean ExtraPadding
+        public readonly static DependencyProperty ResizeTextMinSizeProperty = Label.ResizeTextMinSizeProperty;
+        public System.Int32 ResizeTextMinSize
         {
-            get { return CheckBoxLabel.ExtraPadding; }
-            set { CheckBoxLabel.ExtraPadding = value; }
+            get { return CheckBoxLabel.ResizeTextMinSize; }
+            set { CheckBoxLabel.ResizeTextMinSize = value; }
         }
 
-        public readonly static DependencyProperty RichTextProperty = Label.RichTextProperty;
-        public System.Boolean RichText
+        public readonly static DependencyProperty ResizeTextMaxSizeProperty = Label.ResizeTextMaxSizeProperty;
+        public System.Int32 ResizeTextMaxSize
         {
-            get { return CheckBoxLabel.RichText; }
-            set { CheckBoxLabel.RichText = value; }
+            get { return CheckBoxLabel.ResizeTextMaxSize; }
+            set { CheckBoxLabel.ResizeTextMaxSize = value; }
         }
 
-        public readonly static DependencyProperty ParseCtrlCharactersProperty = Label.ParseCtrlCharactersProperty;
-        public System.Boolean ParseCtrlCharacters
+        public readonly static DependencyProperty TextComponentTextAlignmentProperty = Label.TextComponentTextAlignmentProperty;
+        public UnityEngine.TextAnchor TextComponentTextAlignment
         {
-            get { return CheckBoxLabel.ParseCtrlCharacters; }
-            set { CheckBoxLabel.ParseCtrlCharacters = value; }
+            get { return CheckBoxLabel.TextComponentTextAlignment; }
+            set { CheckBoxLabel.TextComponentTextAlignment = value; }
         }
 
-        public readonly static DependencyProperty IsOverlayProperty = Label.IsOverlayProperty;
-        public System.Boolean IsOverlay
+        public readonly static DependencyProperty AlignByGeometryProperty = Label.AlignByGeometryProperty;
+        public System.Boolean AlignByGeometry
         {
-            get { return CheckBoxLabel.IsOverlay; }
-            set { CheckBoxLabel.IsOverlay = value; }
+            get { return CheckBoxLabel.AlignByGeometry; }
+            set { CheckBoxLabel.AlignByGeometry = value; }
         }
 
-        public readonly static DependencyProperty IsOrthographicProperty = Label.IsOrthographicProperty;
-        public System.Boolean IsOrthographic
+        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
+        public System.Int32 FontSize
         {
-            get { return CheckBoxLabel.IsOrthographic; }
-            set { CheckBoxLabel.IsOrthographic = value; }
+            get { return CheckBoxLabel.FontSize; }
+            set { CheckBoxLabel.FontSize = value; }
         }
 
-        public readonly static DependencyProperty EnableCullingProperty = Label.EnableCullingProperty;
-        public System.Boolean EnableCulling
+        public readonly static DependencyProperty HorizontalOverflowProperty = Label.HorizontalOverflowProperty;
+        public UnityEngine.HorizontalWrapMode HorizontalOverflow
         {
-            get { return CheckBoxLabel.EnableCulling; }
-            set { CheckBoxLabel.EnableCulling = value; }
+            get { return CheckBoxLabel.HorizontalOverflow; }
+            set { CheckBoxLabel.HorizontalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
+        public readonly static DependencyProperty VerticalOverflowProperty = Label.VerticalOverflowProperty;
+        public UnityEngine.VerticalWrapMode VerticalOverflow
         {
-            get { return CheckBoxLabel.IgnoreRectMaskCulling; }
-            set { CheckBoxLabel.IgnoreRectMaskCulling = value; }
+            get { return CheckBoxLabel.VerticalOverflow; }
+            set { CheckBoxLabel.VerticalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
-        public System.Boolean IgnoreVisibility
+        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
+        public System.Single LineSpacing
         {
-            get { return CheckBoxLabel.IgnoreVisibility; }
-            set { CheckBoxLabel.IgnoreVisibility = value; }
+            get { return CheckBoxLabel.LineSpacing; }
+            set { CheckBoxLabel.LineSpacing = value; }
         }
 
-        public readonly static DependencyProperty HorizontalMappingProperty = Label.HorizontalMappingProperty;
-        public TMPro.TextureMappingOptions HorizontalMapping
+        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
+        public UnityEngine.FontStyle FontStyle
         {
-            get { return CheckBoxLabel.HorizontalMapping; }
-            set { CheckBoxLabel.HorizontalMapping = value; }
-        }
-
-        public readonly static DependencyProperty VerticalMappingProperty = Label.VerticalMappingProperty;
-        public TMPro.TextureMappingOptions VerticalMapping
-        {
-            get { return CheckBoxLabel.VerticalMapping; }
-            set { CheckBoxLabel.VerticalMapping = value; }
-        }
-
-        public readonly static DependencyProperty MappingUvLineOffsetProperty = Label.MappingUvLineOffsetProperty;
-        public System.Single MappingUvLineOffset
-        {
-            get { return CheckBoxLabel.MappingUvLineOffset; }
-            set { CheckBoxLabel.MappingUvLineOffset = value; }
-        }
-
-        public readonly static DependencyProperty RenderModeProperty = Label.RenderModeProperty;
-        public TMPro.TextRenderFlags RenderMode
-        {
-            get { return CheckBoxLabel.RenderMode; }
-            set { CheckBoxLabel.RenderMode = value; }
-        }
-
-        public readonly static DependencyProperty GeometrySortingOrderProperty = Label.GeometrySortingOrderProperty;
-        public TMPro.VertexSortingOrder GeometrySortingOrder
-        {
-            get { return CheckBoxLabel.GeometrySortingOrder; }
-            set { CheckBoxLabel.GeometrySortingOrder = value; }
-        }
-
-        public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
-        public System.Boolean VertexBufferAutoSizeReduction
-        {
-            get { return CheckBoxLabel.VertexBufferAutoSizeReduction; }
-            set { CheckBoxLabel.VertexBufferAutoSizeReduction = value; }
-        }
-
-        public readonly static DependencyProperty FirstVisibleCharacterProperty = Label.FirstVisibleCharacterProperty;
-        public System.Int32 FirstVisibleCharacter
-        {
-            get { return CheckBoxLabel.FirstVisibleCharacter; }
-            set { CheckBoxLabel.FirstVisibleCharacter = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleCharactersProperty = Label.MaxVisibleCharactersProperty;
-        public System.Int32 MaxVisibleCharacters
-        {
-            get { return CheckBoxLabel.MaxVisibleCharacters; }
-            set { CheckBoxLabel.MaxVisibleCharacters = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleWordsProperty = Label.MaxVisibleWordsProperty;
-        public System.Int32 MaxVisibleWords
-        {
-            get { return CheckBoxLabel.MaxVisibleWords; }
-            set { CheckBoxLabel.MaxVisibleWords = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleLinesProperty = Label.MaxVisibleLinesProperty;
-        public System.Int32 MaxVisibleLines
-        {
-            get { return CheckBoxLabel.MaxVisibleLines; }
-            set { CheckBoxLabel.MaxVisibleLines = value; }
-        }
-
-        public readonly static DependencyProperty UseMaxVisibleDescenderProperty = Label.UseMaxVisibleDescenderProperty;
-        public System.Boolean UseMaxVisibleDescender
-        {
-            get { return CheckBoxLabel.UseMaxVisibleDescender; }
-            set { CheckBoxLabel.UseMaxVisibleDescender = value; }
-        }
-
-        public readonly static DependencyProperty PageToDisplayProperty = Label.PageToDisplayProperty;
-        public System.Int32 PageToDisplay
-        {
-            get { return CheckBoxLabel.PageToDisplay; }
-            set { CheckBoxLabel.PageToDisplay = value; }
-        }
-
-        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
-        public UnityEngine.Vector4 TextMargin
-        {
-            get { return CheckBoxLabel.TextMargin; }
-            set { CheckBoxLabel.TextMargin = value; }
-        }
-
-        public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
-        public System.Boolean HavePropertiesChanged
-        {
-            get { return CheckBoxLabel.HavePropertiesChanged; }
-            set { CheckBoxLabel.HavePropertiesChanged = value; }
-        }
-
-        public readonly static DependencyProperty IsUsingLegacyAnimationComponentProperty = Label.IsUsingLegacyAnimationComponentProperty;
-        public System.Boolean IsUsingLegacyAnimationComponent
-        {
-            get { return CheckBoxLabel.IsUsingLegacyAnimationComponent; }
-            set { CheckBoxLabel.IsUsingLegacyAnimationComponent = value; }
-        }
-
-        public readonly static DependencyProperty IsVolumetricTextProperty = Label.IsVolumetricTextProperty;
-        public System.Boolean IsVolumetricText
-        {
-            get { return CheckBoxLabel.IsVolumetricText; }
-            set { CheckBoxLabel.IsVolumetricText = value; }
+            get { return CheckBoxLabel.FontStyle; }
+            set { CheckBoxLabel.FontStyle = value; }
         }
 
         public readonly static DependencyProperty OnCullStateChangedProperty = Label.OnCullStateChangedProperty;
@@ -855,6 +519,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.Maskable; }
             set { CheckBoxLabel.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
+        public UnityEngine.Color FontColor
+        {
+            get { return CheckBoxLabel.FontColor; }
+            set { CheckBoxLabel.FontColor = value; }
         }
 
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;
@@ -1143,10 +814,10 @@ namespace Delight
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_checkBoxCheckBoxLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_checkBoxCheckBoxLabel, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.FontSizeProperty.SetDefault(_checkBoxCheckBoxLabel, 18f);
-                    Delight.Label.FontStyleProperty.SetDefault(_checkBoxCheckBoxLabel, TMPro.FontStyles.Normal);
+                    Delight.Label.FontSizeProperty.SetDefault(_checkBoxCheckBoxLabel, 18);
+                    Delight.Label.FontStyleProperty.SetDefault(_checkBoxCheckBoxLabel, UnityEngine.FontStyle.Normal);
                     Delight.Label.FontColorProperty.SetDefault(_checkBoxCheckBoxLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _checkBoxCheckBoxLabel, TMPro.FontStyles.Italic);
+                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _checkBoxCheckBoxLabel, UnityEngine.FontStyle.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _checkBoxCheckBoxLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                 }
                 return _checkBoxCheckBoxLabel;

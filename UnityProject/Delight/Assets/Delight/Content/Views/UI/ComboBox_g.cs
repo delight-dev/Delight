@@ -1058,242 +1058,11 @@ namespace Delight
             set { ComboBoxButton.IsBackButton = value; }
         }
 
-        public readonly static DependencyProperty ButtonLabelAutoSizeProperty = Button.LabelAutoSizeProperty;
-        public Delight.AutoSize ButtonLabelAutoSize
-        {
-            get { return ComboBoxButton.LabelAutoSize; }
-            set { ComboBoxButton.LabelAutoSize = value; }
-        }
-
-        public readonly static DependencyProperty ButtonAutoSizeTextContainerProperty = Button.AutoSizeTextContainerProperty;
-        public System.Boolean ButtonAutoSizeTextContainer
-        {
-            get { return ComboBoxButton.AutoSizeTextContainer; }
-            set { ComboBoxButton.AutoSizeTextContainer = value; }
-        }
-
-        public readonly static DependencyProperty ButtonMaskOffsetProperty = Button.MaskOffsetProperty;
-        public UnityEngine.Vector4 ButtonMaskOffset
-        {
-            get { return ComboBoxButton.MaskOffset; }
-            set { ComboBoxButton.MaskOffset = value; }
-        }
-
-        public readonly static DependencyProperty ButtonTextProperty = Button.TextProperty;
-        public System.String ButtonText
-        {
-            get { return ComboBoxButton.Text; }
-            set { ComboBoxButton.Text = value; }
-        }
-
-        public readonly static DependencyProperty ButtonIsRightToLeftTextProperty = Button.IsRightToLeftTextProperty;
-        public System.Boolean ButtonIsRightToLeftText
-        {
-            get { return ComboBoxButton.IsRightToLeftText; }
-            set { ComboBoxButton.IsRightToLeftText = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontProperty = Button.FontProperty;
-        public TMP_FontAsset ButtonFont
-        {
-            get { return ComboBoxButton.Font; }
-            set { ComboBoxButton.Font = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontSharedMaterialProperty = Button.FontSharedMaterialProperty;
-        public MaterialAsset ButtonFontSharedMaterial
-        {
-            get { return ComboBoxButton.FontSharedMaterial; }
-            set { ComboBoxButton.FontSharedMaterial = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontSharedMaterialsProperty = Button.FontSharedMaterialsProperty;
-        public UnityEngine.Material[] ButtonFontSharedMaterials
-        {
-            get { return ComboBoxButton.FontSharedMaterials; }
-            set { ComboBoxButton.FontSharedMaterials = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontMaterialProperty = Button.FontMaterialProperty;
-        public MaterialAsset ButtonFontMaterial
-        {
-            get { return ComboBoxButton.FontMaterial; }
-            set { ComboBoxButton.FontMaterial = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontMaterialsProperty = Button.FontMaterialsProperty;
-        public UnityEngine.Material[] ButtonFontMaterials
-        {
-            get { return ComboBoxButton.FontMaterials; }
-            set { ComboBoxButton.FontMaterials = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontColorProperty = Button.FontColorProperty;
-        public UnityEngine.Color ButtonFontColor
-        {
-            get { return ComboBoxButton.FontColor; }
-            set { ComboBoxButton.FontColor = value; }
-        }
-
-        public readonly static DependencyProperty ButtonTextMeshProUGUIAlphaProperty = Button.TextMeshProUGUIAlphaProperty;
-        public System.Single ButtonTextMeshProUGUIAlpha
-        {
-            get { return ComboBoxButton.TextMeshProUGUIAlpha; }
-            set { ComboBoxButton.TextMeshProUGUIAlpha = value; }
-        }
-
-        public readonly static DependencyProperty ButtonEnableVertexGradientProperty = Button.EnableVertexGradientProperty;
-        public System.Boolean ButtonEnableVertexGradient
-        {
-            get { return ComboBoxButton.EnableVertexGradient; }
-            set { ComboBoxButton.EnableVertexGradient = value; }
-        }
-
-        public readonly static DependencyProperty ButtonColorGradientProperty = Button.ColorGradientProperty;
-        public TMPro.VertexGradient ButtonColorGradient
-        {
-            get { return ComboBoxButton.ColorGradient; }
-            set { ComboBoxButton.ColorGradient = value; }
-        }
-
-        public readonly static DependencyProperty ButtonColorGradientPresetProperty = Button.ColorGradientPresetProperty;
-        public TMP_ColorGradientAsset ButtonColorGradientPreset
-        {
-            get { return ComboBoxButton.ColorGradientPreset; }
-            set { ComboBoxButton.ColorGradientPreset = value; }
-        }
-
-        public readonly static DependencyProperty ButtonSpriteAssetProperty = Button.SpriteAssetProperty;
-        public TMP_SpriteAsset ButtonSpriteAsset
-        {
-            get { return ComboBoxButton.SpriteAsset; }
-            set { ComboBoxButton.SpriteAsset = value; }
-        }
-
-        public readonly static DependencyProperty ButtonTintAllSpritesProperty = Button.TintAllSpritesProperty;
-        public System.Boolean ButtonTintAllSprites
-        {
-            get { return ComboBoxButton.TintAllSprites; }
-            set { ComboBoxButton.TintAllSprites = value; }
-        }
-
-        public readonly static DependencyProperty ButtonOverrideColorTagsProperty = Button.OverrideColorTagsProperty;
-        public System.Boolean ButtonOverrideColorTags
-        {
-            get { return ComboBoxButton.OverrideColorTags; }
-            set { ComboBoxButton.OverrideColorTags = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFaceColorProperty = Button.FaceColorProperty;
-        public UnityEngine.Color32 ButtonFaceColor
-        {
-            get { return ComboBoxButton.FaceColor; }
-            set { ComboBoxButton.FaceColor = value; }
-        }
-
-        public readonly static DependencyProperty ButtonOutlineColorProperty = Button.OutlineColorProperty;
-        public UnityEngine.Color32 ButtonOutlineColor
-        {
-            get { return ComboBoxButton.OutlineColor; }
-            set { ComboBoxButton.OutlineColor = value; }
-        }
-
-        public readonly static DependencyProperty ButtonOutlineWidthProperty = Button.OutlineWidthProperty;
-        public System.Single ButtonOutlineWidth
-        {
-            get { return ComboBoxButton.OutlineWidth; }
-            set { ComboBoxButton.OutlineWidth = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontSizeProperty = Button.FontSizeProperty;
-        public System.Single ButtonFontSize
-        {
-            get { return ComboBoxButton.FontSize; }
-            set { ComboBoxButton.FontSize = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontWeightProperty = Button.FontWeightProperty;
-        public TMPro.FontWeight ButtonFontWeight
-        {
-            get { return ComboBoxButton.FontWeight; }
-            set { ComboBoxButton.FontWeight = value; }
-        }
-
-        public readonly static DependencyProperty ButtonEnableAutoSizingProperty = Button.EnableAutoSizingProperty;
-        public System.Boolean ButtonEnableAutoSizing
-        {
-            get { return ComboBoxButton.EnableAutoSizing; }
-            set { ComboBoxButton.EnableAutoSizing = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontSizeMinProperty = Button.FontSizeMinProperty;
-        public System.Single ButtonFontSizeMin
-        {
-            get { return ComboBoxButton.FontSizeMin; }
-            set { ComboBoxButton.FontSizeMin = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontSizeMaxProperty = Button.FontSizeMaxProperty;
-        public System.Single ButtonFontSizeMax
-        {
-            get { return ComboBoxButton.FontSizeMax; }
-            set { ComboBoxButton.FontSizeMax = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFontStyleProperty = Button.FontStyleProperty;
-        public TMPro.FontStyles ButtonFontStyle
-        {
-            get { return ComboBoxButton.FontStyle; }
-            set { ComboBoxButton.FontStyle = value; }
-        }
-
         public readonly static DependencyProperty ButtonTextAlignmentProperty = Button.TextAlignmentProperty;
-        public TMPro.TextAlignmentOptions ButtonTextAlignment
+        public Delight.ElementAlignment ButtonTextAlignment
         {
             get { return ComboBoxButton.TextAlignment; }
             set { ComboBoxButton.TextAlignment = value; }
-        }
-
-        public readonly static DependencyProperty ButtonCharacterSpacingProperty = Button.CharacterSpacingProperty;
-        public System.Single ButtonCharacterSpacing
-        {
-            get { return ComboBoxButton.CharacterSpacing; }
-            set { ComboBoxButton.CharacterSpacing = value; }
-        }
-
-        public readonly static DependencyProperty ButtonWordSpacingProperty = Button.WordSpacingProperty;
-        public System.Single ButtonWordSpacing
-        {
-            get { return ComboBoxButton.WordSpacing; }
-            set { ComboBoxButton.WordSpacing = value; }
-        }
-
-        public readonly static DependencyProperty ButtonLineSpacingProperty = Button.LineSpacingProperty;
-        public System.Single ButtonLineSpacing
-        {
-            get { return ComboBoxButton.LineSpacing; }
-            set { ComboBoxButton.LineSpacing = value; }
-        }
-
-        public readonly static DependencyProperty ButtonLineSpacingAdjustmentProperty = Button.LineSpacingAdjustmentProperty;
-        public System.Single ButtonLineSpacingAdjustment
-        {
-            get { return ComboBoxButton.LineSpacingAdjustment; }
-            set { ComboBoxButton.LineSpacingAdjustment = value; }
-        }
-
-        public readonly static DependencyProperty ButtonParagraphSpacingProperty = Button.ParagraphSpacingProperty;
-        public System.Single ButtonParagraphSpacing
-        {
-            get { return ComboBoxButton.ParagraphSpacing; }
-            set { ComboBoxButton.ParagraphSpacing = value; }
-        }
-
-        public readonly static DependencyProperty ButtonCharacterWidthAdjustmentProperty = Button.CharacterWidthAdjustmentProperty;
-        public System.Single ButtonCharacterWidthAdjustment
-        {
-            get { return ComboBoxButton.CharacterWidthAdjustment; }
-            set { ComboBoxButton.CharacterWidthAdjustment = value; }
         }
 
         public readonly static DependencyProperty ButtonEnableWordWrappingProperty = Button.EnableWordWrappingProperty;
@@ -1303,207 +1072,102 @@ namespace Delight
             set { ComboBoxButton.EnableWordWrapping = value; }
         }
 
-        public readonly static DependencyProperty ButtonWordWrappingRatiosProperty = Button.WordWrappingRatiosProperty;
-        public System.Single ButtonWordWrappingRatios
+        public readonly static DependencyProperty ButtonLabelAutoSizeProperty = Button.LabelAutoSizeProperty;
+        public Delight.AutoSize ButtonLabelAutoSize
         {
-            get { return ComboBoxButton.WordWrappingRatios; }
-            set { ComboBoxButton.WordWrappingRatios = value; }
+            get { return ComboBoxButton.LabelAutoSize; }
+            set { ComboBoxButton.LabelAutoSize = value; }
         }
 
-        public readonly static DependencyProperty ButtonOverflowModeProperty = Button.OverflowModeProperty;
-        public TMPro.TextOverflowModes ButtonOverflowMode
+        public readonly static DependencyProperty ButtonFontProperty = Button.FontProperty;
+        public FontAsset ButtonFont
         {
-            get { return ComboBoxButton.OverflowMode; }
-            set { ComboBoxButton.OverflowMode = value; }
+            get { return ComboBoxButton.Font; }
+            set { ComboBoxButton.Font = value; }
         }
 
-        public readonly static DependencyProperty ButtonLinkedTextComponentProperty = Button.LinkedTextComponentProperty;
-        public TMPro.TMP_Text ButtonLinkedTextComponent
+        public readonly static DependencyProperty ButtonTextProperty = Button.TextProperty;
+        public System.String ButtonText
         {
-            get { return ComboBoxButton.LinkedTextComponent; }
-            set { ComboBoxButton.LinkedTextComponent = value; }
+            get { return ComboBoxButton.Text; }
+            set { ComboBoxButton.Text = value; }
         }
 
-        public readonly static DependencyProperty ButtonIsLinkedTextComponentProperty = Button.IsLinkedTextComponentProperty;
-        public System.Boolean ButtonIsLinkedTextComponent
+        public readonly static DependencyProperty ButtonSupportRichTextProperty = Button.SupportRichTextProperty;
+        public System.Boolean ButtonSupportRichText
         {
-            get { return ComboBoxButton.IsLinkedTextComponent; }
-            set { ComboBoxButton.IsLinkedTextComponent = value; }
+            get { return ComboBoxButton.SupportRichText; }
+            set { ComboBoxButton.SupportRichText = value; }
         }
 
-        public readonly static DependencyProperty ButtonEnableKerningProperty = Button.EnableKerningProperty;
-        public System.Boolean ButtonEnableKerning
+        public readonly static DependencyProperty ButtonResizeTextForBestFitProperty = Button.ResizeTextForBestFitProperty;
+        public System.Boolean ButtonResizeTextForBestFit
         {
-            get { return ComboBoxButton.EnableKerning; }
-            set { ComboBoxButton.EnableKerning = value; }
+            get { return ComboBoxButton.ResizeTextForBestFit; }
+            set { ComboBoxButton.ResizeTextForBestFit = value; }
         }
 
-        public readonly static DependencyProperty ButtonExtraPaddingProperty = Button.ExtraPaddingProperty;
-        public System.Boolean ButtonExtraPadding
+        public readonly static DependencyProperty ButtonResizeTextMinSizeProperty = Button.ResizeTextMinSizeProperty;
+        public System.Int32 ButtonResizeTextMinSize
         {
-            get { return ComboBoxButton.ExtraPadding; }
-            set { ComboBoxButton.ExtraPadding = value; }
+            get { return ComboBoxButton.ResizeTextMinSize; }
+            set { ComboBoxButton.ResizeTextMinSize = value; }
         }
 
-        public readonly static DependencyProperty ButtonRichTextProperty = Button.RichTextProperty;
-        public System.Boolean ButtonRichText
+        public readonly static DependencyProperty ButtonResizeTextMaxSizeProperty = Button.ResizeTextMaxSizeProperty;
+        public System.Int32 ButtonResizeTextMaxSize
         {
-            get { return ComboBoxButton.RichText; }
-            set { ComboBoxButton.RichText = value; }
+            get { return ComboBoxButton.ResizeTextMaxSize; }
+            set { ComboBoxButton.ResizeTextMaxSize = value; }
         }
 
-        public readonly static DependencyProperty ButtonParseCtrlCharactersProperty = Button.ParseCtrlCharactersProperty;
-        public System.Boolean ButtonParseCtrlCharacters
+        public readonly static DependencyProperty ButtonTextComponentTextAlignmentProperty = Button.TextComponentTextAlignmentProperty;
+        public UnityEngine.TextAnchor ButtonTextComponentTextAlignment
         {
-            get { return ComboBoxButton.ParseCtrlCharacters; }
-            set { ComboBoxButton.ParseCtrlCharacters = value; }
+            get { return ComboBoxButton.TextComponentTextAlignment; }
+            set { ComboBoxButton.TextComponentTextAlignment = value; }
         }
 
-        public readonly static DependencyProperty ButtonIsOverlayProperty = Button.IsOverlayProperty;
-        public System.Boolean ButtonIsOverlay
+        public readonly static DependencyProperty ButtonAlignByGeometryProperty = Button.AlignByGeometryProperty;
+        public System.Boolean ButtonAlignByGeometry
         {
-            get { return ComboBoxButton.IsOverlay; }
-            set { ComboBoxButton.IsOverlay = value; }
+            get { return ComboBoxButton.AlignByGeometry; }
+            set { ComboBoxButton.AlignByGeometry = value; }
         }
 
-        public readonly static DependencyProperty ButtonIsOrthographicProperty = Button.IsOrthographicProperty;
-        public System.Boolean ButtonIsOrthographic
+        public readonly static DependencyProperty ButtonFontSizeProperty = Button.FontSizeProperty;
+        public System.Int32 ButtonFontSize
         {
-            get { return ComboBoxButton.IsOrthographic; }
-            set { ComboBoxButton.IsOrthographic = value; }
+            get { return ComboBoxButton.FontSize; }
+            set { ComboBoxButton.FontSize = value; }
         }
 
-        public readonly static DependencyProperty ButtonEnableCullingProperty = Button.EnableCullingProperty;
-        public System.Boolean ButtonEnableCulling
+        public readonly static DependencyProperty ButtonHorizontalOverflowProperty = Button.HorizontalOverflowProperty;
+        public UnityEngine.HorizontalWrapMode ButtonHorizontalOverflow
         {
-            get { return ComboBoxButton.EnableCulling; }
-            set { ComboBoxButton.EnableCulling = value; }
+            get { return ComboBoxButton.HorizontalOverflow; }
+            set { ComboBoxButton.HorizontalOverflow = value; }
         }
 
-        public readonly static DependencyProperty ButtonIgnoreRectMaskCullingProperty = Button.IgnoreRectMaskCullingProperty;
-        public System.Boolean ButtonIgnoreRectMaskCulling
+        public readonly static DependencyProperty ButtonVerticalOverflowProperty = Button.VerticalOverflowProperty;
+        public UnityEngine.VerticalWrapMode ButtonVerticalOverflow
         {
-            get { return ComboBoxButton.IgnoreRectMaskCulling; }
-            set { ComboBoxButton.IgnoreRectMaskCulling = value; }
+            get { return ComboBoxButton.VerticalOverflow; }
+            set { ComboBoxButton.VerticalOverflow = value; }
         }
 
-        public readonly static DependencyProperty ButtonIgnoreVisibilityProperty = Button.IgnoreVisibilityProperty;
-        public System.Boolean ButtonIgnoreVisibility
+        public readonly static DependencyProperty ButtonLineSpacingProperty = Button.LineSpacingProperty;
+        public System.Single ButtonLineSpacing
         {
-            get { return ComboBoxButton.IgnoreVisibility; }
-            set { ComboBoxButton.IgnoreVisibility = value; }
+            get { return ComboBoxButton.LineSpacing; }
+            set { ComboBoxButton.LineSpacing = value; }
         }
 
-        public readonly static DependencyProperty ButtonHorizontalMappingProperty = Button.HorizontalMappingProperty;
-        public TMPro.TextureMappingOptions ButtonHorizontalMapping
+        public readonly static DependencyProperty ButtonFontStyleProperty = Button.FontStyleProperty;
+        public UnityEngine.FontStyle ButtonFontStyle
         {
-            get { return ComboBoxButton.HorizontalMapping; }
-            set { ComboBoxButton.HorizontalMapping = value; }
-        }
-
-        public readonly static DependencyProperty ButtonVerticalMappingProperty = Button.VerticalMappingProperty;
-        public TMPro.TextureMappingOptions ButtonVerticalMapping
-        {
-            get { return ComboBoxButton.VerticalMapping; }
-            set { ComboBoxButton.VerticalMapping = value; }
-        }
-
-        public readonly static DependencyProperty ButtonMappingUvLineOffsetProperty = Button.MappingUvLineOffsetProperty;
-        public System.Single ButtonMappingUvLineOffset
-        {
-            get { return ComboBoxButton.MappingUvLineOffset; }
-            set { ComboBoxButton.MappingUvLineOffset = value; }
-        }
-
-        public readonly static DependencyProperty ButtonRenderModeProperty = Button.RenderModeProperty;
-        public TMPro.TextRenderFlags ButtonRenderMode
-        {
-            get { return ComboBoxButton.RenderMode; }
-            set { ComboBoxButton.RenderMode = value; }
-        }
-
-        public readonly static DependencyProperty ButtonGeometrySortingOrderProperty = Button.GeometrySortingOrderProperty;
-        public TMPro.VertexSortingOrder ButtonGeometrySortingOrder
-        {
-            get { return ComboBoxButton.GeometrySortingOrder; }
-            set { ComboBoxButton.GeometrySortingOrder = value; }
-        }
-
-        public readonly static DependencyProperty ButtonVertexBufferAutoSizeReductionProperty = Button.VertexBufferAutoSizeReductionProperty;
-        public System.Boolean ButtonVertexBufferAutoSizeReduction
-        {
-            get { return ComboBoxButton.VertexBufferAutoSizeReduction; }
-            set { ComboBoxButton.VertexBufferAutoSizeReduction = value; }
-        }
-
-        public readonly static DependencyProperty ButtonFirstVisibleCharacterProperty = Button.FirstVisibleCharacterProperty;
-        public System.Int32 ButtonFirstVisibleCharacter
-        {
-            get { return ComboBoxButton.FirstVisibleCharacter; }
-            set { ComboBoxButton.FirstVisibleCharacter = value; }
-        }
-
-        public readonly static DependencyProperty ButtonMaxVisibleCharactersProperty = Button.MaxVisibleCharactersProperty;
-        public System.Int32 ButtonMaxVisibleCharacters
-        {
-            get { return ComboBoxButton.MaxVisibleCharacters; }
-            set { ComboBoxButton.MaxVisibleCharacters = value; }
-        }
-
-        public readonly static DependencyProperty ButtonMaxVisibleWordsProperty = Button.MaxVisibleWordsProperty;
-        public System.Int32 ButtonMaxVisibleWords
-        {
-            get { return ComboBoxButton.MaxVisibleWords; }
-            set { ComboBoxButton.MaxVisibleWords = value; }
-        }
-
-        public readonly static DependencyProperty ButtonMaxVisibleLinesProperty = Button.MaxVisibleLinesProperty;
-        public System.Int32 ButtonMaxVisibleLines
-        {
-            get { return ComboBoxButton.MaxVisibleLines; }
-            set { ComboBoxButton.MaxVisibleLines = value; }
-        }
-
-        public readonly static DependencyProperty ButtonUseMaxVisibleDescenderProperty = Button.UseMaxVisibleDescenderProperty;
-        public System.Boolean ButtonUseMaxVisibleDescender
-        {
-            get { return ComboBoxButton.UseMaxVisibleDescender; }
-            set { ComboBoxButton.UseMaxVisibleDescender = value; }
-        }
-
-        public readonly static DependencyProperty ButtonPageToDisplayProperty = Button.PageToDisplayProperty;
-        public System.Int32 ButtonPageToDisplay
-        {
-            get { return ComboBoxButton.PageToDisplay; }
-            set { ComboBoxButton.PageToDisplay = value; }
-        }
-
-        public readonly static DependencyProperty ButtonTextMarginProperty = Button.TextMarginProperty;
-        public UnityEngine.Vector4 ButtonTextMargin
-        {
-            get { return ComboBoxButton.TextMargin; }
-            set { ComboBoxButton.TextMargin = value; }
-        }
-
-        public readonly static DependencyProperty ButtonHavePropertiesChangedProperty = Button.HavePropertiesChangedProperty;
-        public System.Boolean ButtonHavePropertiesChanged
-        {
-            get { return ComboBoxButton.HavePropertiesChanged; }
-            set { ComboBoxButton.HavePropertiesChanged = value; }
-        }
-
-        public readonly static DependencyProperty ButtonIsUsingLegacyAnimationComponentProperty = Button.IsUsingLegacyAnimationComponentProperty;
-        public System.Boolean ButtonIsUsingLegacyAnimationComponent
-        {
-            get { return ComboBoxButton.IsUsingLegacyAnimationComponent; }
-            set { ComboBoxButton.IsUsingLegacyAnimationComponent = value; }
-        }
-
-        public readonly static DependencyProperty ButtonIsVolumetricTextProperty = Button.IsVolumetricTextProperty;
-        public System.Boolean ButtonIsVolumetricText
-        {
-            get { return ComboBoxButton.IsVolumetricText; }
-            set { ComboBoxButton.IsVolumetricText = value; }
+            get { return ComboBoxButton.FontStyle; }
+            set { ComboBoxButton.FontStyle = value; }
         }
 
         public readonly static DependencyProperty ButtonOnCullStateChangedProperty = Button.OnCullStateChangedProperty;
@@ -1518,6 +1182,13 @@ namespace Delight
         {
             get { return ComboBoxButton.Maskable; }
             set { ComboBoxButton.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty ButtonFontColorProperty = Button.FontColorProperty;
+        public UnityEngine.Color ButtonFontColor
+        {
+            get { return ComboBoxButton.FontColor; }
+            set { ComboBoxButton.FontColor = value; }
         }
 
         public readonly static DependencyProperty ButtonRaycastTargetProperty = Button.RaycastTargetProperty;
@@ -2059,9 +1730,9 @@ namespace Delight
 #if UNITY_EDITOR
                     _comboBoxComboBoxButtonLabel.Name = "ComboBoxComboBoxButtonLabel";
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_comboBoxComboBoxButtonLabel, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_comboBoxComboBoxButtonLabel, 18);
                     Delight.Label.FontColorProperty.SetDefault(_comboBoxComboBoxButtonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
-                    Delight.Label.TextAlignmentProperty.SetDefault(_comboBoxComboBoxButtonLabel, TMPro.TextAlignmentOptions.Left);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_comboBoxComboBoxButtonLabel, Delight.ElementAlignment.Left);
                     Delight.Label.MarginProperty.SetDefault(_comboBoxComboBoxButtonLabel, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.FontColorProperty.SetStateDefault("Pressed", _comboBoxComboBoxButtonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _comboBoxComboBoxButtonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));

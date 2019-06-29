@@ -172,242 +172,11 @@ namespace Delight
             set { LabelTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty LabelAutoSizeProperty = Label.AutoSizeProperty;
-        public Delight.AutoSize LabelAutoSize
-        {
-            get { return Label.AutoSize; }
-            set { Label.AutoSize = value; }
-        }
-
-        public readonly static DependencyProperty AutoSizeTextContainerProperty = Label.AutoSizeTextContainerProperty;
-        public System.Boolean AutoSizeTextContainer
-        {
-            get { return Label.AutoSizeTextContainer; }
-            set { Label.AutoSizeTextContainer = value; }
-        }
-
-        public readonly static DependencyProperty MaskOffsetProperty = Label.MaskOffsetProperty;
-        public UnityEngine.Vector4 MaskOffset
-        {
-            get { return Label.MaskOffset; }
-            set { Label.MaskOffset = value; }
-        }
-
-        public readonly static DependencyProperty TextProperty = Label.TextProperty;
-        public System.String Text
-        {
-            get { return Label.Text; }
-            set { Label.Text = value; }
-        }
-
-        public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
-        public System.Boolean IsRightToLeftText
-        {
-            get { return Label.IsRightToLeftText; }
-            set { Label.IsRightToLeftText = value; }
-        }
-
-        public readonly static DependencyProperty FontProperty = Label.FontProperty;
-        public TMP_FontAsset Font
-        {
-            get { return Label.Font; }
-            set { Label.Font = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialProperty = Label.FontSharedMaterialProperty;
-        public MaterialAsset FontSharedMaterial
-        {
-            get { return Label.FontSharedMaterial; }
-            set { Label.FontSharedMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialsProperty = Label.FontSharedMaterialsProperty;
-        public UnityEngine.Material[] FontSharedMaterials
-        {
-            get { return Label.FontSharedMaterials; }
-            set { Label.FontSharedMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialProperty = Label.FontMaterialProperty;
-        public MaterialAsset FontMaterial
-        {
-            get { return Label.FontMaterial; }
-            set { Label.FontMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialsProperty = Label.FontMaterialsProperty;
-        public UnityEngine.Material[] FontMaterials
-        {
-            get { return Label.FontMaterials; }
-            set { Label.FontMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
-        public UnityEngine.Color FontColor
-        {
-            get { return Label.FontColor; }
-            set { Label.FontColor = value; }
-        }
-
-        public readonly static DependencyProperty TextMeshProUGUIAlphaProperty = Label.TextMeshProUGUIAlphaProperty;
-        public System.Single TextMeshProUGUIAlpha
-        {
-            get { return Label.TextMeshProUGUIAlpha; }
-            set { Label.TextMeshProUGUIAlpha = value; }
-        }
-
-        public readonly static DependencyProperty EnableVertexGradientProperty = Label.EnableVertexGradientProperty;
-        public System.Boolean EnableVertexGradient
-        {
-            get { return Label.EnableVertexGradient; }
-            set { Label.EnableVertexGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientProperty = Label.ColorGradientProperty;
-        public TMPro.VertexGradient ColorGradient
-        {
-            get { return Label.ColorGradient; }
-            set { Label.ColorGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientPresetProperty = Label.ColorGradientPresetProperty;
-        public TMP_ColorGradientAsset ColorGradientPreset
-        {
-            get { return Label.ColorGradientPreset; }
-            set { Label.ColorGradientPreset = value; }
-        }
-
-        public readonly static DependencyProperty SpriteAssetProperty = Label.SpriteAssetProperty;
-        public TMP_SpriteAsset SpriteAsset
-        {
-            get { return Label.SpriteAsset; }
-            set { Label.SpriteAsset = value; }
-        }
-
-        public readonly static DependencyProperty TintAllSpritesProperty = Label.TintAllSpritesProperty;
-        public System.Boolean TintAllSprites
-        {
-            get { return Label.TintAllSprites; }
-            set { Label.TintAllSprites = value; }
-        }
-
-        public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
-        public System.Boolean OverrideColorTags
-        {
-            get { return Label.OverrideColorTags; }
-            set { Label.OverrideColorTags = value; }
-        }
-
-        public readonly static DependencyProperty FaceColorProperty = Label.FaceColorProperty;
-        public UnityEngine.Color32 FaceColor
-        {
-            get { return Label.FaceColor; }
-            set { Label.FaceColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineColorProperty = Label.OutlineColorProperty;
-        public UnityEngine.Color32 OutlineColor
-        {
-            get { return Label.OutlineColor; }
-            set { Label.OutlineColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineWidthProperty = Label.OutlineWidthProperty;
-        public System.Single OutlineWidth
-        {
-            get { return Label.OutlineWidth; }
-            set { Label.OutlineWidth = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
-        public System.Single FontSize
-        {
-            get { return Label.FontSize; }
-            set { Label.FontSize = value; }
-        }
-
-        public readonly static DependencyProperty FontWeightProperty = Label.FontWeightProperty;
-        public TMPro.FontWeight FontWeight
-        {
-            get { return Label.FontWeight; }
-            set { Label.FontWeight = value; }
-        }
-
-        public readonly static DependencyProperty EnableAutoSizingProperty = Label.EnableAutoSizingProperty;
-        public System.Boolean EnableAutoSizing
-        {
-            get { return Label.EnableAutoSizing; }
-            set { Label.EnableAutoSizing = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMinProperty = Label.FontSizeMinProperty;
-        public System.Single FontSizeMin
-        {
-            get { return Label.FontSizeMin; }
-            set { Label.FontSizeMin = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMaxProperty = Label.FontSizeMaxProperty;
-        public System.Single FontSizeMax
-        {
-            get { return Label.FontSizeMax; }
-            set { Label.FontSizeMax = value; }
-        }
-
-        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
-        public TMPro.FontStyles FontStyle
-        {
-            get { return Label.FontStyle; }
-            set { Label.FontStyle = value; }
-        }
-
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
-        public TMPro.TextAlignmentOptions TextAlignment
+        public Delight.ElementAlignment TextAlignment
         {
             get { return Label.TextAlignment; }
             set { Label.TextAlignment = value; }
-        }
-
-        public readonly static DependencyProperty CharacterSpacingProperty = Label.CharacterSpacingProperty;
-        public System.Single CharacterSpacing
-        {
-            get { return Label.CharacterSpacing; }
-            set { Label.CharacterSpacing = value; }
-        }
-
-        public readonly static DependencyProperty WordSpacingProperty = Label.WordSpacingProperty;
-        public System.Single WordSpacing
-        {
-            get { return Label.WordSpacing; }
-            set { Label.WordSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
-        public System.Single LineSpacing
-        {
-            get { return Label.LineSpacing; }
-            set { Label.LineSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingAdjustmentProperty = Label.LineSpacingAdjustmentProperty;
-        public System.Single LineSpacingAdjustment
-        {
-            get { return Label.LineSpacingAdjustment; }
-            set { Label.LineSpacingAdjustment = value; }
-        }
-
-        public readonly static DependencyProperty ParagraphSpacingProperty = Label.ParagraphSpacingProperty;
-        public System.Single ParagraphSpacing
-        {
-            get { return Label.ParagraphSpacing; }
-            set { Label.ParagraphSpacing = value; }
-        }
-
-        public readonly static DependencyProperty CharacterWidthAdjustmentProperty = Label.CharacterWidthAdjustmentProperty;
-        public System.Single CharacterWidthAdjustment
-        {
-            get { return Label.CharacterWidthAdjustment; }
-            set { Label.CharacterWidthAdjustment = value; }
         }
 
         public readonly static DependencyProperty EnableWordWrappingProperty = Label.EnableWordWrappingProperty;
@@ -417,207 +186,102 @@ namespace Delight
             set { Label.EnableWordWrapping = value; }
         }
 
-        public readonly static DependencyProperty WordWrappingRatiosProperty = Label.WordWrappingRatiosProperty;
-        public System.Single WordWrappingRatios
+        public readonly static DependencyProperty LabelAutoSizeProperty = Label.AutoSizeProperty;
+        public Delight.AutoSize LabelAutoSize
         {
-            get { return Label.WordWrappingRatios; }
-            set { Label.WordWrappingRatios = value; }
+            get { return Label.AutoSize; }
+            set { Label.AutoSize = value; }
         }
 
-        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
-        public TMPro.TextOverflowModes OverflowMode
+        public readonly static DependencyProperty FontProperty = Label.FontProperty;
+        public FontAsset Font
         {
-            get { return Label.OverflowMode; }
-            set { Label.OverflowMode = value; }
+            get { return Label.Font; }
+            set { Label.Font = value; }
         }
 
-        public readonly static DependencyProperty LinkedTextComponentProperty = Label.LinkedTextComponentProperty;
-        public TMPro.TMP_Text LinkedTextComponent
+        public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        public System.String Text
         {
-            get { return Label.LinkedTextComponent; }
-            set { Label.LinkedTextComponent = value; }
+            get { return Label.Text; }
+            set { Label.Text = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
+        public readonly static DependencyProperty SupportRichTextProperty = Label.SupportRichTextProperty;
+        public System.Boolean SupportRichText
         {
-            get { return Label.IsLinkedTextComponent; }
-            set { Label.IsLinkedTextComponent = value; }
+            get { return Label.SupportRichText; }
+            set { Label.SupportRichText = value; }
         }
 
-        public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
-        public System.Boolean EnableKerning
+        public readonly static DependencyProperty ResizeTextForBestFitProperty = Label.ResizeTextForBestFitProperty;
+        public System.Boolean ResizeTextForBestFit
         {
-            get { return Label.EnableKerning; }
-            set { Label.EnableKerning = value; }
+            get { return Label.ResizeTextForBestFit; }
+            set { Label.ResizeTextForBestFit = value; }
         }
 
-        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
-        public System.Boolean ExtraPadding
+        public readonly static DependencyProperty ResizeTextMinSizeProperty = Label.ResizeTextMinSizeProperty;
+        public System.Int32 ResizeTextMinSize
         {
-            get { return Label.ExtraPadding; }
-            set { Label.ExtraPadding = value; }
+            get { return Label.ResizeTextMinSize; }
+            set { Label.ResizeTextMinSize = value; }
         }
 
-        public readonly static DependencyProperty RichTextProperty = Label.RichTextProperty;
-        public System.Boolean RichText
+        public readonly static DependencyProperty ResizeTextMaxSizeProperty = Label.ResizeTextMaxSizeProperty;
+        public System.Int32 ResizeTextMaxSize
         {
-            get { return Label.RichText; }
-            set { Label.RichText = value; }
+            get { return Label.ResizeTextMaxSize; }
+            set { Label.ResizeTextMaxSize = value; }
         }
 
-        public readonly static DependencyProperty ParseCtrlCharactersProperty = Label.ParseCtrlCharactersProperty;
-        public System.Boolean ParseCtrlCharacters
+        public readonly static DependencyProperty TextComponentTextAlignmentProperty = Label.TextComponentTextAlignmentProperty;
+        public UnityEngine.TextAnchor TextComponentTextAlignment
         {
-            get { return Label.ParseCtrlCharacters; }
-            set { Label.ParseCtrlCharacters = value; }
+            get { return Label.TextComponentTextAlignment; }
+            set { Label.TextComponentTextAlignment = value; }
         }
 
-        public readonly static DependencyProperty IsOverlayProperty = Label.IsOverlayProperty;
-        public System.Boolean IsOverlay
+        public readonly static DependencyProperty AlignByGeometryProperty = Label.AlignByGeometryProperty;
+        public System.Boolean AlignByGeometry
         {
-            get { return Label.IsOverlay; }
-            set { Label.IsOverlay = value; }
+            get { return Label.AlignByGeometry; }
+            set { Label.AlignByGeometry = value; }
         }
 
-        public readonly static DependencyProperty IsOrthographicProperty = Label.IsOrthographicProperty;
-        public System.Boolean IsOrthographic
+        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
+        public System.Int32 FontSize
         {
-            get { return Label.IsOrthographic; }
-            set { Label.IsOrthographic = value; }
+            get { return Label.FontSize; }
+            set { Label.FontSize = value; }
         }
 
-        public readonly static DependencyProperty EnableCullingProperty = Label.EnableCullingProperty;
-        public System.Boolean EnableCulling
+        public readonly static DependencyProperty HorizontalOverflowProperty = Label.HorizontalOverflowProperty;
+        public UnityEngine.HorizontalWrapMode HorizontalOverflow
         {
-            get { return Label.EnableCulling; }
-            set { Label.EnableCulling = value; }
+            get { return Label.HorizontalOverflow; }
+            set { Label.HorizontalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
+        public readonly static DependencyProperty VerticalOverflowProperty = Label.VerticalOverflowProperty;
+        public UnityEngine.VerticalWrapMode VerticalOverflow
         {
-            get { return Label.IgnoreRectMaskCulling; }
-            set { Label.IgnoreRectMaskCulling = value; }
+            get { return Label.VerticalOverflow; }
+            set { Label.VerticalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
-        public System.Boolean IgnoreVisibility
+        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
+        public System.Single LineSpacing
         {
-            get { return Label.IgnoreVisibility; }
-            set { Label.IgnoreVisibility = value; }
+            get { return Label.LineSpacing; }
+            set { Label.LineSpacing = value; }
         }
 
-        public readonly static DependencyProperty HorizontalMappingProperty = Label.HorizontalMappingProperty;
-        public TMPro.TextureMappingOptions HorizontalMapping
+        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
+        public UnityEngine.FontStyle FontStyle
         {
-            get { return Label.HorizontalMapping; }
-            set { Label.HorizontalMapping = value; }
-        }
-
-        public readonly static DependencyProperty VerticalMappingProperty = Label.VerticalMappingProperty;
-        public TMPro.TextureMappingOptions VerticalMapping
-        {
-            get { return Label.VerticalMapping; }
-            set { Label.VerticalMapping = value; }
-        }
-
-        public readonly static DependencyProperty MappingUvLineOffsetProperty = Label.MappingUvLineOffsetProperty;
-        public System.Single MappingUvLineOffset
-        {
-            get { return Label.MappingUvLineOffset; }
-            set { Label.MappingUvLineOffset = value; }
-        }
-
-        public readonly static DependencyProperty RenderModeProperty = Label.RenderModeProperty;
-        public TMPro.TextRenderFlags RenderMode
-        {
-            get { return Label.RenderMode; }
-            set { Label.RenderMode = value; }
-        }
-
-        public readonly static DependencyProperty GeometrySortingOrderProperty = Label.GeometrySortingOrderProperty;
-        public TMPro.VertexSortingOrder GeometrySortingOrder
-        {
-            get { return Label.GeometrySortingOrder; }
-            set { Label.GeometrySortingOrder = value; }
-        }
-
-        public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
-        public System.Boolean VertexBufferAutoSizeReduction
-        {
-            get { return Label.VertexBufferAutoSizeReduction; }
-            set { Label.VertexBufferAutoSizeReduction = value; }
-        }
-
-        public readonly static DependencyProperty FirstVisibleCharacterProperty = Label.FirstVisibleCharacterProperty;
-        public System.Int32 FirstVisibleCharacter
-        {
-            get { return Label.FirstVisibleCharacter; }
-            set { Label.FirstVisibleCharacter = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleCharactersProperty = Label.MaxVisibleCharactersProperty;
-        public System.Int32 MaxVisibleCharacters
-        {
-            get { return Label.MaxVisibleCharacters; }
-            set { Label.MaxVisibleCharacters = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleWordsProperty = Label.MaxVisibleWordsProperty;
-        public System.Int32 MaxVisibleWords
-        {
-            get { return Label.MaxVisibleWords; }
-            set { Label.MaxVisibleWords = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleLinesProperty = Label.MaxVisibleLinesProperty;
-        public System.Int32 MaxVisibleLines
-        {
-            get { return Label.MaxVisibleLines; }
-            set { Label.MaxVisibleLines = value; }
-        }
-
-        public readonly static DependencyProperty UseMaxVisibleDescenderProperty = Label.UseMaxVisibleDescenderProperty;
-        public System.Boolean UseMaxVisibleDescender
-        {
-            get { return Label.UseMaxVisibleDescender; }
-            set { Label.UseMaxVisibleDescender = value; }
-        }
-
-        public readonly static DependencyProperty PageToDisplayProperty = Label.PageToDisplayProperty;
-        public System.Int32 PageToDisplay
-        {
-            get { return Label.PageToDisplay; }
-            set { Label.PageToDisplay = value; }
-        }
-
-        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
-        public UnityEngine.Vector4 TextMargin
-        {
-            get { return Label.TextMargin; }
-            set { Label.TextMargin = value; }
-        }
-
-        public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
-        public System.Boolean HavePropertiesChanged
-        {
-            get { return Label.HavePropertiesChanged; }
-            set { Label.HavePropertiesChanged = value; }
-        }
-
-        public readonly static DependencyProperty IsUsingLegacyAnimationComponentProperty = Label.IsUsingLegacyAnimationComponentProperty;
-        public System.Boolean IsUsingLegacyAnimationComponent
-        {
-            get { return Label.IsUsingLegacyAnimationComponent; }
-            set { Label.IsUsingLegacyAnimationComponent = value; }
-        }
-
-        public readonly static DependencyProperty IsVolumetricTextProperty = Label.IsVolumetricTextProperty;
-        public System.Boolean IsVolumetricText
-        {
-            get { return Label.IsVolumetricText; }
-            set { Label.IsVolumetricText = value; }
+            get { return Label.FontStyle; }
+            set { Label.FontStyle = value; }
         }
 
         public readonly static DependencyProperty OnCullStateChangedProperty = Label.OnCullStateChangedProperty;
@@ -632,6 +296,13 @@ namespace Delight
         {
             get { return Label.Maskable; }
             set { Label.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
+        public UnityEngine.Color FontColor
+        {
+            get { return Label.FontColor; }
+            set { Label.FontColor = value; }
         }
 
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;
@@ -873,14 +544,14 @@ namespace Delight
 #if UNITY_EDITOR
                     _buttonLabel.Name = "ButtonLabel";
 #endif
-                    Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, Delight.ElementAlignment.Center);
                     Delight.Label.WidthProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.FontColorProperty.SetDefault(_buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.FontStyleProperty.SetDefault(_buttonLabel, TMPro.FontStyles.Normal);
+                    Delight.Label.FontStyleProperty.SetDefault(_buttonLabel, UnityEngine.FontStyle.Normal);
                     Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _buttonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontColorProperty.SetStateDefault("Pressed", _buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, TMPro.FontStyles.Italic);
+                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, UnityEngine.FontStyle.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _buttonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                     Delight.Label.OffsetProperty.SetHasBinding(_buttonLabel);
                 }

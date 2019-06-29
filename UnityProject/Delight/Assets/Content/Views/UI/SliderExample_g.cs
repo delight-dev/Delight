@@ -389,7 +389,7 @@ namespace Delight
                     _sliderExampleLabel1.Name = "SliderExampleLabel1";
 #endif
                     Delight.Label.WidthProperty.SetDefault(_sliderExampleLabel1, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Label.TextAlignmentProperty.SetDefault(_sliderExampleLabel1, TMPro.TextAlignmentOptions.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_sliderExampleLabel1, Delight.ElementAlignment.Center);
                     Delight.Label.TextProperty.SetHasBinding(_sliderExampleLabel1);
                 }
                 return _sliderExampleLabel1;
@@ -562,7 +562,7 @@ namespace Delight
                     _sliderExampleLabel2.Name = "SliderExampleLabel2";
 #endif
                     Delight.Label.WidthProperty.SetDefault(_sliderExampleLabel2, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Label.TextAlignmentProperty.SetDefault(_sliderExampleLabel2, TMPro.TextAlignmentOptions.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_sliderExampleLabel2, Delight.ElementAlignment.Center);
                     Delight.Label.TextProperty.SetHasBinding(_sliderExampleLabel2);
                 }
                 return _sliderExampleLabel2;

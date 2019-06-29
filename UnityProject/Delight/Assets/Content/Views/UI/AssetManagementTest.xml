@@ -25,7 +25,7 @@
       </Group>  
       <Group Id="ImageSet2" Spacing="5" LoadMode="OnDemand">
         <Image Sprite="Frame3" Size="100,100" />
-        <Image Sprite="Frame4" Size="100,100" /> 
+        <Image Sprite="Frame4" Size="100,100" />   
       </Group>
       <Group Id="ImageSet3" Spacing="5" LoadMode="OnDemand">
         <Image Sprite="Frame2" Size="100,100" />

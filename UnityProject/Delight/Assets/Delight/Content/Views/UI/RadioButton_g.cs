@@ -395,242 +395,11 @@ namespace Delight
             set { RadioButtonImageView.LoadMode = value; }
         }
 
-        public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
-        public Delight.AutoSize AutoSize
-        {
-            get { return RadioButtonLabel.AutoSize; }
-            set { RadioButtonLabel.AutoSize = value; }
-        }
-
-        public readonly static DependencyProperty AutoSizeTextContainerProperty = Label.AutoSizeTextContainerProperty;
-        public System.Boolean AutoSizeTextContainer
-        {
-            get { return RadioButtonLabel.AutoSizeTextContainer; }
-            set { RadioButtonLabel.AutoSizeTextContainer = value; }
-        }
-
-        public readonly static DependencyProperty MaskOffsetProperty = Label.MaskOffsetProperty;
-        public UnityEngine.Vector4 MaskOffset
-        {
-            get { return RadioButtonLabel.MaskOffset; }
-            set { RadioButtonLabel.MaskOffset = value; }
-        }
-
-        public readonly static DependencyProperty TextProperty = Label.TextProperty;
-        public System.String Text
-        {
-            get { return RadioButtonLabel.Text; }
-            set { RadioButtonLabel.Text = value; }
-        }
-
-        public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
-        public System.Boolean IsRightToLeftText
-        {
-            get { return RadioButtonLabel.IsRightToLeftText; }
-            set { RadioButtonLabel.IsRightToLeftText = value; }
-        }
-
-        public readonly static DependencyProperty FontProperty = Label.FontProperty;
-        public TMP_FontAsset Font
-        {
-            get { return RadioButtonLabel.Font; }
-            set { RadioButtonLabel.Font = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialProperty = Label.FontSharedMaterialProperty;
-        public MaterialAsset FontSharedMaterial
-        {
-            get { return RadioButtonLabel.FontSharedMaterial; }
-            set { RadioButtonLabel.FontSharedMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontSharedMaterialsProperty = Label.FontSharedMaterialsProperty;
-        public UnityEngine.Material[] FontSharedMaterials
-        {
-            get { return RadioButtonLabel.FontSharedMaterials; }
-            set { RadioButtonLabel.FontSharedMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialProperty = Label.FontMaterialProperty;
-        public MaterialAsset FontMaterial
-        {
-            get { return RadioButtonLabel.FontMaterial; }
-            set { RadioButtonLabel.FontMaterial = value; }
-        }
-
-        public readonly static DependencyProperty FontMaterialsProperty = Label.FontMaterialsProperty;
-        public UnityEngine.Material[] FontMaterials
-        {
-            get { return RadioButtonLabel.FontMaterials; }
-            set { RadioButtonLabel.FontMaterials = value; }
-        }
-
-        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
-        public UnityEngine.Color FontColor
-        {
-            get { return RadioButtonLabel.FontColor; }
-            set { RadioButtonLabel.FontColor = value; }
-        }
-
-        public readonly static DependencyProperty TextMeshProUGUIAlphaProperty = Label.TextMeshProUGUIAlphaProperty;
-        public System.Single TextMeshProUGUIAlpha
-        {
-            get { return RadioButtonLabel.TextMeshProUGUIAlpha; }
-            set { RadioButtonLabel.TextMeshProUGUIAlpha = value; }
-        }
-
-        public readonly static DependencyProperty EnableVertexGradientProperty = Label.EnableVertexGradientProperty;
-        public System.Boolean EnableVertexGradient
-        {
-            get { return RadioButtonLabel.EnableVertexGradient; }
-            set { RadioButtonLabel.EnableVertexGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientProperty = Label.ColorGradientProperty;
-        public TMPro.VertexGradient ColorGradient
-        {
-            get { return RadioButtonLabel.ColorGradient; }
-            set { RadioButtonLabel.ColorGradient = value; }
-        }
-
-        public readonly static DependencyProperty ColorGradientPresetProperty = Label.ColorGradientPresetProperty;
-        public TMP_ColorGradientAsset ColorGradientPreset
-        {
-            get { return RadioButtonLabel.ColorGradientPreset; }
-            set { RadioButtonLabel.ColorGradientPreset = value; }
-        }
-
-        public readonly static DependencyProperty SpriteAssetProperty = Label.SpriteAssetProperty;
-        public TMP_SpriteAsset SpriteAsset
-        {
-            get { return RadioButtonLabel.SpriteAsset; }
-            set { RadioButtonLabel.SpriteAsset = value; }
-        }
-
-        public readonly static DependencyProperty TintAllSpritesProperty = Label.TintAllSpritesProperty;
-        public System.Boolean TintAllSprites
-        {
-            get { return RadioButtonLabel.TintAllSprites; }
-            set { RadioButtonLabel.TintAllSprites = value; }
-        }
-
-        public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
-        public System.Boolean OverrideColorTags
-        {
-            get { return RadioButtonLabel.OverrideColorTags; }
-            set { RadioButtonLabel.OverrideColorTags = value; }
-        }
-
-        public readonly static DependencyProperty FaceColorProperty = Label.FaceColorProperty;
-        public UnityEngine.Color32 FaceColor
-        {
-            get { return RadioButtonLabel.FaceColor; }
-            set { RadioButtonLabel.FaceColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineColorProperty = Label.OutlineColorProperty;
-        public UnityEngine.Color32 OutlineColor
-        {
-            get { return RadioButtonLabel.OutlineColor; }
-            set { RadioButtonLabel.OutlineColor = value; }
-        }
-
-        public readonly static DependencyProperty OutlineWidthProperty = Label.OutlineWidthProperty;
-        public System.Single OutlineWidth
-        {
-            get { return RadioButtonLabel.OutlineWidth; }
-            set { RadioButtonLabel.OutlineWidth = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
-        public System.Single FontSize
-        {
-            get { return RadioButtonLabel.FontSize; }
-            set { RadioButtonLabel.FontSize = value; }
-        }
-
-        public readonly static DependencyProperty FontWeightProperty = Label.FontWeightProperty;
-        public TMPro.FontWeight FontWeight
-        {
-            get { return RadioButtonLabel.FontWeight; }
-            set { RadioButtonLabel.FontWeight = value; }
-        }
-
-        public readonly static DependencyProperty EnableAutoSizingProperty = Label.EnableAutoSizingProperty;
-        public System.Boolean EnableAutoSizing
-        {
-            get { return RadioButtonLabel.EnableAutoSizing; }
-            set { RadioButtonLabel.EnableAutoSizing = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMinProperty = Label.FontSizeMinProperty;
-        public System.Single FontSizeMin
-        {
-            get { return RadioButtonLabel.FontSizeMin; }
-            set { RadioButtonLabel.FontSizeMin = value; }
-        }
-
-        public readonly static DependencyProperty FontSizeMaxProperty = Label.FontSizeMaxProperty;
-        public System.Single FontSizeMax
-        {
-            get { return RadioButtonLabel.FontSizeMax; }
-            set { RadioButtonLabel.FontSizeMax = value; }
-        }
-
-        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
-        public TMPro.FontStyles FontStyle
-        {
-            get { return RadioButtonLabel.FontStyle; }
-            set { RadioButtonLabel.FontStyle = value; }
-        }
-
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
-        public TMPro.TextAlignmentOptions TextAlignment
+        public Delight.ElementAlignment TextAlignment
         {
             get { return RadioButtonLabel.TextAlignment; }
             set { RadioButtonLabel.TextAlignment = value; }
-        }
-
-        public readonly static DependencyProperty CharacterSpacingProperty = Label.CharacterSpacingProperty;
-        public System.Single CharacterSpacing
-        {
-            get { return RadioButtonLabel.CharacterSpacing; }
-            set { RadioButtonLabel.CharacterSpacing = value; }
-        }
-
-        public readonly static DependencyProperty WordSpacingProperty = Label.WordSpacingProperty;
-        public System.Single WordSpacing
-        {
-            get { return RadioButtonLabel.WordSpacing; }
-            set { RadioButtonLabel.WordSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
-        public System.Single LineSpacing
-        {
-            get { return RadioButtonLabel.LineSpacing; }
-            set { RadioButtonLabel.LineSpacing = value; }
-        }
-
-        public readonly static DependencyProperty LineSpacingAdjustmentProperty = Label.LineSpacingAdjustmentProperty;
-        public System.Single LineSpacingAdjustment
-        {
-            get { return RadioButtonLabel.LineSpacingAdjustment; }
-            set { RadioButtonLabel.LineSpacingAdjustment = value; }
-        }
-
-        public readonly static DependencyProperty ParagraphSpacingProperty = Label.ParagraphSpacingProperty;
-        public System.Single ParagraphSpacing
-        {
-            get { return RadioButtonLabel.ParagraphSpacing; }
-            set { RadioButtonLabel.ParagraphSpacing = value; }
-        }
-
-        public readonly static DependencyProperty CharacterWidthAdjustmentProperty = Label.CharacterWidthAdjustmentProperty;
-        public System.Single CharacterWidthAdjustment
-        {
-            get { return RadioButtonLabel.CharacterWidthAdjustment; }
-            set { RadioButtonLabel.CharacterWidthAdjustment = value; }
         }
 
         public readonly static DependencyProperty EnableWordWrappingProperty = Label.EnableWordWrappingProperty;
@@ -640,207 +409,102 @@ namespace Delight
             set { RadioButtonLabel.EnableWordWrapping = value; }
         }
 
-        public readonly static DependencyProperty WordWrappingRatiosProperty = Label.WordWrappingRatiosProperty;
-        public System.Single WordWrappingRatios
+        public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
+        public Delight.AutoSize AutoSize
         {
-            get { return RadioButtonLabel.WordWrappingRatios; }
-            set { RadioButtonLabel.WordWrappingRatios = value; }
+            get { return RadioButtonLabel.AutoSize; }
+            set { RadioButtonLabel.AutoSize = value; }
         }
 
-        public readonly static DependencyProperty OverflowModeProperty = Label.OverflowModeProperty;
-        public TMPro.TextOverflowModes OverflowMode
+        public readonly static DependencyProperty FontProperty = Label.FontProperty;
+        public FontAsset Font
         {
-            get { return RadioButtonLabel.OverflowMode; }
-            set { RadioButtonLabel.OverflowMode = value; }
+            get { return RadioButtonLabel.Font; }
+            set { RadioButtonLabel.Font = value; }
         }
 
-        public readonly static DependencyProperty LinkedTextComponentProperty = Label.LinkedTextComponentProperty;
-        public TMPro.TMP_Text LinkedTextComponent
+        public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        public System.String Text
         {
-            get { return RadioButtonLabel.LinkedTextComponent; }
-            set { RadioButtonLabel.LinkedTextComponent = value; }
+            get { return RadioButtonLabel.Text; }
+            set { RadioButtonLabel.Text = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
+        public readonly static DependencyProperty SupportRichTextProperty = Label.SupportRichTextProperty;
+        public System.Boolean SupportRichText
         {
-            get { return RadioButtonLabel.IsLinkedTextComponent; }
-            set { RadioButtonLabel.IsLinkedTextComponent = value; }
+            get { return RadioButtonLabel.SupportRichText; }
+            set { RadioButtonLabel.SupportRichText = value; }
         }
 
-        public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
-        public System.Boolean EnableKerning
+        public readonly static DependencyProperty ResizeTextForBestFitProperty = Label.ResizeTextForBestFitProperty;
+        public System.Boolean ResizeTextForBestFit
         {
-            get { return RadioButtonLabel.EnableKerning; }
-            set { RadioButtonLabel.EnableKerning = value; }
+            get { return RadioButtonLabel.ResizeTextForBestFit; }
+            set { RadioButtonLabel.ResizeTextForBestFit = value; }
         }
 
-        public readonly static DependencyProperty ExtraPaddingProperty = Label.ExtraPaddingProperty;
-        public System.Boolean ExtraPadding
+        public readonly static DependencyProperty ResizeTextMinSizeProperty = Label.ResizeTextMinSizeProperty;
+        public System.Int32 ResizeTextMinSize
         {
-            get { return RadioButtonLabel.ExtraPadding; }
-            set { RadioButtonLabel.ExtraPadding = value; }
+            get { return RadioButtonLabel.ResizeTextMinSize; }
+            set { RadioButtonLabel.ResizeTextMinSize = value; }
         }
 
-        public readonly static DependencyProperty RichTextProperty = Label.RichTextProperty;
-        public System.Boolean RichText
+        public readonly static DependencyProperty ResizeTextMaxSizeProperty = Label.ResizeTextMaxSizeProperty;
+        public System.Int32 ResizeTextMaxSize
         {
-            get { return RadioButtonLabel.RichText; }
-            set { RadioButtonLabel.RichText = value; }
+            get { return RadioButtonLabel.ResizeTextMaxSize; }
+            set { RadioButtonLabel.ResizeTextMaxSize = value; }
         }
 
-        public readonly static DependencyProperty ParseCtrlCharactersProperty = Label.ParseCtrlCharactersProperty;
-        public System.Boolean ParseCtrlCharacters
+        public readonly static DependencyProperty TextComponentTextAlignmentProperty = Label.TextComponentTextAlignmentProperty;
+        public UnityEngine.TextAnchor TextComponentTextAlignment
         {
-            get { return RadioButtonLabel.ParseCtrlCharacters; }
-            set { RadioButtonLabel.ParseCtrlCharacters = value; }
+            get { return RadioButtonLabel.TextComponentTextAlignment; }
+            set { RadioButtonLabel.TextComponentTextAlignment = value; }
         }
 
-        public readonly static DependencyProperty IsOverlayProperty = Label.IsOverlayProperty;
-        public System.Boolean IsOverlay
+        public readonly static DependencyProperty AlignByGeometryProperty = Label.AlignByGeometryProperty;
+        public System.Boolean AlignByGeometry
         {
-            get { return RadioButtonLabel.IsOverlay; }
-            set { RadioButtonLabel.IsOverlay = value; }
+            get { return RadioButtonLabel.AlignByGeometry; }
+            set { RadioButtonLabel.AlignByGeometry = value; }
         }
 
-        public readonly static DependencyProperty IsOrthographicProperty = Label.IsOrthographicProperty;
-        public System.Boolean IsOrthographic
+        public readonly static DependencyProperty FontSizeProperty = Label.FontSizeProperty;
+        public System.Int32 FontSize
         {
-            get { return RadioButtonLabel.IsOrthographic; }
-            set { RadioButtonLabel.IsOrthographic = value; }
+            get { return RadioButtonLabel.FontSize; }
+            set { RadioButtonLabel.FontSize = value; }
         }
 
-        public readonly static DependencyProperty EnableCullingProperty = Label.EnableCullingProperty;
-        public System.Boolean EnableCulling
+        public readonly static DependencyProperty HorizontalOverflowProperty = Label.HorizontalOverflowProperty;
+        public UnityEngine.HorizontalWrapMode HorizontalOverflow
         {
-            get { return RadioButtonLabel.EnableCulling; }
-            set { RadioButtonLabel.EnableCulling = value; }
+            get { return RadioButtonLabel.HorizontalOverflow; }
+            set { RadioButtonLabel.HorizontalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
+        public readonly static DependencyProperty VerticalOverflowProperty = Label.VerticalOverflowProperty;
+        public UnityEngine.VerticalWrapMode VerticalOverflow
         {
-            get { return RadioButtonLabel.IgnoreRectMaskCulling; }
-            set { RadioButtonLabel.IgnoreRectMaskCulling = value; }
+            get { return RadioButtonLabel.VerticalOverflow; }
+            set { RadioButtonLabel.VerticalOverflow = value; }
         }
 
-        public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
-        public System.Boolean IgnoreVisibility
+        public readonly static DependencyProperty LineSpacingProperty = Label.LineSpacingProperty;
+        public System.Single LineSpacing
         {
-            get { return RadioButtonLabel.IgnoreVisibility; }
-            set { RadioButtonLabel.IgnoreVisibility = value; }
+            get { return RadioButtonLabel.LineSpacing; }
+            set { RadioButtonLabel.LineSpacing = value; }
         }
 
-        public readonly static DependencyProperty HorizontalMappingProperty = Label.HorizontalMappingProperty;
-        public TMPro.TextureMappingOptions HorizontalMapping
+        public readonly static DependencyProperty FontStyleProperty = Label.FontStyleProperty;
+        public UnityEngine.FontStyle FontStyle
         {
-            get { return RadioButtonLabel.HorizontalMapping; }
-            set { RadioButtonLabel.HorizontalMapping = value; }
-        }
-
-        public readonly static DependencyProperty VerticalMappingProperty = Label.VerticalMappingProperty;
-        public TMPro.TextureMappingOptions VerticalMapping
-        {
-            get { return RadioButtonLabel.VerticalMapping; }
-            set { RadioButtonLabel.VerticalMapping = value; }
-        }
-
-        public readonly static DependencyProperty MappingUvLineOffsetProperty = Label.MappingUvLineOffsetProperty;
-        public System.Single MappingUvLineOffset
-        {
-            get { return RadioButtonLabel.MappingUvLineOffset; }
-            set { RadioButtonLabel.MappingUvLineOffset = value; }
-        }
-
-        public readonly static DependencyProperty RenderModeProperty = Label.RenderModeProperty;
-        public TMPro.TextRenderFlags RenderMode
-        {
-            get { return RadioButtonLabel.RenderMode; }
-            set { RadioButtonLabel.RenderMode = value; }
-        }
-
-        public readonly static DependencyProperty GeometrySortingOrderProperty = Label.GeometrySortingOrderProperty;
-        public TMPro.VertexSortingOrder GeometrySortingOrder
-        {
-            get { return RadioButtonLabel.GeometrySortingOrder; }
-            set { RadioButtonLabel.GeometrySortingOrder = value; }
-        }
-
-        public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
-        public System.Boolean VertexBufferAutoSizeReduction
-        {
-            get { return RadioButtonLabel.VertexBufferAutoSizeReduction; }
-            set { RadioButtonLabel.VertexBufferAutoSizeReduction = value; }
-        }
-
-        public readonly static DependencyProperty FirstVisibleCharacterProperty = Label.FirstVisibleCharacterProperty;
-        public System.Int32 FirstVisibleCharacter
-        {
-            get { return RadioButtonLabel.FirstVisibleCharacter; }
-            set { RadioButtonLabel.FirstVisibleCharacter = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleCharactersProperty = Label.MaxVisibleCharactersProperty;
-        public System.Int32 MaxVisibleCharacters
-        {
-            get { return RadioButtonLabel.MaxVisibleCharacters; }
-            set { RadioButtonLabel.MaxVisibleCharacters = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleWordsProperty = Label.MaxVisibleWordsProperty;
-        public System.Int32 MaxVisibleWords
-        {
-            get { return RadioButtonLabel.MaxVisibleWords; }
-            set { RadioButtonLabel.MaxVisibleWords = value; }
-        }
-
-        public readonly static DependencyProperty MaxVisibleLinesProperty = Label.MaxVisibleLinesProperty;
-        public System.Int32 MaxVisibleLines
-        {
-            get { return RadioButtonLabel.MaxVisibleLines; }
-            set { RadioButtonLabel.MaxVisibleLines = value; }
-        }
-
-        public readonly static DependencyProperty UseMaxVisibleDescenderProperty = Label.UseMaxVisibleDescenderProperty;
-        public System.Boolean UseMaxVisibleDescender
-        {
-            get { return RadioButtonLabel.UseMaxVisibleDescender; }
-            set { RadioButtonLabel.UseMaxVisibleDescender = value; }
-        }
-
-        public readonly static DependencyProperty PageToDisplayProperty = Label.PageToDisplayProperty;
-        public System.Int32 PageToDisplay
-        {
-            get { return RadioButtonLabel.PageToDisplay; }
-            set { RadioButtonLabel.PageToDisplay = value; }
-        }
-
-        public readonly static DependencyProperty TextMarginProperty = Label.TextMarginProperty;
-        public UnityEngine.Vector4 TextMargin
-        {
-            get { return RadioButtonLabel.TextMargin; }
-            set { RadioButtonLabel.TextMargin = value; }
-        }
-
-        public readonly static DependencyProperty HavePropertiesChangedProperty = Label.HavePropertiesChangedProperty;
-        public System.Boolean HavePropertiesChanged
-        {
-            get { return RadioButtonLabel.HavePropertiesChanged; }
-            set { RadioButtonLabel.HavePropertiesChanged = value; }
-        }
-
-        public readonly static DependencyProperty IsUsingLegacyAnimationComponentProperty = Label.IsUsingLegacyAnimationComponentProperty;
-        public System.Boolean IsUsingLegacyAnimationComponent
-        {
-            get { return RadioButtonLabel.IsUsingLegacyAnimationComponent; }
-            set { RadioButtonLabel.IsUsingLegacyAnimationComponent = value; }
-        }
-
-        public readonly static DependencyProperty IsVolumetricTextProperty = Label.IsVolumetricTextProperty;
-        public System.Boolean IsVolumetricText
-        {
-            get { return RadioButtonLabel.IsVolumetricText; }
-            set { RadioButtonLabel.IsVolumetricText = value; }
+            get { return RadioButtonLabel.FontStyle; }
+            set { RadioButtonLabel.FontStyle = value; }
         }
 
         public readonly static DependencyProperty OnCullStateChangedProperty = Label.OnCullStateChangedProperty;
@@ -855,6 +519,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.Maskable; }
             set { RadioButtonLabel.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
+        public UnityEngine.Color FontColor
+        {
+            get { return RadioButtonLabel.FontColor; }
+            set { RadioButtonLabel.FontColor = value; }
         }
 
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;
@@ -1144,10 +815,10 @@ namespace Delight
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_radioButtonRadioButtonLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_radioButtonRadioButtonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.FontSizeProperty.SetDefault(_radioButtonRadioButtonLabel, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_radioButtonRadioButtonLabel, 18);
                     Delight.Label.FontColorProperty.SetDefault(_radioButtonRadioButtonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.FontStyleProperty.SetDefault(_radioButtonRadioButtonLabel, TMPro.FontStyles.Normal);
-                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _radioButtonRadioButtonLabel, TMPro.FontStyles.Italic);
+                    Delight.Label.FontStyleProperty.SetDefault(_radioButtonRadioButtonLabel, UnityEngine.FontStyle.Normal);
+                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _radioButtonRadioButtonLabel, UnityEngine.FontStyle.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _radioButtonRadioButtonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                 }
                 return _radioButtonRadioButtonLabel;
