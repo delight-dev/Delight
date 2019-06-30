@@ -181,10 +181,74 @@ namespace Delight.Editor.Parser
             foreach (var path in paths)
             {
                 var xumlFile = GetXmlFileAtPath(path);
+                if (String.IsNullOrWhiteSpace(xumlFile.Content))
+                {
+                    // if file is empty create new view template with the same name and ignore this file
+                    switch (xumlFile.ContentType)
+                    {
+                        case XmlContentType.View:
+                            GenerateNewViewXml(xumlFile);
+                            break;
+                        case XmlContentType.Scene:
+                            GenerateNewSceneXml(xumlFile);
+                            break;
+                        case XmlContentType.Style:
+                            //GenerateNewStyleXml(xumlFile);
+                            break;
+                    }
+                    continue;
+                }
+
                 files.Add(xumlFile);
             }
 
             ParseXmlFiles(files);
+        }
+
+        /// <summary>
+        /// Generates new view XML. 
+        /// </summary>
+        private static void GenerateNewSceneXml(XmlFile xumlFile)
+        {
+            var sb = new StringBuilder();
+            var sceneName = xumlFile.Name.ToPropertyName();
+
+            // add elipses "../" to schema location according to directory depth
+            int contentDirIndex = xumlFile.Path.LastIndexOf(ContentParser.ScenesFolder);
+            string p1 = xumlFile.Path.Substring(contentDirIndex + ContentParser.ScenesFolder.Length);
+
+            int directoryDepth = 1 + p1.Count(x => x == '/');
+            var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+
+            sb.AppendLine("<{0} xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {1}Delight.xsd\">", sceneName, ellipsis);
+            sb.AppendLine("</{0}>", sceneName);
+
+            // write file
+            Debug.Log("Creating " + xumlFile.Path);
+            File.WriteAllText(xumlFile.Path, sb.ToString());
+        }
+
+        /// <summary>
+        /// Generates new view XML. 
+        /// </summary>
+        private static void GenerateNewViewXml(XmlFile xumlFile)
+        {
+            var sb = new StringBuilder();
+            var viewName = xumlFile.Name.ToPropertyName();
+
+            // add elipses "../" to schema location according to directory depth
+            int contentDirIndex = xumlFile.Path.LastIndexOf(ContentParser.ViewsFolder);
+            string p1 = xumlFile.Path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+
+            int directoryDepth = 1 + p1.Count(x => x == '/');
+            var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+
+            sb.AppendLine("<{0} xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {1}Delight.xsd\">", viewName, ellipsis);
+            sb.AppendLine("</{0}>", viewName);
+
+            // write file
+            Debug.Log("Creating " + xumlFile.Path);
+            File.WriteAllText(xumlFile.Path, sb.ToString());
         }
 
         /// <summary>

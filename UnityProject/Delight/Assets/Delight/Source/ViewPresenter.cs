@@ -50,7 +50,11 @@ namespace Delight
 #if UNITY_EDITOR
                 if (GameObject != null) GameObject.DestroyImmediate(GameObject);
 #endif
-                Create();
+                _view = Assets.CreateView(ViewTypeName);
+                if (_view == null)
+                {
+                    Create();
+                }
 
                 if (_view == null)
                     return;

@@ -395,7 +395,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("        }");
 
             sb.AppendLine("    }");
-            
+
             // close namespace
             sb.AppendLine("}");
 
@@ -2207,7 +2207,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
             sb.AppendLine("<xs:schema id=\"Delight\" xmlns:xs=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"Delight\" xmlns=\"Delight\" attributeFormDefault=\"unqualified\" elementFormDefault=\"qualified\">");
 
-            var viewTypes = TypeHelper.FindDerivedTypes(typeof(View));
+            var viewTypes = TypeHelper.FindDerivedTypes(typeof(View)).ToList();
             var enums = new HashSet<Type>();
             var templateType = typeof(Template);
             var viewBaseType = typeof(View);
@@ -2217,35 +2217,55 @@ namespace Delight.Editor.Parser
 
             // generate XSD schema elements
             // .. for views
-            foreach (var viewType in viewTypes)
+            for (int i = 0; i <= viewTypes.Count(); ++i)
             {
-                viewNames.Clear();
+                // add a last special case for all new views not yet having code generated
+                bool isLast = viewTypes.Count() == i;
+                Type viewType = isLast ? typeof(UIView) : viewTypes[i];
 
-                // check first if type name is different from view name
-                string defaultViewName = viewType.Name;
-                foreach (var viewObject in _contentObjectModel.ViewObjects)
+                viewNames.Clear();
+                if (!isLast)
                 {
-                    if (viewObject.TypeName == viewType.Name)
+                    // normal case
+                    // check first if type name is different from view name
+                    string defaultViewName = viewType.Name;
+                    foreach (var viewObject in _contentObjectModel.ViewObjects)
                     {
-                        defaultViewName = viewObject.Name;
+                        if (viewObject.TypeName == viewType.Name)
+                        {
+                            defaultViewName = viewObject.Name;
+                        }
+                    }
+
+                    if (processedViews.Contains(defaultViewName))
+                        continue;
+
+                    viewNames.Add(defaultViewName);
+                    processedViews.Add(defaultViewName);
+
+                    // check if view-type has an alias
+                    foreach (var alias in Aliases.ViewAliases)
+                    {
+                        if (alias.Value == defaultViewName)
+                        {
+                            if (!processedViews.Contains(alias.Key))
+                            {
+                                viewNames.Add(alias.Key);
+                                processedViews.Add(alias.Key);
+                            }
+                        }
                     }
                 }
-
-                if (processedViews.Contains(defaultViewName))
-                    continue;
-
-                viewNames.Add(defaultViewName);
-                processedViews.Add(defaultViewName);
-
-                // check if view-type has an alias
-                foreach (var alias in Aliases.ViewAliases)
+                else
                 {
-                    if (alias.Value == defaultViewName)
+                    // special case, if last iteration, see if there are any view objects not processed and add them (happens when new views are added that has not yet had their code generated)
+                    string defaultViewName = viewType.Name;
+                    foreach (var viewObject in _contentObjectModel.ViewObjects)
                     {
-                        if (!processedViews.Contains(alias.Key))
+                        if (!processedViews.Contains(viewObject.Name))
                         {
-                            viewNames.Add(alias.Key);
-                            processedViews.Add(alias.Key);
+                            viewNames.Add(viewObject.Name);
+                            processedViews.Add(viewObject.Name);
                         }
                     }
                 }
@@ -2308,20 +2328,23 @@ namespace Delight.Editor.Parser
                     sb.AppendFormat("  </xs:complexType>{0}", Environment.NewLine);
                 }
 
-                // add simple type for styles belonging to view
-                sb.AppendLine();
-                sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Style_" + viewType.Name, Environment.NewLine);
-                sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
-
-                foreach (var style in ContentObjectModel.GetStyleDeclarations(viewType.Name))
+                if (!isLast)
                 {
-                    if (String.IsNullOrEmpty(style.StyleName))
-                        continue;
-                    sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", style.StyleName, Environment.NewLine);
-                }
+                    // add simple type for styles belonging to view
+                    sb.AppendLine();
+                    sb.AppendFormat("  <xs:simpleType name=\"{0}\">{1}", "Style_" + viewType.Name, Environment.NewLine);
+                    sb.AppendFormat("    <xs:restriction base=\"xs:string\">{0}", Environment.NewLine);
 
-                sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
-                sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
+                    foreach (var style in ContentObjectModel.GetStyleDeclarations(viewType.Name))
+                    {
+                        if (String.IsNullOrEmpty(style.StyleName))
+                            continue;
+                        sb.AppendFormat("      <xs:enumeration value=\"{0}\" />{1}", style.StyleName, Environment.NewLine);
+                    }
+
+                    sb.AppendFormat("    </xs:restriction>{0}", Environment.NewLine);
+                    sb.AppendFormat("  </xs:simpleType>{0}", Environment.NewLine);
+                }
             }
 
             // .. for styles
@@ -2398,8 +2421,46 @@ namespace Delight.Editor.Parser
             }
 
             // print result
-            //Debug.Log("[Delight] XSD schema generated.");
+            Debug.Log("[Delight] XSD schema generated.");
             //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
+        }
+
+        /// <summary>
+        /// Generates code from XML view object.
+        /// </summary>
+        public static void GenerateBlankCodeBehind(string viewName, string filepath)
+        {
+            //Debug.Log("Generating code for " + viewObject.FilePath);
+            var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(filepath));
+            var sourceFile = String.Format("{0}/{1}.cs", dir, viewName);
+            if (File.Exists(sourceFile))
+            {
+                return; // don't overwrite any existing files
+            }
+
+            var viewTypeName = viewName;
+
+            // build the codebehind for the view
+            var sb = new StringBuilder();
+
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace Delight");
+            sb.AppendLine("{");
+            sb.AppendLine("    public partial class {0}", viewTypeName);
+            sb.AppendLine("    {");
+            sb.AppendLine("    }");
+            sb.AppendLine("}");
+
+            // write file
+            //Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
         }
 
         #endregion
