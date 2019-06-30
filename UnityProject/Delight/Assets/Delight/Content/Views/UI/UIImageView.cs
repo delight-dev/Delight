@@ -38,6 +38,17 @@ namespace Delight
                 return;
 
             base.BeforeLoad();
+
+            if (ImageComponent == null)
+            {
+                // check if image color or sprite has binding
+                if (BackgroundColorProperty.HasBinding(this) || BackgroundSpriteProperty.HasBinding(this))
+                {
+                    ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                    FastMaterialChanged(); // apply fast material if specified
+                }
+            }
+
             SpriteChanged();
         }
 
