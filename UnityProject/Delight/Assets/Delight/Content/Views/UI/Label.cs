@@ -12,6 +12,12 @@ namespace Delight
 {
     public partial class Label
     {
+        #region Fields
+
+        private ContentSizeFitter _contentSizeFitter;
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -40,9 +46,39 @@ namespace Delight
         {
             if (IgnoreObject)
                 return;
+
+            if (AutoSize != AutoSize.None)
+            {
+                EnableScriptEvents = true;
+            }
+                       
             base.BeforeLoad();
 
             TextComponent = GameObject.AddComponent<UnityEngine.UI.Text>();
+
+            if (AutoSize != AutoSize.None)
+            {
+                // add content size fitter
+                _contentSizeFitter = GameObject.AddComponent<ContentSizeFitter>();
+                if (AutoSize == AutoSize.Width || AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.True)
+                {
+                    _contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+                }
+
+                if (AutoSize == AutoSize.Height || AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.True)
+                {
+                    _contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
+                }
+            }
+        }
+
+        /// <summary>
+        /// When AutoSize adjust size of label to content size fitter.
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+            SetSize(ActualWidth, ActualHeight);
         }
 
         /// <summary>
@@ -64,18 +100,8 @@ namespace Delight
                 }
             }
 
-            if (AutoSize != AutoSize.None)
-            {
-                // add content size fitter
-                var contentSizeFitter = GameObject.AddComponent<ContentSizeFitter>();
-                if (AutoSize == AutoSize.Width || AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.True)
-                {
-                    contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
-                }
-
-                // adjust size initially to text
-                TextChanged();
-            }
+            // adjust size initially to text
+            TextChanged();
         }
 
         /// <summary>
@@ -100,7 +126,7 @@ namespace Delight
             TextComponent.alignment = TextAnchor;
             if (Font == null && TextComponent.font == null)
             {
-                TextComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font; 
+                TextComponent.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
             }
         }
 

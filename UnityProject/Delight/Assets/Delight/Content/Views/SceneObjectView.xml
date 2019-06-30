@@ -18,7 +18,7 @@
            Select="t:Action"
            Submit="t:Action"
            UpdateSelected="t:Action"
-           >
+           HideInDesigner="True">
 </SceneObjectView>
 
 <!-- 

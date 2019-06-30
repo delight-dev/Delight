@@ -384,6 +384,8 @@ namespace Delight
         /// </summary>
         public void SetSize(float width, float height)
         {
+            if (Width == null) Width = new ElementSize();
+            if (Height == null) Height = new ElementSize();
             Width.Pixels = width;
             Height.Pixels = height;
         }

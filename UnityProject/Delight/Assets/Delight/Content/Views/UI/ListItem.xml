@@ -10,5 +10,6 @@
           MouseExit="ListItemMouseExit"
           MouseDown="ListItemMouseDown"
           MouseUp="ListItemMouseUp"
-          ContentTemplateData="t:ContentTemplateData">
+          ContentTemplateData="t:ContentTemplateData"
+          HideInDesigner="True">
 </ListItem> 

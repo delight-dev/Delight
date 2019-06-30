@@ -555,6 +555,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(12)]
         public string Module;
 
+        [ProtoMember(13)]
+        public bool HideInDesigner;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -614,6 +617,8 @@ namespace Delight.Editor.Parser
             HasContentTemplate = false;
             PropertyExpressions.Clear();
             ViewDeclarations.Clear();
+            Module = null;
+            HideInDesigner = false;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)

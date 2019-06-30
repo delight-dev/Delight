@@ -17,8 +17,6 @@ namespace Delight
             ViewActivators = new Dictionary<string, Func<View, View, Template, View>>();
             ViewActivators.Add("AssetManagementTest", (x, y, z) => new AssetManagementTest(x, y, null, z));
             ViewActivators.Add("LayoutRoot", (x, y, z) => new LayoutRoot(x, y, null, z));
-            ViewActivators.Add("BigSlowView", (x, y, z) => new BigSlowView(x, y, null, z));
-            ViewActivators.Add("UIImageView", (x, y, z) => new UIImageView(x, y, null, z));
             ViewActivators.Add("BindingTest", (x, y, z) => new BindingTest(x, y, null, z));
             ViewActivators.Add("UIView", (x, y, z) => new UIView(x, y, null, z));
             ViewActivators.Add("ComboBoxExample", (x, y, z) => new ComboBoxExample(x, y, null, z));
@@ -33,6 +31,7 @@ namespace Delight
             ViewActivators.Add("ViewSwitcherTest", (x, y, z) => new ViewSwitcherTest(x, y, null, z));
             ViewActivators.Add("SceneObjectView", (x, y, z) => new SceneObjectView(x, y, null, z));
             ViewActivators.Add("Button", (x, y, z) => new Button(x, y, null, z));
+            ViewActivators.Add("UIImageView", (x, y, z) => new UIImageView(x, y, null, z));
             ViewActivators.Add("CheckBox", (x, y, z) => new CheckBox(x, y, null, z));
             ViewActivators.Add("Collection", (x, y, z) => new Collection(x, y, null, z));
             ViewActivators.Add("ComboBox", (x, y, z) => new ComboBox(x, y, null, z));

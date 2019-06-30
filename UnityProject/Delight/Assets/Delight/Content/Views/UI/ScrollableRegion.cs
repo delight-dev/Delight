@@ -16,9 +16,6 @@ namespace Delight
     {
         #region Fields
 
-        public Vector2 NormalizedPosition;
-        public Vector2 AbsolutePosition;
-
         private float _actualWidth;
         private float _actualHeight;
         private bool _isDragging;
@@ -904,6 +901,42 @@ namespace Delight
                 var viewportRatio = cy != 0 ? vpy / cy : 1;
                 VerticalScrollbar.SetScrollPosition((clampedOffset.y - min.y) / (max.y - min.y), viewportRatio);
             }
+        }
+
+        /// <summary>
+        /// Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).
+        /// </summary>
+        public void SetScrollPosition(float horizontalPosition, float verticalPosition)
+        {
+            // calculate content offset
+            horizontalPosition = Mathf.Clamp(horizontalPosition, 0, 1);
+            verticalPosition = Mathf.Clamp(verticalPosition, 0, 1);
+
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            // set content offset based on bounds
+            Vector2 contentOffset = new Vector2(
+                min.x - (Math.Abs(max.x - min.x) * horizontalPosition),
+                min.y - (Math.Abs(max.y - min.y) * verticalPosition)
+                );
+
+            var clampedOffset = GetClampedOffset(contentOffset);
+            SetContentOffset(clampedOffset);
+        }
+
+        /// <summary>
+        /// Sets absolute scroll position in pixels (from 0 to size of scrollable content).
+        /// </summary>
+        public void SetAbsoluteScrollPosition(float horizontalPosition, float verticalPosition)
+        {
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+
+            float ax = cx > 0 ? horizontalPosition / cx : 0;
+            float ay = cy > 0 ? verticalPosition / cy : 0;
+
+            SetScrollPosition(ax, ay);
         }
 
         #endregion

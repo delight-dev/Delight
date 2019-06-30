@@ -1,5 +1,5 @@
 <LayoutRoot xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-            BasedOn="UICanvas" EnableScriptEvents="True" RenderMode="ScreenSpaceOverlay">
+            BasedOn="UICanvas" EnableScriptEvents="True" RenderMode="ScreenSpaceOverlay" HideInDesigner="True">
 </LayoutRoot>
 
 

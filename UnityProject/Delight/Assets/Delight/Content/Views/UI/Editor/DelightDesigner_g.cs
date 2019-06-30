@@ -21,15 +21,15 @@ namespace Delight
             ContentRegion = new ScrollableRegion(this, Grid1.Content, "ContentRegion", ContentRegionTemplate);
             Grid1.Cell.SetValue(ContentRegion, new CellIndex(1, 1));
             Grid1.CellSpan.SetValue(ContentRegion, new CellIndex(1, 2));
-            Region1 = new Region(this, ContentRegion.Content, "Region1", Region1Template);
-            GridImage = new Image(this, Region1.Content, "GridImage", GridImageTemplate);
-            Image1 = new Image(this, Region1.Content, "Image1", Image1Template);
-            Image2 = new Image(this, Region1.Content, "Image2", Image2Template);
+            GridBackgroundRegion = new Region(this, ContentRegion.Content, "GridBackgroundRegion", GridBackgroundRegionTemplate);
+            GridImage = new Image(this, GridBackgroundRegion.Content, "GridImage", GridImageTemplate);
+            Image1 = new Image(this, GridBackgroundRegion.Content, "Image1", Image1Template);
+            Image2 = new Image(this, GridBackgroundRegion.Content, "Image2", Image2Template);
             ViewRegion = new Region(this, ContentRegion.Content, "ViewRegion", ViewRegionTemplate);
-            Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);
-            Grid1.Cell.SetValue(Region2, new CellIndex(0, 0));
-            Grid1.CellSpan.SetValue(Region2, new CellIndex(2, 1));
-            List1 = new List(this, Region2.Content, "List1", List1Template);
+            Region1 = new Region(this, Grid1.Content, "Region1", Region1Template);
+            Grid1.Cell.SetValue(Region1, new CellIndex(0, 0));
+            Grid1.CellSpan.SetValue(Region1, new CellIndex(2, 1));
+            List1 = new List(this, Region1.Content, "List1", List1Template);
             List1.ItemSelected += ResolveActionHandler(this, "ViewSelected");
 
             // binding <List Items="{view in DesignerViews}">
@@ -46,9 +46,9 @@ namespace Delight
                 list1Content.ContentTemplateData = tiView;
                 return list1Content;
             });
-            Region3 = new Region(this, Grid1.Content, "Region3", Region3Template);
-            Grid1.Cell.SetValue(Region3, new CellIndex(0, 1));
-            Grid1.CellSpan.SetValue(Region3, new CellIndex(1, 2));
+            Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);
+            Grid1.Cell.SetValue(Region2, new CellIndex(0, 1));
+            Grid1.CellSpan.SetValue(Region2, new CellIndex(1, 2));
             this.AfterInitializeInternal();
         }
 
@@ -66,8 +66,8 @@ namespace Delight
             dependencyProperties.Add(Grid1TemplateProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
-            dependencyProperties.Add(Region1Property);
-            dependencyProperties.Add(Region1TemplateProperty);
+            dependencyProperties.Add(GridBackgroundRegionProperty);
+            dependencyProperties.Add(GridBackgroundRegionTemplateProperty);
             dependencyProperties.Add(GridImageProperty);
             dependencyProperties.Add(GridImageTemplateProperty);
             dependencyProperties.Add(Image1Property);
@@ -76,14 +76,14 @@ namespace Delight
             dependencyProperties.Add(Image2TemplateProperty);
             dependencyProperties.Add(ViewRegionProperty);
             dependencyProperties.Add(ViewRegionTemplateProperty);
-            dependencyProperties.Add(Region2Property);
-            dependencyProperties.Add(Region2TemplateProperty);
+            dependencyProperties.Add(Region1Property);
+            dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(List1Property);
             dependencyProperties.Add(List1TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
-            dependencyProperties.Add(Region3Property);
-            dependencyProperties.Add(Region3TemplateProperty);
+            dependencyProperties.Add(Region2Property);
+            dependencyProperties.Add(Region2TemplateProperty);
             dependencyProperties.Add(List1ContentProperty);
             dependencyProperties.Add(List1ContentTemplateProperty);
         }
@@ -127,18 +127,18 @@ namespace Delight
             set { ContentRegionTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
-        public Region Region1
+        public readonly static DependencyProperty<Region> GridBackgroundRegionProperty = new DependencyProperty<Region>("GridBackgroundRegion");
+        public Region GridBackgroundRegion
         {
-            get { return Region1Property.GetValue(this); }
-            set { Region1Property.SetValue(this, value); }
+            get { return GridBackgroundRegionProperty.GetValue(this); }
+            set { GridBackgroundRegionProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
-        public Template Region1Template
+        public readonly static DependencyProperty<Template> GridBackgroundRegionTemplateProperty = new DependencyProperty<Template>("GridBackgroundRegionTemplate");
+        public Template GridBackgroundRegionTemplate
         {
-            get { return Region1TemplateProperty.GetValue(this); }
-            set { Region1TemplateProperty.SetValue(this, value); }
+            get { return GridBackgroundRegionTemplateProperty.GetValue(this); }
+            set { GridBackgroundRegionTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> GridImageProperty = new DependencyProperty<Image>("GridImage");
@@ -197,18 +197,18 @@ namespace Delight
             set { ViewRegionTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
-        public Region Region2
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
+        public Region Region1
         {
-            get { return Region2Property.GetValue(this); }
-            set { Region2Property.SetValue(this, value); }
+            get { return Region1Property.GetValue(this); }
+            set { Region1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
-        public Template Region2Template
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
+        public Template Region1Template
         {
-            get { return Region2TemplateProperty.GetValue(this); }
-            set { Region2TemplateProperty.SetValue(this, value); }
+            get { return Region1TemplateProperty.GetValue(this); }
+            set { Region1TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<List> List1Property = new DependencyProperty<List>("List1");
@@ -239,18 +239,18 @@ namespace Delight
             set { Label1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region3Property = new DependencyProperty<Region>("Region3");
-        public Region Region3
+        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
+        public Region Region2
         {
-            get { return Region3Property.GetValue(this); }
-            set { Region3Property.SetValue(this, value); }
+            get { return Region2Property.GetValue(this); }
+            set { Region2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region3TemplateProperty = new DependencyProperty<Template>("Region3Template");
-        public Template Region3Template
+        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
+        public Template Region2Template
         {
-            get { return Region3TemplateProperty.GetValue(this); }
-            set { Region3TemplateProperty.SetValue(this, value); }
+            get { return Region2TemplateProperty.GetValue(this); }
+            set { Region2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ListItem> List1ContentProperty = new DependencyProperty<ListItem>("List1Content");
@@ -301,16 +301,16 @@ namespace Delight
 #endif
                     Delight.DelightDesigner.Grid1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGrid1);
                     Delight.DelightDesigner.ContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentRegion);
-                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
+                    Delight.DelightDesigner.GridBackgroundRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridBackgroundRegion);
                     Delight.DelightDesigner.GridImageTemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridImage);
                     Delight.DelightDesigner.Image1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage1);
                     Delight.DelightDesigner.Image2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage2);
                     Delight.DelightDesigner.ViewRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewRegion);
-                    Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
+                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
                     Delight.DelightDesigner.List1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1Content);
                     Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
-                    Delight.DelightDesigner.Region3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion3);
+                    Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
                 }
                 return _delightDesigner;
             }
@@ -508,25 +508,25 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerRegion1;
-        public static Template DelightDesignerRegion1
+        private static Template _delightDesignerGridBackgroundRegion;
+        public static Template DelightDesignerGridBackgroundRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
+                if (_delightDesignerGridBackgroundRegion == null || _delightDesignerGridBackgroundRegion.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerRegion1 == null)
+                if (_delightDesignerGridBackgroundRegion == null)
 #endif
                 {
-                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
+                    _delightDesignerGridBackgroundRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
+                    _delightDesignerGridBackgroundRegion.Name = "DelightDesignerGridBackgroundRegion";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                    Delight.Region.WidthProperty.SetDefault(_delightDesignerGridBackgroundRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerGridBackgroundRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
                 }
-                return _delightDesignerRegion1;
+                return _delightDesignerGridBackgroundRegion;
             }
         }
 
@@ -616,31 +616,29 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerViewRegion.Name = "DelightDesignerViewRegion";
 #endif
-                    Delight.Region.WidthProperty.SetDefault(_delightDesignerViewRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_delightDesignerViewRegion, new ElementSize(1000f, ElementSizeUnit.Pixels));
                 }
                 return _delightDesignerViewRegion;
             }
         }
 
-        private static Template _delightDesignerRegion2;
-        public static Template DelightDesignerRegion2
+        private static Template _delightDesignerRegion1;
+        public static Template DelightDesignerRegion1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerRegion2 == null || _delightDesignerRegion2.CurrentVersion != Template.Version)
+                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerRegion2 == null)
+                if (_delightDesignerRegion1 == null)
 #endif
                 {
-                    _delightDesignerRegion2 = new Template(RegionTemplates.Region);
+                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerRegion2.Name = "DelightDesignerRegion2";
+                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion2, new UnityEngine.Color(0.7019608f, 0.7019608f, 0.7019608f, 1f));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(0.7019608f, 0.7019608f, 0.7019608f, 1f));
                 }
-                return _delightDesignerRegion2;
+                return _delightDesignerRegion1;
             }
         }
 
@@ -894,24 +892,24 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerRegion3;
-        public static Template DelightDesignerRegion3
+        private static Template _delightDesignerRegion2;
+        public static Template DelightDesignerRegion2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerRegion3 == null || _delightDesignerRegion3.CurrentVersion != Template.Version)
+                if (_delightDesignerRegion2 == null || _delightDesignerRegion2.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerRegion3 == null)
+                if (_delightDesignerRegion2 == null)
 #endif
                 {
-                    _delightDesignerRegion3 = new Template(RegionTemplates.Region);
+                    _delightDesignerRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerRegion3.Name = "DelightDesignerRegion3";
+                    _delightDesignerRegion2.Name = "DelightDesignerRegion2";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion3, new UnityEngine.Color(0.6392157f, 0.6352941f, 0.6392157f, 1f));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion2, new UnityEngine.Color(0.6392157f, 0.6352941f, 0.6392157f, 1f));
                 }
-                return _delightDesignerRegion3;
+                return _delightDesignerRegion2;
             }
         }
 

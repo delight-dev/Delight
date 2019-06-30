@@ -7,13 +7,13 @@
 
     <!-- Designer Content Region -->
     <ScrollableRegion Grid.Cell="1,1" Id="ContentRegion" HasInertia="False" ScrollbarVisibility="Never" Grid.CellSpan="1,2"> 
-      <Region Width="1000" Height="1000">
+      <Region Id="GridBackgroundRegion" Width="1000" Height="1000">
         <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
         <Image Color="#3f3f3d" Size="1,100%" />
         <Image Color="#3f3f3d" Size="100%,1" />
       </Region>
 
-      <Region Id="ViewRegion" Width="1000" Height="1000">
+      <Region Id="ViewRegion">
       </Region>
     </ScrollableRegion>
 

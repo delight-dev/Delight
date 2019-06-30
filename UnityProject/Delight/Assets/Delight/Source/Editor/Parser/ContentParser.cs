@@ -337,6 +337,13 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
+                if (attributeName.IEquals("HideInDesigner"))
+                {
+                    Boolean.TryParse(attributeValue, out var hideInDesigner);
+                    viewObject.HideInDesigner = hideInDesigner;
+                    continue;
+                }
+
                 if (attributeName.IEquals("BasedOn"))
                 {
                     // set default 

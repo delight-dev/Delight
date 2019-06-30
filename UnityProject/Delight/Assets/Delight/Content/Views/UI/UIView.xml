@@ -5,5 +5,5 @@
         CanvasGroup="t:UnityEngine.CanvasGroup, UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
         UseFastShader="t:bool" FastMaterial="t:Material = UI-Fast-Default"
         BubbleNotifyChildLayoutChanged="t:bool"
-        IgnoreFlip="t:bool"> 
+        IgnoreFlip="t:bool" HideInDesigner="True"> 
 </UIView>
