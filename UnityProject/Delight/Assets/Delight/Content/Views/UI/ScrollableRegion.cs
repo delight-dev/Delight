@@ -335,7 +335,7 @@ namespace Delight
                 hasNewSize = true;
             }
             var newHeight = new ElementSize(maxHeight);
-            if (!newHeight.Equals(Height))
+            if (!newHeight.Equals(ContentRegion.Height))
             {
                 ContentRegion.Height = newHeight;
                 hasNewSize = true;

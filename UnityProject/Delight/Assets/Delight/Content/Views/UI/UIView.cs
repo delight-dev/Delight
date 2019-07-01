@@ -386,8 +386,12 @@ namespace Delight
         {
             if (Width == null) Width = new ElementSize();
             if (Height == null) Height = new ElementSize();
-            Width.Pixels = width;
-            Height.Pixels = height;
+
+            if (Width.Pixels != width)
+                Width = new ElementSize(width);
+
+            if (Height.Pixels != height)
+                Height = new ElementSize(height);
         }
 
         /// <summary>

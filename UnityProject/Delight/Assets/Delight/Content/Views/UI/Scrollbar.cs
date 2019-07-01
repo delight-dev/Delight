@@ -81,6 +81,7 @@ namespace Delight
                 ViewportRatioProperty.SetValue(this, ratio, false);
             }
 
+            Handle.DisableLayoutUpdate = true;
             if (Handle.OffsetFromParent == null)
                 Handle.OffsetFromParent = new ElementMargin();
 
@@ -100,9 +101,12 @@ namespace Delight
                 float handleLength = totalLength * ViewportRatio;
                 float scrollLength = Math.Max(0, totalLength - handleLength);
 
+                
                 Handle.Height = handleLength;
                 Handle.OffsetFromParent.Top = position * scrollLength;
             }
+            Handle.DisableLayoutUpdate = false;
+            Handle.UpdateLayout(false);
         }
     }
 }
