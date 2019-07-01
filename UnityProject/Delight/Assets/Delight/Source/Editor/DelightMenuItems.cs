@@ -129,7 +129,7 @@ namespace Delight.Editor
             if (!ContentAssetProcessor.IsInContentTypeFolder(path, inContentFolder, contentFolder))
             {
                 // no. adjust path to correct subfolder
-                path = inContentFolder + ContentParser.ViewsFolder.Substring(1);
+                path = inContentFolder + contentFolder.Substring(1);
             }
 
             return path;

@@ -1,4 +1,4 @@
-// Internal view logic generated from "MyScene.xml"
+// Internal view logic generated from "NewScene.xml"
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -9,26 +9,26 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class MyScene : UIView
+    public partial class NewScene : UIView
     {
         #region Constructors
 
-        public MyScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? MySceneTemplates.Default, initializer)
+        public NewScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
+            base(parent, layoutParent, id, template ?? NewSceneTemplates.Default, initializer)
         {
             // constructing Label (Label1)
             Label1 = new Label(this, this, "Label1", Label1Template);
             this.AfterInitializeInternal();
         }
 
-        public MyScene() : this(null)
+        public NewScene() : this(null)
         {
         }
 
-        static MyScene()
+        static NewScene()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(MySceneTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(NewSceneTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
@@ -57,7 +57,7 @@ namespace Delight
 
     #region Data Templates
 
-    public static class MySceneTemplates
+    public static class NewSceneTemplates
     {
         #region Properties
 
@@ -65,50 +65,49 @@ namespace Delight
         {
             get
             {
-                return MyScene;
+                return NewScene;
             }
         }
 
-        private static Template _myScene;
-        public static Template MyScene
+        private static Template _newScene;
+        public static Template NewScene
         {
             get
             {
 #if UNITY_EDITOR
-                if (_myScene == null || _myScene.CurrentVersion != Template.Version)
+                if (_newScene == null || _newScene.CurrentVersion != Template.Version)
 #else
-                if (_myScene == null)
+                if (_newScene == null)
 #endif
                 {
-                    _myScene = new Template(UIViewTemplates.UIView);
+                    _newScene = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
-                    _myScene.Name = "MyScene";
+                    _newScene.Name = "NewScene";
 #endif
-                    Delight.MyScene.Label1TemplateProperty.SetDefault(_myScene, MySceneLabel1);
+                    Delight.NewScene.Label1TemplateProperty.SetDefault(_newScene, NewSceneLabel1);
                 }
-                return _myScene;
+                return _newScene;
             }
         }
 
-        private static Template _mySceneLabel1;
-        public static Template MySceneLabel1
+        private static Template _newSceneLabel1;
+        public static Template NewSceneLabel1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_mySceneLabel1 == null || _mySceneLabel1.CurrentVersion != Template.Version)
+                if (_newSceneLabel1 == null || _newSceneLabel1.CurrentVersion != Template.Version)
 #else
-                if (_mySceneLabel1 == null)
+                if (_newSceneLabel1 == null)
 #endif
                 {
-                    _mySceneLabel1 = new Template(LabelTemplates.Label);
+                    _newSceneLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _mySceneLabel1.Name = "MySceneLabel1";
+                    _newSceneLabel1.Name = "NewSceneLabel1";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_mySceneLabel1, "My first scene :)");
-                    Delight.Label.FontColorProperty.SetDefault(_mySceneLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetDefault(_newSceneLabel1, "Awesome!");
                 }
-                return _mySceneLabel1;
+                return _newSceneLabel1;
             }
         }
 

@@ -54,7 +54,7 @@ namespace Delight
             ViewActivators.Add("Slider", (x, y, z) => new Slider(x, y, null, z));
             ViewActivators.Add("ToggleGroup", (x, y, z) => new ToggleGroup(x, y, null, z));
             ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));
-            ViewActivators.Add("MyScene", (x, y, z) => new MyScene(x, y, null, z));
+            ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
             ViewActivators.Add("DelightEditor", (x, y, z) => new DelightEditor(x, y, null, z));
         }
     }
