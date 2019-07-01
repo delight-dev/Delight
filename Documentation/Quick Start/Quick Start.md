@@ -2,15 +2,33 @@
 
 [TOC]
 
-1. Import the **Delight unity package** to your project. You'll have two new folders:
+1. Import the **Delight unity package** to your project. It will create two folders in your project:
 
-   `Content/` - your custom content goes here
+   `Content/` - your project's content
 
-   `Delight/` - contains the framework source code and content
+   `Delight/` - framework source and content
 
-2. Expand the `Content/` folder, right-click on the `Content/Scenes` folder and choose `Create -> Delight Scene` from the menu. 
+   
 
-3. The scene MyGameScene.unity will be created in the same folder. Open the scene and run it.
+2. Right-click in your project hierarchy or select Assets from the top menu, and choose: 
+
+   `Create -> Delight Scene`. 
+
+   Press enter to create the scene **NewScene**. Open the newly created **NewScene.xml** and add the Label element:
+
+   ```xml
+   <NewScene xmlns="Delight" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="Delight ../Delight.xsd">
+     
+       <Label Text="Awesome!" />
+   
+   </NewScene>
+   ```
+
+   
+
+3. The Unity scene **NewScene.unity** is created in the same folder. Open the scene and run it.
 
 Congratulations, you've created your first scene in Delight :)
 
