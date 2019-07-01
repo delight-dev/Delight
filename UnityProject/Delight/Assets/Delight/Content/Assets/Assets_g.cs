@@ -41,6 +41,18 @@ namespace Delight
 
     public partial class SpriteAsset : AssetObject<UnityEngine.Sprite>
     {
+        public static implicit operator SpriteAsset(UnityEngine.Sprite unityObject)
+        {
+            return new SpriteAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator SpriteAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.Sprites[assetId];
+        }
     }
 
     public partial class SpriteAssetData : DataProvider<SpriteAsset>
@@ -119,6 +131,18 @@ namespace Delight
 
     public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
     {
+        public static implicit operator TMP_FontAsset(TMPro.TMP_FontAsset unityObject)
+        {
+            return new TMP_FontAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TMP_FontAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.TMP_FontAssets[assetId];
+        }
     }
 
     public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
@@ -152,6 +176,18 @@ namespace Delight
 
     public partial class MaterialAsset : AssetObject<UnityEngine.Material>
     {
+        public static implicit operator MaterialAsset(UnityEngine.Material unityObject)
+        {
+            return new MaterialAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator MaterialAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.Materials[assetId];
+        }
     }
 
     public partial class MaterialAssetData : DataProvider<MaterialAsset>
@@ -185,6 +221,18 @@ namespace Delight
 
     public partial class FontAsset : AssetObject<UnityEngine.Font>
     {
+        public static implicit operator FontAsset(UnityEngine.Font unityObject)
+        {
+            return new FontAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator FontAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.Fonts[assetId];
+        }
     }
 
     public partial class FontAssetData : DataProvider<FontAsset>
@@ -214,61 +262,22 @@ namespace Delight
 
     #endregion
 
-    #region TMP_ColorGradients
-
-    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
-    {
-    }
-
-    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
-    }
-
-    #endregion
-
-    #region TMP_SpriteAssets
-
-    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
-    {
-    }
-
-    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
-    }
-
-    #endregion
-
-    #region TMP_InputValidators
-
-    public partial class TMP_InputValidatorAsset : AssetObject<TMPro.TMP_InputValidator>
-    {
-    }
-
-    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
-    {
-    }
-
-    public static partial class Assets
-    {
-        public static TMP_InputValidatorAssetData TMP_InputValidators = new TMP_InputValidatorAssetData();
-    }
-
-    #endregion
-
     #region Texture2Ds
 
     public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
     {
+        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
+        {
+            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator Texture2DAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.Texture2Ds[assetId];
+        }
     }
 
     public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
@@ -302,6 +311,18 @@ namespace Delight
 
     public partial class ShaderAsset : AssetObject<UnityEngine.Shader>
     {
+        public static implicit operator ShaderAsset(UnityEngine.Shader unityObject)
+        {
+            return new ShaderAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator ShaderAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            return Assets.Shaders[assetId];
+        }
     }
 
     public partial class ShaderAssetData : DataProvider<ShaderAsset>

@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Fields
 
+        private BindableObject _selectedItem;
         private BindableCollection _oldCollection;
         private Dictionary<BindableObject, ListItem> _presentedItems = new Dictionary<BindableObject, ListItem>();
 
@@ -880,6 +881,7 @@ namespace Delight
                 return;
 
             listItem.IsSelected = selected;
+            _selectedItem = selected ? listItem.Item : null;
 
             ItemSelectionActionData data = new ItemSelectionActionData { IsSelected = selected, ListItem = listItem, Item = listItem.Item };
             if (selected)
@@ -890,6 +892,14 @@ namespace Delight
             {
                 ItemDeselected?.Invoke(this, data);
             }
+        }
+
+        /// <summary>
+        /// Gets selected item of type.
+        /// </summary>
+        public T GetSelected<T>() where T : BindableObject
+        {
+            return SelectedItem as T;
         }
 
         #endregion
@@ -904,6 +914,21 @@ namespace Delight
             get
             {
                 return Overflow == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets selected item.
+        /// </summary>
+        public BindableObject SelectedItem
+        {
+            get
+            {
+                return _selectedItem;
+            }
+            set
+            {
+                SelectItem(value);
             }
         }
 

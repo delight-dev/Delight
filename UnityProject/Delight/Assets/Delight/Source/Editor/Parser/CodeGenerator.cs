@@ -1825,6 +1825,18 @@ namespace Delight.Editor.Parser
                 sb.AppendLine();
                 sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetTypeName, assetType.FullName);
                 sb.AppendLine("    {");
+                sb.AppendLine("        public static implicit operator {0}({1} unityObject)", assetTypeName, assetType.FullName);
+                sb.AppendLine("        {");
+                sb.AppendLine("            return new {0} {{ UnityObject = unityObject, IsUnmanaged = true }};", assetTypeName);
+                sb.AppendLine("        }");
+                sb.AppendLine();
+                sb.AppendLine("        public static implicit operator {0}(string assetId)", assetTypeName);
+                sb.AppendLine("        {");
+                sb.AppendLine("            if (String.IsNullOrEmpty(assetId))");
+                sb.AppendLine("                return null;");
+                sb.AppendLine();
+                sb.AppendLine("            return Assets.{0}[assetId];", assetTypeNamePlural);
+                sb.AppendLine("        }");
                 sb.AppendLine("    }");
                 sb.AppendLine();
                 sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
