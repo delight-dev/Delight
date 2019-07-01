@@ -25,6 +25,8 @@ namespace Delight
         private Vector2 _contentStartOffset;
         private Vector2 _previousContentOffset;
         private bool _isOutOfBoundsElastic;
+        private bool _isOutOfBoundsElasticX;
+        private bool _isOutOfBoundsElasticY;
         private bool _offsetChangedFromStartPosition;
 
         #endregion
@@ -63,11 +65,13 @@ namespace Delight
                     contentOffset += _velocity * deltaTime;
 
                     // check if content is out of bounds 
-                    if (ScrollBounds != ScrollBounds.None && IsOutOfBounds(contentOffset))
+                    if (ScrollBounds != ScrollBounds.None && IsOutOfBounds(contentOffset, out var outOfBoundsX, out var outOfBoundsY))
                     {
                         if (ScrollBounds == ScrollBounds.Elastic)
                         {
                             _isOutOfBoundsElastic = true;
+                            _isOutOfBoundsElasticX = outOfBoundsX;
+                            _isOutOfBoundsElasticY = outOfBoundsY;
                         }
                         else if (ScrollBounds == ScrollBounds.Clamped)
                         {
@@ -77,7 +81,18 @@ namespace Delight
                     }
                     else
                     {
+                        // if previously out of bounds reset velocity to prevent bouncing effect
+                        if (_isOutOfBoundsElastic)
+                        {
+                            if (_isOutOfBoundsElasticX)
+                                _velocity.x = 0;
+                            if (_isOutOfBoundsElasticY)
+                                _velocity.y = 0;
+                        }
+
                         _isOutOfBoundsElastic = false;
+                        _isOutOfBoundsElasticX = false;
+                        _isOutOfBoundsElasticY = false;
                         SetContentOffset(contentOffset);
                     }
 
@@ -137,7 +152,7 @@ namespace Delight
         /// <summary>
         /// Returns true if content offset is out of bounds.
         /// </summary>
-        private bool IsOutOfBounds(Vector2 offset)
+        private bool IsOutOfBounds(Vector2 offset, out bool xAxisOutOfBounds, out bool yAxisOutOfBounds)
         {
             Vector2 min, max;
             GetBounds(out min, out max);
@@ -160,7 +175,9 @@ namespace Delight
                 max.y = 0;
             }
 
-            return (offset.x > min.x) || (offset.x < max.x) || (offset.y > min.y) || (offset.y < max.y);
+            xAxisOutOfBounds = (offset.x > min.x) || (offset.x < max.x);
+            yAxisOutOfBounds = (offset.y > min.y) || (offset.y < max.y);
+            return xAxisOutOfBounds || yAxisOutOfBounds;
         }
 
         /// <summary>
@@ -537,9 +554,11 @@ namespace Delight
             {
                 contentOffset = GetClampedOffset(contentOffset);
             }
-            else if (ScrollBounds == ScrollBounds.Elastic && IsOutOfBounds(contentOffset))
+            else if (ScrollBounds == ScrollBounds.Elastic && IsOutOfBounds(contentOffset, out var outOfBoundsX, out var outOfBoundsY))
             {
                 _isOutOfBoundsElastic = true;
+                _isOutOfBoundsElasticX = outOfBoundsX;
+                _isOutOfBoundsElasticY = outOfBoundsY;
             }
 
             _offsetChangedFromStartPosition = true;

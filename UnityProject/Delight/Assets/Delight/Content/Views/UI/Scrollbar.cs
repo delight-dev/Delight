@@ -100,7 +100,6 @@ namespace Delight
                 float totalLength = Bar.ActualHeight;
                 float handleLength = totalLength * ViewportRatio;
                 float scrollLength = Math.Max(0, totalLength - handleLength);
-
                 
                 Handle.Height = handleLength;
                 Handle.OffsetFromParent.Top = position * scrollLength;
