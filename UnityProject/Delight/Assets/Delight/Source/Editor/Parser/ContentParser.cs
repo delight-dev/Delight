@@ -310,7 +310,22 @@ namespace Delight.Editor.Parser
             }
             catch (Exception e)
             {
-                ConsoleLogger.LogError(String.Format("[Delight] Error parsing XML file \"{0}\". Exception thrown: {1}", xumlFile.Content, e.Message + e.StackTrace));
+                // get which line error occurred on from exception message
+                int line = 1;
+                int indexOfLine = e.Message.IndexOf("Line");
+                if (indexOfLine > 0)
+                {
+                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
+                    int indexOfComma = msg.IndexOf(",");
+
+                    // get lineinfo
+                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
+                    {
+                        line = 1;
+                    }
+                }
+
+                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Error parsing XML file. Exception thrown: {2}", xumlFile.Path, line, e.Message));
                 return;
             }
 

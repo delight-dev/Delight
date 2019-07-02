@@ -52,6 +52,9 @@ namespace Delight
                 SliderRegion.DisableLayoutUpdate = false;
             }
 
+            SliderFillImageView.Alignment = IsReversed ? ElementAlignment.Right : ElementAlignment.Left;
+            SliderHandleImageView.Alignment = IsReversed ? ElementAlignment.Right : ElementAlignment.Left;
+
             // update slider position
             UpdateSliderPosition(Value);
 

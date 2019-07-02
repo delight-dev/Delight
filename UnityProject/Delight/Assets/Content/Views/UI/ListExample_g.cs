@@ -20,9 +20,11 @@ namespace Delight
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1.Content, "Group2", Group2Template);
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
-            Button1.Click += ResolveActionHandler(this, "Add");
+            if (Button1.Click == null) Button1.Click = new ViewAction();
+            Button1.Click.RegisterHandler(ResolveActionHandler(this, "Add"));
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
-            Button2.Click += ResolveActionHandler(this, "Remove");
+            if (Button2.Click == null) Button2.Click = new ViewAction();
+            Button2.Click.RegisterHandler(ResolveActionHandler(this, "Remove"));
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in Players}">

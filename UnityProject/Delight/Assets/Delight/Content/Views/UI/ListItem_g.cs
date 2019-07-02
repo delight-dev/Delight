@@ -16,11 +16,16 @@ namespace Delight
         public ListItem(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? ListItemTemplates.Default, initializer)
         {
-            Click += ResolveActionHandler(this, "ListItemMouseClick");
-            MouseEnter += ResolveActionHandler(this, "ListItemMouseEnter");
-            MouseExit += ResolveActionHandler(this, "ListItemMouseExit");
-            MouseDown += ResolveActionHandler(this, "ListItemMouseDown");
-            MouseUp += ResolveActionHandler(this, "ListItemMouseUp");
+            if (Click == null) Click = new ViewAction();
+            Click.RegisterHandler(ResolveActionHandler(this, "ListItemMouseClick"));
+            if (MouseEnter == null) MouseEnter = new ViewAction();
+            MouseEnter.RegisterHandler(ResolveActionHandler(this, "ListItemMouseEnter"));
+            if (MouseExit == null) MouseExit = new ViewAction();
+            MouseExit.RegisterHandler(ResolveActionHandler(this, "ListItemMouseExit"));
+            if (MouseDown == null) MouseDown = new ViewAction();
+            MouseDown.RegisterHandler(ResolveActionHandler(this, "ListItemMouseDown"));
+            if (MouseUp == null) MouseUp = new ViewAction();
+            MouseUp.RegisterHandler(ResolveActionHandler(this, "ListItemMouseUp"));
             this.AfterInitializeInternal();
         }
 

@@ -500,7 +500,7 @@ namespace Delight
             IsAtomicBindableObjectType = typeof(AtomicBindableObject).IsAssignableFrom(propertyType);
 
             // don't clear view references, content templates and view actions as they are set in constructor and not to change during run-time
-            ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.View.ViewAction).IsAssignableFrom(propertyType) &&
+            ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.ViewAction).IsAssignableFrom(propertyType) &&
                 !typeof(ContentTemplate).IsAssignableFrom(propertyType);
             if (IsAtomicBindableObjectType)
             {

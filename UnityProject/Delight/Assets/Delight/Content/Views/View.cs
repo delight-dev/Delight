@@ -18,7 +18,6 @@ namespace Delight
         #region Fields
 
         public delegate void ChangeHandler();
-        public delegate void ViewAction(DependencyObject sender, object eventArgs);
         public delegate void LoadedEventHandler(object source);
         public event LoadedEventHandler Loaded;
 
@@ -469,25 +468,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Returns view action.
-        /// </summary>
-        protected ViewAction Action(ViewAction action)
-        {
-            return action; // TODO remove if replaced by ResolveActionHandler
-        }
-
-        /// <summary>
-        /// Returns view action from action.
-        /// </summary>
-        protected ViewAction Action(Action action)
-        {
-            return (x, y) => action(); // TODO remove if replaced by ResolveActionHandler
-        }
-
-        /// <summary>
         /// Resolves action handler from name. 
         /// </summary>
-        protected ViewAction ResolveActionHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
+        protected ViewAction.ViewActionDelegate ResolveActionHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
         {
             // look for a method with the same name as the entry
             var parentType = parent.GetType();

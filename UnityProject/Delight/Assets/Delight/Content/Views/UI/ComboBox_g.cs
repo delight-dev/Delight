@@ -18,12 +18,14 @@ namespace Delight
         {
             // constructing Button (ComboBoxButton)
             ComboBoxButton = new Button(this, this, "ComboBoxButton", ComboBoxButtonTemplate);
-            ComboBoxButton.Click += ResolveActionHandler(this, "ComboBoxButtonClick");
+            if (ComboBoxButton.Click == null) ComboBoxButton.Click = new ViewAction();
+            ComboBoxButton.Click.RegisterHandler(ResolveActionHandler(this, "ComboBoxButtonClick"));
 
             // constructing UICanvas (ComboBoxListCanvas)
             ComboBoxListCanvas = new UICanvas(this, this, "ComboBoxListCanvas", ComboBoxListCanvasTemplate);
             ComboBoxList = new List(this, ComboBoxListCanvas.Content, "ComboBoxList", ComboBoxListTemplate);
-            ComboBoxList.ItemSelected += ResolveActionHandler(this, "ComboBoxListSelectionChanged");
+            if (ComboBoxList.ItemSelected == null) ComboBoxList.ItemSelected = new ViewAction();
+            ComboBoxList.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ComboBoxListSelectionChanged"));
 
             // Template for ComboBoxList
             ComboBoxList.ContentTemplate = new ContentTemplate(x0 => 

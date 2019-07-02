@@ -959,5 +959,24 @@ namespace Delight
         }
 
         #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets or sets normalized scroll position. TODO make into dependency property so we can bind to it. 
+        /// </summary>
+        public Vector2 NormalizedPosition
+        {
+            set
+            {
+                SetScrollPosition(value.x, value.y);
+            }
+            get
+            {
+                return new Vector2(HorizontalScrollbar.ScrollPosition, VerticalScrollbar.ScrollPosition);
+            }
+        }
+
+        #endregion
     }
 }

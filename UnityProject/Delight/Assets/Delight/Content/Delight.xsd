@@ -3385,6 +3385,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="NormalizedPosition" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="Mask" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />

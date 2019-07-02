@@ -359,7 +359,7 @@ namespace Delight
         /// <summary>
         /// Adds event trigger callback.
         /// </summary>
-        public static void AddEventTrigger(this GameObject gameObject, DependencyObject sender, View.ViewAction action, EventTriggerType eventTriggerType)
+        public static void AddEventTrigger(this GameObject gameObject, DependencyObject sender, ViewAction action, EventTriggerType eventTriggerType)
         {
             if (action == null)
                 return;

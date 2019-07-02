@@ -182,7 +182,8 @@ namespace Delight.Editor.Parser
                 // yes. attach handlers
                 foreach (var actionAssignment in actionAssignments)
                 {
-                    sb.AppendLine("            {0} += ResolveActionHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                    sb.AppendLine("            if ({0} == null) {0} = new ViewAction();", actionAssignment.PropertyName);
+                    sb.AppendLine("            {0}.RegisterHandler(ResolveActionHandler(this, \"{1}\"));", actionAssignment.PropertyName, actionAssignment.PropertyValue);
                 }
 
                 // initialize any attached properties                
@@ -952,6 +953,8 @@ namespace Delight.Editor.Parser
                         var actionValue = actionAssignment.PropertyValue;
                         var actionName = actionValue;
 
+                        sb.AppendLine(indent, "if ({0}.{1} == null) {0}.{1} = new ViewAction();", childIdVar, actionAssignment.PropertyName);
+
                         // does the action have parameters?
                         if (actionValue.Contains("("))
                         {
@@ -986,13 +989,13 @@ namespace Delight.Editor.Parser
                                 }
 
                                 // generate action assignment with parameters
-                                sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
+                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(ResolveActionHandler(this, \"{2}\", {3}));", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
                                 continue;
                             }
                         }
 
                         // generate action assignment without parameters
-                        sb.AppendLine(indent, "{0}.{1} += ResolveActionHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionName);
+                        sb.AppendLine(indent, "{0}.{1}.RegisterHandler(ResolveActionHandler(this, \"{2}\"));", childIdVar, actionAssignment.PropertyName, actionName);
                     }
                 }
 

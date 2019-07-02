@@ -30,7 +30,8 @@ namespace Delight
             Grid1.Cell.SetValue(Region1, new CellIndex(0, 0));
             Grid1.CellSpan.SetValue(Region1, new CellIndex(2, 1));
             List1 = new List(this, Region1.Content, "List1", List1Template);
-            List1.ItemSelected += ResolveActionHandler(this, "ViewSelected");
+            if (List1.ItemSelected == null) List1.ItemSelected = new ViewAction();
+            List1.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ViewSelected"));
 
             // binding <List Items="{view in DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = DesignerViews, () => { }, false));

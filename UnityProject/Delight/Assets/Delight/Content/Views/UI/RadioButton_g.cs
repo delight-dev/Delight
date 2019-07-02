@@ -23,7 +23,8 @@ namespace Delight
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Spacing" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "RadioButtonGroup", "Spacing" }, new List<Func<BindableObject>> { () => this, () => RadioButtonGroup }), () => RadioButtonGroup.Spacing = Spacing, () => { }, false));
             RadioButtonImageView = new Image(this, RadioButtonGroup.Content, "RadioButtonImageView", RadioButtonImageViewTemplate);
             RadioButtonLabel = new Label(this, RadioButtonGroup.Content, "RadioButtonLabel", RadioButtonLabelTemplate);
-            Click += ResolveActionHandler(this, "RadioButtonClick");
+            if (Click == null) Click = new ViewAction();
+            Click.RegisterHandler(ResolveActionHandler(this, "RadioButtonClick"));
             this.AfterInitializeInternal();
         }
 

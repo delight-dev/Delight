@@ -21,11 +21,16 @@ namespace Delight
 
             // binding <Label Offset="{TextOffset}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextOffset" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "Offset" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.Offset = TextOffset, () => { }, false));
-            Click += ResolveActionHandler(this, "ButtonMouseClick");
-            MouseEnter += ResolveActionHandler(this, "ButtonMouseEnter");
-            MouseExit += ResolveActionHandler(this, "ButtonMouseExit");
-            MouseDown += ResolveActionHandler(this, "ButtonMouseDown");
-            MouseUp += ResolveActionHandler(this, "ButtonMouseUp");
+            if (Click == null) Click = new ViewAction();
+            Click.RegisterHandler(ResolveActionHandler(this, "ButtonMouseClick"));
+            if (MouseEnter == null) MouseEnter = new ViewAction();
+            MouseEnter.RegisterHandler(ResolveActionHandler(this, "ButtonMouseEnter"));
+            if (MouseExit == null) MouseExit = new ViewAction();
+            MouseExit.RegisterHandler(ResolveActionHandler(this, "ButtonMouseExit"));
+            if (MouseDown == null) MouseDown = new ViewAction();
+            MouseDown.RegisterHandler(ResolveActionHandler(this, "ButtonMouseDown"));
+            if (MouseUp == null) MouseUp = new ViewAction();
+            MouseUp.RegisterHandler(ResolveActionHandler(this, "ButtonMouseUp"));
             this.AfterInitializeInternal();
         }
 

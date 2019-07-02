@@ -27,11 +27,16 @@ namespace Delight
 
             // constructing Scrollbar (VerticalScrollbar)
             VerticalScrollbar = new Scrollbar(this, this, "VerticalScrollbar", VerticalScrollbarTemplate);
-            Drag += ResolveActionHandler(this, "OnDrag");
-            BeginDrag += ResolveActionHandler(this, "OnBeginDrag");
-            InitializePotentialDrag += ResolveActionHandler(this, "OnInitializePotentialDrag");
-            EndDrag += ResolveActionHandler(this, "OnEndDrag");
-            Scroll += ResolveActionHandler(this, "OnScroll");
+            if (Drag == null) Drag = new ViewAction();
+            Drag.RegisterHandler(ResolveActionHandler(this, "OnDrag"));
+            if (BeginDrag == null) BeginDrag = new ViewAction();
+            BeginDrag.RegisterHandler(ResolveActionHandler(this, "OnBeginDrag"));
+            if (InitializePotentialDrag == null) InitializePotentialDrag = new ViewAction();
+            InitializePotentialDrag.RegisterHandler(ResolveActionHandler(this, "OnInitializePotentialDrag"));
+            if (EndDrag == null) EndDrag = new ViewAction();
+            EndDrag.RegisterHandler(ResolveActionHandler(this, "OnEndDrag"));
+            if (Scroll == null) Scroll = new ViewAction();
+            Scroll.RegisterHandler(ResolveActionHandler(this, "OnScroll"));
             ContentContainer = ContentRegion;
             this.AfterInitializeInternal();
         }

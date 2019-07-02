@@ -20,11 +20,11 @@ This document describes how to migrate from MarkLight to Delight and also highli
 
 5. Open the Delight window.
 
-   ![Open Delight Window](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightWindow.png)
+   ![Open Delight Window](DelightWindow.png)
 
    Attach it for easy access:
 
-![](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightWindow2.png)
+![](DelightWindow2.png)
 
 The button **Rebuild All** generates code for all views as well as for assets and configuration. Used when when views, configuration or assets has been changed while the editor was closed, or if all the code needs to be regenerated because of errors after getting latest from source control. Note that if you change, e.g. a view XML while the editor is open and switch to the editor, the necessary code is automatically generated (will trigger a recompile of the project).
 
@@ -41,7 +41,7 @@ The checkbox *Build Asset Bundles* need to be checked if you've moved assets whi
 
 `EAA.Client/Assets/Content/` is where your project's views and assets will be residing:
 
-![](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightFolder2.png)
+![](DelightFolder2.png)
 
 - `Content/Assets` contains the assets (sprites, fonts, etc) used in your views.
 - `Content/Models` contains your bindable data-model (C# classes) automatically generated from a schema file (or manually created). It's a new feature that you may use in the future to more easily bind to your model objects (and have them globally accessable and decoupled from your UI).
@@ -103,7 +103,7 @@ Since it's a partial class you have access to the generated code, and can e.g. w
 
 All assets (fonts, sprites, etc) that are to be accessed by the framework need to reside in the `Content/Assets`folder. 
 
-![](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\AssetsFolder.png)
+![](AssetsFolder.png)
 
 Assets in the `Assets/Resources` folder will be included in the build. The other assets will be put in asset bundles with the same name of the sub-folder the asset resides in. So the above content creates two asset bundles *Bundle1* and *Bundle2*. 
 
@@ -272,18 +272,38 @@ Here are the step to migrate views from MarkLight to Delight. This example shows
 
 7. Run the scene and if you check the "Enable Delight" checkbox, the new view will be opened when the old one used to open. Use this to compare between the old and new and verify that everything looks and behaves the same. Due to the differences between the versions it's likely there will be issues that needs to be fixed.
 
-   ![Open Delight Window](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightCheckbox.png)
+   ![Open Delight Window](DelightCheckbox.png)
 
 You can inspect your view in the hierarchy (note that the game object will be created under the view switcher when the view is opened):
 
-![Open Delight Window](C:\Projects\GitProjects\Delight\Documentation\Migration Guide\DelightPresenter.png)
+![Open Delight Window](DelightPresenter.png)
 
 ### Misc Fixes
 
 - Change `transform.Find( "Region (ItemsViewRegion)" );` to `ItemsViewRegion.transform`
+
 - Items can no longer be selected through the bindable collection / observable list, but need to be done through the list view itself.  `MyBindableList.SetSelected(item)` change to `MyListView.SelectItem(item)`. 
+
 - `MyPanel.ScrollRect.NormalizedPosition` accessed through `Panel.NormalizedPosition`
+
 - If StartCoroutine is used you might get `Unity Script Relay Missing` error during runtime. Make sure the view has `EnableScriptEvents="True"` set on the root element. 
+
+- `"#"` are no longer necessary or valid in bindings. It can be removed with no impact. 
+
+- If script events such as `Start()`, `Awake()` or `Update()` are used in the code-behind, those needs to be overridden e.g. `public override void Awake() {...}` and `EnableScriptEvents="True"` need to be set in the XML otherwise the methods won't be called.
+
+- If you have issues with the view not behaving correctly the second time you open it, it may have to do with variable not being reset when the view is unloaded (done automatically when you close the view). All dependency properties are automatically reset but if you have non-dependency properties (e.g. private or public fields in your class) those need to be reset manually in Unload(): 
+
+  ```c#
+          protected override void AfterUnload()
+          {
+              base.AfterUnload();
+              _isUpdating = false;
+              _isClosing = false;
+          }
+  ```
+
+  
 
 
 

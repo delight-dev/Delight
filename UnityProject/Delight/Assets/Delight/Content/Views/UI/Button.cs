@@ -50,6 +50,10 @@ namespace Delight
             base.OnChanged(property);
             switch (property)
             {
+                case nameof(IsDisabled):
+                    IsDisabledChanged();
+                    break;
+
                 case nameof(ToggleValue):
                     ToggleValueChanged();
                     break;
@@ -174,7 +178,7 @@ namespace Delight
                 if (GameObject?.GetComponent<RaycastTargetGraphic>() == null)
                 {
                     GameObject?.AddComponent<RaycastTargetGraphic>();
-                }                
+                }
             }
         }
 
@@ -281,10 +285,40 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called when the button is disabled/enabled.
+        /// </summary>
+        public void IsDisabledChanged()
+        {
+            if (IsDisabled)
+            {
+                SetState("Disabled");
+
+                // disable button actions
+                Click.IsEnabled = false;
+                MouseEnter.IsEnabled = false;
+                MouseExit.IsEnabled = false;
+                MouseDown.IsEnabled = false;
+                MouseUp.IsEnabled = false;
+            }
+            else
+            {
+                SetState(IsToggleButton && ToggleValue ? "Pressed" : DefaultStateName);
+
+                // enable button actions
+                Click.IsEnabled = true;
+                MouseEnter.IsEnabled = true;
+                MouseExit.IsEnabled = true;
+                MouseDown.IsEnabled = true;
+                MouseUp.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
         /// Called when the button is disabled.
         /// </summary>
         public void OnDisable()
         {
+            // TODO implement OnDisable wrapper
             if (!IsToggleButton && !IsDisabled)
             {
                 // reset state to default if view is deactivated
