@@ -316,9 +316,8 @@ namespace Delight
         /// <summary>
         /// Called when the button is disabled.
         /// </summary>
-        public void OnDisable()
+        public override void OnDisable()
         {
-            // TODO implement OnDisable wrapper
             if (!IsToggleButton && !IsDisabled)
             {
                 // reset state to default if view is deactivated

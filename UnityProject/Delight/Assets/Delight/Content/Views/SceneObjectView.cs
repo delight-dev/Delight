@@ -169,6 +169,13 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called when script becomes disabled if EnableScriptEvents is true.
+        /// </summary>
+        public virtual void OnDisable()
+        {
+        }
+
+        /// <summary>
         /// Called once per frame if EnableScriptEvents is true.
         /// </summary>
         public virtual void Update()
@@ -317,6 +324,11 @@ namespace Delight
         {
             yield return new WaitForSeconds( 0 );
             SceneObjectView?.OnEnable();
+        }
+
+        public void OnDisable()
+        {
+            SceneObjectView?.OnDisable();
         }
 
         public void Update()
