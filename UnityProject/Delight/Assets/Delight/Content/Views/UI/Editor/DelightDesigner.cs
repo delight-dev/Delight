@@ -23,10 +23,13 @@ namespace Delight
 
             // load designer view data from the object model
             var contentObjectModel = ContentObjectModel.GetInstance();
+            var designerViews = new List<DesignerView>();
             foreach (var viewObject in contentObjectModel.ViewObjects.Where(x => !x.HideInDesigner))
             {
-                DesignerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName });
+                designerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName });
             }
+
+            DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
         }
 
         public override void Update()

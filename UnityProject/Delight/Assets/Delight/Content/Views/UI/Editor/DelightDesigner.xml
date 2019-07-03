@@ -20,7 +20,7 @@
     <!-- Left Panel - Content Explorer -->
     <Region Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#b3b3b3">
       <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="100%"
-            ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ScrollBounds="Clamped" ItemSelected="ViewSelected">
+            ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected">
         <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima" Width="240" EnableWordWrapping="False" Margin="25,0,0,0" OverflowMode="Ellipsis" ExtraPadding="True" FontColor="#242424" /> 
       </List>
     </Region> 
