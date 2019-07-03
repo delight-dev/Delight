@@ -558,6 +558,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(13)]
         public bool HideInDesigner;
 
+        [ProtoMember(14, AsReference = true)]
+        public List<ViewObject> ContentTemplates;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -570,6 +573,7 @@ namespace Delight.Editor.Parser
             PropertyExpressions = new List<PropertyExpression>();
             ViewDeclarations = new List<ViewDeclaration>();
             MappedPropertyDeclarations = new List<MappedPropertyDeclaration>();
+            ContentTemplates = new List<ViewObject>();
         }
 
         #endregion
@@ -619,6 +623,7 @@ namespace Delight.Editor.Parser
             ViewDeclarations.Clear();
             Module = null;
             HideInDesigner = false;
+            ContentTemplates.Clear();
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)

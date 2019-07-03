@@ -52,6 +52,7 @@ namespace Delight
             ViewActivators.Add("ScrollableRegion", (x, y, z) => new ScrollableRegion(x, y, null, z));
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
             ViewActivators.Add("Slider", (x, y, z) => new Slider(x, y, null, z));
+            ViewActivators.Add("TabPanel", (x, y, z) => new TabPanel(x, y, null, z));
             ViewActivators.Add("ToggleGroup", (x, y, z) => new ToggleGroup(x, y, null, z));
             ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));

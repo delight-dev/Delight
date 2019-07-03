@@ -87,11 +87,16 @@ namespace Delight.Editor
                 }
             } while (true);
 
-            ProjectWindowUtil.CreateAssetWithContent(filename, string.Empty);
+            // set indicator to generate code-behind once file is renamed
             if (generateCodeBehind)
             {
-                CodeGenerator.GenerateBlankCodeBehind(viewName, filename);
+                var config = MasterConfig.GetInstance();
+                config.GenerateBlankCodeBehind = true;
+                config.SaveConfig();
             }
+
+            // create XML file that the user will be allowed to name, once created the XML parser will generate the content
+            ProjectWindowUtil.CreateAssetWithContent(filename, string.Empty);
         }
 
         public static string GetContentFolderPathFromSelectedFile(string contentFolder)

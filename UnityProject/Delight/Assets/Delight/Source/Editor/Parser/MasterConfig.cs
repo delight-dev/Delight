@@ -76,6 +76,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(15)]
         public List<string> Modules;
 
+        [ProtoMember(16)]
+        public bool GenerateBlankCodeBehind;
+
         private static MasterConfig _config;
 
         #endregion

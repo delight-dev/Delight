@@ -39,6 +39,7 @@ namespace Delight.Editor.Parser
         private const string ModelsClassName = "Models";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
         private static readonly char[] ModuleDelimiterChars = { ' ', ';' };
+        private static readonly char[] ContentTemplateDelimiterChars = { ' ', ';' };
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
@@ -249,6 +250,15 @@ namespace Delight.Editor.Parser
             // write file
             Debug.Log("Creating " + xumlFile.Path);
             File.WriteAllText(xumlFile.Path, sb.ToString());
+
+            // generate code-behind 
+            var config = MasterConfig.GetInstance();
+            if (config.GenerateBlankCodeBehind)
+            {
+                CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
+                config.GenerateBlankCodeBehind = false;
+                config.SaveConfig();
+            }
         }
 
         /// <summary>
@@ -455,9 +465,20 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
-                if (attributeName.IEquals("ContentTemplateType"))
+                if (attributeName.IEquals("ContentTemplateType")) // TODO remove
                 {
                     viewObject.ContentTemplate = _contentObjectModel.LoadViewObject(attributeValue);
+                    continue;
+                }
+
+                if (attributeName.IEquals("ContentTemplateTypes"))
+                {
+                    var contentTemplateTypes = attributeValue.Split(ContentTemplateDelimiterChars, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
+                    foreach (var templateType in contentTemplateTypes)
+                    {
+                        var templateView = _contentObjectModel.LoadViewObject(attributeValue);
+                        viewObject.ContentTemplates.Add(templateView);
+                    }
                     continue;
                 }
 
