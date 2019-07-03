@@ -1,7 +1,7 @@
 <ComboBox xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
           Width="160" Height="40"
           IsDropUp="t:bool"
-          HasContentTemplate="True" ContentTemplateType="ComboBoxListItem"
+          HasContentTemplates="True" ContentTemplateTypes="ComboBoxListItem"
           EnableScriptEvents="True"
           m.ComboBoxList=""
           m.ComboBoxButton="Button"

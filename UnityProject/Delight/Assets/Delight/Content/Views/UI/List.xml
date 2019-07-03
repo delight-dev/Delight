@@ -2,7 +2,7 @@
       BasedOn="Collection" Orientation="t:ElementOrientation" 
       Spacing="t:ElementSize" HorizontalSpacing="t:ElementSize" VerticalSpacing="t:ElementSize" Padding="t:ElementMargin"
       ContentAlignment="t:ElementAlignment" 
-      HasContentTemplate="True" ContentTemplateType="ListItem"
+      HasContentTemplates="True" ContentTemplateTypes="ListItem"
       AlternateItems="t:bool"
       IsScrollable="t:bool"
       IsVirtualized="t:bool"

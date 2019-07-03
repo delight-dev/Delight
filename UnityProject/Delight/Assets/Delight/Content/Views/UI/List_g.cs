@@ -303,6 +303,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarVisibility = value; }
         }
 
+        public readonly static DependencyProperty DisableMouseWheelProperty = ScrollableRegion.DisableMouseWheelProperty;
+        public System.Boolean DisableMouseWheel
+        {
+            get { return ScrollableRegion.DisableMouseWheel; }
+            set { ScrollableRegion.DisableMouseWheel = value; }
+        }
+
         public readonly static DependencyProperty RenderCameraProperty = ScrollableRegion.RenderCameraProperty;
         public System.String RenderCamera
         {

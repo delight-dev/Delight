@@ -1,11 +1,6 @@
 ﻿#region Using Statements
 using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
+using System.Linq;
 #endregion
 
 namespace Delight
@@ -20,14 +15,18 @@ namespace Delight
         /// <summary>
         /// Creates new item in collection.
         /// </summary>
-        protected virtual View CreateItem(BindableObject item)
+        protected virtual View CreateItem(BindableObject item, Type templateType = null)
         {
-            if (ContentTemplate == null)
+            if (ContentTemplates == null || ContentTemplates.Count <= 0)
                 return null;
 
-            var templateData = new ContentTemplateData { Item = item };
-            var itemView = ContentTemplate.Activator(templateData);
-            itemView.Load();
+            // find activator that corresponds to the type specified                       
+            var activator = templateType == null ? ContentTemplates[0].Activator : ContentTemplates.FirstOrDefault(x => x.TemplateType == templateType)?.Activator;
+            if (activator == null)
+                return null;
+
+            var templateData = new ContentTemplateData { Item = item };            
+            var itemView = activator(templateData);
 
             return itemView;
         }

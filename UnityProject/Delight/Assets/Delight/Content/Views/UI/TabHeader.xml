@@ -1,0 +1,4 @@
+<TabHeader xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+           BasedOn="Button" HideInDesigner="True" ContentTemplateData="t:ContentTemplateData" ToggleClick="TabToggleClick"
+           TabIndex="t:int">
+</TabHeader>

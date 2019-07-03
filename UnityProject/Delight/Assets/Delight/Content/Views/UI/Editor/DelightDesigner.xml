@@ -1,33 +1,29 @@
 <DelightDesigner xmlns="Delight" BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData">
-  
-  <Grid Columns="250,*,250" Rows="50,*">  
+
+  <Grid Columns="250,*,250" Rows="50,*">
 
     <!-- Right Menu -->
     <!--<Region Grid.Cell="1,2" BackgroundColor="#dcdcdc"/>-->
 
     <!-- Designer Content Region -->
-    <ScrollableRegion Grid.Cell="1,1" Id="ContentRegion" HasInertia="False" ScrollbarVisibility="Never" Grid.CellSpan="1,2"> 
-      <Region Id="GridBackgroundRegion" Width="1000" Height="1000">
-        <Image Id="GridImage" Sprite="DesignerGrid2" Type="Tiled" Width="100%" Height="100%" IsVisible="False" />
-        <Image Color="#3f3f3d" Size="1,100%" />
-        <Image Color="#3f3f3d" Size="100%,1" />
-      </Region>
-
-      <Region Id="ViewRegion">
-      </Region>
+    <ScrollableRegion Grid.Cell="1,1" Id="ScrollableContentRegion" HasInertia="False" ScrollbarVisibility="Never" Grid.CellSpan="1,2" Scroll="OnScroll" DisableMouseWheel="True">
+      <Canvas Id="ContentRegionCanvas" Scale="1">
+        <Region Id="ViewContentRegion">
+        </Region>
+      </Canvas>
     </ScrollableRegion>
 
     <!-- Left Panel - Content Explorer -->
     <Region Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#b3b3b3">
-      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="100%"
+      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="5,50,5,5" BackgroundColor="#ebebeb" Width="100%" Height="100%" CanReselect="True"
             ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected">
-        <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima" Width="240" EnableWordWrapping="False" Margin="25,0,0,0" OverflowMode="Ellipsis" ExtraPadding="True" FontColor="#242424" /> 
+        <Label Text="{view.Name}" FontSize="16" Height="24" Font="Ebrima" Width="240" EnableWordWrapping="False" Margin="25,0,0,0" OverflowMode="Ellipsis" ExtraPadding="True" FontColor="#242424" />
       </List>
-    </Region> 
-    
+    </Region>
+
     <!-- Top Menu -->
     <Region Grid.Cell="0,1" Grid.CellSpan="1,2" BackgroundColor="#a3a2a3"/>
 
-  </Grid> 
+  </Grid>
 
-</DelightDesigner>  
+</DelightDesigner>

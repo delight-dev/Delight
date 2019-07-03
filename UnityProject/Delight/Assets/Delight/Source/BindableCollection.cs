@@ -258,6 +258,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets list from bindable collection.
+        /// </summary>
+        public List<T> ToList()
+        {
+            return new List<T>(this);
+        }
+
+        /// <summary>
         /// Returns first item matching the predicate.
         /// </summary>
         public T Find(Predicate<T> predicate)

@@ -12,7 +12,7 @@ namespace Delight
     {
         public void ShowModelBindingTest()
         {
-            ViewSwitcher1.SwitchTo(ModelBindingTest);
+            //ViewSwitcher1.SwitchTo(ModelBindingTest);
         }
 
         public void ShowScrollExample()
@@ -42,7 +42,7 @@ namespace Delight
 
         public void ShowComboBoxExample()
         {
-            ViewSwitcher1.SwitchTo(ComboBoxExample);
+            //ViewSwitcher1.SwitchTo(ComboBoxExample);
         }
     }
 }

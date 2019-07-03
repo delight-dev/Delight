@@ -1,0 +1,8 @@
+<TabPanelExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd">
+  <TabPanel Items="{player in @Players}">
+    <TabHeader Text="{player.Name}" />
+    <Tab>
+      <Label Text="{player.Name}" />
+    </Tab>
+  </TabPanel>  
+</TabPanelExample>  

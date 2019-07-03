@@ -328,14 +328,16 @@ namespace Delight
         /// <summary>
         /// Called when a new item is to be generated.
         /// </summary>
-        protected override View CreateItem(BindableObject item)
+        protected override View CreateItem(BindableObject item, Type templateType = null)
         {
             if (IsVirtualized)
             {
                 // TODO implement
             }
 
-            var listItem = base.CreateItem(item) as ListItem;
+            var listItem = base.CreateItem(item, templateType) as ListItem;
+            listItem.Load();
+
             if (IsScrollable && listItem != null)
             {
                 ScrollableRegion.UnblockDragEvents(listItem as SceneObjectView);

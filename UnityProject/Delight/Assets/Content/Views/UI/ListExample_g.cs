@@ -30,8 +30,10 @@ namespace Delight
             // binding <List Items="{player in Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Players" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Players, () => { }, false));
 
-            // Template for PlayerList
-            PlayerList.ContentTemplate = new ContentTemplate(tiPlayer => 
+            // templates for PlayerList
+            if (PlayerList.ContentTemplates == null) PlayerList.ContentTemplates = new BindableCollection<ContentTemplate>();
+
+            PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var listItem1 = new ListItem(this, PlayerList.Content, "ListItem1", ListItem1Template);
                 var image1 = new Image(this, listItem1.Content, "Image1", Image1Template);
@@ -44,7 +46,7 @@ namespace Delight
                 listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 listItem1.ContentTemplateData = tiPlayer;
                 return listItem1;
-            });
+            }, typeof(ListItem), "ListItem1"));
             this.AfterInitializeInternal();
         }
 

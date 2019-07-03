@@ -27,6 +27,7 @@ namespace Delight
             ViewActivators.Add("PerformanceTest", (x, y, z) => new PerformanceTest(x, y, null, z));
             ViewActivators.Add("ScrollExample", (x, y, z) => new ScrollExample(x, y, null, z));
             ViewActivators.Add("SliderExample", (x, y, z) => new SliderExample(x, y, null, z));
+            ViewActivators.Add("TabPanelExample", (x, y, z) => new TabPanelExample(x, y, null, z));
             ViewActivators.Add("TestScene", (x, y, z) => new TestScene(x, y, null, z));
             ViewActivators.Add("ViewSwitcherTest", (x, y, z) => new ViewSwitcherTest(x, y, null, z));
             ViewActivators.Add("SceneObjectView", (x, y, z) => new SceneObjectView(x, y, null, z));
@@ -52,6 +53,8 @@ namespace Delight
             ViewActivators.Add("ScrollableRegion", (x, y, z) => new ScrollableRegion(x, y, null, z));
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
             ViewActivators.Add("Slider", (x, y, z) => new Slider(x, y, null, z));
+            ViewActivators.Add("Tab", (x, y, z) => new Tab(x, y, null, z));
+            ViewActivators.Add("TabHeader", (x, y, z) => new TabHeader(x, y, null, z));
             ViewActivators.Add("TabPanel", (x, y, z) => new TabPanel(x, y, null, z));
             ViewActivators.Add("ToggleGroup", (x, y, z) => new ToggleGroup(x, y, null, z));
             ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));

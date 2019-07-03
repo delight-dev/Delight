@@ -13,7 +13,24 @@ namespace Delight
     /// </summary>
     public static partial class Aliases
     {
-        public static Dictionary<string, string> ViewAliases = new Dictionary<string, string>();
-        public static Dictionary<string, string> PropertyAliases = new Dictionary<string, string>();
-    }    
+        private static Dictionary<string, string> _viewAliases;
+        public static Dictionary<string, string> ViewAliases
+        {
+            get
+            {
+                if (_viewAliases == null)
+                {
+                    _viewAliases = new Dictionary<string, string>();
+                    _viewAliases.Add("Canvas", "UICanvas");
+                    _viewAliases.Add("Panel", "ScrollableRegion");
+                }
+
+                return _viewAliases;
+            }
+            set
+            {
+                _viewAliases = value;
+            }
+        }
+    }
 }

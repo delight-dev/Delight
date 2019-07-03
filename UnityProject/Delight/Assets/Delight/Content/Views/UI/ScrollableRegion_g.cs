@@ -66,6 +66,7 @@ namespace Delight
             dependencyProperties.Add(ScrollSensitivityProperty);
             dependencyProperties.Add(HorizontalScrollbarVisibilityProperty);
             dependencyProperties.Add(VerticalScrollbarVisibilityProperty);
+            dependencyProperties.Add(DisableMouseWheelProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
             dependencyProperties.Add(HorizontalScrollbarProperty);
@@ -188,6 +189,13 @@ namespace Delight
         {
             get { return VerticalScrollbarVisibilityProperty.GetValue(this); }
             set { VerticalScrollbarVisibilityProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> DisableMouseWheelProperty = new DependencyProperty<System.Boolean>("DisableMouseWheel");
+        public System.Boolean DisableMouseWheel
+        {
+            get { return DisableMouseWheelProperty.GetValue(this); }
+            set { DisableMouseWheelProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> ContentRegionProperty = new DependencyProperty<Region>("ContentRegion");

@@ -6,13 +6,14 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 #endregion
 
 namespace Delight
 {
     public partial class DelightDesigner
     {
-        public View _displayedView;
+        public UIView _displayedView;
 
         public override void AfterInitialize()
         {
@@ -26,42 +27,23 @@ namespace Delight
             var designerViews = new List<DesignerView>();
             foreach (var viewObject in contentObjectModel.ViewObjects.Where(x => !x.HideInDesigner))
             {
+                // ignore views that aren't scene object views
+                if (!IsUIView(viewObject))
+                    continue;
+
                 designerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName });
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
         }
 
-        public override void Update()
+        private bool IsUIView(ViewObject viewObject)
         {
-            base.Update();
-
-            var viewportWidth = ContentRegion.ActualWidth;
-            var viewportHeight = ContentRegion.ActualHeight;
-
-            // center and adjust background grid to window
-            var gridWidth = (float)((Math.Ceiling(viewportWidth / 200) + 1) * 200);
-            var gridHeight = (float)((Math.Ceiling(viewportHeight / 200) + 1) * 200);
-            if (GridImage.Width.Pixels != gridWidth || GridImage.Height.Pixels != gridHeight)
-            {
-                GridBackgroundRegion.SetSize(gridWidth, gridHeight);
-                GridImage.SetSize(gridWidth, gridHeight);
-                GridImage.UpdateLayout(false); // trigger layout update to remove stuttering as layout is changed one frame later
-                GridBackgroundRegion.UpdateLayout(false);
-                GridImage.IsVisible = true;
-            }
-
-            // adjust size of view region to scrollable viewport
-            ViewRegion.SetSize(viewportWidth, viewportHeight);            
-        }
-
-        public void Test1()
-        {
-            var label = this.Find<Label>();
-
-            //Debug.Log("Label font = " + label.Font.UnityObject);
-
-            //Button1.SetState("Highlighted");            
+            if (viewObject == null || String.IsNullOrEmpty(viewObject.Name) || viewObject.Name == "View")
+                return false;
+            if (viewObject.Name == "UIView")
+                return true;
+            return IsUIView(viewObject.BasedOn);
         }
 
         public void ViewSelected(DesignerView designerView)
@@ -72,7 +54,7 @@ namespace Delight
             }
 
             // add "Designer" prefix to see if there is a dedicated designer wrapper for the view
-            _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewRegion);
+            _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
 
             var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
@@ -80,10 +62,71 @@ namespace Delight
             _displayedView?.PrepareForDesigner();
 
             // center on view
-            ContentRegion.SetScrollPosition(0.5f, 0.5f);
-
+            ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
+            SetScale(Vector3.one);
+            
             sw2.Stop();
             Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
+        }
+
+        /// <summary>
+        /// Called when the content is scrolled using mouse wheel or track pad.
+        /// </summary>
+        public void OnScroll(DependencyObject sender, object eventArgs)
+        {
+            if (_displayedView == null)
+                return;
+
+            PointerEventData pointerData = eventArgs as PointerEventData;
+            bool zoomIn = pointerData.scrollDelta.x > 0 || pointerData.scrollDelta.y > 0;
+            var zoomFactor = 0.10f;
+            zoomFactor = zoomIn ? 1 + zoomFactor : 1 - zoomFactor;
+
+            var scale = ContentRegionCanvas.Scale;
+            scale.x *= zoomFactor;
+            scale.y *= zoomFactor;
+
+            SetScale(scale);
+        }
+
+        /// <summary>
+        /// Scales view content. 
+        /// </summary>
+        public void SetScale(Vector3 scale)
+        {            
+            if (_displayedView == null)
+            {
+                ContentRegionCanvas.Scale = Vector3.one;
+                return;
+            }
+
+            ContentRegionCanvas.Scale = scale;
+
+            // adjust size of view region based on size of view and viewport
+            var viewportWidth = ScrollableContentRegion.ActualWidth;
+            var viewportHeight = ScrollableContentRegion.ActualHeight;
+
+            var width = _displayedView.OverrideWidth ?? _displayedView.Width ?? ElementSize.FromPercents(1);
+            var height = _displayedView.OverrideHeight ?? _displayedView.Height ?? ElementSize.FromPercents(1);
+            
+            float adjustedWidth = viewportWidth * Mathf.Max(scale.x, 1.0f);
+            float adjustedHeight = viewportHeight * Mathf.Max(scale.y, 1.0f);
+
+            if (width.Unit != ElementSizeUnit.Percents)
+            {
+                float viewWidth = width.Pixels * Mathf.Max(scale.x, 1.0f);
+                adjustedWidth = Mathf.Max(viewWidth, adjustedWidth);
+            }
+
+            if (height.Unit != ElementSizeUnit.Percents)
+            {
+                float viewHeight = height.Pixels * Mathf.Max(scale.y, 1.0f);
+                adjustedHeight = Mathf.Max(viewHeight, adjustedHeight);
+            }
+
+            // adjust content regions to size
+            ContentRegionCanvas.SetSize(adjustedWidth + 500, adjustedHeight + 500);
+            ViewContentRegion.SetSize(adjustedWidth, adjustedHeight);
         }
     }
 }

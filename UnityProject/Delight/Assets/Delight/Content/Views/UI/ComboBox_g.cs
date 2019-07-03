@@ -26,12 +26,6 @@ namespace Delight
             ComboBoxList = new List(this, ComboBoxListCanvas.Content, "ComboBoxList", ComboBoxListTemplate);
             if (ComboBoxList.ItemSelected == null) ComboBoxList.ItemSelected = new ViewAction();
             ComboBoxList.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ComboBoxListSelectionChanged"));
-
-            // Template for ComboBoxList
-            ComboBoxList.ContentTemplate = new ContentTemplate(x0 => 
-            {
-                return null;
-            });
             ContentContainer = ComboBoxList;
             this.AfterInitializeInternal();
         }
@@ -330,6 +324,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarVisibility; }
             set { ComboBoxList.VerticalScrollbarVisibility = value; }
+        }
+
+        public readonly static DependencyProperty DisableMouseWheelProperty = List.DisableMouseWheelProperty;
+        public System.Boolean DisableMouseWheel
+        {
+            get { return ComboBoxList.DisableMouseWheel; }
+            set { ComboBoxList.DisableMouseWheel = value; }
         }
 
         public readonly static DependencyProperty RenderCameraProperty = List.RenderCameraProperty;
@@ -694,6 +695,13 @@ namespace Delight
         {
             get { return ComboBoxList.ContentTemplate; }
             set { ComboBoxList.ContentTemplate = value; }
+        }
+
+        public readonly static DependencyProperty ContentTemplatesProperty = List.ContentTemplatesProperty;
+        public Delight.BindableCollection<Delight.ContentTemplate> ContentTemplates
+        {
+            get { return ComboBoxList.ContentTemplates; }
+            set { ComboBoxList.ContentTemplates = value; }
         }
 
         public readonly static DependencyProperty BackgroundSpriteProperty = List.BackgroundSpriteProperty;

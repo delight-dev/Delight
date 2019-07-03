@@ -31,9 +31,20 @@ namespace Delight
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the class. 
+        /// </summary>
         public BindableObject()
         {
             _id = Guid.NewGuid().ToString();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the class. 
+        /// </summary>
+        public BindableObject(string id)
+        {
+            _id = String.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
         }
 
         #endregion

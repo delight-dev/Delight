@@ -41,8 +41,10 @@ namespace Delight
             // binding <List Items="{player in @Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Models.Players, () => { }, false));
 
-            // Template for PlayerList
-            PlayerList.ContentTemplate = new ContentTemplate(tiPlayer => 
+            // templates for PlayerList
+            if (PlayerList.ContentTemplates == null) PlayerList.ContentTemplates = new BindableCollection<ContentTemplate>();
+
+            PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var playerListContent = new ListItem(this, PlayerList.Content, "PlayerListContent", PlayerListContentTemplate);
                 var group3 = new Group(this, playerListContent.Content, "Group3", Group3Template);
@@ -57,8 +59,10 @@ namespace Delight
                 // binding <List Items="{achievement in player.Achievements}">
                 playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Achievements" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => achievementsList }), () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements, () => { }, false));
 
-                // Template for achievementsList
-                achievementsList.ContentTemplate = new ContentTemplate(tiAchievement => 
+                // templates for achievementsList
+                if (achievementsList.ContentTemplates == null) achievementsList.ContentTemplates = new BindableCollection<ContentTemplate>();
+
+                achievementsList.ContentTemplates.Add(new ContentTemplate(tiAchievement => 
                 {
                     var achievementsListContent = new ListItem(this, achievementsList.Content, "AchievementsListContent", AchievementsListContentTemplate);
                     var label4 = new Label(this, achievementsListContent.Content, "Label4", Label4Template);
@@ -67,10 +71,10 @@ namespace Delight
                     achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => (tiAchievement.Item as Delight.Achievement) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
                     achievementsListContent.ContentTemplateData = tiAchievement;
                     return achievementsListContent;
-                });
+                }, typeof(ListItem), "AchievementsListContent"));
                 playerListContent.ContentTemplateData = tiPlayer;
                 return playerListContent;
-            });
+            }, typeof(ListItem), "PlayerListContent"));
             this.AfterInitializeInternal();
         }
 

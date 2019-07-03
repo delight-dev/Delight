@@ -453,21 +453,15 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
-                if (attributeName.IEquals("HasContentTemplate"))
+                if (attributeName.IEquals("HasContentTemplates"))
                 {
-                    bool hasContentTemplate;
-                    if (!bool.TryParse(attributeValue, out hasContentTemplate))
+                    bool hasContentTemplates;
+                    if (!bool.TryParse(attributeValue, out hasContentTemplates))
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid HasContentTemplate value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXmlElement), attributeValue));
+                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid HasContentTemplates value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXmlElement), attributeValue));
                         continue;
                     }
-                    viewObject.HasContentTemplate = hasContentTemplate;
-                    continue;
-                }
-
-                if (attributeName.IEquals("ContentTemplateType")) // TODO remove
-                {
-                    viewObject.ContentTemplate = _contentObjectModel.LoadViewObject(attributeValue);
+                    viewObject.HasContentTemplates = hasContentTemplates;
                     continue;
                 }
 
@@ -476,7 +470,7 @@ namespace Delight.Editor.Parser
                     var contentTemplateTypes = attributeValue.Split(ContentTemplateDelimiterChars, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
                     foreach (var templateType in contentTemplateTypes)
                     {
-                        var templateView = _contentObjectModel.LoadViewObject(attributeValue);
+                        var templateView = _contentObjectModel.LoadViewObject(templateType);
                         viewObject.ContentTemplates.Add(templateView);
                     }
                     continue;

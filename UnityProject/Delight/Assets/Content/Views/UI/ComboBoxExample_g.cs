@@ -41,8 +41,10 @@ namespace Delight
             // binding <ComboBox Items="{player in @Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<BindableObject>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.Players, () => { }, false));
 
-            // Template for ComboBox
-            ComboBox.ContentTemplate = new ContentTemplate(tiPlayer => 
+            // templates for ComboBox
+            if (ComboBox.ContentTemplates == null) ComboBox.ContentTemplates = new BindableCollection<ContentTemplate>();
+
+            ComboBox.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var comboBoxContent = new ComboBoxListItem(this, ComboBox.Content, "ComboBoxContent", ComboBoxContentTemplate);
                 var label1 = new Label(this, comboBoxContent.Content, "Label1", Label1Template);
@@ -51,7 +53,7 @@ namespace Delight
                 comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 comboBoxContent.ContentTemplateData = tiPlayer;
                 return comboBoxContent;
-            });
+            }, typeof(ComboBoxListItem), "ComboBoxContent"));
             this.AfterInitializeInternal();
         }
 

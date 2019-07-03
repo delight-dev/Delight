@@ -54,7 +54,7 @@ namespace Delight.Editor.Parser
             foreach (var viewObject in viewObjects)
             {
                 viewObject.NeedUpdate = AnyParentNeedUpdate(viewObject);
-                viewObject.HasContentTemplate = AnyParentHasContentTemplate(viewObject);
+                viewObject.HasContentTemplates = AnyParentHasContentTemplate(viewObject);
 
                 // update view property declarations with view type data
                 var viewPropertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
@@ -99,6 +99,7 @@ namespace Delight.Editor.Parser
                 GenerateViewCode(viewObject);
 
                 viewObject.NeedUpdate = false;
+                viewObject.HasCode = true;
             }
 
 #if UNITY_EDITOR
@@ -388,7 +389,7 @@ namespace Delight.Editor.Parser
             var viewObjects = _contentObjectModel.ViewObjects;
             foreach (var viewObject in viewObjects)
             {
-                if (viewObject.Name == "View" || viewObject.Name == "DelightDesigner")
+                if (!viewObject.HasCode || viewObject.Name == "View" || viewObject.Name == "DelightDesigner")
                     continue;
                 sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z) => new {0}(x, y, null, z));", viewObject.TypeName);
             }
@@ -490,34 +491,43 @@ namespace Delight.Editor.Parser
 
                 // validate template content
                 var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
-                bool templateContent = childViewObject.HasContentTemplate;
+                bool templateContent = childViewObject.HasContentTemplates;
                 if (templateContent)
                 {
                     var childId = childViewDeclaration.Id;
-                    var contentTemplateType = childViewObject.ContentTemplate?.TypeName;
+                    var contentTemplateTypes = childViewObject.ContentTemplates.Select(x => x.TypeName).ToList();
                     bool wrapContent = false;
 
-                    // see if template child is of appropriate type
-                    if (!String.IsNullOrEmpty(contentTemplateType) && childViewDeclaration.ChildDeclarations.Count() == 1)
+                    // see if content children is of appropriate template type 
+                    if (contentTemplateTypes.Any() && childViewDeclaration.ChildDeclarations.Count() > 0)
                     {
-                        var templateChildObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ChildDeclarations[0].ViewName);
-                        wrapContent = true;
-                        while (templateChildObject != null)
+                        foreach (var contentChild in childViewDeclaration.ChildDeclarations)
                         {
-                            if (templateChildObject.TypeName.IEquals(contentTemplateType))
+                            bool wrapThisChild = true;
+                            var templateChildObject = _contentObjectModel.LoadViewObject(contentChild.ViewName);
+                            while (templateChildObject != null)
                             {
-                                wrapContent = false;
-                                break;
+                                if (contentTemplateTypes.Any(x => x.IEquals(templateChildObject.TypeName)))
+                                {
+                                    wrapThisChild = false;
+                                    break;
+                                }
+
+                                templateChildObject = templateChildObject.BasedOn;
                             }
 
-                            templateChildObject = templateChildObject.BasedOn;
+                            if (wrapThisChild)
+                            {
+                                wrapContent = true;
+                                break;
+                            }
                         }
                     }
 
                     if (wrapContent)
                     {
-                        // children is not of appropriate type, so we need to wrap them
-                        string viewName = !String.IsNullOrEmpty(contentTemplateType) ? contentTemplateType : "Region";
+                        // children is not of appropriate type, so we need to wrap them in a template type
+                        string viewName = contentTemplateTypes.FirstOrDefault() ?? "Region";
                         var wrappingRegionDeclaration = new ViewDeclaration
                         {
                             Id = childId + "Content",
@@ -921,7 +931,7 @@ namespace Delight.Editor.Parser
                 var childId = childViewDeclaration.Id;
                 var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
                 var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
-                bool templateContent = childViewObject.HasContentTemplate;
+                bool templateContent = childViewObject.HasContentTemplates;
 
                 // put a comment if we are creating top-level views
                 if (parentViewDeclaration == null)
@@ -1259,31 +1269,34 @@ namespace Delight.Editor.Parser
                         ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
                     }
 
-                    sb.AppendLine();
-                    sb.AppendLine(indent, "// Template for {0}", childIdVar);
-                    sb.AppendLine(indent, "{0}.ContentTemplate = new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
-                    sb.AppendLine(indent, "{{");
-                }
-
-                var firstChildInTemplate = childViewDeclaration.ChildDeclarations.FirstOrDefault();
-                var childFirstTemplateChild = firstTemplateChild;
-                if (templateContent && firstChildInTemplate != null)
-                {
-                    childFirstTemplateChild = firstChildInTemplate.Id.ToLocalVariableName();
-                }
-
-                // print child view declaration
-                GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, childFirstTemplateChild);
-
-                if (templateContent)
-                {
-                    if (firstChildInTemplate != null)
+                    // generate child view declarations for templated content
+                    if (childViewDeclaration.ChildDeclarations.Any())
                     {
-                        sb.AppendLine(indent, "    {0}.ContentTemplateData = {1};", childFirstTemplateChild, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                        sb.AppendLine();
+                        sb.AppendLine(indent, "// templates for {0}", childIdVar);
+                        sb.AppendLine(indent, "if ({0}.ContentTemplates == null) {0}.ContentTemplates = new BindableCollection<ContentTemplate>();", childIdVar);
                     }
 
-                    sb.AppendLine(indent, "    return {0};", firstChildInTemplate != null ? childFirstTemplateChild : "null");
-                    sb.AppendLine(indent, "}});");
+                    foreach (var templateChild in childViewDeclaration.ChildDeclarations)
+                    {
+                        var templateChildId = templateChild.Id.ToLocalVariableName();                        
+
+                        sb.AppendLine();
+                        sb.AppendLine(indent, "{0}.ContentTemplates.Add(new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                        sb.AppendLine(indent, "{{");
+                       
+                        // print child view declaration
+                        GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId);
+
+                        sb.AppendLine(indent, "    {0}.ContentTemplateData = {1};", templateChildId, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                        sb.AppendLine(indent, "    return {0};", templateChildId);
+                        sb.AppendLine(indent, "}}, typeof({0}), \"{1}\"));", templateChild.ViewName, templateChild.Id);
+                    }
+                }
+                else
+                {
+                    // print child view declaration
+                    GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
             }
         }
@@ -1675,7 +1688,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static bool AnyParentHasContentTemplate(ViewObject viewObject)
         {
-            if (viewObject.HasContentTemplate)
+            if (viewObject.HasContentTemplates)
                 return true;
 
             return viewObject.BasedOn != null ? AnyParentHasContentTemplate(viewObject.BasedOn) : false;

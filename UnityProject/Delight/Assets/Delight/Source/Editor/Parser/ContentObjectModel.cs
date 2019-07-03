@@ -543,12 +543,6 @@ namespace Delight.Editor.Parser
         [ProtoMember(8, AsReference = true)]
         public List<ViewDeclaration> ViewDeclarations;
 
-        [ProtoMember(9)]
-        public bool HasContentTemplate;
-
-        [ProtoMember(10, AsReference = true)]
-        public ViewObject ContentTemplate;
-
         [ProtoMember(11, AsReference = true)]
         public ViewDeclaration ContentContainer;
 
@@ -560,6 +554,12 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(14, AsReference = true)]
         public List<ViewObject> ContentTemplates;
+
+        [ProtoMember(15, AsReference = true)]
+        public bool HasContentTemplates;
+
+        [ProtoMember(16)]
+        public bool HasCode;
 
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
@@ -617,13 +617,13 @@ namespace Delight.Editor.Parser
             BasedOn = null;
             NeedUpdate = false;
             ContentContainer = null;
-            ContentTemplate = null;
-            HasContentTemplate = false;
             PropertyExpressions.Clear();
             ViewDeclarations.Clear();
             Module = null;
             HideInDesigner = false;
             ContentTemplates.Clear();
+            HasContentTemplates = false;
+            HasCode = false;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)

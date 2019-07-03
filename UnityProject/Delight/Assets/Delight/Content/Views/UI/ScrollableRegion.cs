@@ -532,6 +532,9 @@ namespace Delight
         /// </summary>
         public void OnScroll(DependencyObject sender, object eventArgs)
         {
+            if (DisableMouseWheel)
+                return;
+
             PointerEventData pointerData = eventArgs as PointerEventData;
             Vector2 delta = pointerData.scrollDelta;
 

@@ -468,6 +468,26 @@ namespace Delight
         }
 
         /// <summary>
+        /// Moves view to another layout parent. 
+        /// </summary>
+        public virtual void MoveTo(View newLayoutParent)
+        {
+            if (newLayoutParent == LayoutParent)
+                return;
+
+            if (LayoutParent != null)
+            {
+                LayoutParent.LayoutChildren.Remove(this);
+            }
+
+            LayoutParent = newLayoutParent;
+            if (LayoutParent != null)
+            {
+                newLayoutParent.LayoutChildren.Add(this);
+            }
+        }
+
+        /// <summary>
         /// Resolves action handler from name. 
         /// </summary>
         protected ViewAction.ViewActionDelegate ResolveActionHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
