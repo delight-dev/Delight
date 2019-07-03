@@ -550,16 +550,7 @@ namespace Delight
 
             Vector2 contentOffset = GetContentOffset();
             contentOffset += delta * ScrollSensitivity;
-            if (ScrollBounds == ScrollBounds.Clamped)
-            {
-                contentOffset = GetClampedOffset(contentOffset);
-            }
-            else if (ScrollBounds == ScrollBounds.Elastic && IsOutOfBounds(contentOffset, out var outOfBoundsX, out var outOfBoundsY))
-            {
-                _isOutOfBoundsElastic = true;
-                _isOutOfBoundsElasticX = outOfBoundsX;
-                _isOutOfBoundsElasticY = outOfBoundsY;
-            }
+            contentOffset = GetClampedOffset(contentOffset);
 
             _offsetChangedFromStartPosition = true;
             SetContentOffset(contentOffset);
