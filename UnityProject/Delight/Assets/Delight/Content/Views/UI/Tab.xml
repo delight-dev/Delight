@@ -1,3 +1,3 @@
 <Tab xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-     HideInDesigner="True" ContentTemplateData="t:ContentTemplateData">
+     HideInDesigner="True" ContentTemplateData="t:ContentTemplateData" Text="t:string" TabHeaderId="t:string">
 </Tab>

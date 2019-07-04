@@ -328,7 +328,7 @@ namespace Delight
         /// <summary>
         /// Called when a new item is to be generated.
         /// </summary>
-        protected override View CreateItem(BindableObject item, Type templateType = null)
+        protected override View CreateItem(BindableObject item, Type templateType = null, string templateId = null)
         {
             if (IsVirtualized)
             {

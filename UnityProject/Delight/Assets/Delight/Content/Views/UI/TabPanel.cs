@@ -62,7 +62,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Generates views from data in collection. 
+        /// Generates tab items from data in collection. 
         /// </summary>
         protected void CreateTabItems()
         {
@@ -75,7 +75,6 @@ namespace Delight
             }
 
             SelectedTabIndexChanged();
-            UpdateLayout();
         }
 
         /// <summary>
@@ -84,7 +83,21 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            ItemsChanged();
+
+            if (IsStaticProperty.IsUndefined(this) && ItemsProperty.IsUndefined(this))
+            {
+                // if items property isn't defined assume tab panel is meant to be static
+                IsStatic = true;
+            }
+
+            if (IsStatic)
+            {
+                CreateStaticTabItems();
+            }
+            else
+            {
+                ItemsChanged();
+            }
         }
 
         /// <summary>
@@ -201,6 +214,7 @@ namespace Delight
         /// </summary>
         public virtual void ItemsChanged()
         {
+            IsStatic = false;
             if (_oldCollection != null)
             {
                 // unsubscribe from change events in the old list
@@ -246,28 +260,66 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called just before the view and its children are loaded.
-        /// </summary>
-        protected override void BeforeLoad()
-        {
-            base.BeforeLoad();
-        }
-
-        /// <summary>
         /// Called when a new item is to be generated.
         /// </summary>
         protected View CreateTabItem(BindableObject item)
         {
-            var tabItem = CreateItem(item, typeof(Tab)) as Tab;            
+            var tabItem = CreateItem(item, typeof(Tab)) as Tab;
+            if (tabItem == null)
+            {
+                // create empty tab
+                tabItem = new Tab(this, Content);
+            }
+
             if (!_tabs.ContainsKey(item))
             {
                 _tabs.Add(item, tabItem);
             }
 
-            var tabHeader = CreateItem(item, typeof(TabHeader)) as TabHeader;
-            if (!_tabHeaders.ContainsKey(item))
+            var tabHeader = CreateTabHeader(tabItem, item);
+            return tabItem;
+        }
+
+        /// <summary>
+        /// Generates views from data in collection. 
+        /// </summary>
+        protected void CreateStaticTabItems()
+        {
+            if (ContentTemplates == null)
+                return;
+
+            foreach (var contentTemplate in ContentTemplates)
             {
-                _tabHeaders.Add(item, tabHeader);
+                if (contentTemplate.TemplateType != typeof(Tab))
+                    continue;
+
+                var templateData = new ContentTemplateData();
+                var tab = contentTemplate.Activator(templateData) as Tab;
+
+                var tabHeader = CreateTabHeader(tab);
+            }
+
+            SelectedTabIndexChanged();
+        }
+
+        /// <summary>
+        /// Creates tab header for tab.
+        /// </summary>
+        protected View CreateTabHeader(Tab tab, BindableObject item = null)
+        {
+            var tabHeader = CreateItem(item, typeof(TabHeader), tab.TabHeaderId) as TabHeader;
+            if (tabHeader == null)
+            {
+                // create default tab header
+                tabHeader = new TabHeader(this, TabHeaderGroup);
+            }
+
+            if (item != null)
+            {
+                if (!_tabHeaders.ContainsKey(item))
+                {
+                    _tabHeaders.Add(item, tabHeader);
+                }
             }
 
             tabHeader.ParentTabPanel = this;
@@ -275,15 +327,23 @@ namespace Delight
             tabHeader.TabIndex = TabHeaderGroup.LayoutChildren.Count - 1;
             tabHeader.Load();
 
-            return tabItem;
-        }
+            // set default tab header text if undefined
+            if (!Tab.TextProperty.IsUndefined(tab) && TabHeader.TextProperty.IsUndefined(tabHeader.Label))
+            {
+                tabHeader.Text = tab.Text;
+            }
 
-        /// <summary>
-        /// Updates the layout of the group. 
-        /// </summary>
-        public override bool UpdateLayout(bool notifyParent = true)
-        {
-            return base.UpdateLayout(notifyParent);
+            if (TabHeaderWidth != null)
+            {
+                tabHeader.Width = TabHeaderWidth;
+            }
+
+            if (TabHeaderHeight != null)
+            {
+                tabHeader.Height = TabHeaderHeight;
+            }
+
+            return tabHeader;
         }
 
         #endregion

@@ -35,6 +35,9 @@ namespace Delight
             DependencyProperties.Add(TabPanelTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(SelectedTabIndexProperty);
+            dependencyProperties.Add(IsStaticProperty);
+            dependencyProperties.Add(TabHeaderWidthProperty);
+            dependencyProperties.Add(TabHeaderHeightProperty);
             dependencyProperties.Add(TabSwitcherProperty);
             dependencyProperties.Add(TabSwitcherTemplateProperty);
             dependencyProperties.Add(TabHeaderGroupProperty);
@@ -50,6 +53,27 @@ namespace Delight
         {
             get { return SelectedTabIndexProperty.GetValue(this); }
             set { SelectedTabIndexProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsStaticProperty = new DependencyProperty<System.Boolean>("IsStatic");
+        public System.Boolean IsStatic
+        {
+            get { return IsStaticProperty.GetValue(this); }
+            set { IsStaticProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> TabHeaderWidthProperty = new DependencyProperty<Delight.ElementSize>("TabHeaderWidth");
+        public Delight.ElementSize TabHeaderWidth
+        {
+            get { return TabHeaderWidthProperty.GetValue(this); }
+            set { TabHeaderWidthProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> TabHeaderHeightProperty = new DependencyProperty<Delight.ElementSize>("TabHeaderHeight");
+        public Delight.ElementSize TabHeaderHeight
+        {
+            get { return TabHeaderHeightProperty.GetValue(this); }
+            set { TabHeaderHeightProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewSwitcher> TabSwitcherProperty = new DependencyProperty<ViewSwitcher>("TabSwitcher");

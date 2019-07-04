@@ -4034,6 +4034,8 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="ContentTemplateData" type="xs:string" />
+    <xs:attribute name="Text" type="xs:string" />
+    <xs:attribute name="TabHeaderId" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -4245,7 +4247,10 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="ShowFirstByDefault" type="xs:string" />
+    <xs:attribute name="SelectedTabIndex" type="xs:string" />
+    <xs:attribute name="IsStatic" type="xs:string" />
+    <xs:attribute name="TabHeaderWidth" type="xs:string" />
+    <xs:attribute name="TabHeaderHeight" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="ContentTemplate" type="xs:string" />
     <xs:attribute name="ContentTemplates" type="xs:string" />

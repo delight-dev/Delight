@@ -15,13 +15,14 @@ namespace Delight
         /// <summary>
         /// Creates new item in collection.
         /// </summary>
-        protected virtual View CreateItem(BindableObject item, Type templateType = null)
+        protected virtual View CreateItem(BindableObject item, Type templateType = null, string templateId = null)
         {
             if (ContentTemplates == null || ContentTemplates.Count <= 0)
                 return null;
 
             // find activator that corresponds to the type specified                       
-            var activator = templateType == null ? ContentTemplates[0].Activator : ContentTemplates.FirstOrDefault(x => x.TemplateType == templateType)?.Activator;
+            var activator = templateType == null ? ContentTemplates[0].Activator : 
+                ContentTemplates.FirstOrDefault(x => (x.TemplateType == templateType) && (templateId == null || templateId == x.Id))?.Activator;
             if (activator == null)
                 return null;
 
