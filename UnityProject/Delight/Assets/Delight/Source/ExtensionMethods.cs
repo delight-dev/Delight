@@ -361,7 +361,7 @@ namespace Delight
         /// </summary>
         public static void AddEventTrigger(this GameObject gameObject, DependencyObject sender, ViewAction action, EventTriggerType eventTriggerType)
         {
-            if (action == null)
+            if (action == null || !action.IsEnabled)
                 return;
 
             EventTrigger eventTrigger = gameObject.GetComponent<EventTrigger>();
