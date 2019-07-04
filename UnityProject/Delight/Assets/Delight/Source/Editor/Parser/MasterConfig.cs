@@ -150,7 +150,7 @@ namespace Delight.Editor.Parser
                     catch (Exception e)
                     {
                         Debug.LogException(e);
-                        Debug.LogError(String.Format("[Delight] Failed to deserialize config file \"{0}\". Creating new config.", ConfigFile));
+                        Debug.LogError(String.Format("#Delight# Failed to deserialize config file \"{0}\". Creating new config.", ConfigFile));
                         _config = CreateDefault();
                         return;
                     }
@@ -184,7 +184,7 @@ namespace Delight.Editor.Parser
                         catch (Exception e)
                         {
                             Debug.LogException(e);
-                            Debug.LogError(String.Format("[Delight] Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
+                            Debug.LogError(String.Format("#Delight# Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
                             return;
                         }
                         finally
@@ -196,7 +196,7 @@ namespace Delight.Editor.Parser
                 catch (Exception e)
                 {
                     Debug.LogException(e);
-                    Debug.LogError(String.Format("[Delight] Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
+                    Debug.LogError(String.Format("#Delight# Failed to serialize config file \"{0}\". Creating new config.", ConfigFile));
                     return;
                 }
             }
@@ -225,7 +225,7 @@ namespace Delight.Editor.Parser
 
                 if (String.IsNullOrEmpty(sanitizedPath))
                 {
-                    Debug.LogWarning(String.Format("[Delight] Improperly formatted content folder path \"{0}\" removed from configuration.", path));
+                    Debug.LogWarning(String.Format("#Delight# Improperly formatted content folder path \"{0}\" removed from configuration.", path));
                     ContentFolders.RemoveAt(i);
                     continue;
                 }

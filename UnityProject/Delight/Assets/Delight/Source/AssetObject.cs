@@ -218,7 +218,7 @@ namespace Delight
                 var resourceObject = Resources.Load<T>(FullPath);
                 if (resourceObject == null)
                 {
-                    Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", FullPath));
+                    Debug.Log(String.Format("#Delight# Unable to load resource asset \"{0}\". Resource not found.", FullPath));
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
@@ -264,7 +264,7 @@ namespace Delight
                     var resourceObject = await Resources.LoadAsync<T>(FullPath);
                     if (resourceObject == null)
                     {
-                        Debug.Log(String.Format("[Delight] Unable to load resource asset \"{0}\". Resource not found.", FullPath));
+                        Debug.Log(String.Format("#Delight# Unable to load resource asset \"{0}\". Resource not found.", FullPath));
                         OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                         return;
                     }
@@ -276,7 +276,7 @@ namespace Delight
                 var assetBundle = AssetBundle;
                 if (assetBundle == null)
                 {
-                    Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset bundle \"{1}\" not found.", Id, AssetBundleId));
+                    Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Asset bundle \"{1}\" not found.", Id, AssetBundleId));
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
@@ -285,7 +285,7 @@ namespace Delight
                 var unityAssetBundle = await assetBundle.LoadAsync();
                 if (unityAssetBundle == null)
                 {
-                    Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
+                    Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }
@@ -295,7 +295,7 @@ namespace Delight
                 var unityObject = unityAssetBundle.LoadAsset<T>(Id);
                 if (unityObject == null)
                 {
-                    Debug.Log(String.Format("[Delight] Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
+                    Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }

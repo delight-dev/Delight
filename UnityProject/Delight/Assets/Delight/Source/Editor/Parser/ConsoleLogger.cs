@@ -1,6 +1,5 @@
-﻿// Uncomment define to enable Console Pro integration, which means XML errors show up in stack-trace and double-clicking on the 
-// error takes you to the line in the XML file
-//#define ENABLE_CONSOLEPRO
+﻿// add module "ConsolePro" to Config.txt to enable ConsolePro integration, which means XML errors show up in the console
+// and double-clicking on the entry takes you to the line in the XML file
 
 #region Using Statements
 using Delight.Editor.Parser;
@@ -17,13 +16,14 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Globalization;
 using System.IO;
-#if ENABLE_CONSOLEPRO
+#if DELIGHT_MODULE_CONSOLEPRO
 using FlyingWormConsole3;
 #endif
 #endregion
 
 namespace Delight.Editor
 {
+
     /// <summary>
     /// Logs error messages.
     /// </summary>
@@ -32,33 +32,38 @@ namespace Delight.Editor
         public delegate void LogDelegate(object message);
         public delegate void ExceptionLogDelegate(Exception e);
 
-#if !ENABLE_CONSOLEPRO
+#if !DELIGHT_MODULE_CONSOLEPRO
         public static LogDelegate Log = Debug.Log; 
         public static LogDelegate LogError = Debug.LogError; 
         public static LogDelegate LogWarning = Debug.LogWarning; 
-        public static LogDelegate LogParseError = Debug.LogError; 
+        
         public static ExceptionLogDelegate LogException = Debug.LogException;
         public static void UpdateEntries()
         {
+        }
+
+        public static void LogParseError(string file, int line, string message)
+        {
+            Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
         }
 #else
         public static Dictionary<string, List<ConsoleProEntry>> _entries = new Dictionary<string, List<ConsoleProEntry>>();
 
         public static void Log(string message)
         {
-            string str1 = message.StartsWith("[Delight] ") ? message.Substring("[Delight] ".Length) : message;
+            string str1 = message.StartsWith("#Delight# ") ? message.Substring("#Delight# ".Length) : message;
             Debug.Log("#Delight# " + str1);
         }
 
         public static void LogWarning(string message)
         {
-            string str1 = message.StartsWith("[Delight] ") ? message.Substring("[Delight] ".Length) : message;
+            string str1 = message.StartsWith("#Delight# ") ? message.Substring("#Delight# ".Length) : message;
             Debug.LogWarning("#Delight# " + str1);
         }
 
         public static void LogError(string message)
         {
-            string str1 = message.StartsWith("[Delight] ") ? message.Substring("[Delight] ".Length) : message;
+            string str1 = message.StartsWith("#Delight# ") ? message.Substring("#Delight# ".Length) : message;
             Debug.LogError("#Delight# " + str1);
         }
 
@@ -67,18 +72,14 @@ namespace Delight.Editor
             Debug.Log("#Delight# " + e.ToString());
         }
 
-        public static void LogParseError(string message)
+        public static void LogParseError(string file, int line, string message)
         {
-            string str1 = message.StartsWith("[Delight] ") ? message.Substring("[Delight] ".Length) : message;
-            int p1 = str1.IndexOf("(");
-            var filename = str1.Substring(0, p1 - 1);
-            var lineStr = str1.Substring(p1 + 1);
-            lineStr = lineStr.Substring(0, lineStr.IndexOf(")"));
-            int line = System.Convert.ToInt32(lineStr, CultureInfo.InvariantCulture);
+            string str1 = message.StartsWith("#Delight# ") ? message.Substring("#Delight# ".Length) : message;
+            var lineStr = line.ToString();
 
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("[ConsolePro]" + str1);
-            sb.AppendLine(String.Format("Delight:ParseContent() (at {0}:{1})", filename, lineStr));
+            sb.AppendLine(String.Format("Delight:XmlError() (at {0}:{1})", file, line));
             sb.AppendLine(filename);
             sb.AppendLine(lineStr);
 

@@ -136,7 +136,7 @@ namespace Delight
                 var response = (await getBundleRequest.SendWebRequest()) as UnityWebRequestAsyncOperation;
                 if (response.webRequest.isNetworkError || response.webRequest.isHttpError)
                 {
-                    Debug.Log(String.Format("[Delight] Failed to load asset bundle \"{0}\" from URI \"{1}\".", Id, bundleUri));
+                    Debug.Log(String.Format("#Delight# Failed to load asset bundle \"{0}\" from URI \"{1}\".", Id, bundleUri));
                     return;
                 }
 

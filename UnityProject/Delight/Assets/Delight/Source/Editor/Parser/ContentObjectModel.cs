@@ -141,7 +141,7 @@ namespace Delight.Editor.Parser
             var existingBundle = AssetBundleObjects.FirstOrDefault(x => x.Name.IEquals(bundleName));
             if (existingBundle != null && !bundleName.IEquals("Resources"))
             {
-                Debug.LogError(String.Format("[Delight] Duplicate asset bundle \"{0}\" at \"{1}\". Bundle with same name exist at \"{2}\". Please make sure the bundle names are unique.", bundleName, bundlePath, existingBundle.Path));
+                Debug.LogError(String.Format("#Delight# Duplicate asset bundle \"{0}\" at \"{1}\". Bundle with same name exist at \"{2}\". Please make sure the bundle names are unique.", bundleName, bundlePath, existingBundle.Path));
             }
 
             bundle = new AssetBundleObject { Name = bundleName, Path = bundlePath };
@@ -244,7 +244,7 @@ namespace Delight.Editor.Parser
                     catch (Exception e)
                     {
                         Debug.LogException(e);
-                        Debug.LogError(String.Format("[Delight] Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
+                        Debug.LogError(String.Format("#Delight# Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
                         _contentObjectModel = new ContentObjectModel();
                         return;
                     }

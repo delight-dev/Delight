@@ -497,7 +497,7 @@ namespace Delight
             var actionHandler = parentType.GetMethod(actionHandlerName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             if (actionHandler == null)
             {
-                Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". View action handler not found in view \"{2}\".", GetType().Name, actionHandlerName, parentType.Name));
+                Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". View action handler not found in view \"{2}\".", GetType().Name, actionHandlerName, parentType.Name));
                 return (x, y) => { };
             }
 
@@ -536,7 +536,7 @@ namespace Delight
                         case 10:
                             return (x, y) => actionHandler.Invoke(parent, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
                         default:
-                            Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
                             return (x, y) => { };
                     }
                 }
@@ -565,7 +565,7 @@ namespace Delight
                         case 10:
                             return (x, y) => actionHandler.Invoke(parent, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
                         default:
-                            Debug.LogError(String.Format("[Delight] {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
                             return (x, y) => { };
                     }
                 }

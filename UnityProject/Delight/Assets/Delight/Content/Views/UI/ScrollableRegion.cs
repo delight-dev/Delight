@@ -396,7 +396,7 @@ namespace Delight
             if (!CanScrollHorizontally || HorizontalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
                 HorizontalScrollbar.Ignore();
-            } 
+            }
 
             if (!CanScrollVertically || VerticalScrollbarVisibility == ScrollbarVisibilityMode.Never)
             {
@@ -943,8 +943,8 @@ namespace Delight
         /// </summary>
         public void SetAbsoluteScrollPosition(float horizontalPosition, float verticalPosition)
         {
-            float cx = ContentRegion.ActualWidth;
-            float cy = ContentRegion.ActualHeight;
+            float cx = ContentRegion.ActualWidth - ViewportWidth;
+            float cy = ContentRegion.ActualHeight - ViewportHeight;
 
             float ax = cx > 0 ? horizontalPosition / cx : 0;
             float ay = cy > 0 ? verticalPosition / cy : 0;
@@ -968,6 +968,38 @@ namespace Delight
             get
             {
                 return new Vector2(HorizontalScrollbar.ScrollPosition, VerticalScrollbar.ScrollPosition);
+            }
+        }
+
+        public float ViewportWidth
+        {
+            get
+            {
+                return ActualWidth;
+            }
+        }
+
+        public float ViewportHeight
+        {
+            get
+            {
+                return ActualHeight;
+            }
+        }
+
+        public float ContentWidth
+        {
+            get
+            {
+                return ContentRegion.ActualWidth;
+            }
+        }
+
+        public float ContentHeight
+        {
+            get
+            {
+                return ContentRegion.ActualHeight;
             }
         }
 

@@ -19,16 +19,29 @@ namespace Delight
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1.Content, "Group2", Group2Template);
+            InputField1 = new InputField(this, Group2.Content, "InputField1", InputField1Template);
+
+            // binding <InputField Text="{ItemIndex}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ItemIndex" }, 
+                new List<Func<BindableObject>> { () => this }) }, 
+                new BindingPath(new List<string> { "InputField1", "Text" }, 
+                new List<Func<BindableObject>> { () => this, () => InputField1 }), 
+                () => InputField1.Text = ItemIndex, 
+                () => ItemIndex = InputField1.Text, true));
+
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
             if (Button1.Click == null) Button1.Click = new ViewAction();
-            Button1.Click.RegisterHandler(ResolveActionHandler(this, "Add"));
+            Button1.Click.RegisterHandler(ResolveActionHandler(this, "SelectItem"));
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
             if (Button2.Click == null) Button2.Click = new ViewAction();
-            Button2.Click.RegisterHandler(ResolveActionHandler(this, "Remove"));
+            Button2.Click.RegisterHandler(ResolveActionHandler(this, "ScrollTo"));
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
 
             // binding <List Items="{player in Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Players" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Players, () => { }, false));
+
+            // binding <List SelectedItem="{SelectedPlayer}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "SelectedPlayer" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "SelectedItem" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.SelectedItem = SelectedPlayer, () => { }, false));
 
             // templates for PlayerList
             if (PlayerList.ContentTemplates == null) PlayerList.ContentTemplates = new BindableCollection<ContentTemplate>();
@@ -60,10 +73,14 @@ namespace Delight
             DependencyProperties.Add(ListExampleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(PlayersProperty);
+            dependencyProperties.Add(ItemIndexProperty);
+            dependencyProperties.Add(SelectedPlayerProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Group2Property);
             dependencyProperties.Add(Group2TemplateProperty);
+            dependencyProperties.Add(InputField1Property);
+            dependencyProperties.Add(InputField1TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
@@ -87,6 +104,20 @@ namespace Delight
         {
             get { return PlayersProperty.GetValue(this); }
             set { PlayersProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.String> ItemIndexProperty = new DependencyProperty<System.String>("ItemIndex");
+        public System.String ItemIndex
+        {
+            get { return ItemIndexProperty.GetValue(this); }
+            set { ItemIndexProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.Player> SelectedPlayerProperty = new DependencyProperty<Delight.Player>("SelectedPlayer");
+        public Delight.Player SelectedPlayer
+        {
+            get { return SelectedPlayerProperty.GetValue(this); }
+            set { SelectedPlayerProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
@@ -115,6 +146,20 @@ namespace Delight
         {
             get { return Group2TemplateProperty.GetValue(this); }
             set { Group2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<InputField> InputField1Property = new DependencyProperty<InputField>("InputField1");
+        public InputField InputField1
+        {
+            get { return InputField1Property.GetValue(this); }
+            set { InputField1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> InputField1TemplateProperty = new DependencyProperty<Template>("InputField1Template");
+        public Template InputField1Template
+        {
+            get { return InputField1TemplateProperty.GetValue(this); }
+            set { InputField1TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
@@ -235,6 +280,7 @@ namespace Delight
 #endif
                     Delight.ListExample.Group1TemplateProperty.SetDefault(_listExample, ListExampleGroup1);
                     Delight.ListExample.Group2TemplateProperty.SetDefault(_listExample, ListExampleGroup2);
+                    Delight.ListExample.InputField1TemplateProperty.SetDefault(_listExample, ListExampleInputField1);
                     Delight.ListExample.Button1TemplateProperty.SetDefault(_listExample, ListExampleButton1);
                     Delight.ListExample.Button2TemplateProperty.SetDefault(_listExample, ListExampleButton2);
                     Delight.ListExample.PlayerListTemplateProperty.SetDefault(_listExample, ListExamplePlayerList);
@@ -290,6 +336,90 @@ namespace Delight
             }
         }
 
+        private static Template _listExampleInputField1;
+        public static Template ListExampleInputField1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleInputField1 == null || _listExampleInputField1.CurrentVersion != Template.Version)
+#else
+                if (_listExampleInputField1 == null)
+#endif
+                {
+                    _listExampleInputField1 = new Template(InputFieldTemplates.InputField);
+#if UNITY_EDITOR
+                    _listExampleInputField1.Name = "ListExampleInputField1";
+#endif
+                    Delight.InputField.TextProperty.SetHasBinding(_listExampleInputField1);
+                    Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_listExampleInputField1, ListExampleInputField1InputFieldPlaceholder);
+                    Delight.InputField.TextAreaTemplateProperty.SetDefault(_listExampleInputField1, ListExampleInputField1TextArea);
+                    Delight.InputField.InputTextTemplateProperty.SetDefault(_listExampleInputField1, ListExampleInputField1InputText);
+                }
+                return _listExampleInputField1;
+            }
+        }
+
+        private static Template _listExampleInputField1InputFieldPlaceholder;
+        public static Template ListExampleInputField1InputFieldPlaceholder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleInputField1InputFieldPlaceholder == null || _listExampleInputField1InputFieldPlaceholder.CurrentVersion != Template.Version)
+#else
+                if (_listExampleInputField1InputFieldPlaceholder == null)
+#endif
+                {
+                    _listExampleInputField1InputFieldPlaceholder = new Template(InputFieldTemplates.InputFieldInputFieldPlaceholder);
+#if UNITY_EDITOR
+                    _listExampleInputField1InputFieldPlaceholder.Name = "ListExampleInputField1InputFieldPlaceholder";
+#endif
+                }
+                return _listExampleInputField1InputFieldPlaceholder;
+            }
+        }
+
+        private static Template _listExampleInputField1TextArea;
+        public static Template ListExampleInputField1TextArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleInputField1TextArea == null || _listExampleInputField1TextArea.CurrentVersion != Template.Version)
+#else
+                if (_listExampleInputField1TextArea == null)
+#endif
+                {
+                    _listExampleInputField1TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
+#if UNITY_EDITOR
+                    _listExampleInputField1TextArea.Name = "ListExampleInputField1TextArea";
+#endif
+                }
+                return _listExampleInputField1TextArea;
+            }
+        }
+
+        private static Template _listExampleInputField1InputText;
+        public static Template ListExampleInputField1InputText
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleInputField1InputText == null || _listExampleInputField1InputText.CurrentVersion != Template.Version)
+#else
+                if (_listExampleInputField1InputText == null)
+#endif
+                {
+                    _listExampleInputField1InputText = new Template(InputFieldTemplates.InputFieldInputText);
+#if UNITY_EDITOR
+                    _listExampleInputField1InputText.Name = "ListExampleInputField1InputText";
+#endif
+                }
+                return _listExampleInputField1InputText;
+            }
+        }
+
         private static Template _listExampleButton1;
         public static Template ListExampleButton1
         {
@@ -326,7 +456,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleButton1Label.Name = "ListExampleButton1Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_listExampleButton1Label, "Add");
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton1Label, "Select");
                 }
                 return _listExampleButton1Label;
             }
@@ -368,7 +498,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleButton2Label.Name = "ListExampleButton2Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_listExampleButton2Label, "Remove");
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton2Label, "ScrollTo");
                 }
                 return _listExampleButton2Label;
             }

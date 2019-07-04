@@ -120,7 +120,7 @@ namespace Delight
 
             if (_view == null)
             {
-                Debug.Log(String.Format("[Delight] ViewPresenter unable to present view \"{0}\". View with that name not found.", ViewTypeName));
+                Debug.Log(String.Format("#Delight# ViewPresenter unable to present view \"{0}\". View with that name not found.", ViewTypeName));
                 return;
             }
         }

@@ -18,6 +18,17 @@ namespace Delight
     }
 
     /// <summary>
+    /// Contains arguments for the collection selection event.
+    /// </summary>
+    public class CollectionSelectionEventArgs : CollectionChangedEventArgs
+    {
+        public bool ScrollTo;
+        public bool Select;
+        public ElementAlignment? Alignment;
+        public ElementMargin Offset;
+    }
+
+    /// <summary>
     /// Contains a batch of collection changed event arguments.
     /// </summary>
     public class BatchedCollectionChangedEventArgs : CollectionChangedEventArgs

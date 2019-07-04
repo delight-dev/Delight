@@ -130,8 +130,8 @@ namespace Delight
             }
             else if (Data.ContainsKey(item.Id))
             {
-                Debug.LogWarning(String.Format("[Delight] BindableCollection<{0}>: attempt to add item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
-                return; 
+                Debug.LogWarning(String.Format("#Delight# BindableCollection<{0}>: attempt to add item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
+                return;
             }
 
             Data.Add(item.Id, item);
@@ -181,7 +181,7 @@ namespace Delight
         // TODO remove, here for backwards compatilibity with MarkLight
         public void ItemsModified()
         {
-            Notify( new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Replace
             });
@@ -199,19 +199,19 @@ namespace Delight
         // TODO remove, here for backwards compatilibity with MarkLight
         public void ItemModified(T item, string fieldPath = "")
         {
-            Notify( new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Replace
-            } );
+            });
         }
 
         // TODO remove, here for backwards compatilibity with MarkLight
-        public void ItemModified( int index, string fieldPath = "" )
+        public void ItemModified(int index, string fieldPath = "")
         {
-            Notify( new CollectionChangedEventArgs
+            Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Replace
-            } );
+            });
         }
 
         public virtual bool Contains(T item)
@@ -244,9 +244,63 @@ namespace Delight
             return false;
         }
 
+        public virtual void SelectAndScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            if (index < 0 || index >= Count)
+                return;
+
+            SelectAndScrollTo(this[index], alignment, offset, true);
+        }
+
+        public virtual void SelectAndScrollTo(T item, ElementAlignment? alignment = null, ElementMargin offset = null, bool scrollTo = false)
+        {
+            Notify(new CollectionSelectionEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Select,
+                Item = item,
+                Alignment = alignment,
+                Offset = offset,
+                ScrollTo = scrollTo
+            });
+        }
+
+        public virtual void Select(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
+        { 
+            if (index < 0 || index >= Count)
+                return;
+
+            Select(this[index], alignment, offset);
+        }
+
+        public virtual void Select(T item, ElementAlignment? alignment = null, ElementMargin offset = null, bool scrollTo = false)
+        {
+            Notify(new CollectionSelectionEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Select,
+                Item = item,
+                Alignment = alignment,
+                Offset = offset,
+                ScrollTo = scrollTo
+            });
+        }
+
         public virtual void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            // TODO should be called on the list view itself 
+            if (index < 0 || index >= Count)
+                return;
+
+            ScrollTo(this[index], alignment, offset);
+        }
+
+        public virtual void ScrollTo(T item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            Notify(new CollectionSelectionEventArgs
+            {
+                ChangeAction = CollectionChangeAction.ScrollTo,
+                Item = item,
+                Alignment = alignment,
+                Offset = offset
+            });
         }
 
         public virtual void RemoveRange(IEnumerable<T> items)
@@ -258,21 +312,13 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets list from bindable collection.
-        /// </summary>
-        public List<T> ToList()
-        {
-            return new List<T>(this);
-        }
-
-        /// <summary>
         /// Returns first item matching the predicate.
         /// </summary>
         public T Find(Predicate<T> predicate)
         {
             foreach (var item in _dataList)
             {
-                if(predicate(item.Value))
+                if (predicate(item.Value))
                     return item.Value;
             }
 
@@ -296,9 +342,9 @@ namespace Delight
 
         public T FirstOrDefault(Func<T, bool> predicate)
         {
-            foreach(var item in _dataList)
+            foreach (var item in _dataList)
             {
-                if(predicate(item.Value))
+                if (predicate(item.Value))
                     return item.Value;
             }
             return null;
@@ -312,6 +358,14 @@ namespace Delight
                     return true;
             }
             return false;
+        }
+
+        /// <summary>
+        /// Gets list from bindable collection.
+        /// </summary>
+        public List<T> ToList()
+        {
+            return new List<T>(this);
         }
 
         public new virtual IEnumerator<T> GetEnumerator()

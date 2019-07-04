@@ -8,7 +8,8 @@
             EndEdit="t:Action"
             ValueChanged="t:Action"
             Width="120" Height="40"
-            TextMargin="t:ElementMargin = 9">
+            TextMargin="t:ElementMargin = 9"
+            defaultBinding.Text="TwoWay">
   <Region Id="InputFieldPlaceholder" IsContentContainer="True" />
   <RectMask2D Id="TextArea" Margin="{TextMargin}">
     <Label Id="InputText" Width="100%" Height="100%" TextAlignment="TopLeft" />

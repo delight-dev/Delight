@@ -172,7 +172,7 @@ namespace Delight
                 ToggleValueChanged();
             }
 
-            if (ImageComponent == null)
+            if (ImageComponent == null && BackgroundSpriteProperty.IsUndefined(this))
             {
                 // provide raycast target so transparent clicks are tracked
                 if (GameObject?.GetComponent<RaycastTargetGraphic>() == null)

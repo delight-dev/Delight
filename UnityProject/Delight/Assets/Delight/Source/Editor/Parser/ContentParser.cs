@@ -297,7 +297,7 @@ namespace Delight.Editor.Parser
             }
             finally
             {
-                ConsoleLogger.Log(String.Format("[Delight] Content processed. {0}", DateTime.Now));
+                ConsoleLogger.Log(String.Format("#Delight# Content processed. {0}", DateTime.Now));
             }
         }
 
@@ -309,7 +309,7 @@ namespace Delight.Editor.Parser
             //Debug.Log("Parsing " + xumlFile.Path);
             if (xumlFile.ContentType == XmlContentType.Unknown)
             {
-                ConsoleLogger.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ScenesFolder, StylesFolder));
+                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ScenesFolder, StylesFolder));
                 return;
             }
 
@@ -335,7 +335,8 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Error parsing XML file. Exception thrown: {2}", xumlFile.Path, line, e.Message));
+                ConsoleLogger.LogParseError(xumlFile.Path, line, 
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
 
@@ -354,7 +355,7 @@ namespace Delight.Editor.Parser
             }
             else
             {
-                ConsoleLogger.LogWarning(String.Format("[Delight] Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
+                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
             }
         }
 
@@ -410,7 +411,8 @@ namespace Delight.Editor.Parser
 
                 if (attributeName.IEquals("Id"))
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Id can't be specified on the root view element.", GetLineInfo(rootXmlElement)));
+                    ConsoleLogger.LogParseError(viewObject.FilePath, 1, 
+                        String.Format("#Delight# Id can't be specified on the root view element."));
                     continue;
                 }
 
@@ -458,7 +460,8 @@ namespace Delight.Editor.Parser
                     bool hasContentTemplates;
                     if (!bool.TryParse(attributeValue, out hasContentTemplates))
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid HasContentTemplates value \"{1}\". Should be either \"True\" or \"False\".", GetLineInfo(rootXmlElement), attributeValue));
+                        ConsoleLogger.LogParseError(viewObject.FilePath, 1, 
+                            String.Format("#Delight# Invalid HasContentTemplates value \"{0}\". Should be either \"True\" or \"False\".", attributeValue));
                         continue;
                     }
                     viewObject.HasContentTemplates = hasContentTemplates;
@@ -477,7 +480,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // parse property expression
-                var result = ParsePropertyExpression(rootXmlElement, attributeName, attributeValue);
+                var result = ParsePropertyExpression(viewObject.FilePath, rootXmlElement, attributeName, attributeValue);
                 propertyExpressions.AddRange(result);
             }
 
@@ -575,7 +578,7 @@ namespace Delight.Editor.Parser
                 if (attributeName.IEquals("xmlns") || attributeName.IEquals("schemaLocation") || attributeName.IEquals("xsi"))
                     continue;
 
-                ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid attribute <{1} {2}=\"{3}\">. Attributes can't be specified on style root element.", GetLineInfo(rootXmlElement), styleName, attributeName, attributeValue));
+                ConsoleLogger.LogParseError(styleObject.FilePath, 1, String.Format("#Delight# Invalid attribute <{0} {1}=\"{2}\">. Attributes can't be specified on style root element.", styleName, attributeName, attributeValue));
             }
 
             // parse style declarations
@@ -616,20 +619,20 @@ namespace Delight.Editor.Parser
                     }
 
                     // parse property expressions
-                    var propertyExpressions = ParsePropertyExpression(styleElement, attributeName, attributeValue);
+                    var propertyExpressions = ParsePropertyExpression(path, styleElement, attributeName, attributeValue);
                     foreach (var propertyExpression in propertyExpressions)
                     {
                         var propertyDeclaration = propertyExpression as PropertyDeclaration;
                         if (propertyDeclaration != null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Property declarations can't be specified in the style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                            ConsoleLogger.LogParseError(path, styleDeclaration.LineNumber, String.Format("#Delight# Invalid style <{0} {1}=\"{2}\">. Property declarations can't be specified in the style.", styleDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
                         var mappedViewDeclaration = propertyExpression as PropertyMapping;
                         if (mappedViewDeclaration != null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style <{1} {2}=\"{3}\">. Property mappings can't be specified in the style.", GetLineInfo(styleElement), styleDeclaration.ViewName, attributeName, attributeValue));
+                            ConsoleLogger.LogParseError(path, styleDeclaration.LineNumber, String.Format("#Delight# Invalid style <{0} {1}=\"{2}\">. Property mappings can't be specified in the style.", styleDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
@@ -721,14 +724,14 @@ namespace Delight.Editor.Parser
                         if (!provider.IsValidIdentifier(attributeValue))
                         {
                             // ignore invalid identifiers
-                            //ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifier must start with an letter or underscore, followed by letters, numbers or underscores.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            //ConsoleLogger.LogParseError(String.Format("#Delight# {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifier must start with an letter or underscore, followed by letters, numbers or underscores.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
                         if (viewIdCount.ContainsKey(attributeValue))
                         {
                             // ignore invalid identifiers
-                            //ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifiers in the file must be unique to avoid name conflicts, there is already a view with the same Id \"{3}\".", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            //ConsoleLogger.LogParseError(String.Format("#Delight# {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifiers in the file must be unique to avoid name conflicts, there is already a view with the same Id \"{3}\".", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
@@ -750,20 +753,21 @@ namespace Delight.Editor.Parser
                     }
 
                     // parse property expression
-                    var propertyExpressions = ParsePropertyExpression(viewElement, attributeName, attributeValue);
+                    var propertyExpressions = ParsePropertyExpression(path, viewElement, attributeName, attributeValue);
                     foreach (var propertyExpression in propertyExpressions)
                     {
                         var propertyDeclaration = propertyExpression as PropertyDeclaration;
                         if (propertyDeclaration != null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property declaration <{1} {2}=\"{3}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            ConsoleLogger.LogParseError(path, viewDeclaration.LineNumber, String.Format("#Delight# Invalid property declaration <{0} {1}=\"{2}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.", 
+                                viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
                         var mappedViewDeclaration = propertyExpression as PropertyMapping;
                         if (mappedViewDeclaration != null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid mapped view declaration <{1} {2}=\"{3}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
+                            ConsoleLogger.LogParseError(path, viewDeclaration.LineNumber, String.Format("#Delight# Invalid mapped view declaration <{0} {1}=\"{2}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.", viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
 
@@ -810,7 +814,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses property expression.
         /// </summary>
-        private static List<PropertyExpression> ParsePropertyExpression(XElement element, string attributeName, string attributeValue)
+        private static List<PropertyExpression> ParsePropertyExpression(string path, XElement element, string attributeName, string attributeValue)
         {
             var propertyExpressions = new List<PropertyExpression>();
             int dotCount = attributeName.Count(x => x == '.');
@@ -824,7 +828,7 @@ namespace Delight.Editor.Parser
                 var names = attributeName.Split('-');
                 if (names.Length != 2)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property expression {1}=\"{2}\". Only a single dash \"-\" may be used to denote state property assignment.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property expression {0}=\"{1}\". Only a single dash \"-\" may be used to denote state property assignment.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -842,7 +846,7 @@ namespace Delight.Editor.Parser
                 // validate
                 if (dotCount > 0 || hasStateName)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property declaration {0}=\"{1}\". Make sure declaration contains a non-nested property name without state definition.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -865,7 +869,7 @@ namespace Delight.Editor.Parser
                 // validate
                 if (dotCount > 0 || hasStateName)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid attached property declaration {0}=\"{1}\". Make sure declaration contains a non-nested property name without state definition.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -874,7 +878,7 @@ namespace Delight.Editor.Parser
 
                 if (assignmentIndex > 0)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid attached property declaration {1}=\"{2}\". Assignment not allowed in declaration.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid attached property declaration {0}=\"{1}\". Assignment not allowed in declaration.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -901,7 +905,7 @@ namespace Delight.Editor.Parser
 
                 if (propertyType == null)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Property type not found {1}=\"{2}\".", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Property type not found {0}=\"{1}\".", attributeName, attributeValue));
                     return new List<PropertyExpression>();
                 }
 
@@ -919,7 +923,7 @@ namespace Delight.Editor.Parser
                 // validate
                 if (dotCount > 0 || hasStateName)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Make sure declaration contains a non-nested property name without state definition.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property declaration {0}=\"{1}\". Make sure declaration contains a non-nested property name without state definition.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
@@ -966,7 +970,7 @@ namespace Delight.Editor.Parser
                         var genericType = MasterConfig.GetType(genericParameterTypeName, genericParameterTypeNamespace);
                         if (genericType == null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Unable to find generic type parameter \"{3}\".", GetLineInfo(element), attributeName, attributeValue, genericParameterType));
+                            ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property declaration {0}=\"{1}\". Unable to find generic type parameter \"{2}\".", attributeName, attributeValue, genericParameterType));
                             return new List<PropertyExpression>();
                         }
 
@@ -979,7 +983,7 @@ namespace Delight.Editor.Parser
                     propertyType = MasterConfig.GetType(fullGenericTypeName, propertyNamespace);
                     if (propertyType == null)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property declaration {1}=\"{2}\". Unable to find generic type \"{3}\".", GetLineInfo(element), attributeName, attributeValue, genericTypeName));
+                        ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property declaration {0}=\"{1}\". Unable to find generic type \"{2}\".", attributeName, attributeValue, genericTypeName));
                         return new List<PropertyExpression>();
                     }
 
@@ -1007,7 +1011,8 @@ namespace Delight.Editor.Parser
 
                 if (propertyType == null)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Property type not found {1}=\"{2}\".", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), 
+                        String.Format("#Delight# Property type not found {0}=\"{1}\".", attributeName, attributeValue));
                     return new List<PropertyExpression>();
                 }
 
@@ -1092,12 +1097,13 @@ namespace Delight.Editor.Parser
                 // validate
                 if (hasStateName)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property binding {1}=\"{2}\". Binding to state properties are not allowed.", GetLineInfo(element), attributeName, attributeValue));
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(),
+                        String.Format("#Delight# Invalid property binding {0}=\"{1}\". Binding to state properties are not allowed.", attributeName, attributeValue));
                     return propertyExpressions;
                 }
 
                 // parse binding string
-                var propertyBinding = ParseBinding(element, attributeName, attributeValue);
+                var propertyBinding = ParseBinding(path, element, attributeName, attributeValue);
                 propertyBinding.AttachedNeedUpdate = attachedNeedUpdate;
                 propertyBinding.BindingNeedUpdate = true;
                 propertyExpressions.Add(propertyBinding);
@@ -1142,7 +1148,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses binding. 
         /// </summary>
-        private static PropertyBinding ParseBinding(XElement element, string propertyName, string propertyBindingString)
+        private static PropertyBinding ParseBinding(string path, XElement element, string propertyName, string propertyBindingString)
         {
             string trimmedBinding = propertyBindingString.Trim();
             var propertyBinding = new PropertyBinding();
@@ -1156,7 +1162,8 @@ namespace Delight.Editor.Parser
                 string[] bindings = trimmedBinding.Split(BindingDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
                 if (bindings.Length < 1)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Improperly formatted property binding {1}=\"{2}\".", GetLineInfo(element), propertyName, propertyBindingString));
+                    ConsoleLogger.LogParseError(path, propertyBinding.LineNumber,
+                        String.Format("#Delight# Improperly formatted property binding {0}=\"{1}\".", propertyName, propertyBindingString));
                     return null;
                 }
 
@@ -1183,7 +1190,8 @@ namespace Delight.Editor.Parser
             if (matches.Count <= 0)
             {
                 // no bindings found
-                ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Improperly formatted property binding {1}=\"{2}\". String contains no binding.", GetLineInfo(element), propertyName, propertyBindingString));
+                ConsoleLogger.LogParseError(path, propertyBinding.LineNumber, 
+                    String.Format("#Delight# Improperly formatted property binding {0}=\"{1}\". String contains no binding.", propertyName, propertyBindingString));
                 return null;
             }
 
@@ -1401,7 +1409,7 @@ namespace Delight.Editor.Parser
             var emptyList = new List<string>();
             ParseSchemaFiles(schemaFiles, emptyList, emptyList, emptyList);
 
-            ConsoleLogger.Log("[Delight] Schema rebuild completed.");
+            ConsoleLogger.Log("#Delight# Schema rebuild completed.");
         }
 
         /// <summary>
@@ -1468,7 +1476,8 @@ namespace Delight.Editor.Parser
                     var insertDecl = line.Substring(1).Split(new char[] { ' ', '(', ')', ',' }, StringSplitOptions.RemoveEmptyEntries);
                     if (insertDecl.Length < 1)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. No model object specified.\nError line:\n{2}", path, i + 1, line));
+                        ConsoleLogger.LogParseError(path, i+1, 
+                            String.Format("#Delight# Unable to parse data insert declaration. No model object specified.\nError line:\n{0}", line));
                         continue;
                     }
 
@@ -1476,7 +1485,8 @@ namespace Delight.Editor.Parser
                     insertModelObject = _contentObjectModel.LoadModelObject(insertModelName, false);
                     if (insertModelObject == null)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. Model object \"{2}\" not found. Make sure data inserts appears after model declaration.\nError line:\n{3}", path, i + 1, insertModelName, line));
+                        ConsoleLogger.LogParseError(path, i + 1, 
+                            String.Format("#Delight# Unable to parse data insert declaration. Model object \"{0}\" not found. Make sure data inserts appears after model declaration.\nError line:\n{1}", insertModelName, line));
                         continue;
                     }
 
@@ -1498,7 +1508,8 @@ namespace Delight.Editor.Parser
                         var property = insertModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
                         if (property == null)
                         {
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse data insert declaration. Property \"{2}\" not found.\nError line:\n{3}", path, i + 1, propertyName, line));
+                            ConsoleLogger.LogParseError(path, i + 1, 
+                                String.Format("#Delight# Unable to parse data insert declaration. Property \"{0}\" not found.\nError line:\n{1}", propertyName, line));
                             continue;
                         }
 
@@ -1515,7 +1526,7 @@ namespace Delight.Editor.Parser
                     string[] args = line.Split(null);
                     if (args.Length > 2)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.\nError line:\n{2}", path, i + 1, line));
+                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.\nError line:\n{0}", line));
                         continue;
                     }
 
@@ -1537,7 +1548,7 @@ namespace Delight.Editor.Parser
                     var matches = _dataInsertRegex.Matches(line).OfType<Match>().ToList();
                     if (matches.Count <= 0)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse data insert. Specify a comma separated list of values with an optional ID and build target specifier, example: \"dataId: value, \"value string\", value3 #dev\". \nError line:\n{2}", path, i + 1, line));
+                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse data insert. Specify a comma separated list of values with an optional ID and build target specifier, example: \"dataId: value, \"value string\", value3 #dev\". \nError line:\n{0}", line));
                         continue;
                     }
 
@@ -1564,7 +1575,7 @@ namespace Delight.Editor.Parser
                     // the rest are property values
                     if (matches.Count > insertProperties.Count)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse data insert. Number of values greater than properties specified in the data insert declaration. \nError line:\n{2}", path, i + 1, line));
+                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse data insert. Number of values greater than properties specified in the data insert declaration. \nError line:\n{0}", line));
                         continue;
                     }
 
@@ -1586,7 +1597,7 @@ namespace Delight.Editor.Parser
                 }
                 else
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse line. Line is not in a valid model or data insert declaration.\nError line:\n{2}", path, i + 1, line));
+                    ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse line. Line is not in a valid model or data insert declaration.\nError line:\n{0}", line));
                     continue;
                 }
             }
@@ -1768,7 +1779,7 @@ namespace Delight.Editor.Parser
             _contentObjectModel.AssetsNeedUpdate = false;
             _contentObjectModel.SaveObjectModel();
 
-            ConsoleLogger.Log("[Delight] Asset bundles rebuild completed.");
+            ConsoleLogger.Log("#Delight# Asset bundles rebuild completed.");
         }
 
         /// <summary>
@@ -1780,7 +1791,7 @@ namespace Delight.Editor.Parser
             var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(assetFile);
             if (unityAssetObject == null)
             {
-                ConsoleLogger.LogError(String.Format("[Delight] Unable to load asset at \"{0}\". Asset ignored.", assetFile));
+                ConsoleLogger.LogError(String.Format("#Delight# Unable to load asset at \"{0}\". Asset ignored.", assetFile));
                 return null;
             }
 
@@ -1831,7 +1842,7 @@ namespace Delight.Editor.Parser
                 if (bundle.IsResource)
                     continue;
 
-                //ConsoleLogger.Log(String.Format("[Delight] Building asset bundle \"{0}\".", bundle.Name));
+                //ConsoleLogger.Log(String.Format("#Delight# Building asset bundle \"{0}\".", bundle.Name));
 
                 var build = new AssetBundleBuild();
                 build.assetBundleName = bundle.Name.ToLower();
@@ -1963,7 +1974,7 @@ namespace Delight.Editor.Parser
             }
 
             ParseConfigFiles(configFiles);
-            ConsoleLogger.Log("[Delight] Config rebuild completed.");
+            ConsoleLogger.Log("#Delight# Config rebuild completed.");
 
             // compare old settings with new
             ConfigParseResult result = ConfigParseResult.RebuildNothing;
@@ -2035,7 +2046,7 @@ namespace Delight.Editor.Parser
                 var colonIndex = line.IndexOf(':');
                 if (colonIndex < 0)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{2}", path, i + 1, line));
+                    ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{0}", line));
                     continue;
                 }
 
@@ -2043,7 +2054,7 @@ namespace Delight.Editor.Parser
                 var configValue = line.Substring(colonIndex + 1).Trim();
                 if (String.IsNullOrWhiteSpace(configOption))
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{2}", path, i + 1, line));
+                    ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse config option. Make sure to specify config option name followed by a colon (Example syntax: \"ServerUri:\").\nError line:\n{0}", line));
                     continue;
                 }
 
@@ -2087,7 +2098,7 @@ namespace Delight.Editor.Parser
                             else if (value.IEquals("false"))
                                 config.UseSimulatedUriInEditor = false;
                             else
-                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option {2}. Value need to be either true or false.\nError line:\n{2}", path, i + 1, line, configOption));
+                                ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be either true or false.\nError line:\n{0}", line, configOption));
                         }
                         break;
 
@@ -2248,7 +2259,7 @@ namespace Delight.Editor.Parser
                             }
                             catch
                             {
-                                ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse value of config option {2}. Value need to be an integer.\nError line:\n{2}", path, i + 1, line, configOption));
+                                ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be an integer.\nError line:\n{0}", line, configOption));
                             }
                         }
                         break;
@@ -2272,7 +2283,7 @@ namespace Delight.Editor.Parser
 
 
                     default:
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to parse config option. Option \"{2}\" not recognized.\nError line:\n{3}", path, i + 1, configOption, line));
+                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse config option. Option \"{0}\" not recognized.\nError line:\n{1}", configOption, line));
                         continue;
                 }
             }

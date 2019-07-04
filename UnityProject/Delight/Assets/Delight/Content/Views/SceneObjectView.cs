@@ -24,7 +24,7 @@ namespace Delight
             {
                 if (_unityScriptRelay == null)
                 {
-                    Debug.LogError("[Delight] Unity Script Relay missing. Make sure EnableScriptEvents is set to true.");
+                    Debug.LogError("#Delight# Unity Script Relay missing. Make sure EnableScriptEvents is set to true.");
                     return null;
                 }
 

@@ -101,7 +101,7 @@ namespace Delight
                 var cellIndex = Cell.GetValue(child);
                 if (cellIndex == null)
                 {
-                    Debug.LogWarning(String.Format("[Delight] {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
+                    Debug.LogWarning(String.Format("#Delight# {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
                     continue;
                 }
 

@@ -20,9 +20,18 @@ namespace Delight
             if (ContentTemplates == null || ContentTemplates.Count <= 0)
                 return null;
 
-            // find activator that corresponds to the type specified                       
-            var activator = templateType == null ? ContentTemplates[0].Activator : 
-                ContentTemplates.FirstOrDefault(x => (x.TemplateType == templateType) && (templateId == null || templateId == x.Id))?.Activator;
+            // find activator that corresponds to the type specified           
+            var templates = ContentTemplates.ToList();
+            if (templateType != null)
+            {
+                templates = templates.Where(x => x.TemplateType == templateType).ToList();
+            }
+            if (templateId != null)
+            {
+                templates = templates.Where(x => x.Id == templateId).ToList();
+            }
+
+            var activator = templates.FirstOrDefault()?.Activator;
             if (activator == null)
                 return null;
 

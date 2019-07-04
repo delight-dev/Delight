@@ -76,7 +76,8 @@ namespace Delight.Editor.Parser
                 styleDeclaration.BasedOn = styleDeclarations.FirstOrDefault(x => x.ViewName.IEquals(styleDeclaration.ViewName) && x.StyleName.IEquals(styleDeclaration.BasedOnName));
                 if (styleDeclaration.BasedOn == null)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style <{1} BasedOn=\"{2}\">. Couldn't find the style \"{2}\" this style is based on.", GetLineInfo(styleDeclaration.StylePath, styleDeclaration), styleDeclaration.ViewName, styleDeclaration.BasedOnName));
+                    ConsoleLogger.LogParseError(styleDeclaration.StylePath, styleDeclaration.LineNumber, 
+                        String.Format("#Delight# Invalid style <{0} BasedOn=\"{1}\">. Couldn't find the style \"{1}\" this style is based on.", styleDeclaration.ViewName, styleDeclaration.BasedOnName));
                 }
             }
 
@@ -361,7 +362,7 @@ namespace Delight.Editor.Parser
         {
             var config = MasterConfig.GetInstance();
 
-            //ConsoleLogger.Log("[Delight] Generating asset activators.");
+            //ConsoleLogger.Log("#Delight# Generating asset activators.");
             var sb = new StringBuilder();
 
             // open the view class
@@ -632,8 +633,8 @@ namespace Delight.Editor.Parser
                 propertyAssignments.AddRange(viewDeclaration.GetPropertyAssignmentsWithStyle(out var styleMissing));
                 if (styleMissing)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid style declaration <{1} Style=\"{2}\">. The style \"{2}\" couldn't be found.",
-                        GetLineInfo(fileName, viewDeclaration), viewObject.Name, viewDeclaration.Style));
+                    ConsoleLogger.LogParseError(fileName, viewDeclaration.LineNumber,
+                        String.Format("#Delight# Invalid style declaration <{0} Style=\"{1}\">. The style \"{1}\" couldn't be found.", viewObject.Name, viewDeclaration.Style));
                 }
                 propertyBindings.AddRange(viewDeclaration.GetPropertyBindingsWithStyle(out var dummy).Where(x => !x.IsAttached));
             }
@@ -711,7 +712,26 @@ namespace Delight.Editor.Parser
                 // is this a property binding?
                 if (!isAssignment)
                 {
-                    // yes. set boolean indicating that property has binding
+                    // yes. set boolean indicating that property has binding after validating declaration exist
+                    var bindingPropertyDecl = propertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName == propertyName);
+                    if (bindingPropertyDecl == null)
+                    {
+                        // no declaration found for property assignment                    
+                        var initializerProperty = initializerProperties.FirstOrDefault(x => x.PropertyName == propertyBinding.PropertyName);
+
+                        // check if assignment is to an initializer property
+                        if (initializerProperty == null)
+                        {
+                            // no. which means this is an invalid binding
+                            // binding is set for a property that isn't declared, 
+                            var path = propertyBinding.StyleDeclaration == null ? fileName : propertyBinding.StyleDeclaration.StylePath; // if binding comes from style filepath is different
+                            ConsoleLogger.LogParseError(path, propertyBinding.LineNumber,
+                                String.Format("#Delight# Invalid property binding <{0} {1}=\"{2}\">. The property \"{1}\" does not exist in this view.",
+                                    viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                            continue;
+                        }
+                    }
+
                     sb.AppendLine("                    {0}.{1}Property.SetHasBinding({2});", fullViewTypeName, propertyName, localId);
                     continue;
                 }
@@ -730,9 +750,9 @@ namespace Delight.Editor.Parser
                         // no. which means this is an invalid assignment
                         // value is set for a property that isn't declared, 
                         var path = propertyAssignment.StyleDeclaration == null ? fileName : propertyAssignment.StyleDeclaration.StylePath; // if assignment comes from style filepath is different
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property assignment <{1} {2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
-                            GetLineInfo(path, propertyAssignment),
-                            viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
+                        ConsoleLogger.LogParseError(path, propertyAssignment.LineNumber, 
+                            String.Format("#Delight# Invalid property assignment <{0} {1}=\"{2}\">. The property \"{1}\" does not exist in this view.",
+                                viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
                         continue;
                     }
 
@@ -805,8 +825,8 @@ namespace Delight.Editor.Parser
                             catch (Exception e)
                             {
                                 // invalid enum value
-                                ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign enum value to property <{1} {2}=\"{3}\">. Invalid enum value of type \"{4}\".",
-                                    GetLineInfo(fileName, propertyAssignment),
+                                ConsoleLogger.LogParseError(fileName, propertyAssignment.LineNumber, 
+                                    String.Format("#Delight# Unable to assign enum value to property <{0} {1}=\"{2}\">. Invalid enum value of type \"{3}\".",
                                     viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                                 continue;
                             }
@@ -814,8 +834,8 @@ namespace Delight.Editor.Parser
                         else
                         {
                             // no initializer found for the type being assigned to
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign value to property <{1} {2}=\"{3}\">. Unable to convert value to property of type \"{4}\".",
-                                GetLineInfo(fileName, propertyAssignment),
+                            ConsoleLogger.LogParseError(fileName, propertyAssignment.LineNumber,
+                                String.Format("#Delight# Unable to assign value to property <{0} {1}=\"{2}\">. Unable to convert value to property of type \"{3}\".",
                                 viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                             continue;
                         }
@@ -1016,8 +1036,8 @@ namespace Delight.Editor.Parser
                     var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeFullName, attachedProperty.PropertyValue);
                     if (String.IsNullOrEmpty(typeValueInitializer))
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to assign value to attached property <{1} {5}.{2}=\"{3}\">. Unable to convert value to property of type \"{4}\". Makes sure to include the namespace in the attached property declaration.",
-                            GetLineInfo(fileName, attachedProperty),
+                        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber, 
+                            String.Format("#Delight# Unable to assign value to attached property <{0} {4}.{1}=\"{2}\">. Unable to convert value to property of type \"{3}\". Makes sure to include the namespace in the attached property declaration.",
                             viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
                         continue;
                     }
@@ -1193,8 +1213,8 @@ namespace Delight.Editor.Parser
                             default:
                                 if (convertedSourceProperties.Count <= 0)
                                 {
-                                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Something wrong with binding <{1} {2}=\"{3}\">.",
-                                        GetLineInfo(fileName, propertyBinding),
+                                    ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber, 
+                                        String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
                                         viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
                                     continue;
                                 }
@@ -1279,12 +1299,12 @@ namespace Delight.Editor.Parser
 
                     foreach (var templateChild in childViewDeclaration.ChildDeclarations)
                     {
-                        var templateChildId = templateChild.Id.ToLocalVariableName();                        
+                        var templateChildId = templateChild.Id.ToLocalVariableName();
 
                         sb.AppendLine();
                         sb.AppendLine(indent, "{0}.ContentTemplates.Add(new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
                         sb.AppendLine(indent, "{{");
-                       
+
                         // print child view declaration
                         GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId);
 
@@ -1344,8 +1364,8 @@ namespace Delight.Editor.Parser
                 var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
                 if (memberInfo == null)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Unable to infer item type in binding <{1} {2}=\"{3}\">. Member \"{4}\" not found in type \"{5}\".",
-                        GetLineInfo(fileName, itemIdDeclaration),
+                    ConsoleLogger.LogParseError(fileName, itemIdDeclaration.LineNumber, 
+                        String.Format("#Delight# Unable to infer item type in binding <{0} {1}=\"{2}\">. Member \"{3}\" not found in type \"{4}\".",
                         viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
                         sourcePath[i], sourceType.Name));
                     return null;
@@ -1469,8 +1489,9 @@ namespace Delight.Editor.Parser
                 var propertyDeclaration = propertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName.IEquals(propertyMapping.TargetObjectName));
                 if (propertyDeclaration == null)
                 {
-                    ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The property \"{2}\" does not exist in this view.",
-                        GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
+                    ConsoleLogger.LogParseError(viewObject.FilePath, propertyMapping.LineNumber,
+                        String.Format("#Delight# Invalid property mapping <{0} m.{1}=\"{2}\">. The property \"{1}\" does not exist in this view.",
+                        viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern));
                     continue;
                 }
 
@@ -1511,7 +1532,9 @@ namespace Delight.Editor.Parser
                     var targetObjectType = Type.GetType(propertyDeclaration.Declaration.AssemblyQualifiedType);
                     if (targetObjectType == null)
                     {
-                        ConsoleLogger.LogParseError(String.Format("[Delight] {0}: Invalid property mapping <{1} m.{2}=\"{3}\">. The mapped target object of type \"{4}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", GetLineInfo(viewObject.FilePath, propertyMapping), viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
+                        ConsoleLogger.LogParseError(viewObject.FilePath, propertyMapping.LineNumber,
+                            String.Format("#Delight# Invalid property mapping <{0} m.{1}=\"{2}\">. The mapped target object of type \"{3}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", 
+                            viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
                         continue;
                     }
 
@@ -1762,7 +1785,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateAssetCode()
         {
-            //ConsoleLogger.Log("[Delight] Generating asset code.");
+            //ConsoleLogger.Log("#Delight# Generating asset code.");
             var sb = new StringBuilder();
 
             // open the view class
@@ -2102,8 +2125,9 @@ namespace Delight.Editor.Parser
                         if (typeInitializer == null)
                         {
                             // no initializer found for the type being assigned to
-                            ConsoleLogger.LogParseError(String.Format("[Delight] {0} ({1}): Unable to insert data for property \"{2}\". No value initializer found for property type \"{3}\".",
-                                modelObject.SchemaFilePath, propertyData.Line, propertyData.Property.Name, propertyData.Property.TypeName));
+                            ConsoleLogger.LogParseError(modelObject.SchemaFilePath, propertyData.Line, 
+                                String.Format("#Delight# Unable to insert data for property \"{0}\". No value initializer found for property type \"{1}\".",
+                                 propertyData.Property.Name, propertyData.Property.TypeName));
                             continue;
                         }
 
@@ -2449,7 +2473,7 @@ namespace Delight.Editor.Parser
             }
 
             // print result
-            Debug.Log("[Delight] XSD schema generated.");
+            Debug.Log("#Delight# XSD schema generated.");
             //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
         }
 
@@ -2500,7 +2524,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static void GenerateConfigCode()
         {
-            //ConsoleLogger.Log("[Delight] Generating config code.");
+            //ConsoleLogger.Log("#Delight# Generating config code.");
 
             var sb = new StringBuilder();
             var config = MasterConfig.GetInstance();

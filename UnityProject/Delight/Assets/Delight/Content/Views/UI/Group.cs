@@ -78,7 +78,7 @@ namespace Delight
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
                         continue;
                     }
                     else
@@ -91,7 +91,7 @@ namespace Delight
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
                         continue;
                     }
                     else

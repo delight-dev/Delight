@@ -84,7 +84,7 @@ namespace Delight
         /// </summary>
         private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
-            if( !IsLoaded )
+            if (!IsLoaded)
                 return;
 
             // Debug.Log("Collection changed");
@@ -136,6 +136,23 @@ namespace Delight
                     updateLayout = true;
                     break;
 
+                case CollectionChangeAction.Select:
+                    var selectArgs = e as CollectionSelectionEventArgs;
+                    if (selectArgs.ScrollTo)
+                    {
+                        SelectAndScrollToItem(e.Item, selectArgs.Alignment, selectArgs.Offset);
+                    }
+                    else
+                    {
+                        SelectItem(e.Item);
+                    }
+                    break;
+
+                case CollectionChangeAction.ScrollTo:
+                    var scrollArgs = e as CollectionSelectionEventArgs;
+                    ScrollTo(e.Item, scrollArgs.Alignment, scrollArgs.Offset);
+                    break;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -144,10 +161,7 @@ namespace Delight
 
             // TODO implement collection change actions
             //// update list of items
-            //else if (e.ListChangeAction == ListChangeAction.ScrollTo)
-            //{
-            //    ScrollTo(e.StartIndex, e.Alignment);
-            //}
+
             //else if (e.ListChangeAction == ListChangeAction.Modify)
             //{
             //    ItemsModified(e.StartIndex, e.EndIndex, e.FieldPath);
@@ -161,6 +175,101 @@ namespace Delight
             //{
             //    ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex, FieldPath = e.FieldPath });
             //}
+        }
+
+        public void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            var item = Items.Get(index);
+            ScrollTo(item, alignment, offset);
+        }
+
+        public void ScrollTo(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            if (IsVirtualized)
+            {
+                // TODO implement
+                return;
+            }
+
+            if (!IsScrollable || item == null)
+                return;
+
+            if (!_presentedItems.TryGetValue(item, out var listItem))
+                return;
+
+            if (offset == null)
+            {
+                offset = new ElementMargin();
+            }
+
+            if (ScrollsHorizontally)
+            {
+                // set horizontal scroll distance
+                float viewportWidth = ScrollableRegion.ViewportWidth;
+                float scrollRegionWidth = ScrollableRegion.ContentWidth;
+                float scrollWidth = scrollRegionWidth - viewportWidth;
+                if (scrollWidth <= 0)
+                {
+                    return;
+                }
+
+                // calculate the scroll position based on alignment and offset
+                float itemPosition = listItem.OffsetFromParent.Left.Pixels;
+                float itemWidth = listItem.Width.Pixels;
+
+                if (alignment == null || alignment.Value.HasFlag(ElementAlignment.Right))
+                {
+                    // scroll so item is the right side of viewport
+                    float scrollOffset = itemPosition - (viewportWidth - itemWidth) + offset.Left.Pixels + offset.Right.Pixels;
+                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                }
+                else if (alignment.Value.HasFlag(ElementAlignment.Top) || alignment.Value.HasFlag(ElementAlignment.Bottom) ||
+                    alignment.Value == ElementAlignment.Center)
+                {
+                    // scroll so item is at center of viewport
+                    float scrollOffset = itemPosition - viewportWidth / 2 + itemWidth / 2 + offset.Left.Pixels + offset.Right.Pixels;
+                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                }
+                else
+                {
+                    // scroll so item is at left side of viewport
+                    float scrollOffset = itemPosition + offset.Left.Pixels + offset.Right.Pixels;
+                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                }
+            }
+            else
+            {
+                // set vertical scroll distance
+                float viewportHeight = ScrollableRegion.ViewportHeight;
+
+                // calculate the scroll position based on alignment and offset
+                float itemPosition = listItem.OffsetFromParent.Top.Pixels;
+                float itemHeight = listItem.Height.Pixels;
+                float scrollOffset = 0;
+
+                if (alignment == null || alignment.Value.HasFlag(ElementAlignment.Bottom))
+                {
+                    // scroll so item is at bottom of viewport
+                    scrollOffset = itemPosition + itemHeight + offset.Top.Pixels + offset.Bottom.Pixels - viewportHeight;
+
+                }
+                else if (alignment.Value.HasFlag(ElementAlignment.Left) || alignment.Value.HasFlag(ElementAlignment.Right) ||
+                    alignment.Value == ElementAlignment.Center)
+                {
+                    // scroll so item is at center of viewport
+                    scrollOffset = itemPosition + itemHeight / 2 + offset.Top.Pixels + offset.Bottom.Pixels
+                        - viewportHeight / 2;
+                }
+                else
+                {
+                    // scroll so item is at top of viewport
+                    scrollOffset = itemPosition + offset.Top.Pixels + offset.Bottom.Pixels;
+                }
+
+                Debug.Log("Scrolling to position: " + scrollOffset);
+
+                ScrollableRegion.SetAbsoluteScrollPosition(0, scrollOffset);
+            }
         }
 
         /// <summary>
@@ -335,7 +444,7 @@ namespace Delight
                 // TODO implement
             }
 
-            var listItem = base.CreateItem(item, templateType) as ListItem;
+            var listItem = base.CreateItem(item, templateType, templateId) as ListItem;
             listItem.Load();
 
             if (IsScrollable && listItem != null)
@@ -415,7 +524,7 @@ namespace Delight
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
                         continue;
                     }
                     else
@@ -428,7 +537,7 @@ namespace Delight
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
                         continue;
                     }
                     else
@@ -496,7 +605,7 @@ namespace Delight
 
             // .. add margins
             if (!percentageWidth)
-            {                
+            {
                 totalWidth += isHorizontal ? totalSpacing : 0f;
                 totalWidth += margin.Left.Pixels + margin.Right.Pixels + padding.Left.Pixels + padding.Right.Pixels;
                 maxWidth += margin.Left.Pixels + margin.Right.Pixels + padding.Left.Pixels + padding.Right.Pixels;
@@ -606,13 +715,13 @@ namespace Delight
 
                 if (childWidth.Unit == ElementSizeUnit.Percents && isHorizontal)
                 {
-                    Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                    Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
                     continue;
                 }
 
                 if (childHeight.Unit == ElementSizeUnit.Percents && !isHorizontal)
                 {
-                    Debug.LogWarning(String.Format("[Delight] Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                    Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
                     continue;
                 }
 
@@ -784,11 +893,26 @@ namespace Delight
         }
 
         /// <summary>
+        /// Selects item and scrolls to it.
+        /// </summary>
+        public void SelectAndScrollToItem(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            SelectItem(item);
+            ScrollTo(item, alignment, offset);
+        }
+
+        /// <summary>
         /// Selects item in the list.
         /// </summary>
         public void SelectItem(BindableObject item, bool triggeredByClick = false)
         {
-            if(_presentedItems.TryGetValue(item, out var listItem))
+            if (item == null)
+            {
+                DeselectAll();
+                return;
+            }
+
+            if (_presentedItems.TryGetValue(item, out var listItem))
             {
                 SelectItem(listItem);
             }
@@ -842,6 +966,19 @@ namespace Delight
                     // yes.
                     SetSelected(listItem, false);
                 }
+            }
+        }
+
+        public void DeselectAll()
+        {
+            if (IsVirtualized)
+            {
+                // TODO implement
+            }
+
+            foreach (var listItem in _presentedItems.Values)
+            {
+                SetSelected(listItem, false);
             }
         }
 

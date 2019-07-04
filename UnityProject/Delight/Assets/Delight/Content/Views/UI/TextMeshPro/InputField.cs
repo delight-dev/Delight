@@ -1,4 +1,5 @@
-﻿#if DELIGHT_MODULE_TEXTMESHPRO
+﻿// add module "TextMeshPro" to Config.txt to enable TextMeshPro integration
+#if DELIGHT_MODULE_TEXTMESHPRO
 
 #region Using Statements
 using System;
@@ -17,7 +18,7 @@ namespace Delight
     /// </summary>
     public partial class InputField
     {
-        #region Methods
+#region Methods
 
         /// <summary>
         /// Called when a property has been changed. 
@@ -111,6 +112,9 @@ namespace Delight
             if (SetValueOnEndEdit)
             {
                 TextChanged();
+
+                // notify text property has been changed
+                OnPropertyChanged("Text");  
             }
 
             TMProUpdatePlaceholder();
@@ -125,6 +129,9 @@ namespace Delight
             if (!SetValueOnEndEdit)
             {
                 TextChanged();
+
+                // notify text property has been changed
+                OnPropertyChanged("Text");  
             }
 
             TMProUpdatePlaceholder();
@@ -146,7 +153,7 @@ namespace Delight
             }
         }
 
-        #endregion
+#endregion
     }
 }
 

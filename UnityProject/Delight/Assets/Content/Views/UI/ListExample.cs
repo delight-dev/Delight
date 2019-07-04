@@ -17,21 +17,27 @@ namespace Delight
             System.Random random = new System.Random();
 
             var playerList = new BindableCollection<Player>();
-            for (int i = 1; i <= 50; ++i)
+            for (int i = 0; i < 50; ++i)
             {
                 playerList.Add(new Player { Name = "Item " + i, Color = new Color(random.Next(0, 255) / 255f, random.Next(0, 255) / 255f, random.Next(0, 255) / 255f) });
             }
             Players = playerList;
         }
 
-        public void Add()
+        public void SelectItem()
         {
-
+            int.TryParse(ItemIndex, out var index);
+            Debug.Log("Scrolling to: " + index);
+            Players.SelectAndScrollTo(index, ElementAlignment.Center);
+            //PlayerList.ScrollTo(index, ElementAlignment.Center);
         }
 
-        public void Remove()
+        public void ScrollTo()
         {
-
+            int.TryParse(ItemIndex, out var index);
+            Debug.Log("Scrolling to: " + index);
+            Players.ScrollTo(index, ElementAlignment.Center);
+            //PlayerList.ScrollTo(index, ElementAlignment.Bottom);
         }
     }
 }

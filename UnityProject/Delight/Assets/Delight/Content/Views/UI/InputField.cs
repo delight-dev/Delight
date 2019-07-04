@@ -84,7 +84,7 @@ namespace Delight
             if (OnlyTriggerValueChangedFromUI)
             {
                 InputFieldComponent.onValueChanged.RemoveAllListeners();
-            }           
+            }
 
             if (OnlyTriggerValueChangedFromUI)
             {
@@ -101,6 +101,9 @@ namespace Delight
             if (SetValueOnEndEdit)
             {
                 TextChanged();
+
+                // notify text property has been changed
+                OnPropertyChanged("Text");
             }
 
             UpdatePlaceholder();
@@ -115,6 +118,9 @@ namespace Delight
             if (!SetValueOnEndEdit)
             {
                 TextChanged();
+
+                // notify text property has been changed
+                OnPropertyChanged("Text");                
             }
 
             UpdatePlaceholder();

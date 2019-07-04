@@ -388,7 +388,7 @@ namespace Delight
             // check if from the same type
             if (variable.GetType() != value.GetType())
             {
-                Debug.Log("[Delight] The checked flag is not from the same type as the checked variable.");
+                Debug.Log("#Delight# The checked flag is not from the same type as the checked variable.");
                 return false;
             }
 

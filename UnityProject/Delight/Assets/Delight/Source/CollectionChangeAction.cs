@@ -36,8 +36,18 @@
         Clear = 5,
 
         /// <summary>
+        /// Scroll to specified item.
+        /// </summary>
+        ScrollTo = 6,
+
+        /// <summary>
+        /// Selects the specified item.
+        /// </summary>
+        Select = 7,
+
+        /// <summary>
         /// Batch of actions performed.
         /// </summary>
-        Batch = 6
+        Batch = 8
     }
 }
