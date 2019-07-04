@@ -303,7 +303,7 @@ You can inspect your view in the hierarchy (note that the game object will be cr
           }
   ```
 
-  
+- Partial views should have `BasedOn="RivalityPartialView"` set in their XML, this is so the flipping logic works as it should - as partial views shouldn't be flipped if they reside in a flipped main view. If you don't do this the view might get mirrored incorrectly. 
 
 
 

@@ -110,7 +110,7 @@ namespace Delight
         {
             if (ImageComponent == null)
                 return;
-                        
+
             if (ColorProperty.IsUndefined(this))
             {
                 if (ImageComponent.sprite != null || ImageComponent.overrideSprite != null)
@@ -126,7 +126,7 @@ namespace Delight
             }
 
             var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
-            if (Width == null && Height == null)
+            if (WidthProperty.IsUndefined(this) && HeightProperty.IsUndefined(this))
             {
                 // if width and height is undefined, adjust size to native size of sprite                
                 if (sprite != null)
@@ -136,7 +136,7 @@ namespace Delight
                     OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
                 }
             }
-            
+
             bool isLoading = Sprite != null && !Sprite.IsLoaded;
             if (isLoading && sprite == null)
             {
