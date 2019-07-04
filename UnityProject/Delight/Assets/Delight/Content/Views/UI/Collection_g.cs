@@ -29,8 +29,6 @@ namespace Delight
             DependencyProperties.Add(CollectionTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(ItemsProperty);
-            dependencyProperties.Add(ContentTemplateProperty);
-            dependencyProperties.Add(ContentTemplatesProperty);
         }
 
         #endregion
@@ -42,20 +40,6 @@ namespace Delight
         {
             get { return ItemsProperty.GetValue(this); }
             set { ItemsProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Delight.ContentTemplate> ContentTemplateProperty = new DependencyProperty<Delight.ContentTemplate>("ContentTemplate");
-        public Delight.ContentTemplate ContentTemplate
-        {
-            get { return ContentTemplateProperty.GetValue(this); }
-            set { ContentTemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Delight.BindableCollection<Delight.ContentTemplate>> ContentTemplatesProperty = new DependencyProperty<Delight.BindableCollection<Delight.ContentTemplate>>("ContentTemplates");
-        public Delight.BindableCollection<Delight.ContentTemplate> ContentTemplates
-        {
-            get { return ContentTemplatesProperty.GetValue(this); }
-            set { ContentTemplatesProperty.SetValue(this, value); }
         }
 
         #endregion

@@ -34,7 +34,6 @@ namespace Delight.Editor
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
-            EditorApplication.update += OnUpdate;
         }
 
         private static void OnHierarchyChanged()
@@ -60,20 +59,6 @@ namespace Delight.Editor
                 return;
 
             // TODO perform live updates, etc. in edit mode
-        }
-
-        private static void OnUpdate()
-        {
-            if (Application.isPlaying)
-                return;
-
-            // update log entries every 50ms
-            _consoleUpdateTimer += Time.deltaTime;
-            if (_consoleUpdateTimer > 0.05)
-            {
-                ConsoleLogger.UpdateEntries();
-                _consoleUpdateTimer = 0;
-            }
         }
 
         private static void OnPlayModeStateChanged(PlayModeStateChange state)

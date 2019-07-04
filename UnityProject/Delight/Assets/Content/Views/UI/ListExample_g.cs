@@ -22,13 +22,7 @@ namespace Delight
             InputField1 = new InputField(this, Group2.Content, "InputField1", InputField1Template);
 
             // binding <InputField Text="{ItemIndex}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ItemIndex" }, 
-                new List<Func<BindableObject>> { () => this }) }, 
-                new BindingPath(new List<string> { "InputField1", "Text" }, 
-                new List<Func<BindableObject>> { () => this, () => InputField1 }), 
-                () => InputField1.Text = ItemIndex, 
-                () => ItemIndex = InputField1.Text, true));
-
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ItemIndex" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "InputField1", "Text" }, new List<Func<BindableObject>> { () => this, () => InputField1 }), () => InputField1.Text = ItemIndex, () => ItemIndex = InputField1.Text, true));
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
             if (Button1.Click == null) Button1.Click = new ViewAction();
             Button1.Click.RegisterHandler(ResolveActionHandler(this, "SelectItem"));

@@ -1,5 +1,5 @@
 <Collection xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-            BasedOn="UIImageView" Items="t:BindableCollection" ContentTemplate="t:ContentTemplate" ContentTemplates="t:BindableCollection[ContentTemplate]"
+            BasedOn="UIImageView" Items="t:BindableCollection"
             HasContentTemplates="True"
             HideInDesigner="True">
 </Collection>

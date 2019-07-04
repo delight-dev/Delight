@@ -10,6 +10,12 @@ namespace Delight
     /// </summary>
     public partial class Collection
     {
+        #region Fields
+
+        public BindableCollection<ContentTemplate> ContentTemplates = new BindableCollection<ContentTemplate>();
+
+        #endregion
+
         #region Methods
 
         /// <summary>

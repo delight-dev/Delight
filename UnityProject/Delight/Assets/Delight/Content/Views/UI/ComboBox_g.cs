@@ -690,20 +690,6 @@ namespace Delight
             set { ComboBoxList.Items = value; }
         }
 
-        public readonly static DependencyProperty ContentTemplateProperty = List.ContentTemplateProperty;
-        public Delight.ContentTemplate ContentTemplate
-        {
-            get { return ComboBoxList.ContentTemplate; }
-            set { ComboBoxList.ContentTemplate = value; }
-        }
-
-        public readonly static DependencyProperty ContentTemplatesProperty = List.ContentTemplatesProperty;
-        public Delight.BindableCollection<Delight.ContentTemplate> ContentTemplates
-        {
-            get { return ComboBoxList.ContentTemplates; }
-            set { ComboBoxList.ContentTemplates = value; }
-        }
-
         public readonly static DependencyProperty BackgroundSpriteProperty = List.BackgroundSpriteProperty;
         public SpriteAsset BackgroundSprite
         {
