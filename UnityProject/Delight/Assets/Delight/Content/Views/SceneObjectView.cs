@@ -85,23 +85,40 @@ namespace Delight
                 return;
 
             // add unity event system triggers
-            GameObject.AddEventTrigger(this, BeginDrag, EventTriggerType.BeginDrag);
-            GameObject.AddEventTrigger(this, Cancel, EventTriggerType.Cancel);
-            GameObject.AddEventTrigger(this, Deselect, EventTriggerType.Deselect);
-            GameObject.AddEventTrigger(this, Drag, EventTriggerType.Drag);
-            GameObject.AddEventTrigger(this, Drop, EventTriggerType.Drop);
-            GameObject.AddEventTrigger(this, EndDrag, EventTriggerType.EndDrag);
-            GameObject.AddEventTrigger(this, InitializePotentialDrag, EventTriggerType.InitializePotentialDrag);
-            GameObject.AddEventTrigger(this, Move, EventTriggerType.Move);
-            GameObject.AddEventTrigger(this, Click, EventTriggerType.PointerClick);
-            GameObject.AddEventTrigger(this, MouseDown, EventTriggerType.PointerDown);
-            GameObject.AddEventTrigger(this, MouseEnter, EventTriggerType.PointerEnter);
-            GameObject.AddEventTrigger(this, MouseExit, EventTriggerType.PointerExit);
-            GameObject.AddEventTrigger(this, MouseUp, EventTriggerType.PointerUp);
-            GameObject.AddEventTrigger(this, Scroll, EventTriggerType.Scroll);
-            GameObject.AddEventTrigger(this, Select, EventTriggerType.Select);
-            GameObject.AddEventTrigger(this, Submit, EventTriggerType.Submit);
-            GameObject.AddEventTrigger(this, UpdateSelected, EventTriggerType.UpdateSelected);
+            if (!BeginDragProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, BeginDrag, EventTriggerType.BeginDrag);
+            if (!CancelProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Cancel, EventTriggerType.Cancel);
+            if (!DeselectProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Deselect, EventTriggerType.Deselect);
+            if (!DragProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Drag, EventTriggerType.Drag);
+            if (!DropProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Drop, EventTriggerType.Drop);
+            if (!EndDragProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, EndDrag, EventTriggerType.EndDrag);
+            if (!InitializePotentialDragProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, InitializePotentialDrag, EventTriggerType.InitializePotentialDrag);
+            if (!MoveProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Move, EventTriggerType.Move);
+            if (!ClickProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Click, EventTriggerType.PointerClick);
+            if (!MouseDownProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, MouseDown, EventTriggerType.PointerDown);
+            if (!MouseEnterProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, MouseEnter, EventTriggerType.PointerEnter);
+            if (!MouseExitProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, MouseExit, EventTriggerType.PointerExit);
+            if (!MouseUpProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, MouseUp, EventTriggerType.PointerUp);
+            if (!ScrollProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Scroll, EventTriggerType.Scroll);
+            if (!SelectProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Select, EventTriggerType.Select);
+            if (!SubmitProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, Submit, EventTriggerType.Submit);
+            if (!UpdateSelectedProperty.IsUndefined(this))
+                GameObject.AddEventTrigger(this, UpdateSelected, EventTriggerType.UpdateSelected);
 
             IsActiveChanged();
         }

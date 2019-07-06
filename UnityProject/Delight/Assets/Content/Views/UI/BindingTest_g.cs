@@ -20,11 +20,9 @@ namespace Delight
             Region1 = new Region(this, this, "Region1", Region1Template);
             Group1 = new Group(this, Region1.Content, "Group1", Group1Template);
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
-            if (Button1.Click == null) Button1.Click = new ViewAction();
-            Button1.Click.RegisterHandler(ResolveActionHandler(this, "Test1"));
+            Button1.Click.RegisterHandler(this, "Test1");
             Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
-            if (Button2.Click == null) Button2.Click = new ViewAction();
-            Button2.Click.RegisterHandler(ResolveActionHandler(this, "Test2"));
+            Button2.Click.RegisterHandler(this, "Test2");
             Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
 
             // binding <Button BackgroundColor="{TestBinding2}">

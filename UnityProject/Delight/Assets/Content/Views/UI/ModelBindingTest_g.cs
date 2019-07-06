@@ -20,14 +20,11 @@ namespace Delight
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1.Content, "Group2", Group2Template);
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
-            if (Button1.Click == null) Button1.Click = new ViewAction();
-            Button1.Click.RegisterHandler(ResolveActionHandler(this, "Test1"));
+            Button1.Click.RegisterHandler(this, "Test1");
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
-            if (Button2.Click == null) Button2.Click = new ViewAction();
-            Button2.Click.RegisterHandler(ResolveActionHandler(this, "Add"));
+            Button2.Click.RegisterHandler(this, "Add");
             Button3 = new Button(this, Group2.Content, "Button3", Button3Template);
-            if (Button3.Click == null) Button3.Click = new ViewAction();
-            Button3.Click.RegisterHandler(ResolveActionHandler(this, "Remove"));
+            Button3.Click.RegisterHandler(this, "Remove");
             Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
 
             // binding <Label Text="{@Loc.Greeting1}">
@@ -42,8 +39,6 @@ namespace Delight
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Models.Players, () => { }, false));
 
             // templates for PlayerList
-            if (PlayerList.ContentTemplates == null) PlayerList.ContentTemplates = new BindableCollection<ContentTemplate>();
-
             PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var playerListContent = new ListItem(this, PlayerList.Content, "PlayerListContent", PlayerListContentTemplate);
@@ -53,15 +48,12 @@ namespace Delight
                 // binding <Label Text="{player.Name}">
                 playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 var achievementsList = new List(this, group3.Content, "AchievementsList", AchievementsListTemplate);
-                if (achievementsList.ItemSelected == null) achievementsList.ItemSelected = new ViewAction();
-                achievementsList.ItemSelected.RegisterHandler(ResolveActionHandler(this, "AchievementSelectionChanged"));
+                achievementsList.ItemSelected.RegisterHandler(this, "AchievementSelectionChanged");
 
                 // binding <List Items="{achievement in player.Achievements}">
                 playerListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Achievements" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => achievementsList }), () => achievementsList.Items = (tiPlayer.Item as Delight.Player).Achievements, () => { }, false));
 
                 // templates for achievementsList
-                if (achievementsList.ContentTemplates == null) achievementsList.ContentTemplates = new BindableCollection<ContentTemplate>();
-
                 achievementsList.ContentTemplates.Add(new ContentTemplate(tiAchievement => 
                 {
                     var achievementsListContent = new ListItem(this, achievementsList.Content, "AchievementsListContent", AchievementsListContentTemplate);

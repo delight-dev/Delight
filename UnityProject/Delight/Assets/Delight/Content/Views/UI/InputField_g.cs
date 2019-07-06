@@ -110,14 +110,14 @@ namespace Delight
             set { OnlyTriggerValueChangedFromUIProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit");
+        public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit", () => new ViewAction());
         public ViewAction EndEdit
         {
             get { return EndEditProperty.GetValue(this); }
             set { EndEditProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged");
+        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }

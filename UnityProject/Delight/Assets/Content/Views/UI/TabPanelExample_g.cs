@@ -23,8 +23,6 @@ namespace Delight
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "TabPanel1", "Items" }, new List<Func<BindableObject>> { () => this, () => TabPanel1 }), () => TabPanel1.Items = Models.Players, () => { }, false));
 
             // templates for TabPanel1
-            if (TabPanel1.ContentTemplates == null) TabPanel1.ContentTemplates = new BindableCollection<ContentTemplate>();
-
             TabPanel1.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var tabHeader1 = new TabHeader(this, TabPanel1.Content, "TabHeader1", TabHeader1Template);
@@ -35,6 +33,7 @@ namespace Delight
                 return tabHeader1;
             }, typeof(TabHeader), "TabHeader1"));
 
+            // templates for TabPanel1
             TabPanel1.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var tab1 = new Tab(this, TabPanel1.Content, "Tab1", Tab1Template);

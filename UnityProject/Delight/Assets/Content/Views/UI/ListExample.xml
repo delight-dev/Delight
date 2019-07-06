@@ -5,14 +5,41 @@
       <InputField Text="{ItemIndex}" />
       <Button Text="Select" Click="SelectItem" />
       <Button Text="ScrollTo" Click="ScrollTo" />
+      <Button Text="ScrollToSelected" Click="ScrollToSelected" Margin="0,5,0,0" />
     </Group> 
 
     <List Id="PlayerList" Items="{player in Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" 
-          IsScrollable="True" Overflow="Wrap" Orientation="Horizontal" SelectedItem="{SelectedPlayer}">
-      <ListItem Width="100" Height="100"> 
+          IsScrollable="True" Overflow="Wrap" Orientation="Horizontal" SelectedItem="{SelectedPlayer}"
+          CanMultiSelect="True" TemplateSelector="MyTemplateSelector">  
+      <ListItem Id="TemplateA" Width="100" Height="100"> 
         <Image Color="{player.Color}" Margin="5" /> 
         <Label Text="{player.Name}" AutoSize="True" />
       </ListItem>
+
+      <ListItem Id="TemplateB" Width="200" Height="100">
+        <Image Color="{player.Color}" Margin="5" />
+        <Label Text="Supreme {player.Name}" AutoSize="True" />
+      </ListItem>
     </List>
+
+    <!--<List Id="StaticList" Width="500" Spacing="5">
+      <ListItem Width="100" Height="50">
+        <Image Color="Blue" Margin="5" />
+        <Label Text="Player 1" AutoSize="True" />        
+      </ListItem>
+      <ListItem Width="100" Height="50">
+        <Image Color="Blue" Margin="5" />
+        <Label Text="Player 2" AutoSize="True" />
+      </ListItem>
+      <ListItem Width="100" Height="50">
+        <Image Color="Blue" Margin="5" />
+        <Label Text="Player 3" AutoSize="True" />
+      </ListItem>
+      <ListItem Width="100" Height="50">
+        <Image Color="Blue" Margin="5" />
+        <Label Text="Player 4" AutoSize="True" />
+      </ListItem>
+    </List>-->
+    
   </Group> 
 </ListExample>

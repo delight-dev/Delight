@@ -228,8 +228,10 @@ namespace Delight
             }
             else
             {
+#pragma warning disable CS4014
                 // if asset is in bundle, load it asynchronously
                 LoadGenericAsync();
+#pragma warning restore CS4014
             }
         }
 

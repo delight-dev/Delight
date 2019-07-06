@@ -29,21 +29,16 @@ namespace Delight
             RadioButton3 = new RadioButton(this, Group4.Content, "RadioButton3", RadioButton3Template);
             Group5 = new Group(this, Group1.Content, "Group5", Group5Template);
             Button1 = new Button(this, Group5.Content, "Button1", Button1Template);
-            if (Button1.Click == null) Button1.Click = new ViewAction();
-            Button1.Click.RegisterHandler(ResolveActionHandler(this, "Add"));
+            Button1.Click.RegisterHandler(this, "Add");
             Button2 = new Button(this, Group5.Content, "Button2", Button2Template);
-            if (Button2.Click == null) Button2.Click = new ViewAction();
-            Button2.Click.RegisterHandler(ResolveActionHandler(this, "Remove"));
+            Button2.Click.RegisterHandler(this, "Remove");
             ComboBox = new ComboBox(this, Group1.Content, "ComboBox", ComboBoxTemplate);
-            if (ComboBox.ItemSelected == null) ComboBox.ItemSelected = new ViewAction();
-            ComboBox.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ItemSelected"));
+            ComboBox.ItemSelected.RegisterHandler(this, "ItemSelected");
 
             // binding <ComboBox Items="{player in @Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<BindableObject>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.Players, () => { }, false));
 
             // templates for ComboBox
-            if (ComboBox.ContentTemplates == null) ComboBox.ContentTemplates = new BindableCollection<ContentTemplate>();
-
             ComboBox.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var comboBoxContent = new ComboBoxListItem(this, ComboBox.Content, "ComboBoxContent", ComboBoxContentTemplate);

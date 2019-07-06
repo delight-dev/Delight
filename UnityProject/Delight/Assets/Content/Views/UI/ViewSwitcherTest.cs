@@ -15,29 +15,29 @@ namespace Delight
             //ViewSwitcher1.SwitchTo(ModelBindingTest);
         }
 
-        public void ShowScrollExample()
+        public async void ShowScrollExample()
         {
-            ViewSwitcher1.SwitchTo(ScrollExample);
+            await ViewSwitcher1.SwitchTo(ScrollExample);
         }
 
-        public void ShowAssetManagementTest()
+        public async void ShowAssetManagementTest()
         {
-            ViewSwitcher1.SwitchTo(AssetManagementTest);
+            await ViewSwitcher1.SwitchTo(AssetManagementTest);
         }
 
-        public void ShowInputFieldExample()
+        public async void ShowInputFieldExample()
         {
-            ViewSwitcher1.SwitchTo(InputFieldExample);
+            await ViewSwitcher1.SwitchTo(InputFieldExample);
         }
         
-        public void ShowSliderExample()
+        public async void ShowSliderExample()
         {
-            ViewSwitcher1.SwitchTo(SliderExample);
+            await ViewSwitcher1.SwitchTo(SliderExample);
         }
 
-        public void ShowBindingTest()
+        public async void ShowBindingTest()
         {
-            ViewSwitcher1.SwitchTo(BindingTest);
+            await ViewSwitcher1.SwitchTo(BindingTest);
         }
 
         public void ShowComboBoxExample()

@@ -290,7 +290,7 @@ namespace Delight
 
             foreach (var contentTemplate in ContentTemplates)
             {
-                if (contentTemplate.TemplateType != typeof(Tab))
+                if (!typeof(Tab).IsAssignableFrom(contentTemplate.TemplateType))
                     continue;
 
                 var templateData = new ContentTemplateData();

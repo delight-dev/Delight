@@ -91,7 +91,7 @@ namespace Delight
             //    BigSpriteImage.Offset = new ElementMargin();
             //BigSpriteImage.Offset.Left += 20;
 
-            //BigSpriteImage.Sprite = Assets.Sprites.Frame1;
+            BigSpriteImage.Sprite = Assets.Sprites.Frame1;
         }
 
         private float _timer1;

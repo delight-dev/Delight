@@ -863,6 +863,29 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
+            // function property declaration
+            if (attributeValue.IEquals("t:Method"))
+            {
+                // validate
+                if (dotCount > 0 || hasStateName)
+                {
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), String.Format("#Delight# Invalid property declaration {0}=\"{1}\". Make sure declaration contains a non-nested property name without state definition.", attributeName, attributeValue));
+                    return propertyExpressions;
+                }
+
+                // action property declaration
+                var propertyDeclaration = new PropertyDeclaration();
+                propertyExpressions.Add(propertyDeclaration);
+
+                propertyDeclaration.PropertyName = attributeName;
+                propertyDeclaration.PropertyTypeName = "ViewMethod";
+                propertyDeclaration.PropertyTypeFullName = "ViewMethod";
+                propertyDeclaration.DeclarationType = PropertyDeclarationType.Method;
+                propertyDeclaration.LineNumber = element.GetLineNumber();
+
+                return propertyExpressions;
+            }
+
             // attached property declaration
             if (attributeValue.IStartsWith("at:"))
             {

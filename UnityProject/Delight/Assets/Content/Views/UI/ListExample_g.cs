@@ -24,36 +24,51 @@ namespace Delight
             // binding <InputField Text="{ItemIndex}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ItemIndex" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "InputField1", "Text" }, new List<Func<BindableObject>> { () => this, () => InputField1 }), () => InputField1.Text = ItemIndex, () => ItemIndex = InputField1.Text, true));
             Button1 = new Button(this, Group2.Content, "Button1", Button1Template);
-            if (Button1.Click == null) Button1.Click = new ViewAction();
-            Button1.Click.RegisterHandler(ResolveActionHandler(this, "SelectItem"));
+            Button1.Click.RegisterHandler(this, "SelectItem");
             Button2 = new Button(this, Group2.Content, "Button2", Button2Template);
-            if (Button2.Click == null) Button2.Click = new ViewAction();
-            Button2.Click.RegisterHandler(ResolveActionHandler(this, "ScrollTo"));
+            Button2.Click.RegisterHandler(this, "ScrollTo");
+            Button3 = new Button(this, Group2.Content, "Button3", Button3Template);
+            Button3.Click.RegisterHandler(this, "ScrollToSelected");
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
+            PlayerList.TemplateSelector.RegisterMethod(this, "MyTemplateSelector");
 
             // binding <List Items="{player in Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Players" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Players, () => { }, false));
 
             // binding <List SelectedItem="{SelectedPlayer}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "SelectedPlayer" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "SelectedItem" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.SelectedItem = SelectedPlayer, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "SelectedPlayer" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "SelectedItem" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.SelectedItem = SelectedPlayer, () => SelectedPlayer = PlayerList.SelectedItem as Delight.Player, true));
 
             // templates for PlayerList
-            if (PlayerList.ContentTemplates == null) PlayerList.ContentTemplates = new BindableCollection<ContentTemplate>();
-
             PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
-                var listItem1 = new ListItem(this, PlayerList.Content, "ListItem1", ListItem1Template);
-                var image1 = new Image(this, listItem1.Content, "Image1", Image1Template);
+                var templateA = new ListItem(this, PlayerList.Content, "TemplateA", TemplateATemplate);
+                var image1 = new Image(this, templateA.Content, "Image1", Image1Template);
 
                 // binding <Image Color="{player.Color}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Color" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Color" }, new List<Func<BindableObject>> { () => image1 }), () => image1.Color = (tiPlayer.Item as Delight.Player).Color, () => { }, false));
-                var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
+                templateA.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Color" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Color" }, new List<Func<BindableObject>> { () => image1 }), () => image1.Color = (tiPlayer.Item as Delight.Player).Color, () => { }, false));
+                var label1 = new Label(this, templateA.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{player.Name}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
-                listItem1.ContentTemplateData = tiPlayer;
-                return listItem1;
-            }, typeof(ListItem), "ListItem1"));
+                templateA.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                templateA.ContentTemplateData = tiPlayer;
+                return templateA;
+            }, typeof(ListItem), "TemplateA"));
+
+            // templates for PlayerList
+            PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
+            {
+                var templateB = new ListItem(this, PlayerList.Content, "TemplateB", TemplateBTemplate);
+                var image2 = new Image(this, templateB.Content, "Image2", Image2Template);
+
+                // binding <Image Color="{player.Color}">
+                templateB.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Color" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Color" }, new List<Func<BindableObject>> { () => image2 }), () => image2.Color = (tiPlayer.Item as Delight.Player).Color, () => { }, false));
+                var label2 = new Label(this, templateB.Content, "Label2", Label2Template);
+
+                // binding <Label Text="Supreme {player.Name}">
+                templateB.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = String.Format("Supreme {0}", (tiPlayer.Item as Delight.Player).Name), () => { }, false));
+                templateB.ContentTemplateData = tiPlayer;
+                return templateB;
+            }, typeof(ListItem), "TemplateB"));
             this.AfterInitializeInternal();
         }
 
@@ -79,14 +94,22 @@ namespace Delight
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
+            dependencyProperties.Add(Button3Property);
+            dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(PlayerListProperty);
             dependencyProperties.Add(PlayerListTemplateProperty);
-            dependencyProperties.Add(ListItem1Property);
-            dependencyProperties.Add(ListItem1TemplateProperty);
+            dependencyProperties.Add(TemplateAProperty);
+            dependencyProperties.Add(TemplateATemplateProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(TemplateBProperty);
+            dependencyProperties.Add(TemplateBTemplateProperty);
+            dependencyProperties.Add(Image2Property);
+            dependencyProperties.Add(Image2TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
         }
 
         #endregion
@@ -184,6 +207,20 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button3Property = new DependencyProperty<Button>("Button3");
+        public Button Button3
+        {
+            get { return Button3Property.GetValue(this); }
+            set { Button3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button3TemplateProperty = new DependencyProperty<Template>("Button3Template");
+        public Template Button3Template
+        {
+            get { return Button3TemplateProperty.GetValue(this); }
+            set { Button3TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<List> PlayerListProperty = new DependencyProperty<List>("PlayerList");
         public List PlayerList
         {
@@ -198,18 +235,18 @@ namespace Delight
             set { PlayerListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ListItem> ListItem1Property = new DependencyProperty<ListItem>("ListItem1");
-        public ListItem ListItem1
+        public readonly static DependencyProperty<ListItem> TemplateAProperty = new DependencyProperty<ListItem>("TemplateA");
+        public ListItem TemplateA
         {
-            get { return ListItem1Property.GetValue(this); }
-            set { ListItem1Property.SetValue(this, value); }
+            get { return TemplateAProperty.GetValue(this); }
+            set { TemplateAProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> ListItem1TemplateProperty = new DependencyProperty<Template>("ListItem1Template");
-        public Template ListItem1Template
+        public readonly static DependencyProperty<Template> TemplateATemplateProperty = new DependencyProperty<Template>("TemplateATemplate");
+        public Template TemplateATemplate
         {
-            get { return ListItem1TemplateProperty.GetValue(this); }
-            set { ListItem1TemplateProperty.SetValue(this, value); }
+            get { return TemplateATemplateProperty.GetValue(this); }
+            set { TemplateATemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
@@ -238,6 +275,48 @@ namespace Delight
         {
             get { return Label1TemplateProperty.GetValue(this); }
             set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ListItem> TemplateBProperty = new DependencyProperty<ListItem>("TemplateB");
+        public ListItem TemplateB
+        {
+            get { return TemplateBProperty.GetValue(this); }
+            set { TemplateBProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> TemplateBTemplateProperty = new DependencyProperty<Template>("TemplateBTemplate");
+        public Template TemplateBTemplate
+        {
+            get { return TemplateBTemplateProperty.GetValue(this); }
+            set { TemplateBTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image2Property = new DependencyProperty<Image>("Image2");
+        public Image Image2
+        {
+            get { return Image2Property.GetValue(this); }
+            set { Image2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image2TemplateProperty = new DependencyProperty<Template>("Image2Template");
+        public Template Image2Template
+        {
+            get { return Image2TemplateProperty.GetValue(this); }
+            set { Image2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -277,10 +356,14 @@ namespace Delight
                     Delight.ListExample.InputField1TemplateProperty.SetDefault(_listExample, ListExampleInputField1);
                     Delight.ListExample.Button1TemplateProperty.SetDefault(_listExample, ListExampleButton1);
                     Delight.ListExample.Button2TemplateProperty.SetDefault(_listExample, ListExampleButton2);
+                    Delight.ListExample.Button3TemplateProperty.SetDefault(_listExample, ListExampleButton3);
                     Delight.ListExample.PlayerListTemplateProperty.SetDefault(_listExample, ListExamplePlayerList);
-                    Delight.ListExample.ListItem1TemplateProperty.SetDefault(_listExample, ListExampleListItem1);
+                    Delight.ListExample.TemplateATemplateProperty.SetDefault(_listExample, ListExampleTemplateA);
                     Delight.ListExample.Image1TemplateProperty.SetDefault(_listExample, ListExampleImage1);
                     Delight.ListExample.Label1TemplateProperty.SetDefault(_listExample, ListExampleLabel1);
+                    Delight.ListExample.TemplateBTemplateProperty.SetDefault(_listExample, ListExampleTemplateB);
+                    Delight.ListExample.Image2TemplateProperty.SetDefault(_listExample, ListExampleImage2);
+                    Delight.ListExample.Label2TemplateProperty.SetDefault(_listExample, ListExampleLabel2);
                 }
                 return _listExample;
             }
@@ -498,6 +581,49 @@ namespace Delight
             }
         }
 
+        private static Template _listExampleButton3;
+        public static Template ListExampleButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton3 == null || _listExampleButton3.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton3 == null)
+#endif
+                {
+                    _listExampleButton3 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _listExampleButton3.Name = "ListExampleButton3";
+#endif
+                    Delight.Button.MarginProperty.SetDefault(_listExampleButton3, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton3, ListExampleButton3Label);
+                }
+                return _listExampleButton3;
+            }
+        }
+
+        private static Template _listExampleButton3Label;
+        public static Template ListExampleButton3Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton3Label == null || _listExampleButton3Label.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton3Label == null)
+#endif
+                {
+                    _listExampleButton3Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _listExampleButton3Label.Name = "ListExampleButton3Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton3Label, "ScrollToSelected");
+                }
+                return _listExampleButton3Label;
+            }
+        }
+
         private static Template _listExamplePlayerList;
         public static Template ListExamplePlayerList
         {
@@ -520,7 +646,9 @@ namespace Delight
                     Delight.List.IsScrollableProperty.SetDefault(_listExamplePlayerList, true);
                     Delight.List.OverflowProperty.SetDefault(_listExamplePlayerList, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_listExamplePlayerList, Delight.ElementOrientation.Horizontal);
+                    Delight.List.CanMultiSelectProperty.SetDefault(_listExamplePlayerList, true);
                     Delight.List.ItemsProperty.SetHasBinding(_listExamplePlayerList);
+                    Delight.List.SelectedItemProperty.SetHasBinding(_listExamplePlayerList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_listExamplePlayerList, ListExamplePlayerListScrollableRegion);
                 }
                 return _listExamplePlayerList;
@@ -694,25 +822,25 @@ namespace Delight
             }
         }
 
-        private static Template _listExampleListItem1;
-        public static Template ListExampleListItem1
+        private static Template _listExampleTemplateA;
+        public static Template ListExampleTemplateA
         {
             get
             {
 #if UNITY_EDITOR
-                if (_listExampleListItem1 == null || _listExampleListItem1.CurrentVersion != Template.Version)
+                if (_listExampleTemplateA == null || _listExampleTemplateA.CurrentVersion != Template.Version)
 #else
-                if (_listExampleListItem1 == null)
+                if (_listExampleTemplateA == null)
 #endif
                 {
-                    _listExampleListItem1 = new Template(ListItemTemplates.ListItem);
+                    _listExampleTemplateA = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
-                    _listExampleListItem1.Name = "ListExampleListItem1";
+                    _listExampleTemplateA.Name = "ListExampleTemplateA";
 #endif
-                    Delight.ListItem.WidthProperty.SetDefault(_listExampleListItem1, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.ListItem.HeightProperty.SetDefault(_listExampleListItem1, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.WidthProperty.SetDefault(_listExampleTemplateA, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.HeightProperty.SetDefault(_listExampleTemplateA, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
-                return _listExampleListItem1;
+                return _listExampleTemplateA;
             }
         }
 
@@ -757,6 +885,72 @@ namespace Delight
                     Delight.Label.TextProperty.SetHasBinding(_listExampleLabel1);
                 }
                 return _listExampleLabel1;
+            }
+        }
+
+        private static Template _listExampleTemplateB;
+        public static Template ListExampleTemplateB
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleTemplateB == null || _listExampleTemplateB.CurrentVersion != Template.Version)
+#else
+                if (_listExampleTemplateB == null)
+#endif
+                {
+                    _listExampleTemplateB = new Template(ListItemTemplates.ListItem);
+#if UNITY_EDITOR
+                    _listExampleTemplateB.Name = "ListExampleTemplateB";
+#endif
+                    Delight.ListItem.WidthProperty.SetDefault(_listExampleTemplateB, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.HeightProperty.SetDefault(_listExampleTemplateB, new ElementSize(100f, ElementSizeUnit.Pixels));
+                }
+                return _listExampleTemplateB;
+            }
+        }
+
+        private static Template _listExampleImage2;
+        public static Template ListExampleImage2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleImage2 == null || _listExampleImage2.CurrentVersion != Template.Version)
+#else
+                if (_listExampleImage2 == null)
+#endif
+                {
+                    _listExampleImage2 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _listExampleImage2.Name = "ListExampleImage2";
+#endif
+                    Delight.Image.MarginProperty.SetDefault(_listExampleImage2, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels)));
+                    Delight.Image.ColorProperty.SetHasBinding(_listExampleImage2);
+                }
+                return _listExampleImage2;
+            }
+        }
+
+        private static Template _listExampleLabel2;
+        public static Template ListExampleLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleLabel2 == null || _listExampleLabel2.CurrentVersion != Template.Version)
+#else
+                if (_listExampleLabel2 == null)
+#endif
+                {
+                    _listExampleLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _listExampleLabel2.Name = "ListExampleLabel2";
+#endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_listExampleLabel2, Delight.AutoSize.Default);
+                    Delight.Label.TextProperty.SetHasBinding(_listExampleLabel2);
+                }
+                return _listExampleLabel2;
             }
         }
 

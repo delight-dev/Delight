@@ -50,6 +50,8 @@ namespace Delight
             dependencyProperties.Add(CanReselectProperty);
             dependencyProperties.Add(DeselectAfterSelectProperty);
             dependencyProperties.Add(SelectOnMouseUpProperty);
+            dependencyProperties.Add(SelectedItemProperty);
+            dependencyProperties.Add(IsStaticProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
@@ -135,14 +137,14 @@ namespace Delight
             set { SortDirectionProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected");
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
             set { ItemSelectedProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected");
+        public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected", () => new ViewAction());
         public ViewAction ItemDeselected
         {
             get { return ItemDeselectedProperty.GetValue(this); }
@@ -189,6 +191,20 @@ namespace Delight
         {
             get { return SelectOnMouseUpProperty.GetValue(this); }
             set { SelectOnMouseUpProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.BindableObject> SelectedItemProperty = new DependencyProperty<Delight.BindableObject>("SelectedItem");
+        public Delight.BindableObject SelectedItem
+        {
+            get { return SelectedItemProperty.GetValue(this); }
+            set { SelectedItemProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsStaticProperty = new DependencyProperty<System.Boolean>("IsStatic");
+        public System.Boolean IsStatic
+        {
+            get { return IsStaticProperty.GetValue(this); }
+            set { IsStaticProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");

@@ -76,7 +76,7 @@ namespace Delight.Editor.Parser
                 styleDeclaration.BasedOn = styleDeclarations.FirstOrDefault(x => x.ViewName.IEquals(styleDeclaration.ViewName) && x.StyleName.IEquals(styleDeclaration.BasedOnName));
                 if (styleDeclaration.BasedOn == null)
                 {
-                    ConsoleLogger.LogParseError(styleDeclaration.StylePath, styleDeclaration.LineNumber, 
+                    ConsoleLogger.LogParseError(styleDeclaration.StylePath, styleDeclaration.LineNumber,
                         String.Format("#Delight# Invalid style <{0} BasedOn=\"{1}\">. Couldn't find the style \"{1}\" this style is based on.", styleDeclaration.ViewName, styleDeclaration.BasedOnName));
                 }
             }
@@ -177,15 +177,24 @@ namespace Delight.Editor.Parser
                 GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
 
                 // do we have action handlers specified on the root element?
-                var actionAssignments = viewObject.GetPropertyAssignmentsWithStyle()
-                    .Where(x => x.PropertyDeclarationInfo != null &&
+                var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
+                var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
                                 x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
 
                 // yes. attach handlers
                 foreach (var actionAssignment in actionAssignments)
                 {
-                    sb.AppendLine("            if ({0} == null) {0} = new ViewAction();", actionAssignment.PropertyName);
-                    sb.AppendLine("            {0}.RegisterHandler(ResolveActionHandler(this, \"{1}\"));", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                    sb.AppendLine("            {0}.RegisterHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
+                }
+
+                // do we have methods specified on the root element?
+                var methodAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
+                                x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Method).ToList();
+
+                // yes. set methods
+                foreach (var methodAssignment in methodAssignments)
+                {
+                    sb.AppendLine("            {0}.RegisterMethod(this, \"{1}\");", methodAssignment.PropertyName, methodAssignment.PropertyValue);
                 }
 
                 // initialize any attached properties                
@@ -242,9 +251,11 @@ namespace Delight.Editor.Parser
             foreach (var declaration in propertyDeclarations)
             {
                 var typeName = declaration.DeclarationType == PropertyDeclarationType.Asset ? declaration.AssetType.FormattedTypeName : declaration.PropertyTypeFullName;
+                string activator = (declaration.DeclarationType == PropertyDeclarationType.Action || declaration.DeclarationType == PropertyDeclarationType.Method) ?
+                    String.Format(", () => new {0}()", typeName) : string.Empty;
 
                 sb.AppendLine();
-                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\");", typeName, declaration.PropertyName);
+                sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\"{2});", typeName, declaration.PropertyName, activator);
                 sb.AppendLine("        public {0} {1}", typeName, declaration.PropertyName);
                 sb.AppendLine("        {");
                 sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", declaration.PropertyName);
@@ -750,7 +761,7 @@ namespace Delight.Editor.Parser
                         // no. which means this is an invalid assignment
                         // value is set for a property that isn't declared, 
                         var path = propertyAssignment.StyleDeclaration == null ? fileName : propertyAssignment.StyleDeclaration.StylePath; // if assignment comes from style filepath is different
-                        ConsoleLogger.LogParseError(path, propertyAssignment.LineNumber, 
+                        ConsoleLogger.LogParseError(path, propertyAssignment.LineNumber,
                             String.Format("#Delight# Invalid property assignment <{0} {1}=\"{2}\">. The property \"{1}\" does not exist in this view.",
                                 viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue));
                         continue;
@@ -793,8 +804,9 @@ namespace Delight.Editor.Parser
                 // update property assignment data with declaration information
                 propertyAssignment.PropertyDeclarationInfo = decl;
 
-                // ignore action assignments as they are always set as run-time values
-                if (decl.Declaration.DeclarationType == PropertyDeclarationType.Action)
+                // ignore action and method assignments as they are always set as run-time values in constructor
+                if (decl.Declaration.DeclarationType == PropertyDeclarationType.Action ||
+                    decl.Declaration.DeclarationType == PropertyDeclarationType.Method)
                     continue;
 
                 var propertyTypeName = decl.IsAssetReference ? decl.AssetType.FormattedTypeName : decl.Declaration.PropertyTypeFullName;
@@ -822,10 +834,10 @@ namespace Delight.Editor.Parser
                             {
                                 typeValueInitializer = String.Format("{0}.{1}", type.FullName.Replace('+', '.'), Enum.Parse(type, propertyAssignment.PropertyValue, true));
                             }
-                            catch (Exception e)
+                            catch
                             {
                                 // invalid enum value
-                                ConsoleLogger.LogParseError(fileName, propertyAssignment.LineNumber, 
+                                ConsoleLogger.LogParseError(fileName, propertyAssignment.LineNumber,
                                     String.Format("#Delight# Unable to assign enum value to property <{0} {1}=\"{2}\">. Invalid enum value of type \"{3}\".",
                                     viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
                                 continue;
@@ -969,7 +981,8 @@ namespace Delight.Editor.Parser
                 sb.AppendLine(indent, String.Format("{3} = new {1}(this, {2}, \"{0}\", {0}Template);", childId, childViewObject.TypeName, parentReference, inTemplate ? "var " + childIdVar : childIdVar));
 
                 // do we have action handlers?
-                var actionAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy).Where(x =>
+                var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
+                var actionAssignments = childPropertyAssignments.Where(x =>
                 {
                     if (x.PropertyDeclarationInfo == null)
                         return false;
@@ -982,8 +995,6 @@ namespace Delight.Editor.Parser
                     {
                         var actionValue = actionAssignment.PropertyValue;
                         var actionName = actionValue;
-
-                        sb.AppendLine(indent, "if ({0}.{1} == null) {0}.{1} = new ViewAction();", childIdVar, actionAssignment.PropertyName);
 
                         // does the action have parameters?
                         if (actionValue.Contains("("))
@@ -1019,13 +1030,32 @@ namespace Delight.Editor.Parser
                                 }
 
                                 // generate action assignment with parameters
-                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(ResolveActionHandler(this, \"{2}\", {3}));", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
+                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
                                 continue;
                             }
                         }
 
                         // generate action assignment without parameters
-                        sb.AppendLine(indent, "{0}.{1}.RegisterHandler(ResolveActionHandler(this, \"{2}\"));", childIdVar, actionAssignment.PropertyName, actionName);
+                        sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionName);
+                    }
+                }
+
+                // do we have method assignments?
+                var methodAssignments = childPropertyAssignments.Where(x =>
+                {
+                    if (x.PropertyDeclarationInfo == null)
+                        return false;
+                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Method;
+                });
+                if (methodAssignments.Any())
+                {
+                    // yes. add initializer for action handlers
+                    foreach (var methodAssignment in methodAssignments)
+                    {
+                        var actionName = methodAssignment.PropertyValue;
+
+                        // generate action assignment without parameters
+                        sb.AppendLine(indent, "{0}.{1}.RegisterMethod(this, \"{2}\");", childIdVar, methodAssignment.PropertyName, actionName);
                     }
                 }
 
@@ -1036,7 +1066,7 @@ namespace Delight.Editor.Parser
                     var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeFullName, attachedProperty.PropertyValue);
                     if (String.IsNullOrEmpty(typeValueInitializer))
                     {
-                        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber, 
+                        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber,
                             String.Format("#Delight# Unable to assign value to attached property <{0} {4}.{1}=\"{2}\">. Unable to convert value to property of type \"{3}\". Makes sure to include the namespace in the attached property declaration.",
                             viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
                         continue;
@@ -1048,11 +1078,42 @@ namespace Delight.Editor.Parser
 
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
 
+                // get templated content data
+                var childTemplateDepth = templateDepth;
+                TemplateItemInfo ti = null;
+                if (templateContent)
+                {
+                    ++childTemplateDepth;
+                    if (templateItems == null)
+                    {
+                        templateItems = new List<TemplateItemInfo>();
+                    }
+
+                    var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
+                    if (itemIdDeclaration != null)
+                    {
+                        ti = new TemplateItemInfo();
+                        ti.Name = itemIdDeclaration.ItemId;
+                        ti.VariableName = String.Format("ti{0}", ti.Name.ToPropertyName());
+                        ti.ItemIdDeclaration = itemIdDeclaration;
+                        templateItems.Add(ti);
+
+                        ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                    }
+                }
+
                 // generate bindings
                 if (propertyBindings.Any())
                 {
                     foreach (var propertyBinding in propertyBindings)
                     {
+                        // handle special case when binding to SelectedItem in lists <List Item="{player in Players}" SelectedItem="{SelectedPlayer}" />
+                        bool castToItemType = false;
+                        if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null && !String.IsNullOrEmpty(ti.ItemType))
+                        {
+                            castToItemType = true;
+                        }
+
                         // generate binding path to source
                         var sourceBindingPathObjects = new List<string>();
                         var convertedSourceProperties = new List<string>();
@@ -1213,7 +1274,7 @@ namespace Delight.Editor.Parser
                             default:
                                 if (convertedSourceProperties.Count <= 0)
                                 {
-                                    ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber, 
+                                    ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
                                         String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
                                         viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
                                     continue;
@@ -1244,6 +1305,11 @@ namespace Delight.Editor.Parser
                             targetToSource = !propertyBinding.IsAttached ?
                                 String.Format("{0} = {1}", sourceProperties.First(), convertedTargetProperty) :
                                 String.Format("{0} = {1}.GetValue({2})", sourceProperties.First(), targetProperty, childIdVar);
+
+                            if (castToItemType) // special case when binding to SelectedItem in generic lists so target is cast to specific type
+                            {
+                                targetToSource += String.Format(" as {0}", ti.ItemType);
+                            }
                         }
                         else
                         {
@@ -1266,42 +1332,14 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                var childTemplateDepth = templateDepth;
-                TemplateItemInfo ti = null;
                 if (templateContent)
                 {
-                    ++childTemplateDepth;
-
-                    if (templateItems == null)
-                    {
-                        templateItems = new List<TemplateItemInfo>();
-                    }
-
-                    var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
-                    if (itemIdDeclaration != null)
-                    {
-                        ti = new TemplateItemInfo();
-                        ti.Name = itemIdDeclaration.ItemId;
-                        ti.VariableName = String.Format("ti{0}", ti.Name.ToPropertyName());
-                        ti.ItemIdDeclaration = itemIdDeclaration;
-                        templateItems.Add(ti);
-
-                        ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
-                    }
-
-                    // generate child view declarations for templated content
-                    if (childViewDeclaration.ChildDeclarations.Any())
-                    {
-                        sb.AppendLine();
-                        sb.AppendLine(indent, "// templates for {0}", childIdVar);
-                        sb.AppendLine(indent, "if ({0}.ContentTemplates == null) {0}.ContentTemplates = new BindableCollection<ContentTemplate>();", childIdVar);
-                    }
-
                     foreach (var templateChild in childViewDeclaration.ChildDeclarations)
                     {
                         var templateChildId = templateChild.Id.ToLocalVariableName();
 
                         sb.AppendLine();
+                        sb.AppendLine(indent, "// templates for {0}", childIdVar);
                         sb.AppendLine(indent, "{0}.ContentTemplates.Add(new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
                         sb.AppendLine(indent, "{{");
 
@@ -1364,7 +1402,7 @@ namespace Delight.Editor.Parser
                 var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
                 if (memberInfo == null)
                 {
-                    ConsoleLogger.LogParseError(fileName, itemIdDeclaration.LineNumber, 
+                    ConsoleLogger.LogParseError(fileName, itemIdDeclaration.LineNumber,
                         String.Format("#Delight# Unable to infer item type in binding <{0} {1}=\"{2}\">. Member \"{3}\" not found in type \"{4}\".",
                         viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
                         sourcePath[i], sourceType.Name));
@@ -1533,7 +1571,7 @@ namespace Delight.Editor.Parser
                     if (targetObjectType == null)
                     {
                         ConsoleLogger.LogParseError(viewObject.FilePath, propertyMapping.LineNumber,
-                            String.Format("#Delight# Invalid property mapping <{0} m.{1}=\"{2}\">. The mapped target object of type \"{3}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.", 
+                            String.Format("#Delight# Invalid property mapping <{0} m.{1}=\"{2}\">. The mapped target object of type \"{3}\" could not be found. Make sure the namespace is included in the type name and if the type exist in a separate assembly specify a assembly qualified type name.",
                             viewObject.Name, propertyMapping.TargetObjectName, propertyMapping.MapPattern, propertyDeclaration.Declaration.PropertyName));
                         continue;
                     }
@@ -2125,7 +2163,7 @@ namespace Delight.Editor.Parser
                         if (typeInitializer == null)
                         {
                             // no initializer found for the type being assigned to
-                            ConsoleLogger.LogParseError(modelObject.SchemaFilePath, propertyData.Line, 
+                            ConsoleLogger.LogParseError(modelObject.SchemaFilePath, propertyData.Line,
                                 String.Format("#Delight# Unable to insert data for property \"{0}\". No value initializer found for property type \"{1}\".",
                                  propertyData.Property.Name, propertyData.Property.TypeName));
                             continue;

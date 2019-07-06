@@ -83,119 +83,119 @@ namespace Delight
             set { IsActiveProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> BeginDragProperty = new DependencyProperty<ViewAction>("BeginDrag");
+        public readonly static DependencyProperty<ViewAction> BeginDragProperty = new DependencyProperty<ViewAction>("BeginDrag", () => new ViewAction());
         public ViewAction BeginDrag
         {
             get { return BeginDragProperty.GetValue(this); }
             set { BeginDragProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> CancelProperty = new DependencyProperty<ViewAction>("Cancel");
+        public readonly static DependencyProperty<ViewAction> CancelProperty = new DependencyProperty<ViewAction>("Cancel", () => new ViewAction());
         public ViewAction Cancel
         {
             get { return CancelProperty.GetValue(this); }
             set { CancelProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ClickProperty = new DependencyProperty<ViewAction>("Click");
+        public readonly static DependencyProperty<ViewAction> ClickProperty = new DependencyProperty<ViewAction>("Click", () => new ViewAction());
         public ViewAction Click
         {
             get { return ClickProperty.GetValue(this); }
             set { ClickProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> DeselectProperty = new DependencyProperty<ViewAction>("Deselect");
+        public readonly static DependencyProperty<ViewAction> DeselectProperty = new DependencyProperty<ViewAction>("Deselect", () => new ViewAction());
         public ViewAction Deselect
         {
             get { return DeselectProperty.GetValue(this); }
             set { DeselectProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> DragProperty = new DependencyProperty<ViewAction>("Drag");
+        public readonly static DependencyProperty<ViewAction> DragProperty = new DependencyProperty<ViewAction>("Drag", () => new ViewAction());
         public ViewAction Drag
         {
             get { return DragProperty.GetValue(this); }
             set { DragProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> DropProperty = new DependencyProperty<ViewAction>("Drop");
+        public readonly static DependencyProperty<ViewAction> DropProperty = new DependencyProperty<ViewAction>("Drop", () => new ViewAction());
         public ViewAction Drop
         {
             get { return DropProperty.GetValue(this); }
             set { DropProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> EndDragProperty = new DependencyProperty<ViewAction>("EndDrag");
+        public readonly static DependencyProperty<ViewAction> EndDragProperty = new DependencyProperty<ViewAction>("EndDrag", () => new ViewAction());
         public ViewAction EndDrag
         {
             get { return EndDragProperty.GetValue(this); }
             set { EndDragProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> InitializePotentialDragProperty = new DependencyProperty<ViewAction>("InitializePotentialDrag");
+        public readonly static DependencyProperty<ViewAction> InitializePotentialDragProperty = new DependencyProperty<ViewAction>("InitializePotentialDrag", () => new ViewAction());
         public ViewAction InitializePotentialDrag
         {
             get { return InitializePotentialDragProperty.GetValue(this); }
             set { InitializePotentialDragProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> MoveProperty = new DependencyProperty<ViewAction>("Move");
+        public readonly static DependencyProperty<ViewAction> MoveProperty = new DependencyProperty<ViewAction>("Move", () => new ViewAction());
         public ViewAction Move
         {
             get { return MoveProperty.GetValue(this); }
             set { MoveProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> MouseDownProperty = new DependencyProperty<ViewAction>("MouseDown");
+        public readonly static DependencyProperty<ViewAction> MouseDownProperty = new DependencyProperty<ViewAction>("MouseDown", () => new ViewAction());
         public ViewAction MouseDown
         {
             get { return MouseDownProperty.GetValue(this); }
             set { MouseDownProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> MouseEnterProperty = new DependencyProperty<ViewAction>("MouseEnter");
+        public readonly static DependencyProperty<ViewAction> MouseEnterProperty = new DependencyProperty<ViewAction>("MouseEnter", () => new ViewAction());
         public ViewAction MouseEnter
         {
             get { return MouseEnterProperty.GetValue(this); }
             set { MouseEnterProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> MouseExitProperty = new DependencyProperty<ViewAction>("MouseExit");
+        public readonly static DependencyProperty<ViewAction> MouseExitProperty = new DependencyProperty<ViewAction>("MouseExit", () => new ViewAction());
         public ViewAction MouseExit
         {
             get { return MouseExitProperty.GetValue(this); }
             set { MouseExitProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> MouseUpProperty = new DependencyProperty<ViewAction>("MouseUp");
+        public readonly static DependencyProperty<ViewAction> MouseUpProperty = new DependencyProperty<ViewAction>("MouseUp", () => new ViewAction());
         public ViewAction MouseUp
         {
             get { return MouseUpProperty.GetValue(this); }
             set { MouseUpProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ScrollProperty = new DependencyProperty<ViewAction>("Scroll");
+        public readonly static DependencyProperty<ViewAction> ScrollProperty = new DependencyProperty<ViewAction>("Scroll", () => new ViewAction());
         public ViewAction Scroll
         {
             get { return ScrollProperty.GetValue(this); }
             set { ScrollProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> SelectProperty = new DependencyProperty<ViewAction>("Select");
+        public readonly static DependencyProperty<ViewAction> SelectProperty = new DependencyProperty<ViewAction>("Select", () => new ViewAction());
         public ViewAction Select
         {
             get { return SelectProperty.GetValue(this); }
             set { SelectProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> SubmitProperty = new DependencyProperty<ViewAction>("Submit");
+        public readonly static DependencyProperty<ViewAction> SubmitProperty = new DependencyProperty<ViewAction>("Submit", () => new ViewAction());
         public ViewAction Submit
         {
             get { return SubmitProperty.GetValue(this); }
             set { SubmitProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> UpdateSelectedProperty = new DependencyProperty<ViewAction>("UpdateSelected");
+        public readonly static DependencyProperty<ViewAction> UpdateSelectedProperty = new DependencyProperty<ViewAction>("UpdateSelected", () => new ViewAction());
         public ViewAction UpdateSelected
         {
             get { return UpdateSelectedProperty.GetValue(this); }

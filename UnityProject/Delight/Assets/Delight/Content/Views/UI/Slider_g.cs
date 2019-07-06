@@ -22,14 +22,10 @@ namespace Delight
             SliderFillRegion = new Region(this, SliderRegion.Content, "SliderFillRegion", SliderFillRegionTemplate);
             SliderFillImageView = new Image(this, SliderFillRegion.Content, "SliderFillImageView", SliderFillImageViewTemplate);
             SliderHandleImageView = new Image(this, SliderRegion.Content, "SliderHandleImageView", SliderHandleImageViewTemplate);
-            if (Drag == null) Drag = new ViewAction();
-            Drag.RegisterHandler(ResolveActionHandler(this, "SliderDrag"));
-            if (BeginDrag == null) BeginDrag = new ViewAction();
-            BeginDrag.RegisterHandler(ResolveActionHandler(this, "SliderBeginDrag"));
-            if (EndDrag == null) EndDrag = new ViewAction();
-            EndDrag.RegisterHandler(ResolveActionHandler(this, "SliderEndDrag"));
-            if (InitializePotentialDrag == null) InitializePotentialDrag = new ViewAction();
-            InitializePotentialDrag.RegisterHandler(ResolveActionHandler(this, "SliderInitializePotentialDrag"));
+            Drag.RegisterHandler(this, "SliderDrag");
+            BeginDrag.RegisterHandler(this, "SliderBeginDrag");
+            EndDrag.RegisterHandler(this, "SliderEndDrag");
+            InitializePotentialDrag.RegisterHandler(this, "SliderInitializePotentialDrag");
             this.AfterInitializeInternal();
         }
 
@@ -139,7 +135,7 @@ namespace Delight
             set { StepsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged");
+        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }

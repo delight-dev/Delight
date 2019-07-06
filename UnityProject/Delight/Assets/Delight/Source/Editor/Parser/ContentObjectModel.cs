@@ -1070,7 +1070,8 @@ namespace Delight.Editor.Parser
         Template = 2,
         View = 3,
         UnityComponent = 4,
-        Asset = 5
+        Asset = 5,
+        Method = 6
     }
 
     #endregion

@@ -22,6 +22,8 @@ namespace Delight
                 playerList.Add(new Player { Name = "Item " + i, Color = new Color(random.Next(0, 255) / 255f, random.Next(0, 255) / 255f, random.Next(0, 255) / 255f) });
             }
             Players = playerList;
+
+            //PlayerList.TemplateSelector = x => MyTemplateSelector(x);
         }
 
         public void SelectItem()
@@ -37,7 +39,24 @@ namespace Delight
             int.TryParse(ItemIndex, out var index);
             Debug.Log("Scrolling to: " + index);
             Players.ScrollTo(index, ElementAlignment.Center);
-            //PlayerList.ScrollTo(index, ElementAlignment.Bottom);
+        }
+
+        public void ScrollToSelected()
+        {
+            int.TryParse(ItemIndex, out var index);
+            //Debug.Log("Scrolling to: " + index);
+            //Players.ScrollTo(index, ElementAlignment.Center);
+
+            Debug.Log("Scrolling to: " + SelectedPlayer?.Name);
+            Players.ScrollTo(SelectedPlayer, ElementAlignment.Center);
+        }
+
+        public string MyTemplateSelector(Player player)
+        {
+            if (player.Name == "Item 1" || player.Name == "Item 5" || player.Name == "Item 23")
+                return "TemplateB";
+
+            return "TemplateA";
         }
     }
 }

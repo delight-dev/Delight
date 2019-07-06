@@ -29,6 +29,7 @@ namespace Delight
             DependencyProperties.Add(CollectionTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(ItemsProperty);
+            dependencyProperties.Add(TemplateSelectorProperty);
         }
 
         #endregion
@@ -40,6 +41,13 @@ namespace Delight
         {
             get { return ItemsProperty.GetValue(this); }
             set { ItemsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewMethod> TemplateSelectorProperty = new DependencyProperty<ViewMethod>("TemplateSelector", () => new ViewMethod());
+        public ViewMethod TemplateSelector
+        {
+            get { return TemplateSelectorProperty.GetValue(this); }
+            set { TemplateSelectorProperty.SetValue(this, value); }
         }
 
         #endregion

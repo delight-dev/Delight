@@ -19,8 +19,7 @@ namespace Delight
             // constructing Grid (Grid1)
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             ScrollableContentRegion = new ScrollableRegion(this, Grid1.Content, "ScrollableContentRegion", ScrollableContentRegionTemplate);
-            if (ScrollableContentRegion.Scroll == null) ScrollableContentRegion.Scroll = new ViewAction();
-            ScrollableContentRegion.Scroll.RegisterHandler(ResolveActionHandler(this, "OnScroll"));
+            ScrollableContentRegion.Scroll.RegisterHandler(this, "OnScroll");
             Grid1.Cell.SetValue(ScrollableContentRegion, new CellIndex(1, 1));
             Grid1.CellSpan.SetValue(ScrollableContentRegion, new CellIndex(1, 2));
             ContentRegionCanvas = new UICanvas(this, ScrollableContentRegion.Content, "ContentRegionCanvas", ContentRegionCanvasTemplate);
@@ -29,15 +28,12 @@ namespace Delight
             Grid1.Cell.SetValue(Region1, new CellIndex(0, 0));
             Grid1.CellSpan.SetValue(Region1, new CellIndex(2, 1));
             List1 = new List(this, Region1.Content, "List1", List1Template);
-            if (List1.ItemSelected == null) List1.ItemSelected = new ViewAction();
-            List1.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ViewSelected"));
+            List1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
             // binding <List Items="{view in DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = DesignerViews, () => { }, false));
 
             // templates for List1
-            if (List1.ContentTemplates == null) List1.ContentTemplates = new BindableCollection<ContentTemplate>();
-
             List1.ContentTemplates.Add(new ContentTemplate(tiView => 
             {
                 var list1Content = new ListItem(this, List1.Content, "List1Content", List1ContentTemplate);

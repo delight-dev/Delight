@@ -10,9 +10,15 @@ namespace Delight
 {
     public partial class ComboBox
     {
-        #region Fields
+        #region Properties
 
-        public BindableCollection<ContentTemplate> ContentTemplates = new BindableCollection<ContentTemplate>();
+        public BindableCollection<ContentTemplate> ContentTemplates
+        {
+            get
+            {
+                return ComboBoxList.ContentTemplates;
+            }
+        }
 
         #endregion
 

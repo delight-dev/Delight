@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -29,6 +30,13 @@ namespace Delight
             base.OnChanged(property);
             switch (property)
             {
+                case nameof(SelectedItem):
+                    if (_selectedItem != SelectedItem)
+                    {
+                        SelectItem(SelectedItem);
+                    }
+                    break;
+
                 case nameof(Orientation):
                     ListOrientationChanged();
                     break;
@@ -49,7 +57,7 @@ namespace Delight
 
             foreach (var item in Items)
             {
-                CreateItem(item);
+                CreateListItem(item);
             }
 
             UpdateLayout();
@@ -61,7 +69,21 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            ItemsChanged();
+
+            if (IsStaticProperty.IsUndefined(this) && ItemsProperty.IsUndefined(this))
+            {
+                // if items property isn't defined assume list is meant to be static
+                IsStatic = true;
+            }
+
+            if (IsStatic)
+            {
+                CreateStaticListItems();
+            }
+            else
+            {
+                ItemsChanged();
+            }
         }
 
         /// <summary>
@@ -117,7 +139,7 @@ namespace Delight
             switch (e.ChangeAction)
             {
                 case CollectionChangeAction.Add:
-                    CreateItem(e.Item);
+                    CreateListItem(e.Item);
                     updateLayout = true;
                     break;
 
@@ -266,8 +288,6 @@ namespace Delight
                     scrollOffset = itemPosition + offset.Top.Pixels + offset.Bottom.Pixels;
                 }
 
-                Debug.Log("Scrolling to position: " + scrollOffset);
-
                 ScrollableRegion.SetAbsoluteScrollPosition(0, scrollOffset);
             }
         }
@@ -312,7 +332,7 @@ namespace Delight
                 // old list smaller than new - add items
                 for (int i = childCount; i < newItemsCount; ++i)
                 {
-                    CreateItem(Items.Get(i));
+                    CreateListItem(Items.Get(i));
                 }
             }
             else if (newItemsCount < childCount)
@@ -435,33 +455,34 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called when a new item is to be generated.
+        /// Called when a new dynamic list item is to be generated.
         /// </summary>
-        protected override View CreateItem(BindableObject item, Type templateType = null, string templateId = null)
+        protected View CreateListItem(BindableObject item)
         {
             if (IsVirtualized)
             {
                 // TODO implement
             }
 
-            var listItem = base.CreateItem(item, templateType, templateId) as ListItem;
+            string templateId = TemplateSelector?.Invoke(item) as string;
+            var listItem = base.CreateItem(item, null, templateId) as ListItem;
+            if (listItem == null)
+                return null;
+
             listItem.Load();
 
-            if (IsScrollable && listItem != null)
-            {
-                ScrollableRegion.UnblockDragEvents(listItem as SceneObjectView);
-            }
+            UnblockListItemDragEvents(listItem);
 
-            // unblock drag-events in parent scrollable regions
-            // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here
-            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(listItem as SceneObjectView));
-            if (!_presentedItems.ContainsKey(item))
+            if (item != null)
             {
-                _presentedItems.Add(item, listItem);
-            }
+                if (!_presentedItems.ContainsKey(item))
+                {
+                    _presentedItems.Add(item, listItem);
+                }
 
-            // set item data on list item for easy reference
-            listItem.Item = item;
+                // set item data on list item for easy reference
+                listItem.Item = item;
+            }
             return listItem;
         }
 
@@ -914,7 +935,7 @@ namespace Delight
 
             if (_presentedItems.TryGetValue(item, out var listItem))
             {
-                SelectItem(listItem);
+                SelectItem(listItem, triggeredByClick);
             }
         }
 
@@ -930,7 +951,7 @@ namespace Delight
             if (listItem.IsSelected)
             {
                 // yes. can it be deselected?
-                if (triggeredByClick && !CanDeselect)
+                if (triggeredByClick && !CheckCanDeselect())
                 {
                     // no. should it be re-selected?
                     if (CanReselect)
@@ -950,14 +971,17 @@ namespace Delight
                 // select
                 SetSelected(listItem, true);
 
-                // deselect other items
-                foreach (ListItem item in Content.LayoutChildren)
+                // deselect other items if we can't multi-select
+                if (!CanMultiSelect)
                 {
-                    if (item == listItem)
-                        continue;
+                    foreach (ListItem item in Content.LayoutChildren)
+                    {
+                        if (item == listItem)
+                            continue;
 
-                    // deselect and trigger actions
-                    SetSelected(item, false);
+                        // deselect and trigger actions
+                        SetSelected(item, false);
+                    }
                 }
 
                 // should this item immediately be deselected?
@@ -979,6 +1003,11 @@ namespace Delight
             foreach (var listItem in _presentedItems.Values)
             {
                 SetSelected(listItem, false);
+            }
+
+            if (SelectedItem != null)
+            {
+                SelectedItem = null;
             }
         }
 
@@ -1020,7 +1049,11 @@ namespace Delight
                 return;
 
             listItem.IsSelected = selected;
-            _selectedItem = selected ? listItem.Item : null;
+            if (selected)
+            {
+                _selectedItem = listItem.Item;
+                SelectedItem = listItem.Item;                
+            }
 
             ItemSelectionActionData data = new ItemSelectionActionData { IsSelected = selected, ListItem = listItem, Item = listItem.Item };
             if (selected)
@@ -1041,6 +1074,49 @@ namespace Delight
             return SelectedItem as T;
         }
 
+        /// <summary>
+        /// Checks if an item can be deselected. 
+        /// </summary>
+        private bool CheckCanDeselect()
+        {
+            return CanDeselectProperty.IsUndefined(this) ? CanMultiSelect : CanDeselect;
+        }
+
+        /// <summary>
+        /// Generates static list items.
+        /// </summary>
+        private void CreateStaticListItems()
+        {
+            if (ContentTemplates == null)
+                return;
+
+            foreach (var contentTemplate in ContentTemplates)
+            {
+                var templateData = new ContentTemplateData();
+                var listItem = contentTemplate.Activator(templateData) as ListItem;
+                listItem.Load();
+                UnblockListItemDragEvents(listItem);                                
+            }
+        }
+
+        /// <summary>
+        /// Unblocks drag events from list items, which makes it so draggable items don't block the list from being scrolled.
+        /// </summary>
+        private void UnblockListItemDragEvents(ListItem listItem)
+        {
+            if (listItem == null)
+                return;
+
+            if (IsScrollable)
+            {
+                ScrollableRegion.UnblockDragEvents(listItem as SceneObjectView);
+            }
+
+            // unblock drag-events in parent scrollable regions
+            // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here
+            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(listItem as SceneObjectView));
+        }
+
         #endregion
 
         #region Properties
@@ -1053,21 +1129,6 @@ namespace Delight
             get
             {
                 return Overflow == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets selected item.
-        /// </summary>
-        public BindableObject SelectedItem
-        {
-            get
-            {
-                return _selectedItem;
-            }
-            set
-            {
-                SelectItem(value);
             }
         }
 

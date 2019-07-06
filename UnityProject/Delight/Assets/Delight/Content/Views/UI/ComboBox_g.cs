@@ -18,14 +18,12 @@ namespace Delight
         {
             // constructing Button (ComboBoxButton)
             ComboBoxButton = new Button(this, this, "ComboBoxButton", ComboBoxButtonTemplate);
-            if (ComboBoxButton.Click == null) ComboBoxButton.Click = new ViewAction();
-            ComboBoxButton.Click.RegisterHandler(ResolveActionHandler(this, "ComboBoxButtonClick"));
+            ComboBoxButton.Click.RegisterHandler(this, "ComboBoxButtonClick");
 
             // constructing UICanvas (ComboBoxListCanvas)
             ComboBoxListCanvas = new UICanvas(this, this, "ComboBoxListCanvas", ComboBoxListCanvasTemplate);
             ComboBoxList = new List(this, ComboBoxListCanvas.Content, "ComboBoxList", ComboBoxListTemplate);
-            if (ComboBoxList.ItemSelected == null) ComboBoxList.ItemSelected = new ViewAction();
-            ComboBoxList.ItemSelected.RegisterHandler(ResolveActionHandler(this, "ComboBoxListSelectionChanged"));
+            ComboBoxList.ItemSelected.RegisterHandler(this, "ComboBoxListSelectionChanged");
             ContentContainer = ComboBoxList;
             this.AfterInitializeInternal();
         }
@@ -60,7 +58,7 @@ namespace Delight
             set { IsDropUpProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected");
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
@@ -226,6 +224,20 @@ namespace Delight
         {
             get { return ComboBoxList.SelectOnMouseUp; }
             set { ComboBoxList.SelectOnMouseUp = value; }
+        }
+
+        public readonly static DependencyProperty SelectedItemProperty = List.SelectedItemProperty;
+        public Delight.BindableObject SelectedItem
+        {
+            get { return ComboBoxList.SelectedItem; }
+            set { ComboBoxList.SelectedItem = value; }
+        }
+
+        public readonly static DependencyProperty IsStaticProperty = List.IsStaticProperty;
+        public System.Boolean IsStatic
+        {
+            get { return ComboBoxList.IsStatic; }
+            set { ComboBoxList.IsStatic = value; }
         }
 
         public readonly static DependencyProperty MaskContentProperty = List.MaskContentProperty;

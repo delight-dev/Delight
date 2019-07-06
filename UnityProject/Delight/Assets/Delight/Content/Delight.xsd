@@ -1607,6 +1607,7 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="Items" type="xs:string" />
+    <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1709,6 +1710,8 @@
     <xs:attribute name="CanReselect" type="xs:string" />
     <xs:attribute name="DeselectAfterSelect" type="xs:string" />
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
+    <xs:attribute name="SelectedItem" type="xs:string" />
+    <xs:attribute name="IsStatic" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -2768,7 +2771,6 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="ScrollsHorizontally" type="xs:string" />
-    <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
     <xs:attribute name="Spacing" type="xs:string" />
     <xs:attribute name="HorizontalSpacing" type="xs:string" />
@@ -2788,6 +2790,8 @@
     <xs:attribute name="CanReselect" type="xs:string" />
     <xs:attribute name="DeselectAfterSelect" type="xs:string" />
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
+    <xs:attribute name="SelectedItem" type="xs:string" />
+    <xs:attribute name="IsStatic" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -2853,6 +2857,7 @@
     <xs:attribute name="ScrollableRegionIsActive" type="xs:string" />
     <xs:attribute name="ScrollableRegionLoadMode" type="Enum_LoadMode" />
     <xs:attribute name="Items" type="xs:string" />
+    <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -4256,6 +4261,7 @@
     <xs:attribute name="TabHeaderWidth" type="xs:string" />
     <xs:attribute name="TabHeaderHeight" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
+    <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />

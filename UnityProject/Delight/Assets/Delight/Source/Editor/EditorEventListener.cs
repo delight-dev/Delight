@@ -23,34 +23,14 @@ namespace Delight.Editor
     {
         #region Fields
 
-        public static Scene? EditorScene;
         public static bool QueuedAssetsToBeProcessed = false;
         public static PostprocessAllAssetsBatch PostprocessBatch = new PostprocessAllAssetsBatch();
-        private static float _consoleUpdateTimer = 0;
 
         #endregion
 
         static EditorEventListener()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
-            EditorApplication.hierarchyChanged += OnHierarchyChanged;
-        }
-
-        private static void OnHierarchyChanged()
-        {
-            var activeScene = EditorSceneManager.GetActiveScene();
-            if (activeScene.name == "DelightEditor")
-            {
-                EditorApplication.update -= OnEditorUpdate;
-                EditorApplication.update += OnEditorUpdate;
-
-                EditorScene = activeScene;
-            }
-            else
-            {
-                EditorApplication.update -= OnEditorUpdate;
-                EditorScene = null;
-            }
         }
 
         private static void OnEditorUpdate()
@@ -104,18 +84,9 @@ namespace Delight.Editor
                     break;
 
                 case PlayModeStateChange.EnteredPlayMode:
-                    // lock script reloads while playing
-                    //EditorApplication.LockReloadAssemblies();
-
-                    // TODO remove
-                    // add sub-scene
-                    //var activeScene = SceneManager.GetActiveScene();
-                    //var scene = SceneManager.CreateScene("DelightEditor");
                     break;
 
                 case PlayModeStateChange.ExitingPlayMode:
-                    // unlock script reloads when in edit mode
-                    //EditorApplication.UnlockReloadAssemblies();
                     break;
             }
         }

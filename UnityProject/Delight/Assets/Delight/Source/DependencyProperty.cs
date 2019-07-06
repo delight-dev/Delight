@@ -26,6 +26,7 @@ namespace Delight
         public bool IsAssetType;
         public bool IsAtomicBindableObjectType;
         public bool ClearValuesOnUnload;
+        public Func<T> Activator;
 
         #endregion
 
@@ -43,6 +44,14 @@ namespace Delight
             }
             else
             {
+                if (Activator != null)
+                {
+                    // use activator to create initial value
+                    var value = Activator();
+                    Values.Add(key, value);
+                    return value;
+                }
+
                 return GetDefault(key);
             }
         }
@@ -488,7 +497,7 @@ namespace Delight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public DependencyProperty(string propertyName)
+        public DependencyProperty(string propertyName, Func<T> activator = null)
         {
             Values = new Dictionary<DependencyObject, T>();
             Defaults = new Dictionary<Template, T>();
@@ -502,6 +511,8 @@ namespace Delight
             // don't clear view references, content templates and view actions as they are set in constructor and not to change during run-time
             ClearValuesOnUnload = !typeof(View).IsAssignableFrom(propertyType) && !typeof(Delight.ViewAction).IsAssignableFrom(propertyType) &&
                 !typeof(ContentTemplate).IsAssignableFrom(propertyType);
+            Activator = activator;
+
             if (IsAtomicBindableObjectType)
             {
                 PropertyChangedHandlers = new Dictionary<DependencyObject, PropertyChangedEventHandler>();

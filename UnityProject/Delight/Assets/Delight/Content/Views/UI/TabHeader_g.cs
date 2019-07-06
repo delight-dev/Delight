@@ -16,8 +16,7 @@ namespace Delight
         public TabHeader(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? TabHeaderTemplates.Default, initializer)
         {
-            if (ToggleClick == null) ToggleClick = new ViewAction();
-            ToggleClick.RegisterHandler(ResolveActionHandler(this, "TabToggleClick"));
+            ToggleClick.RegisterHandler(this, "TabToggleClick");
             this.AfterInitializeInternal();
         }
 
