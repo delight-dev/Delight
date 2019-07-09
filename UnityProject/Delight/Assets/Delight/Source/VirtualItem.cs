@@ -47,6 +47,8 @@ namespace Delight
         {
             if (width != null)
                 Width = new ElementSize(width);
+            Height = ElementSize.FromPercents(1);
+            Offset = new ElementMargin();
         }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace Delight
                 Width = new ElementSize(width);
             if (height != null)
                 Height = new ElementSize(height);
+            Offset = new ElementMargin();
         }
 
         /// <summary>

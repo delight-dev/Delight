@@ -850,8 +850,10 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestAchievementsList.Name = "ModelBindingTestAchievementsList";
 #endif
+                    Delight.List.IsVirtualizedProperty.SetDefault(_modelBindingTestAchievementsList, true);
                     Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
                     Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.HeightProperty.SetDefault(_modelBindingTestAchievementsList, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.List.ItemsProperty.SetHasBinding(_modelBindingTestAchievementsList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsList, ModelBindingTestAchievementsListScrollableRegion);
                 }
@@ -1061,6 +1063,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestLabel4.Name = "ModelBindingTestLabel4";
 #endif
+                    Delight.Label.WidthProperty.SetDefault(_modelBindingTestLabel4, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Label.HeightProperty.SetDefault(_modelBindingTestLabel4, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Label.TextProperty.SetHasBinding(_modelBindingTestLabel4);
                 }
                 return _modelBindingTestLabel4;

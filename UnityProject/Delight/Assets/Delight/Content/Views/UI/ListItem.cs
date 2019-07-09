@@ -165,7 +165,7 @@ namespace Delight
         /// <summary>
         /// Adjusts the size of the list item to its content. 
         /// </summary>
-        private bool AdjustSizeToContent()
+        public bool AdjustSizeToContent()
         {
             bool hasNewSize = false;
 

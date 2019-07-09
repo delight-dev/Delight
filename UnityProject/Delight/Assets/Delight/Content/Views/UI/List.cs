@@ -142,9 +142,13 @@ namespace Delight
             }
 
             _presentedItems.Clear();
-            _virtualItems.Clear();
-            _indexOfItem.Clear();
-            _realizedItemPool.Clear();
+
+            if (IsVirtualized)
+            {
+                _virtualItems.Clear();
+                _indexOfItem.Clear();
+                _realizedItemPool.Clear();
+            }
         }
 
         /// <summary>
@@ -504,6 +508,14 @@ namespace Delight
                 foreach (var contentTemplate in ContentTemplates)
                 {
                     var itemView = contentTemplate.Activator(new ContentTemplateData { Item = null }) as ListItem;
+                    if (itemView.Width == null && itemView.Height == null)
+                    {
+                        // if size not set, try adjust item to content
+                        itemView.DisableLayoutUpdate = true;
+                        itemView.AdjustSizeToContent();
+                        itemView.DisableLayoutUpdate = false;
+                    }
+
                     var itemWidth = itemView.OverrideWidth ?? itemView.Width ?? ElementSize.FromPercents(1);
                     var itemHeight = itemView.OverrideHeight ?? itemView.Height ?? ElementSize.FromPercents(1);
                     _contentTemplateVirtualItem.Add(contentTemplate, new VirtualItem(itemWidth, itemHeight, contentTemplate));
@@ -719,6 +731,7 @@ namespace Delight
             listItem.OffsetFromParent = virtualItem.Offset;
             listItem.Alignment = virtualItem.Alignment;
             listItem.IsSelected = virtualItem.IsSelected;
+            listItem.Item = virtualItem.Item;
             listItem.DisableLayoutUpdate = false;
 
             listItem.Load();
@@ -1040,7 +1053,7 @@ namespace Delight
                     continue;
                 }
 
-                ElementMargin offset = null;
+                ElementMargin offset = new ElementMargin();
 
                 // set offsets and alignment
                 var alignment = ElementAlignment.TopLeft;
