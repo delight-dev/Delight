@@ -26,6 +26,7 @@ namespace Delight
             InputField2 = new InputField(this, Group2.Content, "InputField2", InputField2Template);
             Label4 = new Label(this, Group2.Content, "Label4", Label4Template);
             InputField3 = new InputField(this, Group2.Content, "InputField3", InputField3Template);
+            InputField3.ValueChanged.RegisterHandler(this, "OnValueChanged");
             Image1 = new Image(this, InputField3.Content, "Image1", Image1Template);
             Group3 = new Group(this, Group1.Content, "Group3", Group3Template);
             Label5 = new Label(this, Group3.Content, "Label5", Label5Template);

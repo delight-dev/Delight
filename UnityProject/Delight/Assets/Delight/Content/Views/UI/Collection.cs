@@ -23,6 +23,23 @@ namespace Delight
         /// </summary>
         protected virtual View CreateItem(BindableObject item, Type templateType = null, string templateId = null)
         {
+            var template = GetContentTemplate(templateType, templateId);
+
+            var activator = template?.Activator;
+            if (activator == null)
+                return null;
+
+            var templateData = new ContentTemplateData { Item = item };            
+            var itemView = activator(templateData);
+
+            return itemView;
+        }
+
+        /// <summary>
+        /// Gets content template of the specified type and id. 
+        /// </summary>
+        protected virtual ContentTemplate GetContentTemplate(Type templateType = null, string templateId = null)
+        {
             if (ContentTemplates == null || ContentTemplates.Count <= 0)
                 return null;
 
@@ -37,14 +54,7 @@ namespace Delight
                 templates = templates.Where(x => x.Id == templateId).ToList();
             }
 
-            var activator = templates.FirstOrDefault()?.Activator;
-            if (activator == null)
-                return null;
-
-            var templateData = new ContentTemplateData { Item = item };            
-            var itemView = activator(templateData);
-
-            return itemView;
+            return templates.FirstOrDefault();
         }
 
         #endregion

@@ -48,7 +48,25 @@ namespace Delight
             //Players.ScrollTo(index, ElementAlignment.Center);
 
             Debug.Log("Scrolling to: " + SelectedPlayer?.Name);
-            Players.ScrollTo(SelectedPlayer, ElementAlignment.Center);
+            Players.ScrollTo(SelectedPlayer, ElementAlignment.TopLeft);
+        }
+
+        public void AddItem()
+        {
+            System.Random random = new System.Random();
+            Players.Add(new Player { Name = "New " + Players.Count, Color = new Color(random.Next(0, 255) / 255f, random.Next(0, 255) / 255f, random.Next(0, 255) / 255f) });
+        }
+
+        public void RemoveItem()
+        {
+            Players.Remove(SelectedPlayer);
+        }
+
+        public void InsertItem()
+        {
+            System.Random random = new System.Random();
+            int.TryParse(ItemIndex, out var index);
+            Players.Insert(index, new Player { Name = "New " + Players.Count, Color = new Color(random.Next(0, 255) / 255f, random.Next(0, 255) / 255f, random.Next(0, 255) / 255f) });
         }
 
         public string MyTemplateSelector(Player player)

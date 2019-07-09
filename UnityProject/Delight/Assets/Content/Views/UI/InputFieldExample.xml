@@ -7,7 +7,7 @@
       <Label Text="Password" AutoSize="True" FontSize="12" Height="20" />
       <InputField Width="200px" ContentType="Password" />
       <Label Text="With placeholder content" AutoSize="True" FontSize="12" Height="20" />
-      <InputField Width="200px">
+      <InputField Width="200px" ValueChanged="OnValueChanged">
         <Image Sprite="RainbowSquare" Alignment="Left" Offset="10,0,0,0" />
       </InputField>
     </Group>

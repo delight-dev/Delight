@@ -240,6 +240,13 @@ namespace Delight
             set { ComboBoxList.IsStatic = value; }
         }
 
+        public readonly static DependencyProperty RealizationMarginProperty = List.RealizationMarginProperty;
+        public UnityEngine.Vector2 RealizationMargin
+        {
+            get { return ComboBoxList.RealizationMargin; }
+            set { ComboBoxList.RealizationMargin = value; }
+        }
+
         public readonly static DependencyProperty MaskContentProperty = List.MaskContentProperty;
         public System.Boolean MaskContent
         {

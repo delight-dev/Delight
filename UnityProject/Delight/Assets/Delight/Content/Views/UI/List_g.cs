@@ -52,6 +52,8 @@ namespace Delight
             dependencyProperties.Add(SelectOnMouseUpProperty);
             dependencyProperties.Add(SelectedItemProperty);
             dependencyProperties.Add(IsStaticProperty);
+            dependencyProperties.Add(VirtualItemGetterProperty);
+            dependencyProperties.Add(RealizationMarginProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
@@ -205,6 +207,20 @@ namespace Delight
         {
             get { return IsStaticProperty.GetValue(this); }
             set { IsStaticProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewMethod> VirtualItemGetterProperty = new DependencyProperty<ViewMethod>("VirtualItemGetter", () => new ViewMethod());
+        public ViewMethod VirtualItemGetter
+        {
+            get { return VirtualItemGetterProperty.GetValue(this); }
+            set { VirtualItemGetterProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.Vector2> RealizationMarginProperty = new DependencyProperty<UnityEngine.Vector2>("RealizationMargin");
+        public UnityEngine.Vector2 RealizationMargin
+        {
+            get { return RealizationMarginProperty.GetValue(this); }
+            set { RealizationMarginProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");

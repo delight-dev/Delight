@@ -1691,6 +1691,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="IsDropUp" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
@@ -1712,6 +1713,7 @@
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
     <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="IsStatic" type="xs:string" />
+    <xs:attribute name="RealizationMargin" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -2792,6 +2794,8 @@
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
     <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="IsStatic" type="xs:string" />
+    <xs:attribute name="VirtualItemGetter" type="xs:string" />
+    <xs:attribute name="RealizationMargin" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -3479,6 +3483,7 @@
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
     <xs:attribute name="VerticalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
     <xs:attribute name="DisableMouseWheel" type="xs:string" />
+    <xs:attribute name="ContentScrolled" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />
@@ -3591,6 +3596,7 @@
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
     <xs:attribute name="VerticalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
     <xs:attribute name="DisableMouseWheel" type="xs:string" />
+    <xs:attribute name="ContentScrolled" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />

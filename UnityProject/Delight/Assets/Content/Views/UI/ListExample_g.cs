@@ -29,6 +29,12 @@ namespace Delight
             Button2.Click.RegisterHandler(this, "ScrollTo");
             Button3 = new Button(this, Group2.Content, "Button3", Button3Template);
             Button3.Click.RegisterHandler(this, "ScrollToSelected");
+            Button4 = new Button(this, Group2.Content, "Button4", Button4Template);
+            Button4.Click.RegisterHandler(this, "AddItem");
+            Button5 = new Button(this, Group2.Content, "Button5", Button5Template);
+            Button5.Click.RegisterHandler(this, "InsertItem");
+            Button6 = new Button(this, Group2.Content, "Button6", Button6Template);
+            Button6.Click.RegisterHandler(this, "RemoveItem");
             PlayerList = new List(this, Group1.Content, "PlayerList", PlayerListTemplate);
             PlayerList.TemplateSelector.RegisterMethod(this, "MyTemplateSelector");
 
@@ -96,6 +102,12 @@ namespace Delight
             dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(Button3Property);
             dependencyProperties.Add(Button3TemplateProperty);
+            dependencyProperties.Add(Button4Property);
+            dependencyProperties.Add(Button4TemplateProperty);
+            dependencyProperties.Add(Button5Property);
+            dependencyProperties.Add(Button5TemplateProperty);
+            dependencyProperties.Add(Button6Property);
+            dependencyProperties.Add(Button6TemplateProperty);
             dependencyProperties.Add(PlayerListProperty);
             dependencyProperties.Add(PlayerListTemplateProperty);
             dependencyProperties.Add(TemplateAProperty);
@@ -219,6 +231,48 @@ namespace Delight
         {
             get { return Button3TemplateProperty.GetValue(this); }
             set { Button3TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button4Property = new DependencyProperty<Button>("Button4");
+        public Button Button4
+        {
+            get { return Button4Property.GetValue(this); }
+            set { Button4Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button4TemplateProperty = new DependencyProperty<Template>("Button4Template");
+        public Template Button4Template
+        {
+            get { return Button4TemplateProperty.GetValue(this); }
+            set { Button4TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
+        public Button Button5
+        {
+            get { return Button5Property.GetValue(this); }
+            set { Button5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
+        public Template Button5Template
+        {
+            get { return Button5TemplateProperty.GetValue(this); }
+            set { Button5TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button6Property = new DependencyProperty<Button>("Button6");
+        public Button Button6
+        {
+            get { return Button6Property.GetValue(this); }
+            set { Button6Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button6TemplateProperty = new DependencyProperty<Template>("Button6Template");
+        public Template Button6Template
+        {
+            get { return Button6TemplateProperty.GetValue(this); }
+            set { Button6TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<List> PlayerListProperty = new DependencyProperty<List>("PlayerList");
@@ -357,6 +411,9 @@ namespace Delight
                     Delight.ListExample.Button1TemplateProperty.SetDefault(_listExample, ListExampleButton1);
                     Delight.ListExample.Button2TemplateProperty.SetDefault(_listExample, ListExampleButton2);
                     Delight.ListExample.Button3TemplateProperty.SetDefault(_listExample, ListExampleButton3);
+                    Delight.ListExample.Button4TemplateProperty.SetDefault(_listExample, ListExampleButton4);
+                    Delight.ListExample.Button5TemplateProperty.SetDefault(_listExample, ListExampleButton5);
+                    Delight.ListExample.Button6TemplateProperty.SetDefault(_listExample, ListExampleButton6);
                     Delight.ListExample.PlayerListTemplateProperty.SetDefault(_listExample, ListExamplePlayerList);
                     Delight.ListExample.TemplateATemplateProperty.SetDefault(_listExample, ListExampleTemplateA);
                     Delight.ListExample.Image1TemplateProperty.SetDefault(_listExample, ListExampleImage1);
@@ -407,7 +464,7 @@ namespace Delight
                     _listExampleGroup2.Name = "ListExampleGroup2";
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_listExampleGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.WidthProperty.SetDefault(_listExampleGroup2, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Group.WidthProperty.SetDefault(_listExampleGroup2, new ElementSize(200f, ElementSizeUnit.Pixels));
                 }
                 return _listExampleGroup2;
             }
@@ -428,6 +485,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleInputField1.Name = "ListExampleInputField1";
 #endif
+                    Delight.InputField.WidthProperty.SetDefault(_listExampleInputField1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.TextProperty.SetHasBinding(_listExampleInputField1);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_listExampleInputField1, ListExampleInputField1InputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_listExampleInputField1, ListExampleInputField1TextArea);
@@ -512,6 +570,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleButton1.Name = "ListExampleButton1";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton1, ListExampleButton1Label);
                 }
                 return _listExampleButton1;
@@ -554,6 +613,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleButton2.Name = "ListExampleButton2";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton2, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton2, ListExampleButton2Label);
                 }
                 return _listExampleButton2;
@@ -596,6 +656,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleButton3.Name = "ListExampleButton3";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton3, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.MarginProperty.SetDefault(_listExampleButton3, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton3, ListExampleButton3Label);
                 }
@@ -624,6 +685,138 @@ namespace Delight
             }
         }
 
+        private static Template _listExampleButton4;
+        public static Template ListExampleButton4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton4 == null || _listExampleButton4.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton4 == null)
+#endif
+                {
+                    _listExampleButton4 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _listExampleButton4.Name = "ListExampleButton4";
+#endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton4, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.MarginProperty.SetDefault(_listExampleButton4, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton4, ListExampleButton4Label);
+                }
+                return _listExampleButton4;
+            }
+        }
+
+        private static Template _listExampleButton4Label;
+        public static Template ListExampleButton4Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton4Label == null || _listExampleButton4Label.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton4Label == null)
+#endif
+                {
+                    _listExampleButton4Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _listExampleButton4Label.Name = "ListExampleButton4Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton4Label, "Add");
+                }
+                return _listExampleButton4Label;
+            }
+        }
+
+        private static Template _listExampleButton5;
+        public static Template ListExampleButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton5 == null || _listExampleButton5.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton5 == null)
+#endif
+                {
+                    _listExampleButton5 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _listExampleButton5.Name = "ListExampleButton5";
+#endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton5, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.MarginProperty.SetDefault(_listExampleButton5, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton5, ListExampleButton5Label);
+                }
+                return _listExampleButton5;
+            }
+        }
+
+        private static Template _listExampleButton5Label;
+        public static Template ListExampleButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton5Label == null || _listExampleButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton5Label == null)
+#endif
+                {
+                    _listExampleButton5Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _listExampleButton5Label.Name = "ListExampleButton5Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton5Label, "Insert");
+                }
+                return _listExampleButton5Label;
+            }
+        }
+
+        private static Template _listExampleButton6;
+        public static Template ListExampleButton6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton6 == null || _listExampleButton6.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton6 == null)
+#endif
+                {
+                    _listExampleButton6 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _listExampleButton6.Name = "ListExampleButton6";
+#endif
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton6, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Button.MarginProperty.SetDefault(_listExampleButton6, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton6, ListExampleButton6Label);
+                }
+                return _listExampleButton6;
+            }
+        }
+
+        private static Template _listExampleButton6Label;
+        public static Template ListExampleButton6Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton6Label == null || _listExampleButton6Label.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton6Label == null)
+#endif
+                {
+                    _listExampleButton6Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _listExampleButton6Label.Name = "ListExampleButton6Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton6Label, "Remove");
+                }
+                return _listExampleButton6Label;
+            }
+        }
+
         private static Template _listExamplePlayerList;
         public static Template ListExamplePlayerList
         {
@@ -639,14 +832,15 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExamplePlayerList.Name = "ListExamplePlayerList";
 #endif
-                    Delight.List.WidthProperty.SetDefault(_listExamplePlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.WidthProperty.SetDefault(_listExamplePlayerList, new ElementSize(425f, ElementSizeUnit.Pixels));
                     Delight.List.HeightProperty.SetDefault(_listExamplePlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_listExamplePlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_listExamplePlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.List.IsScrollableProperty.SetDefault(_listExamplePlayerList, true);
                     Delight.List.OverflowProperty.SetDefault(_listExamplePlayerList, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_listExamplePlayerList, Delight.ElementOrientation.Horizontal);
-                    Delight.List.CanMultiSelectProperty.SetDefault(_listExamplePlayerList, true);
+                    Delight.List.CanMultiSelectProperty.SetDefault(_listExamplePlayerList, false);
+                    Delight.List.IsVirtualizedProperty.SetDefault(_listExamplePlayerList, true);
                     Delight.List.ItemsProperty.SetHasBinding(_listExamplePlayerList);
                     Delight.List.SelectedItemProperty.SetHasBinding(_listExamplePlayerList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_listExamplePlayerList, ListExamplePlayerListScrollableRegion);
@@ -903,7 +1097,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _listExampleTemplateB.Name = "ListExampleTemplateB";
 #endif
-                    Delight.ListItem.WidthProperty.SetDefault(_listExampleTemplateB, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.WidthProperty.SetDefault(_listExampleTemplateB, new ElementSize(205f, ElementSizeUnit.Pixels));
                     Delight.ListItem.HeightProperty.SetDefault(_listExampleTemplateB, new ElementSize(100f, ElementSizeUnit.Pixels));
                 }
                 return _listExampleTemplateB;

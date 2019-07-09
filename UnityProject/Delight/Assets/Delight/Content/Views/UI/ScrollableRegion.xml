@@ -16,7 +16,8 @@
                   i.ScrollbarVisibility="HorizontalScrollbarVisibility, VerticalScrollbarVisibility"
                   HorizontalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto"
                   VerticalScrollbarVisibility="t:ScrollbarVisibilityMode = Auto"
-                  DisableMouseWheel="t:bool">
+                  DisableMouseWheel="t:bool"
+                  ContentScrolled="t:Action">
   <Region Id="ContentRegion" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True" Alignment="{ContentAlignment}">
   </Region>
   <Scrollbar Id="HorizontalScrollbar" Orientation="Horizontal" />

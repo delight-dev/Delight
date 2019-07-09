@@ -145,6 +145,28 @@ namespace Delight
             OnPropertyChanged(item.Id);
         }
 
+        public virtual void Insert(int index, T item)
+        {
+            if (String.IsNullOrEmpty(item.Id))
+            {
+                item.Id = Guid.NewGuid().ToString();
+            }
+            else if (Data.ContainsKey(item.Id))
+            {
+                Debug.LogWarning(String.Format("#Delight# BindableCollection<{0}>: attempt to insert item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
+                return;
+            }
+
+            Data.Add(item.Id, item);
+            DataList.Insert(index, new KeyValuePair<string, T>(item.Id, item));
+
+            Notify(new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace
+            });
+            OnPropertyChanged(item.Id);
+        }
+
         public virtual void Clear()
         {
             Data.Clear();

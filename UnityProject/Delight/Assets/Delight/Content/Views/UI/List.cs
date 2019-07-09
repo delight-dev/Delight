@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -17,6 +18,12 @@ namespace Delight
         private BindableObject _selectedItem;
         private BindableCollection _oldCollection;
         private Dictionary<BindableObject, ListItem> _presentedItems = new Dictionary<BindableObject, ListItem>();
+
+        // for virtualized list
+        private Dictionary<BindableObject, int> _indexOfItem;
+        private Dictionary<ContentTemplate, VirtualItem> _contentTemplateVirtualItem;
+        private Dictionary<ContentTemplate, List<ListItem>> _realizedItemPool;
+        private List<VirtualItem> _virtualItems;
 
         #endregion
 
@@ -38,7 +45,11 @@ namespace Delight
                     break;
 
                 case nameof(Orientation):
-                    ListOrientationChanged();
+                    if (IsLoaded)
+                    {
+                        ClearItems();
+                        CreateItems();
+                    }
                     break;
 
                 case nameof(Items):
@@ -60,7 +71,37 @@ namespace Delight
                 CreateListItem(item);
             }
 
-            UpdateLayout();
+            // update layout and notify parents if size has changed
+            if (UpdateLayout(false))
+            {
+                NotifyParentOfChildLayoutChanged();
+            }
+        }
+
+        /// <summary>
+        /// Called during initialization. 
+        /// </summary>
+        public override void AfterInitialize()
+        {
+            base.AfterInitialize();
+
+            if (IsVirtualized)
+            {
+                _indexOfItem = new Dictionary<BindableObject, int>();
+                _virtualItems = new List<VirtualItem>();
+                _realizedItemPool = new Dictionary<ContentTemplate, List<ListItem>>();
+                IsScrollable = true; // virtualized lists are always scrollable
+
+                ScrollableRegion.ContentScrolled.RegisterHandler(this, "ContentScrolled");
+            }
+        }
+
+        /// <summary>
+        /// Called for virtualized lists to update the realized items.
+        /// </summary>
+        public void ContentScrolled()
+        {
+            UpdateRealizedItems();
         }
 
         /// <summary>
@@ -72,13 +113,15 @@ namespace Delight
 
             if (IsStaticProperty.IsUndefined(this) && ItemsProperty.IsUndefined(this))
             {
-                // if items property isn't defined assume list is meant to be static
+                // if items property isn't defined (no value or binding) assume list is meant to be static
                 IsStatic = true;
             }
 
             if (IsStatic)
             {
+                IsVirtualized = false; // static list can't be virtualized
                 CreateStaticListItems();
+                return;
             }
             else
             {
@@ -99,6 +142,9 @@ namespace Delight
             }
 
             _presentedItems.Clear();
+            _virtualItems.Clear();
+            _indexOfItem.Clear();
+            _realizedItemPool.Clear();
         }
 
         /// <summary>
@@ -126,7 +172,11 @@ namespace Delight
 
             if (updateLayout)
             {
-                UpdateLayout();
+                // update layout and notify parents if size has changed
+                if (UpdateLayout(false))
+                {
+                    NotifyParentOfChildLayoutChanged();
+                }
             }
         }
 
@@ -180,44 +230,49 @@ namespace Delight
             }
 
             return updateLayout;
-
-            // TODO implement collection change actions
-            //// update list of items
-
-            //else if (e.ListChangeAction == ListChangeAction.Modify)
-            //{
-            //    ItemsModified(e.StartIndex, e.EndIndex, e.FieldPath);
-            //}
-            //else if (e.ListChangeAction == ListChangeAction.Select)
-            //{
-            //    SelectItem(e.StartIndex);
-            //}
-
-            //if (ListChanged.HasEntries)
-            //{
-            //    ListChanged.Trigger(new ListChangedActionData { ListChangeAction = e.ListChangeAction, StartIndex = e.StartIndex, EndIndex = e.EndIndex, FieldPath = e.FieldPath });
-            //}
         }
 
+        /// <summary>
+        /// Scrolls to specified item.
+        /// </summary>
         public void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
             var item = Items.Get(index);
             ScrollTo(item, alignment, offset);
         }
 
+        /// <summary>
+        /// Gets virtual item from bindable item.
+        /// </summary>
+        public VirtualItem GetVirtualItem(BindableObject item)
+        {
+            if (!_indexOfItem.TryGetValue(item, out int index))
+                return null;
+
+            return _virtualItems[index];
+        }
+
+        /// <summary>
+        /// Scrolls to specified item.
+        /// </summary>
         public void ScrollTo(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            if (IsVirtualized)
-            {
-                // TODO implement
-                return;
-            }
-
             if (!IsScrollable || item == null)
                 return;
 
-            if (!_presentedItems.TryGetValue(item, out var listItem))
-                return;
+            ListItem listItem = null;
+            VirtualItem virtualItem = null;
+            if (!IsVirtualized)
+            {
+                if (!_presentedItems.TryGetValue(item, out listItem))
+                    return;        
+            }
+            else
+            {
+                virtualItem = GetVirtualItem(item);
+                if (virtualItem == null)
+                    return;
+            }
 
             if (offset == null)
             {
@@ -236,28 +291,29 @@ namespace Delight
                 }
 
                 // calculate the scroll position based on alignment and offset
-                float itemPosition = listItem.OffsetFromParent.Left.Pixels;
-                float itemWidth = listItem.Width.Pixels;
+                float itemPosition = !IsVirtualized ? listItem.OffsetFromParent.Left.Pixels : virtualItem.Offset.Left.Pixels;
+                float itemWidth = !IsVirtualized ? listItem.Width.Pixels : virtualItem.Width.Pixels;
+                float scrollOffset = 0;
 
                 if (alignment == null || alignment.Value.HasFlag(ElementAlignment.Right))
                 {
                     // scroll so item is the right side of viewport
-                    float scrollOffset = itemPosition - (viewportWidth - itemWidth) + offset.Left.Pixels + offset.Right.Pixels;
-                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                    scrollOffset = itemPosition + itemWidth + offset.Left.Pixels + offset.Bottom.Pixels - viewportWidth;
                 }
                 else if (alignment.Value.HasFlag(ElementAlignment.Top) || alignment.Value.HasFlag(ElementAlignment.Bottom) ||
                     alignment.Value == ElementAlignment.Center)
                 {
                     // scroll so item is at center of viewport
-                    float scrollOffset = itemPosition - viewportWidth / 2 + itemWidth / 2 + offset.Left.Pixels + offset.Right.Pixels;
-                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                    scrollOffset = itemPosition + itemWidth / 2 + offset.Left.Pixels + offset.Right.Pixels
+                        - viewportWidth / 2;
                 }
                 else
                 {
                     // scroll so item is at left side of viewport
-                    float scrollOffset = itemPosition + offset.Left.Pixels + offset.Right.Pixels;
-                    ScrollableRegion.SetScrollPosition((scrollOffset / scrollWidth).Clamp(0, 1), 0);
+                    scrollOffset = itemPosition + offset.Left.Pixels + offset.Right.Pixels;
                 }
+
+                ScrollableRegion.SetAbsoluteScrollPosition(scrollOffset, 0);
             }
             else
             {
@@ -265,8 +321,8 @@ namespace Delight
                 float viewportHeight = ScrollableRegion.ViewportHeight;
 
                 // calculate the scroll position based on alignment and offset
-                float itemPosition = listItem.OffsetFromParent.Top.Pixels;
-                float itemHeight = listItem.Height.Pixels;
+                float itemPosition = !IsVirtualized ? listItem.OffsetFromParent.Top.Pixels : virtualItem.Offset.Top.Pixels;
+                float itemHeight = !IsVirtualized ? listItem.Height.Pixels : virtualItem.Height.Pixels;
                 float scrollOffset = 0;
 
                 if (alignment == null || alignment.Value.HasFlag(ElementAlignment.Bottom))
@@ -299,7 +355,9 @@ namespace Delight
         {
             if (IsVirtualized)
             {
-                // TODO implement
+                ClearItems();
+                CreateItems();
+                return;
             }
 
             int newItemsCount = Items.Count;
@@ -354,7 +412,9 @@ namespace Delight
         {
             if (IsVirtualized)
             {
-                // TODO implement
+                ClearItems();
+                CreateItems();
+                return;
             }
 
             if (_presentedItems.TryGetValue(item, out var listItem))
@@ -398,6 +458,19 @@ namespace Delight
         /// </summary>
         private void ClearItems()
         {
+            if (IsVirtualized)
+            {
+                // unrealize all items
+                foreach (var virtualItem in _virtualItems)
+                {
+                    UnrealizeItem(virtualItem);
+                }
+
+                _virtualItems.Clear();
+                _indexOfItem.Clear();
+                return;
+            }
+
             // unload and clear existing children
             foreach (var child in Content.LayoutChildren)
             {
@@ -405,11 +478,6 @@ namespace Delight
             }
             Content.LayoutChildren.Clear();
             _presentedItems.Clear();
-        }
-
-        public void ListOrientationChanged()
-        {
-            // TODO implement rearrangement of list
         }
 
         /// <summary>
@@ -427,6 +495,21 @@ namespace Delight
 
             ScrollableRegion.CanScrollHorizontally = ScrollsHorizontally;
             ScrollableRegion.CanScrollVertically = !ScrollsHorizontally;
+
+            if (IsVirtualized && VirtualItemGetter.Method == null)
+            {
+                // get the default size of each item template
+                var templateData = new ContentTemplateData { Item = null };
+                _contentTemplateVirtualItem = new Dictionary<ContentTemplate, VirtualItem>();
+                foreach (var contentTemplate in ContentTemplates)
+                {
+                    var itemView = contentTemplate.Activator(new ContentTemplateData { Item = null }) as ListItem;
+                    var itemWidth = itemView.OverrideWidth ?? itemView.Width ?? ElementSize.FromPercents(1);
+                    var itemHeight = itemView.OverrideHeight ?? itemView.Height ?? ElementSize.FromPercents(1);
+                    _contentTemplateVirtualItem.Add(contentTemplate, new VirtualItem(itemWidth, itemHeight, contentTemplate));
+                    itemView.Destroy();
+                }
+            }
         }
 
         /// <summary>
@@ -447,6 +530,9 @@ namespace Delight
         /// </summary>
         public void OnListChildLayoutChanged()
         {
+            if (IsVirtualized)
+                return;
+
             // update layout and notify parents if size has changed
             if (UpdateLayout(false))
             {
@@ -457,17 +543,44 @@ namespace Delight
         /// <summary>
         /// Called when a new dynamic list item is to be generated.
         /// </summary>
-        protected View CreateListItem(BindableObject item)
+        protected void CreateListItem(BindableObject item)
         {
+            string templateId = TemplateSelector?.Invoke(item) as string;
             if (IsVirtualized)
             {
-                // TODO implement
+                // add virtual item
+                VirtualItem virtualItem = null;
+                if (VirtualItemGetter.Method != null)
+                {
+                    virtualItem = VirtualItemGetter.Invoke(item) as VirtualItem;
+                }
+                else
+                {
+                    var template = GetContentTemplate(null, templateId);
+                    if (template != null)
+                    {
+                        _contentTemplateVirtualItem.TryGetValue(template, out virtualItem);
+                    }
+                }
+
+                if (virtualItem != null)
+                {
+                    var newVirtualItem = new VirtualItem(virtualItem.Width, virtualItem.Height, virtualItem.ContentTemplate);
+                    if (newVirtualItem.ContentTemplate == null)
+                    {
+                        var template = GetContentTemplate(null, templateId);
+                        newVirtualItem.ContentTemplate = template;
+                    }
+                    newVirtualItem.Item = item;
+                    _virtualItems.Add(newVirtualItem);
+                    _indexOfItem.Add(item, _virtualItems.Count - 1);
+                }
+                return;
             }
 
-            string templateId = TemplateSelector?.Invoke(item) as string;
             var listItem = base.CreateItem(item, null, templateId) as ListItem;
             if (listItem == null)
-                return null;
+                return;
 
             listItem.Load();
 
@@ -483,7 +596,6 @@ namespace Delight
                 // set item data on list item for easy reference
                 listItem.Item = item;
             }
-            return listItem;
         }
 
         /// <summary>
@@ -504,8 +616,153 @@ namespace Delight
                 hasNewSize = UpdateLayoutWrapped();
             }
 
+            if (IsVirtualized)
+            {
+                UpdateRealizedItems();
+            }
+
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
             return base.UpdateLayout(notifyParent) || hasNewSize;
+        }
+
+        /// <summary>
+        /// Updates realized items.
+        /// </summary>
+        private void UpdateRealizedItems()
+        {
+            foreach (var virtualItem in _virtualItems)
+            {
+                // see if virtual item is in viewport
+                if (!IsVirtualItemInViewport(virtualItem))
+                {
+                    // if it has a previously realized item add it back to the pool
+                    UnrealizeItem(virtualItem);
+                    continue;
+                }
+
+                RealizeItem(virtualItem);
+            }
+        }
+
+        /// <summary>
+        /// Unrealizes virtual item.
+        /// </summary>
+        private void UnrealizeItem(VirtualItem virtualItem)
+        {
+            if (virtualItem.RealizedItem == null)
+                return; // item already unrealized
+
+            if (!_realizedItemPool.TryGetValue(virtualItem.ContentTemplate, out var realizedItemPool))
+            {
+                realizedItemPool = new List<ListItem>();
+                _realizedItemPool.Add(virtualItem.ContentTemplate, realizedItemPool);
+            }
+
+            realizedItemPool.Add(virtualItem.RealizedItem);
+            virtualItem.RealizedItem.IsActive = false;
+            virtualItem.RealizedItem = null;
+        }
+
+        /// <summary>
+        /// Realizes virtual item.
+        /// </summary>
+        private void RealizeItem(VirtualItem virtualItem)
+        {
+            if (virtualItem.RealizedItem != null)
+                return; // item already realized
+
+            // see if a realized item is available from the pool
+            ListItem realizedItem = null;
+            if (_realizedItemPool.TryGetValue(virtualItem.ContentTemplate, out var realizedItemPool))
+            {
+                int lastIndex = realizedItemPool.Count - 1;
+                if (lastIndex >= 0)
+                {
+                    realizedItem = realizedItemPool[lastIndex];
+                    realizedItemPool.RemoveAt(lastIndex);
+                }
+            }
+
+            if (realizedItem == null)
+            {
+                // create new realized item
+                realizedItem = CreateRealizedListItem(virtualItem);
+            }
+
+            // set size and offset of realized item to match virtual item
+            realizedItem.IsActive = true;
+            realizedItem.Width = virtualItem.Width;
+            realizedItem.Height = virtualItem.Height;
+            realizedItem.OffsetFromParent = virtualItem.Offset;
+            realizedItem.Alignment = virtualItem.Alignment;
+            realizedItem.IsSelected = virtualItem.IsSelected;
+            realizedItem.Item = virtualItem.Item;
+            if (realizedItem.ContentTemplateData != null)
+            {
+                realizedItem.ContentTemplateData.Item = virtualItem.Item;
+            }
+            virtualItem.RealizedItem = realizedItem;
+        }
+
+        /// <summary>
+        /// Creates new realized list item from virtual item.
+        /// </summary>
+        protected ListItem CreateRealizedListItem(VirtualItem virtualItem)
+        {
+            var listItem = virtualItem.ContentTemplate.Activator(new ContentTemplateData { Item = virtualItem.Item }) as ListItem;
+            if (listItem == null)
+                return null;
+
+            listItem.DisableLayoutUpdate = true;
+            listItem.Width = virtualItem.Width;
+            listItem.Height = virtualItem.Height;
+            listItem.OffsetFromParent = virtualItem.Offset;
+            listItem.Alignment = virtualItem.Alignment;
+            listItem.IsSelected = virtualItem.IsSelected;
+            listItem.DisableLayoutUpdate = false;
+
+            listItem.Load();
+
+            UnblockListItemDragEvents(listItem);
+            listItem.Item = virtualItem.Item;
+            return listItem;
+        }
+
+        /// <summary>
+        /// Returns true if the virtual item is visible in the viewport.
+        /// </summary>
+        private bool IsVirtualItemInViewport(VirtualItem virtualItem)
+        {
+            var contentOffset = ScrollableRegion.GetContentOffset();
+            float vpXMin = 0 - RealizationMargin.x;
+            float vpYMin = 0 - RealizationMargin.y;
+            float vpXMax = ScrollableRegion.ViewportWidth + RealizationMargin.x;
+            float vpYMax = ScrollableRegion.ViewportHeight + RealizationMargin.y;
+           
+            if (Overflow == OverflowMode.Wrap)
+            {
+                // check both axis
+                float xMin = (virtualItem.Offset.Left.Pixels) + contentOffset.x;
+                float xMax = (virtualItem.Offset.Left.Pixels + virtualItem.Width.Pixels) + contentOffset.x;
+                float yMin = (virtualItem.Offset.Top.Pixels) + contentOffset.y;
+                float yMax = (virtualItem.Offset.Top.Pixels + virtualItem.Height.Pixels) + contentOffset.y;
+                return (xMax >= 0 && xMin <= vpXMax) && (yMax >= 0 && yMin <= vpYMax);
+            }
+            else
+            {
+                if (ScrollsHorizontally)
+                {
+                    float xMin = (virtualItem.Offset.Left.Pixels) + contentOffset.x;
+                    float xMax = (virtualItem.Offset.Left.Pixels + virtualItem.Width.Pixels) + contentOffset.x;
+                    return xMax >= 0 && xMin <= vpXMax;
+                }
+                else
+                {
+                    float yMin = (virtualItem.Offset.Top.Pixels) + contentOffset.y;
+                    float yMax = (virtualItem.Offset.Top.Pixels + virtualItem.Height.Pixels) + contentOffset.y;
+                    return yMax >= 0 && yMin <= vpYMax;
+                }
+            }
         }
 
         /// <summary>
@@ -522,30 +779,43 @@ namespace Delight
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
 
-            List<UIView> children = new List<UIView>();
-            Content.ForEach<UIView>(x =>
+            List<UIView> children = null;
+            if (!IsVirtualized)
             {
-                children.Add(x);
-            }, false);
+                children = new List<UIView>();
+                Content.ForEach<UIView>(x =>
+                {
+                    children.Add(x);
+                }, false);
+            }
 
             // get size of content and set content offsets and alignment
             var spacingSize = Spacing ?? ElementSize.Default;
             var spacing = isHorizontal ? (HorizontalSpacing != null ? HorizontalSpacing.Pixels : spacingSize.Pixels)
                  : (VerticalSpacing != null ? VerticalSpacing.Pixels : spacingSize.Pixels);
 
-            int childCount = children.Count;
+            int childCount = !IsVirtualized ? children.Count : _virtualItems.Count;
             int childIndex = 0;
             for (int i = 0; i < childCount; ++i)
             {
-                var childView = children[i];
-                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
-                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
+                var childView = !IsVirtualized ? children[i] : null;
+                var childViewAlignment = !IsVirtualized ? childView.Alignment : ElementAlignment.Center;
+                VirtualItem childSize = null;
+                if (!IsVirtualized)
+                {
+                    childSize = new VirtualItem(childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default),
+                        childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default));
+                }
+                else
+                {
+                    childSize = _virtualItems[i];
+                }
 
-                if (childWidth.Unit == ElementSizeUnit.Percents)
+                if (childSize.Width.Unit == ElementSizeUnit.Percents)
                 {
                     if (isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# {0}: Unable to arrange list item horizontally as it doesn't specify its width in pixels.", Name));
                         continue;
                     }
                     else
@@ -554,11 +824,11 @@ namespace Delight
                     }
                 }
 
-                if (childHeight.Unit == ElementSizeUnit.Percents)
+                if (childSize.Height.Unit == ElementSizeUnit.Percents)
                 {
                     if (!isHorizontal)
                     {
-                        Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                        Debug.LogWarning(String.Format("#Delight# {0} Unable to arrange list item vertically as it doesn't specify its height in pixels.", Name));
                         continue;
                     }
                     else
@@ -566,9 +836,6 @@ namespace Delight
                         percentageHeight = true;
                     }
                 }
-
-                bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
-                childView.DisableLayoutUpdate = true;
 
                 // set offsets and alignment
                 var offset = new ElementMargin(
@@ -578,7 +845,7 @@ namespace Delight
                 // set desired alignment if it is valid for the orientation otherwise use defaults
                 var alignment = ElementAlignment.Center;
                 var defaultAlignment = isHorizontal ? ElementAlignment.Left : ElementAlignment.Top;
-                var desiredAlignment = !ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : childView.Alignment;
+                var desiredAlignment = !ContentAlignmentProperty.IsUndefined(this) ? ContentAlignment : childViewAlignment;
                 if (isHorizontal && (desiredAlignment == ElementAlignment.Top || desiredAlignment == ElementAlignment.Bottom
                     || desiredAlignment == ElementAlignment.TopLeft || desiredAlignment == ElementAlignment.BottomLeft))
                 {
@@ -597,26 +864,40 @@ namespace Delight
                 // get size of content
                 if (!percentageWidth)
                 {
-                    totalWidth += childWidth;
-                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
+                    totalWidth += childSize.Width.Pixels;
+                    maxWidth = childSize.Width.Pixels > maxWidth ? childSize.Width.Pixels : maxWidth;
                 }
 
                 if (!percentageHeight)
                 {
-                    totalHeight += childHeight;
-                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
+                    totalHeight += childSize.Height.Pixels;
+                    maxHeight = childSize.Height.Pixels > maxHeight ? childSize.Height.Pixels : maxHeight;
                 }
 
-                // update child layout
-                if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                if (!IsVirtualized)
                 {
-                    childView.OffsetFromParent = offset;
-                    childView.Alignment = alignment;
+                    bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
+                    childView.DisableLayoutUpdate = true;
 
-                    childView.UpdateLayout(false);
+                    // update child layout
+                    if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                    {
+                        childView.OffsetFromParent = offset;
+                        childView.Alignment = alignment;
+
+                        childView.UpdateLayout(false);
+                    }
+
+                    childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
                 }
+                else
+                {
+                    // set offset of virtual size
+                    childSize.Offset = offset;
+                    childSize.Alignment = alignment;
+                }
+
                 ++childIndex;
-                childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
             }
 
             // calculate total width and height
@@ -710,11 +991,15 @@ namespace Delight
             float maxWidth = 0f;
             float maxHeight = 0f;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
-            List<UIView> children = new List<UIView>();
-            Content.ForEach<UIView>(x =>
+            List<UIView> children = null;
+            if (!IsVirtualized)
             {
-                children.Add(x);
-            }, false);
+                children = new List<UIView>();
+                Content.ForEach<UIView>(x =>
+                {
+                    children.Add(x);
+                }, false);
+            }
 
             // get size of content and set content offsets and alignment
             var spacing = Spacing ?? ElementSize.Default;
@@ -724,30 +1009,37 @@ namespace Delight
             float yOffset = 0f;
             float maxColumnWidth = 0;
             float maxRowHeight = 0;
-            int childCount = children.Count;
+            int childCount = !IsVirtualized ? children.Count : _virtualItems.Count;
             int childIndex = 0;
             bool firstItem = true;
 
             for (int i = 0; i < childCount; ++i)
             {
-                var childView = children[i];
-                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
-                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
-
-                if (childWidth.Unit == ElementSizeUnit.Percents && isHorizontal)
+                var childView = !IsVirtualized ? children[i] : null;
+                var childViewAlignment = !IsVirtualized ? childView.Alignment : ElementAlignment.Center;
+                VirtualItem childSize = null;
+                if (!IsVirtualized)
                 {
-                    Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" horizontally as it doesn't specify its width in pixels.", childView.Name));
+                    childSize = new VirtualItem(childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default),
+                        childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default));
+                }
+                else
+                {
+                    childSize = _virtualItems[i];
+                }
+
+                if (childSize.Width.Unit == ElementSizeUnit.Percents && isHorizontal)
+                {
+                    Debug.LogError(String.Format("#Delight# {0}: Unable to arrange list item horizontally as it doesn't specify its width in pixels.", Name));
                     continue;
                 }
 
-                if (childHeight.Unit == ElementSizeUnit.Percents && !isHorizontal)
+                if (childSize.Height.Unit == ElementSizeUnit.Percents && !isHorizontal)
                 {
-                    Debug.LogWarning(String.Format("#Delight# Unable to group view \"{0}\" vertically as it doesn't specify its height in pixels or elements.", childView.Name));
+                    Debug.LogError(String.Format("#Delight# {0}: Unable to arrange list item vertically as it doesn't specify its height in pixels or elements.", Name));
                     continue;
                 }
 
-                bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
-                childView.DisableLayoutUpdate = true;
                 ElementMargin offset = null;
 
                 // set offsets and alignment
@@ -760,7 +1052,7 @@ namespace Delight
                         xOffset = 0;
                         firstItem = false;
                     }
-                    else if ((xOffset + childWidth + horizontalSpacing) > ActualWidth)
+                    else if ((xOffset + childSize.Width + horizontalSpacing) > ActualWidth)
                     {
                         // item overflows to next row
                         xOffset = 0;
@@ -775,10 +1067,10 @@ namespace Delight
 
                     // set offsets
                     offset = new ElementMargin(xOffset, yOffset);
-                    xOffset += childWidth;
-                    maxRowHeight = Mathf.Max(maxRowHeight, childHeight);
+                    xOffset += childSize.Width;
+                    maxRowHeight = Mathf.Max(maxRowHeight, childSize.Height);
                     maxWidth = Mathf.Max(maxWidth, xOffset);
-                    maxHeight = Mathf.Max(maxHeight, yOffset + childHeight);
+                    maxHeight = Mathf.Max(maxHeight, yOffset + childSize.Height);
                 }
                 else
                 {
@@ -788,7 +1080,7 @@ namespace Delight
                         yOffset = 0;
                         firstItem = false;
                     }
-                    else if ((yOffset + childHeight + verticalSpacing) > ActualHeight)
+                    else if ((yOffset + childSize.Height + verticalSpacing) > ActualHeight)
                     {
                         // item overflows to next column
                         yOffset = 0;
@@ -803,22 +1095,36 @@ namespace Delight
 
                     // set offsets
                     offset = new ElementMargin(xOffset, yOffset);
-                    yOffset += childHeight;
-                    maxColumnWidth = Mathf.Max(maxColumnWidth, childWidth);
-                    maxWidth = Mathf.Max(maxWidth, xOffset + childWidth);
+                    yOffset += childSize.Height;
+                    maxColumnWidth = Mathf.Max(maxColumnWidth, childSize.Width);
+                    maxWidth = Mathf.Max(maxWidth, xOffset + childSize.Width);
                     maxHeight = Mathf.Max(maxHeight, yOffset);
                 }
 
-                // update child layout if changed
-                if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                if (!IsVirtualized)
                 {
-                    childView.OffsetFromParent = offset;
-                    childView.Alignment = alignment;
-                    childView.UpdateLayout(false);
+                    bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
+                    childView.DisableLayoutUpdate = true;
+
+                    // update child layout
+                    if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                    {
+                        childView.OffsetFromParent = offset;
+                        childView.Alignment = alignment;
+
+                        childView.UpdateLayout(false);
+                    }
+
+                    childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
+                }
+                else
+                {
+                    // set offset of virtual size
+                    childSize.Offset = offset;
+                    childSize.Alignment = alignment;
                 }
 
                 ++childIndex;
-                childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
             }
 
             var padding = Padding ?? ElementMargin.Default;
@@ -933,12 +1239,20 @@ namespace Delight
                 return;
             }
 
-            if (_presentedItems.TryGetValue(item, out var listItem))
+            if (IsVirtualized)
             {
-                SelectItem(listItem, triggeredByClick);
+                var virtualItem = GetVirtualItem(item);
+                SelectVirtualItem(virtualItem);
+            }
+            else
+            {
+                if (_presentedItems.TryGetValue(item, out var listItem))
+                {
+                    SelectItem(listItem, triggeredByClick);
+                }
             }
         }
-
+               
         /// <summary>
         /// Selects item in the list.
         /// </summary>
@@ -946,6 +1260,13 @@ namespace Delight
         {
             if (listItem == null || (triggeredByClick && !CanSelect))
                 return;
+
+            if (IsVirtualized)
+            {
+                var virtualItem = GetVirtualItem(listItem.Item);
+                SelectVirtualItem(virtualItem);
+                return;
+            }
 
             // is item already selected?
             if (listItem.IsSelected)
@@ -992,54 +1313,7 @@ namespace Delight
                 }
             }
         }
-
-        public void DeselectAll()
-        {
-            if (IsVirtualized)
-            {
-                // TODO implement
-            }
-
-            foreach (var listItem in _presentedItems.Values)
-            {
-                SetSelected(listItem, false);
-            }
-
-            if (SelectedItem != null)
-            {
-                SelectedItem = null;
-            }
-        }
-
-        /// <summary>
-        /// Selects item in the list.
-        /// </summary>
-        //public void SelectItem(int index)
-        //{
-        //    if (Items == null || index < 0 || index >= Items.Count)
-        //        return;
-
-        //    if (IsVirtualized)
-        //    {
-        //        // TODO implement virtualized selection logic
-        //        //_selectedItem = Items[index];
-        //        //int startIndex = _previousFirstRowIndex * ItemsPerVirtualizedRow;
-        //        //int endIndex = startIndex + (VirtualizedItemsCount - 1);
-
-        //        //// is item outside viewport? 
-        //        //if (index < startIndex || index > endIndex)
-        //        //    return; // yes. no need to update
-
-        //        //// select virtualized list item
-        //        //var virtualizedItem = _virtualizedItems[index - startIndex];
-        //        //SelectItem(virtualizedItem, false);
-        //    }
-        //    else
-        //    {
-        //        SelectItem(_presentedListItems[index] as ListItem, false);
-        //    }
-        //}
-
+        
         /// <summary>
         /// Selects or deselects a list item.
         /// </summary>
@@ -1052,7 +1326,7 @@ namespace Delight
             if (selected)
             {
                 _selectedItem = listItem.Item;
-                SelectedItem = listItem.Item;                
+                SelectedItem = listItem.Item;
             }
 
             ItemSelectionActionData data = new ItemSelectionActionData { IsSelected = selected, ListItem = listItem, Item = listItem.Item };
@@ -1063,6 +1337,116 @@ namespace Delight
             else
             {
                 ItemDeselected?.Invoke(this, data);
+            }
+        }
+
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
+        private void SelectVirtualItem(VirtualItem listItem, bool triggeredByClick = false)
+        {
+            if (listItem == null || (triggeredByClick && !CanSelect))
+                return;
+
+            // is item already selected?
+            if (listItem.IsSelected)
+            {
+                // yes. can it be deselected?
+                if (triggeredByClick && !CheckCanDeselect())
+                {
+                    // no. should it be re-selected?
+                    if (CanReselect)
+                    {
+                        // yes. select it again
+                        SetSelectedVirtual(listItem, true);
+                    }
+
+                    return; // no.
+                }
+
+                // deselect and trigger actions
+                SetSelectedVirtual(listItem, false);
+            }
+            else
+            {
+                // select
+                SetSelectedVirtual(listItem, true);
+
+                // deselect other items if we can't multi-select
+                if (!CanMultiSelect)
+                {
+                    foreach (VirtualItem item in _virtualItems)
+                    {
+                        if (item == listItem)
+                            continue;
+
+                        // deselect and trigger actions
+                        SetSelectedVirtual(item, false);
+                    }
+                }
+
+                // should this item immediately be deselected?
+                if (DeselectAfterSelect)
+                {
+                    // yes.
+                    SetSelectedVirtual(listItem, false);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Selects or deselects a list item.
+        /// </summary>
+        private void SetSelectedVirtual(VirtualItem listItem, bool selected)
+        {
+            if (listItem == null)
+                return;
+            
+            listItem.IsSelected = selected;
+            if (listItem.RealizedItem != null)
+            {
+                listItem.RealizedItem.IsSelected = selected;
+            }
+
+            if (selected)
+            {
+                _selectedItem = listItem.Item;
+                SelectedItem = listItem.Item;
+            }
+
+            ItemSelectionActionData data = new ItemSelectionActionData { IsSelected = selected, ListItem = listItem.RealizedItem, Item = listItem.Item };
+            if (selected)
+            {
+                ItemSelected?.Invoke(this, data);
+            }
+            else
+            {
+                ItemDeselected?.Invoke(this, data);
+            }
+        }
+
+        /// <summary>
+        /// Deselects all items.
+        /// </summary>
+        public void DeselectAll()
+        {
+            if (IsVirtualized)
+            {
+                foreach (var virtualItem in _virtualItems)
+                {
+                    SetSelectedVirtual(virtualItem, false);
+                }
+                return;
+            }
+
+            foreach (var listItem in _presentedItems.Values)
+            {
+                SetSelected(listItem, false);
+            }
+
+            if (SelectedItem != null)
+            {
+                SelectedItem = null;
             }
         }
 
@@ -1095,7 +1479,7 @@ namespace Delight
                 var templateData = new ContentTemplateData();
                 var listItem = contentTemplate.Activator(templateData) as ListItem;
                 listItem.Load();
-                UnblockListItemDragEvents(listItem);                                
+                UnblockListItemDragEvents(listItem);
             }
         }
 

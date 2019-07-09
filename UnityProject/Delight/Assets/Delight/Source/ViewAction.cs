@@ -58,7 +58,7 @@ namespace Delight
                 _action?.Invoke(sender, eventArgs);
             }
         }
-
+                
         public void RegisterHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
         {
             RegisterHandler(ResolveActionHandler(parent, actionHandlerName, paramGetters));
@@ -175,7 +175,7 @@ namespace Delight
                 else
                 {
                     // try pass the raw data
-                    return (x, y) => actionHandler.Invoke(obj, new object[] { (y as ActionData).RawData });
+                    return (x, y) => actionHandler.Invoke(obj, new object[] { (y as ActionData) != null ? (y as ActionData).RawData : y });
                 }
             }
             else

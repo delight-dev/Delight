@@ -1,22 +1,25 @@
 <ListExample BasedOn="LayoutRoot" xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
              Players="t:BindableCollection[Player]" ItemIndex="t:string" SelectedPlayer="t:Player">
   <Group Orientation="Horizontal" Spacing="10">
-    <Group Spacing="10" Width="100">
-      <InputField Text="{ItemIndex}" />
-      <Button Text="Select" Click="SelectItem" />
-      <Button Text="ScrollTo" Click="ScrollTo" />
-      <Button Text="ScrollToSelected" Click="ScrollToSelected" Margin="0,5,0,0" />
+    <Group Spacing="10" Width="200">
+      <InputField Text="{ItemIndex}" Width="200" />
+      <Button Text="Select" Click="SelectItem" Width="200" />
+      <Button Text="ScrollTo" Click="ScrollTo" Width="200" />
+      <Button Text="ScrollToSelected" Click="ScrollToSelected" Width="200" Margin="0,5,0,0" />
+      <Button Text="Add" Click="AddItem" Width="200" Margin="0,5,0,0" />
+      <Button Text="Insert" Click="InsertItem" Width="200" Margin="0,5,0,0" />
+      <Button Text="Remove" Click="RemoveItem" Width="200" Margin="0,5,0,0" />      
     </Group> 
 
-    <List Id="PlayerList" Items="{player in Players}" Width="500" Height="500" BackgroundColor="Green" Spacing="5" 
+    <List Id="PlayerList" Items="{player in Players}" Width="425" Height="500" BackgroundColor="Green" Spacing="5" 
           IsScrollable="True" Overflow="Wrap" Orientation="Horizontal" SelectedItem="{SelectedPlayer}"
-          CanMultiSelect="True" TemplateSelector="MyTemplateSelector">  
+          CanMultiSelect="False" TemplateSelector="MyTemplateSelector" IsVirtualized="True">  
       <ListItem Id="TemplateA" Width="100" Height="100"> 
         <Image Color="{player.Color}" Margin="5" /> 
         <Label Text="{player.Name}" AutoSize="True" />
       </ListItem>
 
-      <ListItem Id="TemplateB" Width="200" Height="100">
+      <ListItem Id="TemplateB" Width="205" Height="100">
         <Image Color="{player.Color}" Margin="5" />
         <Label Text="Supreme {player.Name}" AutoSize="True" />
       </ListItem>

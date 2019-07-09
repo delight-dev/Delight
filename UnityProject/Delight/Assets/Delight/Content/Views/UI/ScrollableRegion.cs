@@ -152,11 +152,39 @@ namespace Delight
         /// <summary>
         /// Returns true if content offset is out of bounds.
         /// </summary>
-        private bool IsOutOfBounds(Vector2 offset, out bool xAxisOutOfBounds, out bool yAxisOutOfBounds)
+        public bool IsOutOfBounds(Vector2 offset, out bool xAxisOutOfBounds, out bool yAxisOutOfBounds)
         {
             Vector2 min, max;
             GetBounds(out min, out max);
 
+            float cx = ContentRegion.ActualWidth;
+            float cy = ContentRegion.ActualHeight;
+            float vpx = ActualWidth;
+            float vpy = ActualHeight;
+
+            // adjust min/max if content is smaller than viewport
+            if (cx < vpx)
+            {
+                min.x = 0;
+                max.x = 0;
+            }
+
+            if (cy < vpy)
+            {
+                min.y = 0;
+                max.y = 0;
+            }
+
+            xAxisOutOfBounds = (offset.x > min.x) || (offset.x < max.x);
+            yAxisOutOfBounds = (offset.y > min.y) || (offset.y < max.y);
+            return xAxisOutOfBounds || yAxisOutOfBounds;
+        }
+
+        /// <summary>
+        /// Returns true if content offset is out of bounds.
+        /// </summary>
+        public bool IsOutOfBounds(Vector2 offset, Vector2 min, Vector2 max, out bool xAxisOutOfBounds, out bool yAxisOutOfBounds)
+        {
             float cx = ContentRegion.ActualWidth;
             float cy = ContentRegion.ActualHeight;
             float vpx = ActualWidth;
@@ -800,7 +828,7 @@ namespace Delight
         /// <summary>
         /// Gets current content offset as vector.
         /// </summary>
-        private Vector2 GetContentOffset()
+        public Vector2 GetContentOffset()
         {
             if (ContentRegion.OffsetFromParent == null)
                 ContentRegion.OffsetFromParent = new ElementMargin();
@@ -817,17 +845,30 @@ namespace Delight
             if (ContentRegion.OffsetFromParent == null)
                 ContentRegion.OffsetFromParent = new ElementMargin();
 
+            bool hasChanged = false;
             if (CanScrollHorizontally)
             {
-                ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+                if (ContentRegion.OffsetFromParent.Left.Pixels != contentOffset.x)
+                {
+                    ContentRegion.OffsetFromParent.Left.Pixels = contentOffset.x;
+                    hasChanged = true;
+                }
             }
 
             if (CanScrollVertically)
             {
-                ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
+                if (ContentRegion.OffsetFromParent.Top.Pixels != contentOffset.y)
+                {
+                    ContentRegion.OffsetFromParent.Top.Pixels = contentOffset.y;
+                    hasChanged = true;
+                }
             }
 
-            UpdateScrollbars();
+            if (hasChanged)
+            {
+                UpdateScrollbars();
+                ContentScrolled?.Invoke(this, null);
+            }
         }
 
         /// <summary>
@@ -919,7 +960,7 @@ namespace Delight
         /// <summary>
         /// Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).
         /// </summary>
-        public void SetScrollPosition(float horizontalPosition, float verticalPosition)
+        public void SetScrollPosition(float horizontalPosition, float verticalPosition, bool stopMovement = true)
         {
             // calculate content offset
             horizontalPosition = Mathf.Clamp(horizontalPosition, 0, 1);
@@ -936,12 +977,17 @@ namespace Delight
 
             var clampedOffset = GetClampedOffset(contentOffset);
             SetContentOffset(clampedOffset);
+
+            if (stopMovement)
+            {
+                _velocity = Vector2.zero;
+            }
         }
 
         /// <summary>
         /// Sets absolute scroll position in pixels (from 0 to size of scrollable content).
         /// </summary>
-        public void SetAbsoluteScrollPosition(float horizontalPosition, float verticalPosition)
+        public void SetAbsoluteScrollPosition(float horizontalPosition, float verticalPosition, bool stopMovement = true)
         {
             float cx = ContentRegion.ActualWidth - ViewportWidth;
             float cy = ContentRegion.ActualHeight - ViewportHeight;
@@ -949,7 +995,7 @@ namespace Delight
             float ax = cx > 0 ? horizontalPosition / cx : 0;
             float ay = cy > 0 ? verticalPosition / cy : 0;
 
-            SetScrollPosition(ax, ay);
+            SetScrollPosition(ax, ay, stopMovement);
         }
 
         #endregion
