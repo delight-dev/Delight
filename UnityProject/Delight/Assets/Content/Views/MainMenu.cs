@@ -13,14 +13,17 @@ namespace Delight
     {
         public void Play(PointerEventData pointerData)
         {
+            Debug.Log("Play clicked");
         }
 
         public void Options(PointerEventData pointerData)
         {
+            Debug.Log("Options clicked");
         }
 
         public void Quit(PointerEventData pointerData)
         {
+            Debug.Log("Quit clicked");
         }
 
         public void QuitMouseDown(PointerEventData pointerData)

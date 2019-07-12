@@ -386,6 +386,7 @@ namespace Delight.Editor.Parser
             // get all action assignments 
             var allActionAssignments = viewObject.GetAllActionAssignmentsWithStyle();
             bool first = true;
+            int newActionAssignmentCount = 0;
             foreach (var actionAssignment in allActionAssignments)
             {
                 if (!first)
@@ -452,9 +453,10 @@ namespace Delight.Editor.Parser
                 sbHandlers.AppendLine(2, "public void {0}({1})", actionName, parameters);
                 sbHandlers.AppendLine(2, "{{");
                 sbHandlers.AppendLine(2, "}}");
+                ++newActionAssignmentCount;
             }
 
-            if (sbHandlers.Length > 0)
+            if (newActionAssignmentCount > 0)
             {
                 // write file
                 var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));

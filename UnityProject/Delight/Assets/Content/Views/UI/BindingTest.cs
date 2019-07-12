@@ -1,4 +1,4 @@
-﻿#region Using Statements
+#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -13,6 +13,10 @@ namespace Delight
     /// </summary>
     public partial class BindingTest
     {
+
+
+
+
         #region Fields
 
         #endregion

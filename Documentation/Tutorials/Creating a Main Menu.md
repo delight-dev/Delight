@@ -65,7 +65,7 @@ Different views have different properties but most views are based on the `UIVie
 | Margin              | Specifies the view's margin from left, top, right and bottom. Defaults to "0,0,0,0". |
 | Offset              | Specifies the view's offset from left, top, right, bottom. Defaults to "0,0,0,0". |
 | BackgroundColor     | Background color of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5"). Undefined by default. |
-| BackgroundSprite    | The background sprite of the view. The value is the name of the sprite asset, e.g. "mysprite". |
+| BackgroundSprite    | The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite". |
 
 You can also add your own custom dependency properties to your view which we'll go over later in this tutorial.
 
@@ -73,7 +73,7 @@ You can also add your own custom dependency properties to your view which we'll 
 
 ## Responding to button clicks
 
-Open the `MainMenu` view and add the following to the XML:
+Open the `MainMenu` view and add the following click-handlers to the XML:
 
 *MainMenu.xml*
 
@@ -89,9 +89,38 @@ Open the `MainMenu` view and add the following to the XML:
 
 ```
 
-This will generate some click handlers in the code-behind.
-
 {{`Click` is one of the standard view actions that can be set on all views (others include `Drag`, `MouseEnter`, `MouseUp`, `Scroll`, etc.). }}
+
+This will generate the click handlers in the code-behind. Modify the handlers so they log messages:
+
+*MainMenu.cs*
+
+```c#
+namespace Delight
+{
+    public partial class MainMenu
+    {
+        public void Play(PointerEventData pointerData)
+        {
+            Debug.Log("Play clicked");
+        }
+
+        public void Options(PointerEventData pointerData)
+        {
+            Debug.Log("Options clicked");
+        }
+
+        public void Quit(PointerEventData pointerData)
+        {
+            Debug.Log("Quit clicked");
+        }
+    }
+}
+```
+
+
+
+
 
 
 
@@ -99,7 +128,7 @@ Create a view-switcher
 
 Create a options-menu
 
-
+Styling the buttons
 
 
 
