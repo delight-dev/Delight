@@ -13,7 +13,7 @@ namespace Delight
     /// <summary>
     /// Base class for bindable generic collections.
     /// </summary>
-    public class BindableCollection<T> : BindableCollection, IEnumerable<T>
+    public partial class BindableCollection<T> : BindableCollection, IEnumerable<T>
         where T : BindableObject
     {
         #region Fields
@@ -22,6 +22,7 @@ namespace Delight
         protected List<KeyValuePair<string, T>> _dataList = new List<KeyValuePair<string, T>>();
         protected bool _batchNotifications = false;
         protected List<CollectionChangedEventArgs> _collectionChangedEventArgsBatch = new List<CollectionChangedEventArgs>();
+        protected bool _suppressNotifications = false;
 
         #endregion
 
@@ -179,6 +180,9 @@ namespace Delight
 
         private void Notify(CollectionChangedEventArgs eventArgs)
         {
+            if (_suppressNotifications)
+                return;
+
             if (_batchNotifications)
                 _collectionChangedEventArgsBatch.Add(eventArgs);
             else
@@ -241,8 +245,17 @@ namespace Delight
             return Data.ContainsKey(item.Id);
         }
 
+        public virtual bool RemoveAt(int index)
+        {
+            if (index < 0 || index >= Count)
+                return false;
+
+            return Remove(this[index]);
+        }
+
         public virtual bool Remove(T item)
         {
+            // TODO we might want a dictionary to keep track of index to make this O(1)
             bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
@@ -372,6 +385,11 @@ namespace Delight
             return null;
         }
 
+        public bool Any()
+        {
+            return Count > 0;
+        }
+
         public bool Any(Func<T, bool> predicate)
         {
             foreach (var item in _dataList)
@@ -380,6 +398,19 @@ namespace Delight
                     return true;
             }
             return false;
+        }
+
+        public int IndexOf(T item)
+        {
+            // TODO we might want a dictionary to keep track of index to make it O(1)
+            for (int i = 0; i < Count; ++i)
+            {
+                if (_dataList[i].Value == item)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         /// <summary>
@@ -405,7 +436,7 @@ namespace Delight
     /// <summary>
     /// Base class for bindable collections.
     /// </summary>
-    public abstract class BindableCollection : BindableObject, IEnumerable<BindableObject>, INotifyCollectionChanged
+    public abstract partial class BindableCollection : BindableObject, IEnumerable<BindableObject>, INotifyCollectionChanged
     {
         #region Fields
 

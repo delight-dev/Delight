@@ -13,6 +13,7 @@ using Delight.Editor;
 using UnityEngine;
 using System.Xml.Serialization;
 using UnityEditor.SceneManagement;
+using UnityEditor;
 #endregion
 
 namespace Delight.Editor.Parser
@@ -166,6 +167,9 @@ namespace Delight.Editor.Parser
             var propertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>();
             var mappedDeclarations = GetMappedPropertyDeclarations(viewObject);
             var attachedProperties = viewObject.PropertyExpressions.OfType<AttachedProperty>();
+            var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
+            var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
+                            x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
 
             sb.AppendLine("        #region Constructors");
             sb.AppendLine();
@@ -176,12 +180,7 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        {");
                 GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
 
-                // do we have action handlers specified on the root element?
-                var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
-                var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
-                                x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
-
-                // yes. attach handlers
+                // register any action handlers specified on the root element
                 foreach (var actionAssignment in actionAssignments)
                 {
                     sb.AppendLine("            {0}.RegisterHandler(this, \"{1}\");", actionAssignment.PropertyName, actionAssignment.PropertyValue);
@@ -364,6 +363,156 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+
+            // generate action handlers in custom code-behind
+            if (!EditorPrefs.GetBool("Delight_DisableAutoGenerateHandlers"))
+            {
+                GenerateActionHandlers(viewObject);
+            }
+        }
+
+        /// <summary>
+        /// Generates action handler code.
+        /// </summary>
+        private static void GenerateActionHandlers(ViewObject viewObject)
+        {
+            var viewType = Assets.GetViewType(viewObject.TypeName);
+            if (viewType == null)
+                return;
+
+            var sbHandlers = new StringBuilder();
+            var methods = viewType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+            // get all action assignments 
+            var allActionAssignments = viewObject.GetAllActionAssignmentsWithStyle();
+            bool first = true;
+            foreach (var actionAssignment in allActionAssignments)
+            {
+                if (!first)
+                {
+                    sbHandlers.AppendLine();
+                }
+                first = false;
+
+                var actionName = actionAssignment.PropertyValue;
+
+                // does the action have parameters?
+                if (actionName.Contains("("))
+                {
+                    // yes. parse the parameters
+                    string[] actionParameters = actionAssignment.PropertyValue.Split(ActionDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                    actionName = actionParameters[0];
+                }
+
+                if (!ContentParser.CodeValidator.IsValidIdentifier(actionName))
+                    continue;
+
+                // check if method already exist
+                if (methods.Any(x => x.Name != null && x.Name.IEquals(actionName)))
+                    continue;
+
+                // add method
+                string parameters = string.Empty;
+                switch (actionAssignment.PropertyName)
+                {
+                    case "BeginDrag":
+                    case "Click":
+                    case "Drag":
+                    case "Drop":
+                    case "EndDrag":
+                    case "InitializePotentialDrag":
+                    case "MouseDown":
+                    case "MouseUp":
+                    case "MouseEnter":
+                    case "MouseExit":
+                    case "Scroll":
+                        parameters = "PointerEventData pointerData";
+                        break;
+
+                    case "Cancel":
+                    case "Deselect":
+                    case "Select":
+                    case "Submit":
+                    case "UpdateSelected":
+                        parameters = "BaseEventData eventData";
+                        break;
+
+                    case "Move":
+                        parameters = "AxisEventData axisData";
+                        break;
+
+                    case "ItemSelected":
+                        parameters = "ItemSelectionActionData itemData";
+                        break;
+
+                    case "TabSelected":
+                        parameters = "TabSelectionActionData tabSelectionData";
+                        break;
+                }
+                sbHandlers.AppendLine(2, "public void {0}({1})", actionName, parameters);
+                sbHandlers.AppendLine(2, "{{");
+                sbHandlers.AppendLine(2, "}}");
+            }
+
+            if (sbHandlers.Length > 0)
+            {
+                // write file
+                var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
+                var sourceFile = String.Format("{0}/{1}.cs", dir, viewObject.Name);
+
+                if (!File.Exists(sourceFile))
+                {
+                    // generate new source file 
+                    var sb = new StringBuilder();
+                    sb.AppendLine("#region Using Statements");
+                    sb.AppendLine("using System;");
+                    sb.AppendLine("using System.Collections.Generic;");
+                    sb.AppendLine("using System.Runtime.CompilerServices;");
+                    sb.AppendLine("using UnityEngine;");
+                    sb.AppendLine("using UnityEngine.UI;");
+                    sb.AppendLine("using UnityEngine.EventSystems;");
+                    sb.AppendLine("#endregion");
+                    sb.AppendLine();
+                    sb.AppendLine("namespace Delight");
+                    sb.AppendLine("{");
+                    sb.AppendLine("    public partial class {0}", viewObject.TypeName);
+                    sb.AppendLine("    {");
+                    sb.Append(sbHandlers.ToString());
+                    sb.AppendLine("    }");
+                    sb.AppendLine("}");
+
+                    // create file
+                    File.WriteAllText(sourceFile, sb.ToString());
+                }
+                else
+                {
+                    var fileContent = File.ReadAllText(sourceFile);
+                    var classIndex = fileContent.IndexOf("public partial class " + viewObject.TypeName);
+                    if (classIndex < 0) return;
+                    var classContentIndex = fileContent.IndexOf("{", classIndex);
+                    if (classContentIndex < 0) return;
+
+                    // make sure UnityEngine.EventSystems; exists 
+                    var contentBeforeClass = fileContent.Substring(0, classIndex);
+                    if (!contentBeforeClass.Contains("using UnityEngine.EventSystems;"))
+                    {
+                        // add it before the first using statement 
+                        var firstUsing = contentBeforeClass.IndexOf("using ");
+                        if (firstUsing < 0)
+                            firstUsing = 0;
+
+                        var usingStr = "using UnityEngine.EventSystems;" + Environment.NewLine;
+                        fileContent = fileContent.Insert(firstUsing, usingStr);
+                        classContentIndex += usingStr.Length;
+                    }
+
+                    // insert handlers
+                    fileContent = fileContent.Insert(classContentIndex+1, Environment.NewLine + sbHandlers.ToString());
+                    File.WriteAllText(sourceFile, fileContent);
+
+                    Debug.Log("Generating action handlers " + sbHandlers.ToString() + " for: " + sourceFile);
+                }                
+            }
         }
 
         /// <summary>
@@ -404,6 +553,15 @@ namespace Delight.Editor.Parser
                 if (!viewObject.HasCode || viewObject.Name == "View" || viewObject.Name == "DelightDesigner")
                     continue;
                 sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z) => new {0}(x, y, null, z));", viewObject.TypeName);
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("            ViewTypes = new Dictionary<string, Type>();");
+            foreach (var viewObject in viewObjects)
+            {
+                if (!viewObject.HasCode || viewObject.Name == "DelightDesigner")
+                    continue;
+                sb.AppendLine("            ViewTypes.Add(\"{0}\", typeof({0}));", viewObject.TypeName);
             }
 
             sb.AppendLine("        }");
@@ -1912,6 +2070,10 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("            if (String.IsNullOrEmpty(assetId))");
                 sb.AppendLine("                return null;");
                 sb.AppendLine();
+                // special case for Rivality
+                sb.AppendLine("            if (assetId.StartsWith(\"?\"))");
+                sb.AppendLine("                assetId = assetId.Substring(1);");
+                sb.AppendLine();
                 sb.AppendLine("            return Assets.{0}[assetId];", assetTypeNamePlural);
                 sb.AppendLine("        }");
                 sb.AppendLine("    }");
@@ -2539,6 +2701,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("using System.Runtime.CompilerServices;");
             sb.AppendLine("using UnityEngine;");
             sb.AppendLine("using UnityEngine.UI;");
+            sb.AppendLine("using UnityEngine.EventSystems;");
             sb.AppendLine("#endregion");
             sb.AppendLine();
             sb.AppendLine("namespace Delight");

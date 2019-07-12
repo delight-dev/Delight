@@ -44,6 +44,10 @@ namespace Delight
         /// </summary>
         private void SelectedTabIndexChanged()
         {
+#pragma warning disable CS4014
+            TabSwitcher.SwitchTo(SelectedTabIndex);
+#pragma warning restore CS4014
+
             // toggle header
             if (TabHeaderGroup.LayoutChildren.Count > SelectedTabIndex)
             {
@@ -57,6 +61,10 @@ namespace Delight
                 else
                 {
                     (TabHeaderGroup.LayoutChildren[SelectedTabIndex] as TabHeader).ToggleValue = true;
+
+                    var tab = TabSwitcher.Content.LayoutChildren[SelectedTabIndex] as Tab;
+                    TabSelectionActionData data = new TabSelectionActionData { IsSelected = true, Tab = tab, Item = tab.Item };
+                    TabSelected?.Invoke(this, data);
                 }
             }
         }
@@ -270,6 +278,7 @@ namespace Delight
                 // create empty tab
                 tabItem = new Tab(this, Content);
             }
+            tabItem.Item = item;
 
             if (!_tabs.ContainsKey(item))
             {
@@ -344,6 +353,14 @@ namespace Delight
             }
 
             return tabHeader;
+        }
+
+        /// <summary>
+        /// Switches to the specified tab.
+        /// </summary>
+        public void SelectTab(int tabIndex)
+        {
+            SelectedTabIndex = tabIndex;
         }
 
         #endregion

@@ -21,13 +21,12 @@ namespace Delight
 
         #region Methods
 
-        public async void TabToggleClick()
+        public void TabToggleClick()
         {
             if (!ToggleValue)
                 return;
 
-            TabPanel.SelectedTabIndexProperty.SetValue(ParentTabPanel, TabIndex, false);
-            await ParentTabPanel.TabSwitcher.SwitchTo(TabIndex);
+            ParentTabPanel.SelectedTabIndex = TabIndex;
         }
 
         #endregion

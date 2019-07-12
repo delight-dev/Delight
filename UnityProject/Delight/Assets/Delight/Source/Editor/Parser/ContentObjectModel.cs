@@ -98,7 +98,7 @@ namespace Delight.Editor.Parser
             }
 
             // create new view object if it doesn't exist
-            viewObject = new ViewObject { Name = viewName, TypeName = viewName };
+            viewObject = new ViewObject { Name = viewName, TypeName = viewName, HasXml = false };
             ViewObjects.Add(viewObject);
             _viewObjects.Add(viewName, viewObject);
             return viewObject;
@@ -561,6 +561,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(16)]
         public bool HasCode;
 
+        [ProtoMember(17)]
+        public bool HasXml;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -624,6 +627,7 @@ namespace Delight.Editor.Parser
             ContentTemplates.Clear();
             HasContentTemplates = false;
             HasCode = false;
+            HasXml = false;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)
@@ -658,6 +662,23 @@ namespace Delight.Editor.Parser
             }
 
             return viewDeclarations;
+        }
+
+        public List<PropertyAssignment> GetAllActionAssignmentsWithStyle()
+        {
+            var propertyAssignments = new List<PropertyAssignment>();
+            propertyAssignments.AddRange(PropertyExpressions.OfType<PropertyAssignment>());
+
+            var stylePropertyAssignments = ContentObjectModel.GetViewObjectStylePropertyAssignments(Name);
+            propertyAssignments.AddRange(stylePropertyAssignments);
+
+            var viewDeclarations = GetViewDeclarations(false);
+            foreach (var viewDeclaration in viewDeclarations)
+            {
+                propertyAssignments.AddRange(viewDeclaration.Declaration.GetPropertyAssignmentsWithStyle(out var styleMissing));
+            }
+
+            return propertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
         }
 
         #endregion

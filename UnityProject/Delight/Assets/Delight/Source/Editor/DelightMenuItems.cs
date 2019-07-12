@@ -26,7 +26,7 @@ namespace Delight.Editor
         private static void CreateSceneXml()
         {
             var contentObjectModel = ContentObjectModel.GetInstance();
-            var path = GetContentFolderPathFromSelectedFile(ContentParser.ScenesFolder);
+            var path = ContentParser.GetContentFolderPathFromSelectedFile(ContentParser.ScenesFolder);
             var filename = "";
             int i = 0;
             do
@@ -53,19 +53,19 @@ namespace Delight.Editor
         [MenuItem("Assets/Create/Delight View", false, -19)]
         private static void CreateViewXml()
         {
-            CreateViewXml(false);
-        }
-
-        [MenuItem("Assets/Create/Delight View + Code-behind", false, -19)]
-        private static void CreateViewXmlAndCodeBehind()
-        {
             CreateViewXml(true);
         }
+
+        //[MenuItem("Assets/Create/Delight View + Code-behind", false, -19)]
+        //private static void CreateViewXmlAndCodeBehind()
+        //{
+        //    CreateViewXml(true);
+        //}
 
         private static void CreateViewXml(bool generateCodeBehind)
         {
             var contentObjectModel = ContentObjectModel.GetInstance();
-            var path = GetContentFolderPathFromSelectedFile(ContentParser.ViewsFolder);
+            var path = ContentParser.GetContentFolderPathFromSelectedFile(ContentParser.ViewsFolder);
             var filename = "";
             int i = 0;
             string viewName = "";
@@ -97,47 +97,6 @@ namespace Delight.Editor
 
             // create XML file that the user will be allowed to name, once created the XML parser will generate the content
             ProjectWindowUtil.CreateAssetWithContent(filename, string.Empty);
-        }
-
-        public static string GetContentFolderPathFromSelectedFile(string contentFolder)
-        {
-            // rules: 
-            //   1. if we are in the correct specific content subfolder, create the file at that path
-            //   2. if we are in a content folder but not in the right specific content subfolder, create the file in that content folder in the right specific subfolder
-            //   3. if we aren't in a content folder create the file in the default specific content folder
-
-            var config = MasterConfig.GetInstance();
-            string defaultPath = config.ContentFolders.FirstOrDefault() + contentFolder.Substring(1);
-
-            var obj = Selection.activeObject;
-            if (obj == null)
-                return defaultPath;
-
-            string path = AssetDatabase.GetAssetPath(obj.GetInstanceID());
-            if (!Directory.Exists(path))
-            {
-                // remove filename from path
-                path = path.Substring(0, path.LastIndexOf("/") + 1);
-            }
-            else
-            {
-                // make sure path ends with "/"
-                path = MasterConfig.SanitizePath(path);
-            }
-
-            // is the asset in a content folder?
-            var inContentFolder = config.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
-            if (inContentFolder == null)
-                return defaultPath; // no. return default path
-
-            // is the asset in the correct subfolder?
-            if (!ContentAssetProcessor.IsInContentTypeFolder(path, inContentFolder, contentFolder))
-            {
-                // no. adjust path to correct subfolder
-                path = inContentFolder + contentFolder.Substring(1);
-            }
-
-            return path;
         }
 
         #endregion

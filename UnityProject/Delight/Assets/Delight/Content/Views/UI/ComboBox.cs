@@ -146,6 +146,7 @@ namespace Delight
             }
 
             ComboBoxList.IsActive = false;
+            ItemSelected?.Invoke(this, selectionData);
         }
 
         #endregion

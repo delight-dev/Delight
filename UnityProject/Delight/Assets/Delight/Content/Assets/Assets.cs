@@ -17,6 +17,7 @@ namespace Delight
         #region Fields
 
         private static Dictionary<string, Func<View, View, Template, View>> ViewActivators;
+        private static Dictionary<string, Type> ViewTypes;
 
         #endregion
 
@@ -43,6 +44,16 @@ namespace Delight
             if (ViewActivators.TryGetValue(viewName, out var activator))
             {
                 return activator(parent, layoutParent, template);
+            }
+            return null;
+        }
+
+        public static Type GetViewType(string viewTypeName)
+        {
+            if (ViewTypes == null) return null;
+            if (ViewTypes.TryGetValue(viewTypeName, out var viewType))
+            {
+                return viewType;
             }
             return null;
         }

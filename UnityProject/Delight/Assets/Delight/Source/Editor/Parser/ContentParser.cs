@@ -27,6 +27,7 @@ namespace Delight.Editor.Parser
     {
         #region Fields
 
+        public static CodeDomProvider CodeValidator = CodeDomProvider.CreateProvider("C#");
         public const string AssetsFolder = "/Assets/";
         public const string ModelsFolder = "/Models/";
         public const string ViewsFolder = "/Views/";
@@ -234,6 +235,10 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateNewViewXml(XmlFile xumlFile)
         {
+            // make sure file doesn't exist
+            if (File.Exists(xumlFile.Path))
+                return;
+
             var sb = new StringBuilder();
             var viewName = xumlFile.Name.ToPropertyName();
 
@@ -251,14 +256,16 @@ namespace Delight.Editor.Parser
             Debug.Log("Creating " + xumlFile.Path);
             File.WriteAllText(xumlFile.Path, sb.ToString());
 
-            // generate code-behind 
-            var config = MasterConfig.GetInstance();
-            if (config.GenerateBlankCodeBehind)
-            {
-                CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
-                config.GenerateBlankCodeBehind = false;
-                config.SaveConfig();
-            }
+            CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
+
+            // generate code-behind  // TODO cleanup GenerateBlankCodeBehind logic as we always do it
+            //var config = MasterConfig.GetInstance();
+            //if (config.GenerateBlankCodeBehind)
+            //{
+            //    CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
+            //    config.GenerateBlankCodeBehind = false;
+            //    config.SaveConfig();
+            //}
         }
 
         /// <summary>
@@ -272,6 +279,25 @@ namespace Delight.Editor.Parser
             foreach (var file in xumlFiles)
             {
                 ParseXmlFile(file);
+            }
+
+            // auto generate new views 
+            var viewsMissingXml = _contentObjectModel.ViewObjects.Where(x => !x.HasXml && !String.IsNullOrEmpty(x.FilePath)).ToList();
+            if (viewsMissingXml.Count <= 5)
+            {
+                // no more than 5 just to make sure we don't auto-generate a bunch of views because content model is not up to date
+                bool disableAutoGenerateViews = EditorPrefs.GetBool("Delight_DisableAutoGenerateViews");
+                if (!disableAutoGenerateViews)
+                {
+                    foreach (var viewObject in _contentObjectModel.ViewObjects)
+                    {
+                        if (!viewObject.HasXml && !String.IsNullOrEmpty(viewObject.FilePath))
+                        {
+                            Debug.Log("** Creating new XML for referenced view: " + viewObject.FilePath);
+                            GenerateNewViewXml(new XmlFile { Name = viewObject.Name, Path = viewObject.FilePath });
+                        }
+                    }
+                }
             }
 
             CodeGenerator.GenerateViewCode();
@@ -335,7 +361,7 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                ConsoleLogger.LogParseError(xumlFile.Path, line, 
+                ConsoleLogger.LogParseError(xumlFile.Path, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
@@ -350,7 +376,7 @@ namespace Delight.Editor.Parser
                 ParseSceneXml(xumlFile, rootXmlElement);
             }
             else if (xumlFile.ContentType == XmlContentType.Style)
-            {               
+            {
                 ParseStyleXml(xumlFile, rootXmlElement);
             }
             else
@@ -396,6 +422,7 @@ namespace Delight.Editor.Parser
             viewObject.TypeName = viewName;
             viewObject.FilePath = xumlFile.Path;
             viewObject.NeedUpdate = true;
+            viewObject.HasXml = true;
 
             var propertyExpressions = new List<PropertyExpression>();
 
@@ -411,7 +438,7 @@ namespace Delight.Editor.Parser
 
                 if (attributeName.IEquals("Id"))
                 {
-                    ConsoleLogger.LogParseError(viewObject.FilePath, 1, 
+                    ConsoleLogger.LogParseError(viewObject.FilePath, 1,
                         String.Format("#Delight# Id can't be specified on the root view element."));
                     continue;
                 }
@@ -460,7 +487,7 @@ namespace Delight.Editor.Parser
                     bool hasContentTemplates;
                     if (!bool.TryParse(attributeValue, out hasContentTemplates))
                     {
-                        ConsoleLogger.LogParseError(viewObject.FilePath, 1, 
+                        ConsoleLogger.LogParseError(viewObject.FilePath, 1,
                             String.Format("#Delight# Invalid HasContentTemplates value \"{0}\". Should be either \"True\" or \"False\".", attributeValue));
                         continue;
                     }
@@ -704,7 +731,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration)
         {
-            var provider = CodeDomProvider.CreateProvider("C#");
+            
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
             {
@@ -713,6 +740,15 @@ namespace Delight.Editor.Parser
                 viewDeclaration.LineNumber = viewElement.GetLineNumber();
                 viewDeclaration.ParentDeclaration = parentViewDeclaration;
 
+                // load the view to make sure it's in our content object model
+                var referencedViewObject = _contentObjectModel.LoadViewObject(viewDeclaration.ViewName);
+                if (!referencedViewObject.HasXml)
+                {
+                    // potentially new view, set file path
+                    var newPath = GetContentFolderPathFromSelectedFile(ContentParser.ViewsFolder);
+                    referencedViewObject.FilePath = String.Format("{0}{1}.xml", newPath, referencedViewObject.Name);
+                }
+
                 // parse view's initialization attributes
                 foreach (var attribute in viewElement.Attributes())
                 {
@@ -720,8 +756,8 @@ namespace Delight.Editor.Parser
                     string attributeValue = attribute.Value;
 
                     if (attributeName.IEquals("Id"))
-                    {                        
-                        if (!provider.IsValidIdentifier(attributeValue))
+                    {
+                        if (!CodeValidator.IsValidIdentifier(attributeValue))
                         {
                             // ignore invalid identifiers
                             //ConsoleLogger.LogParseError(String.Format("#Delight# {0}: Invalid view identifier <{1} {2}=\"{3}\">. Identifier must start with an letter or underscore, followed by letters, numbers or underscores.", GetLineInfo(viewElement), viewDeclaration.ViewName, attributeName, attributeValue));
@@ -759,7 +795,7 @@ namespace Delight.Editor.Parser
                         var propertyDeclaration = propertyExpression as PropertyDeclaration;
                         if (propertyDeclaration != null)
                         {
-                            ConsoleLogger.LogParseError(path, viewDeclaration.LineNumber, String.Format("#Delight# Invalid property declaration <{0} {1}=\"{2}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.", 
+                            ConsoleLogger.LogParseError(path, viewDeclaration.LineNumber, String.Format("#Delight# Invalid property declaration <{0} {1}=\"{2}\">. Property declarations (like PropertyName=\"t:string\") can only be specified on the root view element.",
                                 viewDeclaration.ViewName, attributeName, attributeValue));
                             continue;
                         }
@@ -804,11 +840,6 @@ namespace Delight.Editor.Parser
             }
 
             return viewDeclarations;
-        }
-
-        private static bool IsValidId(string attributeValue)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -984,7 +1015,7 @@ namespace Delight.Editor.Parser
                     GetTypeNameAndNamespace(genericTypeName, out genericTypeName, out propertyNamespace);
 
                     // TODO validate generic type parameters, loop through each generic parameter and get their type and full name 
-                    int endBracketIndex = propertyTypeName.IndexOf("]");
+                    int endBracketIndex = propertyTypeName.LastIndexOf("]");
                     var genericParameterTypes = propertyTypeName.Substring(startBracketIndex + 1, endBracketIndex - startBracketIndex - 1).Split(',').Select(x => x.Trim());
                     var formattedGenericParameterTypes = new List<string>();
                     foreach (var genericParameterType in genericParameterTypes)
@@ -1034,7 +1065,7 @@ namespace Delight.Editor.Parser
 
                 if (propertyType == null)
                 {
-                    ConsoleLogger.LogParseError(path, element.GetLineNumber(), 
+                    ConsoleLogger.LogParseError(path, element.GetLineNumber(),
                         String.Format("#Delight# Property type not found {0}=\"{1}\".", attributeName, attributeValue));
                     return new List<PropertyExpression>();
                 }
@@ -1213,7 +1244,7 @@ namespace Delight.Editor.Parser
             if (matches.Count <= 0)
             {
                 // no bindings found
-                ConsoleLogger.LogParseError(path, propertyBinding.LineNumber, 
+                ConsoleLogger.LogParseError(path, propertyBinding.LineNumber,
                     String.Format("#Delight# Improperly formatted property binding {0}=\"{1}\". String contains no binding.", propertyName, propertyBindingString));
                 return null;
             }
@@ -1399,6 +1430,50 @@ namespace Delight.Editor.Parser
             Unknown
         }
 
+        /// <summary>
+        /// Gets content folder path from a file path.
+        /// </summary>
+        public static string GetContentFolderPathFromSelectedFile(string contentFolder)
+        {
+            // rules: 
+            //   1. if we are in the correct specific content subfolder, create the file at that path
+            //   2. if we are in a content folder but not in the right specific content subfolder, create the file in that content folder in the right specific subfolder
+            //   3. if we aren't in a content folder create the file in the default specific content folder
+
+            var config = MasterConfig.GetInstance();
+            string defaultPath = config.ContentFolders.FirstOrDefault() + contentFolder.Substring(1);
+
+            var obj = Selection.activeObject;
+            if (obj == null)
+                return defaultPath;
+
+            string path = AssetDatabase.GetAssetPath(obj.GetInstanceID());
+            if (!Directory.Exists(path))
+            {
+                // remove filename from path
+                path = path.Substring(0, path.LastIndexOf("/") + 1);
+            }
+            else
+            {
+                // make sure path ends with "/"
+                path = MasterConfig.SanitizePath(path);
+            }
+
+            // is the asset in a content folder?
+            var inContentFolder = config.ContentFolders.FirstOrDefault(x => path.IIndexOf(x) >= 0);
+            if (inContentFolder == null)
+                return defaultPath; // no. return default path
+
+            // is the asset in the correct subfolder?
+            if (!ContentAssetProcessor.IsInContentTypeFolder(path, inContentFolder, contentFolder))
+            {
+                // no. adjust path to correct subfolder
+                path = inContentFolder + contentFolder.Substring(1);
+            }
+
+            return path;
+        }
+
         #endregion
 
         #region Models
@@ -1499,7 +1574,7 @@ namespace Delight.Editor.Parser
                     var insertDecl = line.Substring(1).Split(new char[] { ' ', '(', ')', ',' }, StringSplitOptions.RemoveEmptyEntries);
                     if (insertDecl.Length < 1)
                     {
-                        ConsoleLogger.LogParseError(path, i+1, 
+                        ConsoleLogger.LogParseError(path, i + 1,
                             String.Format("#Delight# Unable to parse data insert declaration. No model object specified.\nError line:\n{0}", line));
                         continue;
                     }
@@ -1508,7 +1583,7 @@ namespace Delight.Editor.Parser
                     insertModelObject = _contentObjectModel.LoadModelObject(insertModelName, false);
                     if (insertModelObject == null)
                     {
-                        ConsoleLogger.LogParseError(path, i + 1, 
+                        ConsoleLogger.LogParseError(path, i + 1,
                             String.Format("#Delight# Unable to parse data insert declaration. Model object \"{0}\" not found. Make sure data inserts appears after model declaration.\nError line:\n{1}", insertModelName, line));
                         continue;
                     }
@@ -1531,7 +1606,7 @@ namespace Delight.Editor.Parser
                         var property = insertModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
                         if (property == null)
                         {
-                            ConsoleLogger.LogParseError(path, i + 1, 
+                            ConsoleLogger.LogParseError(path, i + 1,
                                 String.Format("#Delight# Unable to parse data insert declaration. Property \"{0}\" not found.\nError line:\n{1}", propertyName, line));
                             continue;
                         }

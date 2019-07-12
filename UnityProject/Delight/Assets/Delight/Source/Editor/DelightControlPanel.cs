@@ -53,6 +53,20 @@ namespace Delight.Editor
                 EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
 
+            bool disableAutoGenerateViews = EditorPrefs.GetBool("Delight_DisableAutoGenerateViews");
+            var newDisableAutoGenerateViews = EditorGUILayout.Toggle("Disable view autogen", disableAutoGenerateViews);
+            if (newDisableAutoGenerateViews != disableAutoGenerateViews)
+            {
+                EditorPrefs.SetBool("Delight_DisableAutoGenerateViews", newDisableAutoGenerateViews);
+            }
+
+            bool disableAutoGenerateHandlers = EditorPrefs.GetBool("Delight_DisableAutoGenerateHandlers");
+            var newDisableAutoGenerateHandlers = EditorGUILayout.Toggle("Disable handler autogen", disableAutoGenerateHandlers);
+            if (newDisableAutoGenerateHandlers != disableAutoGenerateHandlers)
+            {
+                EditorPrefs.SetBool("Delight_DisableAutoGenerateHandlers", newDisableAutoGenerateHandlers);
+            }
+
             // open designer
             //GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
             //if (GUILayout.Button(openDesigner))

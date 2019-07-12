@@ -31,6 +31,7 @@ namespace Delight
             dependencyProperties.Add(ContentTemplateDataProperty);
             dependencyProperties.Add(TextProperty);
             dependencyProperties.Add(TabHeaderIdProperty);
+            dependencyProperties.Add(ItemProperty);
         }
 
         #endregion
@@ -56,6 +57,13 @@ namespace Delight
         {
             get { return TabHeaderIdProperty.GetValue(this); }
             set { TabHeaderIdProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.BindableObject> ItemProperty = new DependencyProperty<Delight.BindableObject>("Item");
+        public Delight.BindableObject Item
+        {
+            get { return ItemProperty.GetValue(this); }
+            set { ItemProperty.SetValue(this, value); }
         }
 
         #endregion
