@@ -59,7 +59,6 @@ namespace Delight
             ViewActivators.Add("RectMask2D", (x, y, z) => new RectMask2D(x, y, null, z));
             ViewActivators.Add("Mask", (x, y, z) => new Mask(x, y, null, z));
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
-            ViewActivators.Add("DelightEditor", (x, y, z) => new DelightEditor(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
 
             ViewTypes = new Dictionary<string, Type>();
@@ -108,7 +107,6 @@ namespace Delight
             ViewTypes.Add("RectMask2D", typeof(RectMask2D));
             ViewTypes.Add("Mask", typeof(Mask));
             ViewTypes.Add("Scrollbar", typeof(Scrollbar));
-            ViewTypes.Add("DelightEditor", typeof(DelightEditor));
             ViewTypes.Add("NewScene", typeof(NewScene));
         }
     }

@@ -22,8 +22,8 @@ Get the latest API-docs, tutorials, extras and news at [https://delight-dev.gith
 
    ```xml
    <NewScene xmlns="Delight" 
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xsi:schemaLocation="Delight ../Delight.xsd">
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="Delight ../Delight.xsd">
      
        <Label Text="Awesome!" />
    
