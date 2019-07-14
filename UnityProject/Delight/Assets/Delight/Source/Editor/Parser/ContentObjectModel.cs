@@ -49,6 +49,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(8, AsReference = true)]
         public List<SceneObject> SceneObjects;
 
+        [ProtoMember(9)]
+        public bool NeedRebuild;
+
         private Dictionary<string, ViewObject> _viewObjects;
         private Dictionary<string, ModelObject> _modelObjects;
         private Dictionary<string, StyleObject> _styleObjects;
@@ -71,6 +74,7 @@ namespace Delight.Editor.Parser
             SceneObjects = new List<SceneObject>();
             AssetBundleObjects = new List<AssetBundleObject>();
             AssetTypes = new List<AssetType>();
+            NeedRebuild = true;
         }
 
         #endregion

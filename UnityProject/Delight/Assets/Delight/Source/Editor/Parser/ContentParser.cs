@@ -309,6 +309,7 @@ namespace Delight.Editor.Parser
                 CodeGenerator.GenerateAssetCode();
             }
 
+            _contentObjectModel.NeedRebuild = false;
             _contentObjectModel.SaveObjectModel();
 
             // update view factory

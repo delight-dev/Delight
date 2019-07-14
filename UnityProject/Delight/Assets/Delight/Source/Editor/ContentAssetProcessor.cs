@@ -235,6 +235,19 @@ namespace Delight.Editor
 
             var sw = System.Diagnostics.Stopwatch.StartNew(); // TODO for tracking processing time
 
+            // check if model file is new, then rebuild all content
+            var contentObjectModel = ContentObjectModel.GetInstance();
+            if (contentObjectModel.NeedRebuild)
+            {
+                ContentParser.RebuildAll(true, true, true);
+                assetsChanged = false;
+                schemasChanged = false;
+                rebuildViews = false;
+                generateXsdSchema = false;
+                viewsChanged = false;
+                rebuildConfig = false;
+            }
+
             // any config changed? 
             if (rebuildConfig)
             {
@@ -246,6 +259,7 @@ namespace Delight.Editor
                     schemasChanged = false;
                     rebuildViews = false;
                     generateXsdSchema = false;
+                    viewsChanged = false;
                 }
                 else 
                 {
