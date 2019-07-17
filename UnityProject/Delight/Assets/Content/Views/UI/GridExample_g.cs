@@ -36,6 +36,7 @@ namespace Delight
             Grid1.Cell.SetValue(Cell21, new CellIndex(2, 1));
             Cell22 = new Region(this, Grid1.Content, "Cell22", Cell22Template);
             Grid1.Cell.SetValue(Cell22, new CellIndex(2, 2));
+            GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             this.AfterInitializeInternal();
         }
 
@@ -68,6 +69,8 @@ namespace Delight
             dependencyProperties.Add(Cell21TemplateProperty);
             dependencyProperties.Add(Cell22Property);
             dependencyProperties.Add(Cell22TemplateProperty);
+            dependencyProperties.Add(GridSplitter1Property);
+            dependencyProperties.Add(GridSplitter1TemplateProperty);
         }
 
         #endregion
@@ -214,6 +217,20 @@ namespace Delight
             set { Cell22TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<GridSplitter> GridSplitter1Property = new DependencyProperty<GridSplitter>("GridSplitter1");
+        public GridSplitter GridSplitter1
+        {
+            get { return GridSplitter1Property.GetValue(this); }
+            set { GridSplitter1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> GridSplitter1TemplateProperty = new DependencyProperty<Template>("GridSplitter1Template");
+        public Template GridSplitter1Template
+        {
+            get { return GridSplitter1TemplateProperty.GetValue(this); }
+            set { GridSplitter1TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -256,6 +273,7 @@ namespace Delight
                     Delight.GridExample.Cell20TemplateProperty.SetDefault(_gridExample, GridExampleCell20);
                     Delight.GridExample.Cell21TemplateProperty.SetDefault(_gridExample, GridExampleCell21);
                     Delight.GridExample.Cell22TemplateProperty.SetDefault(_gridExample, GridExampleCell22);
+                    Delight.GridExample.GridSplitter1TemplateProperty.SetDefault(_gridExample, GridExampleGridSplitter1);
                 }
                 return _gridExample;
             }
@@ -471,6 +489,26 @@ namespace Delight
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell22, new UnityEngine.Color(0.5294118f, 0.1882353f, 0.6784314f, 1f));
                 }
                 return _gridExampleCell22;
+            }
+        }
+
+        private static Template _gridExampleGridSplitter1;
+        public static Template GridExampleGridSplitter1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_gridExampleGridSplitter1 == null || _gridExampleGridSplitter1.CurrentVersion != Template.Version)
+#else
+                if (_gridExampleGridSplitter1 == null)
+#endif
+                {
+                    _gridExampleGridSplitter1 = new Template(GridSplitterTemplates.GridSplitter);
+#if UNITY_EDITOR
+                    _gridExampleGridSplitter1.Name = "GridExampleGridSplitter1";
+#endif
+                }
+                return _gridExampleGridSplitter1;
             }
         }
 

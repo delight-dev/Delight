@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for bindable generic collections.
+    /// Base class for bindable generic collections. Bindable collections notifies observers when the collection changes and enables e.g. the List view to update when items are added.
     /// </summary>
     public partial class BindableCollection<T> : BindableCollection, IEnumerable<T>
         where T : BindableObject
@@ -300,7 +300,7 @@ namespace Delight
         }
 
         public virtual void Select(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
-        { 
+        {
             if (index < 0 || index >= Count)
                 return;
 
@@ -434,7 +434,7 @@ namespace Delight
     }
 
     /// <summary>
-    /// Base class for bindable collections.
+    /// Base class for bindable collections. Bindable collections notifies observers when the collection changes and enables e.g. the List view to update when items are added.
     /// </summary>
     public abstract partial class BindableCollection : BindableObject, IEnumerable<BindableObject>, INotifyCollectionChanged
     {

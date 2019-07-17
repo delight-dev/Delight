@@ -9,7 +9,7 @@ namespace Delight
     public delegate void PropertyChangedEventHandler(object source, string propertyName);
 
     /// <summary>
-    /// Base class for bindable objects.
+    /// Interface for objects notifying listeners a property has been changed.
     /// </summary>
     public interface INotifyPropertyChanged
     {

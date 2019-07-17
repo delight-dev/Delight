@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Delight
 {
     /// <summary>
-    /// Provides logic for switching between views. 
+    /// Provides logic for switching between mutliple child views and displaying one at a time. By default the views are loaded when they are displayed, behavior can be changed through the SwitchMode property. 
     /// </summary>
     public partial class ViewSwitcher
     {
@@ -48,14 +48,16 @@ namespace Delight
                     continue;
                 }
 
+                var childLoadMode = child.LoadMode | ChildLoadMode;
                 if (SwitchMode != SwitchMode.Enable)
                 {
-                    var loadMode = ViewsHiddenWhileLoading ? LoadMode.ManualHiddenWhileLoading : LoadMode.Manual;
+                    var loadMode = childLoadMode | LoadMode.Manual;
                     child.LoadMode = loadMode;
                 }
                 else
                 {
-                    child.LoadMode = LoadMode.Automatic; // force automatic if we're activating them
+                    childLoadMode &= ~LoadMode.Manual; // remove any manual flag to force automatic if we're activating them
+                    child.LoadMode = childLoadMode;
                     child.IsActive = false;
                 }
             }
@@ -85,16 +87,54 @@ namespace Delight
         /// <summary>
         /// Switches to view at index.
         /// </summary>
-        public async Task SwitchTo(int index)
+        public void SwitchTo(int index)
         {
             var view = Content.LayoutChildren.ElementAtOrDefault(index);
-            await SwitchTo(view);
+            SwitchTo(view);
         }
 
         /// <summary>
         /// Switches to the view specified.
         /// </summary>
-        public async Task SwitchTo(View view)
+        public void SwitchTo(View view)
+        {
+            if (view == ActiveView)
+                return;
+
+            if (ActiveView != null)
+            {
+                if (SwitchMode == SwitchMode.Load)
+                {
+                    ActiveView.Unload();
+                }
+                else
+                {
+                    ActiveView.IsActive = false;
+                }
+            }
+
+            ActiveView = view as SceneObjectView;
+            if (ActiveView == null)
+                return;
+
+            // load/activate view
+            ActiveView.Load();
+            ActiveView.IsActive = true;
+        }
+
+        /// <summary>
+        /// Switches to view at index.
+        /// </summary>
+        public async Task SwitchToAsync(int index)
+        {
+            var view = Content.LayoutChildren.ElementAtOrDefault(index);
+            await SwitchToAsync(view);
+        }
+
+        /// <summary>
+        /// Switches to the view specified.
+        /// </summary>
+        public async Task SwitchToAsync(View view)
         {
             if (view == ActiveView)
                 return;

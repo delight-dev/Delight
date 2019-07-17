@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Represents a virtual item, contains information about its size, offset and alignment.
+    /// Represents a virtual item. Contains information about its size, offset and alignment. Used by virtualized lists to keep track of list items that are yet to be realized.
     /// </summary>
     public class VirtualItem : BindableObject
     {
@@ -45,8 +45,7 @@ namespace Delight
         /// </summary>
         public VirtualItem(ElementSize width)
         {
-            if (width != null)
-                Width = new ElementSize(width);
+            Width = width != null ? new ElementSize(width) : ElementSize.FromPercents(1);
             Height = ElementSize.FromPercents(1);
             Offset = new ElementMargin();
         }
@@ -56,17 +55,15 @@ namespace Delight
         /// </summary>
         public VirtualItem(ElementSize width, ElementSize height)
         {
-            if (width != null)
-                Width = new ElementSize(width);
-            if (height != null)
-                Height = new ElementSize(height);
+            Width = width != null ? new ElementSize(width) : ElementSize.FromPercents(1);
+            Height = height != null ? new ElementSize(height) : ElementSize.FromPercents(1);
             Offset = new ElementMargin();
         }
 
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public VirtualItem(ElementSize width, ElementSize height, ContentTemplate contentTemplate) 
+        public VirtualItem(ElementSize width, ElementSize height, ContentTemplate contentTemplate)
             : this(width, height)
         {
             ContentTemplate = contentTemplate;
@@ -75,7 +72,7 @@ namespace Delight
         #endregion
 
         #region Methods
-        
+
         /// <summary>
         /// Gets element sizes from width.
         /// </summary>

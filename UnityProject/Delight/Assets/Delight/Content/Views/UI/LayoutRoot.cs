@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// LayoutRoot view.
+    /// Represents a layout root canvas under which all UI views must reside.
     /// </summary>
     public partial class LayoutRoot
     {

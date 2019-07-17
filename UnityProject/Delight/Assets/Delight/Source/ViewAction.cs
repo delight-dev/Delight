@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Delight
 {
+    /// <summary>
+    /// A view action keeps a list of action handlers and allows for easy enabling / disabling invoking them when the action is triggered.
+    /// </summary>
     public class ViewAction : BindableObject
     {
         #region Fields

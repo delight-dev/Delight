@@ -9,7 +9,7 @@ using System.Globalization;
 namespace Delight
 {
     /// <summary>
-    /// View data template.
+    /// View data template. A data template is associated with a view type and allows for the framework to keep track of an hierarchy of default values. It allows for values in dependenc properties to be stored per type rather than instance.
     /// </summary>
     public class Template
     {
@@ -18,7 +18,7 @@ namespace Delight
         public Template BasedOn;
 
 #if UNITY_EDITOR
-        public string Name; 
+        public string Name;
         public static int Version = 0;
         public int CurrentVersion;
 #endif

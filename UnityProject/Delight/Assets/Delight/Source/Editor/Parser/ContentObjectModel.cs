@@ -74,7 +74,6 @@ namespace Delight.Editor.Parser
             SceneObjects = new List<SceneObject>();
             AssetBundleObjects = new List<AssetBundleObject>();
             AssetTypes = new List<AssetType>();
-            NeedRebuild = true;
         }
 
         #endregion
@@ -232,6 +231,7 @@ namespace Delight.Editor.Parser
             if (!File.Exists(modelFilePath))
             {
                 _contentObjectModel = new ContentObjectModel();
+                _contentObjectModel.NeedRebuild = true;
                 return;
             }
 
@@ -250,6 +250,7 @@ namespace Delight.Editor.Parser
                         Debug.LogException(e);
                         Debug.LogError(String.Format("#Delight# Failed to deserialize content object model file \"{0}\". Creating new content model.", ContentObjectModelFile));
                         _contentObjectModel = new ContentObjectModel();
+                        _contentObjectModel.NeedRebuild = true;
                         return;
                     }
                     finally

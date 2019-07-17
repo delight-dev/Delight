@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Represents left, top, right and bottom margins or offset.
+    /// Represents left, top, right and bottom margins or offset of an element.
     /// </summary>
     [Serializable]
     public class ElementMargin : AtomicBindableObject

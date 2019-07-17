@@ -20,6 +20,7 @@ namespace Delight
         public delegate void ChangeHandler();
         public delegate void LoadedEventHandler(object source);
         public event LoadedEventHandler Loaded;
+        public event LoadedEventHandler LoadedWithAssets;
 
         protected View _parent;
         protected View _layoutParent;
@@ -28,6 +29,7 @@ namespace Delight
         protected List<Binding> _bindings;
         protected Action<View> _initializer;
         protected bool _isLoaded;
+        protected bool _isDynamic;
 
         #endregion
 
@@ -119,9 +121,128 @@ namespace Delight
         /// </summary>
         public List<Binding> Bindings => _bindings;
 
+        /// <summary>
+        /// Boolean indicating if view is dynamic and should be removed completely when unloaded.
+        /// </summary>
+        public bool IsDynamic
+        {
+            get { return _isDynamic; }
+            set { _isDynamic = value; }
+        }
+
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Resolves action handler from name. TODO remove
+        /// </summary>
+        public ViewAction.ViewActionDelegate ResolveActionHandler(object obj, string actionHandlerName, params Func<object>[] paramGetters)
+        {
+            // look for a method with the same name as the entry
+            var parentType = obj.GetType();
+            var actionHandler = parentType.GetMethod(actionHandlerName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            if (actionHandler == null)
+            {
+                Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". View action handler not found in view \"{2}\".", GetType().Name, actionHandlerName, parentType.Name));
+                return (x, y) => { };
+            }
+
+            ParameterInfo[] viewActionMethodParameters = actionHandler.GetParameters();
+            int parameterCount = viewActionMethodParameters.Length;
+            if (parameterCount <= 0)
+            {
+                return (x, y) => actionHandler.Invoke(obj, null);
+            }
+
+            if (paramGetters.Length > 0)
+            {
+                // check if first parameter is a reference to the sender or view action
+                if (typeof(View).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
+                {
+                    switch (paramGetters.Length)
+                    {
+                        case 1:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0]() });
+                        case 2:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1]() });
+                        case 3:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2]() });
+                        case 4:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
+                        case 5:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
+                        case 6:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
+                        case 7:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
+                        case 8:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
+                        case 9:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
+                        case 10:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { x, paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
+                        default:
+                            Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            return (x, y) => { };
+                    }
+                }
+                else
+                {
+                    switch (paramGetters.Length)
+                    {
+                        case 1:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0]() });
+                        case 2:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1]() });
+                        case 3:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2]() });
+                        case 4:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3]() });
+                        case 5:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4]() });
+                        case 6:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5]() });
+                        case 7:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6]() });
+                        case 8:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7]() });
+                        case 9:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8]() });
+                        case 10:
+                            return (x, y) => actionHandler.Invoke(obj, new object[] { paramGetters[0](), paramGetters[1](), paramGetters[2](), paramGetters[3](), paramGetters[4](), paramGetters[5](), paramGetters[6](), paramGetters[7](), paramGetters[8](), paramGetters[9]() });
+                        default:
+                            Debug.LogError(String.Format("#Delight# {0}: Unable to initialize view action handler \"{1}()\". A maximum of 10 parameters are allowed for view action handlers.", GetType().Name, actionHandlerName, parentType.Name));
+                            return (x, y) => { };
+                    }
+                }
+            }
+
+            if (parameterCount == 1)
+            {
+                // check if first parameter is a reference to the sender or view action
+                if (typeof(View).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
+                {
+                    // parameter is the sender
+                    return (x, y) => actionHandler.Invoke(obj, new object[] { x });
+                }
+                else if (typeof(ActionData).IsAssignableFrom(viewActionMethodParameters[0].ParameterType))
+                {
+                    // parameter is the view action data
+                    return (x, y) => actionHandler.Invoke(obj, new object[] { y });
+                }
+                else
+                {
+                    // try pass the raw data
+                    return (x, y) => actionHandler.Invoke(obj, new object[] { (y as ActionData) != null ? (y as ActionData).RawData : y });
+                }
+            }
+            else
+            {
+                return (x, y) => actionHandler.Invoke(obj, new object[] { x, y });
+            }
+        }
+
 
         /// <summary>
         /// Called when a property has been changed.
@@ -129,7 +250,7 @@ namespace Delight
         public override void OnPropertyChanged(object source, string property)
         {
             base.OnPropertyChanged(source, property);
-            if(!IsLoaded)
+            if (!IsLoaded)
                 return;
 
             // call OnChanged if the view is loaded
@@ -165,14 +286,14 @@ namespace Delight
             if (IsLoaded)
                 return;
 
-            await LoadAsyncInternal(true);
+            await LoadAsyncInternal(true, false);
             AfterInitiatedLoad();
         }
 
         /// <summary>
         /// Loads the view asynchronously. 
         /// </summary>
-        protected async Task LoadAsyncInternal(bool initiatedLoad)
+        protected async Task LoadAsyncInternal(bool initiatedLoad, bool parentAwaitAssets)
         {
             if (IsLoaded)
                 return;
@@ -182,13 +303,14 @@ namespace Delight
 
             BeforeLoad();
 
-            await Task.WhenAll(LayoutChildren.Select(x => x.LoadAsyncInternal(false)));
+            bool awaitAssets = parentAwaitAssets || LoadMode.HasFlag(LoadMode.AwaitAssets);
+            await Task.WhenAll(LayoutChildren.ToList().Select(x => x.LoadAsyncInternal(false, awaitAssets)));
 
             _isLoaded = true;
             AfterChildrenLoaded();
             Initialize();
 
-            if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
+            if (awaitAssets)
             {
                 await LoadDependencyPropertiesAsync();
             }
@@ -230,7 +352,7 @@ namespace Delight
 
             BeforeLoad();
 
-            foreach (var child in LayoutChildren)
+            foreach (var child in LayoutChildren.ToList())
             {
                 child.LoadInternal(false);
             }
@@ -403,15 +525,19 @@ namespace Delight
                 return;
 
             BeforeUnload();
-            foreach (var child in LayoutChildren)
+            foreach (var child in LayoutChildren.ToList())
             {
                 child.UnloadInternal();
             }
 
             AfterUnload();
             UnloadDependencyProperties();
-
             _isLoaded = false;
+
+            if (IsDynamic)
+            {
+                Destroy();
+            }
         }
 
         /// <summary>
@@ -464,7 +590,11 @@ namespace Delight
             if (LayoutParent != null)
             {
                 LayoutParent.LayoutChildren.Remove(this);
+                LayoutParent = null;
             }
+            Parent = null;
+
+            // TODO verify the view is released from memory
         }
 
         /// <summary>
@@ -586,6 +716,13 @@ namespace Delight
         /// Called by designer to make the view presentable in the designer.
         /// </summary>
         public virtual void PrepareForDesigner()
+        {
+        }
+
+        /// <summary>
+        /// Sets content template data.
+        /// </summary>
+        public virtual void SetContentTemplateData(ContentTemplateData contentTemplateData)
         {
         }
 

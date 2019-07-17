@@ -11,6 +11,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Interactable input field enabling user to type single or multi-line text.
+    /// </summary>
     public partial class InputField
     {
         #region Methods

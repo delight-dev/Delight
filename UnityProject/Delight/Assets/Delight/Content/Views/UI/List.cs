@@ -11,6 +11,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// The list presents a static or dynamic list of items. The list can be set to be scrollable through the IsScrollable property. items can be made selectable. Items can be arranged vertically or horizontally. The items can overflow or be wrapped to create flowing lists.
+    /// </summary>
     public partial class List
     {
         #region Fields
@@ -142,7 +145,6 @@ namespace Delight
             }
 
             _presentedItems.Clear();
-
             if (IsVirtualized)
             {
                 _virtualItems.Clear();
@@ -448,11 +450,10 @@ namespace Delight
                 Items.CollectionChanged += OnCollectionChanged;
             }
 
-            // clear list items
-            ClearItems();
-
+            // generate new items
             if (IsLoaded)
             {
+                ClearItems();
                 CreateItems();
             }
         }
@@ -476,7 +477,7 @@ namespace Delight
             }
 
             // unload and clear existing children
-            foreach (var child in Content.LayoutChildren)
+            foreach (var child in Content.LayoutChildren.ToList())
             {
                 child.Unload();
             }

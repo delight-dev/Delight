@@ -5,7 +5,7 @@ using System;
 namespace Delight
 {
     /// <summary>
-    /// Enum indicating vertical or horizontal orientation.
+    /// Enum indicating vertical or horizontal orientation of an element.
     /// </summary>
     public enum ElementOrientation
     {

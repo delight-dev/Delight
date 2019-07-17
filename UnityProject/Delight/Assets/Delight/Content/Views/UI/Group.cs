@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Group view.
+    /// The group is used to spacially arrange child views next to each other either horizontally or vertically based on the Orientation property.
     /// </summary>
     public partial class Group
     {
@@ -71,6 +71,12 @@ namespace Delight
             for (int i = 0; i < childCount; ++i)
             {
                 var childView = children[i];
+                if (!childView.IsActive)
+                {
+                    // don't group inactive views
+                    continue;
+                }
+
                 var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
                 var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
 

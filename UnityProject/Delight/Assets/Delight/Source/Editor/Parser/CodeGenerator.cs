@@ -364,6 +364,9 @@ namespace Delight.Editor.Parser
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
 
+            // generate blank code-behind if it doesn't exist
+            CodeGenerator.GenerateBlankCodeBehind(viewObject.Name, viewObject.FilePath);
+
             // generate action handlers in custom code-behind
             if (!EditorPrefs.GetBool("Delight_DisableAutoGenerateHandlers"))
             {
@@ -511,8 +514,6 @@ namespace Delight.Editor.Parser
                     // insert handlers
                     fileContent = fileContent.Insert(classContentIndex+1, Environment.NewLine + sbHandlers.ToString());
                     File.WriteAllText(sourceFile, fileContent);
-
-                    Debug.Log("Generating action handlers " + sbHandlers.ToString() + " for: " + sourceFile);
                 }                
             }
         }
@@ -1506,7 +1507,8 @@ namespace Delight.Editor.Parser
                         // print child view declaration
                         GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId);
 
-                        sb.AppendLine(indent, "    {0}.ContentTemplateData = {1};", templateChildId, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                        sb.AppendLine(indent, "    {0}.IsDynamic = true;", templateChildId);
+                        sb.AppendLine(indent, "    {0}.SetContentTemplateData({1});", templateChildId, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
                         sb.AppendLine(indent, "    return {0};", templateChildId);
                         sb.AppendLine(indent, "}}, typeof({0}), \"{1}\"));", templateChild.ViewName, templateChild.Id);
                     }
@@ -2009,6 +2011,9 @@ namespace Delight.Editor.Parser
             {
                 sb.AppendLine("    #region Asset Bundles");
                 sb.AppendLine();
+                sb.AppendLine("    /// <summary>");
+                sb.AppendLine("    /// AssetBundle data provider. Contains references to all asset bundles in the project.");
+                sb.AppendLine("    /// </summary>");
                 sb.AppendLine("    public partial class AssetBundleData : DataProvider<AssetBundle>");
                 sb.AppendLine("    {");
                 sb.AppendLine("        #region Fields");
@@ -2060,6 +2065,9 @@ namespace Delight.Editor.Parser
                 sb.AppendLine();
                 sb.AppendLine("    #region {0}", assetTypeNamePlural);
                 sb.AppendLine();
+                sb.AppendLine("    /// <summary>");
+                sb.AppendLine("    /// Manages a {0} object. Loads/unloads the asset on-demand as it's requested by views.", assetType.FullName);
+                sb.AppendLine("    /// </summary>");
                 sb.AppendLine("    public partial class {0} : AssetObject<{1}>", assetTypeName, assetType.FullName);
                 sb.AppendLine("    {");
                 sb.AppendLine("        public static implicit operator {0}({1} unityObject)", assetTypeName, assetType.FullName);
@@ -2080,6 +2088,9 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        }");
                 sb.AppendLine("    }");
                 sb.AppendLine();
+                sb.AppendLine("    /// <summary>");
+                sb.AppendLine("    /// {0} data provider. Contains references to all {1} in the project.", assetTypeName, assetTypeNamePlural.ToLower());
+                sb.AppendLine("    /// </summary>");
                 sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
                 sb.AppendLine("    {");
 

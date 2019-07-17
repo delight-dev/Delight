@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {   
     /// <summary>
-    /// Dependency property that maps to a unity component asset.
+    /// Dependency property that maps to a unity component asset. E.g. ImageComponent.sprite
     /// </summary>
     public class MappedAssetDependencyProperty<T, TComponent, TParent> : DependencyProperty<T>
         where TParent : DependencyObject

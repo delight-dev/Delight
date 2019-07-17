@@ -6,7 +6,7 @@ using System.Linq;
 namespace Delight
 {
     /// <summary>
-    /// Generic collection view.
+    /// Generic collection view. Used by views such as Lists and TabPanel that wants to display dynamic content through the Item property.
     /// </summary>
     public partial class Collection
     {

@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// View that resizes itself to its content by default.
+    /// </summary>
     public partial class Frame
     {
         #region Fields

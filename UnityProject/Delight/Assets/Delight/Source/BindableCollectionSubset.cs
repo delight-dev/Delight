@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Contains a subset of items from a parent collection.
+    /// Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered collections. 
     /// </summary>
     public class BindableCollectionSubset<T> : BindableCollection<T>
         where T : BindableObject

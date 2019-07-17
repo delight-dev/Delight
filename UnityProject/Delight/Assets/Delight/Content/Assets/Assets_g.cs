@@ -12,6 +12,9 @@ namespace Delight
 {
     #region Asset Bundles
 
+    /// <summary>
+    /// AssetBundle data provider. Contains references to all asset bundles in the project.
+    /// </summary>
     public partial class AssetBundleData : DataProvider<AssetBundle>
     {
         #region Fields
@@ -39,6 +42,9 @@ namespace Delight
 
     #region Materials
 
+    /// <summary>
+    /// Manages a UnityEngine.Material object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class MaterialAsset : AssetObject<UnityEngine.Material>
     {
         public static implicit operator MaterialAsset(UnityEngine.Material unityObject)
@@ -51,10 +57,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.Materials[assetId];
         }
     }
 
+    /// <summary>
+    /// MaterialAsset data provider. Contains references to all materials in the project.
+    /// </summary>
     public partial class MaterialAssetData : DataProvider<MaterialAsset>
     {
         #region Fields
@@ -84,6 +96,9 @@ namespace Delight
 
     #region Fonts
 
+    /// <summary>
+    /// Manages a UnityEngine.Font object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class FontAsset : AssetObject<UnityEngine.Font>
     {
         public static implicit operator FontAsset(UnityEngine.Font unityObject)
@@ -96,10 +111,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.Fonts[assetId];
         }
     }
 
+    /// <summary>
+    /// FontAsset data provider. Contains references to all fonts in the project.
+    /// </summary>
     public partial class FontAssetData : DataProvider<FontAsset>
     {
         #region Fields
@@ -129,6 +150,9 @@ namespace Delight
 
     #region Sprites
 
+    /// <summary>
+    /// Manages a UnityEngine.Sprite object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class SpriteAsset : AssetObject<UnityEngine.Sprite>
     {
         public static implicit operator SpriteAsset(UnityEngine.Sprite unityObject)
@@ -141,10 +165,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.Sprites[assetId];
         }
     }
 
+    /// <summary>
+    /// SpriteAsset data provider. Contains references to all sprites in the project.
+    /// </summary>
     public partial class SpriteAssetData : DataProvider<SpriteAsset>
     {
         #region Fields
@@ -219,6 +249,9 @@ namespace Delight
 
     #region Texture2Ds
 
+    /// <summary>
+    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
     {
         public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
@@ -231,10 +264,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.Texture2Ds[assetId];
         }
     }
 
+    /// <summary>
+    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
+    /// </summary>
     public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
     {
         #region Fields
@@ -264,6 +303,9 @@ namespace Delight
 
     #region TMP_FontAssets
 
+    /// <summary>
+    /// Manages a TMPro.TMP_FontAsset object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class TMP_FontAsset : AssetObject<TMPro.TMP_FontAsset>
     {
         public static implicit operator TMP_FontAsset(TMPro.TMP_FontAsset unityObject)
@@ -276,10 +318,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.TMP_FontAssets[assetId];
         }
     }
 
+    /// <summary>
+    /// TMP_FontAsset data provider. Contains references to all tmp_fontassets in the project.
+    /// </summary>
     public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
     {
         #region Fields
@@ -309,6 +357,9 @@ namespace Delight
 
     #region Shaders
 
+    /// <summary>
+    /// Manages a UnityEngine.Shader object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
     public partial class ShaderAsset : AssetObject<UnityEngine.Shader>
     {
         public static implicit operator ShaderAsset(UnityEngine.Shader unityObject)
@@ -321,10 +372,16 @@ namespace Delight
             if (String.IsNullOrEmpty(assetId))
                 return null;
 
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
             return Assets.Shaders[assetId];
         }
     }
 
+    /// <summary>
+    /// ShaderAsset data provider. Contains references to all shaders in the project.
+    /// </summary>
     public partial class ShaderAssetData : DataProvider<ShaderAsset>
     {
         #region Fields

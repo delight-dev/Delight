@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Represents size in pixels or percentage.
+    /// Represents size in pixels or percentage of an element. 
     /// </summary>
     [Serializable]
     public class ElementSize : AtomicBindableObject

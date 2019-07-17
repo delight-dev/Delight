@@ -1,13 +1,18 @@
 #region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
 
 namespace Delight
 {
+    /// <summary>
+    /// Arranges content in a series of tabs that can be switched between. Tabs can be oriented horizontallt/vertically and aligned topleft/bottom/etc. Tabs and headers can be static or generated dynamically.
+    /// </summary>
     public partial class TabPanel
     {
         #region Fields
@@ -44,9 +49,7 @@ namespace Delight
         /// </summary>
         private void SelectedTabIndexChanged()
         {
-#pragma warning disable CS4014
             TabSwitcher.SwitchTo(SelectedTabIndex);
-#pragma warning restore CS4014
 
             // toggle header
             if (TabHeaderGroup.LayoutChildren.Count > SelectedTabIndex)
@@ -62,7 +65,7 @@ namespace Delight
                 {
                     (TabHeaderGroup.LayoutChildren[SelectedTabIndex] as TabHeader).ToggleValue = true;
 
-                    var tab = TabSwitcher.Content.LayoutChildren[SelectedTabIndex] as Tab;
+                    var tab = TabSwitcher.ActiveView as Tab;
                     TabSelectionActionData data = new TabSelectionActionData { IsSelected = true, Tab = tab, Item = tab.Item };
                     TabSelected?.Invoke(this, data);
                 }
@@ -122,6 +125,9 @@ namespace Delight
 
             _tabs.Clear();
             _tabHeaders.Clear();
+
+            // clear tab children
+            TabSwitcher.LayoutChildren.Clear();
         }
 
         /// <summary>
@@ -189,10 +195,10 @@ namespace Delight
         /// </summary>
         private void ReplaceItems()
         {
-            // clear list items
-            ClearTabItems();
+            // generate new items
             if (IsLoaded)
             {
+                ClearTabItems();
                 CreateTabItems();
             }
         }
@@ -237,11 +243,10 @@ namespace Delight
                 Items.CollectionChanged += OnCollectionChanged;
             }
 
-            // clear list items
-            ClearTabItems();
-
+            // generate new items
             if (IsLoaded)
             {
+                ClearTabItems();
                 CreateTabItems();
             }
         }
@@ -252,11 +257,11 @@ namespace Delight
         private void ClearTabItems()
         {
             // unload and clear existing children
-            foreach (var tab in Content.LayoutChildren)
+            foreach (var tab in Content.LayoutChildren.ToList())
             {
                 tab.Unload();
             }
-            foreach (var tabHeader in TabHeaderGroup.LayoutChildren)
+            foreach (var tabHeader in TabHeaderGroup.LayoutChildren.ToList())
             {
                 tabHeader.Unload();
             }
@@ -278,6 +283,7 @@ namespace Delight
                 // create empty tab
                 tabItem = new Tab(this, Content);
             }
+            tabItem.IsDynamic = false;
             tabItem.Item = item;
 
             if (!_tabs.ContainsKey(item))
@@ -304,7 +310,7 @@ namespace Delight
 
                 var templateData = new ContentTemplateData();
                 var tab = contentTemplate.Activator(templateData) as Tab;
-
+                tab.IsDynamic = false; // because we don't want it destroyed when the view-switcher unloads it
                 var tabHeader = CreateTabHeader(tab);
             }
 

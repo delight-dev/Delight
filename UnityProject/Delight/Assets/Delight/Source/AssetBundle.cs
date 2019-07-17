@@ -14,7 +14,7 @@ using UnityEngine.Networking;
 namespace Delight
 {
     /// <summary>
-    /// Base class for asset bundles. 
+    /// Base class for asset bundles. Loads/unloads the bundle on-demand as it's requested by views.
     /// </summary>
     public class AssetBundle : BindableObject
     {
@@ -248,7 +248,7 @@ namespace Delight
     }
     
     /// <summary>
-    /// Add asset bundles data.
+    /// Contains references to asset bundle data.
     /// </summary>
     public static partial class Assets
     {

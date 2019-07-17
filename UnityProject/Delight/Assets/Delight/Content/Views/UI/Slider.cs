@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Slider with a handle that can be moved with the mouse. Can be oriented horizontally or vertically.
+    /// </summary>
     public partial class Slider
     {
         /// <summary>

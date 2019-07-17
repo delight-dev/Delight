@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for dependency objects.
+    /// Base class for dependency objects. Dependency objects contains the information about the object that dependency properties need.
     /// </summary>
     public class DependencyObject : BindableObject
     {

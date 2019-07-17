@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Presents text. Based on the UGUI text component.
+    /// </summary>
     public partial class Label
     {
         #region Fields

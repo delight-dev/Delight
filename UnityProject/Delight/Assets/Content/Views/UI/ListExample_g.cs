@@ -56,7 +56,8 @@ namespace Delight
 
                 // binding <Label Text="{player.Name}">
                 templateA.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
-                templateA.ContentTemplateData = tiPlayer;
+                templateA.IsDynamic = true;
+                templateA.SetContentTemplateData(tiPlayer);
                 return templateA;
             }, typeof(ListItem), "TemplateA"));
 
@@ -72,7 +73,8 @@ namespace Delight
 
                 // binding <Label Text="Supreme {player.Name}">
                 templateB.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = String.Format("Supreme {0}", (tiPlayer.Item as Delight.Player).Name), () => { }, false));
-                templateB.ContentTemplateData = tiPlayer;
+                templateB.IsDynamic = true;
+                templateB.SetContentTemplateData(tiPlayer);
                 return templateB;
             }, typeof(ListItem), "TemplateB"));
             this.AfterInitializeInternal();

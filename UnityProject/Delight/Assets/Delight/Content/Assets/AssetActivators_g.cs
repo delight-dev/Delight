@@ -31,6 +31,7 @@ namespace Delight
             ViewActivators.Add("ComboBox", (x, y, z) => new ComboBox(x, y, null, z));
             ViewActivators.Add("GridExample", (x, y, z) => new GridExample(x, y, null, z));
             ViewActivators.Add("LayoutGrid", (x, y, z) => new LayoutGrid(x, y, null, z));
+            ViewActivators.Add("GridSplitter", (x, y, z) => new GridSplitter(x, y, null, z));
             ViewActivators.Add("InputFieldExample", (x, y, z) => new InputFieldExample(x, y, null, z));
             ViewActivators.Add("InputField", (x, y, z) => new InputField(x, y, null, z));
             ViewActivators.Add("ListExample", (x, y, z) => new ListExample(x, y, null, z));
@@ -56,6 +57,7 @@ namespace Delight
             ViewActivators.Add("ComboBoxListItem", (x, y, z) => new ComboBoxListItem(x, y, null, z));
             ViewActivators.Add("UICanvas", (x, y, z) => new UICanvas(x, y, null, z));
             ViewActivators.Add("Frame", (x, y, z) => new Frame(x, y, null, z));
+            ViewActivators.Add("GridSplitterHandle", (x, y, z) => new GridSplitterHandle(x, y, null, z));
             ViewActivators.Add("RectMask2D", (x, y, z) => new RectMask2D(x, y, null, z));
             ViewActivators.Add("Mask", (x, y, z) => new Mask(x, y, null, z));
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
@@ -78,6 +80,7 @@ namespace Delight
             ViewTypes.Add("ComboBox", typeof(ComboBox));
             ViewTypes.Add("GridExample", typeof(GridExample));
             ViewTypes.Add("LayoutGrid", typeof(LayoutGrid));
+            ViewTypes.Add("GridSplitter", typeof(GridSplitter));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("ListExample", typeof(ListExample));
@@ -104,6 +107,7 @@ namespace Delight
             ViewTypes.Add("ComboBoxListItem", typeof(ComboBoxListItem));
             ViewTypes.Add("UICanvas", typeof(UICanvas));
             ViewTypes.Add("Frame", typeof(Frame));
+            ViewTypes.Add("GridSplitterHandle", typeof(GridSplitterHandle));
             ViewTypes.Add("RectMask2D", typeof(RectMask2D));
             ViewTypes.Add("Mask", typeof(Mask));
             ViewTypes.Add("Scrollbar", typeof(Scrollbar));

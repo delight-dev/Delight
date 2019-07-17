@@ -31,7 +31,7 @@ namespace Delight
             dependencyProperties.Add(SwitchModeProperty);
             dependencyProperties.Add(StartViewProperty);
             dependencyProperties.Add(ShowFirstByDefaultProperty);
-            dependencyProperties.Add(ViewsHiddenWhileLoadingProperty);
+            dependencyProperties.Add(ChildLoadModeProperty);
         }
 
         #endregion
@@ -59,11 +59,11 @@ namespace Delight
             set { ShowFirstByDefaultProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.Boolean> ViewsHiddenWhileLoadingProperty = new DependencyProperty<System.Boolean>("ViewsHiddenWhileLoading");
-        public System.Boolean ViewsHiddenWhileLoading
+        public readonly static DependencyProperty<Delight.LoadMode> ChildLoadModeProperty = new DependencyProperty<Delight.LoadMode>("ChildLoadMode");
+        public Delight.LoadMode ChildLoadMode
         {
-            get { return ViewsHiddenWhileLoadingProperty.GetValue(this); }
-            set { ViewsHiddenWhileLoadingProperty.SetValue(this, value); }
+            get { return ChildLoadModeProperty.GetValue(this); }
+            set { ChildLoadModeProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -100,7 +100,6 @@ namespace Delight
 #endif
                     Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcher, Delight.SwitchMode.Load);
                     Delight.ViewSwitcher.ShowFirstByDefaultProperty.SetDefault(_viewSwitcher, true);
-                    Delight.ViewSwitcher.ViewsHiddenWhileLoadingProperty.SetDefault(_viewSwitcher, true);
                 }
                 return _viewSwitcher;
             }

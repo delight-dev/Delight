@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base class for views that has a background sprite and color. 
+    /// </summary>
     public partial class UIImageView : UIView
     {
         #region Methods

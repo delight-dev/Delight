@@ -6,6 +6,9 @@ using UnityEngine;
 
 namespace Delight
 {
+    /// <summary>
+    /// Contains information about a view method.
+    /// </summary>
     public class ViewMethod : BindableObject
     {
         #region Fields

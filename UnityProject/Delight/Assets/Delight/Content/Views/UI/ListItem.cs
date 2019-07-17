@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base view for items displayed within the List view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+    /// </summary>
     public partial class ListItem
     {
         #region Fields
@@ -332,6 +335,14 @@ namespace Delight
             {
                 SetState(DefaultItemStyle);
             }
+        }
+
+        /// <summary>
+        /// Sets content template data.
+        /// </summary>
+        public override void SetContentTemplateData(ContentTemplateData contentTemplateData)
+        {
+            ContentTemplateData = contentTemplateData;
         }
 
         #endregion

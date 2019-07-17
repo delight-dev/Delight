@@ -61,10 +61,12 @@ namespace Delight
 
                     // binding <Label Text="{achievement.Title}">
                     achievementsListContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Title" }, new List<Func<BindableObject>> { () => tiAchievement, () => (tiAchievement.Item as Delight.Achievement) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label4 }), () => label4.Text = (tiAchievement.Item as Delight.Achievement).Title, () => { }, false));
-                    achievementsListContent.ContentTemplateData = tiAchievement;
+                    achievementsListContent.IsDynamic = true;
+                    achievementsListContent.SetContentTemplateData(tiAchievement);
                     return achievementsListContent;
                 }, typeof(ListItem), "AchievementsListContent"));
-                playerListContent.ContentTemplateData = tiPlayer;
+                playerListContent.IsDynamic = true;
+                playerListContent.SetContentTemplateData(tiPlayer);
                 return playerListContent;
             }, typeof(ListItem), "PlayerListContent"));
             this.AfterInitializeInternal();

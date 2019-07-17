@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// View that displays an image sprite. Based on the UGUI ImageComponent. Adjusts its size and image type (spliced, etc) to the native sprite if not explicitly set.
+    /// </summary>
     public partial class Image
     {
         /// <summary>

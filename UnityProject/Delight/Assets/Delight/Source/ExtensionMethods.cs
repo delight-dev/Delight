@@ -15,7 +15,7 @@ using UnityEngine.EventSystems;
 namespace Delight
 {
     /// <summary>
-    /// Extension methods.
+    /// Extension methods. Contains extension methods used by the framework.
     /// </summary>
     public static class ExtensionMethods
     {
@@ -675,6 +675,15 @@ namespace Delight
             if (val.CompareTo(min) < 0) return min;
             else if (val.CompareTo(max) > 0) return max;
             else return val;
+        }
+
+        /// <summary>
+        /// Converts enumerable to bindable collection.
+        /// </summary>
+        public static BindableCollection<TSource> ToBindableCollection<TSource>(this IEnumerable<TSource> source)
+            where TSource : BindableObject
+        {
+            return new BindableCollection<TSource>(source);
         }
 
         #endregion

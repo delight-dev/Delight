@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Presents a view in the scene.
+    /// MonoBehavior for presenting a view in the scene. Used to e.g. create and load the main scene view.
     /// </summary>
     public class ViewPresenter : MonoBehaviour
     {

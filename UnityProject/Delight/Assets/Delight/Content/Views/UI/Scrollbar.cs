@@ -8,7 +8,10 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Scrollbar : UIView
+    /// <summary>
+    /// A scrollbar with a draggable handle. Used by the ScrollableRegion view. 
+    /// </summary>
+    public partial class Scrollbar
     {
         /// <summary>
         /// Called when a property has been changed. 

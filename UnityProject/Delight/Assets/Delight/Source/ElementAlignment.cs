@@ -5,7 +5,7 @@ using System;
 namespace Delight
 {
     /// <summary>
-    /// Enum indicating horizontal and vertical alignment.
+    /// Enum indicating horizontal and vertical alignment of an element.
     /// </summary>
     [Flags]
     public enum ElementAlignment

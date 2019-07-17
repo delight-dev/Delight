@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// A view that masks any content using the background sprite and color as mask. Based on RectMask2D component which has better performance than the regular mask.
+    /// </summary>
     public partial class RectMask2D
     {
         /// <summary>

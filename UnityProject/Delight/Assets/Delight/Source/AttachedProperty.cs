@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for attached properties.
+    /// Base class for attached properties. Attached properties allows values to be associated with views, e.g. <Label Grid.Cell="1,1" /> tells the parent Grid which cell the label should be in.
     /// </summary>
     public class AttachedProperty<T>
     {

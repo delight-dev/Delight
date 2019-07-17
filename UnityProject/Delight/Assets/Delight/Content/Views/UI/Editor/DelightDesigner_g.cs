@@ -41,7 +41,8 @@ namespace Delight
 
                 // binding <Label Text="{view.Name}">
                 list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
-                list1Content.ContentTemplateData = tiView;
+                list1Content.IsDynamic = true;
+                list1Content.SetContentTemplateData(tiView);
                 return list1Content;
             }, typeof(ListItem), "List1Content"));
             Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);

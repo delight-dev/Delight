@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Grid view.
+    /// View that displays static content in a grid layout (note has the alias Grid in XML). 
     /// </summary>
     public partial class LayoutGrid
     {
@@ -154,7 +154,7 @@ namespace Delight
 
             // calculate new column definition based on column span
             var spannedColumnDefinition = new ColumnDefinition(columnDefinition);
-            for (int i = 1; i <= cellSpan.Column; ++i)
+            for (int i = 1; i < cellSpan.Column; ++i)
             {
                 int nextColumnIndex = columnIndex + i;
                 if (nextColumnIndex >= Columns.Count)
@@ -185,7 +185,7 @@ namespace Delight
 
             // calculate new row definition based on row span
             var spannedRowDefinition = new RowDefinition(rowDefinition);
-            for (int i = 1; i <= cellSpan.Row; ++i)
+            for (int i = 1; i < cellSpan.Row; ++i)
             {
                 int nextRowIndex = rowIndex + i;
                 if (nextRowIndex >= Rows.Count)

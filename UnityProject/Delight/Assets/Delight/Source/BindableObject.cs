@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for bindable objects.
+    /// Base class for bindable objects. Bindable objects notifies observers when their properties changes which allows for values to be propagated and bindings and UI to update as data changes. 
     /// </summary>
     public class BindableObject : INotifyPropertyChanged
     {
@@ -75,12 +75,5 @@ namespace Delight
         }
 
         #endregion
-    }
-
-    /// <summary>
-    /// Base class for atomic bindable objects. These are objects that can change internally and be considered "new" objects as they do.
-    /// </summary>
-    public class AtomicBindableObject : BindableObject
-    {
     }
 }

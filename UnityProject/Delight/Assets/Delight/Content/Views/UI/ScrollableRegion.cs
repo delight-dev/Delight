@@ -10,7 +10,7 @@ using UnityEngine.UI;
 namespace Delight
 {
     /// <summary>
-    /// Scrollable region. 
+    /// Presents scrollable content with optional scrollbars. Behaves similar to the UGUI Panel component. 
     /// </summary>
     public partial class ScrollableRegion
     {

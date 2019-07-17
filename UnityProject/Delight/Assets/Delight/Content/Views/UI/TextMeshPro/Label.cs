@@ -11,7 +11,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Label view.
+    /// View that presents text. Based on TextMeshPro text component.
     /// </summary>
     public partial class Label
     {

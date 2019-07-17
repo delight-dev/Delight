@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 namespace Delight
 {
     /// <summary>
-    /// Button view.
+    /// The button view is a clickable region with text. Has the additional states: Highlighted, Pressed and Disabled. The button can be set to toggle through IsToggleButton and to adjust its size to its text through the AutoSize field.
     /// </summary>
     public partial class Button
     {

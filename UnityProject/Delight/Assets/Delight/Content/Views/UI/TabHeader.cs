@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base view for tab headers displayed by the TabPanel.
+    /// </summary>
     public partial class TabHeader
     {
         #region Properties
@@ -27,6 +30,14 @@ namespace Delight
                 return;
 
             ParentTabPanel.SelectedTabIndex = TabIndex;
+        }
+
+        /// <summary>
+        /// Sets content template data.
+        /// </summary>
+        public override void SetContentTemplateData(ContentTemplateData contentTemplateData)
+        {
+            ContentTemplateData = contentTemplateData;
         }
 
         #endregion

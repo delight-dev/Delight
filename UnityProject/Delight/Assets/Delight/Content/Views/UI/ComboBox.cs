@@ -9,10 +9,16 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Presents a static or dynamic list of items in a drop-down.
+    /// </summary>
     public partial class ComboBox
     {
         #region Properties
 
+        /// <summary>
+        /// Passes along the template to the combo-box list.
+        /// </summary>
         public BindableCollection<ContentTemplate> ContentTemplates
         {
             get

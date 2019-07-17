@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// A view that masks any content using the background sprite and color as mask.
+    /// </summary>
     public partial class Mask : UIImageView
     {
         /// <summary>

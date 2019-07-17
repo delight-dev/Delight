@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Dependency property that maps to another property or field.
+    /// Dependency property that maps to another property or field like a unity component property. E.g. TextComponent.text. Stores no data on its own. 
     /// </summary>
     public class MappedDependencyProperty<T, TObject, TParent> : DependencyProperty
         where TParent : DependencyObject

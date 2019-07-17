@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Enum indicating sort direction.
+    /// Enum indicating sort direction of an element.
     /// </summary>
     public enum ElementSortDirection
     {

@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -20,14 +21,21 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var enumType = typeof(T);
-            return String.Format("{0}.{1}", enumType.FullName.Replace('+', '.'), (T)Enum.Parse(typeof(T), stringValue, true));
+            var enumTypeName = enumType.FullName.Replace('+', '.');
+
+            if (stringValue.Contains("|"))
+            {
+                return String.Join(" | ", stringValue.Split('|').Select(x => String.Format("{0}.{1}", enumTypeName, (T)Enum.Parse(typeof(T), x, true))));
+            }
+
+            return String.Format("{0}.{1}", enumTypeName, (T)Enum.Parse(typeof(T), stringValue, true));
         }
 
         /// <summary>
         /// Converts value from string.
         /// </summary>
         public override T Convert(string stringValue)
-        {            
+        {
             return (T)Enum.Parse(typeof(T), stringValue, true);
         }
 

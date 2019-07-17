@@ -46,7 +46,7 @@ namespace Delight
             return IsUIView(viewObject.BasedOn);
         }
 
-        public void ViewSelected(DesignerView designerView)
+        public async void ViewSelected(DesignerView designerView)
         {
             if (_displayedView != null)
             {
@@ -58,7 +58,7 @@ namespace Delight
 
             var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
-            _displayedView?.Load();
+            await _displayedView?.LoadAsync();
             _displayedView?.PrepareForDesigner();
 
             // center on view
@@ -125,7 +125,7 @@ namespace Delight
             }
 
             // adjust content regions to size
-            ContentRegionCanvas.SetSize(adjustedWidth + 500, adjustedHeight + 500);
+            ContentRegionCanvas.SetSize(adjustedWidth * 2, adjustedHeight * 2);
             ViewContentRegion.SetSize(adjustedWidth, adjustedHeight);
         }
     }

@@ -8,7 +8,17 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base views for tab content displayed within the TabPanel.
+    /// </summary>
     public partial class Tab
     {
+        /// <summary>
+        /// Sets content template data.
+        /// </summary>
+        public override void SetContentTemplateData(ContentTemplateData contentTemplateData)
+        {
+            ContentTemplateData = contentTemplateData;
+        }
     }
 }

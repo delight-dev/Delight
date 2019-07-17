@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for data providers.
+    /// Generic base class for data providers. Provides access to bindable objects of a certain type.
     /// </summary>
     public abstract class DataProvider<T> : BindableCollection<T>
         where T : BindableObject

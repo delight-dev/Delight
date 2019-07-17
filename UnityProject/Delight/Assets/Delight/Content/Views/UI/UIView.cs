@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base class for UI views. Has properties for doing layout: Width, Height, Margin, Alignment and Offset.
+    /// </summary>
     public partial class UIView
     {
         #region Methods

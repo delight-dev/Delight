@@ -10,7 +10,7 @@ namespace Delight
     public delegate void CollectionChangedEventHandler(object source, CollectionChangedEventArgs eventArgs);
 
     /// <summary>
-    /// Base class for bindable objects.
+    /// Interface for collections notifying listeners the collection has been changed.
     /// </summary>
     public interface INotifyCollectionChanged
     {

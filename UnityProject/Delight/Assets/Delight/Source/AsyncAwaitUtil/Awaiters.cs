@@ -1,7 +1,9 @@
 using System;
 using UnityEngine;
 
-// TODO: Remove the allocs here, use a static memory pool?
+/// <summary>
+/// Async Await Utility for Unity. Read more at: http://www.stevevermeulen.com/index.php/2017/09/23/using-async-await-in-unity3d-2017/
+/// </summary>
 public static class Awaiters
 {
     readonly static WaitForUpdate _waitForUpdate = new WaitForUpdate();

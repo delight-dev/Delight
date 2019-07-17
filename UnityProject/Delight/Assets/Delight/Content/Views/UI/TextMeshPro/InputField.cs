@@ -14,7 +14,7 @@ using UnityEngine.UI;
 namespace Delight
 {
     /// <summary>
-    /// Input field view.
+    /// Interactable input field view enabling user to type single or multi-line text. Based on TextMeshPro input field component. 
     /// </summary>
     public partial class InputField
     {

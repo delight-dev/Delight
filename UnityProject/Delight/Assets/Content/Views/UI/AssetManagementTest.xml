@@ -19,19 +19,19 @@
     
     <!-- Three sets of images we want to load on-demand -->
     <Group Id="ImageGroup" Orientation="Horizontal" Spacing="5">
-      <Group Id="ImageSet1" Spacing="5" LoadMode="OnDemand">
+      <Group Id="ImageSet1" Spacing="5" LoadMode="Manual">
         <Image Sprite="Frame1" Size="100,100" />
         <Image Sprite="Frame2" Size="100,100" />
       </Group>  
-      <Group Id="ImageSet2" Spacing="5" LoadMode="OnDemand">
+      <Group Id="ImageSet2" Spacing="5" LoadMode="Manual">
         <Image Sprite="Frame3" Size="100,100" />
         <Image Sprite="Frame4" Size="100,100" />   
       </Group>
-      <Group Id="ImageSet3" Spacing="5" LoadMode="OnDemand">
+      <Group Id="ImageSet3" Spacing="5" LoadMode="Manual">
         <Image Sprite="Frame2" Size="100,100" />
         <Image Sprite="Frame3" Size="100,100" />
       </Group>
-      <Group Id="ImageSet4" Spacing="5" LoadMode="OnDemand">
+      <Group Id="ImageSet4" Spacing="5" LoadMode="Manual">
         <Image Id="BigSpriteImage" Sprite="BigSprite" Size="100,205" />
       </Group>
     </Group> 

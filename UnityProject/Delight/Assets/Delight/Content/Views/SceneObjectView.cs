@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 namespace Delight
 {
     /// <summary>
-    /// Scene object view.
+    /// Base class for all views that has a game object in the scene. 
     /// </summary>
     public partial class SceneObjectView
     {
@@ -275,6 +275,19 @@ namespace Delight
         public Coroutine StartCoroutine(string methodName, object value)
         {
             return UnityScript?.StartCoroutine(methodName, value);
+        }
+
+        /// <summary>
+        /// Moves view to another layout parent. 
+        /// </summary>
+        public override void MoveTo(View newLayoutParent)
+        {
+            base.MoveTo(newLayoutParent);
+            if (GameObject != null)
+            {
+                var parent = newLayoutParent as SceneObjectView;
+                GameObject.transform.SetParent(parent?.GameObject?.transform, false);
+            }
         }
 
         #endregion

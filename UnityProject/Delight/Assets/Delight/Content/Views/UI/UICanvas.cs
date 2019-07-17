@@ -8,7 +8,10 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class UICanvas : UIView
+    /// <summary>
+    /// The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. Can also be used to reduce draw calls by sectioning off portion of the UI (i.e. that changes a lot) into a separate canvas.
+    /// </summary>
+    public partial class UICanvas
     {
         #region Methods
 

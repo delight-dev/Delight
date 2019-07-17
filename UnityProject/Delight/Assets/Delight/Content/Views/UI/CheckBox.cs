@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// A check box view consisting of a box that can be ticked and a text label.
+    /// </summary>
     public partial class CheckBox
     {
         #region Methods

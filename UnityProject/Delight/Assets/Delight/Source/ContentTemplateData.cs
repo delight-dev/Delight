@@ -1,7 +1,7 @@
 ﻿namespace Delight
 {
     /// <summary>
-    /// Content template data.
+    /// Content template data. Contains information about data associated with an instantiated content template. 
     /// </summary>
     public class ContentTemplateData : BindableObject
     {
@@ -25,5 +25,7 @@
             get { return _zeroIndex; }
             set { SetProperty(ref _zeroIndex, value); }
         }
+
+        public static readonly ContentTemplateData Empty = new ContentTemplateData();
     }
 }

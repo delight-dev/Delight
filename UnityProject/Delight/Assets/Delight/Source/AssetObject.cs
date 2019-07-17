@@ -9,7 +9,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Base class for unity asset objects.
+    /// Base class for unity asset object managers. Loads/unloads the asset on-demand as it's requested by views.
     /// </summary>
     public class AssetObject : AtomicBindableObject
     {
@@ -178,7 +178,7 @@ namespace Delight
     }
 
     /// <summary>
-    /// Base class for unity asset objects.
+    /// Generic base class for unity asset object managers. Loads/unloads the asset on-demand as it's requested by views.
     /// </summary>
     public class AssetObject<T> : AssetObject
         where T : UnityEngine.Object

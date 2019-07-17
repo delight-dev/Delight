@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Presents a one-of-many selection option. If multiple radio buttons shares the same parent only one is selected at a time.
+    /// </summary>
     public partial class RadioButton
     {
         #region Methods

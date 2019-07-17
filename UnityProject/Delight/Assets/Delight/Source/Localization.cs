@@ -8,6 +8,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Holds information about a localized label. Used by the localization mechanism. 
+    /// </summary>
     public partial class LocalizationLabel : ModelObject
     {
         #region Properties

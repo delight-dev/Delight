@@ -257,15 +257,6 @@ namespace Delight.Editor.Parser
             File.WriteAllText(xumlFile.Path, sb.ToString());
 
             CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
-
-            // generate code-behind  // TODO cleanup GenerateBlankCodeBehind logic as we always do it
-            //var config = MasterConfig.GetInstance();
-            //if (config.GenerateBlankCodeBehind)
-            //{
-            //    CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
-            //    config.GenerateBlankCodeBehind = false;
-            //    config.SaveConfig();
-            //}
         }
 
         /// <summary>

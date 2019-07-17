@@ -30,21 +30,25 @@ namespace Delight.Editor
         }
 
         /// <summary>
-        /// Generates documentation from an XML file.
+        /// Generates API .md docs from documentation XML, for the delight-dev.github.io website.
         /// </summary>
         public static void GenerateDocumentation()
         {
             // Creates API documentation from documentation XML. 
             // To generate the documenation XML add the following to the Assembly-CSharp.csproj file in first PropertyGroup:
             // <DocumentationFile>Assets\DevTools\Docs\Documentation.XML</DocumentationFile>
-            // And build the solution to generate the documentation XML. 
+            // And build the solution to generate the documentation XML, then the API docs can be built through the Delight menu item.
 
             // parse Assets\DevTools\Docs\Documentation.XML
             var docFile = "Assets/DevTools/Docs/Documentation.XML";
-            var outputPath = @"C:\Projects\GitProjects\delight-dev.github.io\Api";
+            var basePath = @"C:\Projects\GitProjects\delight-dev.github.io";
+            var outputPath = basePath + @"\Api";
+            var examplesPath = basePath + @"\_includes\Examples";
+
             if (!File.Exists(docFile))
             {
-                Debug.Log(String.Format("#Delight# Unable to generate API documentation. Couldn't find XML docs at \"{0}\". To generate XML docs add the following to the Assembly-CSharp.csproj file in first PropertyGroup:{1}{1}<DocumentationFile>Assets\\DevTools\\Docs\\Documentation.XML</DocumentationFile>{1}{1}And build the solution to generate the documentation XML.", docFile, Environment.NewLine));
+                Debug.Log(String.Format("#Delight# Unable to generate API documentation. Couldn't find XML docs at \"{0}\". To generate XML docs add the following to the Assembly-CSharp.csproj file in first PropertyGroup:{1}{1}<DocumentationFile>Assets\\DevTools\\Docs\\Documentation.XML</DocumentationFile>{1}{1}And build the solution to generate the documentation XML, then the API docs can be generated.", docFile, Environment.NewLine));
+                return;
             }
 
             var documentationXml = File.ReadAllText("Assets/DevTools/Docs/Documentation.XML");
@@ -187,6 +191,16 @@ namespace Delight.Editor
                     sb.AppendLine("{0}", !String.IsNullOrEmpty(viewDoc.Description) ? viewDoc.Description : viewDoc.Summary);
                 }
 
+                // section: examples
+                // check if example .md file exist for view
+                if (File.Exists(String.Format("{0}/Views/{1}Examples.md", examplesPath, viewDoc.FileName)))
+                {
+                    // create markdown file include
+                    sb.AppendLine();
+                    sb.AppendLine("{{% capture {0}Examples %}}{{% include Examples/Views/{0}Examples.md %}}{{% endcapture %}}", viewDoc.FileName);
+                    sb.AppendLine("{{{{ {0}Examples | markdownify }}}}", viewDoc.FileName);
+                }
+
                 // section: dependency properties
                 var propertyDeclarations = CodeGenerator.GetPropertyDeclarations(viewDoc.View, true, true, true);
                 if (propertyDeclarations.Count > 0)
@@ -216,16 +230,16 @@ namespace Delight.Editor
                             // get type name
                             if (propertyTypeDoc != null)
                             {
-                                propertyTypeName = String.Format("[{0}]({1})", propertyTypeName, propertyTypeDoc.FileName);
+                                propertyTypeName = String.Format("[{0}]({1}{2})", propertyTypeName, propertyTypeDoc.IsView ? "" : "../Types/", propertyTypeDoc.FileName);
                             }
-                            else
+                            else   
                             {
                                 // check if it's a unity type
                                 // check if the type is a Unity type
                                 if (propertyTypeFullName.StartsWith("UnityEngine"))
                                 {
                                     // reference the unity docs
-                                    propertyTypeName = String.Format("[{0}](\"http://docs.unity3d.com/ScriptReference/{0}.html\")", propertyTypeName);
+                                    propertyTypeName = String.Format("[{0}](http://docs.unity3d.com/ScriptReference/{0}.html)", propertyTypeName);
                                 }
                                 else
                                 {
@@ -312,10 +326,10 @@ namespace Delight.Editor
                 File.WriteAllText(String.Format("{0}/{1}/{2}.md", outputPath, doc.IsView ? "Views" : "Types", doc.FileName),
                     doc.DocContent);
             }
-            
+
             Debug.Log("#Delight# Documentation generated");
         }
 
-            #endregion
-        }
+        #endregion
     }
+}

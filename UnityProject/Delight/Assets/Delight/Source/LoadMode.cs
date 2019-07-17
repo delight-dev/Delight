@@ -19,12 +19,15 @@ namespace Delight
         /// View is loaded when explicitly requested to load by calling its Load method. 
         /// </summary>
         Manual = 1,
-        OnDemand = 1,
 
         /// <summary>
-        /// Makes view hidden while view and referenced assets are loading.
+        /// View is hidden while loading.
         /// </summary>
         HiddenWhileLoading = 2,
-        ManualHiddenWhileLoading = 3
+
+        /// <summary>
+        /// Loading of view awaits assets to load before completing.
+        /// </summary>
+        AwaitAssets = 4,
     }
 }
