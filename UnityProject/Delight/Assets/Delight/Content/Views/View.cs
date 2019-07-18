@@ -20,7 +20,6 @@ namespace Delight
         public delegate void ChangeHandler();
         public delegate void LoadedEventHandler(object source);
         public event LoadedEventHandler Loaded;
-        public event LoadedEventHandler LoadedWithAssets;
 
         protected View _parent;
         protected View _layoutParent;

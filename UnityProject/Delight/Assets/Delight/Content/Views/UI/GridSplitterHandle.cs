@@ -15,12 +15,17 @@ namespace Delight
     public partial class GridSplitterHandle
     {
         #region Fields
-               
-        private bool _isDragging;
+
+        public Region ParentRegion;
+        public LayoutGrid ParentGrid;
+        public int Index;
+        public bool IsColumnSplitter;
+        public bool SetSizeOnDragEnded;
+
         private bool _offsetChangedFromStartPosition;
         private Vector2 _dragStartPosition;
         private Vector2 _splitterHandleStartOffset;
-        public Region _parentRegion;
+        private Vector2 _startSize;
 
         #endregion
 
@@ -32,13 +37,6 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-
-            _parentRegion = LayoutParent as Region;
-            if (_parentRegion == null)
-            {
-                Debug.LogError(String.Format("#Delight# {0}: GridSplitterHandle must reside within a Region that resides in a Grid.", Name));
-                return;
-            }
         }
 
         /// <summary>
@@ -46,24 +44,35 @@ namespace Delight
         /// </summary>
         public void OnDrag(DependencyObject sender, PointerEventData pointerData)
         {
-            Vector2 dragPosition;
-            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentRegion.RectTransform, pointerData.position, pointerData.pressEventCamera, out dragPosition))
+            if (!IsEnabled)
                 return;
-
-            var dragDelta = dragPosition - _dragStartPosition;
-            var contentPosition = new Vector2(dragPosition.x - _splitterHandleStartOffset.x,
-                -dragPosition.y - _splitterHandleStartOffset.y);
-
-            if (OffsetFromParent == null)
-                OffsetFromParent = new ElementMargin();
 
             _offsetChangedFromStartPosition = true;
 
             // adjust splitter handle offset
-            Vector2 contentOffset = new Vector2(_splitterHandleStartOffset.x + dragDelta.x, _splitterHandleStartOffset.y - dragDelta.y);
-            contentOffset = GetClampedHandleOffset(contentOffset);
+            Vector2 dragPosition;
+            if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(ParentGrid.RectTransform, pointerData.position, pointerData.pressEventCamera, out dragPosition))
+                return;
+            var dragDelta = dragPosition - _dragStartPosition;
 
-            SetHandleOffset(contentOffset);
+            if (SetSizeOnDragEnded)
+            {                
+                Vector2 contentOffset = new Vector2(_splitterHandleStartOffset.x + dragDelta.x, _splitterHandleStartOffset.y - dragDelta.y);
+                contentOffset = GetClampedHandleOffset(contentOffset);
+                SetHandleOffset(contentOffset);
+            }
+            else
+            {
+                // resize grid
+                if (IsColumnSplitter)
+                {
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x));
+                }
+                else
+                {
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y));
+                }
+            }
         }
 
         /// <summary>
@@ -71,19 +80,42 @@ namespace Delight
         /// </summary>
         public void OnBeginDrag(DependencyObject sender, PointerEventData pointerData)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(_parentRegion.RectTransform, pointerData.position, pointerData.pressEventCamera, out _dragStartPosition);
+            if (!IsEnabled)
+                return;
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(ParentGrid.RectTransform, pointerData.position, pointerData.pressEventCamera, out _dragStartPosition);
 
             _splitterHandleStartOffset = GetHandleOffset();
-            _isDragging = true;
+            _startSize = new Vector2(ParentRegion.ActualWidth, ParentRegion.ActualHeight);
         }
 
         /// <summary>
         /// Called when the content is stopped being dragged.
         /// </summary>
-        public void OnEndDrag(DependencyObject sender, object eventArgs)
+        public void OnEndDrag(DependencyObject sender, PointerEventData pointerData)
         {
-            var contentOffset = GetHandleOffset();
-            _isDragging = false;
+            if (!IsEnabled)
+                return;
+
+            if (SetSizeOnDragEnded && _offsetChangedFromStartPosition)
+            {
+                // resize grid
+                Vector2 dragPosition;
+                if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(ParentGrid.RectTransform, pointerData.position, pointerData.pressEventCamera, out dragPosition))
+                    return;
+                var dragDelta = dragPosition - _dragStartPosition;
+
+                SetHandleOffset(_splitterHandleStartOffset);
+
+                if (IsColumnSplitter)
+                {
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x));
+                }
+                else
+                {
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y));
+                }
+            }
         }
 
         /// <summary>
@@ -156,30 +188,20 @@ namespace Delight
             if (OffsetFromParent == null)
                 OffsetFromParent = new ElementMargin();
 
-            bool hasChanged = false;
-            if (CanResizeHorizontally)
+            if (IsColumnSplitter)
             {
                 if (OffsetFromParent.Left.Pixels != contentOffset.x)
                 {
                     OffsetFromParent.Left.Pixels = contentOffset.x;
-                    hasChanged = true;
                 }
             }
-
-            if (CanResizeVertically)
+            else
             {
                 if (OffsetFromParent.Top.Pixels != contentOffset.y)
                 {
                     OffsetFromParent.Top.Pixels = contentOffset.y;
-                    hasChanged = true;
                 }
             }
-
-            //if (hasChanged)
-            //{
-            //    UpdateScrollbars();
-            //    ContentScrolled?.Invoke(this, null);
-            //}
         }
 
         #endregion

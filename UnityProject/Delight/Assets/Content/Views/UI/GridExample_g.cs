@@ -507,6 +507,9 @@ namespace Delight
 #if UNITY_EDITOR
                     _gridExampleGridSplitter1.Name = "GridExampleGridSplitter1";
 #endif
+                    Delight.GridSplitter.ThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.GridSplitter.InteractionThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.GridSplitter.SplitterColorProperty.SetDefault(_gridExampleGridSplitter1, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
                 }
                 return _gridExampleGridSplitter1;
             }

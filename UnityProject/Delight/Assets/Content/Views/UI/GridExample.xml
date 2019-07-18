@@ -12,6 +12,6 @@
     <Region Id="Cell21" Grid.Cell="2,1" BackgroundColor="#0087ff" />
     <Region Id="Cell22" Grid.Cell="2,2" BackgroundColor="#8730ad" />
 
-    <GridSplitter />
+    <GridSplitter Thickness="5" InteractionThickness="20" SplitterColor="#333333" />
   </Grid>
 </GridExample>

@@ -174,6 +174,8 @@ namespace Delight
             bool hasNewSize = false;
 
             // the default behavior of the list-item is to adjust its height and width to its content
+            bool percentageWidth = true;
+            bool percentageHeight = true;
             float maxWidth = 0f;
             float maxHeight = 0f;
             int childCount = LayoutChildren.Count;
@@ -192,11 +194,13 @@ namespace Delight
                 if (childWidth.Unit != ElementSizeUnit.Percents)
                 {
                     maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
+                    percentageWidth = false;
                 }
 
                 if (childHeight.Unit != ElementSizeUnit.Percents)
                 {
                     maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
+                    percentageHeight = false;
                 }
             }
 
@@ -206,13 +210,13 @@ namespace Delight
             maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
 
             // adjust size to content unless it has been set
-            var newWidth = new ElementSize(maxWidth);
+            var newWidth = percentageWidth ? ElementSize.FromPercents(1) : new ElementSize(maxWidth);
             if (!newWidth.Equals(Width))
             {
                 Width = newWidth;
                 hasNewSize = true;
             }
-            var newHeight = new ElementSize(maxHeight);
+            var newHeight = percentageHeight ? ElementSize.FromPercents(1) : new ElementSize(maxHeight);
             if (!newHeight.Equals(Height))
             {
                 Height = newHeight;

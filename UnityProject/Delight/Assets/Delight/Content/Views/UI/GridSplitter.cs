@@ -54,11 +54,9 @@ namespace Delight
                 cell = new CellIndex(0, 0);
             }
 
-            var actualCellSpan = new CellIndex(Math.Min(rowCount - cell.Row, cellSpan.Row), Math.Min(columnCount - cell.Column, cellSpan.Column));
-            
+            var actualCellSpan = new CellIndex(Math.Min(rowCount - cell.Row, cellSpan.Row), Math.Min(columnCount - cell.Column, cellSpan.Column));            
             int columnSplitterCount = (actualCellSpan.Column - 1) - cell.Column;
             int rowSplitterCount = (actualCellSpan.Row - 1) - cell.Row;
-
             var contentTemplate = ContentTemplates?.FirstOrDefault();
 
             if (SplitMode == SplitMode.Columns || SplitMode == SplitMode.RowsAndColumns)
@@ -75,17 +73,32 @@ namespace Delight
                     var gridSplitterHandle = new GridSplitterHandle(_parentGrid);
                     gridSplitterHandle.MoveTo(gridSplitterHandlerRegion);
                     gridSplitterHandle.Load();
-                    gridSplitterHandle.Width = Thickness ?? ElementSize.FromPixels(10);
+
+                    var thickness = Thickness ?? 10;
+                    var interactionThickness = InteractionThickness ?? thickness;
+                    var difference = interactionThickness - thickness;
+                    if (difference > 0)
+                    {
+                        gridSplitterHandle.SplitterHandle.Margin = new ElementMargin(difference / 2, 0, difference / 2, 0);
+                    }
+
+                    gridSplitterHandle.Width = interactionThickness;
+                    gridSplitterHandle.Offset = new ElementMargin(interactionThickness / 2, 0);
                     gridSplitterHandle.Alignment = ElementAlignment.Right;
-                    gridSplitterHandle.BackgroundColor = Color.yellow;
-                    gridSplitterHandle.CanResizeHorizontally = true;
+                    gridSplitterHandle.SplitterHandle.Color = SplitterColor;
+                    gridSplitterHandle.SplitterHandle.Sprite = SplitterSprite;
+                    gridSplitterHandle.SetSizeOnDragEnded = SetSizeOnDragEnded;
+                    gridSplitterHandle.ParentRegion = gridSplitterHandlerRegion;
+                    gridSplitterHandle.ParentGrid = _parentGrid;
+                    gridSplitterHandle.Index = cell.Column + i;
+                    gridSplitterHandle.IsColumnSplitter = true;
 
                     // create content for the handle                
                     if (contentTemplate == null)
                         continue;
 
                     var gridSplitterHandleContent = contentTemplate.Activator(ContentTemplateData.Empty);
-                    gridSplitterHandleContent.MoveTo(gridSplitterHandle);
+                    gridSplitterHandleContent.MoveTo(gridSplitterHandle.Content);
                     gridSplitterHandleContent.Load();
                 }
             }
@@ -104,10 +117,25 @@ namespace Delight
                     var gridSplitterHandle = new GridSplitterHandle(_parentGrid);
                     gridSplitterHandle.MoveTo(gridSplitterHandlerRegion);
                     gridSplitterHandle.Load();
-                    gridSplitterHandle.Height = Thickness ?? ElementSize.FromPixels(10);
+
+                    var thickness = Thickness ?? 10;
+                    var interactionThickness = InteractionThickness ?? thickness;
+                    var difference = interactionThickness - thickness;
+                    if (difference > 0)
+                    {
+                        gridSplitterHandle.SplitterHandle.Margin = new ElementMargin(0, difference / 2, 0, difference / 2);
+                    }
+
+                    gridSplitterHandle.Height = interactionThickness;
+                    gridSplitterHandle.Offset = new ElementMargin(0, interactionThickness / 2);
                     gridSplitterHandle.Alignment = ElementAlignment.Bottom;
-                    gridSplitterHandle.BackgroundColor = Color.blue;
-                    gridSplitterHandle.CanResizeVertically = true;
+                    gridSplitterHandle.SplitterHandle.Color = SplitterColor;
+                    gridSplitterHandle.SplitterHandle.Sprite = SplitterSprite;
+                    gridSplitterHandle.SetSizeOnDragEnded = SetSizeOnDragEnded;
+                    gridSplitterHandle.ParentRegion = gridSplitterHandlerRegion;
+                    gridSplitterHandle.ParentGrid = _parentGrid;
+                    gridSplitterHandle.Index = cell.Row + i;
+                    gridSplitterHandle.IsColumnSplitter = false;
 
                     // create content for the handle                
                     if (contentTemplate == null)

@@ -101,7 +101,10 @@ namespace Delight
                 var cellIndex = Cell.GetValue(child);
                 if (cellIndex == null)
                 {
-                    Debug.LogWarning(String.Format("#Delight# {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
+                    if (!(child is GridSplitter))
+                    {
+                        Debug.LogWarning(String.Format("#Delight# {0}: Unable to arrange view \"{1}\" in the grid as it doesn't specify its cell index. Specify cell index as an attached property on the view, e.g. <{1} Grid.CellIndex=\"0,1\" ...>, to put the view in the first row and second column.", Name, child.Name));
+                    }
                     continue;
                 }
 
@@ -135,6 +138,80 @@ namespace Delight
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
 
             return false;
+        }
+
+        /// <summary>
+        /// Resizes a column. 
+        /// </summary>
+        public void ResizeColumn(int columnIndex, float newWidth, bool isFollowing = false)
+        {
+            if (columnIndex < 0 || columnIndex >= Columns.Count)
+                return;
+
+            if (newWidth < 0)
+                newWidth = 0;
+
+            var column = Columns[columnIndex];
+            var currentWidth = column.ActualWidth;
+            var difference = currentWidth - newWidth;
+
+            int nextColumnIndex = columnIndex + 1;
+            if (!isFollowing && nextColumnIndex < Columns.Count)
+            {
+                var nextColumnSize = Columns[nextColumnIndex].ActualWidth + difference;
+                if (nextColumnSize < 0)
+                {
+                    // see if difference can be adjusted so nextRowSize is zero
+                    difference = difference - nextColumnSize;
+                    nextColumnSize = 0;
+                }
+
+                // add difference to following column
+                ResizeColumn(nextColumnIndex, nextColumnSize, true);
+            }
+
+            column.Width = currentWidth - difference;            
+            if (!isFollowing)
+            {
+                UpdateLayout(false);
+            }
+        }
+
+        /// <summary>
+        /// Resizes a row. 
+        /// </summary>
+        public void ResizeRow(int rowIndex, float newHeight, bool isFollowing = false)
+        {
+            if (rowIndex < 0 || rowIndex >= Rows.Count)
+                return;
+
+            if (newHeight < 0)
+                newHeight = 0;
+
+            var row = Rows[rowIndex];
+            var currentHeight = row.ActualHeight;
+            var difference = currentHeight - newHeight;
+
+            int nextRowIndex = rowIndex + 1;
+            if (!isFollowing && nextRowIndex < Rows.Count)
+            {
+                var nextRowSize = Rows[nextRowIndex].ActualHeight + difference;
+                if (nextRowSize < 0)
+                {
+                    // see if difference can be adjusted so nextRowSize is zero
+                    difference = difference - nextRowSize;
+                    nextRowSize = 0;
+                }
+
+                // add difference to following row
+                ResizeRow(nextRowIndex, nextRowSize, true);
+            }            
+
+            row.Height = currentHeight - difference;
+            if (!isFollowing)
+            {
+                UpdateLayout(false);
+            }
         }
 
         /// <summary>
@@ -286,7 +363,7 @@ namespace Delight
         {
             UpdateLayout(false);
         }
-
+        
         #endregion
     }
 

@@ -2271,27 +2271,13 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="Thickness" type="xs:string" />
+    <xs:attribute name="InteractionThickness" type="xs:string" />
     <xs:attribute name="Spacing" type="xs:string" />
     <xs:attribute name="SetSizeOnDragEnded" type="xs:string" />
     <xs:attribute name="IsEnabled" type="xs:string" />
     <xs:attribute name="SplitMode" type="Enum_SplitMode" />
-    <xs:attribute name="ImageComponent" type="xs:string" />
-    <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="BackgroundType" type="Enum_Type" />
-    <xs:attribute name="BackgroundPreserveAspect" type="xs:string" />
-    <xs:attribute name="BackgroundFillCenter" type="xs:string" />
-    <xs:attribute name="BackgroundFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="BackgroundFillAmount" type="xs:string" />
-    <xs:attribute name="BackgroundFillClockwise" type="xs:string" />
-    <xs:attribute name="BackgroundFillOrigin" type="xs:string" />
-    <xs:attribute name="BackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="BackgroundUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="BackgroundMaskable" type="xs:string" />
-    <xs:attribute name="BackgroundColor" type="xs:string" />
-    <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
+    <xs:attribute name="SplitterColor" type="xs:string" />
+    <xs:attribute name="SplitterSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -2360,8 +2346,6 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="IsEnabled" type="xs:string" />
-    <xs:attribute name="CanResizeHorizontally" type="xs:string" />
-    <xs:attribute name="CanResizeVertically" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />

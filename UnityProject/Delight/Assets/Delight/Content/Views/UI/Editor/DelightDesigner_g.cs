@@ -48,6 +48,7 @@ namespace Delight
             Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);
             Grid1.Cell.SetValue(Region2, new CellIndex(0, 1));
             Grid1.CellSpan.SetValue(Region2, new CellIndex(1, 2));
+            GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             this.AfterInitializeInternal();
         }
 
@@ -77,6 +78,8 @@ namespace Delight
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Region2Property);
             dependencyProperties.Add(Region2TemplateProperty);
+            dependencyProperties.Add(GridSplitter1Property);
+            dependencyProperties.Add(GridSplitter1TemplateProperty);
             dependencyProperties.Add(List1ContentProperty);
             dependencyProperties.Add(List1ContentTemplateProperty);
         }
@@ -204,6 +207,20 @@ namespace Delight
             set { Region2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<GridSplitter> GridSplitter1Property = new DependencyProperty<GridSplitter>("GridSplitter1");
+        public GridSplitter GridSplitter1
+        {
+            get { return GridSplitter1Property.GetValue(this); }
+            set { GridSplitter1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> GridSplitter1TemplateProperty = new DependencyProperty<Template>("GridSplitter1Template");
+        public Template GridSplitter1Template
+        {
+            get { return GridSplitter1TemplateProperty.GetValue(this); }
+            set { GridSplitter1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<ListItem> List1ContentProperty = new DependencyProperty<ListItem>("List1Content");
         public ListItem List1Content
         {
@@ -259,6 +276,7 @@ namespace Delight
                     Delight.DelightDesigner.List1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1Content);
                     Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
                     Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
+                    Delight.DelightDesigner.GridSplitter1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter1);
                 }
                 return _delightDesigner;
             }
@@ -757,7 +775,7 @@ namespace Delight
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 16);
                     Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(24f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.Fonts["Ebrima"]);
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(240f, ElementSizeUnit.Pixels));
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, "Ellipsis");
@@ -787,6 +805,27 @@ namespace Delight
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion2, new UnityEngine.Color(0.6392157f, 0.6352941f, 0.6392157f, 1f));
                 }
                 return _delightDesignerRegion2;
+            }
+        }
+
+        private static Template _delightDesignerGridSplitter1;
+        public static Template DelightDesignerGridSplitter1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerGridSplitter1 == null || _delightDesignerGridSplitter1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerGridSplitter1 == null)
+#endif
+                {
+                    _delightDesignerGridSplitter1 = new Template(GridSplitterTemplates.GridSplitter);
+#if UNITY_EDITOR
+                    _delightDesignerGridSplitter1.Name = "DelightDesignerGridSplitter1";
+#endif
+                    Delight.GridSplitter.ThicknessProperty.SetDefault(_delightDesignerGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                }
+                return _delightDesignerGridSplitter1;
             }
         }
 

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class GridSplitter : UIImageView
+    public partial class GridSplitter : UIView
     {
         #region Constructors
 
@@ -29,10 +29,13 @@ namespace Delight
             DependencyProperties.Add(GridSplitterTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(ThicknessProperty);
+            dependencyProperties.Add(InteractionThicknessProperty);
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(SetSizeOnDragEndedProperty);
             dependencyProperties.Add(IsEnabledProperty);
             dependencyProperties.Add(SplitModeProperty);
+            dependencyProperties.Add(SplitterColorProperty);
+            dependencyProperties.Add(SplitterSpriteProperty);
         }
 
         #endregion
@@ -44,6 +47,13 @@ namespace Delight
         {
             get { return ThicknessProperty.GetValue(this); }
             set { ThicknessProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> InteractionThicknessProperty = new DependencyProperty<Delight.ElementSize>("InteractionThickness");
+        public Delight.ElementSize InteractionThickness
+        {
+            get { return InteractionThicknessProperty.GetValue(this); }
+            set { InteractionThicknessProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
@@ -74,6 +84,20 @@ namespace Delight
             set { SplitModeProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<UnityEngine.Color> SplitterColorProperty = new DependencyProperty<UnityEngine.Color>("SplitterColor");
+        public UnityEngine.Color SplitterColor
+        {
+            get { return SplitterColorProperty.GetValue(this); }
+            set { SplitterColorProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<SpriteAsset> SplitterSpriteProperty = new DependencyProperty<SpriteAsset>("SplitterSprite");
+        public SpriteAsset SplitterSprite
+        {
+            get { return SplitterSpriteProperty.GetValue(this); }
+            set { SplitterSpriteProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -102,13 +126,14 @@ namespace Delight
                 if (_gridSplitter == null)
 #endif
                 {
-                    _gridSplitter = new Template(UIImageViewTemplates.UIImageView);
+                    _gridSplitter = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _gridSplitter.Name = "GridSplitter";
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_gridSplitter, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.IsEnabledProperty.SetDefault(_gridSplitter, true);
                     Delight.GridSplitter.SplitModeProperty.SetDefault(_gridSplitter, Delight.SplitMode.RowsAndColumns);
+                    Delight.GridSplitter.SplitterColorProperty.SetDefault(_gridSplitter, new UnityEngine.Color(0f, 0f, 0f, 0f));
                 }
                 return _gridSplitter;
             }

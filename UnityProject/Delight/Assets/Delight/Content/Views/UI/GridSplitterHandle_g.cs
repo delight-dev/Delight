@@ -16,10 +16,13 @@ namespace Delight
         public GridSplitterHandle(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
             base(parent, layoutParent, id, template ?? GridSplitterHandleTemplates.Default, initializer)
         {
+            // constructing Image (SplitterHandle)
+            SplitterHandle = new Image(this, this, "SplitterHandle", SplitterHandleTemplate);
             Drag.RegisterHandler(this, "OnDrag");
             BeginDrag.RegisterHandler(this, "OnBeginDrag");
             InitializePotentialDrag.RegisterHandler(this, "OnInitializePotentialDrag");
             EndDrag.RegisterHandler(this, "OnEndDrag");
+            ContentContainer = SplitterHandle;
             this.AfterInitializeInternal();
         }
 
@@ -33,8 +36,8 @@ namespace Delight
             DependencyProperties.Add(GridSplitterHandleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(IsEnabledProperty);
-            dependencyProperties.Add(CanResizeHorizontallyProperty);
-            dependencyProperties.Add(CanResizeVerticallyProperty);
+            dependencyProperties.Add(SplitterHandleProperty);
+            dependencyProperties.Add(SplitterHandleTemplateProperty);
         }
 
         #endregion
@@ -48,18 +51,18 @@ namespace Delight
             set { IsEnabledProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.Boolean> CanResizeHorizontallyProperty = new DependencyProperty<System.Boolean>("CanResizeHorizontally");
-        public System.Boolean CanResizeHorizontally
+        public readonly static DependencyProperty<Image> SplitterHandleProperty = new DependencyProperty<Image>("SplitterHandle");
+        public Image SplitterHandle
         {
-            get { return CanResizeHorizontallyProperty.GetValue(this); }
-            set { CanResizeHorizontallyProperty.SetValue(this, value); }
+            get { return SplitterHandleProperty.GetValue(this); }
+            set { SplitterHandleProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.Boolean> CanResizeVerticallyProperty = new DependencyProperty<System.Boolean>("CanResizeVertically");
-        public System.Boolean CanResizeVertically
+        public readonly static DependencyProperty<Template> SplitterHandleTemplateProperty = new DependencyProperty<Template>("SplitterHandleTemplate");
+        public Template SplitterHandleTemplate
         {
-            get { return CanResizeVerticallyProperty.GetValue(this); }
-            set { CanResizeVerticallyProperty.SetValue(this, value); }
+            get { return SplitterHandleTemplateProperty.GetValue(this); }
+            set { SplitterHandleTemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -96,8 +99,32 @@ namespace Delight
 #endif
                     Delight.GridSplitterHandle.IsEnabledProperty.SetDefault(_gridSplitterHandle, true);
                     Delight.GridSplitterHandle.BackgroundColorProperty.SetDefault(_gridSplitterHandle, new UnityEngine.Color(0f, 0f, 0f, 0f));
+                    Delight.GridSplitterHandle.RaycastBlockModeProperty.SetDefault(_gridSplitterHandle, Delight.RaycastBlockMode.Always);
+                    Delight.GridSplitterHandle.SplitterHandleTemplateProperty.SetDefault(_gridSplitterHandle, GridSplitterHandleSplitterHandle);
                 }
                 return _gridSplitterHandle;
+            }
+        }
+
+        private static Template _gridSplitterHandleSplitterHandle;
+        public static Template GridSplitterHandleSplitterHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_gridSplitterHandleSplitterHandle == null || _gridSplitterHandleSplitterHandle.CurrentVersion != Template.Version)
+#else
+                if (_gridSplitterHandleSplitterHandle == null)
+#endif
+                {
+                    _gridSplitterHandleSplitterHandle = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _gridSplitterHandleSplitterHandle.Name = "GridSplitterHandleSplitterHandle";
+#endif
+                    Delight.Image.WidthProperty.SetDefault(_gridSplitterHandleSplitterHandle, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_gridSplitterHandleSplitterHandle, new ElementSize(1f, ElementSizeUnit.Percents));
+                }
+                return _gridSplitterHandleSplitterHandle;
             }
         }
 
