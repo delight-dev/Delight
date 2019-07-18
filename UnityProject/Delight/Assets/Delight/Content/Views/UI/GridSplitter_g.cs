@@ -36,6 +36,7 @@ namespace Delight
             dependencyProperties.Add(SplitModeProperty);
             dependencyProperties.Add(SplitterColorProperty);
             dependencyProperties.Add(SplitterSpriteProperty);
+            dependencyProperties.Add(BePushyProperty);
         }
 
         #endregion
@@ -96,6 +97,13 @@ namespace Delight
         {
             get { return SplitterSpriteProperty.GetValue(this); }
             set { SplitterSpriteProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> BePushyProperty = new DependencyProperty<System.Boolean>("BePushy");
+        public System.Boolean BePushy
+        {
+            get { return BePushyProperty.GetValue(this); }
+            set { BePushyProperty.SetValue(this, value); }
         }
 
         #endregion

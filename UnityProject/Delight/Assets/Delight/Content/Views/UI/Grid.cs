@@ -117,9 +117,9 @@ namespace Delight
                 cellOffset.Top = rowDefinition.ActualOffset;
 
                 // update child layout
-                if (!cellOffset.Equals(child.OffsetFromParent) || 
-                    !columnDefinition.ActualWidth.Equals(child.Width) || 
-                    !rowDefinition.ActualHeight.Equals(child.Height) || 
+                if (!cellOffset.Equals(child.OffsetFromParent) ||
+                    !columnDefinition.ActualWidth.Equals(child.Width) ||
+                    !rowDefinition.ActualHeight.Equals(child.Height) ||
                     child.Alignment != ElementAlignment.TopLeft)
                 {
                     bool defaultDisableChildLayoutUpdate = child.DisableLayoutUpdate;
@@ -143,52 +143,79 @@ namespace Delight
         /// <summary>
         /// Resizes a column. 
         /// </summary>
-        public void ResizeColumn(int columnIndex, float newWidth, bool isFollowing = false)
+        public void ResizeColumn(int columnIndex, float desiredWidth, bool bePushy = false)
         {
             if (columnIndex < 0 || columnIndex >= Columns.Count)
                 return;
 
-            if (newWidth < 0)
-                newWidth = 0;
-
             var column = Columns[columnIndex];
-            var currentWidth = column.ActualWidth;
-            var difference = currentWidth - newWidth;
+            if (desiredWidth < column.MinWidth)
+                desiredWidth = column.MinWidth; // TODO handle bePushy
+
+            if (desiredWidth > column.MaxWidth)
+                desiredWidth = column.MaxWidth; // TODO handle bePushy
 
             int nextColumnIndex = columnIndex + 1;
-            if (!isFollowing && nextColumnIndex < Columns.Count)
+
+            // get total max width we can size up
+            //float totalWidth = 0;
+            //float minTotal = 0;
+            //int nextColumnIndex = columnIndex + 1;
+
+            //for (int i = nextColumnIndex; i < Columns.Count; ++i)
+            //{
+            //    totalWidth += Columns[i].ActualWidth; 
+            //    minTotal += Columns[i].MinWidth;
+            //}
+            //float maxResize = totalWidth - minTotal;
+            //if (newWidth > maxResize)
+            //    newWidth = maxResize;
+
+            var difference = column.ActualWidth - desiredWidth;
+            float resize = difference;
+
+            // adjust following rows
+            for (int i = nextColumnIndex; i < Columns.Count; ++i)
             {
-                var nextColumnSize = Columns[nextColumnIndex].ActualWidth + difference;
-                if (nextColumnSize < 0)
+                var nextColumnWidth = Columns[i].ActualWidth + resize;
+                if (nextColumnWidth >= Columns[i].MinWidth)
                 {
-                    // see if difference can be adjusted so nextRowSize is zero
-                    difference = difference - nextColumnSize;
-                    nextColumnSize = 0;
+                    // there is room to resize we're all good
+                    Columns[i].Width = nextColumnWidth;
+                    resize = 0;
+                    break;
                 }
-
-                // add difference to following column
-                ResizeColumn(nextColumnIndex, nextColumnSize, true);
+                else if (bePushy)
+                {
+                    Columns[i].Width = Columns[i].MinWidth;
+                    resize = nextColumnWidth - Columns[i].MinWidth;
+                }
+                else
+                {
+                    // limit reached
+                    return;
+                }
             }
 
-            column.Width = currentWidth - difference;            
-            if (!isFollowing)
-            {
-                UpdateLayout(false);
-            }
+            column.Width = column.ActualWidth - (difference - resize);
+            UpdateLayout(false);
         }
 
         /// <summary>
         /// Resizes a row. 
         /// </summary>
-        public void ResizeRow(int rowIndex, float newHeight, bool isFollowing = false)
+        public void ResizeRow(int rowIndex, float newHeight, bool bePushy = false, bool isFollowing = false)
         {
             if (rowIndex < 0 || rowIndex >= Rows.Count)
                 return;
 
-            if (newHeight < 0)
-                newHeight = 0;
-
             var row = Rows[rowIndex];
+            if (newHeight < row.MinHeight)
+                newHeight = row.MinHeight;
+
+            if (newHeight > row.MaxHeight)
+                newHeight = row.MaxHeight;
+
             var currentHeight = row.ActualHeight;
             var difference = currentHeight - newHeight;
 
@@ -204,8 +231,8 @@ namespace Delight
                 }
 
                 // add difference to following row
-                ResizeRow(nextRowIndex, nextRowSize, true);
-            }            
+                ResizeRow(nextRowIndex, nextRowSize, bePushy, true);
+            }
 
             row.Height = currentHeight - difference;
             if (!isFollowing)
@@ -240,7 +267,7 @@ namespace Delight
                 var nextColumnDefinition = Columns[nextColumnIndex];
 
                 // add actual width and spacing of next column
-                spannedColumnDefinition.ActualWidth += nextColumnDefinition.ActualWidth + columnSpacing; 
+                spannedColumnDefinition.ActualWidth += nextColumnDefinition.ActualWidth + columnSpacing;
             }
             return spannedColumnDefinition;
         }
@@ -363,7 +390,7 @@ namespace Delight
         {
             UpdateLayout(false);
         }
-        
+
         #endregion
     }
 
@@ -391,6 +418,8 @@ namespace Delight
         public ElementSize Height;
         public float ActualHeight;
         public float ActualOffset;
+        public float MinHeight;
+        public float MaxHeight;
 
         #endregion
 
@@ -399,6 +428,21 @@ namespace Delight
         public RowDefinition(ElementSize height)
         {
             Height = height;
+            MaxHeight = float.MaxValue;
+        }
+
+        public RowDefinition(ElementSize height, float minHeight)
+        {
+            Height = height;
+            MinHeight = minHeight;
+            MaxHeight = float.MaxValue;
+        }
+
+        public RowDefinition(ElementSize height, float minHeight, float maxHeight)
+        {
+            Height = height;
+            MinHeight = minHeight;
+            MaxHeight = maxHeight;
         }
 
         public RowDefinition(RowDefinition rowDefinition)
@@ -421,6 +465,8 @@ namespace Delight
         public ElementSize Width;
         public float ActualWidth;
         public float ActualOffset;
+        public float MinWidth;
+        public float MaxWidth;
 
         #endregion
 
@@ -429,6 +475,21 @@ namespace Delight
         public ColumnDefinition(ElementSize width)
         {
             Width = width;
+            MaxWidth = float.MaxValue;
+        }
+
+        public ColumnDefinition(ElementSize width, float minWidth)
+        {
+            Width = width;
+            MinWidth = minWidth;
+            MaxWidth = float.MaxValue;
+        }
+
+        public ColumnDefinition(ElementSize width, float minWidth, float maxWidth)
+        {
+            Width = width;
+            MinWidth = minWidth;
+            MaxWidth = maxWidth;
         }
 
         public ColumnDefinition(ColumnDefinition columnDefinition)

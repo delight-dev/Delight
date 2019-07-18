@@ -21,6 +21,7 @@ namespace Delight
         public int Index;
         public bool IsColumnSplitter;
         public bool SetSizeOnDragEnded;
+        public bool BePushy;
 
         private bool _offsetChangedFromStartPosition;
         private Vector2 _dragStartPosition;
@@ -57,8 +58,11 @@ namespace Delight
 
             if (SetSizeOnDragEnded)
             {                
+                // TODO check if grid can be resized if not stay
+
                 Vector2 contentOffset = new Vector2(_splitterHandleStartOffset.x + dragDelta.x, _splitterHandleStartOffset.y - dragDelta.y);
                 contentOffset = GetClampedHandleOffset(contentOffset);
+
                 SetHandleOffset(contentOffset);
             }
             else
@@ -66,11 +70,11 @@ namespace Delight
                 // resize grid
                 if (IsColumnSplitter)
                 {
-                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x));
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), BePushy);
                 }
                 else
                 {
-                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y));
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), BePushy);
                 }
             }
         }
@@ -109,11 +113,11 @@ namespace Delight
 
                 if (IsColumnSplitter)
                 {
-                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x));
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), BePushy);
                 }
                 else
                 {
-                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y));
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), BePushy);
                 }
             }
         }

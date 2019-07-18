@@ -1,6 +1,6 @@
 <DelightDesigner xmlns="Delight" BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData">
 
-  <Grid Columns="250,*,250" Rows="50,*">
+  <Grid Columns="250[230],*,250" Rows="50,*">
 
     <!-- Right Menu -->
     <!--<Region Grid.Cell="1,2" BackgroundColor="#dcdcdc"/>-->

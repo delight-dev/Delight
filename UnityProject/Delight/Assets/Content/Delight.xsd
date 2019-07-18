@@ -2278,6 +2278,7 @@
     <xs:attribute name="SplitMode" type="Enum_SplitMode" />
     <xs:attribute name="SplitterColor" type="xs:string" />
     <xs:attribute name="SplitterSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BePushy" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />

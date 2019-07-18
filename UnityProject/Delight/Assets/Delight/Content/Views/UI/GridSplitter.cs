@@ -64,9 +64,9 @@ namespace Delight
                 for (int i = 0; i < columnSplitterCount; ++i)
                 {
                     var gridSplitterHandlerRegion = new Region(_parentGrid);
+                    gridSplitterHandlerRegion.Id = String.Format("ColumnGridSplitterRegion{0}", i + 1);
                     gridSplitterHandlerRegion.Load();
                     gridSplitterHandlerRegion.IsDynamic = true;
-                    gridSplitterHandlerRegion.Id = String.Format("ColumnGridSplitterRegion{0}", i + 1);
                     _parentGrid.Cell.SetValue(gridSplitterHandlerRegion, new CellIndex(cell.Row, cell.Column + i));
                     _parentGrid.CellSpan.SetValue(gridSplitterHandlerRegion, new CellIndex(cellSpan.Row, 1));
 
@@ -92,6 +92,7 @@ namespace Delight
                     gridSplitterHandle.ParentGrid = _parentGrid;
                     gridSplitterHandle.Index = cell.Column + i;
                     gridSplitterHandle.IsColumnSplitter = true;
+                    gridSplitterHandle.BePushy = BePushy;
 
                     // create content for the handle                
                     if (contentTemplate == null)
@@ -108,9 +109,9 @@ namespace Delight
                 for (int i = 0; i < rowSplitterCount; ++i)
                 {
                     var gridSplitterHandlerRegion = new Region(_parentGrid);
+                    gridSplitterHandlerRegion.Id = String.Format("RowGridSplitterRegion{0}", i + 1);
                     gridSplitterHandlerRegion.Load();
                     gridSplitterHandlerRegion.IsDynamic = true;
-                    gridSplitterHandlerRegion.Id = String.Format("RowGridSplitterRegion{0}", i + 1);
                     _parentGrid.Cell.SetValue(gridSplitterHandlerRegion, new CellIndex(cell.Row + i, cell.Column));
                     _parentGrid.CellSpan.SetValue(gridSplitterHandlerRegion, new CellIndex(1, cellSpan.Column));
 
@@ -136,6 +137,7 @@ namespace Delight
                     gridSplitterHandle.ParentGrid = _parentGrid;
                     gridSplitterHandle.Index = cell.Row + i;
                     gridSplitterHandle.IsColumnSplitter = false;
+                    gridSplitterHandle.BePushy = BePushy;
 
                     // create content for the handle                
                     if (contentTemplate == null)
