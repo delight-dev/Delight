@@ -59,12 +59,15 @@ namespace Delight
 
             TextComponent = GameObject.AddComponent<UnityEngine.UI.Text>();
 
+            var defaultHorizontalOverflow = HorizontalWrapMode.Wrap;
             if (AutoSize != AutoSize.None)
             {
                 // add content size fitter
                 _contentSizeFitter = GameObject.AddComponent<ContentSizeFitter>();
                 if (AutoSize == AutoSize.Width || AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.True)
                 {
+                    // overflow by default if we autosize
+                    defaultHorizontalOverflow = HorizontalWrapMode.Overflow;
                     _contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
                 }
 
@@ -72,6 +75,12 @@ namespace Delight
                 {
                     _contentSizeFitter.verticalFit = ContentSizeFitter.FitMode.PreferredSize;
                 }
+            }
+
+            // set overflow defualt
+            if (HorizontalOverflowProperty.IsUndefined(this))
+            {
+                HorizontalOverflow = defaultHorizontalOverflow;                
             }
         }
 

@@ -184,17 +184,18 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
-        public readonly SpriteAsset CheckBox;
-        public readonly SpriteAsset CheckBoxPressed;
-        public readonly SpriteAsset CloseButton;
-        public readonly SpriteAsset ComboBoxButton;
-        public readonly SpriteAsset ComboBoxButtonPressed;
-        public readonly SpriteAsset RadioButton;
-        public readonly SpriteAsset RadioButtonPressed;
-        public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
         public readonly SpriteAsset EditorGrid;
+        public readonly SpriteAsset CheckBox;
+        public readonly SpriteAsset RadioButtonPressed;
+        public readonly SpriteAsset ComboBoxButton;
+        public readonly SpriteAsset CloseButton;
+        public readonly SpriteAsset RadioButton;
+        public readonly SpriteAsset ComboBoxButtonPressed;
+        public readonly SpriteAsset CheckBoxPressed;
+        public readonly SpriteAsset RainbowSquare;
+        public readonly SpriteAsset Selection;
 
         #endregion
 
@@ -207,34 +208,36 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
-            CheckBox = new SpriteAsset { Id = "CheckBox", IsResource = true, RelativePath = "" };
-            CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", IsResource = true, RelativePath = "" };
-            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "" };
-            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "" };
-            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "" };
-            RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "" };
-            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "" };
-            RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "" };
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
+            CheckBox = new SpriteAsset { Id = "CheckBox", IsResource = true, RelativePath = "Sprites/" };
+            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
+            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "Sprites/" };
+            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "Sprites/" };
+            RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
+            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "Sprites/" };
+            CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", IsResource = true, RelativePath = "Sprites/" };
+            RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
+            Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
-            Add(CheckBox);
-            Add(CheckBoxPressed);
-            Add(CloseButton);
-            Add(ComboBoxButton);
-            Add(ComboBoxButtonPressed);
-            Add(RadioButton);
-            Add(RadioButtonPressed);
-            Add(RainbowSquare);
             Add(DesignerGrid);
             Add(DesignerGrid2);
             Add(EditorGrid);
+            Add(CheckBox);
+            Add(RadioButtonPressed);
+            Add(ComboBoxButton);
+            Add(CloseButton);
+            Add(RadioButton);
+            Add(ComboBoxButtonPressed);
+            Add(CheckBoxPressed);
+            Add(RainbowSquare);
+            Add(Selection);
         }
 
         #endregion

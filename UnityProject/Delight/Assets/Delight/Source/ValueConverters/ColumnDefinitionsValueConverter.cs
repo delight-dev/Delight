@@ -55,7 +55,7 @@ namespace Delight
                     else
                     {
                         // improperly formatted string
-                        throw new Exception("Improperly formatted RowDefinitions/ColumnDefinitions string. Supported examples: *,10,50,2* | 100[50-200], 10 | 10%,40%,50% | 100,100[10]");
+                        throw new Exception("Improperly formatted ColumnDefinitions string. Supported examples: *,10,50,2* | 100[50-200], 10 | 10%,40%,50% | 100,100[10]");
                     }
                 }
 

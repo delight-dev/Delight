@@ -150,31 +150,16 @@ namespace Delight
 
             var column = Columns[columnIndex];
             if (desiredWidth < column.MinWidth)
-                desiredWidth = column.MinWidth; // TODO handle bePushy
+                desiredWidth = column.MinWidth;
 
             if (desiredWidth > column.MaxWidth)
-                desiredWidth = column.MaxWidth; // TODO handle bePushy
-
-            int nextColumnIndex = columnIndex + 1;
-
-            // get total max width we can size up
-            //float totalWidth = 0;
-            //float minTotal = 0;
-            //int nextColumnIndex = columnIndex + 1;
-
-            //for (int i = nextColumnIndex; i < Columns.Count; ++i)
-            //{
-            //    totalWidth += Columns[i].ActualWidth; 
-            //    minTotal += Columns[i].MinWidth;
-            //}
-            //float maxResize = totalWidth - minTotal;
-            //if (newWidth > maxResize)
-            //    newWidth = maxResize;
+                desiredWidth = column.MaxWidth; // TODO handle bePushy?
 
             var difference = column.ActualWidth - desiredWidth;
             float resize = difference;
+            int nextColumnIndex = columnIndex + 1;
 
-            // adjust following rows
+            // adjust following columns
             for (int i = nextColumnIndex; i < Columns.Count; ++i)
             {
                 var nextColumnWidth = Columns[i].ActualWidth + resize;
@@ -193,7 +178,9 @@ namespace Delight
                 else
                 {
                     // limit reached
-                    return;
+                    Columns[i].Width = Columns[i].MinWidth;
+                    resize = nextColumnWidth - Columns[i].MinWidth;
+                    break;
                 }
             }
 
@@ -204,41 +191,49 @@ namespace Delight
         /// <summary>
         /// Resizes a row. 
         /// </summary>
-        public void ResizeRow(int rowIndex, float newHeight, bool bePushy = false, bool isFollowing = false)
+        public void ResizeRow(int rowIndex, float desiredHeight, bool bePushy = false)
         {
             if (rowIndex < 0 || rowIndex >= Rows.Count)
                 return;
 
             var row = Rows[rowIndex];
-            if (newHeight < row.MinHeight)
-                newHeight = row.MinHeight;
+            if (desiredHeight < row.MinHeight)
+                desiredHeight = row.MinHeight;
 
-            if (newHeight > row.MaxHeight)
-                newHeight = row.MaxHeight;
+            if (desiredHeight > row.MaxHeight)
+                desiredHeight = row.MaxHeight; // TODO handle bePushy?
 
-            var currentHeight = row.ActualHeight;
-            var difference = currentHeight - newHeight;
-
+            var difference = row.ActualHeight - desiredHeight;
+            float resize = difference;
             int nextRowIndex = rowIndex + 1;
-            if (!isFollowing && nextRowIndex < Rows.Count)
+
+            // adjust following columns
+            for (int i = nextRowIndex; i < Rows.Count; ++i)
             {
-                var nextRowSize = Rows[nextRowIndex].ActualHeight + difference;
-                if (nextRowSize < 0)
+                var nextRowHeight = Rows[i].ActualHeight + resize;
+                if (nextRowHeight >= Rows[i].MinHeight)
                 {
-                    // see if difference can be adjusted so nextRowSize is zero
-                    difference = difference - nextRowSize;
-                    nextRowSize = 0;
+                    // there is room to resize we're all good
+                    Rows[i].Height = nextRowHeight;
+                    resize = 0;
+                    break;
                 }
-
-                // add difference to following row
-                ResizeRow(nextRowIndex, nextRowSize, bePushy, true);
+                else if (bePushy)
+                {
+                    Rows[i].Height = Rows[i].MinHeight;
+                    resize = nextRowHeight - Rows[i].MinHeight;
+                }
+                else
+                {
+                    // limit reached
+                    Rows[i].Height = Rows[i].MinHeight;
+                    resize = nextRowHeight - Rows[i].MinHeight;
+                    break;
+                }
             }
 
-            row.Height = currentHeight - difference;
-            if (!isFollowing)
-            {
-                UpdateLayout(false);
-            }
+            row.Height = row.ActualHeight - (difference - resize);
+            UpdateLayout(false);
         }
 
         /// <summary>

@@ -294,7 +294,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _gridExampleGrid1.Name = "GridExampleGrid1";
 #endif
-                    Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels))});
+                    Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
                     Delight.LayoutGrid.ColumnsProperty.SetDefault(_gridExampleGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
                     Delight.LayoutGrid.WidthProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
                     Delight.LayoutGrid.HeightProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
@@ -510,7 +510,7 @@ namespace Delight
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.InteractionThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.SplitterColorProperty.SetDefault(_gridExampleGridSplitter1, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
-                    Delight.GridSplitter.BePushyProperty.SetDefault(_gridExampleGridSplitter1, true);
+                    Delight.GridSplitter.BePushyProperty.SetDefault(_gridExampleGridSplitter1, false);
                     Delight.GridSplitter.SetSizeOnDragEndedProperty.SetDefault(_gridExampleGridSplitter1, false);
                 }
                 return _gridExampleGridSplitter1;

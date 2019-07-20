@@ -4033,6 +4033,186 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:element name="SelectionIndicator" type="SelectionIndicator" />
+  <xs:complexType name="SelectionIndicator">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="SelectionTabDefaultWidth" type="xs:string" />
+    <xs:attribute name="SelectionTabIsToggleButton" type="xs:string" />
+    <xs:attribute name="SelectionTabIsDisabled" type="xs:string" />
+    <xs:attribute name="SelectionTabToggleValue" type="xs:string" />
+    <xs:attribute name="SelectionTabTextPadding" type="xs:string" />
+    <xs:attribute name="SelectionTabCanToggleOn" type="xs:string" />
+    <xs:attribute name="SelectionTabCanToggleOff" type="xs:string" />
+    <xs:attribute name="SelectionTabIsMouseOver" type="xs:string" />
+    <xs:attribute name="SelectionTabIsPressed" type="xs:string" />
+    <xs:attribute name="SelectionTabAutoSize" type="Enum_AutoSize" />
+    <xs:attribute name="SelectionTabTextOffset" type="xs:string" />
+    <xs:attribute name="SelectionTabIsCloseButton" type="xs:string" />
+    <xs:attribute name="SelectionTabIsBackButton" type="xs:string" />
+    <xs:attribute name="SelectionTabTextAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="SelectionTabEnableWordWrapping" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelAutoSize" type="Enum_AutoSize" />
+    <xs:attribute name="SelectionTabOverflowMode" type="xs:string" />
+    <xs:attribute name="SelectionTabExtraPadding" type="xs:string" />
+    <xs:attribute name="SelectionTabFont" type="Asset_FontAsset" />
+    <xs:attribute name="SelectionTabText" type="xs:string" />
+    <xs:attribute name="SelectionTabSupportRichText" type="xs:string" />
+    <xs:attribute name="SelectionTabResizeTextForBestFit" type="xs:string" />
+    <xs:attribute name="SelectionTabResizeTextMinSize" type="xs:string" />
+    <xs:attribute name="SelectionTabResizeTextMaxSize" type="xs:string" />
+    <xs:attribute name="SelectionTabTextComponentTextAlignment" type="Enum_TextAnchor" />
+    <xs:attribute name="SelectionTabAlignByGeometry" type="xs:string" />
+    <xs:attribute name="SelectionTabFontSize" type="xs:string" />
+    <xs:attribute name="SelectionTabHorizontalOverflow" type="Enum_HorizontalWrapMode" />
+    <xs:attribute name="SelectionTabVerticalOverflow" type="Enum_VerticalWrapMode" />
+    <xs:attribute name="SelectionTabLineSpacing" type="xs:string" />
+    <xs:attribute name="SelectionTabFontStyle" type="Enum_FontStyle" />
+    <xs:attribute name="SelectionTabOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="SelectionTabMaskable" type="xs:string" />
+    <xs:attribute name="SelectionTabFontColor" type="xs:string" />
+    <xs:attribute name="SelectionTabRaycastTarget" type="xs:string" />
+    <xs:attribute name="SelectionTabMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="SelectionTabLabelWidth" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelHeight" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelOverrideWidth" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelOverrideHeight" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelScale" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="SelectionTabLabelMargin" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelOffset" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelOffsetFromParent" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelPivot" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelDisableLayoutUpdate" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelAlpha" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelIsVisible" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="SelectionTabLabelUseFastShader" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelGameObject" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelEnableScriptEvents" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelIgnoreObject" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelIsActive" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="SelectionTabBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="SelectionTabBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="SelectionTabBackgroundType" type="Enum_Type" />
+    <xs:attribute name="SelectionTabBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="SelectionTabBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="SelectionTabBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundColor" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundRaycastTarget" type="xs:string" />
+    <xs:attribute name="SelectionTabWidth" type="xs:string" />
+    <xs:attribute name="SelectionTabHeight" type="xs:string" />
+    <xs:attribute name="SelectionTabOverrideWidth" type="xs:string" />
+    <xs:attribute name="SelectionTabOverrideHeight" type="xs:string" />
+    <xs:attribute name="SelectionTabScale" type="xs:string" />
+    <xs:attribute name="SelectionTabAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="SelectionTabMargin" type="xs:string" />
+    <xs:attribute name="SelectionTabOffset" type="xs:string" />
+    <xs:attribute name="SelectionTabOffsetFromParent" type="xs:string" />
+    <xs:attribute name="SelectionTabPivot" type="xs:string" />
+    <xs:attribute name="SelectionTabDisableLayoutUpdate" type="xs:string" />
+    <xs:attribute name="SelectionTabAlpha" type="xs:string" />
+    <xs:attribute name="SelectionTabIsVisible" type="xs:string" />
+    <xs:attribute name="SelectionTabRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="SelectionTabUseFastShader" type="xs:string" />
+    <xs:attribute name="SelectionTabBubbleNotifyChildLayoutChanged" type="xs:string" />
+    <xs:attribute name="SelectionTabIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SelectionTabGameObject" type="xs:string" />
+    <xs:attribute name="SelectionTabEnableScriptEvents" type="xs:string" />
+    <xs:attribute name="SelectionTabIgnoreObject" type="xs:string" />
+    <xs:attribute name="SelectionTabIsActive" type="xs:string" />
+    <xs:attribute name="SelectionTabLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="ImageComponent" type="xs:string" />
+    <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BackgroundType" type="Enum_Type" />
+    <xs:attribute name="BackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="BackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
+    <xs:attribute name="ActualWidth" type="xs:string" />
+    <xs:attribute name="ActualHeight" type="xs:string" />
+    <xs:attribute name="IsFullScreen" type="xs:string" />
+    <xs:attribute name="RectTransform" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="CanvasGroup" type="xs:string" />
+    <xs:attribute name="UseFastShader" type="xs:string" />
+    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
+    <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="UnityScript" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="GameObject" type="xs:string" />
+    <xs:attribute name="EnableScriptEvents" type="xs:string" />
+    <xs:attribute name="IgnoreObject" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="Cancel" type="xs:string" />
+    <xs:attribute name="Click" type="xs:string" />
+    <xs:attribute name="Deselect" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="Drop" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Move" type="xs:string" />
+    <xs:attribute name="MouseDown" type="xs:string" />
+    <xs:attribute name="MouseEnter" type="xs:string" />
+    <xs:attribute name="MouseExit" type="xs:string" />
+    <xs:attribute name="MouseUp" type="xs:string" />
+    <xs:attribute name="Scroll" type="xs:string" />
+    <xs:attribute name="Select" type="xs:string" />
+    <xs:attribute name="Submit" type="xs:string" />
+    <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="LayoutChildren" type="xs:string" />
+    <xs:attribute name="IsLoaded" type="xs:string" />
+    <xs:attribute name="Bindings" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="Style_SelectionIndicator" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:simpleType name="Style_SelectionIndicator">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:element name="Slider" type="Slider" />
   <xs:complexType name="Slider">
     <xs:sequence>
@@ -5511,17 +5691,18 @@
       <xs:enumeration value="BigSprite" />
       <xs:enumeration value="Frame3" />
       <xs:enumeration value="Frame4" />
-      <xs:enumeration value="CheckBox" />
-      <xs:enumeration value="CheckBoxPressed" />
-      <xs:enumeration value="CloseButton" />
-      <xs:enumeration value="ComboBoxButton" />
-      <xs:enumeration value="ComboBoxButtonPressed" />
-      <xs:enumeration value="RadioButton" />
-      <xs:enumeration value="RadioButtonPressed" />
-      <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="DesignerGrid" />
       <xs:enumeration value="DesignerGrid2" />
       <xs:enumeration value="EditorGrid" />
+      <xs:enumeration value="CheckBox" />
+      <xs:enumeration value="RadioButtonPressed" />
+      <xs:enumeration value="ComboBoxButton" />
+      <xs:enumeration value="CloseButton" />
+      <xs:enumeration value="RadioButton" />
+      <xs:enumeration value="ComboBoxButtonPressed" />
+      <xs:enumeration value="CheckBoxPressed" />
+      <xs:enumeration value="RainbowSquare" />
+      <xs:enumeration value="Selection" />
     </xs:restriction>
   </xs:simpleType>
 

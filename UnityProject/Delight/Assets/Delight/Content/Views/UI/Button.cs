@@ -85,9 +85,14 @@ namespace Delight
         /// </summary>
         private void Label_PropertyChanged(object source, string propertyName)
         {
-            if (propertyName == nameof(Label.Text))
+            switch (propertyName)
             {
-                TextChanged();
+                case nameof(Label.Width):
+                case nameof(Label.Height):
+                case nameof(Label.Text):
+                    TextChanged();
+                    break;
+
             }
         }
 
@@ -141,6 +146,7 @@ namespace Delight
                     AutoSize = AutoSize.None;
             }
 
+            Label.AutoSize = AutoSize;
             if (AutoSize == AutoSize.None && WidthProperty.IsUndefined(this))
             {
                 // if size isn't specified and the button doesn't adjust to label size, then set default width

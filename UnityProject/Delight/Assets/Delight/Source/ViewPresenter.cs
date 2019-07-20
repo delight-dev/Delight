@@ -16,9 +16,6 @@ namespace Delight
         #region Fields
 
         [HideInInspector]
-        public GameObject GameObject;
-
-        [HideInInspector]
         public string ViewTypeName;
 
         [HideInInspector]
@@ -26,7 +23,24 @@ namespace Delight
 
         public LoadMode LoadMode = LoadMode.Automatic;
         public bool UseAsyncLoad = true;
-        private View _view;
+
+        private View _presentedView;
+        public View PresentedView
+        {
+            get
+            {
+                return _presentedView;
+            }
+        }
+
+        public GameObject _layoutRootGameObject;
+        public GameObject LayoutRootGameObject
+        {
+            get
+            {
+                return _layoutRootGameObject;
+            }
+        }
 
         #endregion
 
@@ -45,18 +59,18 @@ namespace Delight
             if (String.IsNullOrEmpty(ViewTypeName))
                 return;
 
-            if (_view == null)
+            if (_presentedView == null)
             {
 #if UNITY_EDITOR
-                if (GameObject != null) GameObject.DestroyImmediate(GameObject);
+                if (_layoutRootGameObject != null) GameObject.DestroyImmediate(_layoutRootGameObject);
 #endif
-                _view = Assets.CreateView(ViewTypeName);
-                if (_view == null)
+                _presentedView = Assets.CreateView(ViewTypeName);
+                if (_presentedView == null)
                 {
                     Create();
                 }
 
-                if (_view == null)
+                if (_presentedView == null)
                     return;
             }
  
@@ -64,24 +78,24 @@ namespace Delight
 
             if (UseAsyncLoad)
             {
-                await _view.LoadAsync();
+                await _presentedView.LoadAsync();
             }
             else
             {
-                _view.Load();
+                _presentedView.Load();
             }
 
             sw2.Stop();
             Debug.Log(String.Format("Initialize view {0}: {1}", ViewTypeName, sw2.ElapsedMilliseconds));
 
             GameObject go = null;
-            if (_view is UIView)
+            if (_presentedView is UIView)
             {
-                go = (_view as UIView)?.LayoutRoot?.GameObject;
+                go = (_presentedView as UIView)?.LayoutRoot?.GameObject;
             }
-            else if (_view is SceneObjectView)
+            else if (_presentedView is SceneObjectView)
             {
-                go = (_view as SceneObjectView)?.GameObject;
+                go = (_presentedView as SceneObjectView)?.GameObject;
             }
 
             if (go != null)
@@ -89,18 +103,12 @@ namespace Delight
                 go.transform.SetParent(gameObject.transform, false);
             }
 
-#if UNITY_EDITOR
-            if (!Application.isPlaying)
-            {
-                var sceneObject = _view as SceneObjectView;
-                GameObject = sceneObject?.GameObject;
-            }
-#endif
+            _layoutRootGameObject = go;
         }
 
         public void Unload()
         {
-            _view?.Unload();
+            _presentedView?.Unload();
         }
 
         /// <summary>
@@ -114,11 +122,11 @@ namespace Delight
             var type = TypeHelper.GetType(ViewTypeName, ViewTypeNamespace);
 
             var sw = System.Diagnostics.Stopwatch.StartNew();
-            _view = type != null ? TypeHelper.CreateInstance(type) as View : null;
+            _presentedView = type != null ? TypeHelper.CreateInstance(type) as View : null;
             sw.Stop();
             Debug.Log(String.Format("Create view {0}: {1}", ViewTypeName, sw.ElapsedMilliseconds));
 
-            if (_view == null)
+            if (_presentedView == null)
             {
                 Debug.Log(String.Format("#Delight# ViewPresenter unable to present view \"{0}\". View with that name not found.", ViewTypeName));
                 return;

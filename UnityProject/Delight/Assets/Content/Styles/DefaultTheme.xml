@@ -24,4 +24,8 @@
   <RadioButton RadioButtonSprite="RadioButton" Checked-RadioButtonSprite="RadioButtonPressed" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"
                RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" FontSize="18" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
                Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
+
+  <SelectionIndicator BackgroundSprite="Selection"
+                      SelectionTabFontColor="#7a6e6e" Highlighted-SelectionTabFontColor="#7a6e6e" Pressed-SelectionTabFontColor="#7a6e6e"
+                      SelectionTabBackgroundColor="#f4f4f4" Highlighted-SelectionTabBackgroundColor="#f4f4f4" Pressed-SelectionTabBackgroundColor="#f4f4f4" />
 </DefaultTheme> 

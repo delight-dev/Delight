@@ -235,10 +235,6 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateNewViewXml(XmlFile xumlFile)
         {
-            // make sure file doesn't exist
-            if (File.Exists(xumlFile.Path))
-                return;
-
             var sb = new StringBuilder();
             var viewName = xumlFile.Name.ToPropertyName();
 
@@ -284,7 +280,9 @@ namespace Delight.Editor.Parser
                     {
                         if (!viewObject.HasXml && !String.IsNullOrEmpty(viewObject.FilePath))
                         {
-                            Debug.Log("** Creating new XML for referenced view: " + viewObject.FilePath);
+                            // make sure file doesn't exist so we don't overwrite any existing files
+                            if (File.Exists(viewObject.FilePath))
+                                continue;
                             GenerateNewViewXml(new XmlFile { Name = viewObject.Name, Path = viewObject.FilePath });
                         }
                     }

@@ -15,6 +15,12 @@ namespace Delight
     /// </summary>
     public class RowDefinitionsValueConverter : ValueConverter<RowDefinitions>
     {
+        #region Fields
+
+        private static readonly char[] MinMaxDelimiterChars = { ' ', '[', ']', '-' };
+
+        #endregion
+
         #region Methods
 
         /// <summary>
@@ -22,6 +28,7 @@ namespace Delight
         /// </summary>
         public override string GetInitializer(string stringValue)
         {
+            var floatValueConverter = new FloatValueConverter();
             var elementSizeConverter = new ElementSizeValueConverter();
             var sb = new StringBuilder();
 
@@ -29,7 +36,30 @@ namespace Delight
             sb.Append("new RowDefinitions { ");
             for (int i = 0; i < valueList.Count(); ++i)
             {
-                sb.AppendFormat("new RowDefinition({0})", elementSizeConverter.GetInitializer(valueList[i]));
+                var defStr = valueList[i];
+                string minMaxStr = string.Empty;
+                if (valueList[i].Contains("["))
+                {
+                    var minMaxList = valueList[i].Split(MinMaxDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                    defStr = minMaxList[0];
+
+                    if (minMaxList.Length == 2)
+                    {
+                        minMaxStr = String.Format(", {0}", floatValueConverter.GetInitializer(minMaxList[1]));
+                    }
+                    else if (minMaxList.Length == 3)
+                    {
+                        minMaxStr = String.Format(", {0}, {1}", floatValueConverter.GetInitializer(minMaxList[1]),
+                            floatValueConverter.GetInitializer(minMaxList[2]));
+                    }
+                    else
+                    {
+                        // improperly formatted string
+                        throw new Exception("Improperly formatted RowDefinitions string. Supported examples: *,10,50,2* | 100[50-200], 10 | 10%,40%,50% | 100,100[10]");
+                    }
+                }
+
+                sb.AppendFormat("new RowDefinition({0}{1})", elementSizeConverter.GetInitializer(defStr), minMaxStr);
                 if (i < valueList.Count() - 1)
                 {
                     sb.Append(", ");

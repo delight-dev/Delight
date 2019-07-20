@@ -243,6 +243,11 @@ namespace Delight
             if (GameObject == null)
                 return;
 
+            if (!PivotProperty.IsUndefined(this))
+            {
+                RectTransform.pivot = Pivot;
+            }
+
             // update rectTransform
             // horizontal alignment and positioning
             var width = OverrideWidth ?? (Width ?? ElementSize.DefaultLayout);
@@ -321,7 +326,6 @@ namespace Delight
                 RectTransform.offsetMin.x / 2.0f + RectTransform.offsetMax.x / 2.0f,
                 RectTransform.offsetMin.y / 2.0f + RectTransform.offsetMax.y / 2.0f);
 
-            RectTransform.pivot = Pivot;
             if (!ScaleProperty.IsUndefined(this))
             {
                 RectTransform.localScale = Scale;
