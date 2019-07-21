@@ -184,16 +184,16 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
+        public readonly SpriteAsset CheckBox;
+        public readonly SpriteAsset CheckBoxPressed;
+        public readonly SpriteAsset CloseButton;
+        public readonly SpriteAsset ComboBoxButton;
+        public readonly SpriteAsset ComboBoxButtonPressed;
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
         public readonly SpriteAsset EditorGrid;
-        public readonly SpriteAsset CheckBox;
-        public readonly SpriteAsset RadioButtonPressed;
-        public readonly SpriteAsset ComboBoxButton;
-        public readonly SpriteAsset CloseButton;
         public readonly SpriteAsset RadioButton;
-        public readonly SpriteAsset ComboBoxButtonPressed;
-        public readonly SpriteAsset CheckBoxPressed;
+        public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
 
@@ -208,16 +208,16 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
+            CheckBox = new SpriteAsset { Id = "CheckBox", IsResource = true, RelativePath = "Sprites/" };
+            CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", IsResource = true, RelativePath = "Sprites/" };
+            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "Sprites/" };
+            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "Sprites/" };
+            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
-            CheckBox = new SpriteAsset { Id = "CheckBox", IsResource = true, RelativePath = "Sprites/" };
-            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
-            ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "Sprites/" };
-            CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "Sprites/" };
             RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
-            ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "Sprites/" };
-            CheckBoxPressed = new SpriteAsset { Id = "CheckBoxPressed", IsResource = true, RelativePath = "Sprites/" };
+            RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
 
@@ -226,16 +226,16 @@ namespace Delight
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
+            Add(CheckBox);
+            Add(CheckBoxPressed);
+            Add(CloseButton);
+            Add(ComboBoxButton);
+            Add(ComboBoxButtonPressed);
             Add(DesignerGrid);
             Add(DesignerGrid2);
             Add(EditorGrid);
-            Add(CheckBox);
-            Add(RadioButtonPressed);
-            Add(ComboBoxButton);
-            Add(CloseButton);
             Add(RadioButton);
-            Add(ComboBoxButtonPressed);
-            Add(CheckBoxPressed);
+            Add(RadioButtonPressed);
             Add(RainbowSquare);
             Add(Selection);
         }
@@ -246,60 +246,6 @@ namespace Delight
     public static partial class Assets
     {
         public static SpriteAssetData Sprites = new SpriteAssetData();
-    }
-
-    #endregion
-
-    #region Texture2Ds
-
-    /// <summary>
-    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
-    /// </summary>
-    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
-    {
-        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
-        {
-            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
-        }
-
-        public static implicit operator Texture2DAsset(string assetId)
-        {
-            if (String.IsNullOrEmpty(assetId))
-                return null;
-
-            if (assetId.StartsWith("?"))
-                assetId = assetId.Substring(1);
-
-            return Assets.Texture2Ds[assetId];
-        }
-    }
-
-    /// <summary>
-    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
-    /// </summary>
-    public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
-    {
-        #region Fields
-
-        public readonly Texture2DAsset Bluefloral01;
-
-        #endregion
-
-        #region Constructor
-
-        public Texture2DAssetData()
-        {
-            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
-
-            Add(Bluefloral01);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
     }
 
     #endregion
@@ -358,6 +304,60 @@ namespace Delight
 
     #endregion
 
+    #region Texture2Ds
+
+    /// <summary>
+    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
+    {
+        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
+        {
+            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator Texture2DAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.Texture2Ds[assetId];
+        }
+    }
+
+    /// <summary>
+    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
+    /// </summary>
+    public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
+    {
+        #region Fields
+
+        public readonly Texture2DAsset Bluefloral01;
+
+        #endregion
+
+        #region Constructor
+
+        public Texture2DAssetData()
+        {
+            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
+
+            Add(Bluefloral01);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
+    }
+
+    #endregion
+
     #region Shaders
 
     /// <summary>
@@ -408,6 +408,120 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
+    }
+
+    #endregion
+
+    #region TMP_ColorGradients
+
+    /// <summary>
+    /// Manages a TMPro.TMP_ColorGradient object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TMP_ColorGradientAsset : AssetObject<TMPro.TMP_ColorGradient>
+    {
+        public static implicit operator TMP_ColorGradientAsset(TMPro.TMP_ColorGradient unityObject)
+        {
+            return new TMP_ColorGradientAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TMP_ColorGradientAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TMP_ColorGradients[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TMP_ColorGradientAsset data provider. Contains references to all tmp_colorgradients in the project.
+    /// </summary>
+    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_ColorGradientAssetData TMP_ColorGradients = new TMP_ColorGradientAssetData();
+    }
+
+    #endregion
+
+    #region TMP_SpriteAssets
+
+    /// <summary>
+    /// Manages a TMPro.TMP_SpriteAsset object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TMP_SpriteAsset : AssetObject<TMPro.TMP_SpriteAsset>
+    {
+        public static implicit operator TMP_SpriteAsset(TMPro.TMP_SpriteAsset unityObject)
+        {
+            return new TMP_SpriteAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TMP_SpriteAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TMP_SpriteAssets[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TMP_SpriteAsset data provider. Contains references to all tmp_spriteassets in the project.
+    /// </summary>
+    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
+    }
+
+    #endregion
+
+    #region TMP_InputValidators
+
+    /// <summary>
+    /// Manages a TMPro.TMP_InputValidator object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TMP_InputValidatorAsset : AssetObject<TMPro.TMP_InputValidator>
+    {
+        public static implicit operator TMP_InputValidatorAsset(TMPro.TMP_InputValidator unityObject)
+        {
+            return new TMP_InputValidatorAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TMP_InputValidatorAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TMP_InputValidators[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TMP_InputValidatorAsset data provider. Contains references to all tmp_inputvalidators in the project.
+    /// </summary>
+    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_InputValidatorAssetData TMP_InputValidators = new TMP_InputValidatorAssetData();
     }
 
     #endregion

@@ -143,20 +143,6 @@ namespace Delight
             set { SelectionTab.IsBackButton = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabTextAlignmentProperty = Button.TextAlignmentProperty;
-        public Delight.ElementAlignment SelectionTabTextAlignment
-        {
-            get { return SelectionTab.TextAlignment; }
-            set { SelectionTab.TextAlignment = value; }
-        }
-
-        public readonly static DependencyProperty SelectionTabEnableWordWrappingProperty = Button.EnableWordWrappingProperty;
-        public System.Boolean SelectionTabEnableWordWrapping
-        {
-            get { return SelectionTab.EnableWordWrapping; }
-            set { SelectionTab.EnableWordWrapping = value; }
-        }
-
         public readonly static DependencyProperty SelectionTabLabelAutoSizeProperty = Button.LabelAutoSizeProperty;
         public Delight.AutoSize SelectionTabLabelAutoSize
         {
@@ -164,25 +150,18 @@ namespace Delight
             set { SelectionTab.LabelAutoSize = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabOverflowModeProperty = Button.OverflowModeProperty;
-        public System.String SelectionTabOverflowMode
+        public readonly static DependencyProperty SelectionTabAutoSizeTextContainerProperty = Button.AutoSizeTextContainerProperty;
+        public System.Boolean SelectionTabAutoSizeTextContainer
         {
-            get { return SelectionTab.OverflowMode; }
-            set { SelectionTab.OverflowMode = value; }
+            get { return SelectionTab.AutoSizeTextContainer; }
+            set { SelectionTab.AutoSizeTextContainer = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabExtraPaddingProperty = Button.ExtraPaddingProperty;
-        public System.Boolean SelectionTabExtraPadding
+        public readonly static DependencyProperty SelectionTabMaskOffsetProperty = Button.MaskOffsetProperty;
+        public UnityEngine.Vector4 SelectionTabMaskOffset
         {
-            get { return SelectionTab.ExtraPadding; }
-            set { SelectionTab.ExtraPadding = value; }
-        }
-
-        public readonly static DependencyProperty SelectionTabFontProperty = Button.FontProperty;
-        public FontAsset SelectionTabFont
-        {
-            get { return SelectionTab.Font; }
-            set { SelectionTab.Font = value; }
+            get { return SelectionTab.MaskOffset; }
+            set { SelectionTab.MaskOffset = value; }
         }
 
         public readonly static DependencyProperty SelectionTabTextProperty = Button.TextProperty;
@@ -192,67 +171,186 @@ namespace Delight
             set { SelectionTab.Text = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabSupportRichTextProperty = Button.SupportRichTextProperty;
-        public System.Boolean SelectionTabSupportRichText
+        public readonly static DependencyProperty SelectionTabIsRightToLeftTextProperty = Button.IsRightToLeftTextProperty;
+        public System.Boolean SelectionTabIsRightToLeftText
         {
-            get { return SelectionTab.SupportRichText; }
-            set { SelectionTab.SupportRichText = value; }
+            get { return SelectionTab.IsRightToLeftText; }
+            set { SelectionTab.IsRightToLeftText = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabResizeTextForBestFitProperty = Button.ResizeTextForBestFitProperty;
-        public System.Boolean SelectionTabResizeTextForBestFit
+        public readonly static DependencyProperty SelectionTabFontProperty = Button.FontProperty;
+        public TMP_FontAsset SelectionTabFont
         {
-            get { return SelectionTab.ResizeTextForBestFit; }
-            set { SelectionTab.ResizeTextForBestFit = value; }
+            get { return SelectionTab.Font; }
+            set { SelectionTab.Font = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabResizeTextMinSizeProperty = Button.ResizeTextMinSizeProperty;
-        public System.Int32 SelectionTabResizeTextMinSize
+        public readonly static DependencyProperty SelectionTabFontSharedMaterialProperty = Button.FontSharedMaterialProperty;
+        public MaterialAsset SelectionTabFontSharedMaterial
         {
-            get { return SelectionTab.ResizeTextMinSize; }
-            set { SelectionTab.ResizeTextMinSize = value; }
+            get { return SelectionTab.FontSharedMaterial; }
+            set { SelectionTab.FontSharedMaterial = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabResizeTextMaxSizeProperty = Button.ResizeTextMaxSizeProperty;
-        public System.Int32 SelectionTabResizeTextMaxSize
+        public readonly static DependencyProperty SelectionTabFontSharedMaterialsProperty = Button.FontSharedMaterialsProperty;
+        public UnityEngine.Material[] SelectionTabFontSharedMaterials
         {
-            get { return SelectionTab.ResizeTextMaxSize; }
-            set { SelectionTab.ResizeTextMaxSize = value; }
+            get { return SelectionTab.FontSharedMaterials; }
+            set { SelectionTab.FontSharedMaterials = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabTextComponentTextAlignmentProperty = Button.TextComponentTextAlignmentProperty;
-        public UnityEngine.TextAnchor SelectionTabTextComponentTextAlignment
+        public readonly static DependencyProperty SelectionTabFontMaterialProperty = Button.FontMaterialProperty;
+        public MaterialAsset SelectionTabFontMaterial
         {
-            get { return SelectionTab.TextComponentTextAlignment; }
-            set { SelectionTab.TextComponentTextAlignment = value; }
+            get { return SelectionTab.FontMaterial; }
+            set { SelectionTab.FontMaterial = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabAlignByGeometryProperty = Button.AlignByGeometryProperty;
-        public System.Boolean SelectionTabAlignByGeometry
+        public readonly static DependencyProperty SelectionTabFontMaterialsProperty = Button.FontMaterialsProperty;
+        public UnityEngine.Material[] SelectionTabFontMaterials
         {
-            get { return SelectionTab.AlignByGeometry; }
-            set { SelectionTab.AlignByGeometry = value; }
+            get { return SelectionTab.FontMaterials; }
+            set { SelectionTab.FontMaterials = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFontColorProperty = Button.FontColorProperty;
+        public UnityEngine.Color SelectionTabFontColor
+        {
+            get { return SelectionTab.FontColor; }
+            set { SelectionTab.FontColor = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabTextMeshProUGUIAlphaProperty = Button.TextMeshProUGUIAlphaProperty;
+        public System.Single SelectionTabTextMeshProUGUIAlpha
+        {
+            get { return SelectionTab.TextMeshProUGUIAlpha; }
+            set { SelectionTab.TextMeshProUGUIAlpha = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabEnableVertexGradientProperty = Button.EnableVertexGradientProperty;
+        public System.Boolean SelectionTabEnableVertexGradient
+        {
+            get { return SelectionTab.EnableVertexGradient; }
+            set { SelectionTab.EnableVertexGradient = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabColorGradientProperty = Button.ColorGradientProperty;
+        public TMPro.VertexGradient SelectionTabColorGradient
+        {
+            get { return SelectionTab.ColorGradient; }
+            set { SelectionTab.ColorGradient = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabColorGradientPresetProperty = Button.ColorGradientPresetProperty;
+        public TMP_ColorGradientAsset SelectionTabColorGradientPreset
+        {
+            get { return SelectionTab.ColorGradientPreset; }
+            set { SelectionTab.ColorGradientPreset = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabSpriteAssetProperty = Button.SpriteAssetProperty;
+        public TMP_SpriteAsset SelectionTabSpriteAsset
+        {
+            get { return SelectionTab.SpriteAsset; }
+            set { SelectionTab.SpriteAsset = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabTintAllSpritesProperty = Button.TintAllSpritesProperty;
+        public System.Boolean SelectionTabTintAllSprites
+        {
+            get { return SelectionTab.TintAllSprites; }
+            set { SelectionTab.TintAllSprites = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabOverrideColorTagsProperty = Button.OverrideColorTagsProperty;
+        public System.Boolean SelectionTabOverrideColorTags
+        {
+            get { return SelectionTab.OverrideColorTags; }
+            set { SelectionTab.OverrideColorTags = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFaceColorProperty = Button.FaceColorProperty;
+        public UnityEngine.Color32 SelectionTabFaceColor
+        {
+            get { return SelectionTab.FaceColor; }
+            set { SelectionTab.FaceColor = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabOutlineColorProperty = Button.OutlineColorProperty;
+        public UnityEngine.Color32 SelectionTabOutlineColor
+        {
+            get { return SelectionTab.OutlineColor; }
+            set { SelectionTab.OutlineColor = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabOutlineWidthProperty = Button.OutlineWidthProperty;
+        public System.Single SelectionTabOutlineWidth
+        {
+            get { return SelectionTab.OutlineWidth; }
+            set { SelectionTab.OutlineWidth = value; }
         }
 
         public readonly static DependencyProperty SelectionTabFontSizeProperty = Button.FontSizeProperty;
-        public System.Int32 SelectionTabFontSize
+        public System.Single SelectionTabFontSize
         {
             get { return SelectionTab.FontSize; }
             set { SelectionTab.FontSize = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabHorizontalOverflowProperty = Button.HorizontalOverflowProperty;
-        public UnityEngine.HorizontalWrapMode SelectionTabHorizontalOverflow
+        public readonly static DependencyProperty SelectionTabFontWeightProperty = Button.FontWeightProperty;
+        public TMPro.FontWeight SelectionTabFontWeight
         {
-            get { return SelectionTab.HorizontalOverflow; }
-            set { SelectionTab.HorizontalOverflow = value; }
+            get { return SelectionTab.FontWeight; }
+            set { SelectionTab.FontWeight = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabVerticalOverflowProperty = Button.VerticalOverflowProperty;
-        public UnityEngine.VerticalWrapMode SelectionTabVerticalOverflow
+        public readonly static DependencyProperty SelectionTabEnableAutoSizingProperty = Button.EnableAutoSizingProperty;
+        public System.Boolean SelectionTabEnableAutoSizing
         {
-            get { return SelectionTab.VerticalOverflow; }
-            set { SelectionTab.VerticalOverflow = value; }
+            get { return SelectionTab.EnableAutoSizing; }
+            set { SelectionTab.EnableAutoSizing = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFontSizeMinProperty = Button.FontSizeMinProperty;
+        public System.Single SelectionTabFontSizeMin
+        {
+            get { return SelectionTab.FontSizeMin; }
+            set { SelectionTab.FontSizeMin = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFontSizeMaxProperty = Button.FontSizeMaxProperty;
+        public System.Single SelectionTabFontSizeMax
+        {
+            get { return SelectionTab.FontSizeMax; }
+            set { SelectionTab.FontSizeMax = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFontStyleProperty = Button.FontStyleProperty;
+        public TMPro.FontStyles SelectionTabFontStyle
+        {
+            get { return SelectionTab.FontStyle; }
+            set { SelectionTab.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabTextAlignmentProperty = Button.TextAlignmentProperty;
+        public TMPro.TextAlignmentOptions SelectionTabTextAlignment
+        {
+            get { return SelectionTab.TextAlignment; }
+            set { SelectionTab.TextAlignment = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabCharacterSpacingProperty = Button.CharacterSpacingProperty;
+        public System.Single SelectionTabCharacterSpacing
+        {
+            get { return SelectionTab.CharacterSpacing; }
+            set { SelectionTab.CharacterSpacing = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabWordSpacingProperty = Button.WordSpacingProperty;
+        public System.Single SelectionTabWordSpacing
+        {
+            get { return SelectionTab.WordSpacing; }
+            set { SelectionTab.WordSpacing = value; }
         }
 
         public readonly static DependencyProperty SelectionTabLineSpacingProperty = Button.LineSpacingProperty;
@@ -262,11 +360,235 @@ namespace Delight
             set { SelectionTab.LineSpacing = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabFontStyleProperty = Button.FontStyleProperty;
-        public UnityEngine.FontStyle SelectionTabFontStyle
+        public readonly static DependencyProperty SelectionTabLineSpacingAdjustmentProperty = Button.LineSpacingAdjustmentProperty;
+        public System.Single SelectionTabLineSpacingAdjustment
         {
-            get { return SelectionTab.FontStyle; }
-            set { SelectionTab.FontStyle = value; }
+            get { return SelectionTab.LineSpacingAdjustment; }
+            set { SelectionTab.LineSpacingAdjustment = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabParagraphSpacingProperty = Button.ParagraphSpacingProperty;
+        public System.Single SelectionTabParagraphSpacing
+        {
+            get { return SelectionTab.ParagraphSpacing; }
+            set { SelectionTab.ParagraphSpacing = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabCharacterWidthAdjustmentProperty = Button.CharacterWidthAdjustmentProperty;
+        public System.Single SelectionTabCharacterWidthAdjustment
+        {
+            get { return SelectionTab.CharacterWidthAdjustment; }
+            set { SelectionTab.CharacterWidthAdjustment = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabEnableWordWrappingProperty = Button.EnableWordWrappingProperty;
+        public System.Boolean SelectionTabEnableWordWrapping
+        {
+            get { return SelectionTab.EnableWordWrapping; }
+            set { SelectionTab.EnableWordWrapping = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabWordWrappingRatiosProperty = Button.WordWrappingRatiosProperty;
+        public System.Single SelectionTabWordWrappingRatios
+        {
+            get { return SelectionTab.WordWrappingRatios; }
+            set { SelectionTab.WordWrappingRatios = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabOverflowModeProperty = Button.OverflowModeProperty;
+        public TMPro.TextOverflowModes SelectionTabOverflowMode
+        {
+            get { return SelectionTab.OverflowMode; }
+            set { SelectionTab.OverflowMode = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabLinkedTextComponentProperty = Button.LinkedTextComponentProperty;
+        public TMPro.TMP_Text SelectionTabLinkedTextComponent
+        {
+            get { return SelectionTab.LinkedTextComponent; }
+            set { SelectionTab.LinkedTextComponent = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIsLinkedTextComponentProperty = Button.IsLinkedTextComponentProperty;
+        public System.Boolean SelectionTabIsLinkedTextComponent
+        {
+            get { return SelectionTab.IsLinkedTextComponent; }
+            set { SelectionTab.IsLinkedTextComponent = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabEnableKerningProperty = Button.EnableKerningProperty;
+        public System.Boolean SelectionTabEnableKerning
+        {
+            get { return SelectionTab.EnableKerning; }
+            set { SelectionTab.EnableKerning = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabExtraPaddingProperty = Button.ExtraPaddingProperty;
+        public System.Boolean SelectionTabExtraPadding
+        {
+            get { return SelectionTab.ExtraPadding; }
+            set { SelectionTab.ExtraPadding = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabRichTextProperty = Button.RichTextProperty;
+        public System.Boolean SelectionTabRichText
+        {
+            get { return SelectionTab.RichText; }
+            set { SelectionTab.RichText = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabParseCtrlCharactersProperty = Button.ParseCtrlCharactersProperty;
+        public System.Boolean SelectionTabParseCtrlCharacters
+        {
+            get { return SelectionTab.ParseCtrlCharacters; }
+            set { SelectionTab.ParseCtrlCharacters = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIsOverlayProperty = Button.IsOverlayProperty;
+        public System.Boolean SelectionTabIsOverlay
+        {
+            get { return SelectionTab.IsOverlay; }
+            set { SelectionTab.IsOverlay = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIsOrthographicProperty = Button.IsOrthographicProperty;
+        public System.Boolean SelectionTabIsOrthographic
+        {
+            get { return SelectionTab.IsOrthographic; }
+            set { SelectionTab.IsOrthographic = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabEnableCullingProperty = Button.EnableCullingProperty;
+        public System.Boolean SelectionTabEnableCulling
+        {
+            get { return SelectionTab.EnableCulling; }
+            set { SelectionTab.EnableCulling = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIgnoreRectMaskCullingProperty = Button.IgnoreRectMaskCullingProperty;
+        public System.Boolean SelectionTabIgnoreRectMaskCulling
+        {
+            get { return SelectionTab.IgnoreRectMaskCulling; }
+            set { SelectionTab.IgnoreRectMaskCulling = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIgnoreVisibilityProperty = Button.IgnoreVisibilityProperty;
+        public System.Boolean SelectionTabIgnoreVisibility
+        {
+            get { return SelectionTab.IgnoreVisibility; }
+            set { SelectionTab.IgnoreVisibility = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabHorizontalMappingProperty = Button.HorizontalMappingProperty;
+        public TMPro.TextureMappingOptions SelectionTabHorizontalMapping
+        {
+            get { return SelectionTab.HorizontalMapping; }
+            set { SelectionTab.HorizontalMapping = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabVerticalMappingProperty = Button.VerticalMappingProperty;
+        public TMPro.TextureMappingOptions SelectionTabVerticalMapping
+        {
+            get { return SelectionTab.VerticalMapping; }
+            set { SelectionTab.VerticalMapping = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabMappingUvLineOffsetProperty = Button.MappingUvLineOffsetProperty;
+        public System.Single SelectionTabMappingUvLineOffset
+        {
+            get { return SelectionTab.MappingUvLineOffset; }
+            set { SelectionTab.MappingUvLineOffset = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabRenderModeProperty = Button.RenderModeProperty;
+        public TMPro.TextRenderFlags SelectionTabRenderMode
+        {
+            get { return SelectionTab.RenderMode; }
+            set { SelectionTab.RenderMode = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabGeometrySortingOrderProperty = Button.GeometrySortingOrderProperty;
+        public TMPro.VertexSortingOrder SelectionTabGeometrySortingOrder
+        {
+            get { return SelectionTab.GeometrySortingOrder; }
+            set { SelectionTab.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabVertexBufferAutoSizeReductionProperty = Button.VertexBufferAutoSizeReductionProperty;
+        public System.Boolean SelectionTabVertexBufferAutoSizeReduction
+        {
+            get { return SelectionTab.VertexBufferAutoSizeReduction; }
+            set { SelectionTab.VertexBufferAutoSizeReduction = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabFirstVisibleCharacterProperty = Button.FirstVisibleCharacterProperty;
+        public System.Int32 SelectionTabFirstVisibleCharacter
+        {
+            get { return SelectionTab.FirstVisibleCharacter; }
+            set { SelectionTab.FirstVisibleCharacter = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabMaxVisibleCharactersProperty = Button.MaxVisibleCharactersProperty;
+        public System.Int32 SelectionTabMaxVisibleCharacters
+        {
+            get { return SelectionTab.MaxVisibleCharacters; }
+            set { SelectionTab.MaxVisibleCharacters = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabMaxVisibleWordsProperty = Button.MaxVisibleWordsProperty;
+        public System.Int32 SelectionTabMaxVisibleWords
+        {
+            get { return SelectionTab.MaxVisibleWords; }
+            set { SelectionTab.MaxVisibleWords = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabMaxVisibleLinesProperty = Button.MaxVisibleLinesProperty;
+        public System.Int32 SelectionTabMaxVisibleLines
+        {
+            get { return SelectionTab.MaxVisibleLines; }
+            set { SelectionTab.MaxVisibleLines = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabUseMaxVisibleDescenderProperty = Button.UseMaxVisibleDescenderProperty;
+        public System.Boolean SelectionTabUseMaxVisibleDescender
+        {
+            get { return SelectionTab.UseMaxVisibleDescender; }
+            set { SelectionTab.UseMaxVisibleDescender = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabPageToDisplayProperty = Button.PageToDisplayProperty;
+        public System.Int32 SelectionTabPageToDisplay
+        {
+            get { return SelectionTab.PageToDisplay; }
+            set { SelectionTab.PageToDisplay = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabTextMarginProperty = Button.TextMarginProperty;
+        public UnityEngine.Vector4 SelectionTabTextMargin
+        {
+            get { return SelectionTab.TextMargin; }
+            set { SelectionTab.TextMargin = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabHavePropertiesChangedProperty = Button.HavePropertiesChangedProperty;
+        public System.Boolean SelectionTabHavePropertiesChanged
+        {
+            get { return SelectionTab.HavePropertiesChanged; }
+            set { SelectionTab.HavePropertiesChanged = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIsUsingLegacyAnimationComponentProperty = Button.IsUsingLegacyAnimationComponentProperty;
+        public System.Boolean SelectionTabIsUsingLegacyAnimationComponent
+        {
+            get { return SelectionTab.IsUsingLegacyAnimationComponent; }
+            set { SelectionTab.IsUsingLegacyAnimationComponent = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabIsVolumetricTextProperty = Button.IsVolumetricTextProperty;
+        public System.Boolean SelectionTabIsVolumetricText
+        {
+            get { return SelectionTab.IsVolumetricText; }
+            set { SelectionTab.IsVolumetricText = value; }
         }
 
         public readonly static DependencyProperty SelectionTabOnCullStateChangedProperty = Button.OnCullStateChangedProperty;
@@ -281,13 +603,6 @@ namespace Delight
         {
             get { return SelectionTab.Maskable; }
             set { SelectionTab.Maskable = value; }
-        }
-
-        public readonly static DependencyProperty SelectionTabFontColorProperty = Button.FontColorProperty;
-        public UnityEngine.Color SelectionTabFontColor
-        {
-            get { return SelectionTab.FontColor; }
-            set { SelectionTab.FontColor = value; }
         }
 
         public readonly static DependencyProperty SelectionTabRaycastTargetProperty = Button.RaycastTargetProperty;
@@ -822,7 +1137,7 @@ namespace Delight
                     _selectionIndicatorSelectionTabLabel.Name = "SelectionIndicatorSelectionTabLabel";
 #endif
                     Delight.Label.TextProperty.SetDefault(_selectionIndicatorSelectionTabLabel, "Button");
-                    Delight.Label.FontSizeProperty.SetDefault(_selectionIndicatorSelectionTabLabel, 10);
+                    Delight.Label.FontSizeProperty.SetDefault(_selectionIndicatorSelectionTabLabel, 10f);
                     Delight.Label.FontColorProperty.SetDefault(_selectionIndicatorSelectionTabLabel, new UnityEngine.Color(0.4784314f, 0.4313726f, 0.4313726f, 1f));
                     Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _selectionIndicatorSelectionTabLabel, new UnityEngine.Color(0.4784314f, 0.4313726f, 0.4313726f, 1f));
                     Delight.Label.FontColorProperty.SetStateDefault("Pressed", _selectionIndicatorSelectionTabLabel, new UnityEngine.Color(0.4784314f, 0.4313726f, 0.4313726f, 1f));

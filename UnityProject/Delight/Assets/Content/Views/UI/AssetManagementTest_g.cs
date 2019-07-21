@@ -597,7 +597,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel1, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel1, Delight.ElementAlignment.Top);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel1, Delight.ElementAlignment.Left);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel1, TMPro.TextAlignmentOptions.Left);
                     Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel1);
                 }
                 return _assetManagementTestLabel1;
@@ -621,7 +621,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel2, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel2, Delight.ElementAlignment.TopRight);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel2, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel2, TMPro.TextAlignmentOptions.TopLeft);
                     Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel2);
                 }
                 return _assetManagementTestLabel2;
@@ -645,7 +645,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel3, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel3, Delight.ElementAlignment.TopLeft);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel3, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel3, TMPro.TextAlignmentOptions.TopLeft);
                     Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel3);
                 }
                 return _assetManagementTestLabel3;
@@ -1285,7 +1285,7 @@ namespace Delight
 #endif
                     Delight.Label.WidthProperty.SetDefault(_assetManagementTestLabel4, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_assetManagementTestLabel4, Delight.ElementAlignment.Center);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel4, Delight.ElementAlignment.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_assetManagementTestLabel4, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.TextProperty.SetHasBinding(_assetManagementTestLabel4);
                 }
                 return _assetManagementTestLabel4;

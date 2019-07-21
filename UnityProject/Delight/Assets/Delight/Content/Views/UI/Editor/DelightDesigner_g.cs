@@ -20,14 +20,14 @@ namespace Delight
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             ScrollableContentRegion = new ScrollableRegion(this, Grid1.Content, "ScrollableContentRegion", ScrollableContentRegionTemplate);
             ScrollableContentRegion.Scroll.RegisterHandler(this, "OnScroll");
-            Grid1.Cell.SetValue(ScrollableContentRegion, new CellIndex(1, 1));
+            Grid1.Cell.SetValue(ScrollableContentRegion, new CellIndex(0, 1));
             Grid1.CellSpan.SetValue(ScrollableContentRegion, new CellIndex(1, 2));
             ContentRegionCanvas = new UICanvas(this, ScrollableContentRegion.Content, "ContentRegionCanvas", ContentRegionCanvasTemplate);
             ViewContentRegion = new Region(this, ContentRegionCanvas.Content, "ViewContentRegion", ViewContentRegionTemplate);
-            Region1 = new Region(this, Grid1.Content, "Region1", Region1Template);
-            Grid1.Cell.SetValue(Region1, new CellIndex(0, 0));
-            Grid1.CellSpan.SetValue(Region1, new CellIndex(2, 1));
-            List1 = new List(this, Region1.Content, "List1", List1Template);
+            LeftPanel = new Region(this, Grid1.Content, "LeftPanel", LeftPanelTemplate);
+            Grid1.Cell.SetValue(LeftPanel, new CellIndex(0, 0));
+            Label1 = new Label(this, LeftPanel.Content, "Label1", Label1Template);
+            List1 = new List(this, LeftPanel.Content, "List1", List1Template);
             List1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
             // binding <List Items="{view in DesignerViews}">
@@ -37,17 +37,14 @@ namespace Delight
             List1.ContentTemplates.Add(new ContentTemplate(tiView => 
             {
                 var list1Content = new ListItem(this, List1.Content, "List1Content", List1ContentTemplate);
-                var label1 = new Label(this, list1Content.Content, "Label1", Label1Template);
+                var label2 = new Label(this, list1Content.Content, "Label2", Label2Template);
 
                 // binding <Label Text="{view.Name}">
-                list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
+                list1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
                 list1Content.IsDynamic = true;
                 list1Content.SetContentTemplateData(tiView);
                 return list1Content;
             }, typeof(ListItem), "List1Content"));
-            Region2 = new Region(this, Grid1.Content, "Region2", Region2Template);
-            Grid1.Cell.SetValue(Region2, new CellIndex(0, 1));
-            Grid1.CellSpan.SetValue(Region2, new CellIndex(1, 2));
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             this.AfterInitializeInternal();
         }
@@ -70,14 +67,14 @@ namespace Delight
             dependencyProperties.Add(ContentRegionCanvasTemplateProperty);
             dependencyProperties.Add(ViewContentRegionProperty);
             dependencyProperties.Add(ViewContentRegionTemplateProperty);
-            dependencyProperties.Add(Region1Property);
-            dependencyProperties.Add(Region1TemplateProperty);
-            dependencyProperties.Add(List1Property);
-            dependencyProperties.Add(List1TemplateProperty);
+            dependencyProperties.Add(LeftPanelProperty);
+            dependencyProperties.Add(LeftPanelTemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
-            dependencyProperties.Add(Region2Property);
-            dependencyProperties.Add(Region2TemplateProperty);
+            dependencyProperties.Add(List1Property);
+            dependencyProperties.Add(List1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(GridSplitter1Property);
             dependencyProperties.Add(GridSplitter1TemplateProperty);
             dependencyProperties.Add(List1ContentProperty);
@@ -151,32 +148,18 @@ namespace Delight
             set { ViewContentRegionTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
-        public Region Region1
+        public readonly static DependencyProperty<Region> LeftPanelProperty = new DependencyProperty<Region>("LeftPanel");
+        public Region LeftPanel
         {
-            get { return Region1Property.GetValue(this); }
-            set { Region1Property.SetValue(this, value); }
+            get { return LeftPanelProperty.GetValue(this); }
+            set { LeftPanelProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
-        public Template Region1Template
+        public readonly static DependencyProperty<Template> LeftPanelTemplateProperty = new DependencyProperty<Template>("LeftPanelTemplate");
+        public Template LeftPanelTemplate
         {
-            get { return Region1TemplateProperty.GetValue(this); }
-            set { Region1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<List> List1Property = new DependencyProperty<List>("List1");
-        public List List1
-        {
-            get { return List1Property.GetValue(this); }
-            set { List1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> List1TemplateProperty = new DependencyProperty<Template>("List1Template");
-        public Template List1Template
-        {
-            get { return List1TemplateProperty.GetValue(this); }
-            set { List1TemplateProperty.SetValue(this, value); }
+            get { return LeftPanelTemplateProperty.GetValue(this); }
+            set { LeftPanelTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -193,18 +176,32 @@ namespace Delight
             set { Label1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
-        public Region Region2
+        public readonly static DependencyProperty<List> List1Property = new DependencyProperty<List>("List1");
+        public List List1
         {
-            get { return Region2Property.GetValue(this); }
-            set { Region2Property.SetValue(this, value); }
+            get { return List1Property.GetValue(this); }
+            set { List1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
-        public Template Region2Template
+        public readonly static DependencyProperty<Template> List1TemplateProperty = new DependencyProperty<Template>("List1Template");
+        public Template List1Template
         {
-            get { return Region2TemplateProperty.GetValue(this); }
-            set { Region2TemplateProperty.SetValue(this, value); }
+            get { return List1TemplateProperty.GetValue(this); }
+            set { List1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<GridSplitter> GridSplitter1Property = new DependencyProperty<GridSplitter>("GridSplitter1");
@@ -271,11 +268,11 @@ namespace Delight
                     Delight.DelightDesigner.ScrollableContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerScrollableContentRegion);
                     Delight.DelightDesigner.ContentRegionCanvasTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentRegionCanvas);
                     Delight.DelightDesigner.ViewContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewContentRegion);
-                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
+                    Delight.DelightDesigner.LeftPanelTemplateProperty.SetDefault(_delightDesigner, DelightDesignerLeftPanel);
+                    Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
                     Delight.DelightDesigner.List1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1Content);
-                    Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
-                    Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
+                    Delight.DelightDesigner.Label2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel2);
                     Delight.DelightDesigner.GridSplitter1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter1);
                 }
                 return _delightDesigner;
@@ -297,8 +294,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerGrid1.Name = "DelightDesignerGrid1";
 #endif
-                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(250f, ElementSizeUnit.Pixels), 230f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new ColumnDefinition(new ElementSize(250f, ElementSizeUnit.Pixels))});
-                    Delight.LayoutGrid.RowsProperty.SetDefault(_delightDesignerGrid1, new RowDefinitions { new RowDefinition(new ElementSize(50f, ElementSizeUnit.Pixels)), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(250f, ElementSizeUnit.Pixels), 230f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.LayoutGrid.RowsProperty.SetDefault(_delightDesignerGrid1, new RowDefinitions { new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
                 }
                 return _delightDesignerGrid1;
             }
@@ -516,24 +513,51 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerRegion1;
-        public static Template DelightDesignerRegion1
+        private static Template _delightDesignerLeftPanel;
+        public static Template DelightDesignerLeftPanel
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
+                if (_delightDesignerLeftPanel == null || _delightDesignerLeftPanel.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerRegion1 == null)
+                if (_delightDesignerLeftPanel == null)
 #endif
                 {
-                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
+                    _delightDesignerLeftPanel = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
+                    _delightDesignerLeftPanel.Name = "DelightDesignerLeftPanel";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(0.7019608f, 0.7019608f, 0.7019608f, 1f));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerLeftPanel, new UnityEngine.Color(0.9921569f, 0.9921569f, 0.9921569f, 1f));
                 }
-                return _delightDesignerRegion1;
+                return _delightDesignerLeftPanel;
+            }
+        }
+
+        private static Template _delightDesignerLabel1;
+        public static Template DelightDesignerLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerLabel1 == null || _delightDesignerLabel1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerLabel1 == null)
+#endif
+                {
+                    _delightDesignerLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _delightDesignerLabel1.Name = "DelightDesignerLabel1";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerLabel1, "Views");
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 20f);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Ebrima"]);
+                    Delight.Label.AlignmentProperty.SetDefault(_delightDesignerLabel1, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(28f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Label.TextAlignmentProperty.SetDefault(_delightDesignerLabel1, TMPro.TextAlignmentOptions.Left);
+                }
+                return _delightDesignerLabel1;
             }
         }
 
@@ -554,8 +578,8 @@ namespace Delight
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_delightDesignerList1, true);
                     Delight.List.AlignmentProperty.SetDefault(_delightDesignerList1, Delight.ElementAlignment.Top);
-                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
-                    Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerList1, new UnityEngine.Color(0.9215686f, 0.9215686f, 0.9215686f, 1f));
+                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels)));
+                    Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerList1, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.List.WidthProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.HeightProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.CanReselectProperty.SetDefault(_delightDesignerList1, true);
@@ -757,54 +781,33 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerLabel1;
-        public static Template DelightDesignerLabel1
+        private static Template _delightDesignerLabel2;
+        public static Template DelightDesignerLabel2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerLabel1 == null || _delightDesignerLabel1.CurrentVersion != Template.Version)
+                if (_delightDesignerLabel2 == null || _delightDesignerLabel2.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerLabel1 == null)
+                if (_delightDesignerLabel2 == null)
 #endif
                 {
-                    _delightDesignerLabel1 = new Template(LabelTemplates.Label);
+                    _delightDesignerLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _delightDesignerLabel1.Name = "DelightDesignerLabel1";
+                    _delightDesignerLabel2.Name = "DelightDesignerLabel2";
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 16);
-                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(24f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.Fonts["Ebrima"]);
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, "Ellipsis");
-                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
-                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel2, 16f);
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel2, new ElementSize(24f, ElementSizeUnit.Pixels));
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel2, Assets.TMP_FontAssets["Ebrima"]);
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel2, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel2, false);
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel2, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel2, TMPro.TextOverflowModes.Ellipsis);
+                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel2, true);
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel2, new UnityEngine.Color(0.1411765f, 0.1411765f, 0.1411765f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel2);
                 }
-                return _delightDesignerLabel1;
-            }
-        }
-
-        private static Template _delightDesignerRegion2;
-        public static Template DelightDesignerRegion2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerRegion2 == null || _delightDesignerRegion2.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerRegion2 == null)
-#endif
-                {
-                    _delightDesignerRegion2 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _delightDesignerRegion2.Name = "DelightDesignerRegion2";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion2, new UnityEngine.Color(0.6392157f, 0.6352941f, 0.6392157f, 1f));
-                }
-                return _delightDesignerRegion2;
+                return _delightDesignerLabel2;
             }
         }
 

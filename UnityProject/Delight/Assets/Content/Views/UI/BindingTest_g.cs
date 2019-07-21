@@ -445,8 +445,8 @@ namespace Delight
                     _bindingTestButton1Label.Name = "BindingTestButton1Label";
 #endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton1Label, "Test 1");
-                    Delight.Label.FontSizeProperty.SetDefault(_bindingTestButton1Label, 24);
-                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton1Label, Delight.ElementAlignment.Center);
+                    Delight.Label.FontSizeProperty.SetDefault(_bindingTestButton1Label, 24f);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton1Label, TMPro.TextAlignmentOptions.Center);
                 }
                 return _bindingTestButton1Label;
             }
@@ -490,7 +490,7 @@ namespace Delight
                     _bindingTestButton2Label.Name = "BindingTestButton2Label";
 #endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton2Label, "Test 2");
-                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton2Label, Delight.ElementAlignment.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton2Label, TMPro.TextAlignmentOptions.Center);
                 }
                 return _bindingTestButton2Label;
             }
@@ -534,7 +534,7 @@ namespace Delight
                     _bindingTestButton3Label.Name = "BindingTestButton3Label";
 #endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton3Label, "Bg");
-                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton3Label, Delight.ElementAlignment.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton3Label, TMPro.TextAlignmentOptions.Center);
                 }
                 return _bindingTestButton3Label;
             }
@@ -577,7 +577,7 @@ namespace Delight
                     _bindingTestButton4Label.Name = "BindingTestButton4Label";
 #endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton4Label, "Large Button");
-                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton4Label, Delight.ElementAlignment.Center);
+                    Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton4Label, TMPro.TextAlignmentOptions.Center);
                 }
                 return _bindingTestButton4Label;
             }

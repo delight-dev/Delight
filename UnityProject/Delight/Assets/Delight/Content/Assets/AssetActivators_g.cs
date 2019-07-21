@@ -58,8 +58,8 @@ namespace Delight
             ViewActivators.Add("UICanvas", (x, y, z) => new UICanvas(x, y, null, z));
             ViewActivators.Add("Frame", (x, y, z) => new Frame(x, y, null, z));
             ViewActivators.Add("GridSplitterHandle", (x, y, z) => new GridSplitterHandle(x, y, null, z));
-            ViewActivators.Add("RectMask2D", (x, y, z) => new RectMask2D(x, y, null, z));
             ViewActivators.Add("Mask", (x, y, z) => new Mask(x, y, null, z));
+            ViewActivators.Add("RectMask2D", (x, y, z) => new RectMask2D(x, y, null, z));
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
             ViewActivators.Add("SelectionIndicator", (x, y, z) => new SelectionIndicator(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
@@ -109,8 +109,8 @@ namespace Delight
             ViewTypes.Add("UICanvas", typeof(UICanvas));
             ViewTypes.Add("Frame", typeof(Frame));
             ViewTypes.Add("GridSplitterHandle", typeof(GridSplitterHandle));
-            ViewTypes.Add("RectMask2D", typeof(RectMask2D));
             ViewTypes.Add("Mask", typeof(Mask));
+            ViewTypes.Add("RectMask2D", typeof(RectMask2D));
             ViewTypes.Add("Scrollbar", typeof(Scrollbar));
             ViewTypes.Add("SelectionIndicator", typeof(SelectionIndicator));
             ViewTypes.Add("NewScene", typeof(NewScene));
