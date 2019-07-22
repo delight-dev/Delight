@@ -5676,6 +5676,7 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="DesignerViews" type="xs:string" />
+    <xs:attribute name="XmlText" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />
@@ -6133,6 +6134,13 @@
   <xs:simpleType name="Asset_FontAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Ebrima" />
+      <xs:enumeration value="Hasklig-Light" />
+      <xs:enumeration value="Hasklig-Medium" />
+      <xs:enumeration value="Hasklig-Regular" />
+      <xs:enumeration value="Inconsolata-Regular" />
+      <xs:enumeration value="FiraCode-Light" />
+      <xs:enumeration value="FiraCode-Regular" />
+      <xs:enumeration value="Segoe UI" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -6155,18 +6163,26 @@
       <xs:enumeration value="RadioButtonPressed" />
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
+      <xs:enumeration value="ListSelection" />
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Asset_TMP_FontAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Ebrima SDF" />
+      <xs:enumeration value="Hasklig-Light SDF" />
+      <xs:enumeration value="Hasklig-Regular SDF" />
+      <xs:enumeration value="Inconsolata-Regular SDF" />
+      <xs:enumeration value="FiraCode-Light SDF" />
+      <xs:enumeration value="FiraCode-Regular SDF" />
+      <xs:enumeration value="Segoe UI SDF" />
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="bluefloral01" />
+      <xs:enumeration value="ListSelection" />
     </xs:restriction>
   </xs:simpleType>
 

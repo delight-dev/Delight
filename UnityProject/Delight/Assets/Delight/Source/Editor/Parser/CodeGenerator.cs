@@ -550,11 +550,9 @@ namespace Delight.Editor.Parser
             sb.AppendLine("        {");
             sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, Template, View>>();");
 
-            var viewObjects = _contentObjectModel.ViewObjects;
+            var viewObjects = _contentObjectModel.ViewObjects.Where(x => x.HasCode && !x.IsEditorView && x.Name != "View").ToList();
             foreach (var viewObject in viewObjects)
             {
-                if (!viewObject.HasCode || viewObject.Name == "View" || viewObject.Name == "DelightDesigner")
-                    continue;
                 sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z) => new {0}(x, y, null, z));", viewObject.TypeName);
             }
 
@@ -562,13 +560,10 @@ namespace Delight.Editor.Parser
             sb.AppendLine("            ViewTypes = new Dictionary<string, Type>();");
             foreach (var viewObject in viewObjects)
             {
-                if (!viewObject.HasCode || viewObject.Name == "DelightDesigner")
-                    continue;
                 sb.AppendLine("            ViewTypes.Add(\"{0}\", typeof({0}));", viewObject.TypeName);
             }
 
             sb.AppendLine("        }");
-
             sb.AppendLine("    }");
 
             // close namespace

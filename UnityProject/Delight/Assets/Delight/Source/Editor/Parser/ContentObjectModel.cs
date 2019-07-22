@@ -569,6 +569,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(17)]
         public bool HasXml;
 
+        [ProtoMember(18)]
+        public bool IsEditorView;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 

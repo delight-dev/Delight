@@ -136,8 +136,10 @@ namespace Delight
             _selectedIndex = index;
 
             // highlight it in editor
+#if UNITY_EDITOR
             Selection.activeObject = obj;
             EditorGUIUtility.PingObject(obj);
+#endif
         }
 
         #endregion

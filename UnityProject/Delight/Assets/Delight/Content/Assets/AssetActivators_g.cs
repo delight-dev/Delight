@@ -102,7 +102,6 @@ namespace Delight
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
-            ViewTypes.Add("View", typeof(View));
             ViewTypes.Add("UIImageView", typeof(UIImageView));
             ViewTypes.Add("Collection", typeof(Collection));
             ViewTypes.Add("ComboBoxListItem", typeof(ComboBoxListItem));

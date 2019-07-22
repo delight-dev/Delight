@@ -1,4 +1,6 @@
-<MainMenu xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+<MainMenu xmlns="Delight" 
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+          xsi:schemaLocation="Delight ../Delight.xsd">
   <Group Spacing="10">
     <Button Text="Play" Click="Play" />
     <Button Text="Options" Click="Options" />

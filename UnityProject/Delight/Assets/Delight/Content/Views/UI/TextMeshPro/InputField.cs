@@ -78,6 +78,12 @@ namespace Delight
             TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
             TMP_InputFieldComponent.onValueChanged.AddListener(TMProInputFieldValueChanged);
 
+            // fix textmeshpro issue with word wrapping being reset for some reason
+            if (!EnableWordWrappingProperty.IsUndefined(InputText))
+            {
+                EnableWordWrappingProperty.Load(InputText);
+            }
+
             // set initial text
             TextChanged();
 
@@ -94,8 +100,6 @@ namespace Delight
             {
                 TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
             }
-
-            TMP_InputFieldComponent.text = Text ?? String.Empty;
             
             if (OnlyTriggerValueChangedFromUI)
             {

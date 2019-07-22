@@ -452,6 +452,13 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
+                if (attributeName.IEquals("IsEditorView"))
+                {
+                    Boolean.TryParse(attributeValue, out var isEditorView);
+                    viewObject.IsEditorView = isEditorView;
+                    continue;
+                }
+
                 if (attributeName.IEquals("BasedOn"))
                 {
                     // set default 
