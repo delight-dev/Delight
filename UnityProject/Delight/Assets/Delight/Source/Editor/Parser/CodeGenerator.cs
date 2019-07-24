@@ -392,12 +392,6 @@ namespace Delight.Editor.Parser
             int newActionAssignmentCount = 0;
             foreach (var actionAssignment in allActionAssignments)
             {
-                if (!first)
-                {
-                    sbHandlers.AppendLine();
-                }
-                first = false;
-
                 var actionName = actionAssignment.PropertyValue;
 
                 // does the action have parameters?
@@ -414,6 +408,12 @@ namespace Delight.Editor.Parser
                 // check if method already exist
                 if (methods.Any(x => x.Name != null && x.Name.IEquals(actionName)))
                     continue;
+
+                if (!first)
+                {
+                    sbHandlers.AppendLine();
+                }
+                first = false;
 
                 // add method
                 string parameters = string.Empty;

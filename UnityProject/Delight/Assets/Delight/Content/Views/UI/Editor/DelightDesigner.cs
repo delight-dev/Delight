@@ -13,19 +13,6 @@ using TMPro;
 
 namespace Delight
 {
-    public enum XmlSyntaxElement
-    {
-        Undefined,
-        BeginViewName,
-        ViewName,
-        EndViewName,
-        EndView,
-        PropertyValue,
-        EndPropertyValue,
-        PropertyName,
-        Comment,
-        EndComment
-    }
 
     public partial class DelightDesigner
     {
@@ -54,6 +41,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Syntax highlights the text. 
+        /// </summary>
         private void SyntaxHighlightXml()
         {
             string xmlText = XmlText;
@@ -221,6 +211,7 @@ namespace Delight
         {
             base.AfterLoad();
             _textComponent = XmlTextLabel.TextMeshProUGUI;
+            //_textComponent.UpdateGeometry
         }
 
         private bool IsUIView(ViewObject viewObject)

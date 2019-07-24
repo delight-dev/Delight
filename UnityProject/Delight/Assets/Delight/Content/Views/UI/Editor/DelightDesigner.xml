@@ -3,6 +3,7 @@
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
 
   <Grid Columns="170[20],450[20],*" Rows="*" BackgroundColor="#55a3ff">
+    <!--450[20]-->
 
     <!-- Right Menu -->
     <!--<Region Grid.Cell="1,2" BackgroundColor="#dcdcdc"/>-->
@@ -17,8 +18,8 @@
 
     <!-- Left Panel - Content Explorer -->
     <Region Id="ContentExplorer" Grid.Cell="0,0" BackgroundColor="#fdfdfd">
-      <Label Text="Views" FontSize="18" Font="Segoe UI SDF" Alignment="TopLeft" Margin="19,0,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Ellipsis" FontColor="#394459" />
-      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,40,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
+      <Label Text="Views" FontSize="18" Font="Segoe UI SDF" Alignment="TopLeft" Margin="19,10,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Ellipsis" FontColor="#394459" />
+      <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,50,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
             ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
             VerticalScrollbarVisibility="Never">
         <ListItem Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
@@ -30,6 +31,8 @@
     <!-- Left Panel - XML editor -->
     <Region Id="XmlEditor" Grid.Cell="0,1" BackgroundColor="#fbfbfb">
       <!--<Label Text="XML Editor" FontSize="20" Font="Ebrima SDF" Alignment="TopLeft" Margin="28,0,0,0" Height="50" TextAlignment="Left" Width="100%" />-->
+      <XmlEditor />
+      
       <Region Id="XmlEditArea" Margin="25,25,0,0">
         <InputField Id="XmlTextInputField" Text="{XmlText}" Width="100%" Height="100%" Margin="2,2,2,2" OverflowMode="Overflow" LineType="MultiLineNewline" EnableWordWrapping="False" IsRichTextEditingAllowed="False" RichText="False" BackgroundColor="clear"
                     Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#dddddd"/>

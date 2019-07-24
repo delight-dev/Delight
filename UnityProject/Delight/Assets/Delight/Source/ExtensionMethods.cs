@@ -585,7 +585,7 @@ namespace Delight
             var parent = view.LayoutParent as T;
             if (parent != null)
             {
-                action(parent);                
+                action(parent);
             }
 
             view.LayoutParent.ForEachParent(action);
@@ -684,6 +684,83 @@ namespace Delight
             where TSource : BindableObject
         {
             return new BindableCollection<TSource>(source);
+        }
+
+        /// <summary>
+        /// Gets lines from string.
+        /// </summary>
+        public static IEnumerable<string> GetLines(this string str, bool removeEmptyLines = false)
+        {
+            return str.Split(new[] { "\r\n", "\r", "\n" },
+                removeEmptyLines ? StringSplitOptions.RemoveEmptyEntries : StringSplitOptions.None);
+        }
+
+        /// <summary>
+        /// Inserts item to list at index or adds if index is at the end.
+        /// </summary>
+        public static void InsertOrAdd<T>(this List<T> list, int index, T item) 
+        {
+            int count = list.Count();
+            if (index < 0 || index > count)
+            {
+                throw new IndexOutOfRangeException(String.Format("Index: {0}, Collection Count: {1}", index, count));
+            }
+
+            if (index == count)
+            {
+                list.Add(item);
+            }
+            else
+            {
+                list.Insert(index, item);
+            }
+        }
+
+        /// <summary>
+        /// Inserts or adds character to string at index or adds if index is at the end.
+        /// </summary>
+        public static string InsertOrAdd(this string str, int index, string c)
+        {
+            int count = str.Length;
+            if (index < 0 || index > count)
+            {
+                throw new IndexOutOfRangeException(String.Format("Index: {0}, String Length: {1}", index, count));
+            }
+
+            if (index == count)
+            {
+                str += c;
+            }
+            else
+            {
+                str = str.Insert(index, c);
+            }
+            return str;
+        }
+
+        /// <summary>
+        /// Finds the index of the first item matching an expression in an enumerable.
+        /// </summary>
+        public static int IndexOf<T>(this IEnumerable<T> items, Func<T, bool> predicate)
+        {
+            if (items == null) throw new ArgumentNullException("items");
+            if (predicate == null) throw new ArgumentNullException("predicate");
+
+            int retVal = 0;
+            foreach (var item in items)
+            {
+                if (predicate(item)) return retVal;
+                retVal++;
+            }
+            return -1;
+        }
+
+        /// <summary>
+        /// Finds the index of the first occurrence of an item in an enumerable.
+        /// </summary>
+        public static int IndexOf<T>(this IEnumerable<T> items, T item)
+        {
+            return items.IndexOf(i => EqualityComparer<T>.Default.Equals(item, i));
         }
 
         #endregion

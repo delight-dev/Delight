@@ -208,6 +208,22 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Called when the mouse enters the view.
+        /// </summary>
+        public void OnMouseEnter(PointerEventData pointerData)
+        {
+            //Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+        }
+
+        /// <summary>
+        /// Called when the mouse exits the view.
+        /// </summary>
+        public void OnMouseExit(PointerEventData pointerData)
+        {
+            //Cursor.SetCursor(null, Vector3.zero, CursorMode.Auto);
+        }
+
         #endregion
     }
 }

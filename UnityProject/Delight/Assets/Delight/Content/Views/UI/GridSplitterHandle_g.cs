@@ -22,6 +22,8 @@ namespace Delight
             BeginDrag.RegisterHandler(this, "OnBeginDrag");
             InitializePotentialDrag.RegisterHandler(this, "OnInitializePotentialDrag");
             EndDrag.RegisterHandler(this, "OnEndDrag");
+            MouseEnter.RegisterHandler(this, "OnMouseEnter");
+            MouseExit.RegisterHandler(this, "OnMouseExit");
             ContentContainer = SplitterHandle;
             this.AfterInitializeInternal();
         }

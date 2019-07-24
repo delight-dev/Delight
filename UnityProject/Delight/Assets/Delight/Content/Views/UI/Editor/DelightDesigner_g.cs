@@ -48,6 +48,7 @@ namespace Delight
             }, typeof(ListItem), "ListItem1"));
             XmlEditor = new Region(this, Grid1.Content, "XmlEditor", XmlEditorTemplate);
             Grid1.Cell.SetValue(XmlEditor, new CellIndex(0, 1));
+            XmlEditor1 = new XmlEditor(this, XmlEditor.Content, "XmlEditor1", XmlEditor1Template);
             XmlEditArea = new Region(this, XmlEditor.Content, "XmlEditArea", XmlEditAreaTemplate);
             XmlTextInputField = new InputField(this, XmlEditArea.Content, "XmlTextInputField", XmlTextInputFieldTemplate);
 
@@ -89,6 +90,8 @@ namespace Delight
             dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(XmlEditorProperty);
             dependencyProperties.Add(XmlEditorTemplateProperty);
+            dependencyProperties.Add(XmlEditor1Property);
+            dependencyProperties.Add(XmlEditor1TemplateProperty);
             dependencyProperties.Add(XmlEditAreaProperty);
             dependencyProperties.Add(XmlEditAreaTemplateProperty);
             dependencyProperties.Add(XmlTextInputFieldProperty);
@@ -257,6 +260,20 @@ namespace Delight
             set { XmlEditorTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<XmlEditor> XmlEditor1Property = new DependencyProperty<XmlEditor>("XmlEditor1");
+        public XmlEditor XmlEditor1
+        {
+            get { return XmlEditor1Property.GetValue(this); }
+            set { XmlEditor1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> XmlEditor1TemplateProperty = new DependencyProperty<Template>("XmlEditor1Template");
+        public Template XmlEditor1Template
+        {
+            get { return XmlEditor1TemplateProperty.GetValue(this); }
+            set { XmlEditor1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> XmlEditAreaProperty = new DependencyProperty<Region>("XmlEditArea");
         public Region XmlEditArea
         {
@@ -355,6 +372,7 @@ namespace Delight
                     Delight.DelightDesigner.ListItem1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem1);
                     Delight.DelightDesigner.Label2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel2);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
+                    Delight.DelightDesigner.XmlEditor1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor1);
                     Delight.DelightDesigner.XmlEditAreaTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditArea);
                     Delight.DelightDesigner.XmlTextInputFieldTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlTextInputField);
                     Delight.DelightDesigner.XmlTextLabelTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlTextLabel);
@@ -639,7 +657,7 @@ namespace Delight
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 18f);
                     Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Segoe UI SDF"]);
                     Delight.Label.AlignmentProperty.SetDefault(_delightDesignerLabel1, Delight.ElementAlignment.TopLeft);
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(19f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(19f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Label.TextAlignmentProperty.SetDefault(_delightDesignerLabel1, TMPro.TextAlignmentOptions.Left);
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -667,7 +685,7 @@ namespace Delight
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_delightDesignerList1, true);
                     Delight.List.AlignmentProperty.SetDefault(_delightDesignerList1, Delight.ElementAlignment.Top);
-                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(4f, ElementSizeUnit.Pixels), new ElementSize(40f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels)));
+                    Delight.List.MarginProperty.SetDefault(_delightDesignerList1, new ElementMargin(new ElementSize(4f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels)));
                     Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerList1, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.List.WidthProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.HeightProperty.SetDefault(_delightDesignerList1, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -924,6 +942,320 @@ namespace Delight
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditor, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
                 }
                 return _delightDesignerXmlEditor;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1;
+        public static Template DelightDesignerXmlEditor1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1 == null || _delightDesignerXmlEditor1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1 == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1 = new Template(XmlEditorTemplates.XmlEditor);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1.Name = "DelightDesignerXmlEditor1";
+#endif
+                    Delight.XmlEditor.ScrollableAreaTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1ScrollableArea);
+                    Delight.XmlEditor.XmlEditRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1XmlEditRegion);
+                    Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1LineNumbersLabel);
+                    Delight.XmlEditor.XmlTextRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1XmlTextRegion);
+                    Delight.XmlEditor.XmlTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1XmlTextLabel);
+                    Delight.XmlEditor.CaretTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1Caret);
+                    Delight.XmlEditor.CaretElementTemplateProperty.SetDefault(_delightDesignerXmlEditor1, DelightDesignerXmlEditor1CaretElement);
+                }
+                return _delightDesignerXmlEditor1;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableArea;
+        public static Template DelightDesignerXmlEditor1ScrollableArea
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableArea == null || _delightDesignerXmlEditor1ScrollableArea.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableArea == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableArea = new Template(XmlEditorTemplates.XmlEditorScrollableArea);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableArea.Name = "DelightDesignerXmlEditor1ScrollableArea";
+#endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableArea, DelightDesignerXmlEditor1ScrollableAreaContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableArea, DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableArea, DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbar);
+                }
+                return _delightDesignerXmlEditor1ScrollableArea;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaContentRegion;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaContentRegion == null || _delightDesignerXmlEditor1ScrollableAreaContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaContentRegion == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaContentRegion = new Template(XmlEditorTemplates.XmlEditorScrollableAreaContentRegion);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaContentRegion.Name = "DelightDesignerXmlEditor1ScrollableAreaContentRegion";
+#endif
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaContentRegion;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar == null || _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar = new Template(XmlEditorTemplates.XmlEditorScrollableAreaHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar.Name = "DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar, DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar, DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle);
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbar;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar == null || _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar = new Template(XmlEditorTemplates.XmlEditorScrollableAreaHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar.Name = "DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar";
+#endif
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle == null || _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle = new Template(XmlEditorTemplates.XmlEditorScrollableAreaHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle.Name = "DelightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle";
+#endif
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar == null || _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar = new Template(XmlEditorTemplates.XmlEditorScrollableAreaVerticalScrollbar);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar.Name = "DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar, DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar, DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle);
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbar;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar == null || _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar = new Template(XmlEditorTemplates.XmlEditorScrollableAreaVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar.Name = "DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar";
+#endif
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle;
+        public static Template DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle == null || _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle = new Template(XmlEditorTemplates.XmlEditorScrollableAreaVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle.Name = "DelightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle";
+#endif
+                }
+                return _delightDesignerXmlEditor1ScrollableAreaVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1XmlEditRegion;
+        public static Template DelightDesignerXmlEditor1XmlEditRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1XmlEditRegion == null || _delightDesignerXmlEditor1XmlEditRegion.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1XmlEditRegion == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1XmlEditRegion = new Template(XmlEditorTemplates.XmlEditorXmlEditRegion);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1XmlEditRegion.Name = "DelightDesignerXmlEditor1XmlEditRegion";
+#endif
+                }
+                return _delightDesignerXmlEditor1XmlEditRegion;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1LineNumbersLabel;
+        public static Template DelightDesignerXmlEditor1LineNumbersLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1LineNumbersLabel == null || _delightDesignerXmlEditor1LineNumbersLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1LineNumbersLabel == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1LineNumbersLabel = new Template(XmlEditorTemplates.XmlEditorLineNumbersLabel);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1LineNumbersLabel.Name = "DelightDesignerXmlEditor1LineNumbersLabel";
+#endif
+                }
+                return _delightDesignerXmlEditor1LineNumbersLabel;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1XmlTextRegion;
+        public static Template DelightDesignerXmlEditor1XmlTextRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1XmlTextRegion == null || _delightDesignerXmlEditor1XmlTextRegion.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1XmlTextRegion == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1XmlTextRegion = new Template(XmlEditorTemplates.XmlEditorXmlTextRegion);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1XmlTextRegion.Name = "DelightDesignerXmlEditor1XmlTextRegion";
+#endif
+                }
+                return _delightDesignerXmlEditor1XmlTextRegion;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1XmlTextLabel;
+        public static Template DelightDesignerXmlEditor1XmlTextLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1XmlTextLabel == null || _delightDesignerXmlEditor1XmlTextLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1XmlTextLabel == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1XmlTextLabel = new Template(XmlEditorTemplates.XmlEditorXmlTextLabel);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1XmlTextLabel.Name = "DelightDesignerXmlEditor1XmlTextLabel";
+#endif
+                }
+                return _delightDesignerXmlEditor1XmlTextLabel;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1Caret;
+        public static Template DelightDesignerXmlEditor1Caret
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1Caret == null || _delightDesignerXmlEditor1Caret.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1Caret == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1Caret = new Template(XmlEditorTemplates.XmlEditorCaret);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1Caret.Name = "DelightDesignerXmlEditor1Caret";
+#endif
+                }
+                return _delightDesignerXmlEditor1Caret;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditor1CaretElement;
+        public static Template DelightDesignerXmlEditor1CaretElement
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditor1CaretElement == null || _delightDesignerXmlEditor1CaretElement.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditor1CaretElement == null)
+#endif
+                {
+                    _delightDesignerXmlEditor1CaretElement = new Template(XmlEditorTemplates.XmlEditorCaretElement);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditor1CaretElement.Name = "DelightDesignerXmlEditor1CaretElement";
+#endif
+                }
+                return _delightDesignerXmlEditor1CaretElement;
             }
         }
 
