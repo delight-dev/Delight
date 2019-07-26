@@ -840,13 +840,13 @@ namespace Delight
         /// <summary>
         /// Sets content offset as vector.
         /// </summary>
-        private void SetContentOffset(Vector2 contentOffset)
+        private void SetContentOffset(Vector2 contentOffset, bool setHorizontal = true, bool setVertical = true)
         {
             if (ContentRegion.OffsetFromParent == null)
                 ContentRegion.OffsetFromParent = new ElementMargin();
 
             bool hasChanged = false;
-            if (CanScrollHorizontally)
+            if (CanScrollHorizontally && setHorizontal)
             {
                 if (ContentRegion.OffsetFromParent.Left.Pixels != contentOffset.x)
                 {
@@ -855,7 +855,7 @@ namespace Delight
                 }
             }
 
-            if (CanScrollVertically)
+            if (CanScrollVertically && setVertical)
             {
                 if (ContentRegion.OffsetFromParent.Top.Pixels != contentOffset.y)
                 {
@@ -985,6 +985,57 @@ namespace Delight
         }
 
         /// <summary>
+        /// Sets horizontal normalized scroll position (0-1 where 0.5 is scrolled half-way).
+        /// </summary>
+        public void SetHorizontalScrollPosition(float horizontalPosition, bool stopMovement = true)
+        {
+            // calculate content offset
+            horizontalPosition = Mathf.Clamp(horizontalPosition, 0, 1);
+
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            // set content offset based on bounds
+            Vector2 contentOffset = new Vector2(
+                min.x - (Math.Abs(max.x - min.x) * horizontalPosition),
+                0);
+
+            var clampedOffset = GetClampedOffset(contentOffset);
+            SetContentOffset(clampedOffset, true, false);
+
+            if (stopMovement)
+            {
+                _velocity = Vector2.zero;
+            }
+        }
+
+        /// <summary>
+        /// Sets vertical normalized scroll position (0-1 where 0.5 is scrolled half-way).
+        /// </summary>
+        public void SetVerticalScrollPosition(float verticalPosition, bool stopMovement = true)
+        {
+            // calculate content offset
+            verticalPosition = Mathf.Clamp(verticalPosition, 0, 1);
+
+            Vector2 min, max;
+            GetBounds(out min, out max);
+
+            // set content offset based on bounds
+            Vector2 contentOffset = new Vector2(
+                0,
+                min.y - (Math.Abs(max.y - min.y) * verticalPosition)
+                );
+
+            var clampedOffset = GetClampedOffset(contentOffset);
+            SetContentOffset(clampedOffset, false, true);
+
+            if (stopMovement)
+            {
+                _velocity = Vector2.zero;
+            }
+        }
+
+        /// <summary>
         /// Sets absolute scroll position in pixels (from 0 to size of scrollable content).
         /// </summary>
         public void SetAbsoluteScrollPosition(float horizontalPosition, float verticalPosition, bool stopMovement = true)
@@ -996,6 +1047,28 @@ namespace Delight
             float ay = cy > 0 ? verticalPosition / cy : 0;
 
             SetScrollPosition(ax, ay, stopMovement);
+        }
+
+        /// <summary>
+        /// Sets horizontal absolute scroll position in pixels (from 0 to size of scrollable content).
+        /// </summary>
+        public void SetHorizontalAbsoluteScrollPosition(float horizontalPosition, bool stopMovement = true)
+        {
+            float cx = ContentRegion.ActualWidth - ViewportWidth;
+            float ax = cx > 0 ? horizontalPosition / cx : 0;
+
+            SetHorizontalScrollPosition(ax, stopMovement);
+        }
+
+        /// <summary>
+        /// Sets vertical absolute scroll position in pixels (from 0 to size of scrollable content).
+        /// </summary>
+        public void SetVerticalAbsoluteScrollPosition(float verticalPosition, bool stopMovement = true)
+        {
+            float cy = ContentRegion.Height - ViewportHeight;
+            float ay = cy > 0 ? verticalPosition / cy : 0;
+
+            SetVerticalScrollPosition(ay, stopMovement);
         }
 
         #endregion

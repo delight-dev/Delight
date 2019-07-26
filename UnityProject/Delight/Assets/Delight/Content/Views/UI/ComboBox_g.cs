@@ -352,6 +352,1490 @@ namespace Delight
             set { ComboBoxList.DisableMouseWheel = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarLengthProperty = List.HorizontalScrollbarLengthProperty;
+        public Delight.ElementSize HorizontalScrollbarLength
+        {
+            get { return ComboBoxList.HorizontalScrollbarLength; }
+            set { ComboBoxList.HorizontalScrollbarLength = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBreadthProperty = List.HorizontalScrollbarBreadthProperty;
+        public Delight.ElementSize HorizontalScrollbarBreadth
+        {
+            get { return ComboBoxList.HorizontalScrollbarBreadth; }
+            set { ComboBoxList.HorizontalScrollbarBreadth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOrientationProperty = List.HorizontalScrollbarOrientationProperty;
+        public Delight.ElementOrientation HorizontalScrollbarOrientation
+        {
+            get { return ComboBoxList.HorizontalScrollbarOrientation; }
+            set { ComboBoxList.HorizontalScrollbarOrientation = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarScrollPositionProperty = List.HorizontalScrollbarScrollPositionProperty;
+        public System.Single HorizontalScrollbarScrollPosition
+        {
+            get { return ComboBoxList.HorizontalScrollbarScrollPosition; }
+            set { ComboBoxList.HorizontalScrollbarScrollPosition = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarViewportRatioProperty = List.HorizontalScrollbarViewportRatioProperty;
+        public System.Single HorizontalScrollbarViewportRatio
+        {
+            get { return ComboBoxList.HorizontalScrollbarViewportRatio; }
+            set { ComboBoxList.HorizontalScrollbarViewportRatio = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarSpriteProperty = List.HorizontalScrollbarSpriteProperty;
+        public SpriteAsset HorizontalScrollbarSprite
+        {
+            get { return ComboBoxList.HorizontalScrollbarSprite; }
+            set { ComboBoxList.HorizontalScrollbarSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOverrideSpriteProperty = List.HorizontalScrollbarOverrideSpriteProperty;
+        public SpriteAsset HorizontalScrollbarOverrideSprite
+        {
+            get { return ComboBoxList.HorizontalScrollbarOverrideSprite; }
+            set { ComboBoxList.HorizontalScrollbarOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarTypeProperty = List.HorizontalScrollbarTypeProperty;
+        public UnityEngine.UI.Image.Type HorizontalScrollbarType
+        {
+            get { return ComboBoxList.HorizontalScrollbarType; }
+            set { ComboBoxList.HorizontalScrollbarType = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarPreserveAspectProperty = List.HorizontalScrollbarPreserveAspectProperty;
+        public System.Boolean HorizontalScrollbarPreserveAspect
+        {
+            get { return ComboBoxList.HorizontalScrollbarPreserveAspect; }
+            set { ComboBoxList.HorizontalScrollbarPreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarFillCenterProperty = List.HorizontalScrollbarFillCenterProperty;
+        public System.Boolean HorizontalScrollbarFillCenter
+        {
+            get { return ComboBoxList.HorizontalScrollbarFillCenter; }
+            set { ComboBoxList.HorizontalScrollbarFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarFillMethodProperty = List.HorizontalScrollbarFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod HorizontalScrollbarFillMethod
+        {
+            get { return ComboBoxList.HorizontalScrollbarFillMethod; }
+            set { ComboBoxList.HorizontalScrollbarFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarFillAmountProperty = List.HorizontalScrollbarFillAmountProperty;
+        public System.Single HorizontalScrollbarFillAmount
+        {
+            get { return ComboBoxList.HorizontalScrollbarFillAmount; }
+            set { ComboBoxList.HorizontalScrollbarFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarFillClockwiseProperty = List.HorizontalScrollbarFillClockwiseProperty;
+        public System.Boolean HorizontalScrollbarFillClockwise
+        {
+            get { return ComboBoxList.HorizontalScrollbarFillClockwise; }
+            set { ComboBoxList.HorizontalScrollbarFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarFillOriginProperty = List.HorizontalScrollbarFillOriginProperty;
+        public System.Int32 HorizontalScrollbarFillOrigin
+        {
+            get { return ComboBoxList.HorizontalScrollbarFillOrigin; }
+            set { ComboBoxList.HorizontalScrollbarFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarAlphaHitTestMinimumThresholdProperty = List.HorizontalScrollbarAlphaHitTestMinimumThresholdProperty;
+        public System.Single HorizontalScrollbarAlphaHitTestMinimumThreshold
+        {
+            get { return ComboBoxList.HorizontalScrollbarAlphaHitTestMinimumThreshold; }
+            set { ComboBoxList.HorizontalScrollbarAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarUseSpriteMeshProperty = List.HorizontalScrollbarUseSpriteMeshProperty;
+        public System.Boolean HorizontalScrollbarUseSpriteMesh
+        {
+            get { return ComboBoxList.HorizontalScrollbarUseSpriteMesh; }
+            set { ComboBoxList.HorizontalScrollbarUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarMaterialProperty = List.HorizontalScrollbarMaterialProperty;
+        public MaterialAsset HorizontalScrollbarMaterial
+        {
+            get { return ComboBoxList.HorizontalScrollbarMaterial; }
+            set { ComboBoxList.HorizontalScrollbarMaterial = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOnCullStateChangedProperty = List.HorizontalScrollbarOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent HorizontalScrollbarOnCullStateChanged
+        {
+            get { return ComboBoxList.HorizontalScrollbarOnCullStateChanged; }
+            set { ComboBoxList.HorizontalScrollbarOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarMaskableProperty = List.HorizontalScrollbarMaskableProperty;
+        public System.Boolean HorizontalScrollbarMaskable
+        {
+            get { return ComboBoxList.HorizontalScrollbarMaskable; }
+            set { ComboBoxList.HorizontalScrollbarMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarColorProperty = List.HorizontalScrollbarColorProperty;
+        public UnityEngine.Color HorizontalScrollbarColor
+        {
+            get { return ComboBoxList.HorizontalScrollbarColor; }
+            set { ComboBoxList.HorizontalScrollbarColor = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarRaycastTargetProperty = List.HorizontalScrollbarRaycastTargetProperty;
+        public System.Boolean HorizontalScrollbarRaycastTarget
+        {
+            get { return ComboBoxList.HorizontalScrollbarRaycastTarget; }
+            set { ComboBoxList.HorizontalScrollbarRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarWidthProperty = List.HorizontalScrollbarBarWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarBarWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarWidth; }
+            set { ComboBoxList.HorizontalScrollbarBarWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarHeightProperty = List.HorizontalScrollbarBarHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarBarHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarHeight; }
+            set { ComboBoxList.HorizontalScrollbarBarHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarOverrideWidthProperty = List.HorizontalScrollbarBarOverrideWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarBarOverrideWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarOverrideWidth; }
+            set { ComboBoxList.HorizontalScrollbarBarOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarOverrideHeightProperty = List.HorizontalScrollbarBarOverrideHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarBarOverrideHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarOverrideHeight; }
+            set { ComboBoxList.HorizontalScrollbarBarOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarScaleProperty = List.HorizontalScrollbarBarScaleProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarBarScale
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarScale; }
+            set { ComboBoxList.HorizontalScrollbarBarScale = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarAlignmentProperty = List.HorizontalScrollbarBarAlignmentProperty;
+        public Delight.ElementAlignment HorizontalScrollbarBarAlignment
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarAlignment; }
+            set { ComboBoxList.HorizontalScrollbarBarAlignment = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarMarginProperty = List.HorizontalScrollbarBarMarginProperty;
+        public Delight.ElementMargin HorizontalScrollbarBarMargin
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarMargin; }
+            set { ComboBoxList.HorizontalScrollbarBarMargin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarOffsetProperty = List.HorizontalScrollbarBarOffsetProperty;
+        public Delight.ElementMargin HorizontalScrollbarBarOffset
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarOffset; }
+            set { ComboBoxList.HorizontalScrollbarBarOffset = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarOffsetFromParentProperty = List.HorizontalScrollbarBarOffsetFromParentProperty;
+        public Delight.ElementMargin HorizontalScrollbarBarOffsetFromParent
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarOffsetFromParent; }
+            set { ComboBoxList.HorizontalScrollbarBarOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarPivotProperty = List.HorizontalScrollbarBarPivotProperty;
+        public UnityEngine.Vector2 HorizontalScrollbarBarPivot
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarPivot; }
+            set { ComboBoxList.HorizontalScrollbarBarPivot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarLayoutRootProperty = List.HorizontalScrollbarBarLayoutRootProperty;
+        public Delight.LayoutRoot HorizontalScrollbarBarLayoutRoot
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarLayoutRoot; }
+            set { ComboBoxList.HorizontalScrollbarBarLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarDisableLayoutUpdateProperty = List.HorizontalScrollbarBarDisableLayoutUpdateProperty;
+        public System.Boolean HorizontalScrollbarBarDisableLayoutUpdate
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarDisableLayoutUpdate; }
+            set { ComboBoxList.HorizontalScrollbarBarDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarAlphaProperty = List.HorizontalScrollbarBarAlphaProperty;
+        public System.Single HorizontalScrollbarBarAlpha
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarAlpha; }
+            set { ComboBoxList.HorizontalScrollbarBarAlpha = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarIsVisibleProperty = List.HorizontalScrollbarBarIsVisibleProperty;
+        public System.Boolean HorizontalScrollbarBarIsVisible
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIsVisible; }
+            set { ComboBoxList.HorizontalScrollbarBarIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarRaycastBlockModeProperty = List.HorizontalScrollbarBarRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode HorizontalScrollbarBarRaycastBlockMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarRaycastBlockMode; }
+            set { ComboBoxList.HorizontalScrollbarBarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = List.HorizontalScrollbarBarUseFastShaderProperty;
+        public System.Boolean HorizontalScrollbarBarUseFastShader
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarUseFastShader; }
+            set { ComboBoxList.HorizontalScrollbarBarUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarBubbleNotifyChildLayoutChangedProperty = List.HorizontalScrollbarBarBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean HorizontalScrollbarBarBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.HorizontalScrollbarBarBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarIgnoreFlipProperty = List.HorizontalScrollbarBarIgnoreFlipProperty;
+        public System.Boolean HorizontalScrollbarBarIgnoreFlip
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIgnoreFlip; }
+            set { ComboBoxList.HorizontalScrollbarBarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = List.HorizontalScrollbarBarGameObjectProperty;
+        public UnityEngine.GameObject HorizontalScrollbarBarGameObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarGameObject; }
+            set { ComboBoxList.HorizontalScrollbarBarGameObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarEnableScriptEventsProperty = List.HorizontalScrollbarBarEnableScriptEventsProperty;
+        public System.Boolean HorizontalScrollbarBarEnableScriptEvents
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarEnableScriptEvents; }
+            set { ComboBoxList.HorizontalScrollbarBarEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarIgnoreObjectProperty = List.HorizontalScrollbarBarIgnoreObjectProperty;
+        public System.Boolean HorizontalScrollbarBarIgnoreObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIgnoreObject; }
+            set { ComboBoxList.HorizontalScrollbarBarIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarIsActiveProperty = List.HorizontalScrollbarBarIsActiveProperty;
+        public System.Boolean HorizontalScrollbarBarIsActive
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIsActive; }
+            set { ComboBoxList.HorizontalScrollbarBarIsActive = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarLoadModeProperty = List.HorizontalScrollbarBarLoadModeProperty;
+        public Delight.LoadMode HorizontalScrollbarBarLoadMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarLoadMode; }
+            set { ComboBoxList.HorizontalScrollbarBarLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleSpriteProperty = List.HorizontalScrollbarHandleSpriteProperty;
+        public SpriteAsset HorizontalScrollbarHandleSprite
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleSprite; }
+            set { ComboBoxList.HorizontalScrollbarHandleSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOverrideSpriteProperty = List.HorizontalScrollbarHandleOverrideSpriteProperty;
+        public SpriteAsset HorizontalScrollbarHandleOverrideSprite
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOverrideSprite; }
+            set { ComboBoxList.HorizontalScrollbarHandleOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleTypeProperty = List.HorizontalScrollbarHandleTypeProperty;
+        public UnityEngine.UI.Image.Type HorizontalScrollbarHandleType
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleType; }
+            set { ComboBoxList.HorizontalScrollbarHandleType = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandlePreserveAspectProperty = List.HorizontalScrollbarHandlePreserveAspectProperty;
+        public System.Boolean HorizontalScrollbarHandlePreserveAspect
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandlePreserveAspect; }
+            set { ComboBoxList.HorizontalScrollbarHandlePreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleFillCenterProperty = List.HorizontalScrollbarHandleFillCenterProperty;
+        public System.Boolean HorizontalScrollbarHandleFillCenter
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleFillCenter; }
+            set { ComboBoxList.HorizontalScrollbarHandleFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleFillMethodProperty = List.HorizontalScrollbarHandleFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod HorizontalScrollbarHandleFillMethod
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleFillMethod; }
+            set { ComboBoxList.HorizontalScrollbarHandleFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleFillAmountProperty = List.HorizontalScrollbarHandleFillAmountProperty;
+        public System.Single HorizontalScrollbarHandleFillAmount
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleFillAmount; }
+            set { ComboBoxList.HorizontalScrollbarHandleFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleFillClockwiseProperty = List.HorizontalScrollbarHandleFillClockwiseProperty;
+        public System.Boolean HorizontalScrollbarHandleFillClockwise
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleFillClockwise; }
+            set { ComboBoxList.HorizontalScrollbarHandleFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleFillOriginProperty = List.HorizontalScrollbarHandleFillOriginProperty;
+        public System.Int32 HorizontalScrollbarHandleFillOrigin
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleFillOrigin; }
+            set { ComboBoxList.HorizontalScrollbarHandleFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleAlphaHitTestMinimumThresholdProperty = List.HorizontalScrollbarHandleAlphaHitTestMinimumThresholdProperty;
+        public System.Single HorizontalScrollbarHandleAlphaHitTestMinimumThreshold
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleAlphaHitTestMinimumThreshold; }
+            set { ComboBoxList.HorizontalScrollbarHandleAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleUseSpriteMeshProperty = List.HorizontalScrollbarHandleUseSpriteMeshProperty;
+        public System.Boolean HorizontalScrollbarHandleUseSpriteMesh
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleUseSpriteMesh; }
+            set { ComboBoxList.HorizontalScrollbarHandleUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleMaterialProperty = List.HorizontalScrollbarHandleMaterialProperty;
+        public MaterialAsset HorizontalScrollbarHandleMaterial
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleMaterial; }
+            set { ComboBoxList.HorizontalScrollbarHandleMaterial = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOnCullStateChangedProperty = List.HorizontalScrollbarHandleOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent HorizontalScrollbarHandleOnCullStateChanged
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOnCullStateChanged; }
+            set { ComboBoxList.HorizontalScrollbarHandleOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleMaskableProperty = List.HorizontalScrollbarHandleMaskableProperty;
+        public System.Boolean HorizontalScrollbarHandleMaskable
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleMaskable; }
+            set { ComboBoxList.HorizontalScrollbarHandleMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleColorProperty = List.HorizontalScrollbarHandleColorProperty;
+        public UnityEngine.Color HorizontalScrollbarHandleColor
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleColor; }
+            set { ComboBoxList.HorizontalScrollbarHandleColor = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleRaycastTargetProperty = List.HorizontalScrollbarHandleRaycastTargetProperty;
+        public System.Boolean HorizontalScrollbarHandleRaycastTarget
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleRaycastTarget; }
+            set { ComboBoxList.HorizontalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleWidthProperty = List.HorizontalScrollbarHandleWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarHandleWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleWidth; }
+            set { ComboBoxList.HorizontalScrollbarHandleWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleHeightProperty = List.HorizontalScrollbarHandleHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarHandleHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleHeight; }
+            set { ComboBoxList.HorizontalScrollbarHandleHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOverrideWidthProperty = List.HorizontalScrollbarHandleOverrideWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarHandleOverrideWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOverrideWidth; }
+            set { ComboBoxList.HorizontalScrollbarHandleOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOverrideHeightProperty = List.HorizontalScrollbarHandleOverrideHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarHandleOverrideHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOverrideHeight; }
+            set { ComboBoxList.HorizontalScrollbarHandleOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleScaleProperty = List.HorizontalScrollbarHandleScaleProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarHandleScale
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleScale; }
+            set { ComboBoxList.HorizontalScrollbarHandleScale = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleAlignmentProperty = List.HorizontalScrollbarHandleAlignmentProperty;
+        public Delight.ElementAlignment HorizontalScrollbarHandleAlignment
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleAlignment; }
+            set { ComboBoxList.HorizontalScrollbarHandleAlignment = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleMarginProperty = List.HorizontalScrollbarHandleMarginProperty;
+        public Delight.ElementMargin HorizontalScrollbarHandleMargin
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleMargin; }
+            set { ComboBoxList.HorizontalScrollbarHandleMargin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOffsetProperty = List.HorizontalScrollbarHandleOffsetProperty;
+        public Delight.ElementMargin HorizontalScrollbarHandleOffset
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOffset; }
+            set { ComboBoxList.HorizontalScrollbarHandleOffset = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleOffsetFromParentProperty = List.HorizontalScrollbarHandleOffsetFromParentProperty;
+        public Delight.ElementMargin HorizontalScrollbarHandleOffsetFromParent
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleOffsetFromParent; }
+            set { ComboBoxList.HorizontalScrollbarHandleOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandlePivotProperty = List.HorizontalScrollbarHandlePivotProperty;
+        public UnityEngine.Vector2 HorizontalScrollbarHandlePivot
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandlePivot; }
+            set { ComboBoxList.HorizontalScrollbarHandlePivot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleLayoutRootProperty = List.HorizontalScrollbarHandleLayoutRootProperty;
+        public Delight.LayoutRoot HorizontalScrollbarHandleLayoutRoot
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleLayoutRoot; }
+            set { ComboBoxList.HorizontalScrollbarHandleLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleDisableLayoutUpdateProperty = List.HorizontalScrollbarHandleDisableLayoutUpdateProperty;
+        public System.Boolean HorizontalScrollbarHandleDisableLayoutUpdate
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleDisableLayoutUpdate; }
+            set { ComboBoxList.HorizontalScrollbarHandleDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleAlphaProperty = List.HorizontalScrollbarHandleAlphaProperty;
+        public System.Single HorizontalScrollbarHandleAlpha
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleAlpha; }
+            set { ComboBoxList.HorizontalScrollbarHandleAlpha = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsVisibleProperty = List.HorizontalScrollbarHandleIsVisibleProperty;
+        public System.Boolean HorizontalScrollbarHandleIsVisible
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIsVisible; }
+            set { ComboBoxList.HorizontalScrollbarHandleIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleRaycastBlockModeProperty = List.HorizontalScrollbarHandleRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode HorizontalScrollbarHandleRaycastBlockMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode; }
+            set { ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = List.HorizontalScrollbarHandleUseFastShaderProperty;
+        public System.Boolean HorizontalScrollbarHandleUseFastShader
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleUseFastShader; }
+            set { ComboBoxList.HorizontalScrollbarHandleUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleBubbleNotifyChildLayoutChangedProperty = List.HorizontalScrollbarHandleBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIgnoreFlipProperty = List.HorizontalScrollbarHandleIgnoreFlipProperty;
+        public System.Boolean HorizontalScrollbarHandleIgnoreFlip
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIgnoreFlip; }
+            set { ComboBoxList.HorizontalScrollbarHandleIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = List.HorizontalScrollbarHandleGameObjectProperty;
+        public UnityEngine.GameObject HorizontalScrollbarHandleGameObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleGameObject; }
+            set { ComboBoxList.HorizontalScrollbarHandleGameObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleEnableScriptEventsProperty = List.HorizontalScrollbarHandleEnableScriptEventsProperty;
+        public System.Boolean HorizontalScrollbarHandleEnableScriptEvents
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleEnableScriptEvents; }
+            set { ComboBoxList.HorizontalScrollbarHandleEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIgnoreObjectProperty = List.HorizontalScrollbarHandleIgnoreObjectProperty;
+        public System.Boolean HorizontalScrollbarHandleIgnoreObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIgnoreObject; }
+            set { ComboBoxList.HorizontalScrollbarHandleIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsActiveProperty = List.HorizontalScrollbarHandleIsActiveProperty;
+        public System.Boolean HorizontalScrollbarHandleIsActive
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIsActive; }
+            set { ComboBoxList.HorizontalScrollbarHandleIsActive = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleLoadModeProperty = List.HorizontalScrollbarHandleLoadModeProperty;
+        public Delight.LoadMode HorizontalScrollbarHandleLoadMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleLoadMode; }
+            set { ComboBoxList.HorizontalScrollbarHandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarWidthProperty = List.HorizontalScrollbarWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarWidth; }
+            set { ComboBoxList.HorizontalScrollbarWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHeightProperty = List.HorizontalScrollbarHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarHeight; }
+            set { ComboBoxList.HorizontalScrollbarHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOverrideWidthProperty = List.HorizontalScrollbarOverrideWidthProperty;
+        public Delight.ElementSize HorizontalScrollbarOverrideWidth
+        {
+            get { return ComboBoxList.HorizontalScrollbarOverrideWidth; }
+            set { ComboBoxList.HorizontalScrollbarOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOverrideHeightProperty = List.HorizontalScrollbarOverrideHeightProperty;
+        public Delight.ElementSize HorizontalScrollbarOverrideHeight
+        {
+            get { return ComboBoxList.HorizontalScrollbarOverrideHeight; }
+            set { ComboBoxList.HorizontalScrollbarOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarScaleProperty = List.HorizontalScrollbarScaleProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarScale
+        {
+            get { return ComboBoxList.HorizontalScrollbarScale; }
+            set { ComboBoxList.HorizontalScrollbarScale = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarAlignmentProperty = List.HorizontalScrollbarAlignmentProperty;
+        public Delight.ElementAlignment HorizontalScrollbarAlignment
+        {
+            get { return ComboBoxList.HorizontalScrollbarAlignment; }
+            set { ComboBoxList.HorizontalScrollbarAlignment = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarMarginProperty = List.HorizontalScrollbarMarginProperty;
+        public Delight.ElementMargin HorizontalScrollbarMargin
+        {
+            get { return ComboBoxList.HorizontalScrollbarMargin; }
+            set { ComboBoxList.HorizontalScrollbarMargin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOffsetProperty = List.HorizontalScrollbarOffsetProperty;
+        public Delight.ElementMargin HorizontalScrollbarOffset
+        {
+            get { return ComboBoxList.HorizontalScrollbarOffset; }
+            set { ComboBoxList.HorizontalScrollbarOffset = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarOffsetFromParentProperty = List.HorizontalScrollbarOffsetFromParentProperty;
+        public Delight.ElementMargin HorizontalScrollbarOffsetFromParent
+        {
+            get { return ComboBoxList.HorizontalScrollbarOffsetFromParent; }
+            set { ComboBoxList.HorizontalScrollbarOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarPivotProperty = List.HorizontalScrollbarPivotProperty;
+        public UnityEngine.Vector2 HorizontalScrollbarPivot
+        {
+            get { return ComboBoxList.HorizontalScrollbarPivot; }
+            set { ComboBoxList.HorizontalScrollbarPivot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarLayoutRootProperty = List.HorizontalScrollbarLayoutRootProperty;
+        public Delight.LayoutRoot HorizontalScrollbarLayoutRoot
+        {
+            get { return ComboBoxList.HorizontalScrollbarLayoutRoot; }
+            set { ComboBoxList.HorizontalScrollbarLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarDisableLayoutUpdateProperty = List.HorizontalScrollbarDisableLayoutUpdateProperty;
+        public System.Boolean HorizontalScrollbarDisableLayoutUpdate
+        {
+            get { return ComboBoxList.HorizontalScrollbarDisableLayoutUpdate; }
+            set { ComboBoxList.HorizontalScrollbarDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarAlphaProperty = List.HorizontalScrollbarAlphaProperty;
+        public System.Single HorizontalScrollbarAlpha
+        {
+            get { return ComboBoxList.HorizontalScrollbarAlpha; }
+            set { ComboBoxList.HorizontalScrollbarAlpha = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsVisibleProperty = List.HorizontalScrollbarIsVisibleProperty;
+        public System.Boolean HorizontalScrollbarIsVisible
+        {
+            get { return ComboBoxList.HorizontalScrollbarIsVisible; }
+            set { ComboBoxList.HorizontalScrollbarIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarRaycastBlockModeProperty = List.HorizontalScrollbarRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode HorizontalScrollbarRaycastBlockMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarRaycastBlockMode; }
+            set { ComboBoxList.HorizontalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = List.HorizontalScrollbarUseFastShaderProperty;
+        public System.Boolean HorizontalScrollbarUseFastShader
+        {
+            get { return ComboBoxList.HorizontalScrollbarUseFastShader; }
+            set { ComboBoxList.HorizontalScrollbarUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBubbleNotifyChildLayoutChangedProperty = List.HorizontalScrollbarBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean HorizontalScrollbarBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.HorizontalScrollbarBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.HorizontalScrollbarBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIgnoreFlipProperty = List.HorizontalScrollbarIgnoreFlipProperty;
+        public System.Boolean HorizontalScrollbarIgnoreFlip
+        {
+            get { return ComboBoxList.HorizontalScrollbarIgnoreFlip; }
+            set { ComboBoxList.HorizontalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = List.HorizontalScrollbarGameObjectProperty;
+        public UnityEngine.GameObject HorizontalScrollbarGameObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarGameObject; }
+            set { ComboBoxList.HorizontalScrollbarGameObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarEnableScriptEventsProperty = List.HorizontalScrollbarEnableScriptEventsProperty;
+        public System.Boolean HorizontalScrollbarEnableScriptEvents
+        {
+            get { return ComboBoxList.HorizontalScrollbarEnableScriptEvents; }
+            set { ComboBoxList.HorizontalScrollbarEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIgnoreObjectProperty = List.HorizontalScrollbarIgnoreObjectProperty;
+        public System.Boolean HorizontalScrollbarIgnoreObject
+        {
+            get { return ComboBoxList.HorizontalScrollbarIgnoreObject; }
+            set { ComboBoxList.HorizontalScrollbarIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsActiveProperty = List.HorizontalScrollbarIsActiveProperty;
+        public System.Boolean HorizontalScrollbarIsActive
+        {
+            get { return ComboBoxList.HorizontalScrollbarIsActive; }
+            set { ComboBoxList.HorizontalScrollbarIsActive = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarLoadModeProperty = List.HorizontalScrollbarLoadModeProperty;
+        public Delight.LoadMode HorizontalScrollbarLoadMode
+        {
+            get { return ComboBoxList.HorizontalScrollbarLoadMode; }
+            set { ComboBoxList.HorizontalScrollbarLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarLengthProperty = List.VerticalScrollbarLengthProperty;
+        public Delight.ElementSize VerticalScrollbarLength
+        {
+            get { return ComboBoxList.VerticalScrollbarLength; }
+            set { ComboBoxList.VerticalScrollbarLength = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBreadthProperty = List.VerticalScrollbarBreadthProperty;
+        public Delight.ElementSize VerticalScrollbarBreadth
+        {
+            get { return ComboBoxList.VerticalScrollbarBreadth; }
+            set { ComboBoxList.VerticalScrollbarBreadth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOrientationProperty = List.VerticalScrollbarOrientationProperty;
+        public Delight.ElementOrientation VerticalScrollbarOrientation
+        {
+            get { return ComboBoxList.VerticalScrollbarOrientation; }
+            set { ComboBoxList.VerticalScrollbarOrientation = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarScrollPositionProperty = List.VerticalScrollbarScrollPositionProperty;
+        public System.Single VerticalScrollbarScrollPosition
+        {
+            get { return ComboBoxList.VerticalScrollbarScrollPosition; }
+            set { ComboBoxList.VerticalScrollbarScrollPosition = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarViewportRatioProperty = List.VerticalScrollbarViewportRatioProperty;
+        public System.Single VerticalScrollbarViewportRatio
+        {
+            get { return ComboBoxList.VerticalScrollbarViewportRatio; }
+            set { ComboBoxList.VerticalScrollbarViewportRatio = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarSpriteProperty = List.VerticalScrollbarSpriteProperty;
+        public SpriteAsset VerticalScrollbarSprite
+        {
+            get { return ComboBoxList.VerticalScrollbarSprite; }
+            set { ComboBoxList.VerticalScrollbarSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOverrideSpriteProperty = List.VerticalScrollbarOverrideSpriteProperty;
+        public SpriteAsset VerticalScrollbarOverrideSprite
+        {
+            get { return ComboBoxList.VerticalScrollbarOverrideSprite; }
+            set { ComboBoxList.VerticalScrollbarOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarTypeProperty = List.VerticalScrollbarTypeProperty;
+        public UnityEngine.UI.Image.Type VerticalScrollbarType
+        {
+            get { return ComboBoxList.VerticalScrollbarType; }
+            set { ComboBoxList.VerticalScrollbarType = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarPreserveAspectProperty = List.VerticalScrollbarPreserveAspectProperty;
+        public System.Boolean VerticalScrollbarPreserveAspect
+        {
+            get { return ComboBoxList.VerticalScrollbarPreserveAspect; }
+            set { ComboBoxList.VerticalScrollbarPreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarFillCenterProperty = List.VerticalScrollbarFillCenterProperty;
+        public System.Boolean VerticalScrollbarFillCenter
+        {
+            get { return ComboBoxList.VerticalScrollbarFillCenter; }
+            set { ComboBoxList.VerticalScrollbarFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarFillMethodProperty = List.VerticalScrollbarFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod VerticalScrollbarFillMethod
+        {
+            get { return ComboBoxList.VerticalScrollbarFillMethod; }
+            set { ComboBoxList.VerticalScrollbarFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarFillAmountProperty = List.VerticalScrollbarFillAmountProperty;
+        public System.Single VerticalScrollbarFillAmount
+        {
+            get { return ComboBoxList.VerticalScrollbarFillAmount; }
+            set { ComboBoxList.VerticalScrollbarFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarFillClockwiseProperty = List.VerticalScrollbarFillClockwiseProperty;
+        public System.Boolean VerticalScrollbarFillClockwise
+        {
+            get { return ComboBoxList.VerticalScrollbarFillClockwise; }
+            set { ComboBoxList.VerticalScrollbarFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarFillOriginProperty = List.VerticalScrollbarFillOriginProperty;
+        public System.Int32 VerticalScrollbarFillOrigin
+        {
+            get { return ComboBoxList.VerticalScrollbarFillOrigin; }
+            set { ComboBoxList.VerticalScrollbarFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarAlphaHitTestMinimumThresholdProperty = List.VerticalScrollbarAlphaHitTestMinimumThresholdProperty;
+        public System.Single VerticalScrollbarAlphaHitTestMinimumThreshold
+        {
+            get { return ComboBoxList.VerticalScrollbarAlphaHitTestMinimumThreshold; }
+            set { ComboBoxList.VerticalScrollbarAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarUseSpriteMeshProperty = List.VerticalScrollbarUseSpriteMeshProperty;
+        public System.Boolean VerticalScrollbarUseSpriteMesh
+        {
+            get { return ComboBoxList.VerticalScrollbarUseSpriteMesh; }
+            set { ComboBoxList.VerticalScrollbarUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarMaterialProperty = List.VerticalScrollbarMaterialProperty;
+        public MaterialAsset VerticalScrollbarMaterial
+        {
+            get { return ComboBoxList.VerticalScrollbarMaterial; }
+            set { ComboBoxList.VerticalScrollbarMaterial = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOnCullStateChangedProperty = List.VerticalScrollbarOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent VerticalScrollbarOnCullStateChanged
+        {
+            get { return ComboBoxList.VerticalScrollbarOnCullStateChanged; }
+            set { ComboBoxList.VerticalScrollbarOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarMaskableProperty = List.VerticalScrollbarMaskableProperty;
+        public System.Boolean VerticalScrollbarMaskable
+        {
+            get { return ComboBoxList.VerticalScrollbarMaskable; }
+            set { ComboBoxList.VerticalScrollbarMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarColorProperty = List.VerticalScrollbarColorProperty;
+        public UnityEngine.Color VerticalScrollbarColor
+        {
+            get { return ComboBoxList.VerticalScrollbarColor; }
+            set { ComboBoxList.VerticalScrollbarColor = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarRaycastTargetProperty = List.VerticalScrollbarRaycastTargetProperty;
+        public System.Boolean VerticalScrollbarRaycastTarget
+        {
+            get { return ComboBoxList.VerticalScrollbarRaycastTarget; }
+            set { ComboBoxList.VerticalScrollbarRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarWidthProperty = List.VerticalScrollbarBarWidthProperty;
+        public Delight.ElementSize VerticalScrollbarBarWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarBarWidth; }
+            set { ComboBoxList.VerticalScrollbarBarWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarHeightProperty = List.VerticalScrollbarBarHeightProperty;
+        public Delight.ElementSize VerticalScrollbarBarHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarBarHeight; }
+            set { ComboBoxList.VerticalScrollbarBarHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarOverrideWidthProperty = List.VerticalScrollbarBarOverrideWidthProperty;
+        public Delight.ElementSize VerticalScrollbarBarOverrideWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarBarOverrideWidth; }
+            set { ComboBoxList.VerticalScrollbarBarOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarOverrideHeightProperty = List.VerticalScrollbarBarOverrideHeightProperty;
+        public Delight.ElementSize VerticalScrollbarBarOverrideHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarBarOverrideHeight; }
+            set { ComboBoxList.VerticalScrollbarBarOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarScaleProperty = List.VerticalScrollbarBarScaleProperty;
+        public UnityEngine.Vector3 VerticalScrollbarBarScale
+        {
+            get { return ComboBoxList.VerticalScrollbarBarScale; }
+            set { ComboBoxList.VerticalScrollbarBarScale = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarAlignmentProperty = List.VerticalScrollbarBarAlignmentProperty;
+        public Delight.ElementAlignment VerticalScrollbarBarAlignment
+        {
+            get { return ComboBoxList.VerticalScrollbarBarAlignment; }
+            set { ComboBoxList.VerticalScrollbarBarAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarMarginProperty = List.VerticalScrollbarBarMarginProperty;
+        public Delight.ElementMargin VerticalScrollbarBarMargin
+        {
+            get { return ComboBoxList.VerticalScrollbarBarMargin; }
+            set { ComboBoxList.VerticalScrollbarBarMargin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarOffsetProperty = List.VerticalScrollbarBarOffsetProperty;
+        public Delight.ElementMargin VerticalScrollbarBarOffset
+        {
+            get { return ComboBoxList.VerticalScrollbarBarOffset; }
+            set { ComboBoxList.VerticalScrollbarBarOffset = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarOffsetFromParentProperty = List.VerticalScrollbarBarOffsetFromParentProperty;
+        public Delight.ElementMargin VerticalScrollbarBarOffsetFromParent
+        {
+            get { return ComboBoxList.VerticalScrollbarBarOffsetFromParent; }
+            set { ComboBoxList.VerticalScrollbarBarOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarPivotProperty = List.VerticalScrollbarBarPivotProperty;
+        public UnityEngine.Vector2 VerticalScrollbarBarPivot
+        {
+            get { return ComboBoxList.VerticalScrollbarBarPivot; }
+            set { ComboBoxList.VerticalScrollbarBarPivot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarLayoutRootProperty = List.VerticalScrollbarBarLayoutRootProperty;
+        public Delight.LayoutRoot VerticalScrollbarBarLayoutRoot
+        {
+            get { return ComboBoxList.VerticalScrollbarBarLayoutRoot; }
+            set { ComboBoxList.VerticalScrollbarBarLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarDisableLayoutUpdateProperty = List.VerticalScrollbarBarDisableLayoutUpdateProperty;
+        public System.Boolean VerticalScrollbarBarDisableLayoutUpdate
+        {
+            get { return ComboBoxList.VerticalScrollbarBarDisableLayoutUpdate; }
+            set { ComboBoxList.VerticalScrollbarBarDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarAlphaProperty = List.VerticalScrollbarBarAlphaProperty;
+        public System.Single VerticalScrollbarBarAlpha
+        {
+            get { return ComboBoxList.VerticalScrollbarBarAlpha; }
+            set { ComboBoxList.VerticalScrollbarBarAlpha = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarIsVisibleProperty = List.VerticalScrollbarBarIsVisibleProperty;
+        public System.Boolean VerticalScrollbarBarIsVisible
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIsVisible; }
+            set { ComboBoxList.VerticalScrollbarBarIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarRaycastBlockModeProperty = List.VerticalScrollbarBarRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode VerticalScrollbarBarRaycastBlockMode
+        {
+            get { return ComboBoxList.VerticalScrollbarBarRaycastBlockMode; }
+            set { ComboBoxList.VerticalScrollbarBarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = List.VerticalScrollbarBarUseFastShaderProperty;
+        public System.Boolean VerticalScrollbarBarUseFastShader
+        {
+            get { return ComboBoxList.VerticalScrollbarBarUseFastShader; }
+            set { ComboBoxList.VerticalScrollbarBarUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarBubbleNotifyChildLayoutChangedProperty = List.VerticalScrollbarBarBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean VerticalScrollbarBarBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.VerticalScrollbarBarBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.VerticalScrollbarBarBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarIgnoreFlipProperty = List.VerticalScrollbarBarIgnoreFlipProperty;
+        public System.Boolean VerticalScrollbarBarIgnoreFlip
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIgnoreFlip; }
+            set { ComboBoxList.VerticalScrollbarBarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = List.VerticalScrollbarBarGameObjectProperty;
+        public UnityEngine.GameObject VerticalScrollbarBarGameObject
+        {
+            get { return ComboBoxList.VerticalScrollbarBarGameObject; }
+            set { ComboBoxList.VerticalScrollbarBarGameObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarEnableScriptEventsProperty = List.VerticalScrollbarBarEnableScriptEventsProperty;
+        public System.Boolean VerticalScrollbarBarEnableScriptEvents
+        {
+            get { return ComboBoxList.VerticalScrollbarBarEnableScriptEvents; }
+            set { ComboBoxList.VerticalScrollbarBarEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarIgnoreObjectProperty = List.VerticalScrollbarBarIgnoreObjectProperty;
+        public System.Boolean VerticalScrollbarBarIgnoreObject
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIgnoreObject; }
+            set { ComboBoxList.VerticalScrollbarBarIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarIsActiveProperty = List.VerticalScrollbarBarIsActiveProperty;
+        public System.Boolean VerticalScrollbarBarIsActive
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIsActive; }
+            set { ComboBoxList.VerticalScrollbarBarIsActive = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBarLoadModeProperty = List.VerticalScrollbarBarLoadModeProperty;
+        public Delight.LoadMode VerticalScrollbarBarLoadMode
+        {
+            get { return ComboBoxList.VerticalScrollbarBarLoadMode; }
+            set { ComboBoxList.VerticalScrollbarBarLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleSpriteProperty = List.VerticalScrollbarHandleSpriteProperty;
+        public SpriteAsset VerticalScrollbarHandleSprite
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleSprite; }
+            set { ComboBoxList.VerticalScrollbarHandleSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOverrideSpriteProperty = List.VerticalScrollbarHandleOverrideSpriteProperty;
+        public SpriteAsset VerticalScrollbarHandleOverrideSprite
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOverrideSprite; }
+            set { ComboBoxList.VerticalScrollbarHandleOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleTypeProperty = List.VerticalScrollbarHandleTypeProperty;
+        public UnityEngine.UI.Image.Type VerticalScrollbarHandleType
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleType; }
+            set { ComboBoxList.VerticalScrollbarHandleType = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandlePreserveAspectProperty = List.VerticalScrollbarHandlePreserveAspectProperty;
+        public System.Boolean VerticalScrollbarHandlePreserveAspect
+        {
+            get { return ComboBoxList.VerticalScrollbarHandlePreserveAspect; }
+            set { ComboBoxList.VerticalScrollbarHandlePreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleFillCenterProperty = List.VerticalScrollbarHandleFillCenterProperty;
+        public System.Boolean VerticalScrollbarHandleFillCenter
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleFillCenter; }
+            set { ComboBoxList.VerticalScrollbarHandleFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleFillMethodProperty = List.VerticalScrollbarHandleFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod VerticalScrollbarHandleFillMethod
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleFillMethod; }
+            set { ComboBoxList.VerticalScrollbarHandleFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleFillAmountProperty = List.VerticalScrollbarHandleFillAmountProperty;
+        public System.Single VerticalScrollbarHandleFillAmount
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleFillAmount; }
+            set { ComboBoxList.VerticalScrollbarHandleFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleFillClockwiseProperty = List.VerticalScrollbarHandleFillClockwiseProperty;
+        public System.Boolean VerticalScrollbarHandleFillClockwise
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleFillClockwise; }
+            set { ComboBoxList.VerticalScrollbarHandleFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleFillOriginProperty = List.VerticalScrollbarHandleFillOriginProperty;
+        public System.Int32 VerticalScrollbarHandleFillOrigin
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleFillOrigin; }
+            set { ComboBoxList.VerticalScrollbarHandleFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleAlphaHitTestMinimumThresholdProperty = List.VerticalScrollbarHandleAlphaHitTestMinimumThresholdProperty;
+        public System.Single VerticalScrollbarHandleAlphaHitTestMinimumThreshold
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleAlphaHitTestMinimumThreshold; }
+            set { ComboBoxList.VerticalScrollbarHandleAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleUseSpriteMeshProperty = List.VerticalScrollbarHandleUseSpriteMeshProperty;
+        public System.Boolean VerticalScrollbarHandleUseSpriteMesh
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleUseSpriteMesh; }
+            set { ComboBoxList.VerticalScrollbarHandleUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleMaterialProperty = List.VerticalScrollbarHandleMaterialProperty;
+        public MaterialAsset VerticalScrollbarHandleMaterial
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleMaterial; }
+            set { ComboBoxList.VerticalScrollbarHandleMaterial = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOnCullStateChangedProperty = List.VerticalScrollbarHandleOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent VerticalScrollbarHandleOnCullStateChanged
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOnCullStateChanged; }
+            set { ComboBoxList.VerticalScrollbarHandleOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleMaskableProperty = List.VerticalScrollbarHandleMaskableProperty;
+        public System.Boolean VerticalScrollbarHandleMaskable
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleMaskable; }
+            set { ComboBoxList.VerticalScrollbarHandleMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleColorProperty = List.VerticalScrollbarHandleColorProperty;
+        public UnityEngine.Color VerticalScrollbarHandleColor
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleColor; }
+            set { ComboBoxList.VerticalScrollbarHandleColor = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleRaycastTargetProperty = List.VerticalScrollbarHandleRaycastTargetProperty;
+        public System.Boolean VerticalScrollbarHandleRaycastTarget
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleRaycastTarget; }
+            set { ComboBoxList.VerticalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleWidthProperty = List.VerticalScrollbarHandleWidthProperty;
+        public Delight.ElementSize VerticalScrollbarHandleWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleWidth; }
+            set { ComboBoxList.VerticalScrollbarHandleWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleHeightProperty = List.VerticalScrollbarHandleHeightProperty;
+        public Delight.ElementSize VerticalScrollbarHandleHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleHeight; }
+            set { ComboBoxList.VerticalScrollbarHandleHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOverrideWidthProperty = List.VerticalScrollbarHandleOverrideWidthProperty;
+        public Delight.ElementSize VerticalScrollbarHandleOverrideWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOverrideWidth; }
+            set { ComboBoxList.VerticalScrollbarHandleOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOverrideHeightProperty = List.VerticalScrollbarHandleOverrideHeightProperty;
+        public Delight.ElementSize VerticalScrollbarHandleOverrideHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOverrideHeight; }
+            set { ComboBoxList.VerticalScrollbarHandleOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleScaleProperty = List.VerticalScrollbarHandleScaleProperty;
+        public UnityEngine.Vector3 VerticalScrollbarHandleScale
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleScale; }
+            set { ComboBoxList.VerticalScrollbarHandleScale = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleAlignmentProperty = List.VerticalScrollbarHandleAlignmentProperty;
+        public Delight.ElementAlignment VerticalScrollbarHandleAlignment
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleAlignment; }
+            set { ComboBoxList.VerticalScrollbarHandleAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleMarginProperty = List.VerticalScrollbarHandleMarginProperty;
+        public Delight.ElementMargin VerticalScrollbarHandleMargin
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleMargin; }
+            set { ComboBoxList.VerticalScrollbarHandleMargin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOffsetProperty = List.VerticalScrollbarHandleOffsetProperty;
+        public Delight.ElementMargin VerticalScrollbarHandleOffset
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOffset; }
+            set { ComboBoxList.VerticalScrollbarHandleOffset = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleOffsetFromParentProperty = List.VerticalScrollbarHandleOffsetFromParentProperty;
+        public Delight.ElementMargin VerticalScrollbarHandleOffsetFromParent
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleOffsetFromParent; }
+            set { ComboBoxList.VerticalScrollbarHandleOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandlePivotProperty = List.VerticalScrollbarHandlePivotProperty;
+        public UnityEngine.Vector2 VerticalScrollbarHandlePivot
+        {
+            get { return ComboBoxList.VerticalScrollbarHandlePivot; }
+            set { ComboBoxList.VerticalScrollbarHandlePivot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleLayoutRootProperty = List.VerticalScrollbarHandleLayoutRootProperty;
+        public Delight.LayoutRoot VerticalScrollbarHandleLayoutRoot
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleLayoutRoot; }
+            set { ComboBoxList.VerticalScrollbarHandleLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleDisableLayoutUpdateProperty = List.VerticalScrollbarHandleDisableLayoutUpdateProperty;
+        public System.Boolean VerticalScrollbarHandleDisableLayoutUpdate
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleDisableLayoutUpdate; }
+            set { ComboBoxList.VerticalScrollbarHandleDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleAlphaProperty = List.VerticalScrollbarHandleAlphaProperty;
+        public System.Single VerticalScrollbarHandleAlpha
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleAlpha; }
+            set { ComboBoxList.VerticalScrollbarHandleAlpha = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsVisibleProperty = List.VerticalScrollbarHandleIsVisibleProperty;
+        public System.Boolean VerticalScrollbarHandleIsVisible
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIsVisible; }
+            set { ComboBoxList.VerticalScrollbarHandleIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleRaycastBlockModeProperty = List.VerticalScrollbarHandleRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode VerticalScrollbarHandleRaycastBlockMode
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleRaycastBlockMode; }
+            set { ComboBoxList.VerticalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = List.VerticalScrollbarHandleUseFastShaderProperty;
+        public System.Boolean VerticalScrollbarHandleUseFastShader
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleUseFastShader; }
+            set { ComboBoxList.VerticalScrollbarHandleUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleBubbleNotifyChildLayoutChangedProperty = List.VerticalScrollbarHandleBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean VerticalScrollbarHandleBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.VerticalScrollbarHandleBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIgnoreFlipProperty = List.VerticalScrollbarHandleIgnoreFlipProperty;
+        public System.Boolean VerticalScrollbarHandleIgnoreFlip
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIgnoreFlip; }
+            set { ComboBoxList.VerticalScrollbarHandleIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = List.VerticalScrollbarHandleGameObjectProperty;
+        public UnityEngine.GameObject VerticalScrollbarHandleGameObject
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleGameObject; }
+            set { ComboBoxList.VerticalScrollbarHandleGameObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleEnableScriptEventsProperty = List.VerticalScrollbarHandleEnableScriptEventsProperty;
+        public System.Boolean VerticalScrollbarHandleEnableScriptEvents
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleEnableScriptEvents; }
+            set { ComboBoxList.VerticalScrollbarHandleEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIgnoreObjectProperty = List.VerticalScrollbarHandleIgnoreObjectProperty;
+        public System.Boolean VerticalScrollbarHandleIgnoreObject
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIgnoreObject; }
+            set { ComboBoxList.VerticalScrollbarHandleIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsActiveProperty = List.VerticalScrollbarHandleIsActiveProperty;
+        public System.Boolean VerticalScrollbarHandleIsActive
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIsActive; }
+            set { ComboBoxList.VerticalScrollbarHandleIsActive = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleLoadModeProperty = List.VerticalScrollbarHandleLoadModeProperty;
+        public Delight.LoadMode VerticalScrollbarHandleLoadMode
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleLoadMode; }
+            set { ComboBoxList.VerticalScrollbarHandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarWidthProperty = List.VerticalScrollbarWidthProperty;
+        public Delight.ElementSize VerticalScrollbarWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarWidth; }
+            set { ComboBoxList.VerticalScrollbarWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHeightProperty = List.VerticalScrollbarHeightProperty;
+        public Delight.ElementSize VerticalScrollbarHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarHeight; }
+            set { ComboBoxList.VerticalScrollbarHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOverrideWidthProperty = List.VerticalScrollbarOverrideWidthProperty;
+        public Delight.ElementSize VerticalScrollbarOverrideWidth
+        {
+            get { return ComboBoxList.VerticalScrollbarOverrideWidth; }
+            set { ComboBoxList.VerticalScrollbarOverrideWidth = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOverrideHeightProperty = List.VerticalScrollbarOverrideHeightProperty;
+        public Delight.ElementSize VerticalScrollbarOverrideHeight
+        {
+            get { return ComboBoxList.VerticalScrollbarOverrideHeight; }
+            set { ComboBoxList.VerticalScrollbarOverrideHeight = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarScaleProperty = List.VerticalScrollbarScaleProperty;
+        public UnityEngine.Vector3 VerticalScrollbarScale
+        {
+            get { return ComboBoxList.VerticalScrollbarScale; }
+            set { ComboBoxList.VerticalScrollbarScale = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarAlignmentProperty = List.VerticalScrollbarAlignmentProperty;
+        public Delight.ElementAlignment VerticalScrollbarAlignment
+        {
+            get { return ComboBoxList.VerticalScrollbarAlignment; }
+            set { ComboBoxList.VerticalScrollbarAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarMarginProperty = List.VerticalScrollbarMarginProperty;
+        public Delight.ElementMargin VerticalScrollbarMargin
+        {
+            get { return ComboBoxList.VerticalScrollbarMargin; }
+            set { ComboBoxList.VerticalScrollbarMargin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOffsetProperty = List.VerticalScrollbarOffsetProperty;
+        public Delight.ElementMargin VerticalScrollbarOffset
+        {
+            get { return ComboBoxList.VerticalScrollbarOffset; }
+            set { ComboBoxList.VerticalScrollbarOffset = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarOffsetFromParentProperty = List.VerticalScrollbarOffsetFromParentProperty;
+        public Delight.ElementMargin VerticalScrollbarOffsetFromParent
+        {
+            get { return ComboBoxList.VerticalScrollbarOffsetFromParent; }
+            set { ComboBoxList.VerticalScrollbarOffsetFromParent = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarPivotProperty = List.VerticalScrollbarPivotProperty;
+        public UnityEngine.Vector2 VerticalScrollbarPivot
+        {
+            get { return ComboBoxList.VerticalScrollbarPivot; }
+            set { ComboBoxList.VerticalScrollbarPivot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarLayoutRootProperty = List.VerticalScrollbarLayoutRootProperty;
+        public Delight.LayoutRoot VerticalScrollbarLayoutRoot
+        {
+            get { return ComboBoxList.VerticalScrollbarLayoutRoot; }
+            set { ComboBoxList.VerticalScrollbarLayoutRoot = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarDisableLayoutUpdateProperty = List.VerticalScrollbarDisableLayoutUpdateProperty;
+        public System.Boolean VerticalScrollbarDisableLayoutUpdate
+        {
+            get { return ComboBoxList.VerticalScrollbarDisableLayoutUpdate; }
+            set { ComboBoxList.VerticalScrollbarDisableLayoutUpdate = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarAlphaProperty = List.VerticalScrollbarAlphaProperty;
+        public System.Single VerticalScrollbarAlpha
+        {
+            get { return ComboBoxList.VerticalScrollbarAlpha; }
+            set { ComboBoxList.VerticalScrollbarAlpha = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsVisibleProperty = List.VerticalScrollbarIsVisibleProperty;
+        public System.Boolean VerticalScrollbarIsVisible
+        {
+            get { return ComboBoxList.VerticalScrollbarIsVisible; }
+            set { ComboBoxList.VerticalScrollbarIsVisible = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarRaycastBlockModeProperty = List.VerticalScrollbarRaycastBlockModeProperty;
+        public Delight.RaycastBlockMode VerticalScrollbarRaycastBlockMode
+        {
+            get { return ComboBoxList.VerticalScrollbarRaycastBlockMode; }
+            set { ComboBoxList.VerticalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = List.VerticalScrollbarUseFastShaderProperty;
+        public System.Boolean VerticalScrollbarUseFastShader
+        {
+            get { return ComboBoxList.VerticalScrollbarUseFastShader; }
+            set { ComboBoxList.VerticalScrollbarUseFastShader = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBubbleNotifyChildLayoutChangedProperty = List.VerticalScrollbarBubbleNotifyChildLayoutChangedProperty;
+        public System.Boolean VerticalScrollbarBubbleNotifyChildLayoutChanged
+        {
+            get { return ComboBoxList.VerticalScrollbarBubbleNotifyChildLayoutChanged; }
+            set { ComboBoxList.VerticalScrollbarBubbleNotifyChildLayoutChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIgnoreFlipProperty = List.VerticalScrollbarIgnoreFlipProperty;
+        public System.Boolean VerticalScrollbarIgnoreFlip
+        {
+            get { return ComboBoxList.VerticalScrollbarIgnoreFlip; }
+            set { ComboBoxList.VerticalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = List.VerticalScrollbarGameObjectProperty;
+        public UnityEngine.GameObject VerticalScrollbarGameObject
+        {
+            get { return ComboBoxList.VerticalScrollbarGameObject; }
+            set { ComboBoxList.VerticalScrollbarGameObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarEnableScriptEventsProperty = List.VerticalScrollbarEnableScriptEventsProperty;
+        public System.Boolean VerticalScrollbarEnableScriptEvents
+        {
+            get { return ComboBoxList.VerticalScrollbarEnableScriptEvents; }
+            set { ComboBoxList.VerticalScrollbarEnableScriptEvents = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIgnoreObjectProperty = List.VerticalScrollbarIgnoreObjectProperty;
+        public System.Boolean VerticalScrollbarIgnoreObject
+        {
+            get { return ComboBoxList.VerticalScrollbarIgnoreObject; }
+            set { ComboBoxList.VerticalScrollbarIgnoreObject = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsActiveProperty = List.VerticalScrollbarIsActiveProperty;
+        public System.Boolean VerticalScrollbarIsActive
+        {
+            get { return ComboBoxList.VerticalScrollbarIsActive; }
+            set { ComboBoxList.VerticalScrollbarIsActive = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarLoadModeProperty = List.VerticalScrollbarLoadModeProperty;
+        public Delight.LoadMode VerticalScrollbarLoadMode
+        {
+            get { return ComboBoxList.VerticalScrollbarLoadMode; }
+            set { ComboBoxList.VerticalScrollbarLoadMode = value; }
+        }
+
         public readonly static DependencyProperty RenderCameraProperty = List.RenderCameraProperty;
         public System.String RenderCamera
         {

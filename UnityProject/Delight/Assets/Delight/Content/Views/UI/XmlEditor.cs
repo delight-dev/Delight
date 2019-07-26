@@ -18,7 +18,7 @@ namespace Delight
     {
         #region Fields
 
-        public static float CharLength = 10;
+        public static float CharWidth = 10;
         public static float LineHeight = 20.98f;
         public static int SpacesPerTab = 2;
         public static float XmlTextMarginLeft = 20;
@@ -66,6 +66,21 @@ namespace Delight
                     IsFocused = true;
 
                     // set text indicator
+                    UnityEngine.Canvas canvas = LayoutRoot.Canvas;
+                    Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+                    RectTransformUtility.ScreenPointToLocalPointInRectangle(XmlTextRegion.RectTransform, Input.mousePosition, worldCamera, out var localMousePosition);
+
+                    localMousePosition.x = localMousePosition.x + XmlTextRegion.ActualWidth / 2;
+                    localMousePosition.y = localMousePosition.y - XmlTextRegion.ActualHeight / 2;
+
+                    int lineIndex = Mathf.FloorToInt(Mathf.Abs(localMousePosition.y) / LineHeight);
+                    int charIndex = Mathf.RoundToInt(localMousePosition.x / CharWidth);
+
+                    _caretY = lineIndex < _lines.Count ? lineIndex : _lines.Count - 1;
+                    _caretX = charIndex < _lines[_caretY].Length ? charIndex : _lines[_caretY].Length;
+
+                    UpdateTextAndCaret(false);
+                    DebugTextLabel.Text = String.Format("Line: {0}, Char: {1}", lineIndex, charIndex);
                 }
             }
 
@@ -159,6 +174,18 @@ namespace Delight
             {
                 inputString = (char)KeyCode.End + inputString;
                 _trackKeyDown = KeyCode.End;
+                _keyDownDelayTimeElapsed = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.PageDown))
+            {
+                inputString = (char)KeyCode.PageDown + inputString;
+                _trackKeyDown = KeyCode.PageDown;
+                _keyDownDelayTimeElapsed = 0;
+            }
+            else if (Input.GetKeyDown(KeyCode.PageUp))
+            {
+                inputString = (char)KeyCode.PageUp + inputString;
+                _trackKeyDown = KeyCode.PageUp;
                 _keyDownDelayTimeElapsed = 0;
             }
 
@@ -322,9 +349,29 @@ namespace Delight
                         _caretX = _caretX + 2;
                         break;
 
+                    case KeyCode.PageDown:
+                        updateDesiredCaretX = false;
+                        int jumpLines = Mathf.FloorToInt(ScrollableRegion.ViewportHeight / LineHeight);
+                        _caretY += jumpLines;
+                        if (_caretY > _lines.Count - 1)
+                        {
+                            _caretY = _lines.Count - 1;
+                            _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
+                        }
+                        break;
+
+                    case KeyCode.PageUp:
+                        updateDesiredCaretX = false;
+                        int jumpLinesUp = Mathf.FloorToInt(ScrollableRegion.ViewportHeight / LineHeight);
+                        _caretY -= jumpLinesUp;
+                        if (_caretY < 0)
+                        {
+                            _caretY = 0;
+                            _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
+                        }
+                        break;
 
                     // TODO implement shift + arrows/home/end for selection
-                    // TODO implement scrolling to caret/line if it's outside viewport
 
                     default:
                         string str = c.ToString();
@@ -345,6 +392,45 @@ namespace Delight
             }
 
             OnXmlTextChanged();
+
+            // check if caret is outside viewport
+            float viewportWidth = ScrollableRegion.ViewportWidth;
+            float viewportHeight = ScrollableRegion.ViewportHeight;
+            var contentOffset = ScrollableRegion.GetContentOffset();
+            contentOffset.x = Math.Abs(contentOffset.x);
+            contentOffset.y = Math.Abs(contentOffset.y);
+            float caretOffsetX = _caretX * CharWidth + XmlEditLeftMargin.Width;
+            float caretOffsetY = _caretY * LineHeight;
+            float scrollOffsetX = -1;
+            float scrollOffsetY = -1;
+       
+            if ((caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) > (contentOffset.x + viewportWidth))
+            {
+                scrollOffsetX = (caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) - viewportWidth;
+            }
+            else if (caretOffsetX - XmlEditLeftMargin.Width < contentOffset.x)
+            {                
+                scrollOffsetX = caretOffsetX - XmlEditLeftMargin.Width;
+            }
+
+            if ((caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) > (contentOffset.y + viewportHeight))
+            {
+                scrollOffsetY = (caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) - viewportHeight;
+            }
+            else if (caretOffsetY < contentOffset.y)
+            {
+                scrollOffsetY = caretOffsetY;
+            }
+
+            if (scrollOffsetX >= 0 || scrollOffsetY >= 0)
+            {
+                if (scrollOffsetX >= 0 && scrollOffsetY >= 0)
+                    ScrollableRegion.SetAbsoluteScrollPosition(scrollOffsetX, scrollOffsetY);
+                else if (scrollOffsetX >= 0)
+                    ScrollableRegion.SetHorizontalAbsoluteScrollPosition(scrollOffsetX);
+                else
+                    ScrollableRegion.SetVerticalAbsoluteScrollPosition(scrollOffsetY);
+            }
         }
 
         private void HandleControlInput()
@@ -447,33 +533,37 @@ namespace Delight
 
             // set size and text of line numbers
             var maxLineNumberCharCount = _lines.Count().ToString().Length;
-            LineNumbersLabel.Width = CharLength * maxLineNumberCharCount;
-            LineNumbersLabel.Height = _lines.Count() * LineHeight;
+            var lineNumbersWidth = CharWidth * maxLineNumberCharCount;
+            var lineNumbersHeight = _lines.Count() * LineHeight;
+
+            LineNumbersLabel.Width = lineNumbersWidth;
+            LineNumbersLabel.Height = lineNumbersHeight;
             LineNumbersLabel.Text = String.Join(Environment.NewLine, Enumerable.Range(1, _lines.Count()).Select(x => x.ToString()));
+
+            float leftMarginSpacing = CharWidth;
+            XmlEditLeftMargin.Width = lineNumbersWidth + leftMarginSpacing;
+            XmlEditLeftMargin.Height = lineNumbersHeight;
+            XmlEditLeftMargin.Margin.Right = leftMarginSpacing;
 
             // set size and margins of XML edit and text region
             var maxLineLength = _lines.Max(x => x.Length);
-            float labelWidth = maxLineLength * CharLength;
-            float labelHeight = _lines.Count() * LineHeight;
-            XmlEditRegion.Width = labelWidth + LineNumbersLabel.Width + XmlTextMarginLeft + XmlTextMarginRight;
-            XmlEditRegion.Height = labelHeight;
-            XmlTextRegion.Margin.Left = LineNumbersLabel.Width + CharLength;
+            float textWidth = maxLineLength * CharWidth;
+            float textHeight = _lines.Count() * LineHeight;
+            XmlEditRegion.Width = textWidth + XmlEditLeftMargin.Width + XmlTextMarginLeft + XmlTextMarginRight + ScrollableRegion.VerticalScrollbar.ActualWidth;
+            XmlEditRegion.Height = textHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight + LineHeight;
+            XmlTextRegion.Margin.Left = XmlEditLeftMargin.Width;
 
-
-            // position caret indicator
-            if (Caret.OffsetFromParent == null)
-                Caret.OffsetFromParent = new ElementMargin();
-            Caret.OffsetFromParent.Left = CharLength * _caretX;
-            Caret.OffsetFromParent.Top = LineHeight * _caretY;
-
-            SyntaxHighlightXml();
+            // update text, syntax highlighting and caret position
+            UpdateTextAndCaret();
         }
 
-        /// <summary>
-        /// Syntax highlights the text. 
-        /// </summary>
-        private void SyntaxHighlightXml()
+        private void UpdateTextAndCaret(bool syntaxHighlight = true)
         {
+            if (Caret.OffsetFromParent == null)
+                Caret.OffsetFromParent = new ElementMargin();
+            Caret.OffsetFromParent.Left = CharWidth * _caretX;
+            Caret.OffsetFromParent.Top = LineHeight * _caretY;
+
             _caretElement = XmlSyntaxElement.Undefined;
             string xmlText = XmlTextLabel.TextMeshProUGUI.text;
             if (String.IsNullOrEmpty(xmlText))
@@ -635,7 +725,7 @@ namespace Delight
                     addLine = false;
                 }
 
-                if (textInfo.characterInfo[characterIndex].isVisible)
+                if (textInfo.characterInfo[characterIndex].isVisible && syntaxHighlight)
                 {
                     newVertexColors[vertexIndex + 0] = characterColor;
                     newVertexColors[vertexIndex + 1] = characterColor;
@@ -645,7 +735,10 @@ namespace Delight
             }
 
             // update text meshes
-            XmlTextLabel.TextMeshProUGUI.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+            if (syntaxHighlight)
+            {
+                XmlTextLabel.TextMeshProUGUI.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+            }
 
             // TODO for debugging purposes show which element we are in
             CaretElement.Text = _caretElement.ToString();
