@@ -13,174 +13,18 @@ using TMPro;
 
 namespace Delight
 {
-
+    /// <summary>
+    /// Delight designer.
+    /// </summary>
     public partial class DelightDesigner
     {
+        #region Fields
+
         public UIView _displayedView;
-        public TMP_Text _textComponent;
-        public Color32 _propertyNameColor = new Color32(255, 72, 121, 255); // #ff4879
-        public Color32 _propertyValueColor = new Color32(59, 155, 255, 255); // #3b9bff
-        public Color32 _viewNameColor = new Color32(74, 80, 78, 255); // #4a504e
-        public Color32 _commentColor = new Color32(0, 212, 0, 255); // #00d400
-        public Color32 _undefinedColor = new Color32(0, 0, 0, 255);
 
-        public override void OnChanged(string property)
-        {
-            base.OnChanged(property);
-            if (property == nameof(XmlText))
-            {
-                if (_textComponent == null)
-                    return;
+        #endregion
 
-                // TODO we want to track caret position, see what is being edited to do things like intellisense, autocomplete, etc.
-                _textComponent.text = XmlText;
-                _textComponent.ForceMeshUpdate();
-
-                // syntax highlight the text
-                SyntaxHighlightXml();
-            }
-        }
-
-        /// <summary>
-        /// Syntax highlights the text. 
-        /// </summary>
-        private void SyntaxHighlightXml()
-        {
-            string xmlText = XmlText;
-            if (String.IsNullOrEmpty(xmlText))
-                return;
-
-            TMP_TextInfo textInfo = _textComponent.textInfo;
-            Color32[] newVertexColors;
-            Color32 characterColor = _textComponent.color;            
-            var xmlSyntaxElement = XmlSyntaxElement.Undefined;
-
-            int characterCount = textInfo.characterCount;
-            for (int characterIndex = 0; characterIndex < characterCount; ++characterIndex)
-            {                              
-                int materialIndex = textInfo.characterInfo[characterIndex].materialReferenceIndex;
-                newVertexColors = textInfo.meshInfo[materialIndex].colors32;
-                int vertexIndex = textInfo.characterInfo[characterIndex].vertexIndex;
-
-                switch (xmlText[characterIndex])
-                {
-                    case '"':
-                        if (xmlSyntaxElement == XmlSyntaxElement.Comment)
-                            break;
-                        if (characterIndex > 0 && xmlText[characterIndex - 1] == '\\')
-                            break;
-                        xmlSyntaxElement = xmlSyntaxElement == XmlSyntaxElement.PropertyValue ? XmlSyntaxElement.EndPropertyValue : XmlSyntaxElement.PropertyValue;
-                        break;
-                    case '<':
-                        if (xmlSyntaxElement == XmlSyntaxElement.Comment)
-                            break;
-                        if (characterIndex + 3 < characterCount)
-                        {
-                            if (xmlText[characterIndex+1] == '!' && xmlText[characterIndex + 2] == '-' && xmlText[characterIndex + 3] == '-')
-                            {
-                                xmlSyntaxElement = XmlSyntaxElement.Comment;
-                                break;
-                            }
-                        }
-                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
-                            break;
-                        xmlSyntaxElement = XmlSyntaxElement.BeginViewName;
-                        break;
-                    case '/':
-                        if (xmlSyntaxElement == XmlSyntaxElement.Comment)
-                            break;
-                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
-                            break;
-                        if (characterIndex - 1 >= 0)
-                        {
-                            if (xmlText[characterIndex - 1] == '<')
-                            {
-                                xmlSyntaxElement = XmlSyntaxElement.BeginViewName;
-                                break;
-                            }
-                        }
-
-                        xmlSyntaxElement = XmlSyntaxElement.EndViewName;
-                        break;
-                    case '>':
-                        if (xmlSyntaxElement == XmlSyntaxElement.Comment)
-                        {
-                            if (characterIndex - 4 >= 0)
-                            {
-                                if (xmlText[characterIndex - 1] == '-' && xmlText[characterIndex - 2] == '-' && !(xmlText[characterIndex - 3] == '!' && xmlText[characterIndex - 4] != '<'))
-                                {
-                                    xmlSyntaxElement = XmlSyntaxElement.EndComment;
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
-                            break;
-                        xmlSyntaxElement = XmlSyntaxElement.EndView;
-                        break;
-                    case ' ':
-                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue || xmlSyntaxElement == XmlSyntaxElement.Comment)
-                            break;
-                        xmlSyntaxElement = XmlSyntaxElement.PropertyName;
-                        break;
-                    default:
-                        break;
-                }
-
-                switch (xmlSyntaxElement)
-                {
-                    case XmlSyntaxElement.Undefined:
-                        characterColor = _undefinedColor;
-                        break;
-                    case XmlSyntaxElement.BeginViewName:
-                        characterColor = _propertyValueColor;
-                        xmlSyntaxElement = XmlSyntaxElement.ViewName;
-                        break;
-                    case XmlSyntaxElement.ViewName:
-                        characterColor = _viewNameColor;
-                        break;
-                    case XmlSyntaxElement.EndViewName:
-                        characterColor = _propertyValueColor;
-                        xmlSyntaxElement = XmlSyntaxElement.PropertyName;
-                        break;
-                    case XmlSyntaxElement.EndView:
-                        characterColor = _propertyValueColor;
-                        xmlSyntaxElement = XmlSyntaxElement.Undefined;
-                        break;
-                    case XmlSyntaxElement.PropertyValue:
-                        characterColor = _propertyValueColor;
-                        break;
-                    case XmlSyntaxElement.EndPropertyValue:
-                        characterColor = _propertyValueColor;
-                        xmlSyntaxElement = XmlSyntaxElement.PropertyName;
-                        break;
-                    case XmlSyntaxElement.PropertyName:
-                        characterColor = _propertyNameColor;
-                        break;
-                    case XmlSyntaxElement.Comment:
-                        characterColor = _commentColor;
-                        break;
-                    case XmlSyntaxElement.EndComment:
-                        characterColor = _commentColor;
-                        xmlSyntaxElement = XmlSyntaxElement.Undefined;
-                        break;
-                }
-
-                //characterColor = new Color32((byte)UnityEngine.Random.Range(0, 255), (byte)UnityEngine.Random.Range(0, 255), (byte)UnityEngine.Random.Range(0, 255), 255);
-
-                if (textInfo.characterInfo[characterIndex].isVisible)
-                {
-                    newVertexColors[vertexIndex + 0] = characterColor;
-                    newVertexColors[vertexIndex + 1] = characterColor;
-                    newVertexColors[vertexIndex + 2] = characterColor;
-                    newVertexColors[vertexIndex + 3] = characterColor;
-                }
-            }
-
-            // update text meshes
-            _textComponent.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-        }
+        #region Methods
 
         /// <summary>
         /// Called after the view has been initialized.
@@ -201,19 +45,23 @@ namespace Delight
                 if (!IsUIView(viewObject))
                     continue;
 
-                designerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName });
+                designerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName, ViewObject = viewObject });
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
         }
 
+        /// <summary>
+        /// Called after the view has been loaded.
+        /// </summary>
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            _textComponent = XmlTextLabel.TextMeshProUGUI;
-            //_textComponent.UpdateGeometry
         }
 
+        /// <summary>
+        /// Returns boolean indicating if view-object is a UIView.
+        /// </summary>
         private bool IsUIView(ViewObject viewObject)
         {
             if (viewObject == null || String.IsNullOrEmpty(viewObject.Name) || viewObject.Name == "View")
@@ -244,6 +92,9 @@ namespace Delight
             // center on view
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
+
+            // load XML into the editor
+            XmlEditor.XmlText = designerView.ViewObject.FilePath;
 
             sw2.Stop();
             Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
@@ -308,6 +159,8 @@ namespace Delight
             ContentRegionCanvas.SetSize(adjustedWidth * 2, adjustedHeight * 2);
             ViewContentRegion.SetSize(adjustedWidth, adjustedHeight);
         }
+
+        #endregion
     }
 }
 #endif

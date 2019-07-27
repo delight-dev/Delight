@@ -342,6 +342,13 @@ namespace Delight
             set { ScrollableRegion.DisableMouseWheel = value; }
         }
 
+        public readonly static DependencyProperty ScrollEnabledProperty = ScrollableRegion.ScrollEnabledProperty;
+        public System.Boolean ScrollEnabled
+        {
+            get { return ScrollableRegion.ScrollEnabled; }
+            set { ScrollableRegion.ScrollEnabled = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarLengthProperty = ScrollableRegion.HorizontalScrollbarLengthProperty;
         public Delight.ElementSize HorizontalScrollbarLength
         {

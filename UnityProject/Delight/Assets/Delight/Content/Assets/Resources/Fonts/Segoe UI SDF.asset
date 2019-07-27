@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!28 &-5624386522182565927
+--- !u!28 &-6061533268016862351
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1775,7 +1775,7 @@ MonoBehaviour:
     m_GlyphIndex: 96
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: -5624386522182565927}
+  - {fileID: -6061533268016862351}
   m_AtlasTextureIndex: 0
   m_UsedGlyphRects:
   - m_X: 0
@@ -2566,7 +2566,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: -5624386522182565927}
+        m_Texture: {fileID: -6061533268016862351}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:

@@ -365,7 +365,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
 
             // generate blank code-behind if it doesn't exist
-            CodeGenerator.GenerateBlankCodeBehind(viewObject.Name, viewObject.FilePath);
+            CodeGenerator.GenerateBlankCodeBehind(viewObject.Name, viewObject.TypeName, viewObject.FilePath);
 
             // generate action handlers in custom code-behind
             if (!EditorPrefs.GetBool("Delight_DisableAutoGenerateHandlers"))
@@ -2688,7 +2688,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Generates code from XML view object.
         /// </summary>
-        public static void GenerateBlankCodeBehind(string viewName, string filepath)
+        public static void GenerateBlankCodeBehind(string viewName, string viewTypeName, string filepath)
         {
             //Debug.Log("Generating code for " + viewObject.FilePath);
             var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(filepath));
@@ -2697,8 +2697,6 @@ namespace Delight.Editor.Parser
             {
                 return; // don't overwrite any existing files
             }
-
-            var viewTypeName = viewName;
 
             // build the codebehind for the view
             var sb = new StringBuilder();

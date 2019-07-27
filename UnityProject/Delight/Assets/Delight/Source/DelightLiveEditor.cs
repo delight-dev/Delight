@@ -74,12 +74,6 @@ namespace Delight
 
                 _selectedObjects = newSelectedObjects;
                 SelectObject(0);
-
-                // select object
-                foreach (RaycastResult result in results)
-                {
-                    Debug.Log("Hit " + result.gameObject.name);
-                }
             }
 
             if (Input.mouseScrollDelta.y > 0 && ctrlDown)

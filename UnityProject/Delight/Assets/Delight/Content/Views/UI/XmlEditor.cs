@@ -27,9 +27,13 @@ namespace Delight
         public static Color32 PropertyValueColor = new Color32(59, 155, 255, 255); // #3b9bff
         public static Color32 ViewNameColor = new Color32(74, 80, 78, 255); // #4a504e
         public static Color32 CommentColor = new Color32(0, 212, 0, 255); // #00d400
-        public static Color32 UndefinedColor = new Color32(255, 0, 0, 255);
+        public static Color32 UndefinedColor = new Color32(255, 0, 0, 255); // #ff0000
+        public static Color32 SelectionColor = new Color32(224, 224, 224, 255); // #f4f4f4
         public static float KeyRepeatDelay = 0.30f;
         public static float KeyRepeatRate = 0.05f;
+        public static float DoubleClickDelay = 0.5f;
+        public static float CaretRepeatDelay = 0.5f;
+        public static float CaretRepeatRate = 1.15f;
 
         private List<string> _lines = new List<string>();
         private int _caretX;
@@ -37,56 +41,120 @@ namespace Delight
         private int _desiredCaretX;
         private XmlSyntaxElement _caretElement = XmlSyntaxElement.Undefined;
         private KeyCode _trackKeyDown = KeyCode.None;
+        private float _caretDelayTimeElapsed;
+        private float _caretRepeatTimeElapsed;
         private float _keyDownDelayTimeElapsed;
         private float _keyDownRepeatTimeElapsed;
+        private float _mouseClickStart;
+        private Mesh _selectionMesh = new Mesh();
+        private int _selectionOriginX;
+        private int _selectionOriginY;
+        private int _selectionTargetX;
+        private int _selectionTargetY;
+        private bool _hasSelection;
+        private CanvasRenderer _caretCanvasRenderer;
+        private Vector2 _mouseDownPosition;
+        private bool _clickedInsideEditor;
 
         #endregion
 
         #region Methods
 
+        /// <summary>
+        /// Called when a property has been changed.
+        /// </summary>
         public override void OnChanged(string property)
         {
             base.OnChanged(property);
             if (property == nameof(XmlText))
             {
-                //OnXmlTextChanged();
+                ClearEditor();
+                if (XmlText != null)
+                {
+                    _lines = new List<string>(XmlText.GetLines());
+                }
+                OnEditorChanged();
             }
         }
 
+        /// <summary>
+        /// Called every frame and handles keyboard and mouse input. 
+        /// </summary>
         public override void Update()
         {
+            if (IsFocused)
+            {
+                // make caret blink
+                _caretDelayTimeElapsed += Time.deltaTime;
+                if (_caretDelayTimeElapsed > CaretRepeatDelay)
+                {
+                    _caretRepeatTimeElapsed += Time.deltaTime;
+                    Caret.IsActive = _caretRepeatTimeElapsed % CaretRepeatRate > CaretRepeatRate / 2;
+                }
+            }
+
+            bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool scrollEngaged = ctrlDown || Input.GetMouseButton(2);
+            ScrollableRegion.ScrollEnabled = scrollEngaged;
+
             if (Input.GetMouseButtonDown(0))
             {
                 if (!ContainsMouse(Input.mousePosition))
                 {
+                    // user has clicked outside the editor - deselect and deactivate caret
                     IsFocused = false;
+                    _hasSelection = false;
+                    Caret.IsActive = false;
+                    _clickedInsideEditor = false;
+                    GenerateCaretAndSelectionMeshes();
                 }
                 else
                 {
                     IsFocused = true;
+                    _clickedInsideEditor = true;
 
-                    // set text indicator
-                    UnityEngine.Canvas canvas = LayoutRoot.Canvas;
-                    Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(XmlTextRegion.RectTransform, Input.mousePosition, worldCamera, out var localMousePosition);
+                    if (!scrollEngaged)
+                    {
+                        // regular mouse click
+                        _hasSelection = false;
+                        GetMouseCaretPosition(out _caretX, out _caretY);
+                        _desiredCaretX = _caretX;
+                        _selectionOriginX = _caretX;
+                        _selectionOriginY = _caretY;
 
-                    localMousePosition.x = localMousePosition.x + XmlTextRegion.ActualWidth / 2;
-                    localMousePosition.y = localMousePosition.y - XmlTextRegion.ActualHeight / 2;
+                        ActivateCaret();
+                        UpdateTextAndCaret(false);
 
-                    int lineIndex = Mathf.FloorToInt(Mathf.Abs(localMousePosition.y) / LineHeight);
-                    int charIndex = Mathf.RoundToInt(localMousePosition.x / CharWidth);
+                        // handle double-clicks
+                        float timeStamp = Time.unscaledTime;
+                        if (_mouseClickStart + DoubleClickDelay > timeStamp)
+                        {
+                            // TODO select the word under the caret
+                        }
+                        else
+                        {
+                            _mouseClickStart = timeStamp;
+                        }
+                    }
+                }
+            }
+            else if (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged) 
+            {
+                // handle dragging selection
+                GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);                
+                _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                if (_hasSelection)
+                {                    
+                    _caretX = _selectionTargetX;
+                    _caretY = _selectionTargetY;
 
-                    _caretY = lineIndex < _lines.Count ? lineIndex : _lines.Count - 1;
-                    _caretX = charIndex < _lines[_caretY].Length ? charIndex : _lines[_caretY].Length;
-
+                    ActivateCaret();
                     UpdateTextAndCaret(false);
-                    DebugTextLabel.Text = String.Format("Line: {0}, Char: {1}", lineIndex, charIndex);
                 }
             }
 
-            if (Input.anyKey)
-            {
-                bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            if (Input.anyKey && IsFocused)
+            {                
                 if (ctrlDown)
                 {
                     // handle control commands
@@ -94,11 +162,40 @@ namespace Delight
                 }
                 else
                 {
+                    // handle regular input
                     HandleKeyInput();
                 }
             }
         }
 
+        private void GetMouseCaretPosition(out int caretX, out int caretY)
+        {
+            // set text indicator
+            UnityEngine.Canvas canvas = LayoutRoot.Canvas;
+            Camera worldCamera = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(XmlTextRegion.RectTransform, Input.mousePosition, worldCamera, out var localMousePosition);
+
+            localMousePosition.x = localMousePosition.x + XmlTextRegion.ActualWidth / 2;
+            localMousePosition.y = localMousePosition.y - XmlTextRegion.ActualHeight / 2;
+
+            int lineIndex = Mathf.FloorToInt(Mathf.Abs(localMousePosition.y) / LineHeight);
+            int charIndex = Mathf.RoundToInt(localMousePosition.x / CharWidth);
+            if (charIndex < 0)
+            {
+                charIndex = 0;
+            }
+            if (lineIndex < 0)
+            {
+                lineIndex = 0;
+            }
+
+            caretY = lineIndex < _lines.Count ? lineIndex : _lines.Count - 1;
+            caretX = charIndex < _lines[caretY].Length ? charIndex : _lines[caretY].Length;
+        }
+
+        /// <summary>
+        /// Handles keyboard input. 
+        /// </summary>
         private void HandleKeyInput()
         {
             var inputString = Input.inputString;
@@ -192,25 +289,72 @@ namespace Delight
             if (inputString.Length <= 0)
                 return;
 
+            var shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             bool updateDesiredCaretX = true;
             for (int i = 0; i < inputString.Length; ++i)
             {
                 char c = inputString[i];
-                Debug.Log((int)c);
+                //Debug.Log((int)c);
 
                 switch ((KeyCode)c)
                 {
                     case KeyCode.Space:
                     case KeyCode.Less:
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                        }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
                         ++_caretX;
                         break;
 
                     case KeyCode.KeypadEnter:
                     case KeyCode.Return:
-                        // TODO handle autocomplete logic and things like insertion of XML tags
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                        }
+
+                        string viewName = string.Empty;
+                        int indentLevel = 0;
+                        bool hasGottenIndentLevel = false;
+                        bool addIndentation = false;
+                        
+                        if (_caretElement == XmlSyntaxElement.PropertyName || _caretElement == XmlSyntaxElement.ViewName)
+                        {
+                            if (_caretX >= _lines[_caretY].Length && _lines[_caretY].Length > 0)
+                            {
+                                var trimmedLine = _lines[_caretY].TrimEnd();
+                                if (trimmedLine.EndsWith("."))
+                                {
+                                    // if we end view declaration with dot and press enter add "/>" to close it
+                                    _lines[_caretY] = trimmedLine.Substring(0, trimmedLine.Length - 1).TrimEnd() + " />";
+                                    _caretX = _lines[_caretY].Length;
+                                    _caretElement = XmlSyntaxElement.Undefined;
+                                }
+                                else if (trimmedLine.EndsWith(","))
+                                {
+                                    // if we end view declaration with comma and press enter add ">" to close it
+                                    _lines[_caretY] = trimmedLine.Substring(0, trimmedLine.Length - 1).TrimEnd() + ">";
+                                    _caretX = _lines[_caretY].Length;
+                                    _caretElement = XmlSyntaxElement.Undefined;
+
+                                    indentLevel = GetIndentLevelOfNextLine(out viewName);
+                                    hasGottenIndentLevel = true;
+
+                                    var spacesStr = new string(' ', indentLevel);
+                                    _lines.InsertOrAdd(_caretY + 1, String.Format("{0}</{1}>", spacesStr, viewName));
+                                    addIndentation = true;
+                                }
+                            }
+                        }
 
                         // split the current line at caret position and add a new line with the new content
+                        if (!hasGottenIndentLevel)
+                        {
+                            indentLevel = GetIndentLevelOfNextLine(out viewName);
+                        }
+
                         if (_caretX <= 0)
                         {
                             _lines.Insert(_caretY, string.Empty);
@@ -218,6 +362,10 @@ namespace Delight
                         else if (_caretX >= _lines[_caretY].Length)
                         {
                             _lines.InsertOrAdd(_caretY + 1, string.Empty);
+                            if (addIndentation)
+                                indentLevel += SpacesPerTab;
+                            _lines[_caretY + 1] += new string(' ', indentLevel);
+                            _caretX = indentLevel;
                         }
                         else
                         {
@@ -225,12 +373,19 @@ namespace Delight
                             var leftStr = _lines[_caretY].Substring(0, _caretX);
                             _lines[_caretY] = leftStr;
                             _lines.InsertOrAdd(_caretY + 1, rightStr);
+                            _lines[_caretY + 1] = new string(' ', indentLevel) + _lines[_caretY + 1];
+                            _caretX = indentLevel;
                         }
                         ++_caretY;
-                        _caretX = 0;
                         break;
 
                     case KeyCode.Backspace: // backspace
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                            break; // do nothing else
+                        }
+
                         --_caretX;
                         if (_caretX < 0)
                         {
@@ -258,44 +413,21 @@ namespace Delight
                         break;
 
                     case KeyCode.Tab:
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                        }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, new string(' ', SpacesPerTab));
                         _caretX += SpacesPerTab;
                         break;
 
-                    case KeyCode.LeftArrow:
-                        --_caretX;
-                        if (_caretX < 0)
-                        {
-                            --_caretY;
-                            if (_caretY < 0)
-                            {
-                                // we're at the top-left in the input field, so do nothing
-                                _caretY = 0;
-                                _caretX = 0;
-                            }
-                            else
-                            {
-                                // move to end of previous line
-                                _caretX = _lines[_caretY].Length;
-                            }
-                        }
-                        break;
-
-                    case KeyCode.RightArrow:
-                        if (_caretX < _lines[_caretY].Length)
-                        {
-                            ++_caretX;
-                            break;
-                        }
-                        else if (_caretY < _lines.Count - 1)
-                        {
-                            // move to beginning of next line
-                            _caretX = 0;
-                            ++_caretY;
-                        }
-                        break;
-
                     case KeyCode.Delete:
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                            break; // do nothing else
+                        }
+
                         if (_caretX < _lines[_caretY].Length)
                         {
                             _lines[_caretY] = _lines[_caretY].Remove(_caretX, 1);
@@ -312,44 +444,244 @@ namespace Delight
                         }
                         break;
 
+                    case KeyCode.LeftArrow:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
+                        --_caretX;
+                        if (_caretX < 0)
+                        {
+                            --_caretY;
+                            if (_caretY < 0)
+                            {
+                                // we're at the top-left in the input field, so do nothing
+                                _caretY = 0;
+                                _caretX = 0;
+                            }
+                            else
+                            {
+                                // move to end of previous line
+                                _caretX = _lines[_caretY].Length;
+                            }
+                        }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
+                        break;
+
+                    case KeyCode.RightArrow:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
+                        if (_caretX < _lines[_caretY].Length)
+                        {
+                            ++_caretX;
+                        }
+                        else if (_caretY < _lines.Count - 1)
+                        {
+                            // move to beginning of next line
+                            _caretX = 0;
+                            ++_caretY;
+                        }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
+                        break;
+
                     case KeyCode.UpArrow:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         updateDesiredCaretX = false;
                         if (_caretY > 0)
                         {
                             --_caretY;
                             _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
                         }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
                     case KeyCode.DownArrow:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         updateDesiredCaretX = false;
                         if (_caretY < _lines.Count - 1)
                         {
                             ++_caretY;
                             _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
                         }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
                     case KeyCode.Home:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         var nonSpaceIndex = _lines[_caretY].IndexOf(x => x != ' ');
                         if (nonSpaceIndex < 0)
                             nonSpaceIndex = 0;
 
                         _caretX = _caretX == nonSpaceIndex ? 0 : nonSpaceIndex;
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
                     case KeyCode.End:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         _caretX = _lines[_caretY].Length;
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
                     case KeyCode.KeypadEquals:
                     case KeyCode.Equals:
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                        }
+
                         // add ="" if caret isn't in a property value or comment
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c + "\"\"");
                         _caretX = _caretX + 2;
                         break;
 
                     case KeyCode.PageDown:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         updateDesiredCaretX = false;
                         int jumpLines = Mathf.FloorToInt(ScrollableRegion.ViewportHeight / LineHeight);
                         _caretY += jumpLines;
@@ -358,9 +690,34 @@ namespace Delight
                             _caretY = _lines.Count - 1;
                             _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
                         }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
                     case KeyCode.PageUp:
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            if (!_hasSelection)
+                            {
+                                // set origin of selection
+                                _selectionOriginX = _caretX;
+                                _selectionOriginY = _caretY;
+                                _selectionTargetX = _selectionOriginX;
+                                _selectionTargetY = _selectionOriginY;
+                            }
+                        }
+
                         updateDesiredCaretX = false;
                         int jumpLinesUp = Mathf.FloorToInt(ScrollableRegion.ViewportHeight / LineHeight);
                         _caretY -= jumpLinesUp;
@@ -369,11 +726,26 @@ namespace Delight
                             _caretY = 0;
                             _caretX = _desiredCaretX >= _lines[_caretY].Length ? _lines[_caretY].Length : _desiredCaretX;
                         }
+
+                        // handle selection
+                        if (shiftDown)
+                        {
+                            _selectionTargetX = _caretX;
+                            _selectionTargetY = _caretY;
+                            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                        }
+                        else
+                        {
+                            _hasSelection = false;
+                        }
                         break;
 
-                    // TODO implement shift + arrows/home/end for selection
-
                     default:
+                        if (_hasSelection)
+                        {
+                            DeleteSelection();
+                        }
+
                         string str = c.ToString();
                         if (_caretElement == XmlSyntaxElement.Undefined)
                         {
@@ -391,9 +763,10 @@ namespace Delight
                 }
             }
 
-            OnXmlTextChanged();
+            ActivateCaret();
+            OnEditorChanged();
 
-            // check if caret is outside viewport
+            // check if caret is outside viewport and update scroll position
             float viewportWidth = ScrollableRegion.ViewportWidth;
             float viewportHeight = ScrollableRegion.ViewportHeight;
             var contentOffset = ScrollableRegion.GetContentOffset();
@@ -433,6 +806,74 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Removes the selected text.
+        /// </summary>
+        private void DeleteSelection()
+        {
+            _hasSelection = false;
+            int startLine = Math.Min(_selectionOriginY, _selectionTargetY);
+            int endLine = Math.Max(_selectionOriginY, _selectionTargetY);
+            int startChar = startLine == endLine ? Math.Min(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionTargetX : _selectionOriginX;
+            int endChar = startLine == endLine ? Math.Max(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionOriginX : _selectionTargetX;
+
+            if (endLine == startLine)
+            {
+                _lines[startLine] = _lines[startLine].Substring(0, startChar) + _lines[startLine].Substring(endChar);
+            }
+            else
+            {
+                _lines[startLine] = _lines[startLine].Substring(0, startChar) + _lines[endLine].Substring(endChar);
+                _lines.RemoveRange(startLine + 1, endLine - startLine);
+            }
+
+            _caretX = startChar;
+            _caretY = startLine;
+        }    
+
+        /// <summary>
+        /// Gets indendation level and viewname of the next line.
+        /// </summary>
+        private int GetIndentLevelOfNextLine(out string viewName)
+        {
+            viewName = string.Empty;
+            bool getPropertyIdentation = false;
+
+            if (_caretElement == XmlSyntaxElement.PropertyName)
+            {
+                getPropertyIdentation = true;
+            }
+
+            int caretY = _caretY;
+            while (caretY >= 0)
+            {
+                var line = _lines[caretY];
+                var trimmedLine = line.TrimStart();
+                if (trimmedLine.StartsWith("<") && !trimmedLine.StartsWith("<!"))
+                {
+                    int leadingSpaces = _lines[caretY].TakeWhile(Char.IsWhiteSpace).Count();
+                    if (leadingSpaces + 1 < _lines[caretY].Length)
+                    {
+                        viewName = new string(_lines[caretY].Substring(leadingSpaces + 1).TakeWhile(Char.IsLetterOrDigit).ToArray());
+                    }
+
+                    if (getPropertyIdentation)
+                    {
+                        return leadingSpaces + viewName.Length + 2;
+                    }
+                    else
+                    {
+                        return leadingSpaces;
+                    }
+                }
+                --caretY;
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Handles input when CTRL key is pressed.
+        /// </summary>
         private void HandleControlInput()
         {
             var inputString = Input.inputString;
@@ -446,11 +887,19 @@ namespace Delight
                 _keyDownRepeatTimeElapsed = 0;
             }
 
+            // CTRL+V - paste
             if (Input.GetKeyDown(KeyCode.V))
             {
                 var pasteText = GUIUtility.systemCopyBuffer;
-                var pasteLines = pasteText.GetLines().ToList();
+                if (String.IsNullOrEmpty(pasteText))
+                    return;
 
+                if (_hasSelection)
+                {
+                    DeleteSelection();
+                }
+
+                var pasteLines = pasteText.GetLines().ToList();
                 if (pasteLines.Count == 1)
                 {
                     if (pasteLines[0].Length > 0)
@@ -501,28 +950,58 @@ namespace Delight
                 updateText = true;
             }
 
+            // CTRL+A - select all
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                _selectionOriginX = 0;
+                _selectionOriginY = 0;
+                _selectionTargetY = _lines.Count() - 1;
+                _selectionTargetX = _lines[_selectionTargetY].Length;
+                _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+
+                if (_hasSelection)
+                {
+                    GenerateCaretAndSelectionMeshes();
+                }
+            }
+
             if (updateText)
             {
-                OnXmlTextChanged();
+                OnEditorChanged();
             }
         }
 
+        /// <summary>
+        /// Called after the view has been loaded.
+        /// </summary>
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>();
+            XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
+            _caretCanvasRenderer = Caret.GameObject.GetComponent<CanvasRenderer>();
 
-            _caretX = 0;
-            _caretY = 0;
-            _lines.Clear();
-            _lines.Add(string.Empty);
-            XmlText = "";
-
-            // TODO when parsing XML replace tabs with (2) spaces
-            OnXmlTextChanged();
+            ClearEditor();
         }
 
-        private void OnXmlTextChanged()
+        /// <summary>
+        /// Clears all input and resets editor to default state.
+        /// </summary>
+        public void ClearEditor()
+        {
+            _caretX = 0;
+            _caretY = 0;
+            _desiredCaretX = 0;
+            _lines.Clear();
+            _lines.Add(string.Empty);
+            _hasSelection = false;
+
+            OnEditorChanged();
+        }
+
+        /// <summary>
+        /// Called when the XML text, selection or caret has changed. 
+        /// </summary>
+        private void OnEditorChanged()
         {
             string xmlText = String.Join(Environment.NewLine, _lines);
             XmlTextLabel.TextMeshProUGUI.text = xmlText;
@@ -553,10 +1032,13 @@ namespace Delight
             XmlEditRegion.Height = textHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight + LineHeight;
             XmlTextRegion.Margin.Left = XmlEditLeftMargin.Width;
 
-            // update text, syntax highlighting and caret position
+            // update text, syntax highlighting, selection and caret position
             UpdateTextAndCaret();
         }
 
+        /// <summary>
+        /// Updates text, syntax highlighting, selection and caret.
+        /// </summary>
         private void UpdateTextAndCaret(bool syntaxHighlight = true)
         {
             if (Caret.OffsetFromParent == null)
@@ -567,7 +1049,10 @@ namespace Delight
             _caretElement = XmlSyntaxElement.Undefined;
             string xmlText = XmlTextLabel.TextMeshProUGUI.text;
             if (String.IsNullOrEmpty(xmlText))
+            {
+                GenerateCaretAndSelectionMeshes();
                 return;
+            }
 
             TMP_TextInfo textInfo = XmlTextLabel.TextMeshProUGUI.textInfo;
             Color32[] newVertexColors;
@@ -586,6 +1071,7 @@ namespace Delight
                 caretLastInLine = true;
             }
 
+            // go through characters, syntax highlight and track current caret element
             for (int characterIndex = 0; characterIndex < characterCount; ++characterIndex)
             {
                 int materialIndex = textInfo.characterInfo[characterIndex].materialReferenceIndex;
@@ -740,8 +1226,104 @@ namespace Delight
                 XmlTextLabel.TextMeshProUGUI.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
             }
 
+            // generate caret and selection meshes
+            GenerateCaretAndSelectionMeshes();
+
             // TODO for debugging purposes show which element we are in
-            CaretElement.Text = _caretElement.ToString();
+            //CaretElement.Text = _caretElement.ToString();
+        }
+
+        /// <summary>
+        /// Generates caret and selection meshes.
+        /// </summary>
+        private void GenerateCaretAndSelectionMeshes()
+        {
+            _selectionMesh = new Mesh();
+            using (var vertexHelper = new VertexHelper())
+            {
+                if (_hasSelection)
+                {
+                    UIVertex vertex = UIVertex.simpleVert;
+                    vertex.uv0 = Vector2.zero;
+                    vertex.color = SelectionColor;
+
+                    var startX = -TextSelection.ActualWidth / 2;
+                    var startY = TextSelection.ActualHeight / 2;
+
+                    int startLine = Math.Min(_selectionOriginY, _selectionTargetY);
+                    int endLine = Math.Max(_selectionOriginY, _selectionTargetY);
+                    int startChar = startLine == endLine ? Math.Min(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionTargetX : _selectionOriginX;
+                    int endChar = startLine == endLine ? Math.Max(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionOriginX : _selectionTargetX;
+
+                    // draw selection quads for each line that the selection covers
+                    for (int line = startLine; line <= endLine; ++line)
+                    {
+                        int startCharCount = line == startLine ? startChar : 0;
+                        int endCharCount = (line == endLine ? endChar : _lines[line].Length + 1) - startCharCount;
+
+                        // generate vertices for selection
+                        Vector2 startPosition = new Vector2(startX + startCharCount * CharWidth, startY - line * LineHeight);
+                        Vector2 endPosition = new Vector2(startPosition.x + endCharCount * CharWidth, startPosition.y - LineHeight);
+
+                        // check if vertices are outside viewport and clamp position to viewport
+                        float viewportWidth = ScrollableRegion.ViewportWidth;
+                        float viewportHeight = ScrollableRegion.ViewportHeight;
+                        var contentOffset = ScrollableRegion.GetContentOffset();
+                        contentOffset.x = Math.Abs(contentOffset.x);
+                        contentOffset.y = Math.Abs(contentOffset.y);
+
+                        //if ((caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) > (contentOffset.x + viewportWidth))
+                        //{
+                        //    scrollOffsetX = (caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) - viewportWidth;
+                        //}
+                        //else if (caretOffsetX - XmlEditLeftMargin.Width < contentOffset.x)
+                        //{
+                        //    scrollOffsetX = caretOffsetX - XmlEditLeftMargin.Width;
+                        //}
+
+                        //if ((caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) > (contentOffset.y + viewportHeight))
+                        //{
+                        //    scrollOffsetY = (caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) - viewportHeight;
+                        //}
+                        //else if (caretOffsetY < contentOffset.y)
+                        //{
+                        //    scrollOffsetY = caretOffsetY;
+                        //}
+
+                        // TODO recalculate selection when scrolling
+
+                        var startIndex = vertexHelper.currentVertCount;
+                        vertex.position = new Vector3(startPosition.x, endPosition.y, 0.0f);
+                        vertexHelper.AddVert(vertex);
+
+                        vertex.position = new Vector3(endPosition.x, endPosition.y, 0.0f);
+                        vertexHelper.AddVert(vertex);
+
+                        vertex.position = new Vector3(endPosition.x, startPosition.y, 0.0f);
+                        vertexHelper.AddVert(vertex);
+
+                        vertex.position = new Vector3(startPosition.x, startPosition.y, 0.0f);
+                        vertexHelper.AddVert(vertex);
+
+                        vertexHelper.AddTriangle(startIndex, startIndex + 1, startIndex + 2);
+                        vertexHelper.AddTriangle(startIndex + 2, startIndex + 3, startIndex + 0);
+                    }
+                }
+
+                vertexHelper.FillMesh(_selectionMesh);
+            }
+
+            TextSelection.CanvasRendererComponent.SetMesh(_selectionMesh);
+        }
+
+        /// <summary>
+        /// Makes caret visible and resets caret repeat delay. Used when caret is moved to make sure it's visible.
+        /// </summary>
+        public void ActivateCaret()
+        {
+            _caretDelayTimeElapsed = 0;
+            _caretRepeatTimeElapsed = 0;
+            Caret.IsActive = true;
         }
 
         #endregion

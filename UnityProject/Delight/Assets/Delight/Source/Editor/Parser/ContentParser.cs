@@ -252,7 +252,7 @@ namespace Delight.Editor.Parser
             Debug.Log("Creating " + xumlFile.Path);
             File.WriteAllText(xumlFile.Path, sb.ToString());
 
-            CodeGenerator.GenerateBlankCodeBehind(viewName, xumlFile.Path);
+            CodeGenerator.GenerateBlankCodeBehind(viewName, viewName, xumlFile.Path);
         }
 
         /// <summary>

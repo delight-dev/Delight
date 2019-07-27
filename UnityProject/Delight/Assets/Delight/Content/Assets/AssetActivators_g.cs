@@ -53,6 +53,7 @@ namespace Delight
             ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));
             ViewActivators.Add("SceneObjectView", (x, y, z) => new SceneObjectView(x, y, null, z));
             ViewActivators.Add("UIImageView", (x, y, z) => new UIImageView(x, y, null, z));
+            ViewActivators.Add("CanvasRendererView", (x, y, z) => new CanvasRendererView(x, y, null, z));
             ViewActivators.Add("Collection", (x, y, z) => new Collection(x, y, null, z));
             ViewActivators.Add("ComboBoxListItem", (x, y, z) => new ComboBoxListItem(x, y, null, z));
             ViewActivators.Add("UICanvas", (x, y, z) => new UICanvas(x, y, null, z));
@@ -104,6 +105,7 @@ namespace Delight
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
             ViewTypes.Add("UIImageView", typeof(UIImageView));
+            ViewTypes.Add("CanvasRendererView", typeof(CanvasRendererView));
             ViewTypes.Add("Collection", typeof(Collection));
             ViewTypes.Add("ComboBoxListItem", typeof(ComboBoxListItem));
             ViewTypes.Add("UICanvas", typeof(UICanvas));

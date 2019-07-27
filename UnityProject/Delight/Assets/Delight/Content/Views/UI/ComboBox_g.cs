@@ -352,6 +352,13 @@ namespace Delight
             set { ComboBoxList.DisableMouseWheel = value; }
         }
 
+        public readonly static DependencyProperty ScrollEnabledProperty = List.ScrollEnabledProperty;
+        public System.Boolean ScrollEnabled
+        {
+            get { return ComboBoxList.ScrollEnabled; }
+            set { ComboBoxList.ScrollEnabled = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarLengthProperty = List.HorizontalScrollbarLengthProperty;
         public Delight.ElementSize HorizontalScrollbarLength
         {

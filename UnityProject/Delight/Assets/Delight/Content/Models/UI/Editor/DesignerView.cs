@@ -1,5 +1,6 @@
 // Internal view logic generated from "EditorMainView.xml"
 #region Using Statements
+using Delight.Editor.Parser;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -9,6 +10,9 @@ using UnityEngine.UI;
 
 namespace Delight
 {
+    /// <summary>
+    /// Contains information about a view in the designer.
+    /// </summary>
     public class DesignerView: BindableObject
     {
         private string _name;
@@ -23,6 +27,11 @@ namespace Delight
         {
             get { return _viewTypeName; }
             set { SetProperty(ref _viewTypeName, value); }
+        }
+
+        public ViewObject ViewObject
+        {
+            get; set;
         }
     }
 

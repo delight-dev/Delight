@@ -471,6 +471,9 @@ namespace Delight
         /// </summary>
         public void OnDrag(DependencyObject sender, object eventArgs)
         {
+            if (!ScrollEnabled)
+                return;
+
             PointerEventData pointerData = eventArgs as PointerEventData;
 
             Vector2 dragPosition;
@@ -517,6 +520,9 @@ namespace Delight
         /// </summary>
         public void OnBeginDrag(DependencyObject sender, object eventArgs)
         {
+            if (!ScrollEnabled)
+                return;
+
             PointerEventData pointerData = eventArgs as PointerEventData;
             RectTransformUtility.ScreenPointToLocalPointInRectangle(RectTransform, pointerData.position, pointerData.pressEventCamera, out _dragStartPosition);
 
@@ -529,6 +535,9 @@ namespace Delight
         /// </summary>
         public void OnEndDrag(DependencyObject sender, object eventArgs)
         {
+            if (!ScrollEnabled)
+                return;
+
             // if interaction with child views has been disabled during scroll, enable it again
             if (_hasDisabledInteraction)
             {

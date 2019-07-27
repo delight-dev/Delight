@@ -63,6 +63,7 @@ namespace Delight
             dependencyProperties.Add(VerticalScrollbarVisibilityProperty);
             dependencyProperties.Add(DisableMouseWheelProperty);
             dependencyProperties.Add(ContentScrolledProperty);
+            dependencyProperties.Add(ScrollEnabledProperty);
             dependencyProperties.Add(ContentRegionProperty);
             dependencyProperties.Add(ContentRegionTemplateProperty);
             dependencyProperties.Add(HorizontalScrollbarProperty);
@@ -199,6 +200,13 @@ namespace Delight
         {
             get { return ContentScrolledProperty.GetValue(this); }
             set { ContentScrolledProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> ScrollEnabledProperty = new DependencyProperty<System.Boolean>("ScrollEnabled");
+        public System.Boolean ScrollEnabled
+        {
+            get { return ScrollEnabledProperty.GetValue(this); }
+            set { ScrollEnabledProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> ContentRegionProperty = new DependencyProperty<Region>("ContentRegion");
@@ -1771,6 +1779,7 @@ namespace Delight
                     Delight.ScrollableRegion.ScrollSensitivityProperty.SetDefault(_scrollableRegion, 60f);
                     Delight.ScrollableRegion.HorizontalScrollbarVisibilityProperty.SetDefault(_scrollableRegion, Delight.ScrollbarVisibilityMode.Auto);
                     Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_scrollableRegion, Delight.ScrollbarVisibilityMode.Auto);
+                    Delight.ScrollableRegion.ScrollEnabledProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_scrollableRegion, ScrollableRegionVerticalScrollbar);
