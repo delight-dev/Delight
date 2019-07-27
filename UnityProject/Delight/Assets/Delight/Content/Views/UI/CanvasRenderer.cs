@@ -25,7 +25,8 @@ namespace Delight
             CanvasRendererComponent = GameObject.AddComponent<CanvasRenderer>();
             CanvasRendererComponent.SetMaterial(Graphic.defaultGraphicMaterial, Texture2D.whiteTexture);
 
-            GameObject.AddComponent<MaskableComponent>();
+            var maskableComponent = GameObject.AddComponent<MaskableComponent>();
+            maskableComponent.color = Color.clear;
         }
 
         #endregion

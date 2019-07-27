@@ -95,6 +95,8 @@ namespace Delight
 
             bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool scrollEngaged = ctrlDown || Input.GetMouseButton(2);
+            bool mouseButtonDown = false;
+            bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             ScrollableRegion.ScrollEnabled = scrollEngaged;
 
             if (Input.GetMouseButtonDown(0))
@@ -113,7 +115,7 @@ namespace Delight
                     IsFocused = true;
                     _clickedInsideEditor = true;
 
-                    if (!scrollEngaged)
+                    if (!scrollEngaged && !shiftDown)
                     {
                         // regular mouse click
                         _hasSelection = false;
@@ -138,7 +140,8 @@ namespace Delight
                     }
                 }
             }
-            else if (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged) 
+
+            if ((mouseButtonDown && shiftDown) || (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged)) 
             {
                 // handle dragging selection
                 GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);                
@@ -961,7 +964,9 @@ namespace Delight
 
                 if (_hasSelection)
                 {
-                    GenerateCaretAndSelectionMeshes();
+                    _caretX = _selectionTargetX;
+                    _caretY = _selectionTargetY;
+                    UpdateTextAndCaret(false);
                 }
             }
 
