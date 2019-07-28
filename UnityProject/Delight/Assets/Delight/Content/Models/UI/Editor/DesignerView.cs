@@ -29,6 +29,25 @@ namespace Delight
             set { SetProperty(ref _viewTypeName, value); }
         }
 
+        private bool _isDirty;
+        public bool IsDirty
+        {
+            get { return _isDirty; }
+            set
+            {
+                SetProperty(ref _isDirty, value);
+                OnPropertyChanged(nameof(DisplayName));
+            }
+        }
+
+        public string DisplayName
+        {
+            get
+            {
+                return IsDirty ? Name + "*" : Name;
+            }
+        }
+
         public ViewObject ViewObject
         {
             get; set;

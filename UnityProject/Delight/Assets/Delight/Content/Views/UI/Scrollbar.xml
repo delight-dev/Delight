@@ -1,10 +1,10 @@
 <Scrollbar xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-           BasedOn="UIView" m.Bar="" m.Handle="Handle" 
+           BasedOn="UIImageView" m.Bar="Bar" m.Handle="Handle" 
            Length="t:ElementSize = 100%" Breadth="t:ElementSize = 10"
            Orientation="t:ElementOrientation"
            ScrollPosition="t:float"
            ViewportRatio="t:float = 0.1">
-  <Image Id="Bar" Color="Grey">
-    <Image Id="Handle" Color="Brown" />
+  <Image Id="Bar" Color="Grey" Width="100%" Height="100%">
+    <Image Id="Handle" Color="Brown" Width="100%" Height="100%" />
   </Image>
-</Scrollbar> 
+</Scrollbar>  

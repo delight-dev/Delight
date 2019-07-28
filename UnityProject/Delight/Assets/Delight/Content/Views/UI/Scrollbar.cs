@@ -21,6 +21,16 @@ namespace Delight
             base.OnChanged(property);
             switch (property)
             {
+                case nameof(Breadth):
+                case nameof(Length):
+                    UpdateLayout(true);
+                    break;
+
+                case nameof(Orientation):
+                case nameof(Alignment):
+                    UpdateLayout(false);
+                    break;
+
                 case nameof(ViewportRatio):
                 case nameof(ScrollPosition):
                     SetScrollPosition(ScrollPosition, ViewportRatio);
@@ -35,11 +45,13 @@ namespace Delight
             Handle.Ignore();
         }
 
-        protected override void AfterLoad()
+        /// <summary>
+        /// Updates the layout of the scrollbar. 
+        /// </summary>
+        public override bool UpdateLayout(bool notifyParent = true)
         {
-            base.AfterLoad();
-            if (IgnoreObject)
-                return;
+            bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
+            DisableLayoutUpdate = true;
 
             // set properties based on orientation of scrollbar
             if (AlignmentProperty.IsUndefined(this))
@@ -48,13 +60,13 @@ namespace Delight
             }
 
             if (WidthProperty.IsUndefined(this))
-            {
-                Width = Orientation == ElementOrientation.Horizontal ? Length : Breadth;
+            {                
+                OverrideWidth = Orientation == ElementOrientation.Horizontal ? Length : Breadth;
             }
 
             if (HeightProperty.IsUndefined(this))
             {
-                Height = Orientation == ElementOrientation.Horizontal ? Breadth : Length;
+                OverrideHeight = Orientation == ElementOrientation.Horizontal ? Breadth : Length;
             }
 
             if (Orientation == ElementOrientation.Horizontal)
@@ -65,6 +77,9 @@ namespace Delight
             {
                 Handle.Alignment = ElementAlignment.Top;
             }
+
+            DisableLayoutUpdate = defaultDisableLayoutUpdate;
+            return base.UpdateLayout(notifyParent);
         }
 
         /// <summary>

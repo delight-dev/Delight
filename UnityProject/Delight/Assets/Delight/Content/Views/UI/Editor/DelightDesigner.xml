@@ -14,7 +14,7 @@
         <Region Id="ViewContentRegion">
         </Region>
       </Canvas>
-    </ScrollableRegion>
+    </ScrollableRegion> 
 
     <!-- Left Panel - Content Explorer -->
     <Region Id="ContentExplorer" Grid.Cell="0,0" BackgroundColor="#c3c3c3">
@@ -24,14 +24,14 @@
             ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
             VerticalScrollbarVisibility="Never">
         <ListItem Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
-          <Label Text="{view.Name}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="16,0,0,0" EnableWordWrapping="False" OverflowMode="Truncate" ExtraPadding="True"  />
+          <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="16,0,0,0" EnableWordWrapping="False" OverflowMode="Truncate" ExtraPadding="True"  />
         </ListItem>
       </List>
     </Region>
 
     <!-- Left Panel - XML editor -->
     <Region Id="XmlEditorRegion" Grid.Cell="0,1" BackgroundColor="#fbfbfb">
-      <XmlEditor Id="XmlEditor" Margin="10,21,0,0" />
+      <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
     </Region>
 
     <GridSplitter Thickness="20" />

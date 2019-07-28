@@ -44,6 +44,7 @@ namespace Delight
 
             dependencyProperties.Add(XmlTextProperty);
             dependencyProperties.Add(IsFocusedProperty);
+            dependencyProperties.Add(EditProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
             dependencyProperties.Add(XmlEditRegionProperty);
@@ -80,6 +81,13 @@ namespace Delight
         {
             get { return IsFocusedProperty.GetValue(this); }
             set { IsFocusedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> EditProperty = new DependencyProperty<ViewAction>("Edit", () => new ViewAction());
+        public ViewAction Edit
+        {
+            get { return EditProperty.GetValue(this); }
+            set { EditProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
@@ -321,6 +329,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbar.Name = "XmlEditorScrollableRegionHorizontalScrollbar";
 #endif
+                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, XmlEditorScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, XmlEditorScrollableRegionHorizontalScrollbarHandle);
                 }
@@ -343,6 +353,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarBar.Name = "XmlEditorScrollableRegionHorizontalScrollbarBar";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
                 }
                 return _xmlEditorScrollableRegionHorizontalScrollbarBar;
             }
@@ -363,6 +375,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarHandle.Name = "XmlEditorScrollableRegionHorizontalScrollbarHandle";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
                 return _xmlEditorScrollableRegionHorizontalScrollbarHandle;
             }
@@ -383,6 +396,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbar.Name = "XmlEditorScrollableRegionVerticalScrollbar";
 #endif
+                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, XmlEditorScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, XmlEditorScrollableRegionVerticalScrollbarHandle);
                 }
@@ -405,6 +420,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarBar.Name = "XmlEditorScrollableRegionVerticalScrollbarBar";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
                 }
                 return _xmlEditorScrollableRegionVerticalScrollbarBar;
             }
@@ -425,6 +442,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarHandle.Name = "XmlEditorScrollableRegionVerticalScrollbarHandle";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
                 return _xmlEditorScrollableRegionVerticalScrollbarHandle;
             }

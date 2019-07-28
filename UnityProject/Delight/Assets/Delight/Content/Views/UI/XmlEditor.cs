@@ -287,6 +287,7 @@ namespace Delight
         private void HandleKeyInput()
         {
             var inputString = Input.inputString;
+            bool textChanged = false;
 
             // key has been pressed in previous frame
             if (_trackKeyDown != KeyCode.None)
@@ -388,6 +389,7 @@ namespace Delight
                 {
                     case KeyCode.Space:
                     case KeyCode.Less:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -398,6 +400,7 @@ namespace Delight
 
                     case KeyCode.KeypadEnter:
                     case KeyCode.Return:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -468,6 +471,7 @@ namespace Delight
                         break;
 
                     case KeyCode.Backspace: // backspace
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -501,6 +505,7 @@ namespace Delight
                         break;
 
                     case KeyCode.Tab:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -510,6 +515,7 @@ namespace Delight
                         break;
 
                     case KeyCode.Delete:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -746,6 +752,7 @@ namespace Delight
 
                     case KeyCode.KeypadEquals:
                     case KeyCode.Equals:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -829,6 +836,7 @@ namespace Delight
                         break;
 
                     default:
+                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -850,7 +858,7 @@ namespace Delight
                     _desiredCaretX = _caretX;
                 }
             }
-
+            
             ActivateCaret();
             OnEditorChanged();
 
@@ -891,6 +899,12 @@ namespace Delight
                     ScrollableRegion.SetHorizontalAbsoluteScrollPosition(scrollOffsetX);
                 else
                     ScrollableRegion.SetVerticalAbsoluteScrollPosition(scrollOffsetY);
+            }
+
+            if (textChanged)
+            {
+                // trigger edit invent unless only arrow keys has been pressed
+                Edit.Invoke(this, null);
             }
         }
 
@@ -1362,26 +1376,6 @@ namespace Delight
                         var contentOffset = ScrollableRegion.GetContentOffset();
                         contentOffset.x = Math.Abs(contentOffset.x);
                         contentOffset.y = Math.Abs(contentOffset.y);
-
-                        //if ((caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) > (contentOffset.x + viewportWidth))
-                        //{
-                        //    scrollOffsetX = (caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) - viewportWidth;
-                        //}
-                        //else if (caretOffsetX - XmlEditLeftMargin.Width < contentOffset.x)
-                        //{
-                        //    scrollOffsetX = caretOffsetX - XmlEditLeftMargin.Width;
-                        //}
-
-                        //if ((caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) > (contentOffset.y + viewportHeight))
-                        //{
-                        //    scrollOffsetY = (caretOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) - viewportHeight;
-                        //}
-                        //else if (caretOffsetY < contentOffset.y)
-                        //{
-                        //    scrollOffsetY = caretOffsetY;
-                        //}
-
-                        // TODO recalculate selection when scrolling
 
                         var startIndex = vertexHelper.currentVertCount;
                         vertex.position = new Vector3(startPosition.x, endPosition.y, 0.0f);

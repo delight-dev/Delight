@@ -1,7 +1,12 @@
 <XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
            BasedOn="UIImageView" BackgroundColor="#fbfbfb"
-           EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True">
-  <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False">
+           EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True"
+           Edit="t:Action">
+  <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False"
+                    HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
+                    HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"
+                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf"
+                    HorizontalScrollbarBarMargin="3,5,3,5" VerticalScrollbarBarMargin="5,3,5,3"> 
     <Region Id="XmlEditRegion" Width="500" Height="500" Alignment="TopLeft">
       <Region Id="XmlEditLeftMargin" Width="50" Height="21" Alignment="TopLeft" Margin="0">
         <Label Id="LineNumbersLabel" Width="50" Height="21" Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#888888"
@@ -13,8 +18,7 @@
         <Label Id="XmlTextLabel" Width="2000" Height="10000" Font="Inconsolata-Regular SDF" FontSize="20"
                TextAlignment="TopLeft" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft" />
         <Label Id="Caret" Text="|" Width="20" Height="20" Font="Inconsolata-Regular SDF" FontSize="20" FontColor="Black" Offset="-5,0,0,0"
-               TextAlignment="TopLeft" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft"
-               />
+               TextAlignment="TopLeft" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft" />
       </Region>
     </Region>
   </ScrollableRegion>

@@ -286,116 +286,116 @@ namespace Delight
             set { HorizontalScrollbar.ViewportRatio = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarSpriteProperty = Scrollbar.SpriteProperty;
-        public SpriteAsset HorizontalScrollbarSprite
+        public readonly static DependencyProperty HorizontalScrollbarBarSpriteProperty = Scrollbar.BarSpriteProperty;
+        public SpriteAsset HorizontalScrollbarBarSprite
         {
-            get { return HorizontalScrollbar.Sprite; }
-            set { HorizontalScrollbar.Sprite = value; }
+            get { return HorizontalScrollbar.BarSprite; }
+            set { HorizontalScrollbar.BarSprite = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarOverrideSpriteProperty = Scrollbar.OverrideSpriteProperty;
-        public SpriteAsset HorizontalScrollbarOverrideSprite
+        public readonly static DependencyProperty HorizontalScrollbarBarOverrideSpriteProperty = Scrollbar.BarOverrideSpriteProperty;
+        public SpriteAsset HorizontalScrollbarBarOverrideSprite
         {
-            get { return HorizontalScrollbar.OverrideSprite; }
-            set { HorizontalScrollbar.OverrideSprite = value; }
+            get { return HorizontalScrollbar.BarOverrideSprite; }
+            set { HorizontalScrollbar.BarOverrideSprite = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarTypeProperty = Scrollbar.TypeProperty;
-        public UnityEngine.UI.Image.Type HorizontalScrollbarType
+        public readonly static DependencyProperty HorizontalScrollbarBarTypeProperty = Scrollbar.BarTypeProperty;
+        public UnityEngine.UI.Image.Type HorizontalScrollbarBarType
         {
-            get { return HorizontalScrollbar.Type; }
-            set { HorizontalScrollbar.Type = value; }
+            get { return HorizontalScrollbar.BarType; }
+            set { HorizontalScrollbar.BarType = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarPreserveAspectProperty = Scrollbar.PreserveAspectProperty;
-        public System.Boolean HorizontalScrollbarPreserveAspect
+        public readonly static DependencyProperty HorizontalScrollbarBarPreserveAspectProperty = Scrollbar.BarPreserveAspectProperty;
+        public System.Boolean HorizontalScrollbarBarPreserveAspect
         {
-            get { return HorizontalScrollbar.PreserveAspect; }
-            set { HorizontalScrollbar.PreserveAspect = value; }
+            get { return HorizontalScrollbar.BarPreserveAspect; }
+            set { HorizontalScrollbar.BarPreserveAspect = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarFillCenterProperty = Scrollbar.FillCenterProperty;
-        public System.Boolean HorizontalScrollbarFillCenter
+        public readonly static DependencyProperty HorizontalScrollbarBarFillCenterProperty = Scrollbar.BarFillCenterProperty;
+        public System.Boolean HorizontalScrollbarBarFillCenter
         {
-            get { return HorizontalScrollbar.FillCenter; }
-            set { HorizontalScrollbar.FillCenter = value; }
+            get { return HorizontalScrollbar.BarFillCenter; }
+            set { HorizontalScrollbar.BarFillCenter = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarFillMethodProperty = Scrollbar.FillMethodProperty;
-        public UnityEngine.UI.Image.FillMethod HorizontalScrollbarFillMethod
+        public readonly static DependencyProperty HorizontalScrollbarBarFillMethodProperty = Scrollbar.BarFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod HorizontalScrollbarBarFillMethod
         {
-            get { return HorizontalScrollbar.FillMethod; }
-            set { HorizontalScrollbar.FillMethod = value; }
+            get { return HorizontalScrollbar.BarFillMethod; }
+            set { HorizontalScrollbar.BarFillMethod = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarFillAmountProperty = Scrollbar.FillAmountProperty;
-        public System.Single HorizontalScrollbarFillAmount
+        public readonly static DependencyProperty HorizontalScrollbarBarFillAmountProperty = Scrollbar.BarFillAmountProperty;
+        public System.Single HorizontalScrollbarBarFillAmount
         {
-            get { return HorizontalScrollbar.FillAmount; }
-            set { HorizontalScrollbar.FillAmount = value; }
+            get { return HorizontalScrollbar.BarFillAmount; }
+            set { HorizontalScrollbar.BarFillAmount = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarFillClockwiseProperty = Scrollbar.FillClockwiseProperty;
-        public System.Boolean HorizontalScrollbarFillClockwise
+        public readonly static DependencyProperty HorizontalScrollbarBarFillClockwiseProperty = Scrollbar.BarFillClockwiseProperty;
+        public System.Boolean HorizontalScrollbarBarFillClockwise
         {
-            get { return HorizontalScrollbar.FillClockwise; }
-            set { HorizontalScrollbar.FillClockwise = value; }
+            get { return HorizontalScrollbar.BarFillClockwise; }
+            set { HorizontalScrollbar.BarFillClockwise = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarFillOriginProperty = Scrollbar.FillOriginProperty;
-        public System.Int32 HorizontalScrollbarFillOrigin
+        public readonly static DependencyProperty HorizontalScrollbarBarFillOriginProperty = Scrollbar.BarFillOriginProperty;
+        public System.Int32 HorizontalScrollbarBarFillOrigin
         {
-            get { return HorizontalScrollbar.FillOrigin; }
-            set { HorizontalScrollbar.FillOrigin = value; }
+            get { return HorizontalScrollbar.BarFillOrigin; }
+            set { HorizontalScrollbar.BarFillOrigin = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarAlphaHitTestMinimumThresholdProperty = Scrollbar.AlphaHitTestMinimumThresholdProperty;
-        public System.Single HorizontalScrollbarAlphaHitTestMinimumThreshold
+        public readonly static DependencyProperty HorizontalScrollbarBarAlphaHitTestMinimumThresholdProperty = Scrollbar.BarAlphaHitTestMinimumThresholdProperty;
+        public System.Single HorizontalScrollbarBarAlphaHitTestMinimumThreshold
         {
-            get { return HorizontalScrollbar.AlphaHitTestMinimumThreshold; }
-            set { HorizontalScrollbar.AlphaHitTestMinimumThreshold = value; }
+            get { return HorizontalScrollbar.BarAlphaHitTestMinimumThreshold; }
+            set { HorizontalScrollbar.BarAlphaHitTestMinimumThreshold = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarUseSpriteMeshProperty = Scrollbar.UseSpriteMeshProperty;
-        public System.Boolean HorizontalScrollbarUseSpriteMesh
+        public readonly static DependencyProperty HorizontalScrollbarBarUseSpriteMeshProperty = Scrollbar.BarUseSpriteMeshProperty;
+        public System.Boolean HorizontalScrollbarBarUseSpriteMesh
         {
-            get { return HorizontalScrollbar.UseSpriteMesh; }
-            set { HorizontalScrollbar.UseSpriteMesh = value; }
+            get { return HorizontalScrollbar.BarUseSpriteMesh; }
+            set { HorizontalScrollbar.BarUseSpriteMesh = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarMaterialProperty = Scrollbar.MaterialProperty;
-        public MaterialAsset HorizontalScrollbarMaterial
+        public readonly static DependencyProperty HorizontalScrollbarBarMaterialProperty = Scrollbar.BarMaterialProperty;
+        public MaterialAsset HorizontalScrollbarBarMaterial
         {
-            get { return HorizontalScrollbar.Material; }
-            set { HorizontalScrollbar.Material = value; }
+            get { return HorizontalScrollbar.BarMaterial; }
+            set { HorizontalScrollbar.BarMaterial = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarOnCullStateChangedProperty = Scrollbar.OnCullStateChangedProperty;
-        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent HorizontalScrollbarOnCullStateChanged
+        public readonly static DependencyProperty HorizontalScrollbarBarOnCullStateChangedProperty = Scrollbar.BarOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent HorizontalScrollbarBarOnCullStateChanged
         {
-            get { return HorizontalScrollbar.OnCullStateChanged; }
-            set { HorizontalScrollbar.OnCullStateChanged = value; }
+            get { return HorizontalScrollbar.BarOnCullStateChanged; }
+            set { HorizontalScrollbar.BarOnCullStateChanged = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarMaskableProperty = Scrollbar.MaskableProperty;
-        public System.Boolean HorizontalScrollbarMaskable
+        public readonly static DependencyProperty HorizontalScrollbarBarMaskableProperty = Scrollbar.BarMaskableProperty;
+        public System.Boolean HorizontalScrollbarBarMaskable
         {
-            get { return HorizontalScrollbar.Maskable; }
-            set { HorizontalScrollbar.Maskable = value; }
+            get { return HorizontalScrollbar.BarMaskable; }
+            set { HorizontalScrollbar.BarMaskable = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarColorProperty = Scrollbar.ColorProperty;
-        public UnityEngine.Color HorizontalScrollbarColor
+        public readonly static DependencyProperty HorizontalScrollbarBarColorProperty = Scrollbar.BarColorProperty;
+        public UnityEngine.Color HorizontalScrollbarBarColor
         {
-            get { return HorizontalScrollbar.Color; }
-            set { HorizontalScrollbar.Color = value; }
+            get { return HorizontalScrollbar.BarColor; }
+            set { HorizontalScrollbar.BarColor = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarRaycastTargetProperty = Scrollbar.RaycastTargetProperty;
-        public System.Boolean HorizontalScrollbarRaycastTarget
+        public readonly static DependencyProperty HorizontalScrollbarBarRaycastTargetProperty = Scrollbar.BarRaycastTargetProperty;
+        public System.Boolean HorizontalScrollbarBarRaycastTarget
         {
-            get { return HorizontalScrollbar.RaycastTarget; }
-            set { HorizontalScrollbar.RaycastTarget = value; }
+            get { return HorizontalScrollbar.BarRaycastTarget; }
+            set { HorizontalScrollbar.BarRaycastTarget = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBarWidthProperty = Scrollbar.BarWidthProperty;
@@ -832,6 +832,118 @@ namespace Delight
             set { HorizontalScrollbar.HandleLoadMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundSpriteProperty = Scrollbar.BackgroundSpriteProperty;
+        public SpriteAsset HorizontalScrollbarBackgroundSprite
+        {
+            get { return HorizontalScrollbar.BackgroundSprite; }
+            set { HorizontalScrollbar.BackgroundSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundOverrideSpriteProperty = Scrollbar.BackgroundOverrideSpriteProperty;
+        public SpriteAsset HorizontalScrollbarBackgroundOverrideSprite
+        {
+            get { return HorizontalScrollbar.BackgroundOverrideSprite; }
+            set { HorizontalScrollbar.BackgroundOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundTypeProperty = Scrollbar.BackgroundTypeProperty;
+        public UnityEngine.UI.Image.Type HorizontalScrollbarBackgroundType
+        {
+            get { return HorizontalScrollbar.BackgroundType; }
+            set { HorizontalScrollbar.BackgroundType = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundPreserveAspectProperty = Scrollbar.BackgroundPreserveAspectProperty;
+        public System.Boolean HorizontalScrollbarBackgroundPreserveAspect
+        {
+            get { return HorizontalScrollbar.BackgroundPreserveAspect; }
+            set { HorizontalScrollbar.BackgroundPreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundFillCenterProperty = Scrollbar.BackgroundFillCenterProperty;
+        public System.Boolean HorizontalScrollbarBackgroundFillCenter
+        {
+            get { return HorizontalScrollbar.BackgroundFillCenter; }
+            set { HorizontalScrollbar.BackgroundFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundFillMethodProperty = Scrollbar.BackgroundFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod HorizontalScrollbarBackgroundFillMethod
+        {
+            get { return HorizontalScrollbar.BackgroundFillMethod; }
+            set { HorizontalScrollbar.BackgroundFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundFillAmountProperty = Scrollbar.BackgroundFillAmountProperty;
+        public System.Single HorizontalScrollbarBackgroundFillAmount
+        {
+            get { return HorizontalScrollbar.BackgroundFillAmount; }
+            set { HorizontalScrollbar.BackgroundFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundFillClockwiseProperty = Scrollbar.BackgroundFillClockwiseProperty;
+        public System.Boolean HorizontalScrollbarBackgroundFillClockwise
+        {
+            get { return HorizontalScrollbar.BackgroundFillClockwise; }
+            set { HorizontalScrollbar.BackgroundFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundFillOriginProperty = Scrollbar.BackgroundFillOriginProperty;
+        public System.Int32 HorizontalScrollbarBackgroundFillOrigin
+        {
+            get { return HorizontalScrollbar.BackgroundFillOrigin; }
+            set { HorizontalScrollbar.BackgroundFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundAlphaHitTestMinimumThresholdProperty = Scrollbar.BackgroundAlphaHitTestMinimumThresholdProperty;
+        public System.Single HorizontalScrollbarBackgroundAlphaHitTestMinimumThreshold
+        {
+            get { return HorizontalScrollbar.BackgroundAlphaHitTestMinimumThreshold; }
+            set { HorizontalScrollbar.BackgroundAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundUseSpriteMeshProperty = Scrollbar.BackgroundUseSpriteMeshProperty;
+        public System.Boolean HorizontalScrollbarBackgroundUseSpriteMesh
+        {
+            get { return HorizontalScrollbar.BackgroundUseSpriteMesh; }
+            set { HorizontalScrollbar.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundMaterialProperty = Scrollbar.BackgroundMaterialProperty;
+        public MaterialAsset HorizontalScrollbarBackgroundMaterial
+        {
+            get { return HorizontalScrollbar.BackgroundMaterial; }
+            set { HorizontalScrollbar.BackgroundMaterial = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundOnCullStateChangedProperty = Scrollbar.BackgroundOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent HorizontalScrollbarBackgroundOnCullStateChanged
+        {
+            get { return HorizontalScrollbar.BackgroundOnCullStateChanged; }
+            set { HorizontalScrollbar.BackgroundOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundMaskableProperty = Scrollbar.BackgroundMaskableProperty;
+        public System.Boolean HorizontalScrollbarBackgroundMaskable
+        {
+            get { return HorizontalScrollbar.BackgroundMaskable; }
+            set { HorizontalScrollbar.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundColorProperty = Scrollbar.BackgroundColorProperty;
+        public UnityEngine.Color HorizontalScrollbarBackgroundColor
+        {
+            get { return HorizontalScrollbar.BackgroundColor; }
+            set { HorizontalScrollbar.BackgroundColor = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundRaycastTargetProperty = Scrollbar.BackgroundRaycastTargetProperty;
+        public System.Boolean HorizontalScrollbarBackgroundRaycastTarget
+        {
+            get { return HorizontalScrollbar.BackgroundRaycastTarget; }
+            set { HorizontalScrollbar.BackgroundRaycastTarget = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarWidthProperty = Scrollbar.WidthProperty;
         public Delight.ElementSize HorizontalScrollbarWidth
         {
@@ -1028,116 +1140,116 @@ namespace Delight
             set { VerticalScrollbar.ViewportRatio = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarSpriteProperty = Scrollbar.SpriteProperty;
-        public SpriteAsset VerticalScrollbarSprite
+        public readonly static DependencyProperty VerticalScrollbarBarSpriteProperty = Scrollbar.BarSpriteProperty;
+        public SpriteAsset VerticalScrollbarBarSprite
         {
-            get { return VerticalScrollbar.Sprite; }
-            set { VerticalScrollbar.Sprite = value; }
+            get { return VerticalScrollbar.BarSprite; }
+            set { VerticalScrollbar.BarSprite = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarOverrideSpriteProperty = Scrollbar.OverrideSpriteProperty;
-        public SpriteAsset VerticalScrollbarOverrideSprite
+        public readonly static DependencyProperty VerticalScrollbarBarOverrideSpriteProperty = Scrollbar.BarOverrideSpriteProperty;
+        public SpriteAsset VerticalScrollbarBarOverrideSprite
         {
-            get { return VerticalScrollbar.OverrideSprite; }
-            set { VerticalScrollbar.OverrideSprite = value; }
+            get { return VerticalScrollbar.BarOverrideSprite; }
+            set { VerticalScrollbar.BarOverrideSprite = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarTypeProperty = Scrollbar.TypeProperty;
-        public UnityEngine.UI.Image.Type VerticalScrollbarType
+        public readonly static DependencyProperty VerticalScrollbarBarTypeProperty = Scrollbar.BarTypeProperty;
+        public UnityEngine.UI.Image.Type VerticalScrollbarBarType
         {
-            get { return VerticalScrollbar.Type; }
-            set { VerticalScrollbar.Type = value; }
+            get { return VerticalScrollbar.BarType; }
+            set { VerticalScrollbar.BarType = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarPreserveAspectProperty = Scrollbar.PreserveAspectProperty;
-        public System.Boolean VerticalScrollbarPreserveAspect
+        public readonly static DependencyProperty VerticalScrollbarBarPreserveAspectProperty = Scrollbar.BarPreserveAspectProperty;
+        public System.Boolean VerticalScrollbarBarPreserveAspect
         {
-            get { return VerticalScrollbar.PreserveAspect; }
-            set { VerticalScrollbar.PreserveAspect = value; }
+            get { return VerticalScrollbar.BarPreserveAspect; }
+            set { VerticalScrollbar.BarPreserveAspect = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarFillCenterProperty = Scrollbar.FillCenterProperty;
-        public System.Boolean VerticalScrollbarFillCenter
+        public readonly static DependencyProperty VerticalScrollbarBarFillCenterProperty = Scrollbar.BarFillCenterProperty;
+        public System.Boolean VerticalScrollbarBarFillCenter
         {
-            get { return VerticalScrollbar.FillCenter; }
-            set { VerticalScrollbar.FillCenter = value; }
+            get { return VerticalScrollbar.BarFillCenter; }
+            set { VerticalScrollbar.BarFillCenter = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarFillMethodProperty = Scrollbar.FillMethodProperty;
-        public UnityEngine.UI.Image.FillMethod VerticalScrollbarFillMethod
+        public readonly static DependencyProperty VerticalScrollbarBarFillMethodProperty = Scrollbar.BarFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod VerticalScrollbarBarFillMethod
         {
-            get { return VerticalScrollbar.FillMethod; }
-            set { VerticalScrollbar.FillMethod = value; }
+            get { return VerticalScrollbar.BarFillMethod; }
+            set { VerticalScrollbar.BarFillMethod = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarFillAmountProperty = Scrollbar.FillAmountProperty;
-        public System.Single VerticalScrollbarFillAmount
+        public readonly static DependencyProperty VerticalScrollbarBarFillAmountProperty = Scrollbar.BarFillAmountProperty;
+        public System.Single VerticalScrollbarBarFillAmount
         {
-            get { return VerticalScrollbar.FillAmount; }
-            set { VerticalScrollbar.FillAmount = value; }
+            get { return VerticalScrollbar.BarFillAmount; }
+            set { VerticalScrollbar.BarFillAmount = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarFillClockwiseProperty = Scrollbar.FillClockwiseProperty;
-        public System.Boolean VerticalScrollbarFillClockwise
+        public readonly static DependencyProperty VerticalScrollbarBarFillClockwiseProperty = Scrollbar.BarFillClockwiseProperty;
+        public System.Boolean VerticalScrollbarBarFillClockwise
         {
-            get { return VerticalScrollbar.FillClockwise; }
-            set { VerticalScrollbar.FillClockwise = value; }
+            get { return VerticalScrollbar.BarFillClockwise; }
+            set { VerticalScrollbar.BarFillClockwise = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarFillOriginProperty = Scrollbar.FillOriginProperty;
-        public System.Int32 VerticalScrollbarFillOrigin
+        public readonly static DependencyProperty VerticalScrollbarBarFillOriginProperty = Scrollbar.BarFillOriginProperty;
+        public System.Int32 VerticalScrollbarBarFillOrigin
         {
-            get { return VerticalScrollbar.FillOrigin; }
-            set { VerticalScrollbar.FillOrigin = value; }
+            get { return VerticalScrollbar.BarFillOrigin; }
+            set { VerticalScrollbar.BarFillOrigin = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarAlphaHitTestMinimumThresholdProperty = Scrollbar.AlphaHitTestMinimumThresholdProperty;
-        public System.Single VerticalScrollbarAlphaHitTestMinimumThreshold
+        public readonly static DependencyProperty VerticalScrollbarBarAlphaHitTestMinimumThresholdProperty = Scrollbar.BarAlphaHitTestMinimumThresholdProperty;
+        public System.Single VerticalScrollbarBarAlphaHitTestMinimumThreshold
         {
-            get { return VerticalScrollbar.AlphaHitTestMinimumThreshold; }
-            set { VerticalScrollbar.AlphaHitTestMinimumThreshold = value; }
+            get { return VerticalScrollbar.BarAlphaHitTestMinimumThreshold; }
+            set { VerticalScrollbar.BarAlphaHitTestMinimumThreshold = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarUseSpriteMeshProperty = Scrollbar.UseSpriteMeshProperty;
-        public System.Boolean VerticalScrollbarUseSpriteMesh
+        public readonly static DependencyProperty VerticalScrollbarBarUseSpriteMeshProperty = Scrollbar.BarUseSpriteMeshProperty;
+        public System.Boolean VerticalScrollbarBarUseSpriteMesh
         {
-            get { return VerticalScrollbar.UseSpriteMesh; }
-            set { VerticalScrollbar.UseSpriteMesh = value; }
+            get { return VerticalScrollbar.BarUseSpriteMesh; }
+            set { VerticalScrollbar.BarUseSpriteMesh = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarMaterialProperty = Scrollbar.MaterialProperty;
-        public MaterialAsset VerticalScrollbarMaterial
+        public readonly static DependencyProperty VerticalScrollbarBarMaterialProperty = Scrollbar.BarMaterialProperty;
+        public MaterialAsset VerticalScrollbarBarMaterial
         {
-            get { return VerticalScrollbar.Material; }
-            set { VerticalScrollbar.Material = value; }
+            get { return VerticalScrollbar.BarMaterial; }
+            set { VerticalScrollbar.BarMaterial = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarOnCullStateChangedProperty = Scrollbar.OnCullStateChangedProperty;
-        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent VerticalScrollbarOnCullStateChanged
+        public readonly static DependencyProperty VerticalScrollbarBarOnCullStateChangedProperty = Scrollbar.BarOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent VerticalScrollbarBarOnCullStateChanged
         {
-            get { return VerticalScrollbar.OnCullStateChanged; }
-            set { VerticalScrollbar.OnCullStateChanged = value; }
+            get { return VerticalScrollbar.BarOnCullStateChanged; }
+            set { VerticalScrollbar.BarOnCullStateChanged = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarMaskableProperty = Scrollbar.MaskableProperty;
-        public System.Boolean VerticalScrollbarMaskable
+        public readonly static DependencyProperty VerticalScrollbarBarMaskableProperty = Scrollbar.BarMaskableProperty;
+        public System.Boolean VerticalScrollbarBarMaskable
         {
-            get { return VerticalScrollbar.Maskable; }
-            set { VerticalScrollbar.Maskable = value; }
+            get { return VerticalScrollbar.BarMaskable; }
+            set { VerticalScrollbar.BarMaskable = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarColorProperty = Scrollbar.ColorProperty;
-        public UnityEngine.Color VerticalScrollbarColor
+        public readonly static DependencyProperty VerticalScrollbarBarColorProperty = Scrollbar.BarColorProperty;
+        public UnityEngine.Color VerticalScrollbarBarColor
         {
-            get { return VerticalScrollbar.Color; }
-            set { VerticalScrollbar.Color = value; }
+            get { return VerticalScrollbar.BarColor; }
+            set { VerticalScrollbar.BarColor = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarRaycastTargetProperty = Scrollbar.RaycastTargetProperty;
-        public System.Boolean VerticalScrollbarRaycastTarget
+        public readonly static DependencyProperty VerticalScrollbarBarRaycastTargetProperty = Scrollbar.BarRaycastTargetProperty;
+        public System.Boolean VerticalScrollbarBarRaycastTarget
         {
-            get { return VerticalScrollbar.RaycastTarget; }
-            set { VerticalScrollbar.RaycastTarget = value; }
+            get { return VerticalScrollbar.BarRaycastTarget; }
+            set { VerticalScrollbar.BarRaycastTarget = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBarWidthProperty = Scrollbar.BarWidthProperty;
@@ -1572,6 +1684,118 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandleLoadMode; }
             set { VerticalScrollbar.HandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundSpriteProperty = Scrollbar.BackgroundSpriteProperty;
+        public SpriteAsset VerticalScrollbarBackgroundSprite
+        {
+            get { return VerticalScrollbar.BackgroundSprite; }
+            set { VerticalScrollbar.BackgroundSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundOverrideSpriteProperty = Scrollbar.BackgroundOverrideSpriteProperty;
+        public SpriteAsset VerticalScrollbarBackgroundOverrideSprite
+        {
+            get { return VerticalScrollbar.BackgroundOverrideSprite; }
+            set { VerticalScrollbar.BackgroundOverrideSprite = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundTypeProperty = Scrollbar.BackgroundTypeProperty;
+        public UnityEngine.UI.Image.Type VerticalScrollbarBackgroundType
+        {
+            get { return VerticalScrollbar.BackgroundType; }
+            set { VerticalScrollbar.BackgroundType = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundPreserveAspectProperty = Scrollbar.BackgroundPreserveAspectProperty;
+        public System.Boolean VerticalScrollbarBackgroundPreserveAspect
+        {
+            get { return VerticalScrollbar.BackgroundPreserveAspect; }
+            set { VerticalScrollbar.BackgroundPreserveAspect = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundFillCenterProperty = Scrollbar.BackgroundFillCenterProperty;
+        public System.Boolean VerticalScrollbarBackgroundFillCenter
+        {
+            get { return VerticalScrollbar.BackgroundFillCenter; }
+            set { VerticalScrollbar.BackgroundFillCenter = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundFillMethodProperty = Scrollbar.BackgroundFillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod VerticalScrollbarBackgroundFillMethod
+        {
+            get { return VerticalScrollbar.BackgroundFillMethod; }
+            set { VerticalScrollbar.BackgroundFillMethod = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundFillAmountProperty = Scrollbar.BackgroundFillAmountProperty;
+        public System.Single VerticalScrollbarBackgroundFillAmount
+        {
+            get { return VerticalScrollbar.BackgroundFillAmount; }
+            set { VerticalScrollbar.BackgroundFillAmount = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundFillClockwiseProperty = Scrollbar.BackgroundFillClockwiseProperty;
+        public System.Boolean VerticalScrollbarBackgroundFillClockwise
+        {
+            get { return VerticalScrollbar.BackgroundFillClockwise; }
+            set { VerticalScrollbar.BackgroundFillClockwise = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundFillOriginProperty = Scrollbar.BackgroundFillOriginProperty;
+        public System.Int32 VerticalScrollbarBackgroundFillOrigin
+        {
+            get { return VerticalScrollbar.BackgroundFillOrigin; }
+            set { VerticalScrollbar.BackgroundFillOrigin = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundAlphaHitTestMinimumThresholdProperty = Scrollbar.BackgroundAlphaHitTestMinimumThresholdProperty;
+        public System.Single VerticalScrollbarBackgroundAlphaHitTestMinimumThreshold
+        {
+            get { return VerticalScrollbar.BackgroundAlphaHitTestMinimumThreshold; }
+            set { VerticalScrollbar.BackgroundAlphaHitTestMinimumThreshold = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundUseSpriteMeshProperty = Scrollbar.BackgroundUseSpriteMeshProperty;
+        public System.Boolean VerticalScrollbarBackgroundUseSpriteMesh
+        {
+            get { return VerticalScrollbar.BackgroundUseSpriteMesh; }
+            set { VerticalScrollbar.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundMaterialProperty = Scrollbar.BackgroundMaterialProperty;
+        public MaterialAsset VerticalScrollbarBackgroundMaterial
+        {
+            get { return VerticalScrollbar.BackgroundMaterial; }
+            set { VerticalScrollbar.BackgroundMaterial = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundOnCullStateChangedProperty = Scrollbar.BackgroundOnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent VerticalScrollbarBackgroundOnCullStateChanged
+        {
+            get { return VerticalScrollbar.BackgroundOnCullStateChanged; }
+            set { VerticalScrollbar.BackgroundOnCullStateChanged = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundMaskableProperty = Scrollbar.BackgroundMaskableProperty;
+        public System.Boolean VerticalScrollbarBackgroundMaskable
+        {
+            get { return VerticalScrollbar.BackgroundMaskable; }
+            set { VerticalScrollbar.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundColorProperty = Scrollbar.BackgroundColorProperty;
+        public UnityEngine.Color VerticalScrollbarBackgroundColor
+        {
+            get { return VerticalScrollbar.BackgroundColor; }
+            set { VerticalScrollbar.BackgroundColor = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundRaycastTargetProperty = Scrollbar.BackgroundRaycastTargetProperty;
+        public System.Boolean VerticalScrollbarBackgroundRaycastTarget
+        {
+            get { return VerticalScrollbar.BackgroundRaycastTarget; }
+            set { VerticalScrollbar.BackgroundRaycastTarget = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarWidthProperty = Scrollbar.WidthProperty;

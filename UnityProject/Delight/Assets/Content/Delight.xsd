@@ -1917,22 +1917,22 @@
     <xs:attribute name="HorizontalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="HorizontalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="HorizontalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="HorizontalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="HorizontalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarOverrideWidth" type="xs:string" />
@@ -1993,6 +1993,22 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarOverrideWidth" type="xs:string" />
@@ -2020,22 +2036,22 @@
     <xs:attribute name="VerticalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="VerticalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="VerticalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="VerticalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="VerticalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarOverrideWidth" type="xs:string" />
@@ -2096,6 +2112,22 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarOverrideWidth" type="xs:string" />
@@ -3160,22 +3192,22 @@
     <xs:attribute name="HorizontalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="HorizontalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="HorizontalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="HorizontalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="HorizontalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarOverrideWidth" type="xs:string" />
@@ -3236,6 +3268,22 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarOverrideWidth" type="xs:string" />
@@ -3263,22 +3311,22 @@
     <xs:attribute name="VerticalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="VerticalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="VerticalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="VerticalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="VerticalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarOverrideWidth" type="xs:string" />
@@ -3339,6 +3387,22 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarOverrideWidth" type="xs:string" />
@@ -4091,22 +4155,22 @@
     <xs:attribute name="HorizontalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="HorizontalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="HorizontalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="HorizontalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="HorizontalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarOverrideWidth" type="xs:string" />
@@ -4167,6 +4231,22 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarOverrideWidth" type="xs:string" />
@@ -4194,22 +4274,22 @@
     <xs:attribute name="VerticalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="VerticalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="VerticalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="VerticalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="VerticalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarOverrideWidth" type="xs:string" />
@@ -4270,6 +4350,22 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarOverrideWidth" type="xs:string" />
@@ -4412,22 +4508,22 @@
     <xs:attribute name="HorizontalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="HorizontalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="HorizontalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="HorizontalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="HorizontalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="HorizontalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarColor" type="xs:string" />
-    <xs:attribute name="HorizontalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarOverrideWidth" type="xs:string" />
@@ -4488,6 +4584,22 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="HorizontalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHeight" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarOverrideWidth" type="xs:string" />
@@ -4515,22 +4627,22 @@
     <xs:attribute name="VerticalScrollbarOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="VerticalScrollbarScrollPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarViewportRatio" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="VerticalScrollbarType" type="Enum_Type" />
-    <xs:attribute name="VerticalScrollbarPreserveAspect" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillCenter" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="VerticalScrollbarFillAmount" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillClockwise" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarFillOrigin" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="VerticalScrollbarOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarMaskable" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarColor" type="xs:string" />
-    <xs:attribute name="VerticalScrollbarRaycastTarget" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBarType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBarPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBarFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarOverrideWidth" type="xs:string" />
@@ -4591,6 +4703,22 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
+    <xs:attribute name="VerticalScrollbarBackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHeight" type="xs:string" />
     <xs:attribute name="VerticalScrollbarOverrideWidth" type="xs:string" />
@@ -4715,22 +4843,22 @@
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
     <xs:attribute name="ScrollPosition" type="xs:string" />
     <xs:attribute name="ViewportRatio" type="xs:string" />
-    <xs:attribute name="Sprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="OverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="Type" type="Enum_Type" />
-    <xs:attribute name="PreserveAspect" type="xs:string" />
-    <xs:attribute name="FillCenter" type="xs:string" />
-    <xs:attribute name="FillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="FillAmount" type="xs:string" />
-    <xs:attribute name="FillClockwise" type="xs:string" />
-    <xs:attribute name="FillOrigin" type="xs:string" />
-    <xs:attribute name="AlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="UseSpriteMesh" type="xs:string" />
-    <xs:attribute name="Material" type="Asset_MaterialAsset" />
-    <xs:attribute name="OnCullStateChanged" type="xs:string" />
-    <xs:attribute name="Maskable" type="xs:string" />
-    <xs:attribute name="Color" type="xs:string" />
-    <xs:attribute name="RaycastTarget" type="xs:string" />
+    <xs:attribute name="BarSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BarOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BarType" type="Enum_Type" />
+    <xs:attribute name="BarPreserveAspect" type="xs:string" />
+    <xs:attribute name="BarFillCenter" type="xs:string" />
+    <xs:attribute name="BarFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="BarFillAmount" type="xs:string" />
+    <xs:attribute name="BarFillClockwise" type="xs:string" />
+    <xs:attribute name="BarFillOrigin" type="xs:string" />
+    <xs:attribute name="BarAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="BarUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="BarMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BarOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="BarMaskable" type="xs:string" />
+    <xs:attribute name="BarColor" type="xs:string" />
+    <xs:attribute name="BarRaycastTarget" type="xs:string" />
     <xs:attribute name="BarWidth" type="xs:string" />
     <xs:attribute name="BarHeight" type="xs:string" />
     <xs:attribute name="BarOverrideWidth" type="xs:string" />
@@ -4791,6 +4919,23 @@
     <xs:attribute name="HandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HandleIsActive" type="xs:string" />
     <xs:attribute name="HandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="ImageComponent" type="xs:string" />
+    <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
+    <xs:attribute name="BackgroundType" type="Enum_Type" />
+    <xs:attribute name="BackgroundPreserveAspect" type="xs:string" />
+    <xs:attribute name="BackgroundFillCenter" type="xs:string" />
+    <xs:attribute name="BackgroundFillMethod" type="Enum_FillMethod" />
+    <xs:attribute name="BackgroundFillAmount" type="xs:string" />
+    <xs:attribute name="BackgroundFillClockwise" type="xs:string" />
+    <xs:attribute name="BackgroundFillOrigin" type="xs:string" />
+    <xs:attribute name="BackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
+    <xs:attribute name="BackgroundUseSpriteMesh" type="xs:string" />
+    <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
+    <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundColor" type="xs:string" />
+    <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -6557,6 +6702,7 @@
     </xs:sequence>
     <xs:attribute name="XmlText" type="xs:string" />
     <xs:attribute name="IsFocused" type="xs:string" />
+    <xs:attribute name="Edit" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Scrollbar : UIView
+    public partial class Scrollbar : UIImageView
     {
         #region Constructors
 
@@ -109,113 +109,113 @@ namespace Delight
             set { HandleTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty SpriteProperty = Image.SpriteProperty;
-        public SpriteAsset Sprite
+        public readonly static DependencyProperty BarSpriteProperty = Image.SpriteProperty;
+        public SpriteAsset BarSprite
         {
             get { return Bar.Sprite; }
             set { Bar.Sprite = value; }
         }
 
-        public readonly static DependencyProperty OverrideSpriteProperty = Image.OverrideSpriteProperty;
-        public SpriteAsset OverrideSprite
+        public readonly static DependencyProperty BarOverrideSpriteProperty = Image.OverrideSpriteProperty;
+        public SpriteAsset BarOverrideSprite
         {
             get { return Bar.OverrideSprite; }
             set { Bar.OverrideSprite = value; }
         }
 
-        public readonly static DependencyProperty TypeProperty = Image.TypeProperty;
-        public UnityEngine.UI.Image.Type Type
+        public readonly static DependencyProperty BarTypeProperty = Image.TypeProperty;
+        public UnityEngine.UI.Image.Type BarType
         {
             get { return Bar.Type; }
             set { Bar.Type = value; }
         }
 
-        public readonly static DependencyProperty PreserveAspectProperty = Image.PreserveAspectProperty;
-        public System.Boolean PreserveAspect
+        public readonly static DependencyProperty BarPreserveAspectProperty = Image.PreserveAspectProperty;
+        public System.Boolean BarPreserveAspect
         {
             get { return Bar.PreserveAspect; }
             set { Bar.PreserveAspect = value; }
         }
 
-        public readonly static DependencyProperty FillCenterProperty = Image.FillCenterProperty;
-        public System.Boolean FillCenter
+        public readonly static DependencyProperty BarFillCenterProperty = Image.FillCenterProperty;
+        public System.Boolean BarFillCenter
         {
             get { return Bar.FillCenter; }
             set { Bar.FillCenter = value; }
         }
 
-        public readonly static DependencyProperty FillMethodProperty = Image.FillMethodProperty;
-        public UnityEngine.UI.Image.FillMethod FillMethod
+        public readonly static DependencyProperty BarFillMethodProperty = Image.FillMethodProperty;
+        public UnityEngine.UI.Image.FillMethod BarFillMethod
         {
             get { return Bar.FillMethod; }
             set { Bar.FillMethod = value; }
         }
 
-        public readonly static DependencyProperty FillAmountProperty = Image.FillAmountProperty;
-        public System.Single FillAmount
+        public readonly static DependencyProperty BarFillAmountProperty = Image.FillAmountProperty;
+        public System.Single BarFillAmount
         {
             get { return Bar.FillAmount; }
             set { Bar.FillAmount = value; }
         }
 
-        public readonly static DependencyProperty FillClockwiseProperty = Image.FillClockwiseProperty;
-        public System.Boolean FillClockwise
+        public readonly static DependencyProperty BarFillClockwiseProperty = Image.FillClockwiseProperty;
+        public System.Boolean BarFillClockwise
         {
             get { return Bar.FillClockwise; }
             set { Bar.FillClockwise = value; }
         }
 
-        public readonly static DependencyProperty FillOriginProperty = Image.FillOriginProperty;
-        public System.Int32 FillOrigin
+        public readonly static DependencyProperty BarFillOriginProperty = Image.FillOriginProperty;
+        public System.Int32 BarFillOrigin
         {
             get { return Bar.FillOrigin; }
             set { Bar.FillOrigin = value; }
         }
 
-        public readonly static DependencyProperty AlphaHitTestMinimumThresholdProperty = Image.AlphaHitTestMinimumThresholdProperty;
-        public System.Single AlphaHitTestMinimumThreshold
+        public readonly static DependencyProperty BarAlphaHitTestMinimumThresholdProperty = Image.AlphaHitTestMinimumThresholdProperty;
+        public System.Single BarAlphaHitTestMinimumThreshold
         {
             get { return Bar.AlphaHitTestMinimumThreshold; }
             set { Bar.AlphaHitTestMinimumThreshold = value; }
         }
 
-        public readonly static DependencyProperty UseSpriteMeshProperty = Image.UseSpriteMeshProperty;
-        public System.Boolean UseSpriteMesh
+        public readonly static DependencyProperty BarUseSpriteMeshProperty = Image.UseSpriteMeshProperty;
+        public System.Boolean BarUseSpriteMesh
         {
             get { return Bar.UseSpriteMesh; }
             set { Bar.UseSpriteMesh = value; }
         }
 
-        public readonly static DependencyProperty MaterialProperty = Image.MaterialProperty;
-        public MaterialAsset Material
+        public readonly static DependencyProperty BarMaterialProperty = Image.MaterialProperty;
+        public MaterialAsset BarMaterial
         {
             get { return Bar.Material; }
             set { Bar.Material = value; }
         }
 
-        public readonly static DependencyProperty OnCullStateChangedProperty = Image.OnCullStateChangedProperty;
-        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent OnCullStateChanged
+        public readonly static DependencyProperty BarOnCullStateChangedProperty = Image.OnCullStateChangedProperty;
+        public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent BarOnCullStateChanged
         {
             get { return Bar.OnCullStateChanged; }
             set { Bar.OnCullStateChanged = value; }
         }
 
-        public readonly static DependencyProperty MaskableProperty = Image.MaskableProperty;
-        public System.Boolean Maskable
+        public readonly static DependencyProperty BarMaskableProperty = Image.MaskableProperty;
+        public System.Boolean BarMaskable
         {
             get { return Bar.Maskable; }
             set { Bar.Maskable = value; }
         }
 
-        public readonly static DependencyProperty ColorProperty = Image.ColorProperty;
-        public UnityEngine.Color Color
+        public readonly static DependencyProperty BarColorProperty = Image.ColorProperty;
+        public UnityEngine.Color BarColor
         {
             get { return Bar.Color; }
             set { Bar.Color = value; }
         }
 
-        public readonly static DependencyProperty RaycastTargetProperty = Image.RaycastTargetProperty;
-        public System.Boolean RaycastTarget
+        public readonly static DependencyProperty BarRaycastTargetProperty = Image.RaycastTargetProperty;
+        public System.Boolean BarRaycastTarget
         {
             get { return Bar.RaycastTarget; }
             set { Bar.RaycastTarget = value; }
@@ -683,7 +683,7 @@ namespace Delight
                 if (_scrollbar == null)
 #endif
                 {
-                    _scrollbar = new Template(UIViewTemplates.UIView);
+                    _scrollbar = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _scrollbar.Name = "Scrollbar";
 #endif
@@ -713,6 +713,8 @@ namespace Delight
                     _scrollbarBar.Name = "ScrollbarBar";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarBar, new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f));
+                    Delight.Image.WidthProperty.SetDefault(_scrollbarBar, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_scrollbarBar, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _scrollbarBar;
             }
@@ -734,6 +736,8 @@ namespace Delight
                     _scrollbarHandle.Name = "ScrollbarHandle";
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarHandle, new UnityEngine.Color(0.6470588f, 0.1647059f, 0.1647059f, 1f));
+                    Delight.Image.WidthProperty.SetDefault(_scrollbarHandle, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Image.HeightProperty.SetDefault(_scrollbarHandle, new ElementSize(1f, ElementSizeUnit.Percents));
                 }
                 return _scrollbarHandle;
             }

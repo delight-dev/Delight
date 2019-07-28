@@ -22,6 +22,7 @@ namespace Delight
         #region Fields
 
         public UIView _displayedView;
+        public DesignerView _currentEditedView;
 
         #endregion
 
@@ -50,6 +51,17 @@ namespace Delight
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
+        }
+
+        /// <summary>
+        /// Called when the user edits the current view.
+        /// </summary>
+        public void OnEdit()
+        {
+            if (_currentEditedView != null)
+            {
+                _currentEditedView.IsDirty = true;
+            }
         }
 
         /// <summary>
@@ -95,6 +107,7 @@ namespace Delight
             SetScale(Vector3.one);
 
             // load XML into the editor
+            _currentEditedView = designerView;
             XmlEditor.XmlText = File.ReadAllText(designerView.ViewObject.FilePath);
 
             sw2.Stop();

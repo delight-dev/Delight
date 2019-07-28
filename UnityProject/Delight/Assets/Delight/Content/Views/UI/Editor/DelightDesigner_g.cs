@@ -40,8 +40,8 @@ namespace Delight
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
                 var label2 = new Label(this, listItem1.Content, "Label2", Label2Template);
 
-                // binding <Label Text="{view.Name}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiView.Item as Delight.DesignerView).Name, () => { }, false));
+                // binding <Label Text="{view.DisplayName}">
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayName" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiView.Item as Delight.DesignerView).DisplayName, () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiView);
                 return listItem1;
@@ -49,6 +49,7 @@ namespace Delight
             XmlEditorRegion = new Region(this, Grid1.Content, "XmlEditorRegion", XmlEditorRegionTemplate);
             Grid1.Cell.SetValue(XmlEditorRegion, new CellIndex(0, 1));
             XmlEditor = new XmlEditor(this, XmlEditorRegion.Content, "XmlEditor", XmlEditorTemplate);
+            XmlEditor.Edit.RegisterHandler(this, "OnEdit");
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             this.AfterInitializeInternal();
         }
