@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using System.IO;
 #endregion
 
 namespace Delight
@@ -94,7 +95,7 @@ namespace Delight
             SetScale(Vector3.one);
 
             // load XML into the editor
-            XmlEditor.XmlText = designerView.ViewObject.FilePath;
+            XmlEditor.XmlText = File.ReadAllText(designerView.ViewObject.FilePath);
 
             sw2.Stop();
             Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));

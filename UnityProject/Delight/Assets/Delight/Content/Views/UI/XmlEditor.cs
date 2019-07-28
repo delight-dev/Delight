@@ -39,6 +39,8 @@ namespace Delight
         private int _caretX;
         private int _caretY;
         private int _desiredCaretX;
+        private int _previousClickCaretX;
+        private int _previousClickCaretY;
         private XmlSyntaxElement _caretElement = XmlSyntaxElement.Undefined;
         private KeyCode _trackKeyDown = KeyCode.None;
         private float _caretDelayTimeElapsed;
@@ -114,6 +116,7 @@ namespace Delight
                 {
                     IsFocused = true;
                     _clickedInsideEditor = true;
+                    mouseButtonDown = true;
 
                     if (!scrollEngaged && !shiftDown)
                     {
@@ -124,36 +127,45 @@ namespace Delight
                         _selectionOriginX = _caretX;
                         _selectionOriginY = _caretY;
 
-                        ActivateCaret();
-                        UpdateTextAndCaret(false);
-
                         // handle double-clicks
                         float timeStamp = Time.unscaledTime;
                         if (_mouseClickStart + DoubleClickDelay > timeStamp)
                         {
-                            // TODO select the word under the caret
+                            if (_previousClickCaretX == _caretX && _previousClickCaretY == _caretY)
+                            {
+                                Debug.Log("Selecting word");
+
+                                // if double-click at the same spot, select the word at caret
+                                SelectWordAtCaret();
+                            }
                         }
                         else
                         {
                             _mouseClickStart = timeStamp;
                         }
+
+                        _previousClickCaretX = _caretX;
+                        _previousClickCaretY = _caretY;
+
+                        ActivateCaret();
+                        UpdateTextAndCaret(false);
                     }
                 }
             }
 
-            if ((mouseButtonDown && shiftDown) || (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged)) 
+            if ((mouseButtonDown && shiftDown) || (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) 
             {
-                // handle dragging selection
-                GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);                
-                _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
-                if (_hasSelection)
-                {                    
-                    _caretX = _selectionTargetX;
-                    _caretY = _selectionTargetY;
+                //// handle dragging selection
+                //GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);                
+                //_hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                //if (_hasSelection)
+                //{                    
+                //    _caretX = _selectionTargetX;
+                //    _caretY = _selectionTargetY;
 
-                    ActivateCaret();
-                    UpdateTextAndCaret(false);
-                }
+                //    ActivateCaret();
+                //    UpdateTextAndCaret(false);
+                //}
             }
 
             if (Input.anyKey && IsFocused)
@@ -168,6 +180,66 @@ namespace Delight
                     // handle regular input
                     HandleKeyInput();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Selects the word at the current caret position.
+        /// </summary>
+        private void SelectWordAtCaret()
+        {
+            if (_lines[_caretY].Length <= 0)
+                return;
+
+            _selectionOriginX = _caretX - 1;
+            _selectionTargetX = _caretX;
+            _selectionOriginY = _caretY;
+            _selectionTargetY = _caretY;
+
+            if (_selectionOriginX < 0)
+                _selectionOriginX = 0;
+
+            // choose selection method
+            Func<char, bool> selectChar = c => Char.IsLetterOrDigit(c); // select letters and digits by default
+            if (Char.IsWhiteSpace(_lines[_caretY][_selectionOriginX]) && _selectionTargetX < _lines[_caretY].Length &&
+                Char.IsWhiteSpace(_lines[_caretY][_selectionTargetX]))
+            {
+                // if surrounded by whitespace, select whitespace
+                selectChar = c => Char.IsWhiteSpace(c);
+            }
+            else if (!Char.IsLetterOrDigit(_lines[_caretY][_selectionOriginX]) && _selectionTargetX < _lines[_caretY].Length &&
+                     !Char.IsLetterOrDigit(_lines[_caretY][_selectionTargetX]))
+            {
+                // if surrounded by special characters, select special characters
+                selectChar = c => !Char.IsLetterOrDigit(c);
+            }
+
+            while (_selectionTargetX < _lines[_caretY].Length)
+            {
+                if (!selectChar(_lines[_caretY][_selectionTargetX]))
+                {
+                    break;
+                }
+
+                ++_selectionTargetX;
+            }
+
+            while (_selectionOriginX >= 0)
+            {
+                if (!selectChar(_lines[_caretY][_selectionOriginX]))
+                {
+                    _selectionOriginX = _selectionOriginX == _lines[_caretY].Length - 1 ? _selectionOriginX : _selectionOriginX + 1;
+                    break;
+                }
+
+                --_selectionOriginX;
+            }
+
+            _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+            if (_hasSelection)
+            {
+                _desiredCaretX = _selectionTargetX;
+                _caretX = _selectionTargetX;
             }
         }
 
@@ -999,6 +1071,7 @@ namespace Delight
             _lines.Clear();
             _lines.Add(string.Empty);
             _hasSelection = false;
+            ScrollableRegion.SetScrollPosition(0, 0);
 
             OnEditorChanged();
         }
