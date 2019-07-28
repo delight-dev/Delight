@@ -205,14 +205,17 @@ namespace Delight
 
             // choose selection method
             Func<char, bool> selectChar = c => Char.IsLetterOrDigit(c); // select letters and digits by default
-            if (Char.IsWhiteSpace(_lines[_caretY][_selectionOriginX]) && _selectionTargetX < _lines[_caretY].Length &&
-                Char.IsWhiteSpace(_lines[_caretY][_selectionTargetX]))
+            char leftChar = _lines[_caretY][_selectionOriginX];
+            char rightChar = _selectionTargetX < _lines[_caretY].Length ? _lines[_caretY][_selectionTargetX] : leftChar;
+
+            if ((Char.IsWhiteSpace(leftChar) && Char.IsWhiteSpace(rightChar)) ||
+                (Char.IsWhiteSpace(leftChar) && !Char.IsLetterOrDigit(rightChar)) ||
+                (!Char.IsLetterOrDigit(leftChar) && Char.IsWhiteSpace(rightChar)))
             {
                 // if surrounded by whitespace, select whitespace
                 selectChar = c => Char.IsWhiteSpace(c);
             }
-            else if (!Char.IsLetterOrDigit(_lines[_caretY][_selectionOriginX]) && _selectionTargetX < _lines[_caretY].Length &&
-                     !Char.IsLetterOrDigit(_lines[_caretY][_selectionTargetX]))
+            else if (!Char.IsLetterOrDigit(leftChar) && !Char.IsLetterOrDigit(rightChar))
             {
                 // if surrounded by special characters, select special characters
                 selectChar = c => !Char.IsLetterOrDigit(c);
