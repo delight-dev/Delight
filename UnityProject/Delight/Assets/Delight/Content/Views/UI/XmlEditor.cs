@@ -55,7 +55,7 @@ namespace Delight
         private int _selectionTargetY;
         private bool _hasSelection;
         private CanvasRenderer _caretCanvasRenderer;
-        private Vector2 _mouseDownPosition;
+        private Vector3 _mouseDownPosition;
         private bool _clickedInsideEditor;
 
         #endregion
@@ -117,6 +117,7 @@ namespace Delight
                     IsFocused = true;
                     _clickedInsideEditor = true;
                     mouseButtonDown = true;
+                    _mouseDownPosition = Input.mousePosition;
 
                     if (!scrollEngaged && !shiftDown)
                     {
@@ -133,8 +134,6 @@ namespace Delight
                         {
                             if (_previousClickCaretX == _caretX && _previousClickCaretY == _caretY)
                             {
-                                Debug.Log("Selecting word");
-
                                 // if double-click at the same spot, select the word at caret
                                 SelectWordAtCaret();
                             }
@@ -155,17 +154,22 @@ namespace Delight
 
             if ((mouseButtonDown && shiftDown) || (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) 
             {
-                //// handle dragging selection
-                //GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);                
-                //_hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
-                //if (_hasSelection)
-                //{                    
-                //    _caretX = _selectionTargetX;
-                //    _caretY = _selectionTargetY;
+                // if we've dragged beyond a certain threshold update selection (or if we shift+mouse click)
+                Vector3 delta = _mouseDownPosition - Input.mousePosition;
+                if (Mathf.Abs(delta.x) > 3 || Mathf.Abs(delta.y) > 3 || (mouseButtonDown && shiftDown))
+                {
+                    // handle dragging selection
+                    GetMouseCaretPosition(out _selectionTargetX, out _selectionTargetY);
+                    _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
+                    if (_hasSelection)
+                    {
+                        _caretX = _selectionTargetX;
+                        _caretY = _selectionTargetY;
 
-                //    ActivateCaret();
-                //    UpdateTextAndCaret(false);
-                //}
+                        ActivateCaret();
+                        UpdateTextAndCaret(false);
+                    }
+                }
             }
 
             if (Input.anyKey && IsFocused)
@@ -235,6 +239,9 @@ namespace Delight
                 --_selectionOriginX;
             }
 
+            if (_selectionOriginX < 0)
+                _selectionOriginX = 0;
+
             _hasSelection = _selectionTargetX != _selectionOriginX || _selectionTargetY != _selectionOriginY;
             if (_hasSelection)
             {
@@ -243,6 +250,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Gets mouse caret position. 
+        /// </summary>
         private void GetMouseCaretPosition(out int caretX, out int caretY)
         {
             // set text indicator
