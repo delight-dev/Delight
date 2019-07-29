@@ -28,8 +28,8 @@ namespace Delight
 
         public AssetBundleData()
         {
-            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Local };
-            Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Local };
+            Bundle1 = new AssetBundle { Id = "Bundle1", StorageMode = StorageMode.Remote };
+            Bundle2 = new AssetBundle { Id = "Bundle2", StorageMode = StorageMode.Remote };
 
             Add(Bundle1);
             Add(Bundle2);
@@ -126,12 +126,12 @@ namespace Delight
         #region Fields
 
         public readonly FontAsset Ebrima;
+        public readonly FontAsset FiraCodeLight;
+        public readonly FontAsset FiraCodeRegular;
         public readonly FontAsset HaskligLight;
         public readonly FontAsset HaskligMedium;
         public readonly FontAsset HaskligRegular;
         public readonly FontAsset InconsolataRegular;
-        public readonly FontAsset FiraCodeLight;
-        public readonly FontAsset FiraCodeRegular;
         public readonly FontAsset SegoeUI;
 
         #endregion
@@ -141,21 +141,21 @@ namespace Delight
         public FontAssetData()
         {
             Ebrima = new FontAsset { Id = "Ebrima", IsResource = true, RelativePath = "Fonts/" };
+            FiraCodeLight = new FontAsset { Id = "FiraCode-Light", IsResource = true, RelativePath = "Fonts/" };
+            FiraCodeRegular = new FontAsset { Id = "FiraCode-Regular", IsResource = true, RelativePath = "Fonts/" };
             HaskligLight = new FontAsset { Id = "Hasklig-Light", IsResource = true, RelativePath = "Fonts/" };
             HaskligMedium = new FontAsset { Id = "Hasklig-Medium", IsResource = true, RelativePath = "Fonts/" };
             HaskligRegular = new FontAsset { Id = "Hasklig-Regular", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegular = new FontAsset { Id = "Inconsolata-Regular", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeLight = new FontAsset { Id = "FiraCode-Light", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeRegular = new FontAsset { Id = "FiraCode-Regular", IsResource = true, RelativePath = "Fonts/" };
             SegoeUI = new FontAsset { Id = "Segoe UI", IsResource = true, RelativePath = "Fonts/" };
 
             Add(Ebrima);
+            Add(FiraCodeLight);
+            Add(FiraCodeRegular);
             Add(HaskligLight);
             Add(HaskligMedium);
             Add(HaskligRegular);
             Add(InconsolataRegular);
-            Add(FiraCodeLight);
-            Add(FiraCodeRegular);
             Add(SegoeUI);
         }
 
@@ -213,11 +213,11 @@ namespace Delight
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
         public readonly SpriteAsset EditorGrid;
+        public readonly SpriteAsset ListSelection;
         public readonly SpriteAsset RadioButton;
         public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
-        public readonly SpriteAsset ListSelection;
 
         #endregion
 
@@ -238,11 +238,11 @@ namespace Delight
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
+            ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
             RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
             RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
-            ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Frame1);
             Add(Frame2);
@@ -257,11 +257,11 @@ namespace Delight
             Add(DesignerGrid);
             Add(DesignerGrid2);
             Add(EditorGrid);
+            Add(ListSelection);
             Add(RadioButton);
             Add(RadioButtonPressed);
             Add(RainbowSquare);
             Add(Selection);
-            Add(ListSelection);
         }
 
         #endregion
@@ -306,11 +306,11 @@ namespace Delight
         #region Fields
 
         public readonly TMP_FontAsset EbrimaSDF;
+        public readonly TMP_FontAsset FiraCodeLightSDF;
+        public readonly TMP_FontAsset FiraCodeRegularSDF;
         public readonly TMP_FontAsset HaskligLightSDF;
         public readonly TMP_FontAsset HaskligRegularSDF;
         public readonly TMP_FontAsset InconsolataRegularSDF;
-        public readonly TMP_FontAsset FiraCodeLightSDF;
-        public readonly TMP_FontAsset FiraCodeRegularSDF;
         public readonly TMP_FontAsset SegoeUISDF;
 
         #endregion
@@ -320,19 +320,19 @@ namespace Delight
         public TMP_FontAssetData()
         {
             EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
+            FiraCodeLightSDF = new TMP_FontAsset { Id = "FiraCode-Light SDF", IsResource = true, RelativePath = "Fonts/" };
+            FiraCodeRegularSDF = new TMP_FontAsset { Id = "FiraCode-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             HaskligLightSDF = new TMP_FontAsset { Id = "Hasklig-Light SDF", IsResource = true, RelativePath = "Fonts/" };
             HaskligRegularSDF = new TMP_FontAsset { Id = "Hasklig-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegularSDF = new TMP_FontAsset { Id = "Inconsolata-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeLightSDF = new TMP_FontAsset { Id = "FiraCode-Light SDF", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeRegularSDF = new TMP_FontAsset { Id = "FiraCode-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             SegoeUISDF = new TMP_FontAsset { Id = "Segoe UI SDF", IsResource = true, RelativePath = "Fonts/" };
 
             Add(EbrimaSDF);
+            Add(FiraCodeLightSDF);
+            Add(FiraCodeRegularSDF);
             Add(HaskligLightSDF);
             Add(HaskligRegularSDF);
             Add(InconsolataRegularSDF);
-            Add(FiraCodeLightSDF);
-            Add(FiraCodeRegularSDF);
             Add(SegoeUISDF);
         }
 
@@ -378,7 +378,6 @@ namespace Delight
         #region Fields
 
         public readonly Texture2DAsset Bluefloral01;
-        public readonly Texture2DAsset ListSelection;
 
         #endregion
 
@@ -387,10 +386,8 @@ namespace Delight
         public Texture2DAssetData()
         {
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
-            ListSelection = new Texture2DAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
 
             Add(Bluefloral01);
-            Add(ListSelection);
         }
 
         #endregion

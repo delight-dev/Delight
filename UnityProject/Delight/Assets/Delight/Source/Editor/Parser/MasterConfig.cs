@@ -282,6 +282,7 @@ namespace Delight.Editor.Parser
             ServerUriLocator = String.Empty;
             UseSimulatedUriInEditor = true;
             ContentFolders.Add("Assets/Content/");
+            ContentFolders.Add("Assets/TestContent/");
             ContentFolders.Add("Assets/Delight/Content/");
             ContentFolders.Add("Assets/Plugins/Content/");
             ContentFolders.Add("Assets/Plugins/Delight/Content/");

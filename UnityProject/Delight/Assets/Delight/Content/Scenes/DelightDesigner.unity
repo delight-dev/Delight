@@ -393,7 +393,7 @@ MonoBehaviour:
   ViewTypeName: DelightDesigner
   ViewTypeNamespace: Delight
   LoadMode: 0
-  UseAsyncLoad: 1
+  UseAsyncLoad: 0
   _layoutRootGameObject: {fileID: 0}
 --- !u!4 &1956482394
 Transform:

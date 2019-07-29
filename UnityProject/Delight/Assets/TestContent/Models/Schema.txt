@@ -1,0 +1,87 @@
+﻿// Models
+
+= World
+int Order
+string Name
+Levels
+
+= Level
+World
+string Name
+Highscores
+ 
+= Highscore
+Level
+Player
+int Score
+
+= Player 
+string Name
+Color Color
+Highscores
+Achievements
+
+= Achievement
+Player
+Sprite Icon
+string Title
+
+// Data
+
++ World (Order, Name)
+World1: 1, "World 1"
+World2: 2, "World 2"
+World3: 2, "World 2"
+
++ Level (World, Name)
+Level1_1: World1, "Level 1-1"
+Level1_2: World1, "Level 1-2"
+Level1_3: World1, "Level 1-3"
+Level2_1: World2, "Level 2-1"
+Level2_2: World2, "Level 2-2"
+Level2_3: World2, "Level 2-3"
+Level3_1: World3, "Level 3-1"
+Level3_2: World3, "Level 3-2"
+
++ Highscore (Level, Player, Score)
+Level1_1, Player1, 380
+Level1_2, Player1, 5471
+Level1_3, Player1, 1547
+Level1_4, Player1, 33579
+Level1_1, Player2, 1235
+Level2_2, Player2, 187
+Level3_3, Player2, 13897
+Level1_4, Player3, 88789
+Level2_3, Player3, 12335
+Level1_1, Player3, 878
+Level1_1, Player4, 48
+Level1_2, Player4, 18
+
++ Player (Name)
+Player1: "Player 1"
+Player2: "Player 2"
+Player3: "Player 3"
+Player4: "Player 4"
+
+//Player5: "Player 5"
+//Player6: "Player 6"
+//Player7: "Player 7"
+//Player8: "Player 8"
+//Player9: "Player 9"
+//Player10: "Player 10"
+//Player11: "Player 11"
+//Player12: "Player 12"
+//Player13: "Player 13"
+//Player14: "Player 14"
+//Player15: "Player 15"
+
++ Achievement (Player, Title)
+Player1, "A1-3" 
+Player1, "A1-4" 
+Player2, "A2-1" 
+Player2, "A2-2"
+Player2, "A2-3"
+Player3, "A3-1"
+Player3, "A3-2"
+Player4, "A4-1"
+ 

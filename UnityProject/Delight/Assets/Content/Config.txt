@@ -16,13 +16,8 @@
 ServerUri: http://example.com
 UseSimulatedUriInEditor: true
 BuildTargets: Dev
-ContentFolders:
-  MyContent/
-  Example/Content/
-StreamedBundles:
-  Bundle1
-  Bundle2
-  Bundle3
 AssetBundleVersion: 1
+ContentFolders:
+  TestContent/
 Modules: 
   TextMeshPro 
