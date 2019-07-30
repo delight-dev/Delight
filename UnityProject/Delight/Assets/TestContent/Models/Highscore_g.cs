@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Properties
 
+        [SerializeField]
         public string LevelId { get; set; }
         public Level Level
         {
@@ -20,6 +21,7 @@ namespace Delight
             set { LevelId = value?.Id; }
         }
 
+        [SerializeField]
         public string PlayerId { get; set; }
         public Player Player
         {
@@ -27,6 +29,7 @@ namespace Delight
             set { PlayerId = value?.Id; }
         }
 
+        [SerializeField]
         private int _score;
         public int Score
         {

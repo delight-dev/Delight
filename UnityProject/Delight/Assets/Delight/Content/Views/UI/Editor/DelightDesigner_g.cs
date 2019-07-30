@@ -22,11 +22,12 @@ namespace Delight
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             ScrollableContentRegion = new ScrollableRegion(this, Grid1.Content, "ScrollableContentRegion", ScrollableContentRegionTemplate);
             ScrollableContentRegion.Scroll.RegisterHandler(this, "OnScroll");
-            Grid1.Cell.SetValue(ScrollableContentRegion, new CellIndex(0, 2));
+            Grid1.Cell.SetValue(ScrollableContentRegion, new CellIndex(0, 1));
             ContentRegionCanvas = new UICanvas(this, ScrollableContentRegion.Content, "ContentRegionCanvas", ContentRegionCanvasTemplate);
             ViewContentRegion = new Region(this, ContentRegionCanvas.Content, "ViewContentRegion", ViewContentRegionTemplate);
             ContentExplorer = new Region(this, Grid1.Content, "ContentExplorer", ContentExplorerTemplate);
             Grid1.Cell.SetValue(ContentExplorer, new CellIndex(0, 0));
+            Grid1.CellSpan.SetValue(ContentExplorer, new CellIndex(2, 1));
             Label1 = new Label(this, ContentExplorer.Content, "Label1", Label1Template);
             List1 = new List(this, ContentExplorer.Content, "List1", List1Template);
             List1.ItemSelected.RegisterHandler(this, "ViewSelected");
@@ -47,7 +48,7 @@ namespace Delight
                 return listItem1;
             }, typeof(ListItem), "ListItem1"));
             XmlEditorRegion = new Region(this, Grid1.Content, "XmlEditorRegion", XmlEditorRegionTemplate);
-            Grid1.Cell.SetValue(XmlEditorRegion, new CellIndex(0, 1));
+            Grid1.Cell.SetValue(XmlEditorRegion, new CellIndex(1, 1));
             XmlEditor = new XmlEditor(this, XmlEditorRegion.Content, "XmlEditor", XmlEditorTemplate);
             XmlEditor.Edit.RegisterHandler(this, "OnEdit");
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
@@ -341,8 +342,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerGrid1.Name = "DelightDesignerGrid1";
 #endif
-                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(170f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(450f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
-                    Delight.LayoutGrid.RowsProperty.SetDefault(_delightDesignerGrid1, new RowDefinitions { new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(170f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
+                    Delight.LayoutGrid.RowsProperty.SetDefault(_delightDesignerGrid1, new RowDefinitions { new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional)), new RowDefinition(new ElementSize(240f, ElementSizeUnit.Pixels), 20f)});
                     Delight.LayoutGrid.BackgroundColorProperty.SetDefault(_delightDesignerGrid1, new UnityEngine.Color(0.3333333f, 0.6392157f, 1f, 1f));
                 }
                 return _delightDesignerGrid1;

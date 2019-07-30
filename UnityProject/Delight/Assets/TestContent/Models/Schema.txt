@@ -15,7 +15,7 @@ Level
 Player
 int Score
 
-= Player 
+= Player
 string Name
 Color Color
 Highscores

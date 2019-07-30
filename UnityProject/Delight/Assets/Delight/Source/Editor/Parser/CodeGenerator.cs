@@ -2241,6 +2241,7 @@ namespace Delight.Editor.Parser
                 if (isModelReference)
                 {
                     sb.AppendLine();
+                    sb.AppendLine("        [SerializeField]");
                     sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
                     sb.AppendLine("        public {0} {1}", typeName, property.Name);
                     sb.AppendLine("        {");
@@ -2259,6 +2260,7 @@ namespace Delight.Editor.Parser
                 else if (isAssetReference)
                 {
                     sb.AppendLine();
+                    sb.AppendLine("        [SerializeField]");
                     sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
                     sb.AppendLine("        public {0}Asset {1}", typeName, property.Name);
                     sb.AppendLine("        {");
@@ -2269,6 +2271,7 @@ namespace Delight.Editor.Parser
                 else
                 {
                     sb.AppendLine();
+                    sb.AppendLine("        [SerializeField]");
                     sb.AppendLine("        private {0} {1};", typeName, field);
                     sb.AppendLine("        public {0} {1}", typeName, property.Name);
                     sb.AppendLine("        {");

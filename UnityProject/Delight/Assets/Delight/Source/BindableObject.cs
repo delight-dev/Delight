@@ -20,6 +20,7 @@ namespace Delight
 
         #region Properties
 
+        [SerializeField]
         private string _id;
         public string Id
         {

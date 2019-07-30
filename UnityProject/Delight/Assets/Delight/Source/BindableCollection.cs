@@ -131,7 +131,6 @@ namespace Delight
             }
             else if (Data.ContainsKey(item.Id))
             {
-                Debug.LogWarning(String.Format("#Delight# BindableCollection<{0}>: attempt to add item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
                 return;
             }
 
@@ -154,7 +153,6 @@ namespace Delight
             }
             else if (Data.ContainsKey(item.Id))
             {
-                Debug.LogWarning(String.Format("#Delight# BindableCollection<{0}>: attempt to insert item \"{1}\" already in the collection.", typeof(T).Name, item.Id));
                 return;
             }
 

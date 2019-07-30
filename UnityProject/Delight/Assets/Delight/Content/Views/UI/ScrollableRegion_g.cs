@@ -2050,6 +2050,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbar.Name = "ScrollableRegionHorizontalScrollbar";
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementOrientation.Horizontal);
+                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_scrollableRegionHorizontalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Scrollbar.BreadthProperty.SetDefault(_scrollableRegionHorizontalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionHorizontalScrollbar, ScrollableRegionHorizontalScrollbarHandle);
                 }
@@ -2072,6 +2074,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarBar.Name = "ScrollableRegionHorizontalScrollbarBar";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Image.MarginProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
                 }
                 return _scrollableRegionHorizontalScrollbarBar;
             }
@@ -2092,6 +2096,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarHandle.Name = "ScrollableRegionHorizontalScrollbarHandle";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
                 return _scrollableRegionHorizontalScrollbarHandle;
             }
@@ -2113,6 +2118,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbar.Name = "ScrollableRegionVerticalScrollbar";
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementOrientation.Vertical);
+                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_scrollableRegionVerticalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Scrollbar.BreadthProperty.SetDefault(_scrollableRegionVerticalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_scrollableRegionVerticalScrollbar, ScrollableRegionVerticalScrollbarHandle);
                 }
@@ -2135,6 +2142,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarBar.Name = "ScrollableRegionVerticalScrollbarBar";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Image.MarginProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
                 }
                 return _scrollableRegionVerticalScrollbarBar;
             }
@@ -2155,6 +2164,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarHandle.Name = "ScrollableRegionVerticalScrollbarHandle";
 #endif
+                    Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
                 return _scrollableRegionVerticalScrollbarHandle;
             }

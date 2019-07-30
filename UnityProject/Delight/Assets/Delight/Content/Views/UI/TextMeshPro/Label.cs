@@ -98,6 +98,12 @@ namespace Delight
         /// </summary>
         public virtual void TextChanged()
         {
+            if (AutoSize != AutoSize.None && EnableWordWrappingProperty.IsUndefined(this))
+            {
+                // when autosizing disable wordwrapping so PreferredWidth is calculated correctly
+                EnableWordWrapping = false; 
+            }
+
             // adjust label size to text
             if (AutoSize == AutoSize.Width)
             {

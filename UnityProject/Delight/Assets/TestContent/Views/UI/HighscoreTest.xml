@@ -1,0 +1,23 @@
+<HighscoreTest xmlns="Delight" BasedOn="LayoutRoot" SelectedHighscore="t:Highscore" Score="t:string" PlayerId="t:string">
+  
+  <Group Orientation="Horizontal" Spacing="10">
+    <Group Spacing="10" Width="100">
+      <Button Text="Load" Click="LoadHighscores" Width="120" />
+      <Button Text="Save" Click="SaveHighscores" Width="120" />
+      <Button Text="Clear" Click="Clear" Width="120" />
+      <InputField Text="{PlayerId}" Width="200" />
+      <InputField Text="{Score}" Width="200" />
+      <Button Text="Add" Click="Add" Width="120" />
+      <Button Text="Remove" Click="Remove" Width="120" />
+    </Group>
+ 
+    <List Id="HighscoreList" Items="{highscore in @Highscores}" Width="300"
+          BackgroundColor="White" IsScrollable="True"
+          SelectedItem="{SelectedHighscore}">
+      <ListItem Width="100%" BackgroundColor="White">
+        <Label Text="{highscore.Player.Name}" AutoSize="Width" Alignment="Left" Margin="10,0,0,0" />
+        <Label Text="{highscore.ScoreText}" AutoSize="Width" Alignment="Right" FontStyle="Bold" Offset="0,0,25,0" />
+      </ListItem> 
+    </List>
+  </Group> 
+</HighscoreTest>  

@@ -2,14 +2,14 @@
                  Module="TextMeshPro"
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
 
-  <Grid Columns="170[20],450[20],*" Rows="*" BackgroundColor="#55a3ff">
+  <Grid Columns="170[20],*" Rows="*,240[20]" BackgroundColor="#55a3ff">
     <!--450[20]-->
 
     <!-- Right Menu -->
     <!--<Region Grid.Cell="1,2" BackgroundColor="#dcdcdc"/>-->
 
     <!-- Designer Content Region -->
-    <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,2" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True">
+    <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,1" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True">
       <Canvas Id="ContentRegionCanvas" Scale="1">
         <Region Id="ViewContentRegion">
         </Region>
@@ -17,7 +17,7 @@
     </ScrollableRegion> 
 
     <!-- Left Panel - Content Explorer -->
-    <Region Id="ContentExplorer" Grid.Cell="0,0" BackgroundColor="#c3c3c3">
+    <Region Id="ContentExplorer" Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#c3c3c3">
       <!--BackgroundColor="#fdfdfd">--> 
       <Label Text="Views" FontSize="18" Font="Segoe UI SDF" Alignment="TopLeft" Margin="19,10,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Truncate" FontColor="#333333" />
       <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,50,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
@@ -30,7 +30,12 @@
     </Region>
 
     <!-- Left Panel - XML editor -->
-    <Region Id="XmlEditorRegion" Grid.Cell="0,1" BackgroundColor="#fbfbfb">
+    <!--<Region Id="XmlEditorRegion" Grid.Cell="0,1" BackgroundColor="#fbfbfb">
+      <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
+    </Region>-->
+
+    <!-- Bottom Panel - XML editor -->
+    <Region Id="XmlEditorRegion" Grid.Cell="1,1" BackgroundColor="#fbfbfb">
       <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
     </Region>
 
