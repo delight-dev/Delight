@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Properties
 
+        [SerializeField]
         public string PlayerId { get; set; }
         public Player Player
         {
@@ -20,6 +21,7 @@ namespace Delight
             set { PlayerId = value?.Id; }
         }
 
+        [SerializeField]
         public string IconId { get; set; }
         public SpriteAsset Icon
         {
@@ -27,6 +29,7 @@ namespace Delight
             set { IconId = value?.Id; }
         }
 
+        [SerializeField]
         private string _title;
         public string Title
         {

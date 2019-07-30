@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Properties
 
+        [SerializeField]
         private int _order;
         public int Order
         {
@@ -20,6 +21,7 @@ namespace Delight
             set { SetProperty(ref _order, value); }
         }
 
+        [SerializeField]
         private string _name;
         public string Name
         {

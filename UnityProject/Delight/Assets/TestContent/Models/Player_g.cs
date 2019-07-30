@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Properties
 
+        [SerializeField]
         private string _name;
         public string Name
         {
@@ -20,6 +21,7 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
+        [SerializeField]
         private Color _color;
         public Color Color
         {

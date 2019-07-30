@@ -13,6 +13,7 @@ namespace Delight
     {
         #region Properties
 
+        [SerializeField]
         public string WorldId { get; set; }
         public World World
         {
@@ -20,6 +21,7 @@ namespace Delight
             set { WorldId = value?.Id; }
         }
 
+        [SerializeField]
         private string _name;
         public string Name
         {
