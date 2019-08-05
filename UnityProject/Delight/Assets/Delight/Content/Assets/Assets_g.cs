@@ -126,11 +126,6 @@ namespace Delight
         #region Fields
 
         public readonly FontAsset Ebrima;
-        public readonly FontAsset FiraCodeLight;
-        public readonly FontAsset FiraCodeRegular;
-        public readonly FontAsset HaskligLight;
-        public readonly FontAsset HaskligMedium;
-        public readonly FontAsset HaskligRegular;
         public readonly FontAsset InconsolataRegular;
         public readonly FontAsset SegoeUI;
 
@@ -141,20 +136,10 @@ namespace Delight
         public FontAssetData()
         {
             Ebrima = new FontAsset { Id = "Ebrima", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeLight = new FontAsset { Id = "FiraCode-Light", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeRegular = new FontAsset { Id = "FiraCode-Regular", IsResource = true, RelativePath = "Fonts/" };
-            HaskligLight = new FontAsset { Id = "Hasklig-Light", IsResource = true, RelativePath = "Fonts/" };
-            HaskligMedium = new FontAsset { Id = "Hasklig-Medium", IsResource = true, RelativePath = "Fonts/" };
-            HaskligRegular = new FontAsset { Id = "Hasklig-Regular", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegular = new FontAsset { Id = "Inconsolata-Regular", IsResource = true, RelativePath = "Fonts/" };
             SegoeUI = new FontAsset { Id = "Segoe UI", IsResource = true, RelativePath = "Fonts/" };
 
             Add(Ebrima);
-            Add(FiraCodeLight);
-            Add(FiraCodeRegular);
-            Add(HaskligLight);
-            Add(HaskligMedium);
-            Add(HaskligRegular);
             Add(InconsolataRegular);
             Add(SegoeUI);
         }
@@ -306,10 +291,6 @@ namespace Delight
         #region Fields
 
         public readonly TMP_FontAsset EbrimaSDF;
-        public readonly TMP_FontAsset FiraCodeLightSDF;
-        public readonly TMP_FontAsset FiraCodeRegularSDF;
-        public readonly TMP_FontAsset HaskligLightSDF;
-        public readonly TMP_FontAsset HaskligRegularSDF;
         public readonly TMP_FontAsset InconsolataRegularSDF;
         public readonly TMP_FontAsset SegoeUISDF;
 
@@ -320,18 +301,10 @@ namespace Delight
         public TMP_FontAssetData()
         {
             EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeLightSDF = new TMP_FontAsset { Id = "FiraCode-Light SDF", IsResource = true, RelativePath = "Fonts/" };
-            FiraCodeRegularSDF = new TMP_FontAsset { Id = "FiraCode-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
-            HaskligLightSDF = new TMP_FontAsset { Id = "Hasklig-Light SDF", IsResource = true, RelativePath = "Fonts/" };
-            HaskligRegularSDF = new TMP_FontAsset { Id = "Hasklig-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegularSDF = new TMP_FontAsset { Id = "Inconsolata-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             SegoeUISDF = new TMP_FontAsset { Id = "Segoe UI SDF", IsResource = true, RelativePath = "Fonts/" };
 
             Add(EbrimaSDF);
-            Add(FiraCodeLightSDF);
-            Add(FiraCodeRegularSDF);
-            Add(HaskligLightSDF);
-            Add(HaskligRegularSDF);
             Add(InconsolataRegularSDF);
             Add(SegoeUISDF);
         }
