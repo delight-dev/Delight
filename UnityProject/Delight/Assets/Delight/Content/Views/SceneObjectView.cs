@@ -120,7 +120,7 @@ namespace Delight
             if (!UpdateSelectedProperty.IsUndefined(this))
                 GameObject.AddEventTrigger(this, UpdateSelected, EventTriggerType.UpdateSelected);
 
-            IsActiveChanged();
+            IsActiveChanged(false);
         }
 
         /// <summary>
@@ -159,9 +159,18 @@ namespace Delight
         /// <summary>
         /// Called when IsActive property has been changed.
         /// </summary>
-        public virtual void IsActiveChanged()
+        public virtual void IsActiveChanged(bool notifyParent = true)
         {
             GameObject?.SetActive(IsActive);
+        }
+
+        /// <summary>
+        /// Sets IsActive without notifying parent.
+        /// </summary>
+        public virtual void SetIsActive(bool isActive)
+        {
+            IsActiveProperty.SetValue(this, isActive, false);
+            IsActiveChanged(false);
         }
 
         /// <summary>

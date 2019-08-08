@@ -1,7 +1,8 @@
 <Button xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
         BasedOn="UIImageView" Height="40" m.Label=""
         DefaultWidth="t:ElementSize = 160"
-        Click="ButtonMouseClick" MouseEnter="ButtonMouseEnter" MouseExit="ButtonMouseExit" 
+        Click="ButtonMouseClick"
+        MouseEnter="ButtonMouseEnter" MouseExit="ButtonMouseExit"
         MouseDown="ButtonMouseDown" MouseUp="ButtonMouseUp"
         IsToggleButton="t:bool" IsDisabled="t:bool" ToggleValue="t:bool" TextPadding="t:ElementMargin = 20,10,20,10"
         CanToggleOn="t:bool = True" CanToggleOff="t:bool = True" ToggleClick="t:Action" IsMouseOver="t:bool" IsPressed="t:bool"
@@ -9,8 +10,7 @@
         TextOffset="t:ElementMargin = 0"
         IsCloseButton="t:bool"
         IsBackButton="t:bool"
-        EnableScriptEvents="True"
-        > 
+        EnableScriptEvents="True">
   <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" Offset="{TextOffset}" /> 
 </Button>
 

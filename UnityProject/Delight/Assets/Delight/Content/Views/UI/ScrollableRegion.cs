@@ -738,7 +738,24 @@ namespace Delight
         /// </summary>
         public void UnblockDragEvents()
         {
-            this.ForEach<SceneObjectView>(x => UnblockDragEvents(x));
+            if (UnblockDragEventsInChildren)
+            {
+                this.ForEach<SceneObjectView>(x => UnblockDragEvents(x));
+            }
+        }
+
+        /// <summary>
+        /// Makes it so draggable child views aren't blocking the region from being dragged. 
+        /// </summary>
+        public void UnblockDragEvents(IEnumerable<SceneObjectView> viewsToUnblock)
+        {
+            if (UnblockDragEventsInChildren)
+            {
+                foreach (var view in viewsToUnblock)
+                {
+                    UnblockDragEvents(view);
+                }
+            }
         }
 
         /// <summary>
@@ -746,6 +763,9 @@ namespace Delight
         /// </summary>
         public void UnblockDragEvents(SceneObjectView view)
         {
+            if (!UnblockDragEventsInChildren)
+                return;
+
             if (view.GameObject == null)
                 return;
 

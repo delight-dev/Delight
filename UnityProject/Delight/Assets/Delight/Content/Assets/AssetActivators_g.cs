@@ -15,16 +15,15 @@ namespace Delight
         static Assets()
         {
             ViewActivators = new Dictionary<string, Func<View, View, Template, View>>();
-            ViewActivators.Add("MainMenu", (x, y, z) => new MainMenu(x, y, null, z));
-            ViewActivators.Add("UIView", (x, y, z) => new UIView(x, y, null, z));
-            ViewActivators.Add("Group", (x, y, z) => new Group(x, y, null, z));
-            ViewActivators.Add("Button", (x, y, z) => new Button(x, y, null, z));
             ViewActivators.Add("AssetManagementTest", (x, y, z) => new AssetManagementTest(x, y, null, z));
             ViewActivators.Add("LayoutRoot", (x, y, z) => new LayoutRoot(x, y, null, z));
             ViewActivators.Add("Label", (x, y, z) => new Label(x, y, null, z));
             ViewActivators.Add("Region", (x, y, z) => new Region(x, y, null, z));
+            ViewActivators.Add("Group", (x, y, z) => new Group(x, y, null, z));
+            ViewActivators.Add("Button", (x, y, z) => new Button(x, y, null, z));
             ViewActivators.Add("Image", (x, y, z) => new Image(x, y, null, z));
             ViewActivators.Add("BindingTest", (x, y, z) => new BindingTest(x, y, null, z));
+            ViewActivators.Add("UIView", (x, y, z) => new UIView(x, y, null, z));
             ViewActivators.Add("ComboBoxExample", (x, y, z) => new ComboBoxExample(x, y, null, z));
             ViewActivators.Add("CheckBox", (x, y, z) => new CheckBox(x, y, null, z));
             ViewActivators.Add("RadioButton", (x, y, z) => new RadioButton(x, y, null, z));
@@ -38,6 +37,7 @@ namespace Delight
             ViewActivators.Add("ListItem", (x, y, z) => new ListItem(x, y, null, z));
             ViewActivators.Add("InputFieldExample", (x, y, z) => new InputFieldExample(x, y, null, z));
             ViewActivators.Add("ListExample", (x, y, z) => new ListExample(x, y, null, z));
+            ViewActivators.Add("MainMenu", (x, y, z) => new MainMenu(x, y, null, z));
             ViewActivators.Add("ModelBindingTest", (x, y, z) => new ModelBindingTest(x, y, null, z));
             ViewActivators.Add("PerformanceTest", (x, y, z) => new PerformanceTest(x, y, null, z));
             ViewActivators.Add("ScrollExample", (x, y, z) => new ScrollExample(x, y, null, z));
@@ -66,18 +66,18 @@ namespace Delight
             ViewActivators.Add("SelectionIndicator", (x, y, z) => new SelectionIndicator(x, y, null, z));
             ViewActivators.Add("XmlEditor", (x, y, z) => new XmlEditor(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
+            ViewActivators.Add("GroupExamples", (x, y, z) => new GroupExamples(x, y, null, z));
 
             ViewTypes = new Dictionary<string, Type>();
-            ViewTypes.Add("MainMenu", typeof(MainMenu));
-            ViewTypes.Add("UIView", typeof(UIView));
-            ViewTypes.Add("Group", typeof(Group));
-            ViewTypes.Add("Button", typeof(Button));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
             ViewTypes.Add("LayoutRoot", typeof(LayoutRoot));
             ViewTypes.Add("Label", typeof(Label));
             ViewTypes.Add("Region", typeof(Region));
+            ViewTypes.Add("Group", typeof(Group));
+            ViewTypes.Add("Button", typeof(Button));
             ViewTypes.Add("Image", typeof(Image));
             ViewTypes.Add("BindingTest", typeof(BindingTest));
+            ViewTypes.Add("UIView", typeof(UIView));
             ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));
             ViewTypes.Add("CheckBox", typeof(CheckBox));
             ViewTypes.Add("RadioButton", typeof(RadioButton));
@@ -91,6 +91,7 @@ namespace Delight
             ViewTypes.Add("ListItem", typeof(ListItem));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("ListExample", typeof(ListExample));
+            ViewTypes.Add("MainMenu", typeof(MainMenu));
             ViewTypes.Add("ModelBindingTest", typeof(ModelBindingTest));
             ViewTypes.Add("PerformanceTest", typeof(PerformanceTest));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
@@ -119,6 +120,7 @@ namespace Delight
             ViewTypes.Add("SelectionIndicator", typeof(SelectionIndicator));
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("NewScene", typeof(NewScene));
+            ViewTypes.Add("GroupExamples", typeof(GroupExamples));
         }
     }
 }

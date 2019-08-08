@@ -445,6 +445,18 @@ namespace Delight
             return false;
         }
 
+        /// <summary>
+        /// Called when IsActive property has been changed.
+        /// </summary>
+        public override void IsActiveChanged(bool notifyParent = true)
+        {
+            base.IsActiveChanged(notifyParent);
+            if (notifyParent)
+            {
+                NotifyParentOfChildLayoutChanged();
+            }
+        }
+
         #endregion
 
         #region Properties

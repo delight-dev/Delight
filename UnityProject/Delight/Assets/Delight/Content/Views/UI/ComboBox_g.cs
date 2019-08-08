@@ -352,6 +352,13 @@ namespace Delight
             set { ComboBoxList.DisableMouseWheel = value; }
         }
 
+        public readonly static DependencyProperty UnblockDragEventsInChildrenProperty = List.UnblockDragEventsInChildrenProperty;
+        public System.Boolean UnblockDragEventsInChildren
+        {
+            get { return ComboBoxList.UnblockDragEventsInChildren; }
+            set { ComboBoxList.UnblockDragEventsInChildren = value; }
+        }
+
         public readonly static DependencyProperty ScrollEnabledProperty = List.ScrollEnabledProperty;
         public System.Boolean ScrollEnabled
         {

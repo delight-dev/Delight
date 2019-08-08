@@ -342,6 +342,13 @@ namespace Delight
             set { ScrollableRegion.DisableMouseWheel = value; }
         }
 
+        public readonly static DependencyProperty UnblockDragEventsInChildrenProperty = ScrollableRegion.UnblockDragEventsInChildrenProperty;
+        public System.Boolean UnblockDragEventsInChildren
+        {
+            get { return ScrollableRegion.UnblockDragEventsInChildren; }
+            set { ScrollableRegion.UnblockDragEventsInChildren = value; }
+        }
+
         public readonly static DependencyProperty ScrollEnabledProperty = ScrollableRegion.ScrollEnabledProperty;
         public System.Boolean ScrollEnabled
         {

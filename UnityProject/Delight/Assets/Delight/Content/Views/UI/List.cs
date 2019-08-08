@@ -672,7 +672,7 @@ namespace Delight
             }
 
             realizedItemPool.Add(virtualItem.RealizedItem);
-            virtualItem.RealizedItem.IsActive = false;
+            virtualItem.RealizedItem.SetIsActive(false);
             virtualItem.RealizedItem = null;
         }
 
@@ -703,7 +703,7 @@ namespace Delight
             }
 
             // set size and offset of realized item to match virtual item
-            realizedItem.IsActive = true;
+            realizedItem.SetIsActive(true);
             realizedItem.Width = virtualItem.Width;
             realizedItem.Height = virtualItem.Height;
             realizedItem.OffsetFromParent = virtualItem.Offset;
@@ -1505,14 +1505,15 @@ namespace Delight
             if (listItem == null)
                 return;
 
+            var viewsToUnblock = listItem.HierarchyToList<SceneObjectView>();
             if (IsScrollable)
             {
-                ScrollableRegion.UnblockDragEvents(listItem as SceneObjectView);
+                ScrollableRegion.UnblockDragEvents(viewsToUnblock);
             }
 
             // unblock drag-events in parent scrollable regions
-            // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here
-            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(listItem as SceneObjectView));
+            // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here            
+            this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(viewsToUnblock));
         }
 
         #endregion

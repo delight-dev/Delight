@@ -656,6 +656,63 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets a list of all descendants. 
+        /// </summary>
+        public static List<T> GetChildren<T>(this View view, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            return view.GetChildren<T>(x => true, recursive, parent, traversalAlgorithm);
+        }
+
+        /// <summary>
+        /// Gets a list of all descendants matching the predicate. 
+        /// </summary>
+        public static List<T> GetChildren<T>(this View view, Func<T, bool> predicate = null, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            var children = new List<T>();
+            if (predicate == null)
+            {
+                predicate = x => true;
+            }
+
+            view.ForEach<T>(x =>
+            {
+                if (predicate(x))
+                {
+                    children.Add(x);
+                }
+            }, recursive, parent, traversalAlgorithm);
+
+            return children;
+        }
+
+        /// <summary>
+        /// Gets a list containing this view and all children matching the predicate. 
+        /// </summary>
+        public static List<T> HierarchyToList<T>(this T view, Func<T, bool> predicate = null, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View
+        {
+            var children = new List<T>();
+            if (predicate == null)
+            {
+                predicate = x => true;
+            }
+
+            if (predicate(view))
+            {
+                children.Add(view);
+            }
+
+            view.ForEach<T>(x =>
+            {
+                if (predicate(x))
+                {
+                    children.Add(x);
+                }
+            }, recursive, parent, traversalAlgorithm);
+
+            return children;
+        }
+
+        /// <summary>
         /// Adds range of items to hash-set.
         /// </summary>
         public static void AddRange<T>(this HashSet<T> hashSet, IEnumerable<T> items)
@@ -665,7 +722,6 @@ namespace Delight
                 hashSet.Add(item);
             }
         }
-
 
         /// <summary>
         /// Clamps a value to specified range [min, max].

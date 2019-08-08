@@ -1,0 +1,13 @@
+<GroupExamples xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd"
+               IsActive1="t:bool" IsActive2="t:bool">
+
+  <List Id="PlayerList" Items="{player in @Players}" Width="425" Height="500" BackgroundColor="Green" Spacing="5"
+        IsScrollable="True" DisableInteractionScrollDelta="4">
+    <ListItem Width="100" Height="20">
+      <!--<Region BackgroundColor="Blue" Width="100" Height="20" />-->
+      <!--<ListItem BackgroundColor="Blue" Width="100" Height="20" />-->
+      <Button Id="ButtonTest" Text="{player.Name}" Width="100" Height="20" />
+    </ListItem>
+  </List>
+  
+</GroupExamples>

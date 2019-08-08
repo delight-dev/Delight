@@ -9,7 +9,8 @@
     <!--<Region Grid.Cell="1,2" BackgroundColor="#dcdcdc"/>-->
 
     <!-- Designer Content Region -->
-    <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,1" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True">
+    <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,1" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
+                      UnblockDragEventsInChildren="False">
       <Canvas Id="ContentRegionCanvas" Scale="1">
         <Region Id="ViewContentRegion">
         </Region>

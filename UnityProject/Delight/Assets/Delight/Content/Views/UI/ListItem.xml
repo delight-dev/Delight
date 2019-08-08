@@ -5,7 +5,7 @@
           AutoSizeToContent="t:bool = True" 
           Length="t:ElementSize" 
           Breadth="t:ElementSize"
-          Click="ListItemMouseClick" 
+          Click="ListItemMouseClick"
           MouseEnter="ListItemMouseEnter"
           MouseExit="ListItemMouseExit"
           MouseDown="ListItemMouseDown"
