@@ -271,7 +271,7 @@ namespace Delight
             if (!IsVirtualized)
             {
                 if (!_presentedItems.TryGetValue(item, out listItem))
-                    return;        
+                    return;
             }
             else
             {
@@ -752,7 +752,7 @@ namespace Delight
             float vpYMin = 0 - RealizationMargin.y;
             float vpXMax = ScrollableRegion.ViewportWidth + RealizationMargin.x;
             float vpYMax = ScrollableRegion.ViewportHeight + RealizationMargin.y;
-           
+
             if (Overflow == OverflowMode.Wrap)
             {
                 // check both axis
@@ -980,6 +980,7 @@ namespace Delight
                     !newHeight.Equals(ScrollableRegion.ContentRegion.Height))
                 {
                     bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                    ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                     ScrollableRegion.ContentRegion.Width = new ElementSize(newWidth);
                     ScrollableRegion.ContentRegion.Height = new ElementSize(newHeight);
                     ScrollableRegion.UpdateLayout(false);
@@ -1001,6 +1002,9 @@ namespace Delight
         /// </summary>
         private bool UpdateLayoutWrapped()
         {
+            var actualWidth = OverrideWidth ?? (Width ?? ElementSize.DefaultLayout);
+            var actualHeight = OverrideHeight ?? (Height ?? ElementSize.DefaultLayout);
+
             bool hasNewSize = false;
             float maxWidth = 0f;
             float maxHeight = 0f;
@@ -1066,7 +1070,7 @@ namespace Delight
                         xOffset = 0;
                         firstItem = false;
                     }
-                    else if ((xOffset + childSize.Width + horizontalSpacing) > ActualWidth)
+                    else if ((xOffset + childSize.Width + horizontalSpacing) > actualWidth)
                     {
                         // item overflows to next row
                         xOffset = 0;
@@ -1094,7 +1098,7 @@ namespace Delight
                         yOffset = 0;
                         firstItem = false;
                     }
-                    else if ((yOffset + childSize.Height + verticalSpacing) > ActualHeight)
+                    else if ((yOffset + childSize.Height + verticalSpacing) > actualHeight)
                     {
                         // item overflows to next column
                         yOffset = 0;
@@ -1155,6 +1159,7 @@ namespace Delight
                     if (!newHeight.Equals(ScrollableRegion.ContentRegion.Height))
                     {
                         bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                        ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                         ScrollableRegion.ContentRegion.Height = new ElementSize(newHeight);
                         ScrollableRegion.UpdateLayout(false);
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
@@ -1179,7 +1184,7 @@ namespace Delight
                     }
                     else
                     {
-                        if (!Height.Equals(OverrideHeight))
+                        if (Height != null && !Height.Equals(OverrideHeight))
                         {
                             OverrideHeight = Height;
                             hasNewSize = true;
@@ -1197,6 +1202,7 @@ namespace Delight
                     if (!newWidth.Equals(ScrollableRegion.ContentRegion.Width))
                     {
                         bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
+                        ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                         ScrollableRegion.ContentRegion.Width = new ElementSize(newWidth);
                         ScrollableRegion.UpdateLayout(false);
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
@@ -1221,7 +1227,7 @@ namespace Delight
                     }
                     else
                     {
-                        if (!Width.Equals(OverrideWidth))
+                        if (Width != null && !Width.Equals(OverrideWidth))
                         {
                             OverrideWidth = Width;
                             hasNewSize = true;
@@ -1266,7 +1272,7 @@ namespace Delight
                 }
             }
         }
-               
+
         /// <summary>
         /// Selects item in the list.
         /// </summary>
@@ -1327,7 +1333,7 @@ namespace Delight
                 }
             }
         }
-        
+
         /// <summary>
         /// Selects or deselects a list item.
         /// </summary>
@@ -1415,7 +1421,7 @@ namespace Delight
         {
             if (listItem == null)
                 return;
-            
+
             listItem.IsSelected = selected;
             if (listItem.RealizedItem != null)
             {
