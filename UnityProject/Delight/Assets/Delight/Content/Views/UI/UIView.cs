@@ -100,6 +100,7 @@ namespace Delight
                 case nameof(Pivot):
                 case nameof(Scale):
                 case nameof(Rotation):
+                case nameof(Alignment):
                     OffsetChanged();
                     break;
 
@@ -474,7 +475,15 @@ namespace Delight
         {
             get
             {
-                return Mathf.Abs(RectTransform.rect.width);
+                if (RectTransform != null)
+                {
+                    return Mathf.Abs(RectTransform.rect.width);
+                }
+                else
+                {
+                    var width = OverrideWidth ?? Width;
+                    return width != null && width.Unit == ElementSizeUnit.Pixels ? width.Pixels : 0;
+                }
             }
         }
 
@@ -485,7 +494,15 @@ namespace Delight
         {
             get
             {
-                return Mathf.Abs(RectTransform.rect.height);
+                if (RectTransform != null)
+                {
+                    return Mathf.Abs(RectTransform.rect.height);
+                }
+                else
+                {
+                    var height = OverrideHeight ?? Height;
+                    return height != null && height.Unit == ElementSizeUnit.Pixels ? height.Pixels : 0;
+                }
             }
         }
 
