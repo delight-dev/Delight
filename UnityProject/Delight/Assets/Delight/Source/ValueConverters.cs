@@ -64,6 +64,7 @@ namespace Delight
             Converters.Add("UnityEngine.Vector2", new Vector2ValueConverter());
             Converters.Add("UnityEngine.Vector3", new Vector3ValueConverter());
             Converters.Add("UnityEngine.Vector4", new Vector4ValueConverter());
+            Converters.Add("UnityEngine.Quaternion", new QuaternionValueConverter());
             Converters.Add("Delight.ElementAlignment", new EnumValueConverter<ElementAlignment>());
             Converters.Add("Delight.ElementOrientation", new EnumValueConverter<ElementOrientation>());
             Converters.Add("Delight.LoadMode", new EnumValueConverter<LoadMode>());

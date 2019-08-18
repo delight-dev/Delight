@@ -5989,6 +5989,7 @@
     </xs:sequence>
     <xs:attribute name="IsActive1" type="xs:string" />
     <xs:attribute name="IsActive2" type="xs:string" />
+    <xs:attribute name="TestWidth" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />

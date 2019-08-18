@@ -371,6 +371,13 @@ namespace Delight
             set { TabHeaderGroup.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty TabListRotationProperty = ToggleGroup.RotationProperty;
+        public UnityEngine.Quaternion TabListRotation
+        {
+            get { return TabHeaderGroup.Rotation; }
+            set { TabHeaderGroup.Rotation = value; }
+        }
+
         public readonly static DependencyProperty TabListGameObjectProperty = ToggleGroup.GameObjectProperty;
         public UnityEngine.GameObject TabListGameObject
         {

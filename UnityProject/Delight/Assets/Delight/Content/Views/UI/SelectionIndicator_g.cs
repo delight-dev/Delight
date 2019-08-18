@@ -745,6 +745,13 @@ namespace Delight
             set { SelectionTab.LabelIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabLabelRotationProperty = Button.LabelRotationProperty;
+        public UnityEngine.Quaternion SelectionTabLabelRotation
+        {
+            get { return SelectionTab.LabelRotation; }
+            set { SelectionTab.LabelRotation = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabLabelGameObjectProperty = Button.LabelGameObjectProperty;
         public UnityEngine.GameObject SelectionTabLabelGameObject
         {
@@ -1016,6 +1023,13 @@ namespace Delight
         {
             get { return SelectionTab.IgnoreFlip; }
             set { SelectionTab.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabRotationProperty = Button.RotationProperty;
+        public UnityEngine.Quaternion SelectionTabRotation
+        {
+            get { return SelectionTab.Rotation; }
+            set { SelectionTab.Rotation = value; }
         }
 
         public readonly static DependencyProperty SelectionTabGameObjectProperty = Button.GameObjectProperty;

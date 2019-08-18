@@ -294,7 +294,7 @@ namespace Delight
 
                 // see if sprite is in bundle 
                 //var unityObject = await unityAssetBundle.LoadAssetAsync<T>(Id); // bug in Unity makes it so assets loaded asynchronously does not get unloaded when Resources.UnloadAsset() is called
-                var unityObject = unityAssetBundle.LoadAsset<T>(Id);
+                var unityObject = unityAssetBundle.LoadAsset<T>(Name);
                 if (unityObject == null)
                 {
                     Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Asset not found in asset bundle \"{1}\".", Id, AssetBundleId));

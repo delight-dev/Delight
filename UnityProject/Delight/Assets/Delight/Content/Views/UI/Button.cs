@@ -101,19 +101,26 @@ namespace Delight
         /// </summary>
         public virtual void TextChanged()
         {
-            // adjust button size to text
-            if (AutoSize == AutoSize.Width || AutoSize == AutoSize.Default)
+            try
             {
-                Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
+                // adjust button size to text
+                if (AutoSize == AutoSize.Width || AutoSize == AutoSize.Default)
+                {
+                    Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
+                }
+                else if (AutoSize == AutoSize.Height)
+                {
+                    Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
+                }
+                else if (AutoSize == AutoSize.WidthAndHeight)
+                {
+                    Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
+                    Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
+                }
             }
-            else if (AutoSize == AutoSize.Height)
+            catch
             {
-                Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
-            }
-            else if (AutoSize == AutoSize.WidthAndHeight)
-            {
-                Width = new ElementSize(Label.PreferredWidth + TextPadding.Left.Pixels + TextPadding.Right.Pixels);
-                Height = new ElementSize(Label.PreferredHeight + TextPadding.Top.Pixels + TextPadding.Bottom.Pixels);
+                // bugfix of older version of TextMeshPro bug where PreferredWidth / PreferredHeight throws exceptions
             }
 
             // disable label if no text is shown 

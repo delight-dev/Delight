@@ -629,6 +629,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarRotationProperty = ScrollableRegion.HorizontalScrollbarBarRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarBarRotation
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarRotation; }
+            set { ScrollableRegion.HorizontalScrollbarBarRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = ScrollableRegion.HorizontalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -902,6 +909,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarHandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleRotationProperty = ScrollableRegion.HorizontalScrollbarHandleRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarHandleRotation
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandleRotation; }
+            set { ScrollableRegion.HorizontalScrollbarHandleRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = ScrollableRegion.HorizontalScrollbarHandleGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarHandleGameObject
         {
@@ -1173,6 +1187,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarIgnoreFlip; }
             set { ScrollableRegion.HorizontalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarRotationProperty = ScrollableRegion.HorizontalScrollbarRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarRotation
+        {
+            get { return ScrollableRegion.HorizontalScrollbarRotation; }
+            set { ScrollableRegion.HorizontalScrollbarRotation = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = ScrollableRegion.HorizontalScrollbarGameObjectProperty;
@@ -1483,6 +1504,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRotationProperty = ScrollableRegion.VerticalScrollbarBarRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarBarRotation
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarRotation; }
+            set { ScrollableRegion.VerticalScrollbarBarRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = ScrollableRegion.VerticalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -1756,6 +1784,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarHandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleRotationProperty = ScrollableRegion.VerticalScrollbarHandleRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarHandleRotation
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandleRotation; }
+            set { ScrollableRegion.VerticalScrollbarHandleRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = ScrollableRegion.VerticalScrollbarHandleGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarHandleGameObject
         {
@@ -2027,6 +2062,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarIgnoreFlip; }
             set { ScrollableRegion.VerticalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarRotationProperty = ScrollableRegion.VerticalScrollbarRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarRotation
+        {
+            get { return ScrollableRegion.VerticalScrollbarRotation; }
+            set { ScrollableRegion.VerticalScrollbarRotation = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = ScrollableRegion.VerticalScrollbarGameObjectProperty;
@@ -2377,6 +2419,13 @@ namespace Delight
         {
             get { return ScrollableRegion.IgnoreFlip; }
             set { ScrollableRegion.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionRotationProperty = ScrollableRegion.RotationProperty;
+        public UnityEngine.Quaternion ScrollableRegionRotation
+        {
+            get { return ScrollableRegion.Rotation; }
+            set { ScrollableRegion.Rotation = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionGameObjectProperty = ScrollableRegion.GameObjectProperty;

@@ -18,22 +18,33 @@ namespace Delight
         {
             // constructing List (PlayerList)
             PlayerList = new List(this, this, "PlayerList", PlayerListTemplate);
+            PlayerList.ItemSelected.RegisterHandler(this, "AttackModifierSelected");
 
             // binding <List Items="{player in @Players}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "PlayerList", "Items" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Items = Models.Players, () => { }, false));
+
+            // binding <List Width="{TestWidth}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestWidth" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "Width" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Width = TestWidth, () => { }, false));
+
+            // binding <List Height="{TestWidth}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestWidth" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "PlayerList", "Height" }, new List<Func<BindableObject>> { () => this, () => PlayerList }), () => PlayerList.Height = TestWidth, () => { }, false));
 
             // templates for PlayerList
             PlayerList.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
             {
                 var listItem1 = new ListItem(this, PlayerList.Content, "ListItem1", ListItem1Template);
-                var buttonTest = new Button(this, listItem1.Content, "ButtonTest", ButtonTestTemplate);
+                var buttonTest = new Label(this, listItem1.Content, "ButtonTest", ButtonTestTemplate);
 
-                // binding <Button Text="{player.Name}">
+                // binding <Label Text="{player.Name}">
                 listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => buttonTest }), () => buttonTest.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiPlayer);
                 return listItem1;
             }, typeof(ListItem), "ListItem1"));
+
+            // constructing Button (Button1)
+            Button1 = new Button(this, this, "Button1", Button1Template);
+            Button1.Click.RegisterHandler(this, "SetWidth");
             this.AfterInitializeInternal();
         }
 
@@ -48,12 +59,15 @@ namespace Delight
 
             dependencyProperties.Add(IsActive1Property);
             dependencyProperties.Add(IsActive2Property);
+            dependencyProperties.Add(TestWidthProperty);
             dependencyProperties.Add(PlayerListProperty);
             dependencyProperties.Add(PlayerListTemplateProperty);
             dependencyProperties.Add(ListItem1Property);
             dependencyProperties.Add(ListItem1TemplateProperty);
             dependencyProperties.Add(ButtonTestProperty);
             dependencyProperties.Add(ButtonTestTemplateProperty);
+            dependencyProperties.Add(Button1Property);
+            dependencyProperties.Add(Button1TemplateProperty);
         }
 
         #endregion
@@ -72,6 +86,13 @@ namespace Delight
         {
             get { return IsActive2Property.GetValue(this); }
             set { IsActive2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> TestWidthProperty = new DependencyProperty<Delight.ElementSize>("TestWidth");
+        public Delight.ElementSize TestWidth
+        {
+            get { return TestWidthProperty.GetValue(this); }
+            set { TestWidthProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<List> PlayerListProperty = new DependencyProperty<List>("PlayerList");
@@ -102,8 +123,8 @@ namespace Delight
             set { ListItem1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Button> ButtonTestProperty = new DependencyProperty<Button>("ButtonTest");
-        public Button ButtonTest
+        public readonly static DependencyProperty<Label> ButtonTestProperty = new DependencyProperty<Label>("ButtonTest");
+        public Label ButtonTest
         {
             get { return ButtonTestProperty.GetValue(this); }
             set { ButtonTestProperty.SetValue(this, value); }
@@ -114,6 +135,20 @@ namespace Delight
         {
             get { return ButtonTestTemplateProperty.GetValue(this); }
             set { ButtonTestTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
+        public Button Button1
+        {
+            get { return Button1Property.GetValue(this); }
+            set { Button1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>("Button1Template");
+        public Template Button1Template
+        {
+            get { return Button1TemplateProperty.GetValue(this); }
+            set { Button1TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -148,9 +183,11 @@ namespace Delight
 #if UNITY_EDITOR
                     _groupExamples.Name = "GroupExamples";
 #endif
+                    Delight.GroupExamples.TestWidthProperty.SetDefault(_groupExamples, new ElementSize(0f, ElementSizeUnit.Pixels));
                     Delight.GroupExamples.PlayerListTemplateProperty.SetDefault(_groupExamples, GroupExamplesPlayerList);
                     Delight.GroupExamples.ListItem1TemplateProperty.SetDefault(_groupExamples, GroupExamplesListItem1);
                     Delight.GroupExamples.ButtonTestTemplateProperty.SetDefault(_groupExamples, GroupExamplesButtonTest);
+                    Delight.GroupExamples.Button1TemplateProperty.SetDefault(_groupExamples, GroupExamplesButton1);
                 }
                 return _groupExamples;
             }
@@ -171,12 +208,17 @@ namespace Delight
 #if UNITY_EDITOR
                     _groupExamplesPlayerList.Name = "GroupExamplesPlayerList";
 #endif
-                    Delight.List.WidthProperty.SetDefault(_groupExamplesPlayerList, new ElementSize(425f, ElementSizeUnit.Pixels));
-                    Delight.List.HeightProperty.SetDefault(_groupExamplesPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_groupExamplesPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_groupExamplesPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.List.IsScrollableProperty.SetDefault(_groupExamplesPlayerList, true);
+                    Delight.List.IsScrollableProperty.SetDefault(_groupExamplesPlayerList, false);
+                    Delight.List.OrientationProperty.SetDefault(_groupExamplesPlayerList, Delight.ElementOrientation.Horizontal);
+                    Delight.List.OverflowProperty.SetDefault(_groupExamplesPlayerList, Delight.OverflowMode.Wrap);
+                    Delight.List.ContentAlignmentProperty.SetDefault(_groupExamplesPlayerList, Delight.ElementAlignment.Right);
+                    Delight.List.DeselectAfterSelectProperty.SetDefault(_groupExamplesPlayerList, true);
+                    Delight.List.ScaleProperty.SetDefault(_groupExamplesPlayerList, new Vector3(1f, 1f, 1f));
                     Delight.List.ItemsProperty.SetHasBinding(_groupExamplesPlayerList);
+                    Delight.List.WidthProperty.SetHasBinding(_groupExamplesPlayerList);
+                    Delight.List.HeightProperty.SetHasBinding(_groupExamplesPlayerList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_groupExamplesPlayerList, GroupExamplesPlayerListScrollableRegion);
                 }
                 return _groupExamplesPlayerList;
@@ -199,6 +241,10 @@ namespace Delight
                     _groupExamplesPlayerListScrollableRegion.Name = "GroupExamplesPlayerListScrollableRegion";
 #endif
                     Delight.ScrollableRegion.DisableInteractionScrollDeltaProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, 4f);
+                    Delight.ScrollableRegion.CanScrollHorizontallyProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, false);
+                    Delight.ScrollableRegion.CanScrollVerticallyProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, false);
+                    Delight.ScrollableRegion.HorizontalScrollbarVisibilityProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, Delight.ScrollbarVisibilityMode.Remove);
+                    Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, Delight.ScrollbarVisibilityMode.Remove);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, GroupExamplesPlayerListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, GroupExamplesPlayerListScrollableRegionHorizontalScrollbar);
                     Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_groupExamplesPlayerListScrollableRegion, GroupExamplesPlayerListScrollableRegionVerticalScrollbar);
@@ -366,8 +412,9 @@ namespace Delight
 #if UNITY_EDITOR
                     _groupExamplesListItem1.Name = "GroupExamplesListItem1";
 #endif
-                    Delight.ListItem.WidthProperty.SetDefault(_groupExamplesListItem1, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.ListItem.HeightProperty.SetDefault(_groupExamplesListItem1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.WidthProperty.SetDefault(_groupExamplesListItem1, new ElementSize(120f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.HeightProperty.SetDefault(_groupExamplesListItem1, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.BackgroundColorProperty.SetDefault(_groupExamplesListItem1, new UnityEngine.Color(0f, 0f, 1f, 1f));
                 }
                 return _groupExamplesListItem1;
             }
@@ -384,36 +431,58 @@ namespace Delight
                 if (_groupExamplesButtonTest == null)
 #endif
                 {
-                    _groupExamplesButtonTest = new Template(ButtonTemplates.Button);
+                    _groupExamplesButtonTest = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _groupExamplesButtonTest.Name = "GroupExamplesButtonTest";
 #endif
-                    Delight.Button.WidthProperty.SetDefault(_groupExamplesButtonTest, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.Button.HeightProperty.SetDefault(_groupExamplesButtonTest, new ElementSize(20f, ElementSizeUnit.Pixels));
-                    Delight.Button.LabelTemplateProperty.SetDefault(_groupExamplesButtonTest, GroupExamplesButtonTestLabel);
+                    Delight.Label.WidthProperty.SetDefault(_groupExamplesButtonTest, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Label.TextProperty.SetHasBinding(_groupExamplesButtonTest);
                 }
                 return _groupExamplesButtonTest;
             }
         }
 
-        private static Template _groupExamplesButtonTestLabel;
-        public static Template GroupExamplesButtonTestLabel
+        private static Template _groupExamplesButton1;
+        public static Template GroupExamplesButton1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_groupExamplesButtonTestLabel == null || _groupExamplesButtonTestLabel.CurrentVersion != Template.Version)
+                if (_groupExamplesButton1 == null || _groupExamplesButton1.CurrentVersion != Template.Version)
 #else
-                if (_groupExamplesButtonTestLabel == null)
+                if (_groupExamplesButton1 == null)
 #endif
                 {
-                    _groupExamplesButtonTestLabel = new Template(ButtonTemplates.ButtonLabel);
+                    _groupExamplesButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
-                    _groupExamplesButtonTestLabel.Name = "GroupExamplesButtonTestLabel";
+                    _groupExamplesButton1.Name = "GroupExamplesButton1";
 #endif
-                    Delight.Label.TextProperty.SetHasBinding(_groupExamplesButtonTestLabel);
+                    Delight.Button.AlignmentProperty.SetDefault(_groupExamplesButton1, Delight.ElementAlignment.TopLeft);
+                    Delight.Button.OffsetProperty.SetDefault(_groupExamplesButton1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_groupExamplesButton1, GroupExamplesButton1Label);
                 }
-                return _groupExamplesButtonTestLabel;
+                return _groupExamplesButton1;
+            }
+        }
+
+        private static Template _groupExamplesButton1Label;
+        public static Template GroupExamplesButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_groupExamplesButton1Label == null || _groupExamplesButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_groupExamplesButton1Label == null)
+#endif
+                {
+                    _groupExamplesButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _groupExamplesButton1Label.Name = "GroupExamplesButton1Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_groupExamplesButton1Label, "SetWidth");
+                }
+                return _groupExamplesButton1Label;
             }
         }
 

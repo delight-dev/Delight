@@ -532,6 +532,13 @@ namespace Delight
             set { HorizontalScrollbar.BarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarRotationProperty = Scrollbar.BarRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarBarRotation
+        {
+            get { return HorizontalScrollbar.BarRotation; }
+            set { HorizontalScrollbar.BarRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -805,6 +812,13 @@ namespace Delight
             set { HorizontalScrollbar.HandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleRotationProperty = Scrollbar.HandleRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarHandleRotation
+        {
+            get { return HorizontalScrollbar.HandleRotation; }
+            set { HorizontalScrollbar.HandleRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarHandleGameObject
         {
@@ -1076,6 +1090,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.IgnoreFlip; }
             set { HorizontalScrollbar.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarRotationProperty = Scrollbar.RotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarRotation
+        {
+            get { return HorizontalScrollbar.Rotation; }
+            set { HorizontalScrollbar.Rotation = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;
@@ -1386,6 +1407,13 @@ namespace Delight
             set { VerticalScrollbar.BarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRotationProperty = Scrollbar.BarRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarBarRotation
+        {
+            get { return VerticalScrollbar.BarRotation; }
+            set { VerticalScrollbar.BarRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -1659,6 +1687,13 @@ namespace Delight
             set { VerticalScrollbar.HandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleRotationProperty = Scrollbar.HandleRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarHandleRotation
+        {
+            get { return VerticalScrollbar.HandleRotation; }
+            set { VerticalScrollbar.HandleRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarHandleGameObject
         {
@@ -1930,6 +1965,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.IgnoreFlip; }
             set { VerticalScrollbar.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarRotationProperty = Scrollbar.RotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarRotation
+        {
+            get { return VerticalScrollbar.Rotation; }
+            set { VerticalScrollbar.Rotation = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;

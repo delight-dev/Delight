@@ -639,6 +639,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarRotationProperty = List.HorizontalScrollbarBarRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarBarRotation
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarRotation; }
+            set { ComboBoxList.HorizontalScrollbarBarRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = List.HorizontalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -912,6 +919,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarHandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleRotationProperty = List.HorizontalScrollbarHandleRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarHandleRotation
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleRotation; }
+            set { ComboBoxList.HorizontalScrollbarHandleRotation = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = List.HorizontalScrollbarHandleGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarHandleGameObject
         {
@@ -1183,6 +1197,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarIgnoreFlip; }
             set { ComboBoxList.HorizontalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarRotationProperty = List.HorizontalScrollbarRotationProperty;
+        public UnityEngine.Quaternion HorizontalScrollbarRotation
+        {
+            get { return ComboBoxList.HorizontalScrollbarRotation; }
+            set { ComboBoxList.HorizontalScrollbarRotation = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = List.HorizontalScrollbarGameObjectProperty;
@@ -1493,6 +1514,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRotationProperty = List.VerticalScrollbarBarRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarBarRotation
+        {
+            get { return ComboBoxList.VerticalScrollbarBarRotation; }
+            set { ComboBoxList.VerticalScrollbarBarRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = List.VerticalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -1766,6 +1794,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarHandleIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleRotationProperty = List.VerticalScrollbarHandleRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarHandleRotation
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleRotation; }
+            set { ComboBoxList.VerticalScrollbarHandleRotation = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = List.VerticalScrollbarHandleGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarHandleGameObject
         {
@@ -2037,6 +2072,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarIgnoreFlip; }
             set { ComboBoxList.VerticalScrollbarIgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarRotationProperty = List.VerticalScrollbarRotationProperty;
+        public UnityEngine.Quaternion VerticalScrollbarRotation
+        {
+            get { return ComboBoxList.VerticalScrollbarRotation; }
+            set { ComboBoxList.VerticalScrollbarRotation = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = List.VerticalScrollbarGameObjectProperty;
@@ -2389,6 +2431,13 @@ namespace Delight
             set { ComboBoxList.ScrollableRegionIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty ScrollableRegionRotationProperty = List.ScrollableRegionRotationProperty;
+        public UnityEngine.Quaternion ScrollableRegionRotation
+        {
+            get { return ComboBoxList.ScrollableRegionRotation; }
+            set { ComboBoxList.ScrollableRegionRotation = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionGameObjectProperty = List.ScrollableRegionGameObjectProperty;
         public UnityEngine.GameObject ScrollableRegionGameObject
         {
@@ -2667,6 +2716,13 @@ namespace Delight
         {
             get { return ComboBoxList.IgnoreFlip; }
             set { ComboBoxList.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty ComboBoxListRotationProperty = List.RotationProperty;
+        public UnityEngine.Quaternion ComboBoxListRotation
+        {
+            get { return ComboBoxList.Rotation; }
+            set { ComboBoxList.Rotation = value; }
         }
 
         public readonly static DependencyProperty ComboBoxListGameObjectProperty = List.GameObjectProperty;
@@ -3397,6 +3453,13 @@ namespace Delight
             set { ComboBoxButton.LabelIgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty ButtonLabelRotationProperty = Button.LabelRotationProperty;
+        public UnityEngine.Quaternion ButtonLabelRotation
+        {
+            get { return ComboBoxButton.LabelRotation; }
+            set { ComboBoxButton.LabelRotation = value; }
+        }
+
         public readonly static DependencyProperty ButtonLabelGameObjectProperty = Button.LabelGameObjectProperty;
         public UnityEngine.GameObject ButtonLabelGameObject
         {
@@ -3668,6 +3731,13 @@ namespace Delight
         {
             get { return ComboBoxButton.IgnoreFlip; }
             set { ComboBoxButton.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty ButtonRotationProperty = Button.RotationProperty;
+        public UnityEngine.Quaternion ButtonRotation
+        {
+            get { return ComboBoxButton.Rotation; }
+            set { ComboBoxButton.Rotation = value; }
         }
 
         public readonly static DependencyProperty ButtonGameObjectProperty = Button.GameObjectProperty;

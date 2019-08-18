@@ -347,6 +347,13 @@ namespace Delight
             set { Bar.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty BarRotationProperty = Image.RotationProperty;
+        public UnityEngine.Quaternion BarRotation
+        {
+            get { return Bar.Rotation; }
+            set { Bar.Rotation = value; }
+        }
+
         public readonly static DependencyProperty BarGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject BarGameObject
         {
@@ -618,6 +625,13 @@ namespace Delight
         {
             get { return Handle.IgnoreFlip; }
             set { Handle.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty HandleRotationProperty = Image.RotationProperty;
+        public UnityEngine.Quaternion HandleRotation
+        {
+            get { return Handle.Rotation; }
+            set { Handle.Rotation = value; }
         }
 
         public readonly static DependencyProperty HandleGameObjectProperty = Image.GameObjectProperty;

@@ -49,6 +49,7 @@ namespace Delight
             dependencyProperties.Add(FastMaterialProperty);
             dependencyProperties.Add(BubbleNotifyChildLayoutChangedProperty);
             dependencyProperties.Add(IgnoreFlipProperty);
+            dependencyProperties.Add(RotationProperty);
         }
 
         #endregion
@@ -200,6 +201,13 @@ namespace Delight
         {
             get { return IgnoreFlipProperty.GetValue(this); }
             set { IgnoreFlipProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.Quaternion> RotationProperty = new DependencyProperty<UnityEngine.Quaternion>("Rotation");
+        public UnityEngine.Quaternion Rotation
+        {
+            get { return RotationProperty.GetValue(this); }
+            set { RotationProperty.SetValue(this, value); }
         }
 
         #endregion

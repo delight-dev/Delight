@@ -1168,6 +1168,13 @@ namespace Delight
             set { InputText.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty InputTextRotationProperty = Label.RotationProperty;
+        public UnityEngine.Quaternion InputTextRotation
+        {
+            get { return InputText.Rotation; }
+            set { InputText.Rotation = value; }
+        }
+
         public readonly static DependencyProperty InputTextGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject InputTextGameObject
         {

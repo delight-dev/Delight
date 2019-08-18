@@ -99,6 +99,7 @@ namespace Delight
                 case nameof(OffsetFromParent):
                 case nameof(Pivot):
                 case nameof(Scale):
+                case nameof(Rotation):
                     OffsetChanged();
                     break;
 
@@ -246,6 +247,11 @@ namespace Delight
             if (!PivotProperty.IsUndefined(this))
             {
                 RectTransform.pivot = Pivot;
+            }
+
+            if (!RotationProperty.IsUndefined(this))
+            {
+                RectTransform.localRotation = Rotation;
             }
 
             // update rectTransform

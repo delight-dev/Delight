@@ -98,25 +98,32 @@ namespace Delight
         /// </summary>
         public virtual void TextChanged()
         {
-            if (AutoSize != AutoSize.None && EnableWordWrappingProperty.IsUndefined(this))
+            try
             {
-                // when autosizing disable wordwrapping so PreferredWidth is calculated correctly
-                EnableWordWrapping = false; 
-            }
+                if (AutoSize != AutoSize.None && EnableWordWrappingProperty.IsUndefined(this))
+                {
+                    // when autosizing disable wordwrapping so PreferredWidth is calculated correctly
+                    EnableWordWrapping = false;
+                }
 
-            // adjust label size to text
-            if (AutoSize == AutoSize.Width)
-            {
-                Width = new ElementSize(PreferredWidth);
+                // adjust label size to text
+                if (AutoSize == AutoSize.Width)
+                {
+                    Width = new ElementSize(PreferredWidth);
+                }
+                else if (AutoSize == AutoSize.Height)
+                {
+                    Height = new ElementSize(PreferredHeight);
+                }
+                else if (AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.Default)
+                {
+                    Width = new ElementSize(PreferredWidth);
+                    Height = new ElementSize(PreferredHeight);
+                }
             }
-            else if (AutoSize == AutoSize.Height)
+            catch
             {
-                Height = new ElementSize(PreferredHeight);
-            }
-            else if (AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.Default)
-            {
-                Width = new ElementSize(PreferredWidth);
-                Height = new ElementSize(PreferredHeight);
+                // bugfix of older version of TextMeshPro bug where PreferredWidth / PreferredHeight throws exceptions
             }
         }
 

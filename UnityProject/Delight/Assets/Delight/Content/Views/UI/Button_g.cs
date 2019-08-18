@@ -774,6 +774,13 @@ namespace Delight
             set { Label.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty LabelRotationProperty = Label.RotationProperty;
+        public UnityEngine.Quaternion LabelRotation
+        {
+            get { return Label.Rotation; }
+            set { Label.Rotation = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {

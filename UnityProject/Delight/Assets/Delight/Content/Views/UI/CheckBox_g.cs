@@ -360,6 +360,13 @@ namespace Delight
             set { CheckBoxImageView.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxRotationProperty = Image.RotationProperty;
+        public UnityEngine.Quaternion CheckBoxRotation
+        {
+            get { return CheckBoxImageView.Rotation; }
+            set { CheckBoxImageView.Rotation = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject CheckBoxGameObject
         {
@@ -995,6 +1002,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.IgnoreFlip; }
             set { CheckBoxLabel.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelRotationProperty = Label.RotationProperty;
+        public UnityEngine.Quaternion CheckBoxLabelRotation
+        {
+            get { return CheckBoxLabel.Rotation; }
+            set { CheckBoxLabel.Rotation = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelGameObjectProperty = Label.GameObjectProperty;

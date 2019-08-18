@@ -360,6 +360,13 @@ namespace Delight
             set { RadioButtonImageView.IgnoreFlip = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonRotationProperty = Image.RotationProperty;
+        public UnityEngine.Quaternion RadioButtonRotation
+        {
+            get { return RadioButtonImageView.Rotation; }
+            set { RadioButtonImageView.Rotation = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject RadioButtonGameObject
         {
@@ -995,6 +1002,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.IgnoreFlip; }
             set { RadioButtonLabel.IgnoreFlip = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelRotationProperty = Label.RotationProperty;
+        public UnityEngine.Quaternion RadioButtonLabelRotation
+        {
+            get { return RadioButtonLabel.Rotation; }
+            set { RadioButtonLabel.Rotation = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelGameObjectProperty = Label.GameObjectProperty;

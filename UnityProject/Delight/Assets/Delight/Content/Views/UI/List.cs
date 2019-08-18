@@ -983,7 +983,8 @@ namespace Delight
                     ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                     ScrollableRegion.ContentRegion.Width = new ElementSize(newWidth);
                     ScrollableRegion.ContentRegion.Height = new ElementSize(newHeight);
-                    ScrollableRegion.UpdateLayout(false);
+                    ScrollableRegion.ContentRegion.UpdateLayout(false);
+                    ScrollableRegion.UpdateScrollbars();
                     ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
                 }
 
@@ -1161,7 +1162,8 @@ namespace Delight
                         bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                         ScrollableRegion.ContentRegion.Height = new ElementSize(newHeight);
-                        ScrollableRegion.UpdateLayout(false);
+                        ScrollableRegion.ContentRegion.UpdateLayout(false);
+                        ScrollableRegion.UpdateScrollbars();
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
                     }
 
@@ -1204,7 +1206,8 @@ namespace Delight
                         bool disableUpdate = ScrollableRegion.ContentRegion.DisableLayoutUpdate;
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = true;
                         ScrollableRegion.ContentRegion.Width = new ElementSize(newWidth);
-                        ScrollableRegion.UpdateLayout(false);
+                        ScrollableRegion.ContentRegion.UpdateLayout(false);
+                        ScrollableRegion.UpdateScrollbars();
                         ScrollableRegion.ContentRegion.DisableLayoutUpdate = disableUpdate;
                     }
 
