@@ -156,6 +156,22 @@ namespace Delight
             ItemSelected?.Invoke(this, selectionData);
         }
 
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
+        public void SelectItem(int index, bool triggeredByClick = false)
+        {
+            ComboBoxList.SelectItem(index, triggeredByClick);
+        }
+
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
+        public void SelectItem(BindableObject item, bool triggeredByClick = false)
+        {
+            ComboBoxList.SelectItem(item, triggeredByClick);
+        }
+
         #endregion
     }
 }

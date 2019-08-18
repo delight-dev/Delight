@@ -1254,6 +1254,28 @@ namespace Delight
         /// <summary>
         /// Selects item in the list.
         /// </summary>
+        public void SelectItem(int index, bool triggeredByClick = false)
+        {
+            int itemCount = IsStatic ? Content.LayoutChildren.Count : (Items != null ? Items.Count : -1);
+            if (index < 0 || index > itemCount)
+            {
+                DeselectAll();
+                return;
+            }
+
+            if (IsStatic)
+            {
+                SelectItem(Content.LayoutChildren[index], triggeredByClick);
+            }
+            else
+            {
+                SelectItem(Items.Get(index), triggeredByClick);
+            }
+        }
+
+        /// <summary>
+        /// Selects item in the list.
+        /// </summary>
         public void SelectItem(BindableObject item, bool triggeredByClick = false)
         {
             if (item == null)
@@ -1461,15 +1483,24 @@ namespace Delight
                 }
                 return;
             }
-
-            foreach (var listItem in _presentedItems.Values)
+            else if (IsStatic)
             {
-                SetSelected(listItem, false);
+                foreach (var listItem in Content.LayoutChildren)
+                {
+                    SetSelected(listItem as ListItem, false);
+                }
             }
-
-            if (SelectedItem != null)
+            else
             {
-                SelectedItem = null;
+                foreach (var listItem in _presentedItems.Values)
+                {
+                    SetSelected(listItem, false);
+                }
+
+                if (SelectedItem != null)
+                {
+                    SelectedItem = null;
+                }
             }
         }
 
