@@ -45,6 +45,20 @@ namespace Delight
         {
             switch (e.ChangeAction)
             {
+                case CollectionChangeAction.AddRange:
+                    var rangeArgs = e as CollectionChangedRangeEventArgs;
+                    List<T> addedItems = new List<T>();
+                    foreach (var item in rangeArgs.Items)
+                    {
+                        if (_filter(item as T))
+                        {
+                            addedItems.Add(item as T);
+                        }
+                    }
+
+                    base.AddRange(addedItems);
+                    break;
+
                 case CollectionChangeAction.Add:
                     if (_filter(e.Item as T))
                     {

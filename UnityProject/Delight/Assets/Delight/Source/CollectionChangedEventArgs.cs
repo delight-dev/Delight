@@ -29,6 +29,14 @@ namespace Delight
     }
 
     /// <summary>
+    /// Contains arguments for the collection selection event.
+    /// </summary>
+    public class CollectionChangedRangeEventArgs : CollectionChangedEventArgs
+    {
+        public List<BindableObject> Items;
+    }
+
+    /// <summary>
     /// Contains a batch of collection changed event arguments.
     /// </summary>
     public class BatchedCollectionChangedEventArgs : CollectionChangedEventArgs

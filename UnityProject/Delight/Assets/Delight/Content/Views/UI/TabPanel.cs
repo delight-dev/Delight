@@ -167,6 +167,14 @@ namespace Delight
             bool updateLayout = false;
             switch (e.ChangeAction)
             {
+                case CollectionChangeAction.AddRange:
+                    var rangeArgs = e as CollectionChangedRangeEventArgs;
+                    foreach (var item in rangeArgs.Items)
+                    {
+                        CreateTabItem(item);
+                    }
+                    break;
+
                 case CollectionChangeAction.Add:
                     CreateTabItem(e.Item);
                     break;

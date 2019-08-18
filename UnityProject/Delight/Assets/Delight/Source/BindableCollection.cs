@@ -117,9 +117,31 @@ namespace Delight
 
         public virtual void AddRange(IEnumerable<T> items)
         {
+            var addedItems = new List<BindableObject>();
             foreach (var item in items)
             {
-                Add(item);
+                if (String.IsNullOrEmpty(item.Id))
+                {
+                    item.Id = Guid.NewGuid().ToString();
+                }
+                else if (Data.ContainsKey(item.Id))
+                {
+                    return;
+                }
+
+                Data.Add(item.Id, item);
+                DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+                OnPropertyChanged(item.Id);
+                addedItems.Add(item);
+            }
+
+            if (addedItems.Any())
+            {
+                Notify(new CollectionChangedRangeEventArgs
+                {
+                    ChangeAction = CollectionChangeAction.AddRange,
+                    Items = addedItems
+                });
             }
         }
 

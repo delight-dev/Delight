@@ -194,6 +194,15 @@ namespace Delight
             bool updateLayout = false;
             switch (e.ChangeAction)
             {
+                case CollectionChangeAction.AddRange:
+                    var rangeArgs = e as CollectionChangedRangeEventArgs;
+                    foreach (var item in rangeArgs.Items)
+                    {
+                        CreateListItem(item);
+                    }
+                    updateLayout = true;
+                    break;
+
                 case CollectionChangeAction.Add:
                     CreateListItem(e.Item);
                     updateLayout = true;
