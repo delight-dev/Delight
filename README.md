@@ -9,7 +9,7 @@ Get the latest API-docs, tutorials, extras and news at [https://delight-dev.gith
 
 ## Quick Start
 
-1. Import the [Delight unity package](https://github.com/delight-dev/Delight/raw/master/Releases/Delight-latest.unitypackage) into your Unity project. 
+1. Import the latest [Delight unity package](https://github.com/delight-dev/Delight/raw/master/Releases/Delight-latest.unitypackage) into your Unity project. 
 
 
 
