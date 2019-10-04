@@ -897,27 +897,30 @@ namespace Delight
                     maxHeight = childSize.Height.Pixels > maxHeight ? childSize.Height.Pixels : maxHeight;
                 }
 
-                if (!IsVirtualized)
+                if (!DisableItemArrangement)
                 {
-                    bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
-                    childView.DisableLayoutUpdate = true;
-
-                    // update child layout
-                    if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                    if (!IsVirtualized)
                     {
-                        childView.OffsetFromParent = offset;
-                        childView.Alignment = alignment;
+                        bool defaultDisableChildLayoutUpdate = childView.DisableLayoutUpdate;
+                        childView.DisableLayoutUpdate = true;
 
-                        childView.UpdateLayout(false);
+                        // update child layout
+                        if (!offset.Equals(childView.OffsetFromParent) || alignment != childView.Alignment)
+                        {
+                            childView.OffsetFromParent = offset;
+                            childView.Alignment = alignment;
+
+                            childView.UpdateLayout(false);
+                        }
+
+                        childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
                     }
-
-                    childView.DisableLayoutUpdate = defaultDisableChildLayoutUpdate;
-                }
-                else
-                {
-                    // set offset of virtual size
-                    childSize.Offset = offset;
-                    childSize.Alignment = alignment;
+                    else
+                    {
+                        // set offset of virtual size
+                        childSize.Offset = offset;
+                        childSize.Alignment = alignment;
+                    }
                 }
 
                 ++childIndex;
@@ -1274,7 +1277,7 @@ namespace Delight
 
             if (IsStatic)
             {
-                SelectItem(Content.LayoutChildren[index], triggeredByClick);
+                SelectItem(Content.LayoutChildren[index] as ListItem, triggeredByClick);
             }
             else
             {
@@ -1563,6 +1566,42 @@ namespace Delight
             // unblock drag-events in parent scrollable regions
             // TODO this can be done through a better mechanism as we need to do this anytime new children are added to an hierarchy not just here            
             this.ForEachParent<ScrollableRegion>(x => x.UnblockDragEvents(viewsToUnblock));
+        }
+
+        /// <summary>
+        /// Gets list item based belonging to bindable object.
+        /// </summary>
+        public ListItem GetListItem(BindableObject key)
+        {
+            if (IsVirtualized)
+            {
+                return null;
+            }
+            else
+            {
+                _presentedItems.TryGetValue(key, out var listItem);
+                return listItem;
+            }
+        }
+
+        /// <summary>
+        /// Gets list items.
+        /// </summary>
+        public List<ListItem> GetActiveListItems()
+        {
+            if (IsVirtualized)
+            {
+                return null;
+            }
+            else
+            {
+                var listItems = new List<ListItem>();
+                foreach (ListItem listItem in Content.LayoutChildren)
+                {
+                    listItems.Add(listItem);
+                }
+                return listItems;
+            }
         }
 
         #endregion

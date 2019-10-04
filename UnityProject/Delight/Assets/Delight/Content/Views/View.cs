@@ -578,6 +578,8 @@ namespace Delight
         /// </summary>
         protected virtual void AfterUnload()
         {
+            _state = DefaultStateName;
+            _previousState = DefaultStateName;
         }
 
         /// <summary>

@@ -539,6 +539,13 @@ namespace Delight
             set { HorizontalScrollbar.BarRotation = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarPositionProperty = Scrollbar.BarPositionProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarBarPosition
+        {
+            get { return HorizontalScrollbar.BarPosition; }
+            set { HorizontalScrollbar.BarPosition = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -819,6 +826,13 @@ namespace Delight
             set { HorizontalScrollbar.HandleRotation = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandlePositionProperty = Scrollbar.HandlePositionProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarHandlePosition
+        {
+            get { return HorizontalScrollbar.HandlePosition; }
+            set { HorizontalScrollbar.HandlePosition = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarHandleGameObject
         {
@@ -1097,6 +1111,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.Rotation; }
             set { HorizontalScrollbar.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarPositionProperty = Scrollbar.PositionProperty;
+        public UnityEngine.Vector3 HorizontalScrollbarPosition
+        {
+            get { return HorizontalScrollbar.Position; }
+            set { HorizontalScrollbar.Position = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;
@@ -1414,6 +1435,13 @@ namespace Delight
             set { VerticalScrollbar.BarRotation = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarPositionProperty = Scrollbar.BarPositionProperty;
+        public UnityEngine.Vector3 VerticalScrollbarBarPosition
+        {
+            get { return VerticalScrollbar.BarPosition; }
+            set { VerticalScrollbar.BarPosition = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -1694,6 +1722,13 @@ namespace Delight
             set { VerticalScrollbar.HandleRotation = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandlePositionProperty = Scrollbar.HandlePositionProperty;
+        public UnityEngine.Vector3 VerticalScrollbarHandlePosition
+        {
+            get { return VerticalScrollbar.HandlePosition; }
+            set { VerticalScrollbar.HandlePosition = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarHandleGameObject
         {
@@ -1972,6 +2007,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.Rotation; }
             set { VerticalScrollbar.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarPositionProperty = Scrollbar.PositionProperty;
+        public UnityEngine.Vector3 VerticalScrollbarPosition
+        {
+            get { return VerticalScrollbar.Position; }
+            set { VerticalScrollbar.Position = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;

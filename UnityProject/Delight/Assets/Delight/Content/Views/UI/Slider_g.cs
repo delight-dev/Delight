@@ -457,6 +457,13 @@ namespace Delight
             set { SliderBackgroundImageView.Rotation = value; }
         }
 
+        public readonly static DependencyProperty SliderPositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 SliderPosition
+        {
+            get { return SliderBackgroundImageView.Position; }
+            set { SliderBackgroundImageView.Position = value; }
+        }
+
         public readonly static DependencyProperty SliderGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject SliderGameObject
         {
@@ -737,6 +744,13 @@ namespace Delight
             set { SliderFillImageView.Rotation = value; }
         }
 
+        public readonly static DependencyProperty SliderFillPositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 SliderFillPosition
+        {
+            get { return SliderFillImageView.Position; }
+            set { SliderFillImageView.Position = value; }
+        }
+
         public readonly static DependencyProperty SliderFillGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject SliderFillGameObject
         {
@@ -1015,6 +1029,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.Rotation; }
             set { SliderHandleImageView.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandlePositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 SliderHandlePosition
+        {
+            get { return SliderHandleImageView.Position; }
+            set { SliderHandleImageView.Position = value; }
         }
 
         public readonly static DependencyProperty SliderHandleGameObjectProperty = Image.GameObjectProperty;

@@ -367,6 +367,13 @@ namespace Delight
             set { RadioButtonImageView.Rotation = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonPositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 RadioButtonPosition
+        {
+            get { return RadioButtonImageView.Position; }
+            set { RadioButtonImageView.Position = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject RadioButtonGameObject
         {
@@ -1009,6 +1016,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.Rotation; }
             set { RadioButtonLabel.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelPositionProperty = Label.PositionProperty;
+        public UnityEngine.Vector3 RadioButtonLabelPosition
+        {
+            get { return RadioButtonLabel.Position; }
+            set { RadioButtonLabel.Position = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelGameObjectProperty = Label.GameObjectProperty;

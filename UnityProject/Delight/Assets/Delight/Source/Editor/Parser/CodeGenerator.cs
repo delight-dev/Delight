@@ -2027,9 +2027,10 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        public AssetBundleData()");
                 sb.AppendLine("        {");
 
+                bool localBuild = EditorPrefs.GetBool("Delight_BuildLocalAssetBundles");
                 foreach (var assetBundle in bundles)
                 {
-                    bool isStreamed = config.StreamedBundles.IContains(assetBundle.Name);
+                    bool isStreamed = config.StreamedBundles.IContains(assetBundle.Name) || localBuild;
                     sb.AppendLine("            {0} = new AssetBundle {{ Id = \"{1}\", StorageMode = StorageMode.{2} }};", assetBundle.Name.ToPropertyName(), assetBundle.Name, isStreamed ? "Local" : "Remote");
                 }
                 sb.AppendLine();

@@ -327,6 +327,19 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called after the view has been unloaded.
+        /// </summary>
+        protected override void AfterUnload()
+        {
+            base.AfterUnload();
+            Click.IsEnabled = true;
+            MouseEnter.IsEnabled = true;
+            MouseExit.IsEnabled = true;
+            MouseDown.IsEnabled = true;
+            MouseUp.IsEnabled = true;
+        }
+
+        /// <summary>
         /// Called when the button is disabled.
         /// </summary>
         public override void OnDisable()

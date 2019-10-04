@@ -112,26 +112,11 @@ namespace Delight
                 Debug.Log("#Delight# Loading asset bundle: " + Id);
 
                 // get bundle URI 
-                var bundleBaseUri = StorageMode == StorageMode.Remote ?
-                    Config.ServerUriLocator.GetServerUri(Id) : Application.streamingAssetsPath;
-                if (!bundleBaseUri.EndsWith("/"))
-                {
-                    bundleBaseUri += "/";
-                }
-
-                var bundleUri = string.Empty;
-                if (StorageMode == StorageMode.Remote)
-                {
-                    bundleUri = String.Format("{0}{1}{2}{3}", bundleBaseUri, AssetBundleData.GetPlatformName() + "/", DelightAssetsFolder, Id.ToLower());
-                }
-                else
-                {
-                    bundleUri = String.Format("{0}{1}{2}", bundleBaseUri, DelightAssetsFolder, Id.ToLower());
-                }
+                var bundleUri = Config.ServerUriLocator.GetBundleUri(Id, StorageMode);
 
                 // get asset bundle
                 var version = Version > 0 ? Version : Config.AssetBundleVersion;
-                var getBundleRequest = version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, version, 0) : 
+                var getBundleRequest = version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, version, 0) :
                     UnityWebRequestAssetBundle.GetAssetBundle(bundleUri);
                 var response = (await getBundleRequest.SendWebRequest()) as UnityWebRequestAsyncOperation;
                 if (response.webRequest.isNetworkError || response.webRequest.isHttpError)
@@ -164,7 +149,7 @@ namespace Delight
 #if UNITY_EDITOR
             return GetPlatformForAssetBundles(EditorUserBuildSettings.activeBuildTarget);
 #else
-			return GetPlatformForAssetBundles(Application.platform);
+            return GetPlatformForAssetBundles(Application.platform);
 #endif
         }
 
@@ -246,7 +231,7 @@ namespace Delight
 
         #endregion
     }
-    
+
     /// <summary>
     /// Contains references to asset bundle data.
     /// </summary>

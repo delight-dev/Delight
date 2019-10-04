@@ -35,6 +35,9 @@ namespace Delight.Editor
         /// </summary>
         public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {
+            if (EditorPrefs.GetBool("Delight_DisableAutoContentParser"))
+                return;
+
             // check if any views have been added or changed
             var config = MasterConfig.GetInstance();
 

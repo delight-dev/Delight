@@ -100,6 +100,7 @@ namespace Delight
                 case nameof(Pivot):
                 case nameof(Scale):
                 case nameof(Rotation):
+                case nameof(Position):
                 case nameof(Alignment):
                     OffsetChanged();
                     break;
@@ -332,6 +333,11 @@ namespace Delight
             RectTransform.anchoredPosition = new Vector2(
                 RectTransform.offsetMin.x / 2.0f + RectTransform.offsetMax.x / 2.0f,
                 RectTransform.offsetMin.y / 2.0f + RectTransform.offsetMax.y / 2.0f);
+
+            if (!PositionProperty.IsUndefined(this))
+            {
+                RectTransform.localPosition = Position;
+            }
 
             if (!ScaleProperty.IsUndefined(this))
             {

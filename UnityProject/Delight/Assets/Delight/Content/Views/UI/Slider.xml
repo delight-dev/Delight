@@ -6,7 +6,8 @@
         m.SliderBackgroundImageView="Slider"
         m.SliderFillImageView="SliderFill"
         m.SliderHandleImageView="SliderHandle"
-        rename.SliderFillRegionMargin="SliderFillMargin">
+        rename.SliderFillRegionMargin="SliderFillMargin"
+        defaultBinding.Value="TwoWay">
   <Region Id="SliderRegion">
     <Image Id="SliderBackgroundImageView" Width="100%" Height="100%" />
     <Region Id="SliderFillRegion" Margin="0">

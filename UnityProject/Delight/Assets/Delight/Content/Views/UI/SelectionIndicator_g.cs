@@ -752,6 +752,13 @@ namespace Delight
             set { SelectionTab.LabelRotation = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabLabelPositionProperty = Button.LabelPositionProperty;
+        public UnityEngine.Vector3 SelectionTabLabelPosition
+        {
+            get { return SelectionTab.LabelPosition; }
+            set { SelectionTab.LabelPosition = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabLabelGameObjectProperty = Button.LabelGameObjectProperty;
         public UnityEngine.GameObject SelectionTabLabelGameObject
         {
@@ -1030,6 +1037,13 @@ namespace Delight
         {
             get { return SelectionTab.Rotation; }
             set { SelectionTab.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabPositionProperty = Button.PositionProperty;
+        public UnityEngine.Vector3 SelectionTabPosition
+        {
+            get { return SelectionTab.Position; }
+            set { SelectionTab.Position = value; }
         }
 
         public readonly static DependencyProperty SelectionTabGameObjectProperty = Button.GameObjectProperty;

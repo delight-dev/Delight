@@ -367,6 +367,13 @@ namespace Delight
             set { CheckBoxImageView.Rotation = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxPositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 CheckBoxPosition
+        {
+            get { return CheckBoxImageView.Position; }
+            set { CheckBoxImageView.Position = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject CheckBoxGameObject
         {
@@ -1009,6 +1016,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.Rotation; }
             set { CheckBoxLabel.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelPositionProperty = Label.PositionProperty;
+        public UnityEngine.Vector3 CheckBoxLabelPosition
+        {
+            get { return CheckBoxLabel.Position; }
+            set { CheckBoxLabel.Position = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelGameObjectProperty = Label.GameObjectProperty;

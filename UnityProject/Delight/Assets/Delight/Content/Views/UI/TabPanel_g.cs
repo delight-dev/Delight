@@ -378,6 +378,13 @@ namespace Delight
             set { TabHeaderGroup.Rotation = value; }
         }
 
+        public readonly static DependencyProperty TabListPositionProperty = ToggleGroup.PositionProperty;
+        public UnityEngine.Vector3 TabListPosition
+        {
+            get { return TabHeaderGroup.Position; }
+            set { TabHeaderGroup.Position = value; }
+        }
+
         public readonly static DependencyProperty TabListGameObjectProperty = ToggleGroup.GameObjectProperty;
         public UnityEngine.GameObject TabListGameObject
         {

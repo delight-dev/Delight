@@ -199,6 +199,8 @@ namespace Delight
         /// </summary>
         private void UpdateSliderPosition(float value)
         {
+            if (!IsLoaded) return;
+
             float p = (value - Min) / (Max - Min);
             var fillTransform = SliderFillRegion.RectTransform;
 

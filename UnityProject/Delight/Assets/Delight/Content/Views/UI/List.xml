@@ -14,7 +14,8 @@
       IsStatic="t:bool" 
       m.ScrollableRegion="" VirtualItemGetter="t:Method"
       defaultBinding.SelectedItem="TwoWay"
-      RealizationMargin="t:Vector2"> 
+      RealizationMargin="t:Vector2"
+      DisableItemArrangement="t:bool">  
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"
                     AutoSizeContentRegion="False">
   </ScrollableRegion> 

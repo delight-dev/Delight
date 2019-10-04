@@ -781,6 +781,13 @@ namespace Delight
             set { Label.Rotation = value; }
         }
 
+        public readonly static DependencyProperty LabelPositionProperty = Label.PositionProperty;
+        public UnityEngine.Vector3 LabelPosition
+        {
+            get { return Label.Position; }
+            set { Label.Position = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {

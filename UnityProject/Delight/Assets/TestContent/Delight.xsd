@@ -150,6 +150,8 @@
     <xs:attribute name="LabelUseFastShader" type="xs:string" />
     <xs:attribute name="LabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="LabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="LabelRotation" type="xs:string" />
+    <xs:attribute name="LabelPosition" type="xs:string" />
     <xs:attribute name="LabelGameObject" type="xs:string" />
     <xs:attribute name="LabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="LabelIgnoreObject" type="xs:string" />
@@ -195,6 +197,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -269,6 +273,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -350,6 +356,8 @@
     <xs:attribute name="CheckBoxUseFastShader" type="xs:string" />
     <xs:attribute name="CheckBoxBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="CheckBoxIgnoreFlip" type="xs:string" />
+    <xs:attribute name="CheckBoxRotation" type="xs:string" />
+    <xs:attribute name="CheckBoxPosition" type="xs:string" />
     <xs:attribute name="CheckBoxGameObject" type="xs:string" />
     <xs:attribute name="CheckBoxEnableScriptEvents" type="xs:string" />
     <xs:attribute name="CheckBoxIgnoreObject" type="xs:string" />
@@ -440,6 +448,8 @@
     <xs:attribute name="CheckBoxLabelUseFastShader" type="xs:string" />
     <xs:attribute name="CheckBoxLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="CheckBoxLabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="CheckBoxLabelRotation" type="xs:string" />
+    <xs:attribute name="CheckBoxLabelPosition" type="xs:string" />
     <xs:attribute name="CheckBoxLabelGameObject" type="xs:string" />
     <xs:attribute name="CheckBoxLabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="CheckBoxLabelIgnoreObject" type="xs:string" />
@@ -485,6 +495,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -571,6 +583,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -638,6 +652,7 @@
     <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="IsStatic" type="xs:string" />
     <xs:attribute name="RealizationMargin" type="xs:string" />
+    <xs:attribute name="DisableItemArrangement" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -693,6 +708,8 @@
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreObject" type="xs:string" />
@@ -731,6 +748,8 @@
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -769,6 +788,8 @@
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreObject" type="xs:string" />
@@ -812,6 +833,8 @@
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreObject" type="xs:string" />
@@ -850,6 +873,8 @@
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -888,6 +913,8 @@
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreObject" type="xs:string" />
@@ -937,6 +964,8 @@
     <xs:attribute name="ScrollableRegionUseFastShader" type="xs:string" />
     <xs:attribute name="ScrollableRegionBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreFlip" type="xs:string" />
+    <xs:attribute name="ScrollableRegionRotation" type="xs:string" />
+    <xs:attribute name="ScrollableRegionPosition" type="xs:string" />
     <xs:attribute name="ScrollableRegionGameObject" type="xs:string" />
     <xs:attribute name="ScrollableRegionEnableScriptEvents" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreObject" type="xs:string" />
@@ -976,6 +1005,8 @@
     <xs:attribute name="ComboBoxListUseFastShader" type="xs:string" />
     <xs:attribute name="ComboBoxListBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ComboBoxListIgnoreFlip" type="xs:string" />
+    <xs:attribute name="ComboBoxListRotation" type="xs:string" />
+    <xs:attribute name="ComboBoxListPosition" type="xs:string" />
     <xs:attribute name="ComboBoxListGameObject" type="xs:string" />
     <xs:attribute name="ComboBoxListEnableScriptEvents" type="xs:string" />
     <xs:attribute name="ComboBoxListIgnoreObject" type="xs:string" />
@@ -1079,6 +1110,8 @@
     <xs:attribute name="ButtonLabelUseFastShader" type="xs:string" />
     <xs:attribute name="ButtonLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ButtonLabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="ButtonLabelRotation" type="xs:string" />
+    <xs:attribute name="ButtonLabelPosition" type="xs:string" />
     <xs:attribute name="ButtonLabelGameObject" type="xs:string" />
     <xs:attribute name="ButtonLabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="ButtonLabelIgnoreObject" type="xs:string" />
@@ -1117,6 +1150,8 @@
     <xs:attribute name="ButtonUseFastShader" type="xs:string" />
     <xs:attribute name="ButtonBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ButtonIgnoreFlip" type="xs:string" />
+    <xs:attribute name="ButtonRotation" type="xs:string" />
+    <xs:attribute name="ButtonPosition" type="xs:string" />
     <xs:attribute name="ButtonGameObject" type="xs:string" />
     <xs:attribute name="ButtonEnableScriptEvents" type="xs:string" />
     <xs:attribute name="ButtonIgnoreObject" type="xs:string" />
@@ -1145,6 +1180,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1240,6 +1277,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1325,6 +1364,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1416,6 +1457,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1492,6 +1535,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1577,6 +1622,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1665,6 +1712,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1749,6 +1798,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1846,6 +1897,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -1914,6 +1967,7 @@
     <xs:attribute name="IsStatic" type="xs:string" />
     <xs:attribute name="VirtualItemGetter" type="xs:string" />
     <xs:attribute name="RealizationMargin" type="xs:string" />
+    <xs:attribute name="DisableItemArrangement" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -1969,6 +2023,8 @@
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreObject" type="xs:string" />
@@ -2007,6 +2063,8 @@
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -2045,6 +2103,8 @@
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreObject" type="xs:string" />
@@ -2088,6 +2148,8 @@
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreObject" type="xs:string" />
@@ -2126,6 +2188,8 @@
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -2164,6 +2228,8 @@
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreObject" type="xs:string" />
@@ -2213,6 +2279,8 @@
     <xs:attribute name="ScrollableRegionUseFastShader" type="xs:string" />
     <xs:attribute name="ScrollableRegionBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreFlip" type="xs:string" />
+    <xs:attribute name="ScrollableRegionRotation" type="xs:string" />
+    <xs:attribute name="ScrollableRegionPosition" type="xs:string" />
     <xs:attribute name="ScrollableRegionGameObject" type="xs:string" />
     <xs:attribute name="ScrollableRegionEnableScriptEvents" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreObject" type="xs:string" />
@@ -2260,6 +2328,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2355,6 +2425,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2441,6 +2513,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2522,6 +2596,8 @@
     <xs:attribute name="RadioButtonUseFastShader" type="xs:string" />
     <xs:attribute name="RadioButtonBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="RadioButtonIgnoreFlip" type="xs:string" />
+    <xs:attribute name="RadioButtonRotation" type="xs:string" />
+    <xs:attribute name="RadioButtonPosition" type="xs:string" />
     <xs:attribute name="RadioButtonGameObject" type="xs:string" />
     <xs:attribute name="RadioButtonEnableScriptEvents" type="xs:string" />
     <xs:attribute name="RadioButtonIgnoreObject" type="xs:string" />
@@ -2612,6 +2688,8 @@
     <xs:attribute name="RadioButtonLabelUseFastShader" type="xs:string" />
     <xs:attribute name="RadioButtonLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="RadioButtonLabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="RadioButtonLabelRotation" type="xs:string" />
+    <xs:attribute name="RadioButtonLabelPosition" type="xs:string" />
     <xs:attribute name="RadioButtonLabelGameObject" type="xs:string" />
     <xs:attribute name="RadioButtonLabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="RadioButtonLabelIgnoreObject" type="xs:string" />
@@ -2657,6 +2735,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2742,6 +2822,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2826,6 +2908,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -2933,6 +3017,8 @@
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreObject" type="xs:string" />
@@ -2971,6 +3057,8 @@
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -3009,6 +3097,8 @@
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreObject" type="xs:string" />
@@ -3052,6 +3142,8 @@
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreObject" type="xs:string" />
@@ -3090,6 +3182,8 @@
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -3128,6 +3222,8 @@
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreObject" type="xs:string" />
@@ -3186,6 +3282,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -3287,6 +3385,8 @@
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreObject" type="xs:string" />
@@ -3325,6 +3425,8 @@
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -3363,6 +3465,8 @@
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarPosition" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreObject" type="xs:string" />
@@ -3406,6 +3510,8 @@
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreObject" type="xs:string" />
@@ -3444,6 +3550,8 @@
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandlePosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
@@ -3482,6 +3590,8 @@
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarRotation" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarPosition" type="xs:string" />
     <xs:attribute name="VerticalScrollbarGameObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreObject" type="xs:string" />
@@ -3540,6 +3650,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -3622,6 +3734,8 @@
     <xs:attribute name="BarUseFastShader" type="xs:string" />
     <xs:attribute name="BarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="BarIgnoreFlip" type="xs:string" />
+    <xs:attribute name="BarRotation" type="xs:string" />
+    <xs:attribute name="BarPosition" type="xs:string" />
     <xs:attribute name="BarGameObject" type="xs:string" />
     <xs:attribute name="BarEnableScriptEvents" type="xs:string" />
     <xs:attribute name="BarIgnoreObject" type="xs:string" />
@@ -3660,6 +3774,8 @@
     <xs:attribute name="HandleUseFastShader" type="xs:string" />
     <xs:attribute name="HandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="HandleRotation" type="xs:string" />
+    <xs:attribute name="HandlePosition" type="xs:string" />
     <xs:attribute name="HandleGameObject" type="xs:string" />
     <xs:attribute name="HandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="HandleIgnoreObject" type="xs:string" />
@@ -3705,6 +3821,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -3847,6 +3965,8 @@
     <xs:attribute name="SelectionTabLabelUseFastShader" type="xs:string" />
     <xs:attribute name="SelectionTabLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SelectionTabLabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelRotation" type="xs:string" />
+    <xs:attribute name="SelectionTabLabelPosition" type="xs:string" />
     <xs:attribute name="SelectionTabLabelGameObject" type="xs:string" />
     <xs:attribute name="SelectionTabLabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="SelectionTabLabelIgnoreObject" type="xs:string" />
@@ -3885,6 +4005,8 @@
     <xs:attribute name="SelectionTabUseFastShader" type="xs:string" />
     <xs:attribute name="SelectionTabBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SelectionTabIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SelectionTabRotation" type="xs:string" />
+    <xs:attribute name="SelectionTabPosition" type="xs:string" />
     <xs:attribute name="SelectionTabGameObject" type="xs:string" />
     <xs:attribute name="SelectionTabEnableScriptEvents" type="xs:string" />
     <xs:attribute name="SelectionTabIgnoreObject" type="xs:string" />
@@ -3930,6 +4052,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4018,6 +4142,8 @@
     <xs:attribute name="SliderUseFastShader" type="xs:string" />
     <xs:attribute name="SliderBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SliderRotation" type="xs:string" />
+    <xs:attribute name="SliderPosition" type="xs:string" />
     <xs:attribute name="SliderGameObject" type="xs:string" />
     <xs:attribute name="SliderEnableScriptEvents" type="xs:string" />
     <xs:attribute name="SliderIgnoreObject" type="xs:string" />
@@ -4056,6 +4182,8 @@
     <xs:attribute name="SliderFillUseFastShader" type="xs:string" />
     <xs:attribute name="SliderFillBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderFillIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SliderFillRotation" type="xs:string" />
+    <xs:attribute name="SliderFillPosition" type="xs:string" />
     <xs:attribute name="SliderFillGameObject" type="xs:string" />
     <xs:attribute name="SliderFillEnableScriptEvents" type="xs:string" />
     <xs:attribute name="SliderFillIgnoreObject" type="xs:string" />
@@ -4094,6 +4222,8 @@
     <xs:attribute name="SliderHandleUseFastShader" type="xs:string" />
     <xs:attribute name="SliderHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderHandleIgnoreFlip" type="xs:string" />
+    <xs:attribute name="SliderHandleRotation" type="xs:string" />
+    <xs:attribute name="SliderHandlePosition" type="xs:string" />
     <xs:attribute name="SliderHandleGameObject" type="xs:string" />
     <xs:attribute name="SliderHandleEnableScriptEvents" type="xs:string" />
     <xs:attribute name="SliderHandleIgnoreObject" type="xs:string" />
@@ -4139,6 +4269,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4183,10 +4315,10 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="Item" type="xs:string" />
     <xs:attribute name="ContentTemplateData" type="xs:string" />
     <xs:attribute name="Text" type="xs:string" />
     <xs:attribute name="TabHeaderId" type="xs:string" />
-    <xs:attribute name="Item" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -4210,6 +4342,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4356,6 +4490,8 @@
     <xs:attribute name="LabelUseFastShader" type="xs:string" />
     <xs:attribute name="LabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="LabelIgnoreFlip" type="xs:string" />
+    <xs:attribute name="LabelRotation" type="xs:string" />
+    <xs:attribute name="LabelPosition" type="xs:string" />
     <xs:attribute name="LabelGameObject" type="xs:string" />
     <xs:attribute name="LabelEnableScriptEvents" type="xs:string" />
     <xs:attribute name="LabelIgnoreObject" type="xs:string" />
@@ -4401,6 +4537,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4486,6 +4624,8 @@
     <xs:attribute name="TabListUseFastShader" type="xs:string" />
     <xs:attribute name="TabListBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="TabListIgnoreFlip" type="xs:string" />
+    <xs:attribute name="TabListRotation" type="xs:string" />
+    <xs:attribute name="TabListPosition" type="xs:string" />
     <xs:attribute name="TabListGameObject" type="xs:string" />
     <xs:attribute name="TabListEnableScriptEvents" type="xs:string" />
     <xs:attribute name="TabListIgnoreObject" type="xs:string" />
@@ -4533,6 +4673,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4721,6 +4863,8 @@
     <xs:attribute name="InputTextUseFastShader" type="xs:string" />
     <xs:attribute name="InputTextBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="InputTextIgnoreFlip" type="xs:string" />
+    <xs:attribute name="InputTextRotation" type="xs:string" />
+    <xs:attribute name="InputTextPosition" type="xs:string" />
     <xs:attribute name="InputTextGameObject" type="xs:string" />
     <xs:attribute name="InputTextEnableScriptEvents" type="xs:string" />
     <xs:attribute name="InputTextIgnoreObject" type="xs:string" />
@@ -4766,6 +4910,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4904,6 +5050,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -4992,6 +5140,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5089,6 +5239,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5180,6 +5332,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5264,6 +5418,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5331,6 +5487,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5402,6 +5560,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5489,6 +5649,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5577,6 +5739,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5678,6 +5842,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5749,6 +5915,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5846,6 +6014,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -5943,6 +6113,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6013,6 +6185,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6113,6 +6287,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6180,6 +6356,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6280,6 +6458,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6347,6 +6527,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6445,6 +6627,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6512,6 +6696,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6609,6 +6795,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6676,6 +6864,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6743,6 +6933,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6841,6 +7033,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -6938,6 +7132,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />
@@ -7037,6 +7233,8 @@
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
     <xs:attribute name="UnityScript" type="xs:string" />
     <xs:attribute name="Name" type="xs:string" />
     <xs:attribute name="GameObject" type="xs:string" />

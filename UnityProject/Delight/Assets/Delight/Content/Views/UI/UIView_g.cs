@@ -50,6 +50,7 @@ namespace Delight
             dependencyProperties.Add(BubbleNotifyChildLayoutChangedProperty);
             dependencyProperties.Add(IgnoreFlipProperty);
             dependencyProperties.Add(RotationProperty);
+            dependencyProperties.Add(PositionProperty);
         }
 
         #endregion
@@ -208,6 +209,13 @@ namespace Delight
         {
             get { return RotationProperty.GetValue(this); }
             set { RotationProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UnityEngine.Vector3> PositionProperty = new DependencyProperty<UnityEngine.Vector3>("Position");
+        public UnityEngine.Vector3 Position
+        {
+            get { return PositionProperty.GetValue(this); }
+            set { PositionProperty.SetValue(this, value); }
         }
 
         #endregion

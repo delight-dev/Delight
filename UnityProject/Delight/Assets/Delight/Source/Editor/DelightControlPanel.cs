@@ -53,6 +53,13 @@ namespace Delight.Editor
                 EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
 
+            bool localBuild = EditorPrefs.GetBool("Delight_BuildLocalAssetBundles");
+            var newLocalBuild = EditorGUILayout.Toggle("Local Build", EditorPrefs.GetBool("Delight_BuildLocalAssetBundles"));
+            if (newLocalBuild != localBuild)
+            {
+                EditorPrefs.SetBool("Delight_BuildLocalAssetBundles", newLocalBuild);
+            }
+
             bool disableAutoGenerateViews = EditorPrefs.GetBool("Delight_DisableAutoGenerateViews");
             var newDisableAutoGenerateViews = EditorGUILayout.Toggle("Disable view autogen", disableAutoGenerateViews);
             if (newDisableAutoGenerateViews != disableAutoGenerateViews)
@@ -65,6 +72,13 @@ namespace Delight.Editor
             if (newDisableAutoGenerateHandlers != disableAutoGenerateHandlers)
             {
                 EditorPrefs.SetBool("Delight_DisableAutoGenerateHandlers", newDisableAutoGenerateHandlers);
+            }
+
+            bool disableContentParser = EditorPrefs.GetBool("Delight_DisableAutoContentParser");
+            var newDisableContentParser = EditorGUILayout.Toggle("Disable content parser", disableContentParser);
+            if (newDisableContentParser != disableContentParser)
+            {
+                EditorPrefs.SetBool("Delight_DisableAutoContentParser", newDisableContentParser);
             }
 
             // open designer

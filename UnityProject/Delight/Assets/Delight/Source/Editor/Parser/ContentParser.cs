@@ -33,7 +33,7 @@ namespace Delight.Editor.Parser
         public const string ViewsFolder = "/Views/";
         public const string StylesFolder = "/Styles/";
         public const string ScenesFolder = "/Scenes/";
-        public const string StreamingPath = "Assets/StreamingAssets/" + AssetBundle.DelightAssetsFolder;
+        public const string StreamingPath = "Assets/StreamingAssets/";
         public const string RemoteAssetBundlesBasePath = "AssetBundles/";
         private const string DefaultViewType = "UIView";
         private const string DefaultNamespace = "Delight";
@@ -728,7 +728,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration)
         {
-            
+
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
             {
@@ -1836,7 +1836,8 @@ namespace Delight.Editor.Parser
             {
                 // ask to clear output folders
                 var outputPath = GetRemoteBundlePath();
-                string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, StreamingPath);
+                var streamingOutputPath = GetStreamingBundlePath();
+                string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, streamingOutputPath);
                 if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
                 {
                     try
@@ -1845,9 +1846,9 @@ namespace Delight.Editor.Parser
                         {
                             Directory.Delete(outputPath, true);
                         }
-                        if (Directory.Exists(StreamingPath))
+                        if (Directory.Exists(streamingOutputPath))
                         {
-                            Directory.Delete(StreamingPath, true);
+                            Directory.Delete(streamingOutputPath, true);
                         }
                     }
                     catch (System.Exception e)
@@ -1928,6 +1929,7 @@ namespace Delight.Editor.Parser
             if (bundles.Count <= 0)
                 return;
 
+            bool localBuild = EditorPrefs.GetBool("Delight_DeployBuild");
             var config = MasterConfig.GetInstance();
             var streamedBundles = new List<AssetBundleBuild>();
             var remoteBundles = new List<AssetBundleBuild>();
@@ -1943,7 +1945,7 @@ namespace Delight.Editor.Parser
                 build.assetBundleName = bundle.Name.ToLower();
                 build.assetBundleVariant = String.Empty;
                 build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
-                if (config.StreamedBundles.IContains(bundle.Name))
+                if (config.StreamedBundles.IContains(bundle.Name) || localBuild)
                 {
                     streamedBundles.Add(build);
                 }
@@ -1963,11 +1965,12 @@ namespace Delight.Editor.Parser
             // build streamed bundles
             if (streamedBundles.Count() > 0)
             {
-                if (!Directory.Exists(StreamingPath))
-                    Directory.CreateDirectory(StreamingPath);
+                var outputPath = GetStreamingBundlePath();
+                if (!Directory.Exists(outputPath))
+                    Directory.CreateDirectory(outputPath);
 
                 // build bundles with LZ4 compression
-                BuildPipeline.BuildAssetBundles(StreamingPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+                BuildPipeline.BuildAssetBundles(outputPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
             }
 
             if (remoteBundles.Count() > 0)
@@ -1989,6 +1992,13 @@ namespace Delight.Editor.Parser
             return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
         }
 
+        /// <summary>
+        /// Gets streaming asset bundle path.
+        /// </summary>
+        public static string GetStreamingBundlePath()
+        {
+            return String.Format("{0}{1}{2}", StreamingPath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
+        }
 
         /// <summary>
         /// Gets all assets at a path.

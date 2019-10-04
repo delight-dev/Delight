@@ -1,4 +1,5 @@
 ﻿#region Using Statements
+using System;
 using UnityEngine;
 #endregion
 
@@ -11,10 +12,23 @@ namespace Delight
     {
         public virtual string GetServerUri(string bundleName)
         {
-            if (Config.UseSimulatedUriInEditor)
+            if (Config.UseSimulatedUriInEditor && Application.isEditor)
                 return AssetBundle.SimulatedUri;
 
             return Config.ServerUri;
+        }
+
+        public virtual string GetBundleUri(string bundleName, StorageMode storageMode)
+        {
+            var bundleBaseUri = storageMode == StorageMode.Remote ?
+                Config.ServerUriLocator.GetServerUri(bundleName) : Application.streamingAssetsPath;
+            if (!bundleBaseUri.EndsWith("/"))
+            {
+                bundleBaseUri += "/";
+            }
+
+            var bundleUri = String.Format("{0}{1}{2}{3}", bundleBaseUri, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder, bundleName.ToLower());
+            return bundleUri;
         }
     }
 }

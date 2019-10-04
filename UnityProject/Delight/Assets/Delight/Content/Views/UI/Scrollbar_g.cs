@@ -354,6 +354,13 @@ namespace Delight
             set { Bar.Rotation = value; }
         }
 
+        public readonly static DependencyProperty BarPositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 BarPosition
+        {
+            get { return Bar.Position; }
+            set { Bar.Position = value; }
+        }
+
         public readonly static DependencyProperty BarGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject BarGameObject
         {
@@ -632,6 +639,13 @@ namespace Delight
         {
             get { return Handle.Rotation; }
             set { Handle.Rotation = value; }
+        }
+
+        public readonly static DependencyProperty HandlePositionProperty = Image.PositionProperty;
+        public UnityEngine.Vector3 HandlePosition
+        {
+            get { return Handle.Position; }
+            set { Handle.Position = value; }
         }
 
         public readonly static DependencyProperty HandleGameObjectProperty = Image.GameObjectProperty;

@@ -6,5 +6,6 @@
         UseFastShader="t:bool" FastMaterial="t:Material = UI-Fast-Default"
         BubbleNotifyChildLayoutChanged="t:bool"
         IgnoreFlip="t:bool" HideInDesigner="True"
-        Rotation="t:Quaternion"> 
-</UIView>
+        Rotation="t:Quaternion"
+        Position="t:Vector3">   
+</UIView> 

@@ -279,7 +279,7 @@ namespace Delight
             bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
-                for (int i = 0; i < Count; ++i)
+                for (int i = 0; i < _dataList.Count; ++i)
                 {
                     if (_dataList[i].Value == item)
                     {
@@ -297,6 +297,11 @@ namespace Delight
             }
 
             return false;
+        }
+
+        public virtual void Reverse()
+        {
+            DataList.Reverse();
         }
 
         public virtual void SelectAndScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)

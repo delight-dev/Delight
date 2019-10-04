@@ -31,10 +31,11 @@ namespace Delight
             ViewActivators.Add("GridExample", (x, y, z) => new GridExample(x, y, null, z));
             ViewActivators.Add("LayoutGrid", (x, y, z) => new LayoutGrid(x, y, null, z));
             ViewActivators.Add("GridSplitter", (x, y, z) => new GridSplitter(x, y, null, z));
-            ViewActivators.Add("HighscoreTest", (x, y, z) => new HighscoreTest(x, y, null, z));
-            ViewActivators.Add("InputField", (x, y, z) => new InputField(x, y, null, z));
+            ViewActivators.Add("GroupExamples", (x, y, z) => new GroupExamples(x, y, null, z));
             ViewActivators.Add("List", (x, y, z) => new List(x, y, null, z));
             ViewActivators.Add("ListItem", (x, y, z) => new ListItem(x, y, null, z));
+            ViewActivators.Add("HighscoreTest", (x, y, z) => new HighscoreTest(x, y, null, z));
+            ViewActivators.Add("InputField", (x, y, z) => new InputField(x, y, null, z));
             ViewActivators.Add("InputFieldExample", (x, y, z) => new InputFieldExample(x, y, null, z));
             ViewActivators.Add("ListExample", (x, y, z) => new ListExample(x, y, null, z));
             ViewActivators.Add("MainMenu", (x, y, z) => new MainMenu(x, y, null, z));
@@ -66,7 +67,6 @@ namespace Delight
             ViewActivators.Add("SelectionIndicator", (x, y, z) => new SelectionIndicator(x, y, null, z));
             ViewActivators.Add("XmlEditor", (x, y, z) => new XmlEditor(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
-            ViewActivators.Add("GroupExamples", (x, y, z) => new GroupExamples(x, y, null, z));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
@@ -85,10 +85,11 @@ namespace Delight
             ViewTypes.Add("GridExample", typeof(GridExample));
             ViewTypes.Add("LayoutGrid", typeof(LayoutGrid));
             ViewTypes.Add("GridSplitter", typeof(GridSplitter));
-            ViewTypes.Add("HighscoreTest", typeof(HighscoreTest));
-            ViewTypes.Add("InputField", typeof(InputField));
+            ViewTypes.Add("GroupExamples", typeof(GroupExamples));
             ViewTypes.Add("List", typeof(List));
             ViewTypes.Add("ListItem", typeof(ListItem));
+            ViewTypes.Add("HighscoreTest", typeof(HighscoreTest));
+            ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("ListExample", typeof(ListExample));
             ViewTypes.Add("MainMenu", typeof(MainMenu));
@@ -120,7 +121,6 @@ namespace Delight
             ViewTypes.Add("SelectionIndicator", typeof(SelectionIndicator));
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("NewScene", typeof(NewScene));
-            ViewTypes.Add("GroupExamples", typeof(GroupExamples));
         }
     }
 }

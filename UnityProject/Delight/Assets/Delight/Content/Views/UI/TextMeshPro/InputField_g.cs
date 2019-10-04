@@ -1175,6 +1175,13 @@ namespace Delight
             set { InputText.Rotation = value; }
         }
 
+        public readonly static DependencyProperty InputTextPositionProperty = Label.PositionProperty;
+        public UnityEngine.Vector3 InputTextPosition
+        {
+            get { return InputText.Position; }
+            set { InputText.Position = value; }
+        }
+
         public readonly static DependencyProperty InputTextGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject InputTextGameObject
         {

@@ -13,6 +13,8 @@ namespace Delight
     /// </summary>
     public partial class Tab
     {
+        public BindableObject Item { get; set; }
+
         /// <summary>
         /// Sets content template data.
         /// </summary>
