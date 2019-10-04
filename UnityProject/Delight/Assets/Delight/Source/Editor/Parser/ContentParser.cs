@@ -86,6 +86,49 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Method for rivality to build deploy.
+        /// </summary>
+        public static void BuildAssetBundlesForDeploy()
+        {
+            EditorPrefs.SetBool("Delight_DeployBuild", true);
+
+            // wait for any uncompiled scripts to be compiled first
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
+            // build all asset bundles
+            RebuildAssets(false, false);
+        }
+
+        /// <summary>
+        /// Method for rivality to build deploy.
+        /// </summary>
+        public static void BuildViewsForDeploy()
+        {
+            EditorPrefs.SetBool("Delight_DeployBuild", true);
+
+            // wait for any uncompiled scripts to be compiled first
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+
+            // parse all config files
+            ParseAllConfigFiles();
+
+            // parse all assets
+            RebuildAssets(true);
+
+            // parse all schema files
+            ParseAllSchemaFiles();
+
+            // parse all views 
+            ParseAllXmlFiles();
+
+            // refresh generated scripts
+            AssetDatabase.Refresh();
+
+            // generate XSD schemas
+            CodeGenerator.GenerateXsdSchema();
+        }
+
+        /// <summary>
         /// Updates project settings based on config values.
         /// </summary>
         private static void UpdateProjectSettings()
@@ -1791,7 +1834,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Rebuilds assets bundles. 
         /// </summary>
-        public static void RebuildAssets(bool buildBundlesLater = false)
+        public static void RebuildAssets(bool buildBundlesLater = false, bool warnRemoveOldBundles = true)
         {
             var config = MasterConfig.GetInstance();
             bool assetsNeedBuild = false;
@@ -1835,25 +1878,29 @@ namespace Delight.Editor.Parser
             if (!buildBundlesLater)
             {
                 // ask to clear output folders
-                var outputPath = GetRemoteBundlePath();
-                var streamingOutputPath = GetStreamingBundlePath();
-                string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, streamingOutputPath);
-                if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
+                var outputPath = GetRemoteBundlePath(false);
+                var streamingOutputPath = GetStreamingBundlePath(false);
+
+                if (warnRemoveOldBundles)
                 {
-                    try
+                    string message = String.Format("Do you want to delete all files in the directory {0} and {1}?", outputPath, streamingOutputPath);
+                    if (EditorUtility.DisplayDialog("Clearing previous asset builds confirmation", message, "Yes", "No"))
                     {
-                        if (Directory.Exists(outputPath))
+                        try
                         {
-                            Directory.Delete(outputPath, true);
+                            if (Directory.Exists(outputPath))
+                            {
+                                Directory.Delete(outputPath, true);
+                            }
+                            if (Directory.Exists(streamingOutputPath))
+                            {
+                                Directory.Delete(streamingOutputPath, true);
+                            }
                         }
-                        if (Directory.Exists(streamingOutputPath))
+                        catch (System.Exception e)
                         {
-                            Directory.Delete(streamingOutputPath, true);
+                            ConsoleLogger.LogException(e);
                         }
-                    }
-                    catch (System.Exception e)
-                    {
-                        ConsoleLogger.LogException(e);
                     }
                 }
 
@@ -1929,7 +1976,7 @@ namespace Delight.Editor.Parser
             if (bundles.Count <= 0)
                 return;
 
-            bool localBuild = EditorPrefs.GetBool("Delight_DeployBuild");
+            bool deployBuild = EditorPrefs.GetBool("Delight_DeployBuild");
             var config = MasterConfig.GetInstance();
             var streamedBundles = new List<AssetBundleBuild>();
             var remoteBundles = new List<AssetBundleBuild>();
@@ -1945,7 +1992,7 @@ namespace Delight.Editor.Parser
                 build.assetBundleName = bundle.Name.ToLower();
                 build.assetBundleVariant = String.Empty;
                 build.assetNames = AssetDatabase.GetAssetPathsFromAssetBundle(build.assetBundleName);
-                if (config.StreamedBundles.IContains(bundle.Name) || localBuild)
+                if (config.StreamedBundles.IContains(bundle.Name) || deployBuild)
                 {
                     streamedBundles.Add(build);
                 }
@@ -1965,18 +2012,25 @@ namespace Delight.Editor.Parser
             // build streamed bundles
             if (streamedBundles.Count() > 0)
             {
-                var outputPath = GetStreamingBundlePath();
+                var outputPath = GetStreamingBundlePath(deployBuild);
                 if (!Directory.Exists(outputPath))
                     Directory.CreateDirectory(outputPath);
 
                 // build bundles with LZ4 compression
-                BuildPipeline.BuildAssetBundles(outputPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+                if (deployBuild)
+                {
+                    BuildPipeline.BuildAssetBundles(outputPath, streamedBundles.ToArray(), BuildAssetBundleOptions.ChunkBasedCompression, EditorUserBuildSettings.activeBuildTarget);
+                }
+                else
+                {
+                    BuildPipeline.BuildAssetBundles(outputPath, streamedBundles.ToArray(), BuildAssetBundleOptions.None, EditorUserBuildSettings.activeBuildTarget);
+                }
             }
 
             if (remoteBundles.Count() > 0)
             {
                 // get output path
-                var outputPath = GetRemoteBundlePath();
+                var outputPath = GetRemoteBundlePath(deployBuild);
                 if (!Directory.Exists(outputPath))
                     Directory.CreateDirectory(outputPath);
 
@@ -1987,17 +2041,17 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets remote asset bundle path.
         /// </summary>
-        public static string GetRemoteBundlePath()
+        public static string GetRemoteBundlePath(bool deployBuild)
         {
-            return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
+            return String.Format("{0}{1}{2}", RemoteAssetBundlesBasePath, AssetBundleData.GetPlatformName() + "/", deployBuild ? "" : AssetBundle.DelightAssetsFolder);
         }
 
         /// <summary>
         /// Gets streaming asset bundle path.
         /// </summary>
-        public static string GetStreamingBundlePath()
+        public static string GetStreamingBundlePath(bool deployBuild)
         {
-            return String.Format("{0}{1}{2}", StreamingPath, AssetBundleData.GetPlatformName() + "/", AssetBundle.DelightAssetsFolder);
+            return String.Format("{0}{1}{2}", StreamingPath, AssetBundleData.GetPlatformName() + "/", deployBuild ? "" : AssetBundle.DelightAssetsFolder);
         }
 
         /// <summary>

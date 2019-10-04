@@ -2027,7 +2027,7 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        public AssetBundleData()");
                 sb.AppendLine("        {");
 
-                bool localBuild = EditorPrefs.GetBool("Delight_BuildLocalAssetBundles");
+                bool localBuild = EditorPrefs.GetBool("Delight_DeployBuild");
                 foreach (var assetBundle in bundles)
                 {
                     bool isStreamed = config.StreamedBundles.IContains(assetBundle.Name) || localBuild;

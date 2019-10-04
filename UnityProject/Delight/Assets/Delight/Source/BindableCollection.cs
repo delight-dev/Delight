@@ -102,6 +102,7 @@ namespace Delight
             return this[index];
         }
 
+
         public virtual void Edit(Action edit)
         {
             _batchNotifications = true;
@@ -279,7 +280,7 @@ namespace Delight
             bool wasRemoved = Data.Remove(item.Id);
             if (wasRemoved)
             {
-                for (int i = 0; i < _dataList.Count; ++i)
+                for (int i = 0; i < DataList.Count; ++i)
                 {
                     if (_dataList[i].Value == item)
                     {
@@ -383,6 +384,11 @@ namespace Delight
             }
 
             return null;
+        }
+
+        public int FindIndex(Predicate<T> predicate)
+        {
+            return IndexOf(this.Find(predicate));
         }
 
         public T First()

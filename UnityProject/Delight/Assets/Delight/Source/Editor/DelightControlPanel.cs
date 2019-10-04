@@ -39,12 +39,13 @@ namespace Delight.Editor
         public void OnGUI()
         {
             bool buildAssetBundles = EditorPrefs.GetBool("Delight_BuildAssetBundles");
+            bool deployBuild = EditorPrefs.GetBool("Delight_DeployBuild");
 
             // rebuild all
             GUIContent rebuildAll = new GUIContent("Rebuild All", "Rebuilds all delight content (views, assets, etc).");
             if (GUILayout.Button(rebuildAll))
             {
-                ContentParser.RebuildAll(buildAssetBundles);
+                ContentParser.RebuildAll(buildAssetBundles || deployBuild);
             }
 
             var newBuildAssetBundles = EditorGUILayout.Toggle("Build Asset Bundles", EditorPrefs.GetBool("Delight_BuildAssetBundles"));
@@ -53,11 +54,10 @@ namespace Delight.Editor
                 EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
 
-            bool localBuild = EditorPrefs.GetBool("Delight_BuildLocalAssetBundles");
-            var newLocalBuild = EditorGUILayout.Toggle("Local Build", EditorPrefs.GetBool("Delight_BuildLocalAssetBundles"));
-            if (newLocalBuild != localBuild)
+            var newDeployBuild = EditorGUILayout.Toggle("Rivality Deploy Build", EditorPrefs.GetBool("Delight_DeployBuild"));
+            if (newDeployBuild != deployBuild)
             {
-                EditorPrefs.SetBool("Delight_BuildLocalAssetBundles", newLocalBuild);
+                EditorPrefs.SetBool("Delight_DeployBuild", newDeployBuild);
             }
 
             bool disableAutoGenerateViews = EditorPrefs.GetBool("Delight_DisableAutoGenerateViews");
