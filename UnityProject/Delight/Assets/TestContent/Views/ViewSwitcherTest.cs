@@ -11,9 +11,9 @@ namespace Delight
 {
     public partial class ViewSwitcherTest
     {
-        public void ShowModelBindingTest()
+        public async void ShowModelBindingTest()
         {
-            //ViewSwitcher1.SwitchTo(ModelBindingTest);
+            await ViewSwitcher1.SwitchToAsync(ModelBindingTest);
         }
 
         public async void ShowScrollExample()
@@ -41,9 +41,9 @@ namespace Delight
             await ViewSwitcher1.SwitchToAsync(BindingTest);
         }
 
-        public void ShowComboBoxExample()
+        public async void ShowComboBoxExample()
         {
-            //ViewSwitcher1.SwitchTo(ComboBoxExample);
+            await ViewSwitcher1.SwitchToAsync(ComboBoxExample);
         }
     }
 }

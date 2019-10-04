@@ -11,9 +11,8 @@
     </ToggleGroup>
     
     <ViewSwitcher Margin="240,0,0,0" SwitchMode="Load">
-      <!--<ModelBindingTest Id="ModelBindingTest" Alignment="TopLeft" />-->
-      <!--<ComboBoxExample Id="ComboBoxExample" />-->
-      <!-- ViewSwitcher.ChildSwitchMode="Load" -->
+      <ModelBindingTest Id="ModelBindingTest" Alignment="TopLeft" />
+      <ComboBoxExample Id="ComboBoxExample" />
       <InputFieldExample Id="InputFieldExample" />
       <ScrollExample Id="ScrollExample" />
       <AssetManagementTest Id="AssetManagementTest" />

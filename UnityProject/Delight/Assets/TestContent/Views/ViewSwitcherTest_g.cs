@@ -34,6 +34,8 @@ namespace Delight
             Button7 = new Button(this, ToggleGroup1.Content, "Button7", Button7Template);
             Button7.Click.RegisterHandler(this, "ShowBindingTest");
             ViewSwitcher1 = new ViewSwitcher(this, Region1.Content, "ViewSwitcher1", ViewSwitcher1Template);
+            ModelBindingTest = new ModelBindingTest(this, ViewSwitcher1.Content, "ModelBindingTest", ModelBindingTestTemplate);
+            ComboBoxExample = new ComboBoxExample(this, ViewSwitcher1.Content, "ComboBoxExample", ComboBoxExampleTemplate);
             InputFieldExample = new InputFieldExample(this, ViewSwitcher1.Content, "InputFieldExample", InputFieldExampleTemplate);
             ScrollExample = new ScrollExample(this, ViewSwitcher1.Content, "ScrollExample", ScrollExampleTemplate);
             AssetManagementTest = new AssetManagementTest(this, ViewSwitcher1.Content, "AssetManagementTest", AssetManagementTestTemplate);
@@ -71,6 +73,10 @@ namespace Delight
             dependencyProperties.Add(Button7TemplateProperty);
             dependencyProperties.Add(ViewSwitcher1Property);
             dependencyProperties.Add(ViewSwitcher1TemplateProperty);
+            dependencyProperties.Add(ModelBindingTestProperty);
+            dependencyProperties.Add(ModelBindingTestTemplateProperty);
+            dependencyProperties.Add(ComboBoxExampleProperty);
+            dependencyProperties.Add(ComboBoxExampleTemplateProperty);
             dependencyProperties.Add(InputFieldExampleProperty);
             dependencyProperties.Add(InputFieldExampleTemplateProperty);
             dependencyProperties.Add(ScrollExampleProperty);
@@ -227,6 +233,34 @@ namespace Delight
             set { ViewSwitcher1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<ModelBindingTest> ModelBindingTestProperty = new DependencyProperty<ModelBindingTest>("ModelBindingTest");
+        public ModelBindingTest ModelBindingTest
+        {
+            get { return ModelBindingTestProperty.GetValue(this); }
+            set { ModelBindingTestProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ModelBindingTestTemplateProperty = new DependencyProperty<Template>("ModelBindingTestTemplate");
+        public Template ModelBindingTestTemplate
+        {
+            get { return ModelBindingTestTemplateProperty.GetValue(this); }
+            set { ModelBindingTestTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ComboBoxExample> ComboBoxExampleProperty = new DependencyProperty<ComboBoxExample>("ComboBoxExample");
+        public ComboBoxExample ComboBoxExample
+        {
+            get { return ComboBoxExampleProperty.GetValue(this); }
+            set { ComboBoxExampleProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ComboBoxExampleTemplateProperty = new DependencyProperty<Template>("ComboBoxExampleTemplate");
+        public Template ComboBoxExampleTemplate
+        {
+            get { return ComboBoxExampleTemplateProperty.GetValue(this); }
+            set { ComboBoxExampleTemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<InputFieldExample> InputFieldExampleProperty = new DependencyProperty<InputFieldExample>("InputFieldExample");
         public InputFieldExample InputFieldExample
         {
@@ -339,6 +373,8 @@ namespace Delight
                     Delight.ViewSwitcherTest.Button6TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton6);
                     Delight.ViewSwitcherTest.Button7TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestButton7);
                     Delight.ViewSwitcherTest.ViewSwitcher1TemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestViewSwitcher1);
+                    Delight.ViewSwitcherTest.ModelBindingTestTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestModelBindingTest);
+                    Delight.ViewSwitcherTest.ComboBoxExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestComboBoxExample);
                     Delight.ViewSwitcherTest.InputFieldExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestInputFieldExample);
                     Delight.ViewSwitcherTest.ScrollExampleTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestScrollExample);
                     Delight.ViewSwitcherTest.AssetManagementTestTemplateProperty.SetDefault(_viewSwitcherTest, ViewSwitcherTestAssetManagementTest);
@@ -715,6 +751,1748 @@ namespace Delight
                     Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcherTestViewSwitcher1, Delight.SwitchMode.Load);
                 }
                 return _viewSwitcherTestViewSwitcher1;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTest;
+        public static Template ViewSwitcherTestModelBindingTest
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTest == null || _viewSwitcherTestModelBindingTest.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTest == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTest = new Template(ModelBindingTestTemplates.ModelBindingTest);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTest.Name = "ViewSwitcherTestModelBindingTest";
+#endif
+                    Delight.ModelBindingTest.AlignmentProperty.SetDefault(_viewSwitcherTestModelBindingTest, Delight.ElementAlignment.TopLeft);
+                    Delight.ModelBindingTest.Group1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup1);
+                    Delight.ModelBindingTest.Group2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup2);
+                    Delight.ModelBindingTest.Button1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton1);
+                    Delight.ModelBindingTest.Button2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton2);
+                    Delight.ModelBindingTest.Button3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestButton3);
+                    Delight.ModelBindingTest.Label1TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel1);
+                    Delight.ModelBindingTest.Label2TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel2);
+                    Delight.ModelBindingTest.PlayerListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerList);
+                    Delight.ModelBindingTest.PlayerListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestPlayerListContent);
+                    Delight.ModelBindingTest.Group3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestGroup3);
+                    Delight.ModelBindingTest.Label3TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel3);
+                    Delight.ModelBindingTest.AchievementsListTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsList);
+                    Delight.ModelBindingTest.AchievementsListContentTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestAchievementsListContent);
+                    Delight.ModelBindingTest.Label4TemplateProperty.SetDefault(_viewSwitcherTestModelBindingTest, ViewSwitcherTestModelBindingTestLabel4);
+                }
+                return _viewSwitcherTestModelBindingTest;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestGroup1;
+        public static Template ViewSwitcherTestModelBindingTestGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestGroup1 == null || _viewSwitcherTestModelBindingTestGroup1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestGroup1 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestGroup1 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestGroup1.Name = "ViewSwitcherTestModelBindingTestGroup1";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestGroup1;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestGroup2;
+        public static Template ViewSwitcherTestModelBindingTestGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestGroup2 == null || _viewSwitcherTestModelBindingTestGroup2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestGroup2 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestGroup2 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestGroup2.Name = "ViewSwitcherTestModelBindingTestGroup2";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton1;
+        public static Template ViewSwitcherTestModelBindingTestButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton1 == null || _viewSwitcherTestModelBindingTestButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton1 = new Template(ModelBindingTestTemplates.ModelBindingTestButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton1.Name = "ViewSwitcherTestModelBindingTestButton1";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestButton1, ViewSwitcherTestModelBindingTestButton1Label);
+                }
+                return _viewSwitcherTestModelBindingTestButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton1Label;
+        public static Template ViewSwitcherTestModelBindingTestButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton1Label == null || _viewSwitcherTestModelBindingTestButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton1Label == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton1Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton1Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton1Label.Name = "ViewSwitcherTestModelBindingTestButton1Label";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestButton1Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton2;
+        public static Template ViewSwitcherTestModelBindingTestButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton2 == null || _viewSwitcherTestModelBindingTestButton2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton2 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton2 = new Template(ModelBindingTestTemplates.ModelBindingTestButton2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton2.Name = "ViewSwitcherTestModelBindingTestButton2";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestButton2, ViewSwitcherTestModelBindingTestButton2Label);
+                }
+                return _viewSwitcherTestModelBindingTestButton2;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton2Label;
+        public static Template ViewSwitcherTestModelBindingTestButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton2Label == null || _viewSwitcherTestModelBindingTestButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton2Label == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton2Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton2Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton2Label.Name = "ViewSwitcherTestModelBindingTestButton2Label";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestButton2Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton3;
+        public static Template ViewSwitcherTestModelBindingTestButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton3 == null || _viewSwitcherTestModelBindingTestButton3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton3 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton3 = new Template(ModelBindingTestTemplates.ModelBindingTestButton3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton3.Name = "ViewSwitcherTestModelBindingTestButton3";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestButton3, ViewSwitcherTestModelBindingTestButton3Label);
+                }
+                return _viewSwitcherTestModelBindingTestButton3;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestButton3Label;
+        public static Template ViewSwitcherTestModelBindingTestButton3Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestButton3Label == null || _viewSwitcherTestModelBindingTestButton3Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestButton3Label == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestButton3Label = new Template(ModelBindingTestTemplates.ModelBindingTestButton3Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestButton3Label.Name = "ViewSwitcherTestModelBindingTestButton3Label";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestButton3Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel1;
+        public static Template ViewSwitcherTestModelBindingTestLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel1 == null || _viewSwitcherTestModelBindingTestLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel1 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel1.Name = "ViewSwitcherTestModelBindingTestLabel1";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel1;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel2;
+        public static Template ViewSwitcherTestModelBindingTestLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel2 == null || _viewSwitcherTestModelBindingTestLabel2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel2 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel2 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel2.Name = "ViewSwitcherTestModelBindingTestLabel2";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel2;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerList;
+        public static Template ViewSwitcherTestModelBindingTestPlayerList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerList == null || _viewSwitcherTestModelBindingTestPlayerList.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerList == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerList = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerList);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerList.Name = "ViewSwitcherTestModelBindingTestPlayerList";
+#endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerList, ViewSwitcherTestModelBindingTestPlayerListScrollableRegion);
+                }
+                return _viewSwitcherTestModelBindingTestPlayerList;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegion;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegion == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegion == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegion = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegion.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegion";
+#endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegion, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListScrollableRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestPlayerListContent;
+        public static Template ViewSwitcherTestModelBindingTestPlayerListContent
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestPlayerListContent == null || _viewSwitcherTestModelBindingTestPlayerListContent.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestPlayerListContent == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestPlayerListContent = new Template(ModelBindingTestTemplates.ModelBindingTestPlayerListContent);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestPlayerListContent.Name = "ViewSwitcherTestModelBindingTestPlayerListContent";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestPlayerListContent;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestGroup3;
+        public static Template ViewSwitcherTestModelBindingTestGroup3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestGroup3 == null || _viewSwitcherTestModelBindingTestGroup3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestGroup3 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestGroup3 = new Template(ModelBindingTestTemplates.ModelBindingTestGroup3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestGroup3.Name = "ViewSwitcherTestModelBindingTestGroup3";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestGroup3;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel3;
+        public static Template ViewSwitcherTestModelBindingTestLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel3 == null || _viewSwitcherTestModelBindingTestLabel3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel3 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel3 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel3.Name = "ViewSwitcherTestModelBindingTestLabel3";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel3;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsList;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsList == null || _viewSwitcherTestModelBindingTestAchievementsList.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsList == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsList = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsList);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsList.Name = "ViewSwitcherTestModelBindingTestAchievementsList";
+#endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsList, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion);
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsList;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegion";
+#endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegion, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar, ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListScrollableRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestAchievementsListContent;
+        public static Template ViewSwitcherTestModelBindingTestAchievementsListContent
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestAchievementsListContent == null || _viewSwitcherTestModelBindingTestAchievementsListContent.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestAchievementsListContent == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestAchievementsListContent = new Template(ModelBindingTestTemplates.ModelBindingTestAchievementsListContent);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestAchievementsListContent.Name = "ViewSwitcherTestModelBindingTestAchievementsListContent";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestAchievementsListContent;
+            }
+        }
+
+        private static Template _viewSwitcherTestModelBindingTestLabel4;
+        public static Template ViewSwitcherTestModelBindingTestLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestModelBindingTestLabel4 == null || _viewSwitcherTestModelBindingTestLabel4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestModelBindingTestLabel4 == null)
+#endif
+                {
+                    _viewSwitcherTestModelBindingTestLabel4 = new Template(ModelBindingTestTemplates.ModelBindingTestLabel4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestModelBindingTestLabel4.Name = "ViewSwitcherTestModelBindingTestLabel4";
+#endif
+                }
+                return _viewSwitcherTestModelBindingTestLabel4;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExample;
+        public static Template ViewSwitcherTestComboBoxExample
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExample == null || _viewSwitcherTestComboBoxExample.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExample == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExample = new Template(ComboBoxExampleTemplates.ComboBoxExample);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExample.Name = "ViewSwitcherTestComboBoxExample";
+#endif
+                    Delight.ComboBoxExample.Group1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup1);
+                    Delight.ComboBoxExample.Group2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup2);
+                    Delight.ComboBoxExample.Group3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup3);
+                    Delight.ComboBoxExample.CheckBox1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox1);
+                    Delight.ComboBoxExample.CheckBox2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox2);
+                    Delight.ComboBoxExample.CheckBox3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleCheckBox3);
+                    Delight.ComboBoxExample.Group4TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup4);
+                    Delight.ComboBoxExample.RadioButton1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton1);
+                    Delight.ComboBoxExample.RadioButton2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton2);
+                    Delight.ComboBoxExample.RadioButton3TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleRadioButton3);
+                    Delight.ComboBoxExample.Group5TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleGroup5);
+                    Delight.ComboBoxExample.Button1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleButton1);
+                    Delight.ComboBoxExample.Button2TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleButton2);
+                    Delight.ComboBoxExample.ComboBoxTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleComboBox);
+                    Delight.ComboBoxExample.ComboBoxContentTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleComboBoxContent);
+                    Delight.ComboBoxExample.Label1TemplateProperty.SetDefault(_viewSwitcherTestComboBoxExample, ViewSwitcherTestComboBoxExampleLabel1);
+                }
+                return _viewSwitcherTestComboBoxExample;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup1;
+        public static Template ViewSwitcherTestComboBoxExampleGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup1 == null || _viewSwitcherTestComboBoxExampleGroup1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup1.Name = "ViewSwitcherTestComboBoxExampleGroup1";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup2;
+        public static Template ViewSwitcherTestComboBoxExampleGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup2 == null || _viewSwitcherTestComboBoxExampleGroup2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup2.Name = "ViewSwitcherTestComboBoxExampleGroup2";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup3;
+        public static Template ViewSwitcherTestComboBoxExampleGroup3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup3 == null || _viewSwitcherTestComboBoxExampleGroup3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup3.Name = "ViewSwitcherTestComboBoxExampleGroup3";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1 == null || _viewSwitcherTestComboBoxExampleCheckBox1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1.Name = "ViewSwitcherTestComboBoxExampleCheckBox1";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox1, ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox1CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox1CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2 == null || _viewSwitcherTestComboBoxExampleCheckBox2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2.Name = "ViewSwitcherTestComboBoxExampleCheckBox2";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox2, ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox2CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox2CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3 == null || _viewSwitcherTestComboBoxExampleCheckBox3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3.Name = "ViewSwitcherTestComboBoxExampleCheckBox3";
+#endif
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleCheckBox3, ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel;
+        public static Template ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel == null || _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleCheckBox3CheckBoxLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel.Name = "ViewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleCheckBox3CheckBoxLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup4;
+        public static Template ViewSwitcherTestComboBoxExampleGroup4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup4 == null || _viewSwitcherTestComboBoxExampleGroup4.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup4 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup4 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup4);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup4.Name = "ViewSwitcherTestComboBoxExampleGroup4";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup4;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1 == null || _viewSwitcherTestComboBoxExampleRadioButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1.Name = "ViewSwitcherTestComboBoxExampleRadioButton1";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton1, ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton1RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton1RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2 == null || _viewSwitcherTestComboBoxExampleRadioButton2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2.Name = "ViewSwitcherTestComboBoxExampleRadioButton2";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton2, ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton2RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton2RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3 == null || _viewSwitcherTestComboBoxExampleRadioButton3.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3 = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3.Name = "ViewSwitcherTestComboBoxExampleRadioButton3";
+#endif
+                    Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup);
+                    Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView);
+                    Delight.RadioButton.RadioButtonLabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleRadioButton3, ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonGroup);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonGroup;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonImageView);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonImageView;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel == null || _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleRadioButton3RadioButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel.Name = "ViewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleRadioButton3RadioButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleGroup5;
+        public static Template ViewSwitcherTestComboBoxExampleGroup5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleGroup5 == null || _viewSwitcherTestComboBoxExampleGroup5.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleGroup5 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleGroup5 = new Template(ComboBoxExampleTemplates.ComboBoxExampleGroup5);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleGroup5.Name = "ViewSwitcherTestComboBoxExampleGroup5";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleGroup5;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleButton1;
+        public static Template ViewSwitcherTestComboBoxExampleButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleButton1 == null || _viewSwitcherTestComboBoxExampleButton1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleButton1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleButton1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleButton1.Name = "ViewSwitcherTestComboBoxExampleButton1";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleButton1, ViewSwitcherTestComboBoxExampleButton1Label);
+                }
+                return _viewSwitcherTestComboBoxExampleButton1;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleButton1Label;
+        public static Template ViewSwitcherTestComboBoxExampleButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleButton1Label == null || _viewSwitcherTestComboBoxExampleButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleButton1Label == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleButton1Label = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton1Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleButton1Label.Name = "ViewSwitcherTestComboBoxExampleButton1Label";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleButton1Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleButton2;
+        public static Template ViewSwitcherTestComboBoxExampleButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleButton2 == null || _viewSwitcherTestComboBoxExampleButton2.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleButton2 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleButton2 = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton2);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleButton2.Name = "ViewSwitcherTestComboBoxExampleButton2";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleButton2, ViewSwitcherTestComboBoxExampleButton2Label);
+                }
+                return _viewSwitcherTestComboBoxExampleButton2;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleButton2Label;
+        public static Template ViewSwitcherTestComboBoxExampleButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleButton2Label == null || _viewSwitcherTestComboBoxExampleButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleButton2Label == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleButton2Label = new Template(ComboBoxExampleTemplates.ComboBoxExampleButton2Label);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleButton2Label.Name = "ViewSwitcherTestComboBoxExampleButton2Label";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleButton2Label;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBox;
+        public static Template ViewSwitcherTestComboBoxExampleComboBox
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBox == null || _viewSwitcherTestComboBoxExampleComboBox.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBox == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBox = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBox);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBox.Name = "ViewSwitcherTestComboBoxExampleComboBox";
+#endif
+                    Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBox, ViewSwitcherTestComboBoxExampleComboBoxComboBoxButton);
+                    Delight.ComboBox.ComboBoxListCanvasTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBox, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas);
+                    Delight.ComboBox.ComboBoxListTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBox, ViewSwitcherTestComboBoxExampleComboBoxComboBoxList);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBox;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxButton;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxButton
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxButton == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxButton.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxButton == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxButton = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxButton);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxButton.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxButton";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxButton, ViewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxButton;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxButtonLabel);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxButtonLabel;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListCanvas);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListCanvas;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxList;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxList == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxList.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxList == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxList = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxList);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxList.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxList";
+#endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxList, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxList;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion";
+#endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar, ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle == null || _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ViewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleComboBoxContent;
+        public static Template ViewSwitcherTestComboBoxExampleComboBoxContent
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleComboBoxContent == null || _viewSwitcherTestComboBoxExampleComboBoxContent.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleComboBoxContent == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleComboBoxContent = new Template(ComboBoxExampleTemplates.ComboBoxExampleComboBoxContent);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleComboBoxContent.Name = "ViewSwitcherTestComboBoxExampleComboBoxContent";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleComboBoxContent;
+            }
+        }
+
+        private static Template _viewSwitcherTestComboBoxExampleLabel1;
+        public static Template ViewSwitcherTestComboBoxExampleLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_viewSwitcherTestComboBoxExampleLabel1 == null || _viewSwitcherTestComboBoxExampleLabel1.CurrentVersion != Template.Version)
+#else
+                if (_viewSwitcherTestComboBoxExampleLabel1 == null)
+#endif
+                {
+                    _viewSwitcherTestComboBoxExampleLabel1 = new Template(ComboBoxExampleTemplates.ComboBoxExampleLabel1);
+#if UNITY_EDITOR
+                    _viewSwitcherTestComboBoxExampleLabel1.Name = "ViewSwitcherTestComboBoxExampleLabel1";
+#endif
+                }
+                return _viewSwitcherTestComboBoxExampleLabel1;
             }
         }
 
