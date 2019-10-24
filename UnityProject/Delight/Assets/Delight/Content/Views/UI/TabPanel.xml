@@ -2,7 +2,8 @@
           BasedOn="Collection" HasContentTemplates="True" ContentTemplateTypes="Tab;TabHeader" SelectedTabIndex="t:int = 0"
           IsStatic="t:bool" TabHeaderWidth="t:ElementSize" TabHeaderHeight="t:ElementSize"
           m.TabHeaderGroup="TabList"
-          TabSelected="t:Action"> 
+          TabSelected="t:Action"
+          TabSwitchMode="t:SwitchMode = Load"> 
   <ViewSwitcher Id="TabSwitcher" IsContentContainer="True">
   </ViewSwitcher>
   <ToggleGroup Id="TabHeaderGroup" Orientation="Horizontal" Alignment="TopLeft"> 

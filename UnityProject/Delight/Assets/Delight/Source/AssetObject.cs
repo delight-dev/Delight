@@ -16,7 +16,7 @@ namespace Delight
         #region Fields
 
         public virtual bool IsLoaded { get; }
-        
+
         public bool IsResource { get; set; }
         public string RelativePath { get; set; }
         public bool IsUnmanaged { get; set; }
@@ -287,7 +287,7 @@ namespace Delight
                 var unityAssetBundle = await assetBundle.LoadAsync();
                 if (unityAssetBundle == null)
                 {
-                    Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Failed to load asset bundle \"{1}\".", Id, AssetBundleId));
+                    Debug.Log(String.Format("#Delight# Unable to load asset \"{0}\". Failed loading asset bundle \"{1}\".", Id, AssetBundleId));
                     OnPropertyChanged(nameof(UnityObject)); // trigger property change to signal listeners that load is complete
                     return;
                 }

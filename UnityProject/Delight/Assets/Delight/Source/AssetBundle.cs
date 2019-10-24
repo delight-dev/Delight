@@ -109,10 +109,10 @@ namespace Delight
                     return;
                 }
 
-                Debug.Log("#Delight# Loading asset bundle: " + Id);
-
                 // get bundle URI 
                 var bundleUri = Config.ServerUriLocator.GetBundleUri(Id, StorageMode);
+
+                Debug.Log(String.Format("#Delight# Loading asset bundle \"{0}\" from URI \"{1}\".", Id, bundleUri));
 
                 // get asset bundle
                 var version = Version > 0 ? Version : Config.AssetBundleVersion;
@@ -149,7 +149,7 @@ namespace Delight
 #if UNITY_EDITOR
             return GetPlatformForAssetBundles(EditorUserBuildSettings.activeBuildTarget);
 #else
-            return GetPlatformForAssetBundles(Application.platform);
+			return GetPlatformForAssetBundles(Application.platform);
 #endif
         }
 

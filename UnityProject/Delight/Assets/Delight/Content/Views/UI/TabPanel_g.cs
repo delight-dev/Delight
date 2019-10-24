@@ -39,6 +39,7 @@ namespace Delight
             dependencyProperties.Add(TabHeaderWidthProperty);
             dependencyProperties.Add(TabHeaderHeightProperty);
             dependencyProperties.Add(TabSelectedProperty);
+            dependencyProperties.Add(TabSwitchModeProperty);
             dependencyProperties.Add(TabSwitcherProperty);
             dependencyProperties.Add(TabSwitcherTemplateProperty);
             dependencyProperties.Add(TabHeaderGroupProperty);
@@ -82,6 +83,13 @@ namespace Delight
         {
             get { return TabSelectedProperty.GetValue(this); }
             set { TabSelectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.SwitchMode> TabSwitchModeProperty = new DependencyProperty<Delight.SwitchMode>("TabSwitchMode");
+        public Delight.SwitchMode TabSwitchMode
+        {
+            get { return TabSwitchModeProperty.GetValue(this); }
+            set { TabSwitchModeProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewSwitcher> TabSwitcherProperty = new DependencyProperty<ViewSwitcher>("TabSwitcher");
@@ -453,6 +461,7 @@ namespace Delight
                     _tabPanel.Name = "TabPanel";
 #endif
                     Delight.TabPanel.SelectedTabIndexProperty.SetDefault(_tabPanel, 0);
+                    Delight.TabPanel.TabSwitchModeProperty.SetDefault(_tabPanel, Delight.SwitchMode.Load);
                     Delight.TabPanel.TabSwitcherTemplateProperty.SetDefault(_tabPanel, TabPanelTabSwitcher);
                     Delight.TabPanel.TabHeaderGroupTemplateProperty.SetDefault(_tabPanel, TabPanelTabHeaderGroup);
                 }

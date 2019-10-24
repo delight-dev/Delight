@@ -225,7 +225,7 @@ namespace Delight
             });
         }
 
-        // TODO remove, here for backwards compatilibity with MarkLight
+        // TODO here for backwards compatibility with MarkLight
         public void ItemsModified()
         {
             Notify(new CollectionChangedEventArgs
@@ -234,16 +234,16 @@ namespace Delight
             });
         }
 
-        // TODO remove, here for backwards compatilibity with MarkLight
+        // TODO here for backwards compatibility with MarkLight
         public void ItemsModified(string fieldPath)
         {
-            Notify(new CollectionChangedEventArgs
+            foreach (var item in this)
             {
-                ChangeAction = CollectionChangeAction.Replace
-            });
+                item.OnPropertyChanged(fieldPath);
+            }
         }
 
-        // TODO remove, here for backwards compatilibity with MarkLight
+        // TODO here for backwards compatibility with MarkLight
         public void ItemModified(T item, string fieldPath = "")
         {
             Notify(new CollectionChangedEventArgs
@@ -252,7 +252,7 @@ namespace Delight
             });
         }
 
-        // TODO remove, here for backwards compatilibity with MarkLight
+        // TODO here for backwards compatibility with MarkLight
         public void ItemModified(int index, string fieldPath = "")
         {
             Notify(new CollectionChangedEventArgs
@@ -302,6 +302,7 @@ namespace Delight
 
         public virtual void Reverse()
         {
+            //Data.Reverse();
             DataList.Reverse();
         }
 

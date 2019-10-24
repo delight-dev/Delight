@@ -1,4 +1,4 @@
-#region Using Statements
+﻿#region Using Statements
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +94,8 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
+
+            TabSwitcher.SwitchMode = TabSwitchMode;
 
             if (IsStaticProperty.IsUndefined(this) && ItemsProperty.IsUndefined(this))
             {
@@ -294,6 +296,12 @@ namespace Delight
             tabItem.IsDynamic = false;
             tabItem.Item = item;
 
+            if (TabSwitchMode == SwitchMode.Enable)
+            {
+                tabItem.IsActive = false;
+                tabItem.Load();
+            }
+
             if (!_tabs.ContainsKey(item))
             {
                 _tabs.Add(item, tabItem);
@@ -319,6 +327,13 @@ namespace Delight
                 var templateData = new ContentTemplateData();
                 var tab = contentTemplate.Activator(templateData) as Tab;
                 tab.IsDynamic = false; // because we don't want it destroyed when the view-switcher unloads it
+
+                if (TabSwitchMode == SwitchMode.Enable)
+                {
+                    tab.IsActive = false;
+                    tab.Load();
+                }
+
                 var tabHeader = CreateTabHeader(tab);
             }
 
