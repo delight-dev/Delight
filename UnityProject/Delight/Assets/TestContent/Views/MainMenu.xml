@@ -1,9 +1,19 @@
 <MainMenu xmlns="Delight" 
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
           xsi:schemaLocation="Delight ../Delight.xsd">
-  <Group Spacing="10">
-    <Button Text="Play" Click="Play" />
-    <Button Text="Options" Click="Options" />
-    <Button Text="Quit" Click="Quit" MouseDown="QuitMouseDown" />        
-  </Group>  
-</MainMenu> 
+  <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
+          BackgroundColor="#ef706a">
+    <Group Spacing="10px" Alignment="Top">
+      <Button Text="Play" Click="Play" Width="140" />
+      <Button Text="Options" Click="ShowOptions" Width="140" />
+      <Button Text="Quit" Click="Quit" Width="140" />
+    </Group>
+  </Region>
+  <Region Width="75%" Alignment="Right" Margin="15,30,30,30"
+      BackgroundColor="#949494">
+    <ViewSwitcher Id="SubmenuSwitcher" ShowFirstByDefault="False">
+      <LevelSelect Id="LevelSelect" />
+      <Options Id="Options" /> 
+    </ViewSwitcher>
+  </Region>
+</MainMenu>  

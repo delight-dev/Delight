@@ -419,8 +419,10 @@ namespace Delight.Editor.Parser
                 string parameters = string.Empty;
                 switch (actionAssignment.PropertyName)
                 {
-                    case "BeginDrag":
                     case "Click":
+                        break;
+
+                    case "BeginDrag":
                     case "Drag":
                     case "Drop":
                     case "EndDrag":
@@ -438,7 +440,6 @@ namespace Delight.Editor.Parser
                     case "Select":
                     case "Submit":
                     case "UpdateSelected":
-                        parameters = "BaseEventData eventData";
                         break;
 
                     case "Move":

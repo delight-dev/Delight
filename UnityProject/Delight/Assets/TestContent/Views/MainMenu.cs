@@ -11,24 +11,19 @@ namespace Delight
 {
     public partial class MainMenu
     {
-        public void Play(PointerEventData pointerData)
+        public void Play()
         {
-            Debug.Log("Play clicked");
+            SubmenuSwitcher.SwitchTo(LevelSelect);
         }
 
-        public void Options(PointerEventData pointerData)
+        public void ShowOptions()
         {
-            Debug.Log("Options clicked");
+            SubmenuSwitcher.SwitchTo(Options);
         }
 
-        public void Quit(PointerEventData pointerData)
+        public void Quit()
         {
             Debug.Log("Quit clicked");
         }
-
-        public void QuitMouseDown(PointerEventData pointerData)
-        {
-        }
-
     }
 }

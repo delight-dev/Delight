@@ -37,8 +37,11 @@ namespace Delight
             ViewActivators.Add("HighscoreTest", (x, y, z) => new HighscoreTest(x, y, null, z));
             ViewActivators.Add("InputField", (x, y, z) => new InputField(x, y, null, z));
             ViewActivators.Add("InputFieldExample", (x, y, z) => new InputFieldExample(x, y, null, z));
+            ViewActivators.Add("LevelSelect", (x, y, z) => new LevelSelect(x, y, null, z));
             ViewActivators.Add("ListExample", (x, y, z) => new ListExample(x, y, null, z));
             ViewActivators.Add("MainMenu", (x, y, z) => new MainMenu(x, y, null, z));
+            ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));
+            ViewActivators.Add("Options", (x, y, z) => new Options(x, y, null, z));
             ViewActivators.Add("ModelBindingTest", (x, y, z) => new ModelBindingTest(x, y, null, z));
             ViewActivators.Add("PerformanceTest", (x, y, z) => new PerformanceTest(x, y, null, z));
             ViewActivators.Add("ScrollExample", (x, y, z) => new ScrollExample(x, y, null, z));
@@ -52,7 +55,6 @@ namespace Delight
             ViewActivators.Add("TestScene", (x, y, z) => new TestScene(x, y, null, z));
             ViewActivators.Add("ViewSwitcherTest", (x, y, z) => new ViewSwitcherTest(x, y, null, z));
             ViewActivators.Add("ToggleGroup", (x, y, z) => new ToggleGroup(x, y, null, z));
-            ViewActivators.Add("ViewSwitcher", (x, y, z) => new ViewSwitcher(x, y, null, z));
             ViewActivators.Add("SceneObjectView", (x, y, z) => new SceneObjectView(x, y, null, z));
             ViewActivators.Add("UIImageView", (x, y, z) => new UIImageView(x, y, null, z));
             ViewActivators.Add("CanvasRendererView", (x, y, z) => new CanvasRendererView(x, y, null, z));
@@ -66,6 +68,7 @@ namespace Delight
             ViewActivators.Add("Scrollbar", (x, y, z) => new Scrollbar(x, y, null, z));
             ViewActivators.Add("SelectionIndicator", (x, y, z) => new SelectionIndicator(x, y, null, z));
             ViewActivators.Add("XmlEditor", (x, y, z) => new XmlEditor(x, y, null, z));
+            ViewActivators.Add("MainMenuScene", (x, y, z) => new MainMenuScene(x, y, null, z));
             ViewActivators.Add("NewScene", (x, y, z) => new NewScene(x, y, null, z));
 
             ViewTypes = new Dictionary<string, Type>();
@@ -91,8 +94,11 @@ namespace Delight
             ViewTypes.Add("HighscoreTest", typeof(HighscoreTest));
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
+            ViewTypes.Add("LevelSelect", typeof(LevelSelect));
             ViewTypes.Add("ListExample", typeof(ListExample));
             ViewTypes.Add("MainMenu", typeof(MainMenu));
+            ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
+            ViewTypes.Add("Options", typeof(Options));
             ViewTypes.Add("ModelBindingTest", typeof(ModelBindingTest));
             ViewTypes.Add("PerformanceTest", typeof(PerformanceTest));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
@@ -106,7 +112,6 @@ namespace Delight
             ViewTypes.Add("TestScene", typeof(TestScene));
             ViewTypes.Add("ViewSwitcherTest", typeof(ViewSwitcherTest));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
-            ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
             ViewTypes.Add("UIImageView", typeof(UIImageView));
             ViewTypes.Add("CanvasRendererView", typeof(CanvasRendererView));
@@ -120,6 +125,7 @@ namespace Delight
             ViewTypes.Add("Scrollbar", typeof(Scrollbar));
             ViewTypes.Add("SelectionIndicator", typeof(SelectionIndicator));
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
+            ViewTypes.Add("MainMenuScene", typeof(MainMenuScene));
             ViewTypes.Add("NewScene", typeof(NewScene));
         }
     }
