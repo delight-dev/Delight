@@ -314,7 +314,6 @@ namespace Delight.Editor.Parser
                     if (!ContentFolders.Contains(contentFolder))
                     {
                         ContentFolders.Add(contentFolder);
-                        Debug.Log("Adding extension folder: " + contentFolder); // TODO remove
                     }
                 }
             }
