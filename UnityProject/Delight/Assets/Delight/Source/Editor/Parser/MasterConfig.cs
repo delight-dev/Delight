@@ -282,16 +282,48 @@ namespace Delight.Editor.Parser
             ServerUriLocator = String.Empty;
             UseSimulatedUriInEditor = true;
             ContentFolders.Add("Assets/Content/");
-            ContentFolders.Add("Assets/TestContent/");
+            ContentFolders.Add("Assets/DelightDevContent/");
             ContentFolders.Add("Assets/Delight/Content/");
             ContentFolders.Add("Assets/Plugins/Content/");
             ContentFolders.Add("Assets/Plugins/Delight/Content/");
+            UpdateExtensionContentFolders();
             Namespaces.Add("Delight");
             DelightPath = "/";
             DefaultBasedOn = String.Empty;
             BaseView = String.Empty;
             AssetBundleVersion = 0;
             Modules = new List<string>();
+        }
+
+        /// <summary>
+        /// Adds extension content folders. 
+        /// </summary>
+        public void UpdateExtensionContentFolders()
+        {
+            string path = String.Format("{0}/DelightExtensions/", Application.dataPath);
+            if (!Directory.Exists(path))
+                return;
+
+            try
+            {
+                foreach (var directoryPath in Directory.GetDirectories(path))
+                {
+                    var directoryName = Path.GetFileName(directoryPath.TrimEnd(Path.DirectorySeparatorChar));
+
+                    string contentFolder = String.Format("Assets/DelightExtensions/{0}/", directoryName);
+                    if (!ContentFolders.Contains(contentFolder))
+                    {
+                        ContentFolders.Add(contentFolder);
+                        Debug.Log("Adding extension folder: " + contentFolder); // TODO remove
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                Debug.LogError(String.Format("#Delight# Failed to search for extension folders."));
+                return;
+            }
         }
 
         /// <summary>

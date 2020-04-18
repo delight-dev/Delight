@@ -289,6 +289,13 @@ namespace Delight
             set { SliderBackgroundImageView.UseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty SliderPixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single SliderPixelsPerUnitMultiplier
+        {
+            get { return SliderBackgroundImageView.PixelsPerUnitMultiplier; }
+            set { SliderBackgroundImageView.PixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty SliderMaterialProperty = Image.MaterialProperty;
         public MaterialAsset SliderMaterial
         {
@@ -576,6 +583,13 @@ namespace Delight
             set { SliderFillImageView.UseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty SliderFillPixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single SliderFillPixelsPerUnitMultiplier
+        {
+            get { return SliderFillImageView.PixelsPerUnitMultiplier; }
+            set { SliderFillImageView.PixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty SliderFillMaterialProperty = Image.MaterialProperty;
         public MaterialAsset SliderFillMaterial
         {
@@ -861,6 +875,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.UseSpriteMesh; }
             set { SliderHandleImageView.UseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandlePixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single SliderHandlePixelsPerUnitMultiplier
+        {
+            get { return SliderHandleImageView.PixelsPerUnitMultiplier; }
+            set { SliderHandleImageView.PixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty SliderHandleMaterialProperty = Image.MaterialProperty;

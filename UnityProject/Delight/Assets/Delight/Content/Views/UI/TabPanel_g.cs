@@ -218,6 +218,13 @@ namespace Delight
             set { TabHeaderGroup.BackgroundUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty TabListBackgroundPixelsPerUnitMultiplierProperty = ToggleGroup.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single TabListBackgroundPixelsPerUnitMultiplier
+        {
+            get { return TabHeaderGroup.BackgroundPixelsPerUnitMultiplier; }
+            set { TabHeaderGroup.BackgroundPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty TabListBackgroundMaterialProperty = ToggleGroup.BackgroundMaterialProperty;
         public MaterialAsset TabListBackgroundMaterial
         {

@@ -44,6 +44,11 @@ namespace Delight
 
     public partial class AchievementData : DataProvider<Achievement>
     {
+        #region Fields
+
+
+        #endregion
+
         #region Constructor
 
         public AchievementData()

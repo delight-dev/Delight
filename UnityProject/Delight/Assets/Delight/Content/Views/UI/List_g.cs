@@ -476,6 +476,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarPixelsPerUnitMultiplierProperty = ScrollableRegion.HorizontalScrollbarBarPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarPixelsPerUnitMultiplier; }
+            set { ScrollableRegion.HorizontalScrollbarBarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarMaterialProperty = ScrollableRegion.HorizontalScrollbarBarMaterialProperty;
         public MaterialAsset HorizontalScrollbarBarMaterial
         {
@@ -763,6 +770,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarHandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandlePixelsPerUnitMultiplierProperty = ScrollableRegion.HorizontalScrollbarHandlePixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandlePixelsPerUnitMultiplier; }
+            set { ScrollableRegion.HorizontalScrollbarHandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleMaterialProperty = ScrollableRegion.HorizontalScrollbarHandleMaterialProperty;
         public MaterialAsset HorizontalScrollbarHandleMaterial
         {
@@ -1048,6 +1062,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarBackgroundUseSpriteMesh; }
             set { ScrollableRegion.HorizontalScrollbarBackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundPixelsPerUnitMultiplierProperty = ScrollableRegion.HorizontalScrollbarBackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBackgroundPixelsPerUnitMultiplier; }
+            set { ScrollableRegion.HorizontalScrollbarBackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundMaterialProperty = ScrollableRegion.HorizontalScrollbarBackgroundMaterialProperty;
@@ -1372,6 +1393,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarPixelsPerUnitMultiplierProperty = ScrollableRegion.VerticalScrollbarBarPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarPixelsPerUnitMultiplier; }
+            set { ScrollableRegion.VerticalScrollbarBarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarMaterialProperty = ScrollableRegion.VerticalScrollbarBarMaterialProperty;
         public MaterialAsset VerticalScrollbarBarMaterial
         {
@@ -1659,6 +1687,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarHandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandlePixelsPerUnitMultiplierProperty = ScrollableRegion.VerticalScrollbarHandlePixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandlePixelsPerUnitMultiplier; }
+            set { ScrollableRegion.VerticalScrollbarHandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleMaterialProperty = ScrollableRegion.VerticalScrollbarHandleMaterialProperty;
         public MaterialAsset VerticalScrollbarHandleMaterial
         {
@@ -1944,6 +1979,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarBackgroundUseSpriteMesh; }
             set { ScrollableRegion.VerticalScrollbarBackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundPixelsPerUnitMultiplierProperty = ScrollableRegion.VerticalScrollbarBackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return ScrollableRegion.VerticalScrollbarBackgroundPixelsPerUnitMultiplier; }
+            set { ScrollableRegion.VerticalScrollbarBackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundMaterialProperty = ScrollableRegion.VerticalScrollbarBackgroundMaterialProperty;

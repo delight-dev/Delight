@@ -40,6 +40,7 @@ namespace Delight
             dependencyProperties.Add(BackgroundFillOriginProperty);
             dependencyProperties.Add(BackgroundAlphaHitTestMinimumThresholdProperty);
             dependencyProperties.Add(BackgroundUseSpriteMeshProperty);
+            dependencyProperties.Add(BackgroundPixelsPerUnitMultiplierProperty);
             dependencyProperties.Add(BackgroundMaterialProperty);
             dependencyProperties.Add(BackgroundOnCullStateChangedProperty);
             dependencyProperties.Add(BackgroundMaskableProperty);
@@ -133,6 +134,13 @@ namespace Delight
         {
             get { return BackgroundUseSpriteMeshProperty.GetValue(this); }
             set { BackgroundUseSpriteMeshProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView> BackgroundPixelsPerUnitMultiplierProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView>("BackgroundPixelsPerUnitMultiplier", x => x.ImageComponent, x => x.pixelsPerUnitMultiplier, (x, y) => x.pixelsPerUnitMultiplier = y);
+        public System.Single BackgroundPixelsPerUnitMultiplier
+        {
+            get { return BackgroundPixelsPerUnitMultiplierProperty.GetValue(this); }
+            set { BackgroundPixelsPerUnitMultiplierProperty.SetValue(this, value); }
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView> BackgroundMaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView>("BackgroundMaterial", x => x.ImageComponent, (x, y) => x.material = y?.UnityObject);

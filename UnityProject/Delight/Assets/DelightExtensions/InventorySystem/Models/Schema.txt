@@ -1,0 +1,30 @@
+﻿// Models
+
+= Inventory
+InventoryItems
+
+= InventoryItem
+Inventory
+Item
+Vector2 Position
+
+= Item
+Sprite Icon
+String Name
+
+// Data
+
++ Inventory
+DefaultInventory:
+
++ InventoryItem (Inventory, Item)
+DefaultInventory, SwordItem1
+DefaultInventory, SwordItem2
+
++ Item (Icon, Name)
+SwordItem1: SwordIcon, "Sword"  
+SwordItem2: SwordIcon, "Sword 2" 
+SwordItem3: SwordIcon, "Sword 3"
+SwordIcon, "Sword 4"
+SwordIcon, "Sword 5" 
+SwordIcon, "Sword 6"  

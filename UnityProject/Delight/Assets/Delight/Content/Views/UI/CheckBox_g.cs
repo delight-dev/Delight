@@ -199,6 +199,13 @@ namespace Delight
             set { CheckBoxImageView.UseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxPixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single CheckBoxPixelsPerUnitMultiplier
+        {
+            get { return CheckBoxImageView.PixelsPerUnitMultiplier; }
+            set { CheckBoxImageView.PixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxMaterialProperty = Image.MaterialProperty;
         public MaterialAsset CheckBoxMaterial
         {

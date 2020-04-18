@@ -40,6 +40,7 @@ namespace Delight
             dependencyProperties.Add(FillOriginProperty);
             dependencyProperties.Add(AlphaHitTestMinimumThresholdProperty);
             dependencyProperties.Add(UseSpriteMeshProperty);
+            dependencyProperties.Add(PixelsPerUnitMultiplierProperty);
             dependencyProperties.Add(MaterialProperty);
             dependencyProperties.Add(OnCullStateChangedProperty);
             dependencyProperties.Add(MaskableProperty);
@@ -133,6 +134,13 @@ namespace Delight
         {
             get { return UseSpriteMeshProperty.GetValue(this); }
             set { UseSpriteMeshProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image> PixelsPerUnitMultiplierProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image>("PixelsPerUnitMultiplier", x => x.ImageComponent, x => x.pixelsPerUnitMultiplier, (x, y) => x.pixelsPerUnitMultiplier = y);
+        public System.Single PixelsPerUnitMultiplier
+        {
+            get { return PixelsPerUnitMultiplierProperty.GetValue(this); }
+            set { PixelsPerUnitMultiplierProperty.SetValue(this, value); }
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image>("Material", x => x.ImageComponent, (x, y) => x.material = y?.UnityObject);

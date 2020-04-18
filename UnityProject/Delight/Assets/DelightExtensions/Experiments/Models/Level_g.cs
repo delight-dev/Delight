@@ -41,18 +41,39 @@ namespace Delight
 
     public partial class LevelData : DataProvider<Level>
     {
+        #region Fields
+
+        public readonly Level Level1_1;
+        public readonly Level Level1_2;
+        public readonly Level Level1_3;
+        public readonly Level Level2_1;
+        public readonly Level Level2_2;
+        public readonly Level Level2_3;
+        public readonly Level Level3_1;
+        public readonly Level Level3_2;
+
+        #endregion
+
         #region Constructor
 
         public LevelData()
         {
-            Add(new Level { Id = "Level1_1", WorldId = "World1", Name = "Level 1-1" });
-            Add(new Level { Id = "Level1_2", WorldId = "World1", Name = "Level 1-2" });
-            Add(new Level { Id = "Level1_3", WorldId = "World1", Name = "Level 1-3" });
-            Add(new Level { Id = "Level2_1", WorldId = "World2", Name = "Level 2-1" });
-            Add(new Level { Id = "Level2_2", WorldId = "World2", Name = "Level 2-2" });
-            Add(new Level { Id = "Level2_3", WorldId = "World2", Name = "Level 2-3" });
-            Add(new Level { Id = "Level3_1", WorldId = "World3", Name = "Level 3-1" });
-            Add(new Level { Id = "Level3_2", WorldId = "World3", Name = "Level 3-2" });
+            Level1_1 = new Level { Id = "Level1_1", WorldId = "World1", Name = "Level 1-1" };
+            Add(Level1_1);
+            Level1_2 = new Level { Id = "Level1_2", WorldId = "World1", Name = "Level 1-2" };
+            Add(Level1_2);
+            Level1_3 = new Level { Id = "Level1_3", WorldId = "World1", Name = "Level 1-3" };
+            Add(Level1_3);
+            Level2_1 = new Level { Id = "Level2_1", WorldId = "World2", Name = "Level 2-1" };
+            Add(Level2_1);
+            Level2_2 = new Level { Id = "Level2_2", WorldId = "World2", Name = "Level 2-2" };
+            Add(Level2_2);
+            Level2_3 = new Level { Id = "Level2_3", WorldId = "World2", Name = "Level 2-3" };
+            Add(Level2_3);
+            Level3_1 = new Level { Id = "Level3_1", WorldId = "World3", Name = "Level 3-1" };
+            Add(Level3_1);
+            Level3_2 = new Level { Id = "Level3_2", WorldId = "World3", Name = "Level 3-2" };
+            Add(Level3_2);
         }
 
         #endregion

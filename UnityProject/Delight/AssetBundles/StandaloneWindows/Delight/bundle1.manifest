@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 4239670368
+CRC: 1777250979
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d8d80c8b30618926b092f3469a9c22d3
+    Hash: 06e5927820f1411e6a9c4b87fa237724
   TypeTreeHash:
     serializedVersion: 2
-    Hash: cb3f6df5cbc4a2990c44c2787bc9553a
+    Hash: 9e6ad29cbd2df8fbe1a15315db0e51ab
 HashAppended: 0
 ClassTypes:
 - Class: 28
@@ -14,6 +14,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/TestContent/Assets/Bundle1/Sprites/Frame2.psd
-- Assets/TestContent/Assets/Bundle1/Sprites/Frame1.psd
+- Assets/DelightExtensions/Experiments/Assets/Bundle1/Sprites/Frame2.psd
+- Assets/DelightExtensions/Experiments/Assets/Bundle1/Sprites/Frame1.psd
 Dependencies: []

@@ -199,6 +199,13 @@ namespace Delight
             set { RadioButtonImageView.UseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonPixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single RadioButtonPixelsPerUnitMultiplier
+        {
+            get { return RadioButtonImageView.PixelsPerUnitMultiplier; }
+            set { RadioButtonImageView.PixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonMaterialProperty = Image.MaterialProperty;
         public MaterialAsset RadioButtonMaterial
         {

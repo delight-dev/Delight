@@ -186,6 +186,13 @@ namespace Delight
             set { Bar.UseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty BarPixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single BarPixelsPerUnitMultiplier
+        {
+            get { return Bar.PixelsPerUnitMultiplier; }
+            set { Bar.PixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty BarMaterialProperty = Image.MaterialProperty;
         public MaterialAsset BarMaterial
         {
@@ -471,6 +478,13 @@ namespace Delight
         {
             get { return Handle.UseSpriteMesh; }
             set { Handle.UseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HandlePixelsPerUnitMultiplierProperty = Image.PixelsPerUnitMultiplierProperty;
+        public System.Single HandlePixelsPerUnitMultiplier
+        {
+            get { return Handle.PixelsPerUnitMultiplier; }
+            set { Handle.PixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty HandleMaterialProperty = Image.MaterialProperty;

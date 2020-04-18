@@ -485,6 +485,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarPixelsPerUnitMultiplierProperty = List.HorizontalScrollbarBarPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarPixelsPerUnitMultiplier; }
+            set { ComboBoxList.HorizontalScrollbarBarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarMaterialProperty = List.HorizontalScrollbarBarMaterialProperty;
         public MaterialAsset HorizontalScrollbarBarMaterial
         {
@@ -772,6 +779,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarHandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandlePixelsPerUnitMultiplierProperty = List.HorizontalScrollbarHandlePixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandlePixelsPerUnitMultiplier; }
+            set { ComboBoxList.HorizontalScrollbarHandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleMaterialProperty = List.HorizontalScrollbarHandleMaterialProperty;
         public MaterialAsset HorizontalScrollbarHandleMaterial
         {
@@ -1057,6 +1071,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarBackgroundUseSpriteMesh; }
             set { ComboBoxList.HorizontalScrollbarBackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundPixelsPerUnitMultiplierProperty = List.HorizontalScrollbarBackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.HorizontalScrollbarBackgroundPixelsPerUnitMultiplier; }
+            set { ComboBoxList.HorizontalScrollbarBackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundMaterialProperty = List.HorizontalScrollbarBackgroundMaterialProperty;
@@ -1381,6 +1402,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarPixelsPerUnitMultiplierProperty = List.VerticalScrollbarBarPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.VerticalScrollbarBarPixelsPerUnitMultiplier; }
+            set { ComboBoxList.VerticalScrollbarBarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarMaterialProperty = List.VerticalScrollbarBarMaterialProperty;
         public MaterialAsset VerticalScrollbarBarMaterial
         {
@@ -1668,6 +1696,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarHandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandlePixelsPerUnitMultiplierProperty = List.VerticalScrollbarHandlePixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.VerticalScrollbarHandlePixelsPerUnitMultiplier; }
+            set { ComboBoxList.VerticalScrollbarHandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleMaterialProperty = List.VerticalScrollbarHandleMaterialProperty;
         public MaterialAsset VerticalScrollbarHandleMaterial
         {
@@ -1953,6 +1988,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarBackgroundUseSpriteMesh; }
             set { ComboBoxList.VerticalScrollbarBackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundPixelsPerUnitMultiplierProperty = List.VerticalScrollbarBackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.VerticalScrollbarBackgroundPixelsPerUnitMultiplier; }
+            set { ComboBoxList.VerticalScrollbarBackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundMaterialProperty = List.VerticalScrollbarBackgroundMaterialProperty;
@@ -2611,6 +2653,13 @@ namespace Delight
         {
             get { return ComboBoxList.BackgroundUseSpriteMesh; }
             set { ComboBoxList.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty BackgroundPixelsPerUnitMultiplierProperty = List.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single BackgroundPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxList.BackgroundPixelsPerUnitMultiplier; }
+            set { ComboBoxList.BackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty BackgroundMaterialProperty = List.BackgroundMaterialProperty;
@@ -3640,6 +3689,13 @@ namespace Delight
         {
             get { return ComboBoxButton.BackgroundUseSpriteMesh; }
             set { ComboBoxButton.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty ButtonBackgroundPixelsPerUnitMultiplierProperty = Button.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single ButtonBackgroundPixelsPerUnitMultiplier
+        {
+            get { return ComboBoxButton.BackgroundPixelsPerUnitMultiplier; }
+            set { ComboBoxButton.BackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty ButtonBackgroundMaterialProperty = Button.BackgroundMaterialProperty;

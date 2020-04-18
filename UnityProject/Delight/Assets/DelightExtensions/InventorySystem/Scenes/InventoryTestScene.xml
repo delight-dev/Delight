@@ -1,0 +1,9 @@
+<InventoryTestScene xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+  <!--<InventoryView Items="{item in @Inventories.DefaultInventory.InventoryItems}" />-->
+  <List Items="{item in @Inventories.DefaultInventory.InventoryItems}">
+    <Label Text="{item.Item.Name}" /> 
+  </List>
+
+  <Button Text="Add Item" Click="AddItem" Alignment="TopLeft" Offset="10,10,0,0" />
+</InventoryTestScene>  
+ 

@@ -41,13 +41,24 @@ namespace Delight
 
     public partial class WorldData : DataProvider<World>
     {
+        #region Fields
+
+        public readonly World World1;
+        public readonly World World2;
+        public readonly World World3;
+
+        #endregion
+
         #region Constructor
 
         public WorldData()
         {
-            Add(new World { Id = "World1", Order = 1, Name = "World 1" });
-            Add(new World { Id = "World2", Order = 2, Name = "World 2" });
-            Add(new World { Id = "World3", Order = 2, Name = "World 2" });
+            World1 = new World { Id = "World1", Order = 1, Name = "World 1" };
+            Add(World1);
+            World2 = new World { Id = "World2", Order = 2, Name = "World 2" };
+            Add(World2);
+            World3 = new World { Id = "World3", Order = 2, Name = "World 2" };
+            Add(World3);
         }
 
         #endregion

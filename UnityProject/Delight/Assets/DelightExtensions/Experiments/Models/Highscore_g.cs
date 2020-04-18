@@ -44,6 +44,11 @@ namespace Delight
 
     public partial class HighscoreData : DataProvider<Highscore>
     {
+        #region Fields
+
+
+        #endregion
+
         #region Constructor
 
         public HighscoreData()

@@ -871,6 +871,13 @@ namespace Delight
             set { SelectionTab.BackgroundUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabBackgroundPixelsPerUnitMultiplierProperty = Button.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single SelectionTabBackgroundPixelsPerUnitMultiplier
+        {
+            get { return SelectionTab.BackgroundPixelsPerUnitMultiplier; }
+            set { SelectionTab.BackgroundPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabBackgroundMaterialProperty = Button.BackgroundMaterialProperty;
         public MaterialAsset SelectionTabBackgroundMaterial
         {

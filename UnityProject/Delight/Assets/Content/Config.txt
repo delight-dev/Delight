@@ -18,6 +18,5 @@ UseSimulatedUriInEditor: true
 BuildTargets: Dev
 AssetBundleVersion: 1
 ContentFolders:
-  TestContent/
 Modules: 
-  TextMeshPro 
+  TextMeshPro

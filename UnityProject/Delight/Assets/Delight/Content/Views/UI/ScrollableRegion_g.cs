@@ -371,6 +371,13 @@ namespace Delight
             set { HorizontalScrollbar.BarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarPixelsPerUnitMultiplierProperty = Scrollbar.BarPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return HorizontalScrollbar.BarPixelsPerUnitMultiplier; }
+            set { HorizontalScrollbar.BarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarMaterialProperty = Scrollbar.BarMaterialProperty;
         public MaterialAsset HorizontalScrollbarBarMaterial
         {
@@ -658,6 +665,13 @@ namespace Delight
             set { HorizontalScrollbar.HandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandlePixelsPerUnitMultiplierProperty = Scrollbar.HandlePixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return HorizontalScrollbar.HandlePixelsPerUnitMultiplier; }
+            set { HorizontalScrollbar.HandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleMaterialProperty = Scrollbar.HandleMaterialProperty;
         public MaterialAsset HorizontalScrollbarHandleMaterial
         {
@@ -943,6 +957,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.BackgroundUseSpriteMesh; }
             set { HorizontalScrollbar.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundPixelsPerUnitMultiplierProperty = Scrollbar.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single HorizontalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return HorizontalScrollbar.BackgroundPixelsPerUnitMultiplier; }
+            set { HorizontalScrollbar.BackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundMaterialProperty = Scrollbar.BackgroundMaterialProperty;
@@ -1267,6 +1288,13 @@ namespace Delight
             set { VerticalScrollbar.BarUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarPixelsPerUnitMultiplierProperty = Scrollbar.BarPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBarPixelsPerUnitMultiplier
+        {
+            get { return VerticalScrollbar.BarPixelsPerUnitMultiplier; }
+            set { VerticalScrollbar.BarPixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarMaterialProperty = Scrollbar.BarMaterialProperty;
         public MaterialAsset VerticalScrollbarBarMaterial
         {
@@ -1554,6 +1582,13 @@ namespace Delight
             set { VerticalScrollbar.HandleUseSpriteMesh = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandlePixelsPerUnitMultiplierProperty = Scrollbar.HandlePixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarHandlePixelsPerUnitMultiplier
+        {
+            get { return VerticalScrollbar.HandlePixelsPerUnitMultiplier; }
+            set { VerticalScrollbar.HandlePixelsPerUnitMultiplier = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleMaterialProperty = Scrollbar.HandleMaterialProperty;
         public MaterialAsset VerticalScrollbarHandleMaterial
         {
@@ -1839,6 +1874,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.BackgroundUseSpriteMesh; }
             set { VerticalScrollbar.BackgroundUseSpriteMesh = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundPixelsPerUnitMultiplierProperty = Scrollbar.BackgroundPixelsPerUnitMultiplierProperty;
+        public System.Single VerticalScrollbarBackgroundPixelsPerUnitMultiplier
+        {
+            get { return VerticalScrollbar.BackgroundPixelsPerUnitMultiplier; }
+            set { VerticalScrollbar.BackgroundPixelsPerUnitMultiplier = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundMaterialProperty = Scrollbar.BackgroundMaterialProperty;

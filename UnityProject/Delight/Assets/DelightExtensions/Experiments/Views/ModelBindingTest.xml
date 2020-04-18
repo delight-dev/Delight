@@ -4,7 +4,7 @@
       <Button Text="Test 1" Click="Test1" />
       <Button Text="Add" Click="Add" />
       <Button Text="Remove" Click="Remove" />
-      <Label Text="{@Loc.Greeting1}" />
+      <Label Text="{@Loc.Greeting1}" /> 
       <Label Text="{@Loc.Greeting2}" />
     </Group>
 
@@ -12,9 +12,9 @@
       <Group>
         <Label Text="{player.Name}" />
         <List Id="AchievementsList" Items="{achievement in player.Achievements}" IsVirtualized="True" Orientation="Vertical" Offset="50,0,0,0" ItemSelected="AchievementSelectionChanged" Height="200">
-          <Label Text="{achievement.Title}" Width="150" Height="40" /> 
-        </List>  
-      </Group> 
+          <Label Text="{achievement.Title}" Width="150" Height="40" />    
+        </List>   
+      </Group>  
     </List>
   </Group> 
 </ModelBindingTest> 
