@@ -51,6 +51,7 @@ namespace Delight
             // initialize default converters for types
             Converters = new Dictionary<string, ValueConverter>();
             Converters.Add("string", new StringValueConverter());
+            Converters.Add("String", new StringValueConverter());
             Converters.Add("System.String", new StringValueConverter());
             Converters.Add("int", new IntValueConverter());
             Converters.Add("System.Int32", new IntValueConverter());            
@@ -58,14 +59,23 @@ namespace Delight
             Converters.Add("System.Boolean", new BoolValueConverter());
             Converters.Add("float", new FloatValueConverter());
             Converters.Add("System.Single", new FloatValueConverter());
+            Converters.Add("Color", new ColorValueConverter());
             Converters.Add("UnityEngine.Color", new ColorValueConverter());
+            Converters.Add("ElementSize", new ElementSizeValueConverter());
             Converters.Add("Delight.ElementSize", new ElementSizeValueConverter());
+            Converters.Add("ElementMargin", new ElementMarginValueConverter());
             Converters.Add("Delight.ElementMargin", new ElementMarginValueConverter());
+            Converters.Add("Vector2", new Vector2ValueConverter());
             Converters.Add("UnityEngine.Vector2", new Vector2ValueConverter());
+            Converters.Add("Vector3", new Vector3ValueConverter());
             Converters.Add("UnityEngine.Vector3", new Vector3ValueConverter());
+            Converters.Add("Vector4", new Vector4ValueConverter());
             Converters.Add("UnityEngine.Vector4", new Vector4ValueConverter());
+            Converters.Add("Quaternion", new QuaternionValueConverter());
             Converters.Add("UnityEngine.Quaternion", new QuaternionValueConverter());
+            Converters.Add("ElementAlignment", new EnumValueConverter<ElementAlignment>());
             Converters.Add("Delight.ElementAlignment", new EnumValueConverter<ElementAlignment>());
+            Converters.Add("ElementOrientation", new EnumValueConverter<ElementOrientation>());
             Converters.Add("Delight.ElementOrientation", new EnumValueConverter<ElementOrientation>());
             Converters.Add("Delight.LoadMode", new EnumValueConverter<LoadMode>());
             Converters.Add("UnityEngine.RenderMode", new EnumValueConverter<UnityEngine.RenderMode>());

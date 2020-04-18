@@ -513,9 +513,9 @@ namespace Delight.Editor.Parser
                     }
 
                     // insert handlers
-                    fileContent = fileContent.Insert(classContentIndex+1, Environment.NewLine + sbHandlers.ToString());
+                    fileContent = fileContent.Insert(classContentIndex + 1, Environment.NewLine + sbHandlers.ToString());
                     File.WriteAllText(sourceFile, fileContent);
-                }                
+                }
             }
         }
 
@@ -1174,13 +1174,13 @@ namespace Delight.Editor.Parser
                                     bool isTemplateItemSource = templateItemInfo != null;
                                     if (isTemplateItemSource)
                                     {
-                                        if (templateItemInfo.ItemType == null)
+                                        if (templateItemInfo.ItemTypeName == null)
                                         {
                                             formattedActionParameters.Add(actionParameter);
                                             continue; // item type was not inferred so ignore parameter
                                         }
 
-                                        actionParameterPath[0] = String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemType);
+                                        actionParameterPath[0] = String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemTypeName);
                                     }
 
                                     formattedActionParameters.Add("() => " + String.Join("?.", actionParameterPath));
@@ -1256,6 +1256,7 @@ namespace Delight.Editor.Parser
                         templateItems.Add(ti);
 
                         ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                        ti.ItemTypeName = ti.ItemType != null ? ti.ItemType.TypeName() : null;
                     }
                 }
 
@@ -1266,7 +1267,7 @@ namespace Delight.Editor.Parser
                     {
                         // handle special case when binding to SelectedItem in lists <List Item="{player in Players}" SelectedItem="{SelectedPlayer}" />
                         bool castToItemType = false;
-                        if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null && !String.IsNullOrEmpty(ti.ItemType))
+                        if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null && !String.IsNullOrEmpty(ti.ItemTypeName))
                         {
                             castToItemType = true;
                         }
@@ -1277,7 +1278,6 @@ namespace Delight.Editor.Parser
                         var sourceProperties = new List<string>();
                         foreach (var bindingSource in propertyBinding.Sources)
                         {
-                            // generate binding path to source
                             var sourcePath = new List<string>();
                             sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
 
@@ -1308,12 +1308,16 @@ namespace Delight.Editor.Parser
 
                             if (isTemplateItemSource)
                             {
-                                if (templateItemInfo.ItemType == null)
+                                if (templateItemInfo.ItemTypeName == null)
                                     continue; // item type was not inferred so ignore binding
 
                                 sourcePath[0] = templateItemInfo.VariableName;
                                 sourcePath.Insert(1, "Item");
                             }
+
+                            // handle collection indexers in binding path
+                            // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
+                            sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
 
                             var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
                             if (isLoc)
@@ -1347,7 +1351,7 @@ namespace Delight.Editor.Parser
                             {
                                 // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
                                 var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
-                                var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemType);
+                                var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
                                 sourcePath = sourcePath.Skip(2).ToList();
                                 sourcePath.Insert(0, castItemRef);
 
@@ -1465,7 +1469,7 @@ namespace Delight.Editor.Parser
 
                             if (castToItemType) // special case when binding to SelectedItem in generic lists so target is cast to specific type
                             {
-                                targetToSource += String.Format(" as {0}", ti.ItemType);
+                                targetToSource += String.Format(" as {0}", ti.ItemTypeName);
                             }
                         }
                         else
@@ -1518,13 +1522,90 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Get source path from binding declaration.
+        /// </summary>
+        private static List<string> UpdateSourcePathWithCollectionIndexers(string fileName, ViewObject viewObject, List<string> bindingSource, TemplateItemInfo templateItemInfo, ViewDeclaration viewDeclaration)
+        {
+            var sourcePath = new List<string>(bindingSource);
+
+            Type sourceType = typeof(Models);
+            int startIndex = 1;
+            var bindableCollectionBase = typeof(BindableCollection);
+
+            bool isTemplateItemSource = templateItemInfo != null;
+            if (isTemplateItemSource)
+            {
+                if (templateItemInfo.ItemType == null)
+                    return sourcePath; // can't parse it further
+                sourceType = templateItemInfo.ItemType;
+            }
+
+            // go through source path and find the item type 
+            if (!isTemplateItemSource && sourcePath[0] != "Models")
+            {
+                sourceType = MasterConfig.GetType(viewObject.TypeName);
+                startIndex = 0;
+            }
+
+            if (sourceType == null)
+            {
+                // might happen if binding to a new view which has no code generated for it yet
+                return sourcePath;
+            }
+
+            // loop through each property and infer their type
+            var parsedSourcePath = new List<string>();
+            if (startIndex > 0)
+            {
+                parsedSourcePath.AddRange(sourcePath.Take(startIndex));
+            }
+
+            for (int i = startIndex; i < sourcePath.Count; ++i)
+            {
+                parsedSourcePath.Add(sourcePath[i]);
+
+                var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
+                if (memberInfo == null)
+                {
+                    return sourcePath;
+                }
+
+                // if it's a bindable collection get the type from the generic argument
+                sourceType = memberInfo.GetMemberType();
+                if (bindableCollectionBase.IsAssignableFrom(sourceType))
+                {
+                    while (!sourceType.IsGenericType)
+                    {
+                        if (sourceType == bindableCollectionBase)
+                        {
+                            break;
+                        }
+                        sourceType = sourceType.BaseType;
+                    }
+
+                    sourceType = sourceType.GetGenericArguments()[0];
+
+                    // if there is another property add indexer
+                    int nextIndex = i + 1;
+                    if (nextIndex < sourcePath.Count)
+                    {
+                        parsedSourcePath[i] += String.Format("[\"{0}\"]", sourcePath[nextIndex]);
+                        i = nextIndex;
+                    }
+                }
+            }
+
+            return parsedSourcePath;
+        }
+
+        /// <summary>
         /// Gets item type from item declaration.
         /// </summary>
-        private static string GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
+        private static Type GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
         {
             var bindingSource = itemIdDeclaration.Sources.FirstOrDefault();
             if (bindingSource == null)
-                return nameof(BindableObject);
+                return typeof(BindableObject);
 
             var sourcePath = new List<string>();
             sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
@@ -1555,11 +1636,18 @@ namespace Delight.Editor.Parser
 
             // loop through each property and infer their type
             var bindableCollectionBase = typeof(BindableCollection);
+            bool previousWasCollection = false;
             for (int i = startIndex; i < sourcePath.Count; ++i)
             {
                 var memberInfo = sourceType.GetMemberInfo(sourcePath[i], BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
                 if (memberInfo == null)
                 {
+                    if (previousWasCollection)
+                    {
+                        // if previous source in path was a collection we skip next source as it's an indexer like Player1 in @Players.Player1 => Players["Player1"]
+                        continue;
+                    }
+
                     ConsoleLogger.LogParseError(fileName, itemIdDeclaration.LineNumber,
                         String.Format("#Delight# Unable to infer item type in binding <{0} {1}=\"{2}\">. Member \"{3}\" not found in type \"{4}\".",
                         viewDeclaration.ViewName, itemIdDeclaration.PropertyName, itemIdDeclaration.PropertyBindingString,
@@ -1569,13 +1657,15 @@ namespace Delight.Editor.Parser
 
                 // if it's a bindable collection get the type from the generic argument
                 sourceType = memberInfo.GetMemberType();
+                previousWasCollection = false;
                 if (bindableCollectionBase.IsAssignableFrom(sourceType))
                 {
+                    previousWasCollection = true;
                     while (!sourceType.IsGenericType)
                     {
                         if (sourceType == bindableCollectionBase)
                         {
-                            return nameof(BindableObject);
+                            return typeof(BindableObject);
                         }
                         sourceType = sourceType.BaseType;
                     }
@@ -1584,7 +1674,7 @@ namespace Delight.Editor.Parser
                 }
             }
 
-            return sourceType.TypeName();
+            return sourceType;
         }
 
         /// <summary>
@@ -1917,8 +2007,9 @@ namespace Delight.Editor.Parser
         {
             public string Name;
             public string VariableName;
-            public string ItemType;
             public PropertyBinding ItemIdDeclaration;
+            public Type ItemType;
+            public string ItemTypeName;
         }
 
         #endregion
@@ -2299,6 +2390,34 @@ namespace Delight.Editor.Parser
 
             if (modelObject.Data.Any())
             {
+                var config = MasterConfig.GetInstance();
+
+                sb.AppendLine("        #region Fields");
+                sb.AppendLine();
+
+                foreach (var modelData in modelObject.Data)
+                {
+                    if (String.IsNullOrEmpty(modelData.Id))
+                        continue;
+
+                    // make sure data applies to active build target
+                    if (modelData.BuildTargets.Any())
+                    {
+                        if (!config.BuildTargets.Any(x => modelData.BuildTargets.IContains(x)))
+                        {
+                            continue; // build target don't match
+                        }
+                    }
+
+                    var modelId = modelData.Id.ToPropertyName();
+                    sb.AppendLine("        public readonly {0} {1};", modelObject.Name, modelId);
+                }
+
+                sb.AppendLine();
+                sb.AppendLine("        #endregion");
+                sb.AppendLine();
+
+
                 // generate data inserts
                 sb.AppendLine("        #region Constructor");
                 sb.AppendLine();
@@ -2306,7 +2425,6 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        public {0}Data()", modelObject.Name);
                 sb.AppendLine("        {");
 
-                var config = MasterConfig.GetInstance();
                 foreach (var modelData in modelObject.Data)
                 {
                     // make sure data applies to active build target
@@ -2320,9 +2438,12 @@ namespace Delight.Editor.Parser
 
                     // add data
                     var propertySetters = new List<string>();
-                    if (!String.IsNullOrEmpty(modelData.Id))
+                    bool hasId = !String.IsNullOrEmpty(modelData.Id);
+                    string modelId = string.Empty;
+                    if (hasId)
                     {
-                        propertySetters.Add(String.Format("Id = \"{0}\"", modelData.Id));
+                        modelId = modelData.Id.ToPropertyName();
+                        propertySetters.Add(String.Format("Id = \"{0}\"", modelId));
                     }
 
                     foreach (var propertyData in modelData.PropertyData)
@@ -2347,7 +2468,13 @@ namespace Delight.Editor.Parser
                         propertySetters.Add(String.Format("{0} = {1}", propertyData.Property.Name, typeInitializer));
                     }
 
-                    sb.AppendLine("            Add(new {0} {{ {1} }});", modelObject.Name, String.Join(", ", propertySetters));
+                    var newModel = String.Format("new {0} {{ {1} }}", modelObject.Name, String.Join(", ", propertySetters));
+                    if (hasId)
+                    {
+                        sb.AppendLine("            {0} = {1};", modelId, newModel); 
+                    }
+
+                    sb.AppendLine("            Add({0});", hasId ? modelId : newModel);
                 }
 
                 sb.AppendLine("        }");
