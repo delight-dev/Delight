@@ -95,6 +95,10 @@ namespace Delight
                 }
             }
 
+            // update XML editor left margin based on scroll position so the line numbers follow along with scrolling
+            var scrollableContentOffset = ScrollableRegion.GetContentOffset();
+            XmlEditLeftMargin.Offset.Left = -scrollableContentOffset.x;
+
             bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool scrollEngaged = ctrlDown || Input.GetMouseButton(2);
             bool mouseButtonDown = false;

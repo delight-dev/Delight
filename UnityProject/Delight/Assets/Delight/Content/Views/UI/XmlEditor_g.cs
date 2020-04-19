@@ -21,12 +21,13 @@ namespace Delight
             // constructing ScrollableRegion (ScrollableRegion)
             ScrollableRegion = new ScrollableRegion(this, this, "ScrollableRegion", ScrollableRegionTemplate);
             XmlEditRegion = new Region(this, ScrollableRegion.Content, "XmlEditRegion", XmlEditRegionTemplate);
-            XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
-            LineNumbersLabel = new Label(this, XmlEditLeftMargin.Content, "LineNumbersLabel", LineNumbersLabelTemplate);
             XmlTextRegion = new Region(this, XmlEditRegion.Content, "XmlTextRegion", XmlTextRegionTemplate);
             TextSelection = new CanvasRendererView(this, XmlTextRegion.Content, "TextSelection", TextSelectionTemplate);
             XmlTextLabel = new Label(this, XmlTextRegion.Content, "XmlTextLabel", XmlTextLabelTemplate);
             Caret = new Label(this, XmlTextRegion.Content, "Caret", CaretTemplate);
+            XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
+            LineNumbersLabel = new Label(this, XmlEditLeftMargin.Content, "LineNumbersLabel", LineNumbersLabelTemplate);
+            LineNumbersRightBorder = new Region(this, XmlEditLeftMargin.Content, "LineNumbersRightBorder", LineNumbersRightBorderTemplate);
 
             // constructing Label (DebugTextLabel)
             DebugTextLabel = new Label(this, this, "DebugTextLabel", DebugTextLabelTemplate);
@@ -49,10 +50,6 @@ namespace Delight
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
             dependencyProperties.Add(XmlEditRegionProperty);
             dependencyProperties.Add(XmlEditRegionTemplateProperty);
-            dependencyProperties.Add(XmlEditLeftMarginProperty);
-            dependencyProperties.Add(XmlEditLeftMarginTemplateProperty);
-            dependencyProperties.Add(LineNumbersLabelProperty);
-            dependencyProperties.Add(LineNumbersLabelTemplateProperty);
             dependencyProperties.Add(XmlTextRegionProperty);
             dependencyProperties.Add(XmlTextRegionTemplateProperty);
             dependencyProperties.Add(TextSelectionProperty);
@@ -61,6 +58,12 @@ namespace Delight
             dependencyProperties.Add(XmlTextLabelTemplateProperty);
             dependencyProperties.Add(CaretProperty);
             dependencyProperties.Add(CaretTemplateProperty);
+            dependencyProperties.Add(XmlEditLeftMarginProperty);
+            dependencyProperties.Add(XmlEditLeftMarginTemplateProperty);
+            dependencyProperties.Add(LineNumbersLabelProperty);
+            dependencyProperties.Add(LineNumbersLabelTemplateProperty);
+            dependencyProperties.Add(LineNumbersRightBorderProperty);
+            dependencyProperties.Add(LineNumbersRightBorderTemplateProperty);
             dependencyProperties.Add(DebugTextLabelProperty);
             dependencyProperties.Add(DebugTextLabelTemplateProperty);
         }
@@ -116,34 +119,6 @@ namespace Delight
         {
             get { return XmlEditRegionTemplateProperty.GetValue(this); }
             set { XmlEditRegionTemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> XmlEditLeftMarginProperty = new DependencyProperty<Region>("XmlEditLeftMargin");
-        public Region XmlEditLeftMargin
-        {
-            get { return XmlEditLeftMarginProperty.GetValue(this); }
-            set { XmlEditLeftMarginProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> XmlEditLeftMarginTemplateProperty = new DependencyProperty<Template>("XmlEditLeftMarginTemplate");
-        public Template XmlEditLeftMarginTemplate
-        {
-            get { return XmlEditLeftMarginTemplateProperty.GetValue(this); }
-            set { XmlEditLeftMarginTemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Label> LineNumbersLabelProperty = new DependencyProperty<Label>("LineNumbersLabel");
-        public Label LineNumbersLabel
-        {
-            get { return LineNumbersLabelProperty.GetValue(this); }
-            set { LineNumbersLabelProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> LineNumbersLabelTemplateProperty = new DependencyProperty<Template>("LineNumbersLabelTemplate");
-        public Template LineNumbersLabelTemplate
-        {
-            get { return LineNumbersLabelTemplateProperty.GetValue(this); }
-            set { LineNumbersLabelTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> XmlTextRegionProperty = new DependencyProperty<Region>("XmlTextRegion");
@@ -202,6 +177,48 @@ namespace Delight
             set { CaretTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Region> XmlEditLeftMarginProperty = new DependencyProperty<Region>("XmlEditLeftMargin");
+        public Region XmlEditLeftMargin
+        {
+            get { return XmlEditLeftMarginProperty.GetValue(this); }
+            set { XmlEditLeftMarginProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> XmlEditLeftMarginTemplateProperty = new DependencyProperty<Template>("XmlEditLeftMarginTemplate");
+        public Template XmlEditLeftMarginTemplate
+        {
+            get { return XmlEditLeftMarginTemplateProperty.GetValue(this); }
+            set { XmlEditLeftMarginTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> LineNumbersLabelProperty = new DependencyProperty<Label>("LineNumbersLabel");
+        public Label LineNumbersLabel
+        {
+            get { return LineNumbersLabelProperty.GetValue(this); }
+            set { LineNumbersLabelProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> LineNumbersLabelTemplateProperty = new DependencyProperty<Template>("LineNumbersLabelTemplate");
+        public Template LineNumbersLabelTemplate
+        {
+            get { return LineNumbersLabelTemplateProperty.GetValue(this); }
+            set { LineNumbersLabelTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> LineNumbersRightBorderProperty = new DependencyProperty<Region>("LineNumbersRightBorder");
+        public Region LineNumbersRightBorder
+        {
+            get { return LineNumbersRightBorderProperty.GetValue(this); }
+            set { LineNumbersRightBorderProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> LineNumbersRightBorderTemplateProperty = new DependencyProperty<Template>("LineNumbersRightBorderTemplate");
+        public Template LineNumbersRightBorderTemplate
+        {
+            get { return LineNumbersRightBorderTemplateProperty.GetValue(this); }
+            set { LineNumbersRightBorderTemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Label> DebugTextLabelProperty = new DependencyProperty<Label>("DebugTextLabel");
         public Label DebugTextLabel
         {
@@ -253,12 +270,13 @@ namespace Delight
                     Delight.XmlEditor.IsFocusedProperty.SetDefault(_xmlEditor, true);
                     Delight.XmlEditor.ScrollableRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorScrollableRegion);
                     Delight.XmlEditor.XmlEditRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditRegion);
-                    Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditLeftMargin);
-                    Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersLabel);
                     Delight.XmlEditor.XmlTextRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlTextRegion);
                     Delight.XmlEditor.TextSelectionTemplateProperty.SetDefault(_xmlEditor, XmlEditorTextSelection);
                     Delight.XmlEditor.XmlTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlTextLabel);
                     Delight.XmlEditor.CaretTemplateProperty.SetDefault(_xmlEditor, XmlEditorCaret);
+                    Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditLeftMargin);
+                    Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersLabel);
+                    Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersRightBorder);
                     Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorDebugTextLabel);
                 }
                 return _xmlEditor;
@@ -471,60 +489,6 @@ namespace Delight
             }
         }
 
-        private static Template _xmlEditorXmlEditLeftMargin;
-        public static Template XmlEditorXmlEditLeftMargin
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_xmlEditorXmlEditLeftMargin == null || _xmlEditorXmlEditLeftMargin.CurrentVersion != Template.Version)
-#else
-                if (_xmlEditorXmlEditLeftMargin == null)
-#endif
-                {
-                    _xmlEditorXmlEditLeftMargin = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _xmlEditorXmlEditLeftMargin.Name = "XmlEditorXmlEditLeftMargin";
-#endif
-                    Delight.Region.WidthProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(21f, ElementSizeUnit.Pixels));
-                    Delight.Region.AlignmentProperty.SetDefault(_xmlEditorXmlEditLeftMargin, Delight.ElementAlignment.TopLeft);
-                    Delight.Region.MarginProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
-                }
-                return _xmlEditorXmlEditLeftMargin;
-            }
-        }
-
-        private static Template _xmlEditorLineNumbersLabel;
-        public static Template XmlEditorLineNumbersLabel
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_xmlEditorLineNumbersLabel == null || _xmlEditorLineNumbersLabel.CurrentVersion != Template.Version)
-#else
-                if (_xmlEditorLineNumbersLabel == null)
-#endif
-                {
-                    _xmlEditorLineNumbersLabel = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _xmlEditorLineNumbersLabel.Name = "XmlEditorLineNumbersLabel";
-#endif
-                    Delight.Label.WidthProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Label.HeightProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontProperty.SetDefault(_xmlEditorLineNumbersLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 20f);
-                    Delight.Label.FontColorProperty.SetDefault(_xmlEditorLineNumbersLabel, new UnityEngine.Color(0.5333334f, 0.5333334f, 0.5333334f, 1f));
-                    Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextAlignmentOptions.TopRight);
-                    Delight.Label.RichTextProperty.SetDefault(_xmlEditorLineNumbersLabel, false);
-                    Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextOverflowModes.Overflow);
-                    Delight.Label.EnableWordWrappingProperty.SetDefault(_xmlEditorLineNumbersLabel, false);
-                    Delight.Label.AlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, Delight.ElementAlignment.TopLeft);
-                }
-                return _xmlEditorLineNumbersLabel;
-            }
-        }
-
         private static Template _xmlEditorXmlTextRegion;
         public static Template XmlEditorXmlTextRegion
         {
@@ -629,6 +593,86 @@ namespace Delight
                     Delight.Label.AlignmentProperty.SetDefault(_xmlEditorCaret, Delight.ElementAlignment.TopLeft);
                 }
                 return _xmlEditorCaret;
+            }
+        }
+
+        private static Template _xmlEditorXmlEditLeftMargin;
+        public static Template XmlEditorXmlEditLeftMargin
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorXmlEditLeftMargin == null || _xmlEditorXmlEditLeftMargin.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorXmlEditLeftMargin == null)
+#endif
+                {
+                    _xmlEditorXmlEditLeftMargin = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _xmlEditorXmlEditLeftMargin.Name = "XmlEditorXmlEditLeftMargin";
+#endif
+                    Delight.Region.WidthProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Region.AlignmentProperty.SetDefault(_xmlEditorXmlEditLeftMargin, Delight.ElementAlignment.TopLeft);
+                    Delight.Region.OffsetProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Region.MarginProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
+                }
+                return _xmlEditorXmlEditLeftMargin;
+            }
+        }
+
+        private static Template _xmlEditorLineNumbersLabel;
+        public static Template XmlEditorLineNumbersLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorLineNumbersLabel == null || _xmlEditorLineNumbersLabel.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorLineNumbersLabel == null)
+#endif
+                {
+                    _xmlEditorLineNumbersLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _xmlEditorLineNumbersLabel.Name = "XmlEditorLineNumbersLabel";
+#endif
+                    Delight.Label.WidthProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Label.HeightProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Label.FontProperty.SetDefault(_xmlEditorLineNumbersLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 20f);
+                    Delight.Label.FontColorProperty.SetDefault(_xmlEditorLineNumbersLabel, new UnityEngine.Color(0.5333334f, 0.5333334f, 0.5333334f, 1f));
+                    Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextAlignmentOptions.TopRight);
+                    Delight.Label.RichTextProperty.SetDefault(_xmlEditorLineNumbersLabel, false);
+                    Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextOverflowModes.Overflow);
+                    Delight.Label.EnableWordWrappingProperty.SetDefault(_xmlEditorLineNumbersLabel, false);
+                    Delight.Label.AlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, Delight.ElementAlignment.TopLeft);
+                }
+                return _xmlEditorLineNumbersLabel;
+            }
+        }
+
+        private static Template _xmlEditorLineNumbersRightBorder;
+        public static Template XmlEditorLineNumbersRightBorder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorLineNumbersRightBorder == null || _xmlEditorLineNumbersRightBorder.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorLineNumbersRightBorder == null)
+#endif
+                {
+                    _xmlEditorLineNumbersRightBorder = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _xmlEditorLineNumbersRightBorder.Name = "XmlEditorLineNumbersRightBorder";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
+                    Delight.Region.WidthProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Region.AlignmentProperty.SetDefault(_xmlEditorLineNumbersRightBorder, Delight.ElementAlignment.Right);
+                    Delight.Region.OffsetProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _xmlEditorLineNumbersRightBorder;
             }
         }
 

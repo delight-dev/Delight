@@ -909,12 +909,13 @@ namespace Delight
                     Delight.XmlEditor.MarginProperty.SetDefault(_delightDesignerXmlEditor, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(21f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.XmlEditor.ScrollableRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorScrollableRegion);
                     Delight.XmlEditor.XmlEditRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditRegion);
-                    Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditLeftMargin);
-                    Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersLabel);
                     Delight.XmlEditor.XmlTextRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlTextRegion);
                     Delight.XmlEditor.TextSelectionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorTextSelection);
                     Delight.XmlEditor.XmlTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlTextLabel);
                     Delight.XmlEditor.CaretTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorCaret);
+                    Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditLeftMargin);
+                    Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersLabel);
+                    Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersRightBorder);
                     Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorDebugTextLabel);
                 }
                 return _delightDesignerXmlEditor;
@@ -1108,46 +1109,6 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerXmlEditorXmlEditLeftMargin;
-        public static Template DelightDesignerXmlEditorXmlEditLeftMargin
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerXmlEditorXmlEditLeftMargin == null || _delightDesignerXmlEditorXmlEditLeftMargin.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerXmlEditorXmlEditLeftMargin == null)
-#endif
-                {
-                    _delightDesignerXmlEditorXmlEditLeftMargin = new Template(XmlEditorTemplates.XmlEditorXmlEditLeftMargin);
-#if UNITY_EDITOR
-                    _delightDesignerXmlEditorXmlEditLeftMargin.Name = "DelightDesignerXmlEditorXmlEditLeftMargin";
-#endif
-                }
-                return _delightDesignerXmlEditorXmlEditLeftMargin;
-            }
-        }
-
-        private static Template _delightDesignerXmlEditorLineNumbersLabel;
-        public static Template DelightDesignerXmlEditorLineNumbersLabel
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerXmlEditorLineNumbersLabel == null || _delightDesignerXmlEditorLineNumbersLabel.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerXmlEditorLineNumbersLabel == null)
-#endif
-                {
-                    _delightDesignerXmlEditorLineNumbersLabel = new Template(XmlEditorTemplates.XmlEditorLineNumbersLabel);
-#if UNITY_EDITOR
-                    _delightDesignerXmlEditorLineNumbersLabel.Name = "DelightDesignerXmlEditorLineNumbersLabel";
-#endif
-                }
-                return _delightDesignerXmlEditorLineNumbersLabel;
-            }
-        }
-
         private static Template _delightDesignerXmlEditorXmlTextRegion;
         public static Template DelightDesignerXmlEditorXmlTextRegion
         {
@@ -1225,6 +1186,66 @@ namespace Delight
 #endif
                 }
                 return _delightDesignerXmlEditorCaret;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorXmlEditLeftMargin;
+        public static Template DelightDesignerXmlEditorXmlEditLeftMargin
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorXmlEditLeftMargin == null || _delightDesignerXmlEditorXmlEditLeftMargin.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorXmlEditLeftMargin == null)
+#endif
+                {
+                    _delightDesignerXmlEditorXmlEditLeftMargin = new Template(XmlEditorTemplates.XmlEditorXmlEditLeftMargin);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorXmlEditLeftMargin.Name = "DelightDesignerXmlEditorXmlEditLeftMargin";
+#endif
+                }
+                return _delightDesignerXmlEditorXmlEditLeftMargin;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorLineNumbersLabel;
+        public static Template DelightDesignerXmlEditorLineNumbersLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorLineNumbersLabel == null || _delightDesignerXmlEditorLineNumbersLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorLineNumbersLabel == null)
+#endif
+                {
+                    _delightDesignerXmlEditorLineNumbersLabel = new Template(XmlEditorTemplates.XmlEditorLineNumbersLabel);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorLineNumbersLabel.Name = "DelightDesignerXmlEditorLineNumbersLabel";
+#endif
+                }
+                return _delightDesignerXmlEditorLineNumbersLabel;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorLineNumbersRightBorder;
+        public static Template DelightDesignerXmlEditorLineNumbersRightBorder
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorLineNumbersRightBorder == null || _delightDesignerXmlEditorLineNumbersRightBorder.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorLineNumbersRightBorder == null)
+#endif
+                {
+                    _delightDesignerXmlEditorLineNumbersRightBorder = new Template(XmlEditorTemplates.XmlEditorLineNumbersRightBorder);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorLineNumbersRightBorder.Name = "DelightDesignerXmlEditorLineNumbersRightBorder";
+#endif
+                }
+                return _delightDesignerXmlEditorLineNumbersRightBorder;
             }
         }
 
