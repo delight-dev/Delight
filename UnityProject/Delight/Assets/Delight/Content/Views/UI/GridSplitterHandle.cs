@@ -22,6 +22,7 @@ namespace Delight
         public bool IsColumnSplitter;
         public bool SetSizeOnDragEnded;
         public bool BePushy;
+        public bool OverrideProportionalSize;
 
         private bool _offsetChangedFromStartPosition;
         private Vector2 _dragStartPosition;
@@ -70,11 +71,11 @@ namespace Delight
                 // resize grid
                 if (IsColumnSplitter)
                 {
-                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), BePushy);
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), OverrideProportionalSize, BePushy);
                 }
                 else
                 {
-                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), BePushy);
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), OverrideProportionalSize, BePushy);
                 }
             }
         }
@@ -113,11 +114,11 @@ namespace Delight
 
                 if (IsColumnSplitter)
                 {
-                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), BePushy);
+                    ParentGrid.ResizeColumn(Index, new ElementSize(_startSize.x + dragDelta.x), OverrideProportionalSize, BePushy);
                 }
                 else
                 {
-                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), BePushy);
+                    ParentGrid.ResizeRow(Index, new ElementSize(_startSize.y - dragDelta.y), OverrideProportionalSize, BePushy);
                 }
             }
         }

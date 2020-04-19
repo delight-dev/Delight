@@ -52,7 +52,7 @@ namespace Delight
                         minMaxStr = String.Format(", {0}, {1}", floatValueConverter.GetInitializer(minMaxList[1]),
                             floatValueConverter.GetInitializer(minMaxList[2]));
                     }
-                    else
+                    else 
                     {
                         // improperly formatted string
                         throw new Exception("Improperly formatted ColumnDefinitions string. Supported examples: *,10,50,2* | 100[50-200], 10 | 10%,40%,50% | 100,100[10]");

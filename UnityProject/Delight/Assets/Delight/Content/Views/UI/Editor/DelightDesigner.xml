@@ -1,6 +1,6 @@
 <DelightDesigner xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd"
-                 Module="TextMeshPro"
-                 BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
+                 Module="TextMeshPro" EnableScriptEvents="True"
+                 BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
 
   <Grid Columns="170[20],*" Rows="*,240[20]" BackgroundColor="#55a3ff">
     <!--450[20]-->
@@ -40,8 +40,26 @@
       <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
     </Region>
 
-    <GridSplitter Thickness="20" />
+    <GridSplitter Thickness="20" OverrideProportionalSize="False" />
 
   </Grid>
+
+  <Region Id="SaveChangesPopup" IsActive="False" Width="450" Height="300" BackgroundColor="#dbdbdb">
+    <Label Text="Do you want to save changes to the following items?" FontSize="16" Font="Segoe UI SDF" Width="100%" Alignment="TopLeft" Margin="10,0,0,0" />
+    
+    <List IsScrollable="True" Items="{view in ChangedDesignerViews}" Alignment="Top" 
+          Margin="10,40,10,55" BackgroundColor="White" Width="100%" Height="100%" CanSelect="False"
+          HasInertia="False">
+      <ListItem>
+        <Label Text="{view.Name}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#000000" Width="100%" Margin="16,0,0,0" EnableWordWrapping="False" OverflowMode="Truncate" ExtraPadding="True"  />
+      </ListItem>
+    </List>
+     
+    <Group Orientation="Horizontal" Spacing="8" Alignment="BottomRight" Offset="0,0,10,10">
+      <Button Text="Yes" Click="SaveChangesAndQuit" Width="90" Height="30" FontSize="16" />
+      <Button Text="No" Click="DiscardChangesAndQuit" Width="90" Height="30" FontSize="16" />
+      <Button Text="Cancel" Click="CancelQuit" Width="90" Height="30" FontSize="16" />
+    </Group>
+  </Region>
 
 </DelightDesigner>

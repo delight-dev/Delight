@@ -294,8 +294,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _gridExampleGrid1.Name = "GridExampleGrid1";
 #endif
-                    Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
-                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_gridExampleGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
+                    Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
+                    Delight.LayoutGrid.ColumnsProperty.SetDefault(_gridExampleGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
                     Delight.LayoutGrid.WidthProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
                     Delight.LayoutGrid.HeightProperty.SetDefault(_gridExampleGrid1, new ElementSize(600f, ElementSizeUnit.Pixels));
                 }

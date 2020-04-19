@@ -432,6 +432,25 @@ namespace Delight
             return false;
         }
 
+        public void ForEach(Action<T> action)
+        {
+            foreach (var item in _dataList)
+            {
+                action(item.Value);
+            }
+        }
+
+        public IEnumerable<T> Where(Func<T, bool> predicate)
+        {
+            foreach (var data in DataList)
+            {
+                if (predicate(data.Value))
+                {
+                    yield return data.Value;
+                }
+            }
+        }
+
         public int IndexOf(T item)
         {
             // TODO we might want a dictionary to keep track of index to make it O(1)

@@ -80,7 +80,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called every frame and handles keyboard and mouse input. 
+        /// Called every frame and handles keyboard and mouse input.
         /// </summary>
         public override void Update()
         {

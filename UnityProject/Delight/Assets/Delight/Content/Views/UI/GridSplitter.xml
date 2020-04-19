@@ -9,5 +9,6 @@
       SplitMode="t:SplitMode = RowsAndColumns"
       SplitterColor="t:Color = Clear"
       SplitterSprite="t:Sprite"
-      BePushy="t:bool">
+      BePushy="t:bool"
+      OverrideProportionalSize="t:bool = True">
 </GridSplitter> 

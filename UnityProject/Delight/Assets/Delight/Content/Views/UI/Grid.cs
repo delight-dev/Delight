@@ -143,7 +143,7 @@ namespace Delight
         /// <summary>
         /// Resizes a column. 
         /// </summary>
-        public void ResizeColumn(int columnIndex, float desiredWidth, bool bePushy = false)
+        public void ResizeColumn(int columnIndex, float desiredWidth, bool overrideProportionalSize = true, bool bePushy = false)
         {
             if (columnIndex < 0 || columnIndex >= Columns.Count)
                 return;
@@ -166,32 +166,36 @@ namespace Delight
                 if (nextColumnWidth >= Columns[i].MinWidth)
                 {
                     // there is room to resize we're all good
-                    Columns[i].Width = nextColumnWidth;
+                    if (overrideProportionalSize || Columns[i].Width.Unit == ElementSizeUnit.Pixels)
+                        Columns[i].Width = nextColumnWidth;
                     resize = 0;
                     break;
                 }
                 else if (bePushy)
                 {
-                    Columns[i].Width = Columns[i].MinWidth;
+                    if (overrideProportionalSize || Columns[i].Width.Unit == ElementSizeUnit.Pixels)
+                        Columns[i].Width = Columns[i].MinWidth;
                     resize = nextColumnWidth - Columns[i].MinWidth;
                 }
                 else
                 {
                     // limit reached
-                    Columns[i].Width = Columns[i].MinWidth;
+                    if (overrideProportionalSize || Columns[i].Width.Unit == ElementSizeUnit.Pixels)
+                        Columns[i].Width = Columns[i].MinWidth;
                     resize = nextColumnWidth - Columns[i].MinWidth;
                     break;
                 }
             }
 
-            column.Width = column.ActualWidth - (difference - resize);
+            if (overrideProportionalSize || column.Width.Unit == ElementSizeUnit.Pixels)
+                column.Width = column.ActualWidth - (difference - resize);
             UpdateLayout(false);
         }
 
         /// <summary>
         /// Resizes a row. 
         /// </summary>
-        public void ResizeRow(int rowIndex, float desiredHeight, bool bePushy = false)
+        public void ResizeRow(int rowIndex, float desiredHeight, bool overrideProportionalSize = true, bool bePushy = false)
         {
             if (rowIndex < 0 || rowIndex >= Rows.Count)
                 return;
@@ -207,32 +211,36 @@ namespace Delight
             float resize = difference;
             int nextRowIndex = rowIndex + 1;
 
-            // adjust following columns
+            // adjust following rows
             for (int i = nextRowIndex; i < Rows.Count; ++i)
             {
                 var nextRowHeight = Rows[i].ActualHeight + resize;
                 if (nextRowHeight >= Rows[i].MinHeight)
                 {
                     // there is room to resize we're all good
-                    Rows[i].Height = nextRowHeight;
+                    if (overrideProportionalSize || Rows[i].Height.Unit == ElementSizeUnit.Pixels)
+                        Rows[i].Height = nextRowHeight;
                     resize = 0;
                     break;
                 }
                 else if (bePushy)
                 {
-                    Rows[i].Height = Rows[i].MinHeight;
+                    if (overrideProportionalSize || Rows[i].Height.Unit == ElementSizeUnit.Pixels)
+                        Rows[i].Height = Rows[i].MinHeight;
                     resize = nextRowHeight - Rows[i].MinHeight;
                 }
                 else
                 {
                     // limit reached
-                    Rows[i].Height = Rows[i].MinHeight;
+                    if (overrideProportionalSize || Rows[i].Height.Unit == ElementSizeUnit.Pixels)
+                        Rows[i].Height = Rows[i].MinHeight;
                     resize = nextRowHeight - Rows[i].MinHeight;
                     break;
                 }
             }
 
-            row.Height = row.ActualHeight - (difference - resize);
+            if (overrideProportionalSize || row.Height.Unit == ElementSizeUnit.Pixels)
+                row.Height = row.ActualHeight - (difference - resize);
             UpdateLayout(false);
         }
 

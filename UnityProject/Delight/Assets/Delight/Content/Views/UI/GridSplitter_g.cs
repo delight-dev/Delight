@@ -37,6 +37,7 @@ namespace Delight
             dependencyProperties.Add(SplitterColorProperty);
             dependencyProperties.Add(SplitterSpriteProperty);
             dependencyProperties.Add(BePushyProperty);
+            dependencyProperties.Add(OverrideProportionalSizeProperty);
         }
 
         #endregion
@@ -106,6 +107,13 @@ namespace Delight
             set { BePushyProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Boolean> OverrideProportionalSizeProperty = new DependencyProperty<System.Boolean>("OverrideProportionalSize");
+        public System.Boolean OverrideProportionalSize
+        {
+            get { return OverrideProportionalSizeProperty.GetValue(this); }
+            set { OverrideProportionalSizeProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -142,6 +150,7 @@ namespace Delight
                     Delight.GridSplitter.IsEnabledProperty.SetDefault(_gridSplitter, true);
                     Delight.GridSplitter.SplitModeProperty.SetDefault(_gridSplitter, Delight.SplitMode.RowsAndColumns);
                     Delight.GridSplitter.SplitterColorProperty.SetDefault(_gridSplitter, new UnityEngine.Color(0f, 0f, 0f, 0f));
+                    Delight.GridSplitter.OverrideProportionalSizeProperty.SetDefault(_gridSplitter, true);
                 }
                 return _gridSplitter;
             }

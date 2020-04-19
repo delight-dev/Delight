@@ -29,6 +29,24 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called every frame and handles keyboard and mouse input. 
+        /// </summary>
+        public override void Update()
+        {
+            // F11 maximizes designer window in editor
+            if (Input.GetKeyDown(KeyCode.F11))
+            {
+                UnityEditor.EditorWindow.focusedWindow.maximized = !UnityEditor.EditorWindow.focusedWindow.maximized;
+
+                // center on view
+                ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
+                SetScale(Vector3.one);
+            }
+
+            // TODO implement CTRL-S and CTRL-SHIFT-S for save and save all
+        }
+
+        /// <summary>
         /// Called after the view has been initialized.
         /// </summary>
         public override void AfterInitialize()
@@ -37,6 +55,7 @@ namespace Delight
 
             // initialize designer views
             DesignerViews = new DesignerViewData();
+            ChangedDesignerViews = new DesignerViewData();
 
             // load designer view data from the object model
             var contentObjectModel = ContentObjectModel.GetInstance();
@@ -91,6 +110,8 @@ namespace Delight
         {
             if (_displayedView != null)
             {
+                // see if view has unchanged changes
+
                 _displayedView.Destroy();
             }
 
@@ -172,6 +193,53 @@ namespace Delight
             // adjust content regions to size
             ContentRegionCanvas.SetSize(adjustedWidth * 2, adjustedHeight * 2);
             ViewContentRegion.SetSize(adjustedWidth, adjustedHeight);
+        }
+
+        /// <summary>
+        /// Checks and asks if use wants to save unsaved items.
+        /// </summary>
+        public bool CheckForUnsavedProgress()
+        {
+            ChangedDesignerViews.Replace(DesignerViews.Where(x => x.IsDirty));
+            var isDirty = ChangedDesignerViews.Any();
+
+            // show popup: save changes to following items? Yes No Cancel
+            if (isDirty)
+            {
+                SaveChangesPopup.IsActive = true;                
+            }
+
+            return isDirty;
+        }
+
+        /// <summary>
+        /// Called when user clicks "Yes" on popup asking if user wants to save changes.
+        /// </summary>
+        public void SaveChangesAndQuit()
+        {
+            DesignerViews.ForEach(x => x.IsDirty = false);
+            SaveChangesPopup.IsActive = false;
+
+            // SaveChanges();
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+
+        /// <summary>
+        /// Called when user clicks "No" on popup asking if user wants to save changes.
+        /// </summary>
+        public void DiscardChangesAndQuit()
+        {
+            DesignerViews.ForEach(x => x.IsDirty = false);
+            SaveChangesPopup.IsActive = false;
+            UnityEditor.EditorApplication.isPlaying = false;
+        }
+
+        /// <summary>
+        /// Called when user clicks "Cancel" on popup asking if user wants to save changes.
+        /// </summary>
+        public void CancelQuit()
+        {
+            SaveChangesPopup.IsActive = false;
         }
 
         #endregion

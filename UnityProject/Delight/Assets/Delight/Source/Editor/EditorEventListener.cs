@@ -25,12 +25,27 @@ namespace Delight.Editor
 
         public static bool QueuedAssetsToBeProcessed = false;
         public static PostprocessAllAssetsBatch PostprocessBatch = new PostprocessAllAssetsBatch();
+        public static bool IsInDelightDesigner = false;
 
         #endregion
 
         static EditorEventListener()
         {
             EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+            EditorApplication.hierarchyChanged += OnHierarchyChanged;
+        }
+
+        private static void OnHierarchyChanged()
+        {
+            var activeScene = EditorSceneManager.GetActiveScene();
+            if (activeScene.name == "DelightDesigner")
+            {
+                IsInDelightDesigner = true;
+            }
+            else
+            {
+                IsInDelightDesigner = false;
+            }
         }
 
         private static void OnEditorUpdate()
@@ -87,9 +102,31 @@ namespace Delight.Editor
                     break;
 
                 case PlayModeStateChange.ExitingPlayMode:
+                    if (IsInDelightDesigner)
+                    {
+                        //var activeScene = EditorSceneManager.GetActiveScene(); // TODO cleanup
+
+                        // check if delight designer has unsaved progress
+                        var viewPresenter = GameObject.Find("/Delight")?.GetComponent<ViewPresenter>();
+                        if (viewPresenter == null)
+                            break;
+
+                        var delightDesignerView = viewPresenter.PresentedView as DelightDesigner;
+                        if (delightDesignerView == null)
+                            break;
+
+                        if (delightDesignerView.CheckForUnsavedProgress())
+                        {
+                            EditorApplication.isPlaying = true;
+                            break;
+                        }
+                    }
+
                     break;
             }
         }
+
+        public static int i = 0;
 
         public static void AddPostProcessBatch(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {

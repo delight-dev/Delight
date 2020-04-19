@@ -1527,6 +1527,7 @@
     <xs:attribute name="SplitterColor" type="xs:string" />
     <xs:attribute name="SplitterSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BePushy" type="xs:string" />
+    <xs:attribute name="OverrideProportionalSize" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -7690,6 +7691,7 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="DesignerViews" type="xs:string" />
+    <xs:attribute name="ChangedDesignerViews" type="xs:string" />
     <xs:attribute name="XmlText" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />

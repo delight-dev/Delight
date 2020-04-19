@@ -93,6 +93,7 @@ namespace Delight
                     gridSplitterHandle.Index = cell.Column + i;
                     gridSplitterHandle.IsColumnSplitter = true;
                     gridSplitterHandle.BePushy = BePushy;
+                    gridSplitterHandle.OverrideProportionalSize = OverrideProportionalSize;
 
                     // create content for the handle                
                     if (contentTemplate == null)
@@ -138,6 +139,7 @@ namespace Delight
                     gridSplitterHandle.Index = cell.Row + i;
                     gridSplitterHandle.IsColumnSplitter = false;
                     gridSplitterHandle.BePushy = BePushy;
+                    gridSplitterHandle.OverrideProportionalSize = OverrideProportionalSize;
 
                     // create content for the handle                
                     if (contentTemplate == null)
