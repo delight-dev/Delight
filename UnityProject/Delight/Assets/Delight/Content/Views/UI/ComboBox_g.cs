@@ -3944,7 +3944,7 @@ namespace Delight
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.EnableScriptEventsProperty.SetDefault(_comboBox, true);
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(32f, ElementSizeUnit.Pixels));
-                    Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(300f, ElementSizeUnit.Pixels));
+                    Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxButton);
                     Delight.ComboBox.ComboBoxListCanvasTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxListCanvas);
                     Delight.ComboBox.ComboBoxListTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxList);

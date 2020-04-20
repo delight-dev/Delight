@@ -10,6 +10,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.IO;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 #endregion
 
 namespace Delight
@@ -110,7 +113,7 @@ namespace Delight
         {
             UpdateCurrentEditedViewXml();
             if (_displayedView != null)
-            {                
+            {
                 _displayedView.Destroy();
             }
 
@@ -209,10 +212,17 @@ namespace Delight
             var changedViews = DesignerViews.Where(x => x.IsDirty);
             UpdateCurrentEditedViewXml();
 
-            foreach (var changedView in changedViews)
+            if (changedViews.Any())
             {
-                File.WriteAllText(changedView.ViewObject.FilePath, changedView.XmlText);
-                changedView.IsDirty = false;
+                foreach (var changedView in changedViews)
+                {
+                    File.WriteAllText(changedView.ViewObject.FilePath, changedView.XmlText);
+                    changedView.IsDirty = false;
+                }
+
+#if UNITY_EDITOR
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+#endif
             }
         }
 
@@ -238,7 +248,7 @@ namespace Delight
             // show popup: save changes to following items? Yes No Cancel
             if (isDirty)
             {
-                SaveChangesPopup.IsActive = true;                
+                SaveChangesPopup.IsActive = true;
             }
 
             return isDirty;

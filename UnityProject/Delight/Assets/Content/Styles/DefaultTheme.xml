@@ -12,7 +12,7 @@
               Width="400" Height="30" SelectionColor="#ef706a" TextMargin="5,7,5,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22" />
 
-  <ComboBox Height="32" Width="300" ButtonMargin="0,2,0,0" ButtonFontSize="16" ButtonFontColor="#000000"
+  <ComboBox Height="32" Width="200" ButtonMargin="0,2,0,0" ButtonFontSize="16" ButtonFontColor="#000000"
             ButtonTextAlignment="Left" ButtonLabelMargin="10,0,10,0"
             Pressed-ButtonFontColor="#000000" Highlighted-ButtonFontColor="#000000" ButtonBackgroundSprite="ComboBoxButton"
             ButtonBackgroundColor="#ffffff" Pressed-ButtonBackgroundSprite="ComboBoxButtonPressed" Highlighted-ButtonBackgroundColor="#dddddd" Pressed-ButtonBackgroundColor="#eeeeee"

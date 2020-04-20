@@ -1,12 +1,12 @@
 <HighscoreTest xmlns="Delight" BasedOn="LayoutRoot" SelectedHighscore="t:Highscore" Score="t:string" PlayerId="t:string">
   
   <Group Orientation="Horizontal" Spacing="10">
-    <Group Spacing="10" Width="100">
+    <Group Spacing="6">
       <Button Text="Load" Click="LoadHighscores" Width="120" />
       <Button Text="Save" Click="SaveHighscores" Width="120" />
       <Button Text="Clear" Click="Clear" Width="120" />
-      <InputField Text="{PlayerId}" Width="200" />
-      <InputField Text="{Score}" Width="200" />
+      <InputField Text="{PlayerId}" Width="120" />
+      <InputField Text="{Score}" Width="120" />
       <Button Text="Add" Click="Add" Width="120" />
       <Button Text="Remove" Click="Remove" Width="120" />
     </Group>

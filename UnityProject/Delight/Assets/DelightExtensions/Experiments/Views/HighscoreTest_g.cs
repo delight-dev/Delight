@@ -398,8 +398,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _highscoreTestGroup2.Name = "HighscoreTestGroup2";
 #endif
-                    Delight.Group.SpacingProperty.SetDefault(_highscoreTestGroup2, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.WidthProperty.SetDefault(_highscoreTestGroup2, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_highscoreTestGroup2, new ElementSize(6f, ElementSizeUnit.Pixels));
                 }
                 return _highscoreTestGroup2;
             }
@@ -549,7 +548,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _highscoreTestInputField1.Name = "HighscoreTestInputField1";
 #endif
-                    Delight.InputField.WidthProperty.SetDefault(_highscoreTestInputField1, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.InputField.WidthProperty.SetDefault(_highscoreTestInputField1, new ElementSize(120f, ElementSizeUnit.Pixels));
                     Delight.InputField.TextProperty.SetHasBinding(_highscoreTestInputField1);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_highscoreTestInputField1, HighscoreTestInputField1InputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_highscoreTestInputField1, HighscoreTestInputField1TextArea);
@@ -634,7 +633,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _highscoreTestInputField2.Name = "HighscoreTestInputField2";
 #endif
-                    Delight.InputField.WidthProperty.SetDefault(_highscoreTestInputField2, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.InputField.WidthProperty.SetDefault(_highscoreTestInputField2, new ElementSize(120f, ElementSizeUnit.Pixels));
                     Delight.InputField.TextProperty.SetHasBinding(_highscoreTestInputField2);
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_highscoreTestInputField2, HighscoreTestInputField2InputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_highscoreTestInputField2, HighscoreTestInputField2TextArea);
