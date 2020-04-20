@@ -1102,7 +1102,7 @@ namespace Delight
                     Delight.RadioButton.IsInteractableProperty.SetDefault(_radioButton, true);
                     Delight.RadioButton.SpacingProperty.SetDefault(_radioButton, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(40f, ElementSizeUnit.Pixels));
-                    Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(25f, ElementSizeUnit.Pixels));
+                    Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.SpacingProperty.SetDefault(_radioButton, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.RadioButtonGroupTemplateProperty.SetDefault(_radioButton, RadioButtonRadioButtonGroup);
                     Delight.RadioButton.RadioButtonImageViewTemplateProperty.SetDefault(_radioButton, RadioButtonRadioButtonImageView);
@@ -1153,8 +1153,8 @@ namespace Delight
                     Delight.Image.HeightProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Image.SpriteProperty.SetDefault(_radioButtonRadioButtonImageView, Assets.Sprites["RadioButton"]);
                     Delight.Image.SpriteProperty.SetStateDefault("Checked", _radioButtonRadioButtonImageView, Assets.Sprites["RadioButtonPressed"]);
-                    Delight.Image.WidthProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(19f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(19f, ElementSizeUnit.Pixels));
+                    Delight.Image.WidthProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(17f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(17f, ElementSizeUnit.Pixels));
                     Delight.Image.ColorProperty.SetDefault(_radioButtonRadioButtonImageView, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.OffsetProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
@@ -1179,7 +1179,7 @@ namespace Delight
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_radioButtonRadioButtonLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_radioButtonRadioButtonLabel, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.FontSizeProperty.SetDefault(_radioButtonRadioButtonLabel, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_radioButtonRadioButtonLabel, 16f);
                     Delight.Label.FontColorProperty.SetDefault(_radioButtonRadioButtonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontStyleProperty.SetDefault(_radioButtonRadioButtonLabel, TMPro.FontStyles.Normal);
                     Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _radioButtonRadioButtonLabel, TMPro.FontStyles.Italic);

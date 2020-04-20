@@ -7802,6 +7802,13 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:element name="InventorySystemStyles" type="InventorySystemStyles" />
+  <xs:complexType name="InventorySystemStyles">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:simpleType name="Enum_LoadMode">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Automatic" />

@@ -1,28 +1,29 @@
 <DefaultTheme>
-  <Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal" 
+  <Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal"
           Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
-          Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="50"
-          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" />
+          Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="30" FontSize="16"
+          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" /> 
   <Button Style="ComboBoxButton" />
-  <ListItem Breadth="50" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a" 
+  <Label FontSize="16" />
+  <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a" 
             Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a" 
-            Alternate-BackgroundColor="Gray95" /> 
-  <InputField BackgroundColor="White" FontSize="18" FontColor="#000000"  
-              Width="400" Height="50" SelectionColor="#ef706a" TextMargin="10,12,10,0" />
+            Alternate-BackgroundColor="Gray95" />  
+  <InputField BackgroundColor="White" FontSize="16" FontColor="#000000"  
+              Width="400" Height="30" SelectionColor="#ef706a" TextMargin="5,7,5,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22" />
 
-  <ComboBox Height="52" Width="300" ButtonMargin="0,2,0,0" ButtonFontSize="18" ButtonFontColor="#000000"
+  <ComboBox Height="32" Width="300" ButtonMargin="0,2,0,0" ButtonFontSize="16" ButtonFontColor="#000000"
             ButtonTextAlignment="Left" ButtonLabelMargin="10,0,10,0"
             Pressed-ButtonFontColor="#000000" Highlighted-ButtonFontColor="#000000" ButtonBackgroundSprite="ComboBoxButton"
             ButtonBackgroundColor="#ffffff" Pressed-ButtonBackgroundSprite="ComboBoxButtonPressed" Highlighted-ButtonBackgroundColor="#dddddd" Pressed-ButtonBackgroundColor="#eeeeee"
-            BackgroundColor="#ffffff" ComboBoxList.Margin="1,0,1,0" />
-  <ComboBoxItem Breadth="50px" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
+            BackgroundColor="#ffffff" />
+  <ComboBoxItem Breadth="30" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
 
-  <CheckBox CheckBoxSprite="CheckBox" Checked-CheckBoxSprite="CheckBoxPressed" Height="25" CheckBoxWidth="24" CheckBoxHeight="24" 
-            CheckBoxColor="#ffffff" FontSize="18" FontStyle="Normal" FontColor="#ffffff" Spacing="10"
+  <CheckBox CheckBoxSprite="CheckBox" Checked-CheckBoxSprite="CheckBoxPressed" Height="20" CheckBoxWidth="20" CheckBoxHeight="20" 
+            CheckBoxColor="#ffffff" FontSize="16" FontStyle="Normal" FontColor="#ffffff" Spacing="10"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
-  <RadioButton RadioButtonSprite="RadioButton" Checked-RadioButtonSprite="RadioButtonPressed" RadioButtonWidth="19" RadioButtonHeight="19" Height="25"
-               RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" FontSize="18" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
+  <RadioButton RadioButtonSprite="RadioButton" Checked-RadioButtonSprite="RadioButtonPressed" RadioButtonWidth="17" RadioButtonHeight="17" Height="20"
+               RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" FontSize="16" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
                Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
 
   <SelectionIndicator BackgroundSprite="Selection"

@@ -115,7 +115,7 @@ namespace Delight.Editor
                         if (delightDesignerView == null)
                             break;
 
-                        if (delightDesignerView.CheckForUnsavedProgress())
+                        if (delightDesignerView.CheckForUnsavedChanges())
                         {
                             EditorApplication.isPlaying = true;
                             break;

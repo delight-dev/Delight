@@ -319,7 +319,7 @@ namespace Delight.Editor
             if (refreshScripts)
             {
                 // refresh generated scripts
-                AssetDatabase.Refresh();
+                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
             }
 
             if (generateXsdSchema)

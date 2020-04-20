@@ -625,6 +625,7 @@ namespace Delight
                     Delight.Label.HeightProperty.SetDefault(_label, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Label.FontColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24f);
+                    Delight.Label.FontSizeProperty.SetDefault(_label, 16f);
                 }
                 return _label;
             }

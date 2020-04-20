@@ -24,7 +24,7 @@
       </Region>
 
     </Region>
-  </ScrollableRegion>
+  </ScrollableRegion> 
   
   <!-- TODO for debugging, remove -->
   <Label Id="DebugTextLabel" Width="300" Height="22" Alignment="TopRight" RichText="false" OverflowMode="Overflow"

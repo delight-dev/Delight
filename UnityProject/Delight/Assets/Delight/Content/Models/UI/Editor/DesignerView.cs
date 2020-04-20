@@ -48,10 +48,8 @@ namespace Delight
             }
         }
 
-        public ViewObject ViewObject
-        {
-            get; set;
-        }
+        public ViewObject ViewObject { get; set; }
+        public string XmlText { get; internal set; }
     }
 
     public class DesignerViewData : BindableCollection<DesignerView>

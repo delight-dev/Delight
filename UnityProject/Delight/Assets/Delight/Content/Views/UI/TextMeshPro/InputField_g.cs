@@ -1254,9 +1254,9 @@ namespace Delight
                     Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(9f, ElementSizeUnit.Pixels)));
                     Delight.InputField.BackgroundColorProperty.SetDefault(_inputField, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.InputField.WidthProperty.SetDefault(_inputField, new ElementSize(400f, ElementSizeUnit.Pixels));
-                    Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(30f, ElementSizeUnit.Pixels));
                     Delight.InputField.SelectionColorProperty.SetDefault(_inputField, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
-                    Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(12f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(7f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputField, InputFieldInputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputField, InputFieldTextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputField, InputFieldInputText);
@@ -1324,7 +1324,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.TextAlignmentProperty.SetDefault(_inputFieldInputText, TMPro.TextAlignmentOptions.TopLeft);
-                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldInputText, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldInputText, 16f);
                     Delight.Label.FontColorProperty.SetDefault(_inputFieldInputText, new UnityEngine.Color(0f, 0f, 0f, 1f));
                 }
                 return _inputFieldInputText;

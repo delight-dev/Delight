@@ -865,7 +865,7 @@ namespace Delight
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
-                    Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(30f, ElementSizeUnit.Pixels));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Disabled", _button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.LabelTemplateProperty.SetDefault(_button, ButtonLabel);
                 }
@@ -895,6 +895,7 @@ namespace Delight
                     Delight.Label.FontStyleProperty.SetDefault(_buttonLabel, TMPro.FontStyles.Normal);
                     Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _buttonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontColorProperty.SetStateDefault("Pressed", _buttonLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontSizeProperty.SetDefault(_buttonLabel, 16f);
                     Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, TMPro.FontStyles.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _buttonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                     Delight.Label.OffsetProperty.SetHasBinding(_buttonLabel);

@@ -192,6 +192,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets XML text from editor.
+        /// </summary>
+        public string GetXmlText()
+        {
+            return XmlTextLabel.TextMeshProUGUI.text;
+        }
+
+        /// <summary>
         /// Selects the word at the current caret position.
         /// </summary>
         private void SelectWordAtCaret()

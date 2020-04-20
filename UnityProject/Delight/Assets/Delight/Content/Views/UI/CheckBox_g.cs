@@ -1102,7 +1102,7 @@ namespace Delight
                     Delight.CheckBox.IsInteractableProperty.SetDefault(_checkBox, true);
                     Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(40f, ElementSizeUnit.Pixels));
-                    Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(25f, ElementSizeUnit.Pixels));
+                    Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_checkBox, CheckBoxCheckBoxGroup);
                     Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_checkBox, CheckBoxCheckBoxImageView);
@@ -1153,8 +1153,8 @@ namespace Delight
                     Delight.Image.HeightProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Image.SpriteProperty.SetDefault(_checkBoxCheckBoxImageView, Assets.Sprites["CheckBox"]);
                     Delight.Image.SpriteProperty.SetStateDefault("Checked", _checkBoxCheckBoxImageView, Assets.Sprites["CheckBoxPressed"]);
-                    Delight.Image.WidthProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(24f, ElementSizeUnit.Pixels));
-                    Delight.Image.HeightProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(24f, ElementSizeUnit.Pixels));
+                    Delight.Image.WidthProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Image.ColorProperty.SetDefault(_checkBoxCheckBoxImageView, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _checkBoxCheckBoxImageView;
@@ -1178,7 +1178,7 @@ namespace Delight
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_checkBoxCheckBoxLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_checkBoxCheckBoxLabel, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.FontSizeProperty.SetDefault(_checkBoxCheckBoxLabel, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_checkBoxCheckBoxLabel, 16f);
                     Delight.Label.FontStyleProperty.SetDefault(_checkBoxCheckBoxLabel, TMPro.FontStyles.Normal);
                     Delight.Label.FontColorProperty.SetDefault(_checkBoxCheckBoxLabel, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _checkBoxCheckBoxLabel, TMPro.FontStyles.Italic);

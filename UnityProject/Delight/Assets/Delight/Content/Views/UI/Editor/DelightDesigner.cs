@@ -108,10 +108,9 @@ namespace Delight
         /// </summary>
         public async void ViewSelected(DesignerView designerView)
         {
+            UpdateCurrentEditedViewXml();
             if (_displayedView != null)
-            {
-                // see if view has unchanged changes
-
+            {                
                 _displayedView.Destroy();
             }
 
@@ -129,7 +128,14 @@ namespace Delight
 
             // load XML into the editor
             _currentEditedView = designerView;
-            XmlEditor.XmlText = File.ReadAllText(designerView.ViewObject.FilePath);
+            if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
+            {
+                XmlEditor.XmlText = File.ReadAllText(_currentEditedView.XmlText);
+            }
+            else
+            {
+                XmlEditor.XmlText = File.ReadAllText(designerView.ViewObject.FilePath);
+            }
 
             sw2.Stop();
             Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
@@ -196,9 +202,35 @@ namespace Delight
         }
 
         /// <summary>
+        /// Saves all changes.
+        /// </summary>
+        public void SaveChanges()
+        {
+            var changedViews = DesignerViews.Where(x => x.IsDirty);
+            UpdateCurrentEditedViewXml();
+
+            foreach (var changedView in changedViews)
+            {
+                File.WriteAllText(changedView.ViewObject.FilePath, changedView.XmlText);
+                changedView.IsDirty = false;
+            }
+        }
+
+        /// <summary>
+        /// Updates currently edited view xml.
+        /// </summary>
+        private void UpdateCurrentEditedViewXml()
+        {
+            if (_currentEditedView != null && _currentEditedView.IsDirty)
+            {
+                _currentEditedView.XmlText = XmlEditor.GetXmlText();
+            }
+        }
+
+        /// <summary>
         /// Checks and asks if use wants to save unsaved items.
         /// </summary>
-        public bool CheckForUnsavedProgress()
+        public bool CheckForUnsavedChanges()
         {
             ChangedDesignerViews.Replace(DesignerViews.Where(x => x.IsDirty));
             var isDirty = ChangedDesignerViews.Any();
@@ -217,10 +249,8 @@ namespace Delight
         /// </summary>
         public void SaveChangesAndQuit()
         {
-            DesignerViews.ForEach(x => x.IsDirty = false);
+            SaveChanges();
             SaveChangesPopup.IsActive = false;
-
-            // SaveChanges();
             UnityEditor.EditorApplication.isPlaying = false;
         }
 
@@ -229,7 +259,11 @@ namespace Delight
         /// </summary>
         public void DiscardChangesAndQuit()
         {
-            DesignerViews.ForEach(x => x.IsDirty = false);
+            DesignerViews.ForEach(x =>
+            {
+                x.IsDirty = false;
+                x.XmlText = null;
+            });
             SaveChangesPopup.IsActive = false;
             UnityEditor.EditorApplication.isPlaying = false;
         }

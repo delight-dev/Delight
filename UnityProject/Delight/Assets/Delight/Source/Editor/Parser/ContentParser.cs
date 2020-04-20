@@ -79,7 +79,7 @@ namespace Delight.Editor.Parser
             ParseAllXmlFiles();
 
             // refresh generated scripts
-            AssetDatabase.Refresh();
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
             // generate XSD schemas
             CodeGenerator.GenerateXsdSchema();
@@ -122,7 +122,7 @@ namespace Delight.Editor.Parser
             ParseAllXmlFiles();
 
             // refresh generated scripts
-            AssetDatabase.Refresh();
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
             // generate XSD schemas
             CodeGenerator.GenerateXsdSchema();
@@ -180,7 +180,7 @@ namespace Delight.Editor.Parser
             ParseAllXmlFiles();
 
             // refresh generated scripts
-            AssetDatabase.Refresh();
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 
             // generate XSD schemas
             CodeGenerator.GenerateXsdSchema();

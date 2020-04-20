@@ -7,7 +7,7 @@
   <Label Text="{LoadedAssetBundlesString}" Width="400" Alignment="TopLeft" TextAlignment="TopLeft" />
 
   <Region>
-    <Group Spacing="10" Orientation="Vertical" Alignment="TopLeft" Offset="20,100,0,0">
+    <Group Spacing="5" Orientation="Vertical" Alignment="TopLeft" Offset="20,100,0,0">
       <Button Id="LoadAllButton" Text="LoadAll" Click="LoadAll" Width="200" />
       <Button Id="Load1Button" Text="Load Set 1" Click="ToggleLoad1" Width="200" />
       <Button Id="Load2Button" Text="Load Set 2" Click="ToggleLoad2" Width="200" />

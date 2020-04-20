@@ -3943,7 +3943,7 @@ namespace Delight
                     Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.EnableScriptEventsProperty.SetDefault(_comboBox, true);
-                    Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(52f, ElementSizeUnit.Pixels));
+                    Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(32f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxButton);
                     Delight.ComboBox.ComboBoxListCanvasTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxListCanvas);
@@ -3999,7 +3999,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _comboBoxComboBoxButtonLabel.Name = "ComboBoxComboBoxButtonLabel";
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_comboBoxComboBoxButtonLabel, 18f);
+                    Delight.Label.FontSizeProperty.SetDefault(_comboBoxComboBoxButtonLabel, 16f);
                     Delight.Label.FontColorProperty.SetDefault(_comboBoxComboBoxButtonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.TextAlignmentProperty.SetDefault(_comboBoxComboBoxButtonLabel, TMPro.TextAlignmentOptions.Left);
                     Delight.Label.MarginProperty.SetDefault(_comboBoxComboBoxButtonLabel, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -4053,7 +4053,6 @@ namespace Delight
                     Delight.List.IsActiveProperty.SetDefault(_comboBoxComboBoxList, false);
                     Delight.List.CanReselectProperty.SetDefault(_comboBoxComboBoxList, true);
                     Delight.List.BackgroundColorProperty.SetDefault(_comboBoxComboBoxList, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.List.MarginProperty.SetDefault(_comboBoxComboBoxList, new ElementMargin(new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(1f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_comboBoxComboBoxList, ComboBoxComboBoxListScrollableRegion);
                 }
                 return _comboBoxComboBoxList;

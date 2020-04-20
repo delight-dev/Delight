@@ -17,7 +17,7 @@
     
     
     <Group Orientation="Horizontal" Spacing="15px">
-      <Button Text="Add" Click="Add" />
+      <Button Text="Add" Click="Add"  />
       <Button Text="Remove" Click="Remove" />
     </Group>
 

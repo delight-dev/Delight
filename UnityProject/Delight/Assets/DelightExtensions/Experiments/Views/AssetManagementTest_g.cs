@@ -687,7 +687,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _assetManagementTestGroup1.Name = "AssetManagementTestGroup1";
 #endif
-                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_assetManagementTestGroup1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.OrientationProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementOrientation.Vertical);
                     Delight.Group.AlignmentProperty.SetDefault(_assetManagementTestGroup1, Delight.ElementAlignment.TopLeft);
                     Delight.Group.OffsetProperty.SetDefault(_assetManagementTestGroup1, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(100f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));

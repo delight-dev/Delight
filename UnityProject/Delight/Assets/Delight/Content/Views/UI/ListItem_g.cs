@@ -152,7 +152,7 @@ namespace Delight
                     _listItem.Name = "ListItem";
 #endif
                     Delight.ListItem.AutoSizeToContentProperty.SetDefault(_listItem, true);
-                    Delight.ListItem.BreadthProperty.SetDefault(_listItem, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.BreadthProperty.SetDefault(_listItem, new ElementSize(30f, ElementSizeUnit.Pixels));
                     Delight.ListItem.BackgroundColorProperty.SetDefault(_listItem, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _listItem, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Highlighted", _listItem, new UnityEngine.Color(0.8352941f, 0.8313726f, 0.8313726f, 1f));
