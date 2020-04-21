@@ -399,7 +399,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingTestGroup1.Name = "BindingTestGroup1";
 #endif
-                    Delight.Group.SpacingProperty.SetDefault(_bindingTestGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_bindingTestGroup1, new ElementSize(6f, ElementSizeUnit.Pixels));
                     Delight.Group.AlignmentProperty.SetDefault(_bindingTestGroup1, Delight.ElementAlignment.Top);
                     Delight.Group.MarginProperty.SetDefault(_bindingTestGroup1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
@@ -445,7 +445,6 @@ namespace Delight
                     _bindingTestButton1Label.Name = "BindingTestButton1Label";
 #endif
                     Delight.Label.TextProperty.SetDefault(_bindingTestButton1Label, "Test 1");
-                    Delight.Label.FontSizeProperty.SetDefault(_bindingTestButton1Label, 24f);
                     Delight.Label.TextAlignmentProperty.SetDefault(_bindingTestButton1Label, TMPro.TextAlignmentOptions.Center);
                 }
                 return _bindingTestButton1Label;

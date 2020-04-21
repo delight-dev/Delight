@@ -1,5 +1,5 @@
 <ComboBoxExample xmlns="Delight" BasedOn="LayoutRoot">
-  <Group Orientation="Vertical" Spacing="15px" ContentAlignment="Left">
+  <Group Orientation="Vertical" Spacing="10px" ContentAlignment="Left">
 
     <Group Orientation="Horizontal" Spacing="50">
       <Group Spacing="10px" ContentAlignment="Left">

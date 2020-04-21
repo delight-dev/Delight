@@ -921,6 +921,34 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets the selected text.
+        /// </summary>
+        private string GetSelection()
+        {
+            string selection = string.Empty;
+            if (!_hasSelection)
+                return selection;
+
+            int startLine = Math.Min(_selectionOriginY, _selectionTargetY);
+            int endLine = Math.Max(_selectionOriginY, _selectionTargetY);
+            int startChar = startLine == endLine ? Math.Min(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionTargetX : _selectionOriginX;
+            int endChar = startLine == endLine ? Math.Max(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionOriginX : _selectionTargetX;
+
+            if (endLine == startLine)
+            {
+                return _lines[startLine].Substring(startChar, endChar - startChar);
+            }
+            else
+            {
+                var lines = new List<string>();
+                lines.Add(_lines[startLine].Substring(startChar));
+                lines.AddRange(_lines.GetRange(startLine + 1, endLine - startLine));
+                lines.Add(_lines[endLine].Substring(0, endChar));
+                return String.Join(Environment.NewLine, lines);
+            }
+        }
+
+        /// <summary>
         /// Removes the selected text.
         /// </summary>
         private void DeleteSelection()
@@ -999,6 +1027,27 @@ namespace Delight
                 _trackKeyDown = KeyCode.None;
                 _keyDownDelayTimeElapsed = 0;
                 _keyDownRepeatTimeElapsed = 0;
+            }
+
+            // CTRL+C - copy
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                if (_hasSelection)
+                {
+                    GUIUtility.systemCopyBuffer = GetSelection();
+                }
+            }
+
+            // CTRL+X - cut
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                if (_hasSelection)
+                {
+                    GUIUtility.systemCopyBuffer = GetSelection();
+                    DeleteSelection();
+
+                    updateText = true;
+                }
             }
 
             // CTRL+V - paste
@@ -1084,6 +1133,7 @@ namespace Delight
             if (updateText)
             {
                 OnEditorChanged();
+                Edit.Invoke(this, null);
             }
         }
 

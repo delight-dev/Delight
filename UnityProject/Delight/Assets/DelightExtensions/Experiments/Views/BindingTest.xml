@@ -3,8 +3,8 @@
 
   <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
     BackgroundColor="#ef706a">
-    <Group Spacing="10" Alignment="Top" Margin="0,30,0,0">
-      <Button Text="Test 1" BackgroundColor="Blue" FontSize="24" TextAlignment="Center" Click="Test1" />
+    <Group Spacing="6" Alignment="Top" Margin="0,30,0,0">
+      <Button Text="Test 1" BackgroundColor="Blue" TextAlignment="Center" Click="Test1" />
       <Button Text="Test 2" TextAlignment="Center" Click="Test2" />
       <Button Text="Bg" TextAlignment="Center" BackgroundColor="{TestBinding2}" />
       <Button Text="Large Button" TextAlignment="Center" />

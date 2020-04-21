@@ -37,6 +37,9 @@ namespace Delight
         /// </summary>
         public override void Update()
         {
+            bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
             // F11 maximizes designer window in editor
             if (Input.GetKeyDown(KeyCode.F11))
             {
@@ -47,7 +50,11 @@ namespace Delight
                 SetScale(Vector3.one);
             }
 
-            // TODO implement CTRL-S and CTRL-SHIFT-S for save and save all
+            // CTRL+S and CTRL+SHIFT+S saves all changes
+            if (ctrlDown && Input.GetKeyDown(KeyCode.S))
+            {
+                SaveChanges();
+            }
         }
 
         /// <summary>
@@ -152,7 +159,7 @@ namespace Delight
             }
             else
             {
-                XmlEditor.XmlText = _currentEditedView.XmlText; 
+                XmlEditor.XmlText = _currentEditedView.XmlText;
             }
 
             // center on view
@@ -232,15 +239,8 @@ namespace Delight
             {
                 foreach (var changedView in changedViews)
                 {
-                    if (!changedView.IsNew)
-                    {
-                        File.WriteAllText(changedView.FilePath, changedView.XmlText);
-                        changedView.IsDirty = false;
-                    }
-                    else
-                    {
-                        // TODO implement saving new view
-                    }
+                    File.WriteAllText(changedView.FilePath, changedView.XmlText);
+                    changedView.IsDirty = false;
                 }
 
 #if UNITY_EDITOR
@@ -352,8 +352,10 @@ namespace Delight
             int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
             string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
             int directoryDepth = 1 + p1.Count(x => x == '/');
+            var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
 
             sb.AppendLine("<{0} xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {1}Delight.xsd\">", viewName, ellipsis);
+            sb.AppendLine("  ");
             sb.AppendLine("</{0}>", viewName);
             newView.XmlText = sb.ToString();
 

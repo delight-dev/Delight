@@ -393,7 +393,7 @@ namespace Delight
                     _comboBoxExampleGroup1.Name = "ComboBoxExampleGroup1";
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_comboBoxExampleGroup1, Delight.ElementOrientation.Vertical);
-                    Delight.Group.SpacingProperty.SetDefault(_comboBoxExampleGroup1, new ElementSize(15f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_comboBoxExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.Group.ContentAlignmentProperty.SetDefault(_comboBoxExampleGroup1, Delight.ElementAlignment.Left);
                 }
                 return _comboBoxExampleGroup1;
