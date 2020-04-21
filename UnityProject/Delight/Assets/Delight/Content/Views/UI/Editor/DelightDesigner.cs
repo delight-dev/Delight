@@ -312,17 +312,8 @@ namespace Delight
         /// <summary>
         /// Called when user clicks "+ New View" button. 
         /// </summary>
-        public static bool onlyScrollTo = false;
         public void AddNewView()
         {
-            if (onlyScrollTo)
-            {
-                DesignerViews.SelectAndScrollTo(DesignerViews.Count - 1);
-                return;
-            }
-
-            onlyScrollTo = true;
-
             var newView = new DesignerView();
 
             // generate name

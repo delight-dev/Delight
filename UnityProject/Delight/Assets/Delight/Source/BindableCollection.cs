@@ -311,10 +311,10 @@ namespace Delight
             if (index < 0 || index >= Count)
                 return;
 
-            SelectAndScrollTo(this[index], alignment, offset, true);
+            SelectAndScrollTo(this[index], alignment, offset);
         }
 
-        public virtual void SelectAndScrollTo(T item, ElementAlignment? alignment = null, ElementMargin offset = null, bool scrollTo = false)
+        public virtual void SelectAndScrollTo(T item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
             Notify(new CollectionSelectionEventArgs
             {
@@ -322,7 +322,7 @@ namespace Delight
                 Item = item,
                 Alignment = alignment,
                 Offset = offset,
-                ScrollTo = scrollTo
+                ScrollTo = true
             });
         }
 
