@@ -1259,7 +1259,7 @@ namespace Delight
         /// </summary>
         public void SelectAndScrollToItem(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            SelectItem(item);
+            SelectItem(item, true);
             ScrollTo(item, alignment, offset);
         }
 
