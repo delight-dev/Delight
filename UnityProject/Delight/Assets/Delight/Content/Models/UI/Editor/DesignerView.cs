@@ -40,6 +40,24 @@ namespace Delight
             }
         }
 
+        private bool _isNew;
+        public bool IsNew
+        {
+            get { return _isNew; }
+            set
+            {
+                SetProperty(ref _isNew, value);
+                OnPropertyChanged(nameof(DisplayName));
+            }
+        }
+
+        private string _filePath;
+        public string FilePath
+        {
+            get { return _filePath; }
+            set { SetProperty(ref _filePath, value); }
+        }
+
         public string DisplayName
         {
             get

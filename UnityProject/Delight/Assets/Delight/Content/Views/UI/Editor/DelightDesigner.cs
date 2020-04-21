@@ -10,6 +10,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.IO;
+using System.Text;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -69,7 +70,14 @@ namespace Delight
                 if (!IsUIView(viewObject))
                     continue;
 
-                designerViews.Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name, ViewTypeName = viewObject.TypeName, ViewObject = viewObject });
+                designerViews.Add(new DesignerView
+                {
+                    Id = viewObject.Name,
+                    Name = viewObject.Name,
+                    ViewTypeName = viewObject.TypeName,
+                    ViewObject = viewObject,
+                    FilePath = viewObject.FilePath
+                });
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
@@ -117,31 +125,39 @@ namespace Delight
                 _displayedView.Destroy();
             }
 
+            _currentEditedView = designerView;
+
             // add "Designer" prefix to see if there is a dedicated designer wrapper for the view
-            _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
+            if (!designerView.IsNew)
+            {
+                _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
 
-            var sw2 = System.Diagnostics.Stopwatch.StartNew();
+                var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
-            await _displayedView?.LoadAsync();
-            _displayedView?.PrepareForDesigner();
+                await _displayedView?.LoadAsync();
+                _displayedView?.PrepareForDesigner();
+
+                sw2.Stop();
+                Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
+
+                // load XML into the editor
+                if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
+                {
+                    XmlEditor.XmlText = _currentEditedView.XmlText;
+                }
+                else
+                {
+                    XmlEditor.XmlText = File.ReadAllText(designerView.FilePath);
+                }
+            }
+            else
+            {
+                XmlEditor.XmlText = _currentEditedView.XmlText; 
+            }
 
             // center on view
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
-
-            // load XML into the editor
-            _currentEditedView = designerView;
-            if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
-            {
-                XmlEditor.XmlText = File.ReadAllText(_currentEditedView.XmlText);
-            }
-            else
-            {
-                XmlEditor.XmlText = File.ReadAllText(designerView.ViewObject.FilePath);
-            }
-
-            sw2.Stop();
-            Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
         }
 
         /// <summary>
@@ -216,8 +232,15 @@ namespace Delight
             {
                 foreach (var changedView in changedViews)
                 {
-                    File.WriteAllText(changedView.ViewObject.FilePath, changedView.XmlText);
-                    changedView.IsDirty = false;
+                    if (!changedView.IsNew)
+                    {
+                        File.WriteAllText(changedView.FilePath, changedView.XmlText);
+                        changedView.IsDirty = false;
+                    }
+                    else
+                    {
+                        // TODO implement saving new view
+                    }
                 }
 
 #if UNITY_EDITOR
@@ -284,6 +307,60 @@ namespace Delight
         public void CancelQuit()
         {
             SaveChangesPopup.IsActive = false;
+        }
+
+        /// <summary>
+        /// Called when user clicks "+ New View" button. 
+        /// </summary>
+        public static bool onlyScrollTo = false;
+        public void AddNewView()
+        {
+            if (onlyScrollTo)
+            {
+                DesignerViews.SelectAndScrollTo(DesignerViews.Count - 1);
+                return;
+            }
+
+            onlyScrollTo = true;
+
+            var newView = new DesignerView();
+
+            // generate name
+            var viewName = "NewView";
+            for (int i = 1; i < int.MaxValue; ++i)
+            {
+                if (!DesignerViews.Any(x => x.Name == viewName))
+                    break;
+
+                viewName = String.Format("NewView{0}", i);
+            }
+            newView.Id = viewName;
+            newView.Name = viewName;
+
+            // set view path
+            // TODO ask user which content directory to put the new view in
+
+            // generate XML
+            var sb = new StringBuilder();
+
+            // TODO implement view path
+            var config = MasterConfig.GetInstance();
+            string path = String.Format("{0}/{1}Delight/Content{2}{3}.xml", Application.dataPath, config.DelightPath, ContentParser.ViewsFolder, viewName);
+            newView.FilePath = path;
+
+            // add elipses "../" to schema location according to directory depth
+            int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+            string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+            int directoryDepth = 1 + p1.Count(x => x == '/');
+
+            sb.AppendLine("<{0} xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {1}Delight.xsd\">", viewName, ellipsis);
+            sb.AppendLine("</{0}>", viewName);
+            newView.XmlText = sb.ToString();
+
+            newView.IsDirty = false;
+            newView.IsNew = true;
+            DesignerViews.Add(newView);
+            DesignerViews.SelectAndScrollTo(newView);
         }
 
         #endregion
