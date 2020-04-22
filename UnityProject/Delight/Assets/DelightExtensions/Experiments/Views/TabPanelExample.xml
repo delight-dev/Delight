@@ -1,4 +1,4 @@
-<TabPanelExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd">
+<TabPanelExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
   <!--<TabPanel>
     <TabHeader Id="Header1" Text="Header 1" />
     <TabHeader Id="Header2" Text="Header 2" />

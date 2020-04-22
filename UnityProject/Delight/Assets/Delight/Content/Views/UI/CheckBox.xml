@@ -1,5 +1,4 @@
-<CheckBox xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-          BasedOn="UIImageView" IsChecked="t:bool" IsDisabled="t:bool" IsInteractable="t:bool = True"
+<CheckBox xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsChecked="t:bool" IsDisabled="t:bool" IsInteractable="t:bool = True"
           Spacing="t:ElementSize = 10" 
           m.CheckBoxImageView="CheckBox"
           m.CheckBoxLabel=""

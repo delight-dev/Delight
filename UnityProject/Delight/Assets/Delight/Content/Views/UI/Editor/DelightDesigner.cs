@@ -154,7 +154,27 @@ namespace Delight
                 }
                 else
                 {
-                    XmlEditor.XmlText = File.ReadAllText(designerView.FilePath);
+                    var path = designerView.FilePath;
+                    var xmlText = File.ReadAllText(path);
+
+                    // strip namespace and schema elements from XML root
+                    xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
+                    xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
+
+                    int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+                    string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                    int directoryDepth = 1 + p1.Count(x => x == '/');
+                    var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+                    var schemaElement = " xsi:schemaLocation=\"Delight";
+                    //var schemaElement = String.Format(" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
+
+                    int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
+                    if (indexOfSchemaElement > 0)
+                    {
+                        xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
+                    }                    
+
+                    XmlEditor.XmlText = xmlText;
                 }
             }
             else
@@ -239,7 +259,60 @@ namespace Delight
             {
                 foreach (var changedView in changedViews)
                 {
-                    File.WriteAllText(changedView.FilePath, changedView.XmlText);
+                    var path = changedView.FilePath;
+                    var xmlText = changedView.XmlText;
+
+                    // add namespace and schema elements to XML root
+                    int startIndex = 0;
+                    int charCount = xmlText.Length;
+
+                    // find root element
+                    // ignore leading comments
+                    for(int i = 0; i < charCount; ++i)
+                    {
+                        var rootElementIndex = xmlText.IndexOf('<', startIndex);
+                        if (startIndex + 3 < charCount)
+                        {                            
+                            if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
+                            {
+                                startIndex = xmlText.IndexOf("-->", startIndex);
+                                if (startIndex < 0)
+                                    break;
+                                continue;
+                            }
+                        }
+                        break;
+                    }
+
+                    // find insert point after root view name
+                    for (int i = startIndex + 1; ; ++i)
+                    {
+                        if (i >= charCount)
+                        {
+                            startIndex = -1; // insert point not found
+                            break;
+                        }
+
+                        char c = xmlText[i];
+                        if (c == ' ' || c == '>')
+                        {
+                            // TODO look for last " in the same line
+                            startIndex = i;
+                            break;
+                        }
+                    }
+
+                    if (startIndex > 0)
+                    {
+                        int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+                        string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                        int directoryDepth = 1 + p1.Count(x => x == '/');
+                        var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+                        var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
+                        xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
+                    }
+
+                    File.WriteAllText(path, xmlText);
                     changedView.IsDirty = false;
                 }
 
@@ -334,18 +407,11 @@ namespace Delight
             // generate XML
             var sb = new StringBuilder();
 
-            // TODO implement view path
             var config = MasterConfig.GetInstance();
             string path = String.Format("{0}/{1}Delight/Content{2}{3}.xml", Application.dataPath, config.DelightPath, ContentParser.ViewsFolder, viewName);
             newView.FilePath = path;
 
-            // add elipses "../" to schema location according to directory depth
-            int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-            string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-            int directoryDepth = 1 + p1.Count(x => x == '/');
-            var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
-
-            sb.AppendLine("<{0} xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {1}Delight.xsd\">", viewName, ellipsis);
+            sb.AppendLine("<{0}>", viewName);
             sb.AppendLine("  ");
             sb.AppendLine("</{0}>", viewName);
             newView.XmlText = sb.ToString();

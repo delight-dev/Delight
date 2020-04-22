@@ -1,5 +1,4 @@
-<Mask xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-      BasedOn="UIImageView"
+<Mask xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView"
       MaskComponent="t:UnityEngine.UI.Mask, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
       m.MaskComponent=""
       ShowMaskGraphic="True"> 

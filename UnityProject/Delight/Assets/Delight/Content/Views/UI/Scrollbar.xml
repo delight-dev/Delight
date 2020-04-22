@@ -1,5 +1,5 @@
-<Scrollbar xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-           BasedOn="UIImageView" m.Bar="Bar" m.Handle="Handle" 
+<Scrollbar xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" 
+           m.Bar="Bar" m.Handle="Handle" 
            Length="t:ElementSize = 100%" Breadth="t:ElementSize = 10"
            Orientation="t:ElementOrientation"
            ScrollPosition="t:float"

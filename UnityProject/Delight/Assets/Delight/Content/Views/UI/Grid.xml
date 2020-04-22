@@ -1,5 +1,4 @@
-<Grid xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-      BasedOn="UIImageView" TypeName="LayoutGrid"
+<Grid xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" TypeName="LayoutGrid"
       Spacing="t:ElementSize" ColumnSpacing="t:ElementSize" RowSpacing="t:ElementSize"
       Rows="t:RowDefinitions" Columns="t:ColumnDefinitions"
       i.Cells="RowDefinitions, ColumnDefinitions" Cell="at:CellIndex" CellSpan="at:CellIndex"
