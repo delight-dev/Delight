@@ -37,7 +37,7 @@ namespace Delight
         public override T Convert(string stringValue)
         {
             return (T)Enum.Parse(typeof(T), stringValue, true);
-        }
+        } 
 
         /// <summary>
         /// Converts value from object.

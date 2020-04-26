@@ -70,7 +70,7 @@ namespace Delight
 
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to Quaternion.", objectType.Name));
         }
-
+         
         #endregion
     }
 }

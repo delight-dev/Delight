@@ -21,7 +21,7 @@ namespace Delight
         {
             var convertedValue = Convert(stringValue);
             return convertedValue ? "true" : "false";
-        }
+        } 
 
         /// <summary>
         /// Converts value from string.

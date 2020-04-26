@@ -44,7 +44,7 @@ namespace Delight.Editor.Parser
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
-        private static XmlFile _currentXmlFile;
+        private static string _currentXmlFilePath;
         private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}\|]+)?([ ]*\|[ ]*(?<converter>[^}]+))?[ ]*}");
         private static Regex _dataInsertRegex = new Regex(@"[^\s,""']+|""(?<str>[^""]*)"":?|'(?<str>[^']*)':?");
 
@@ -363,19 +363,19 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses XML.
         /// </summary>
-        private static void ParseXmlFile(XmlFile xumlFile)
+        private static void ParseXmlFile(XmlFile xmlFile)
         {
             //Debug.Log("Parsing " + xumlFile.Path);
-            if (xumlFile.ContentType == XmlContentType.Unknown)
+            if (xmlFile.ContentType == XmlContentType.Unknown)
             {
-                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xumlFile.Path, ViewsFolder, ScenesFolder, StylesFolder));
+                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\" as it's not in a XML content type subdirectory (\"{1}\", \"{2}\" or \"{3}\").", xmlFile.Path, ViewsFolder, ScenesFolder, StylesFolder));
                 return;
             }
 
             XElement rootXmlElement = null;
             try
             {
-                rootXmlElement = XElement.Parse(xumlFile.Content, LoadOptions.SetLineInfo);
+                rootXmlElement = XElement.Parse(xmlFile.Content, LoadOptions.SetLineInfo);
             }
             catch (Exception e)
             {
@@ -394,36 +394,36 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                ConsoleLogger.LogParseError(xumlFile.Path, line,
+                ConsoleLogger.LogParseError(xmlFile.Path, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
 
             // files are parsed in order style -> scene -> view
-            if (xumlFile.ContentType == XmlContentType.View)
+            if (xmlFile.ContentType == XmlContentType.View)
             {
-                ParseViewXml(xumlFile, rootXmlElement);
+                ParseViewXml(xmlFile.Path, rootXmlElement);
             }
-            else if (xumlFile.ContentType == XmlContentType.Scene)
+            else if (xmlFile.ContentType == XmlContentType.Scene)
             {
-                ParseSceneXml(xumlFile, rootXmlElement);
+                ParseSceneXml(xmlFile.Path, rootXmlElement);
             }
-            else if (xumlFile.ContentType == XmlContentType.Style)
+            else if (xmlFile.ContentType == XmlContentType.Style)
             {
-                ParseStyleXml(xumlFile, rootXmlElement);
+                ParseStyleXml(xmlFile.Path, rootXmlElement);
             }
             else
             {
-                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xumlFile.Path, xumlFile.ContentType));
+                ConsoleLogger.LogWarning(String.Format("#Delight# Ignoring XML file \"{0}\". Parsing of content type \"{1}\" not implemented.", xmlFile.Path, xmlFile.ContentType));
             }
         }
 
         /// <summary>
         /// Parses view XML.
         /// </summary>
-        private static void ParseViewXml(XmlFile xumlFile, XElement rootXmlElement)
+        public static ViewObject ParseViewXml(string xmlFilePath, XElement rootXmlElement, bool updateContentObjectModel = true)
         {
-            _currentXmlFile = xumlFile;
+            _currentXmlFilePath = xmlFilePath;
             var config = MasterConfig.GetInstance();
             var viewName = rootXmlElement.Name.LocalName;
             var module = rootXmlElement.Attribute("Module")?.Value;
@@ -435,25 +435,25 @@ namespace Delight.Editor.Parser
                 {
                     if (config.Modules.Any(x => x == module.Substring(1)))
                     {
-                        return;
+                        return null;
                     }
                 }
                 else
                 {
                     if (!config.Modules.Any(x => x == module))
                     {
-                        return;
+                        return null;
                     }
                 }
             }
 
-            var viewObject = _contentObjectModel.LoadViewObject(viewName);
+            ViewObject viewObject = _contentObjectModel.LoadViewObject(viewName, updateContentObjectModel);
 
             // clear view object 
             viewObject.Clear();
             viewObject.Name = viewName;
             viewObject.TypeName = viewName;
-            viewObject.FilePath = xumlFile.Path;
+            viewObject.FilePath = xmlFilePath;
             viewObject.NeedUpdate = true;
             viewObject.HasXml = true;
 
@@ -507,11 +507,11 @@ namespace Delight.Editor.Parser
                     // set default 
                     if (attributeValue.IEquals("View") && !String.IsNullOrEmpty(config.BaseView))
                     {
-                        viewObject.BasedOn = _contentObjectModel.LoadViewObject(config.BaseView);
+                        viewObject.BasedOn = _contentObjectModel.LoadViewObject(config.BaseView, updateContentObjectModel);
                     }
                     else
                     {
-                        viewObject.BasedOn = _contentObjectModel.LoadViewObject(attributeValue);
+                        viewObject.BasedOn = _contentObjectModel.LoadViewObject(attributeValue, updateContentObjectModel);
                     }
                     continue;
                 }
@@ -540,7 +540,7 @@ namespace Delight.Editor.Parser
                     var contentTemplateTypes = attributeValue.Split(ContentTemplateDelimiterChars, StringSplitOptions.RemoveEmptyEntries).Select(x => x.Trim());
                     foreach (var templateType in contentTemplateTypes)
                     {
-                        var templateView = _contentObjectModel.LoadViewObject(templateType);
+                        var templateView = _contentObjectModel.LoadViewObject(templateType, updateContentObjectModel);
                         viewObject.ContentTemplates.Add(templateView);
                     }
                     continue;
@@ -560,31 +560,33 @@ namespace Delight.Editor.Parser
                     defaultBasedOn = DefaultViewType;
                 }
 
-                viewObject.BasedOn = _contentObjectModel.LoadViewObject(defaultBasedOn);
+                viewObject.BasedOn = _contentObjectModel.LoadViewObject(defaultBasedOn, updateContentObjectModel);
             }
 
             if (!String.IsNullOrEmpty(config.BaseView) && config.BaseView.IEquals(viewObject.Name))
             {
                 // if this is new base view make sure it always inherits from View
-                viewObject.BasedOn = _contentObjectModel.LoadViewObject("View");
+                viewObject.BasedOn = _contentObjectModel.LoadViewObject("View", updateContentObjectModel);
             }
 
             // parse the view's children recursively
-            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(viewObject, xumlFile.Path, rootXmlElement.Elements(), new Dictionary<string, int>(), null);
+            List<ViewDeclaration> viewDeclarations = ParseViewDeclarations(viewObject, xmlFilePath, rootXmlElement.Elements(), new Dictionary<string, int>(), null, updateContentObjectModel);
 
             // add property declarations for view declarations having IDs
             propertyExpressions.AddRange(GetPropertyDeclarations(viewDeclarations));
 
             viewObject.PropertyExpressions.AddRange(propertyExpressions);
             viewObject.ViewDeclarations.AddRange(viewDeclarations);
+
+            return viewObject;
         }
 
         /// <summary>
         /// Parses scene XML.
         /// </summary>
-        private static void ParseSceneXml(XmlFile xumlFile, XElement rootXmlElement)
+        private static void ParseSceneXml(string xmlFilePath, XElement rootXmlElement)
         {
-            _currentXmlFile = xumlFile;
+            _currentXmlFilePath = xmlFilePath;
             var config = MasterConfig.GetInstance();
             var sceneName = rootXmlElement.Name.LocalName;
             var module = rootXmlElement.Attribute("Module")?.Value;
@@ -613,26 +615,26 @@ namespace Delight.Editor.Parser
             // clear view object 
             sceneObject.Clear();
             sceneObject.Name = sceneName;
-            sceneObject.FilePath = xumlFile.Path;
+            sceneObject.FilePath = xmlFilePath;
             sceneObject.NeedUpdate = true;
 
             // parse scene view
-            ParseViewXml(xumlFile, rootXmlElement);
+            ParseViewXml(xmlFilePath, rootXmlElement);
         }
 
         /// <summary>
         /// Parses style XML file.
         /// </summary>
-        private static void ParseStyleXml(XmlFile xumlFile, XElement rootXmlElement)
+        private static void ParseStyleXml(string xmlFilePath, XElement rootXmlElement)
         {
-            _currentXmlFile = xumlFile;
+            _currentXmlFilePath = xmlFilePath;
             var styleName = rootXmlElement.Name.LocalName;
             var styleObject = _contentObjectModel.LoadStyleObject(styleName);
 
             // clear style object
             styleObject.Clear();
             styleObject.Name = styleName;
-            styleObject.FilePath = xumlFile.Path;
+            styleObject.FilePath = xmlFilePath;
             styleObject.NeedUpdate = true;
 
             // parse view's initialization attributes
@@ -649,7 +651,7 @@ namespace Delight.Editor.Parser
             }
 
             // parse style declarations
-            List<StyleDeclaration> viewDeclarations = ParseStyleDeclarations(xumlFile.Path, rootXmlElement.Elements());
+            List<StyleDeclaration> viewDeclarations = ParseStyleDeclarations(xmlFilePath, rootXmlElement.Elements());
             styleObject.StyleDeclarations.AddRange(viewDeclarations);
         }
 
@@ -769,9 +771,8 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Parses view declarations.
         /// </summary>
-        private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration)
+        private static List<ViewDeclaration> ParseViewDeclarations(ViewObject viewObject, string path, IEnumerable<XElement> viewElements, Dictionary<string, int> viewIdCount, ViewDeclaration parentViewDeclaration, bool updateContentObjectModel)
         {
-
             var viewDeclarations = new List<ViewDeclaration>();
             foreach (var viewElement in viewElements)
             {
@@ -781,7 +782,7 @@ namespace Delight.Editor.Parser
                 viewDeclaration.ParentDeclaration = parentViewDeclaration;
 
                 // load the view to make sure it's in our content object model
-                var referencedViewObject = _contentObjectModel.LoadViewObject(viewDeclaration.ViewName);
+                var referencedViewObject = _contentObjectModel.LoadViewObject(viewDeclaration.ViewName, updateContentObjectModel);
                 if (!referencedViewObject.HasXml)
                 {
                     // potentially new view, set file path
@@ -875,7 +876,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // parse child elements
-                viewDeclaration.ChildDeclarations = ParseViewDeclarations(viewObject, path, viewElement.Elements(), viewIdCount, viewDeclaration);
+                viewDeclaration.ChildDeclarations = ParseViewDeclarations(viewObject, path, viewElement.Elements(), viewIdCount, viewDeclaration, updateContentObjectModel);
                 viewDeclarations.Add(viewDeclaration);
             }
 
@@ -1384,7 +1385,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static string GetLineInfo(IXmlLineInfo element)
         {
-            return String.Format("{0} ({1})", _currentXmlFile.Path, element.LineNumber);
+            return String.Format("{0} ({1})", _currentXmlFilePath, element.LineNumber);
         }
 
         /// <summary>
@@ -1547,7 +1548,7 @@ namespace Delight.Editor.Parser
             var emptyList = new List<string>();
             ParseSchemaFiles(schemaFiles, emptyList, emptyList, emptyList);
 
-            ConsoleLogger.Log("#Delight# Schema rebuild completed.");
+            //ConsoleLogger.Log("#Delight# Schema rebuild completed.");
         }
 
         /// <summary>
@@ -2133,7 +2134,7 @@ namespace Delight.Editor.Parser
             }
 
             ParseConfigFiles(configFiles);
-            ConsoleLogger.Log("#Delight# Config rebuild completed.");
+            //ConsoleLogger.Log("#Delight# Config rebuild completed.");
 
             // compare old settings with new
             ConfigParseResult result = ConfigParseResult.RebuildNothing;

@@ -83,7 +83,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Loads specified view object, creates new one if it doesn't exist.
         /// </summary>
-        public ViewObject LoadViewObject(string viewName)
+        public ViewObject LoadViewObject(string viewName, bool addIfNotExist)
         {
             if (_viewObjects == null)
             {
@@ -102,8 +102,11 @@ namespace Delight.Editor.Parser
 
             // create new view object if it doesn't exist
             viewObject = new ViewObject { Name = viewName, TypeName = viewName, HasXml = false };
-            ViewObjects.Add(viewObject);
-            _viewObjects.Add(viewName, viewObject);
+            if (addIfNotExist)
+            {
+                ViewObjects.Add(viewObject);
+                _viewObjects.Add(viewName, viewObject);
+            }
             return viewObject;
         }
 

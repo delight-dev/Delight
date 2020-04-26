@@ -16,7 +16,7 @@ namespace Delight
     {
         #region Fields
 
-        private static Dictionary<string, Func<View, View, Template, View>> ViewActivators;
+        private static Dictionary<string, Func<View, View, string, Template, View>> ViewActivators;
         private static Dictionary<string, Type> ViewTypes;
 
         #endregion
@@ -25,25 +25,35 @@ namespace Delight
 
         public static View CreateView(string viewName)
         {
-            return CreateView(viewName, null, null, null);
+            return CreateView(viewName, null, null, string.Empty, null);
         }
 
         public static View CreateView(string viewName, View parent)
         {
-            return CreateView(viewName, parent, null, null);
+            return CreateView(viewName, parent, null, string.Empty, null);
         }
 
         public static View CreateView(string viewName, View parent, View layoutParent)
         {
-            return CreateView(viewName, parent, layoutParent, null);
+            return CreateView(viewName, parent, layoutParent, string.Empty, null);
         }
 
-        public static View CreateView(string viewName, View parent, View layoutParent, Template template)
+        public static View CreateView(string viewName, View parent, View layoutParent, string id)
         {
             if (ViewActivators == null) return null;
             if (ViewActivators.TryGetValue(viewName, out var activator))
             {
-                return activator(parent, layoutParent, template);
+                return activator(parent, layoutParent, id, null);
+            }
+            return null;
+        }
+
+        public static View CreateView(string viewName, View parent, View layoutParent, string id, Template template)
+        {
+            if (ViewActivators == null) return null;
+            if (ViewActivators.TryGetValue(viewName, out var activator))
+            {
+                return activator(parent, layoutParent, id, template);
             }
             return null;
         }

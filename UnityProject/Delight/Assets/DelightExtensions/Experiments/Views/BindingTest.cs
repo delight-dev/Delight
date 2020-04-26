@@ -13,10 +13,6 @@ namespace Delight
     /// </summary>
     public partial class BindingTest
     {
-
-
-
-
         #region Fields
 
         #endregion

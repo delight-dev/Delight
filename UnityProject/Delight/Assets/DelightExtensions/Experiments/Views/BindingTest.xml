@@ -1,5 +1,4 @@
-<BindingTest xmlns="Delight" Button2.BackgroundColor="Red" Player1="t:Player" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2"
-             >
+<BindingTest xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Button2.BackgroundColor="Red" Player1="t:Player" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2">
 
   <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
     BackgroundColor="#ef706a">

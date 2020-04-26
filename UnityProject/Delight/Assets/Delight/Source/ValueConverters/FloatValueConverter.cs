@@ -32,7 +32,7 @@ namespace Delight
         public override float Convert(string stringValue)
         {
             return System.Convert.ToSingle(stringValue, CultureInfo.InvariantCulture);
-        }
+        } 
 
         /// <summary>
         /// Converts value from object.

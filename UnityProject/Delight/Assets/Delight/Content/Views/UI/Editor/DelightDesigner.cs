@@ -11,8 +11,10 @@ using UnityEngine.EventSystems;
 using TMPro;
 using System.IO;
 using System.Text;
+using System.Xml.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
+using Delight.Editor;
 #endif
 #endregion
 
@@ -172,7 +174,7 @@ namespace Delight
                     if (indexOfSchemaElement > 0)
                     {
                         xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
-                    }                    
+                    }
 
                     XmlEditor.XmlText = xmlText;
                 }
@@ -186,6 +188,515 @@ namespace Delight
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
         }
+
+        /// <summary>
+        /// Parses run-time view XML and generates the view in the designer.
+        /// </summary>
+        public async void ParseView()
+        {
+#if UNITY_EDITOR
+            // TODO this should be called automatically when the XML of a runtime view is edited
+
+            // only parse new views
+            if (_currentEditedView == null || !_currentEditedView.IsNew)
+                return;
+
+            // attempt to parse the xml
+            string xml = XmlEditor.GetXmlText();
+            XElement rootXmlElement = null;
+            try
+            {
+                rootXmlElement = XElement.Parse(xml, LoadOptions.SetLineInfo);
+            }
+            catch (Exception e)
+            {
+                // get which line error occurred on from exception message
+                int line = 1;
+                int indexOfLine = e.Message.IndexOf("Line");
+                if (indexOfLine > 0)
+                {
+                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
+                    int indexOfComma = msg.IndexOf(",");
+
+                    // get lineinfo
+                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
+                    {
+                        line = 1;
+                    }
+                }
+
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+                return;
+            }
+
+            // create view object
+            var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
+
+            // instantiate view
+            var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion);
+            if (view == null)
+                return;
+
+            // destroy previous view
+            if (_displayedView != null)
+            {
+                _displayedView.Destroy();
+            }
+
+            _displayedView = view;
+
+            // load and present view
+            await _displayedView?.LoadAsync();
+            _displayedView?.PrepareForDesigner();
+#endif
+        }
+
+        /// <summary>
+        /// Instantiates a view object.
+        /// </summary>
+        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent)
+        {
+            // TODO look at code generator and generate constructor logic in a similar way
+            // TODO some operations we might cache if the runtime view is to instantiated more than once
+            // like the update calls and data templates
+            // TODO we might be able to use some smart logic to instantiate partially changed views 
+            // so we simply update the templates that aren't new and construct the views that are new
+            // or we simply reparse the entire view, that's fine too, and we make it so atomic views like
+            // buttons, labels, groups, etc. can't really be changed in the editor. 
+
+            // update view declarations (might not be necessary)
+            CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
+            CodeGenerator.UpdateMappedProperties(viewObject);
+
+            // create the runtime data templates used when instantiating the view
+            Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
+            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates);
+
+            // instantiate view
+            var viewTypeName = viewObject.BasedOn.TypeName;
+            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, dataTemplates[viewObject.TypeName]) as UIView;
+            if (view == null)
+                return null;
+
+            InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
+
+            return view;
+        }
+
+        /// <summary>
+        /// Creates runtime data templates.
+        /// </summary>
+        private static void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
+        {
+            if (String.IsNullOrEmpty(idPath))
+            {
+                idPath = viewObject.TypeName;
+            }
+
+            var isParent = String.IsNullOrEmpty(basedOnPath);
+
+            var templateBasedOn = isParent ?
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
+                basedOnPath;
+            var templateBasedOnViewTypeName = isParent ?
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
+                basedOnViewName;
+
+            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : CodeGenerator.DefaultNamespace;
+            var fullViewTypeName = String.Format("{0}.{1}", ns, viewObject.TypeName);
+            var localId = idPath.ToPrivateMemberName();
+
+            // create data template for main view object
+            // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);            
+            var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
+            var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
+            var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
+            var dataTemplate = new Template(templateBasedOnInstance);
+
+#if UNITY_EDITOR
+            // add name in editor so we can easy track which template is used where in the debugger
+            dataTemplate.Name = idPath;
+#endif
+            dataTemplates.Add(idPath, dataTemplate);
+
+            // generate data template values
+            CodeGenerator.GenerateDataTemplateValueInitializers(null, viewObject, isParent,
+                viewDeclaration, fileName, nestedPropertyExpressions, fullViewTypeName, localId,
+                out var nestedChildViewPropertyExpressions, true, dataTemplates[idPath]);
+
+            // set sub-template properties
+            var viewDeclarations = viewObject.GetViewDeclarations(true);
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                // TODO set sub-template properties
+                //    sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewTypeName, declaration.Declaration.Id, localId, idPath);
+            }
+
+            var contentObjectModel = ContentObjectModel.GetInstance();
+
+            // print child view templates
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                var childViewObject = contentObjectModel.LoadViewObject(declaration.Declaration.ViewName, false);
+                var childIdPath = idPath + declaration.Declaration.Id;
+                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
+                    : basedOnPath + declaration.Declaration.Id;
+                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
+
+                List<PropertyExpression> childPropertyAssignments = null;
+                nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
+
+                CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
+                    isParent && !declaration.IsInherited ? declaration.Declaration : null,
+                    childPropertyAssignments, fileName, dataTemplates);
+            }
+        }
+
+        /// <summary>
+        /// Instantiates view construction logic from view declaration.
+        /// </summary>
+        private static void InstantiateRuntimeChildViews(string idPath, Dictionary<string, Template> dataTemplates, View parent, View layoutParent, string fileName, ViewObject viewObject,
+            string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
+        {
+            bool inTemplate = templateDepth > 0;
+            var contentObjectModel = ContentObjectModel.GetInstance();
+
+            // so we need to loop through all child views, print their construction logic
+            foreach (var childViewDeclaration in childViewDeclarations)
+            {
+                // get identifier for view declaration
+                var childId = childViewDeclaration.Id;
+                var templateIdPath = idPath + childId;
+                var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
+                var childViewObject = contentObjectModel.LoadViewObject(childViewDeclaration.ViewName, false);
+                bool templateContent = childViewObject.HasContentTemplates;
+
+                // instantiate view from view declaration: _view = new View(this, layoutParent, id, initializer);
+                // TODO if childViewObject.TypeName doesn't exist create a placeholder view that just displays the name
+                // of the new view
+                // TODO bugix childId is Group1 when it should be NewViewGroup1 to properly reference the template
+                // or can we get away with just Group1?
+                var layoutParentContent = parentViewDeclaration == null ? layoutParent : layoutParent.Content;
+                var childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
+
+                // TODO maybe add action handlers and method assignments
+
+                // TODO support attached properties
+                // do we have attached properties?
+                //foreach (var attachedProperty in childViewDeclaration.AttachedPropertyAssignments)
+                //{
+                //    // yes. initialize attached property
+                //    var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeFullName, attachedProperty.PropertyValue);
+                //    if (String.IsNullOrEmpty(typeValueInitializer))
+                //    {
+                //        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber,
+                //            String.Format("#Delight# Unable to assign value to attached property <{0} {4}.{1}=\"{2}\">. Unable to convert value to property of type \"{3}\". Makes sure to include the namespace in the attached property declaration.",
+                //            viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
+                //        continue;
+                //    }
+
+                //    var attachedParentIdVar = inTemplate ? attachedProperty.ParentId.ToLocalVariableName() : attachedProperty.ParentId;
+                //    sb.AppendLine(indent, "{0}.{1}.SetValue({2}, {3});", attachedParentIdVar, attachedProperty.PropertyName, childIdVar, typeValueInitializer);
+                //}
+
+                var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
+
+                // get templated content data
+                var childTemplateDepth = templateDepth;
+                TemplateItemInfo ti = null;
+                if (templateContent)
+                {
+                    ++childTemplateDepth;
+                    if (templateItems == null)
+                    {
+                        templateItems = new List<TemplateItemInfo>();
+                    }
+
+                    var itemIdDeclaration = childViewDeclaration.PropertyBindings.FirstOrDefault(x => !String.IsNullOrEmpty(x.ItemId));
+                    if (itemIdDeclaration != null)
+                    {
+                        ti = new TemplateItemInfo();
+                        ti.Name = itemIdDeclaration.ItemId;
+                        ti.VariableName = String.Format("ti{0}", ti.Name.ToPropertyName());
+                        ti.ItemIdDeclaration = itemIdDeclaration;
+                        templateItems.Add(ti);
+
+                        ti.ItemType = CodeGenerator.GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                        ti.ItemTypeName = ti.ItemType != null ? ti.ItemType.TypeName() : null;
+                    }
+                }
+
+                // TODO support bindings
+                //    // generate bindings
+                //    if (propertyBindings.Any())
+                //    {
+                //        foreach (var propertyBinding in propertyBindings)
+                //        {
+                //            // handle special case when binding to SelectedItem in lists <List Item="{player in Players}" SelectedItem="{SelectedPlayer}" />
+                //            bool castToItemType = false;
+                //            if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null && !String.IsNullOrEmpty(ti.ItemTypeName))
+                //            {
+                //                castToItemType = true;
+                //            }
+
+                //            // generate binding path to source
+                //            var sourceBindingPathObjects = new List<string>();
+                //            var convertedSourceProperties = new List<string>();
+                //            var sourceProperties = new List<string>();
+                //            foreach (var bindingSource in propertyBinding.Sources)
+                //            {
+                //                var sourcePath = new List<string>();
+                //                sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+                //                bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                //                bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
+                //                string negatedString = isNegated ? "!" : string.Empty;
+                //                bool isLoc = false;
+                //                string locId = string.Empty;
+
+                //                // handle special case when source is localization dictionary
+                //                if (isModelSource && sourcePath.Count == 3 &&
+                //                    (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
+                //                {
+                //                    sourcePath[1] = "Loc";
+
+                //                    // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
+                //                    locId = sourcePath[2];
+                //                    sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
+                //                    sourcePath[2] = "Label";
+                //                    isLoc = true;
+                //                }
+
+                //                // get property names along path
+                //                var templateItemInfo = templateItems != null
+                //                    ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
+                //                    : null;
+                //                bool isTemplateItemSource = templateItemInfo != null;
+
+                //                if (isTemplateItemSource)
+                //                {
+                //                    if (templateItemInfo.ItemTypeName == null)
+                //                        continue; // item type was not inferred so ignore binding
+
+                //                    sourcePath[0] = templateItemInfo.VariableName;
+                //                    sourcePath.Insert(1, "Item");
+                //                }
+
+                //                // handle collection indexers in binding path
+                //                // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
+                //                sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
+
+                //                var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
+                //                if (isLoc)
+                //                {
+                //                    properties.Insert(0, locId);
+                //                }
+
+                //                string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
+
+                //                // get object getters along path
+                //                List<string> sourceGetters = new List<string>();
+                //                int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
+                //                int sourcePathTake = isModelSource ? 2 : 1;
+                //                if (!isModelSource && !isTemplateItemSource)
+                //                {
+                //                    sourceGetters.Add("() => this");
+                //                }
+
+                //                if (isLoc)
+                //                {
+                //                    sourceGetters.Add("() => Models.Loc");
+                //                }
+
+                //                for (int i = 0; i < sourcePathCount; ++i)
+                //                {
+                //                    sourceGetters.Add(String.Format("() => {0}",
+                //                        string.Join(".", sourcePath.Take(i + sourcePathTake))));
+                //                }
+
+                //                if (isTemplateItemSource)
+                //                {
+                //                    // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                //                    var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
+                //                    var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
+                //                    sourcePath = sourcePath.Skip(2).ToList();
+                //                    sourcePath.Insert(0, castItemRef);
+
+                //                    for (int i = 0; i < sourceGetters.Count; ++i)
+                //                    {
+                //                        // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
+                //                        sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                //                    }
+                //                }
+
+                //                string sourceGettersString = string.Join(", ", sourceGetters);
+                //                string sourceProperty = string.Join(".", sourcePath);
+                //                string convertedSourceProperty = sourceProperty;
+
+                //                // add converter
+                //                if (!String.IsNullOrEmpty(bindingSource.Converter))
+                //                {
+                //                    convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
+                //                }
+                //                else if (isNegated)
+                //                {
+                //                    convertedSourceProperty = "!" + convertedSourceProperty;
+                //                }
+
+                //                convertedSourceProperties.Add(convertedSourceProperty);
+                //                sourceProperties.Add(sourceProperty);
+                //                sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
+                //            }
+
+                //            // generate binding path to target
+                //            var targetPath = new List<string>();
+                //            if (propertyBinding.IsAttached)
+                //            {
+                //                var parentId = propertyBinding.AttachedToParentViewDeclaration.Id;
+                //                var parentIdVar = inTemplate ? parentId.ToLocalVariableName() : parentId;
+                //                targetPath.Add(parentIdVar);
+                //            }
+                //            else
+                //            {
+                //                targetPath.Add(childIdVar);
+                //            }
+                //            targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
+                //            string targetProperties = string.Join(", ", targetPath.Skip(inTemplate ? 1 : 0).Select(x => "\"" + x + "\""));
+
+                //            List<string> targetGetters = new List<string>();
+                //            if (!inTemplate)
+                //            {
+                //                targetGetters.Add("() => this");
+                //            }
+                //            for (int i = 0; i < targetPath.Count - 1; ++i)
+                //            {
+                //                targetGetters.Add(String.Format("() => {0}", string.Join(".", targetPath.Take(i + 1))));
+                //            }
+
+                //            string targetGettersString = string.Join(", ", targetGetters);
+                //            string targetProperty = string.Join(".", targetPath);
+                //            string convertedTargetProperty = targetProperty;
+
+                //            // if the binding is two-way single binding and is converted, add conversion of target
+                //            bool isTwoWay = false;
+                //            if (propertyBinding.BindingType == BindingType.SingleBinding)
+                //            {
+                //                var bindingSource = propertyBinding.Sources.First();
+                //                isTwoWay = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
+                //                if (isTwoWay && !String.IsNullOrEmpty(bindingSource.Converter))
+                //                {
+                //                    convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertFrom({1})", bindingSource.Converter, targetProperty);
+                //                }
+
+                //                if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated))
+                //                {
+                //                    convertedTargetProperty = "!" + convertedTargetProperty;
+                //                }
+                //            }
+
+                //            string sourceToTargetValue = null;
+                //            string targetToSourceValue = null;
+                //            switch (propertyBinding.BindingType)
+                //            {
+                //                case BindingType.SingleBinding:
+                //                default:
+                //                    if (convertedSourceProperties.Count <= 0)
+                //                    {
+                //                        ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
+                //                            String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
+                //                            viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                //                        continue;
+                //                    }
+
+                //                    sourceToTargetValue = String.Format("{0}", convertedSourceProperties.First());
+                //                    if (isTwoWay)
+                //                    {
+                //                        targetToSourceValue = string.Format("{0}", convertedTargetProperty);
+                //                    }
+                //                    break;
+
+                //                case BindingType.MultiBindingTransform:
+                //                    sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                //                    break;
+
+                //                case BindingType.MultiBindingFormatString:
+                //                    sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
+                //                    break;
+                //            }
+
+                //            string sourceToTarget = !propertyBinding.IsAttached ?
+                //                String.Format("{0} = {1}", targetProperty, sourceToTargetValue) :
+                //                String.Format("{0}.SetValue({1}, {2})", targetProperty, childIdVar, sourceToTargetValue);
+                //            string targetToSource;
+                //            if (targetToSourceValue != null)
+                //            {
+                //                targetToSource = !propertyBinding.IsAttached ?
+                //                    String.Format("{0} = {1}", sourceProperties.First(), convertedTargetProperty) :
+                //                    String.Format("{0} = {1}.GetValue({2})", sourceProperties.First(), targetProperty, childIdVar);
+
+                //                if (castToItemType) // special case when binding to SelectedItem in generic lists so target is cast to specific type
+                //                {
+                //                    targetToSource += String.Format(" as {0}", ti.ItemTypeName);
+                //                }
+                //            }
+                //            else
+                //            {
+                //                targetToSource = "{ }";
+                //            }
+
+                //            // print smart binding
+                //            sb.AppendLine();
+                //            sb.AppendLine(indent, "// binding <{0} {1}=\"{2}\">", childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString);
+                //            sb.AppendLine(indent,
+                //                "{0}Bindings.Add(new Binding(new List<BindingPath> {{ {1} }}, {2}, () => {3}, () => {4}, {5}));",
+                //                inTemplate ? firstTemplateChild + "." : "",
+                //                string.Join(", ", sourceBindingPathObjects),
+                //                String.Format(
+                //                    "new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})",
+                //                    targetProperties, targetGettersString),
+                //                sourceToTarget,
+                //                targetToSource,
+                //                isTwoWay ? "true" : "false");
+                //        }
+                //    }                                
+
+                if (templateContent)
+                {
+                    // TODO support template content
+                    //        foreach (var templateChild in childViewDeclaration.ChildDeclarations)
+                    //        {
+                    //            var templateChildId = templateChild.Id.ToLocalVariableName();
+
+                    //            sb.AppendLine();
+                    //            sb.AppendLine(indent, "// templates for {0}", childIdVar);
+                    //            sb.AppendLine(indent, "{0}.ContentTemplates.Add(new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                    //            sb.AppendLine(indent, "{{");
+
+                    //            // print child view declaration
+                    //            InstantiateRuntimeChildViews(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId);
+
+                    //            sb.AppendLine(indent, "    {0}.IsDynamic = true;", templateChildId);
+                    //            sb.AppendLine(indent, "    {0}.SetContentTemplateData({1});", templateChildId, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
+                    //            sb.AppendLine(indent, "    return {0};", templateChildId);
+                    //            sb.AppendLine(indent, "}}, typeof({0}), \"{1}\"));", templateChild.ViewName, templateChild.Id);
+                    //        }
+                }
+                else
+                {
+                    // create child views from child view declarations
+                    InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
+                }
+            }
+        }
+
 
         /// <summary>
         /// Called when the content is scrolled using mouse wheel or track pad.
@@ -268,11 +779,11 @@ namespace Delight
 
                     // find root element
                     // ignore leading comments
-                    for(int i = 0; i < charCount; ++i)
+                    for (int i = 0; i < charCount; ++i)
                     {
                         var rootElementIndex = xmlText.IndexOf('<', startIndex);
                         if (startIndex + 3 < charCount)
-                        {                            
+                        {
                             if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
                             {
                                 startIndex = xmlText.IndexOf("-->", startIndex);

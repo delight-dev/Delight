@@ -59,7 +59,7 @@ namespace Delight
         /// Converts value from string.
         /// </summary>
         public override ElementMargin Convert(string stringValue)
-        {
+        { 
             string[] valueList;
             valueList = stringValue.Split(',').ToArray();
             if (valueList.Length == 1)

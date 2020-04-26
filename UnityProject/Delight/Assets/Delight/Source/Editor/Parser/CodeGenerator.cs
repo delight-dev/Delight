@@ -21,7 +21,7 @@ namespace Delight.Editor.Parser
     /// <summary>
     /// Generates code from content object model.
     /// </summary>
-    public static class CodeGenerator
+    public static partial class CodeGenerator
     {
         #region Fields
 
@@ -61,7 +61,7 @@ namespace Delight.Editor.Parser
                 var viewPropertyDeclarations = viewObject.PropertyExpressions.OfType<PropertyDeclaration>().Where(x => x.DeclarationType == PropertyDeclarationType.View);
                 foreach (var viewPropertyDeclaration in viewPropertyDeclarations)
                 {
-                    var childViewObject = _contentObjectModel.LoadViewObject(viewPropertyDeclaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(viewPropertyDeclaration.PropertyTypeName, true);
                     viewPropertyDeclaration.PropertyTypeFullName = childViewObject.TypeName;
                 }
             }
@@ -85,7 +85,7 @@ namespace Delight.Editor.Parser
             // validate and update view declarations - template content, attached properties, etc.
             foreach (var viewObject in viewObjects)
             {
-                UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations);
+                UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, true);
             }
 
             // update all view objects that are changed            
@@ -115,6 +115,9 @@ namespace Delight.Editor.Parser
         private static void GenerateViewCode(ViewObject viewObject)
         {
             //Debug.Log("Generating code for " + viewObject.FilePath);
+
+            // ** important: changes in view code generation need to be reflected in the runtime instantiation of views in
+            // DelightDesigner.InstantiateRuntimeView() **
 
             var viewTypeName = viewObject.TypeName;
             bool isBaseView = viewObject.TypeName.IEquals("View");
@@ -549,12 +552,12 @@ namespace Delight.Editor.Parser
             sb.AppendLine("    {");
             sb.AppendLine("        static Assets()");
             sb.AppendLine("        {");
-            sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, Template, View>>();");
+            sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, string, Template, View>>();");
 
             var viewObjects = _contentObjectModel.ViewObjects.Where(x => x.HasCode && !x.IsEditorView && x.Name != "View").ToList();
             foreach (var viewObject in viewObjects)
             {
-                sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z) => new {0}(x, y, null, z));", viewObject.TypeName);
+                sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z, w) => new {0}(x, y, z, w));", viewObject.TypeName);
             }
 
             sb.AppendLine();
@@ -574,14 +577,14 @@ namespace Delight.Editor.Parser
             string path = String.Format("{0}/{1}Delight/Content{2}", Application.dataPath, config.DelightPath, ContentParser.AssetsFolder);
             var sourceFile = String.Format("{0}AssetActivators_g.cs", path);
 
-            Debug.Log("Creating " + sourceFile);
+            //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
         /// <summary>
         /// Validates view declarations in the view object.
         /// </summary>
-        private static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations)
+        public static void UpdateViewDeclarations(ViewObject viewObject, List<ViewDeclaration> childViewDeclarations, bool updateContentObjectModel)
         {
             foreach (var childViewDeclaration in childViewDeclarations)
             {
@@ -601,7 +604,7 @@ namespace Delight.Editor.Parser
                         if (parentViewDeclaration.ViewName.IEquals(parentViewName))
                         {
                             // see if view actually has attached property declared
-                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
+                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName, updateContentObjectModel);
                             var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
                             if (attachedPropertyDeclaration != null)
                             {
@@ -642,7 +645,7 @@ namespace Delight.Editor.Parser
                         if (parentViewDeclaration.ViewName.IEquals(parentViewName))
                         {
                             // see if view actually has attached property declared
-                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName);
+                            var parentViewObject = _contentObjectModel.LoadViewObject(parentViewDeclaration.ViewName, updateContentObjectModel);
                             var attachedPropertyDeclaration = parentViewObject.PropertyExpressions.OfType<AttachedProperty>().FirstOrDefault(x => x.PropertyName.IEquals(parentPropertyName));
                             if (attachedPropertyDeclaration != null)
                             {
@@ -659,7 +662,7 @@ namespace Delight.Editor.Parser
                 }
 
                 // validate template content
-                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
+                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName, updateContentObjectModel);
                 bool templateContent = childViewObject.HasContentTemplates;
                 if (templateContent)
                 {
@@ -673,7 +676,7 @@ namespace Delight.Editor.Parser
                         foreach (var contentChild in childViewDeclaration.ChildDeclarations)
                         {
                             bool wrapThisChild = true;
-                            var templateChildObject = _contentObjectModel.LoadViewObject(contentChild.ViewName);
+                            var templateChildObject = _contentObjectModel.LoadViewObject(contentChild.ViewName, updateContentObjectModel);
                             while (templateChildObject != null)
                             {
                                 if (contentTemplateTypes.Any(x => x.IEquals(templateChildObject.TypeName)))
@@ -731,7 +734,7 @@ namespace Delight.Editor.Parser
                     }
                 }
 
-                UpdateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations);
+                UpdateViewDeclarations(viewObject, childViewDeclaration.ChildDeclarations, updateContentObjectModel);
             }
         }
 
@@ -741,6 +744,9 @@ namespace Delight.Editor.Parser
         private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName)
         {
+            // ** important: changes in data template generation need to be reflected in the runtime instantiation of data templates in
+            // DelightDesigner.CreateRuntimeDataTemplates() **
+
             if (String.IsNullOrEmpty(idPath))
             {
                 idPath = viewObject.TypeName;
@@ -783,6 +789,56 @@ namespace Delight.Editor.Parser
             sb.AppendLine("                    {0}.Name = \"{1}\";", localId, idPath);
             sb.AppendLine("#endif");
 
+            GenerateDataTemplateValueInitializers(sb, viewObject, isParent,
+                viewDeclaration, fileName, nestedPropertyExpressions, fullViewTypeName, localId,
+                out var nestedChildViewPropertyExpressions);
+
+            // set sub-template properties
+            var viewDeclarations = viewObject.GetViewDeclarations(true);
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewTypeName, declaration.Declaration.Id, localId, idPath);
+            }
+
+            sb.AppendLine("                }");
+            sb.AppendLine("                return {0};", localId);
+            sb.AppendLine("            }");
+            sb.AppendLine("        }");
+            sb.AppendLine();
+
+            // print child view templates
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.ViewName, true);
+                var childIdPath = idPath + declaration.Declaration.Id;
+                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
+                    : basedOnPath + declaration.Declaration.Id;
+                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
+
+                List<PropertyExpression> childPropertyAssignments = null;
+                nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
+
+                GenerateDataTemplate(sb, childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
+                    isParent && !declaration.IsInherited ? declaration.Declaration : null,
+                    childPropertyAssignments, fileName);
+            }
+        }
+
+        /// <summary>
+        /// Generates data template value initializers for property assignments.
+        /// </summary>
+        public static void GenerateDataTemplateValueInitializers(StringBuilder sb, ViewObject viewObject, bool isParent, ViewDeclaration viewDeclaration, string fileName,
+            List<PropertyExpression> nestedPropertyExpressions, string fullViewTypeName, string localId, out Dictionary<string, List<PropertyExpression>> nestedChildViewPropertyExpressions,
+            bool instantiateDataTemplateValues = false, Template dataTemplate = null)
+        {
+            nestedChildViewPropertyExpressions = new Dictionary<string, List<PropertyExpression>>();
+
             // get property declarations, initializers and assignment expressions
             var initializerProperties = GetPropertyInitializers(viewObject);
             var propertyDeclarations = GetPropertyDeclarations(viewObject, true, true, true);
@@ -814,7 +870,6 @@ namespace Delight.Editor.Parser
                 propertyBindings.AddRange(nestedPropertyExpressions.OfType<PropertyBinding>().Where(x => !x.IsAttached)); // ignore bindings to attached properties
             }
 
-            var nestedChildViewPropertyExpressions = new Dictionary<string, List<PropertyExpression>>();
             List<PropertyExpression> propertyExpressions = new List<PropertyExpression>();
             propertyExpressions.AddRange(propertyAssignments);
             propertyExpressions.AddRange(propertyBindings);
@@ -900,7 +955,14 @@ namespace Delight.Editor.Parser
                         }
                     }
 
-                    sb.AppendLine("                    {0}.{1}Property.SetHasBinding({2});", fullViewTypeName, propertyName, localId);
+                    if (!instantiateDataTemplateValues)
+                    {
+                        sb.AppendLine("                    {0}.{1}Property.SetHasBinding({2});", fullViewTypeName, propertyName, localId);
+                    }
+                    else
+                    {
+                        // TODO implement
+                    }
                     continue;
                 }
 
@@ -1012,50 +1074,48 @@ namespace Delight.Editor.Parser
                 }
 
                 // set property value
-                if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                if (!instantiateDataTemplateValues)
                 {
-                    sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
+                    if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                    {
+                        sb.AppendLine("                    {0}.{1}Property.SetDefault({2}, {3});", fullViewTypeName, propertyName, localId, typeValueInitializer);
+                    }
+                    else
+                    {
+                        sb.AppendLine("                    {0}.{1}Property.SetStateDefault(\"{2}\", {3}, {4});", fullViewTypeName, propertyName, propertyAssignment.StateName, localId, typeValueInitializer);
+                    }
                 }
                 else
                 {
-                    sb.AppendLine("                    {0}.{1}Property.SetStateDefault(\"{2}\", {3}, {4});", fullViewTypeName, propertyName, propertyAssignment.StateName, localId, typeValueInitializer);
+                    // instantiate data template value
+                    string ns = string.Empty;
+                    string typeName = fullViewTypeName;
+                    List<string> defaultNamespaces = null;
+
+                    int nsIndex = fullViewTypeName.LastIndexOf(".");
+                    if (nsIndex > 0)
+                    {
+                        ns = fullViewTypeName.Substring(0, nsIndex);
+                        typeName = fullViewTypeName.Substring(nsIndex + 1);                        
+                        defaultNamespaces = MasterConfig.GetInstance().Namespaces;
+                    } 
+
+                    var viewType = TypeHelper.GetType(typeName, ns, defaultNamespaces);
+                    var dependencyPropertyInfo = viewType.GetField(String.Format("{0}Property", propertyName));
+                    var dependencyPropertyInstance = dependencyPropertyInfo.GetValue(null) as DependencyProperty;
+                    var typeValueConverter = ValueConverters.Get(propertyTypeName);
+                    var dataTemplateValue = typeValueConverter.ConvertGeneric(propertyAssignment.PropertyValue);
+
+                    //var dataTemplateValue = ""; // TODO get data template value
+                    if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                    {
+                        dependencyPropertyInstance.SetDefaultGeneric(dataTemplate, dataTemplateValue);
+                    }
+                    else
+                    {
+                        dependencyPropertyInstance.SetStateDefaultGeneric(propertyAssignment.StateName, dataTemplate, dataTemplateValue);
+                    }
                 }
-            }
-
-            // set sub-template properties
-            var viewDeclarations = viewObject.GetViewDeclarations(true);
-            foreach (var declaration in viewDeclarations)
-            {
-                if (String.IsNullOrEmpty(declaration.Declaration.Id))
-                    continue;
-
-                sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewTypeName, declaration.Declaration.Id, localId, idPath);
-            }
-
-            sb.AppendLine("                }");
-            sb.AppendLine("                return {0};", localId);
-            sb.AppendLine("            }");
-            sb.AppendLine("        }");
-            sb.AppendLine();
-
-            // print child view templates
-            foreach (var declaration in viewDeclarations)
-            {
-                if (String.IsNullOrEmpty(declaration.Declaration.Id))
-                    continue;
-
-                var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.ViewName);
-                var childIdPath = idPath + declaration.Declaration.Id;
-                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
-                    : basedOnPath + declaration.Declaration.Id;
-                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
-
-                List<PropertyExpression> childPropertyAssignments = null;
-                nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
-
-                GenerateDataTemplate(sb, childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
-                    isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName);
             }
         }
 
@@ -1109,6 +1169,9 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateChildViewDeclarations(string fileName, ViewObject viewObject, StringBuilder sb, string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
         {
+            // ** important: changes in view code generation need to be reflected in the runtime instantiation of views in
+            // DelightDesigner.InstantiateRuntimeView() **
+
             bool isFirst = true;
             int indent = 3 + templateDepth;
             bool inTemplate = templateDepth > 0;
@@ -1119,7 +1182,7 @@ namespace Delight.Editor.Parser
                 // get identifier for view declaration
                 var childId = childViewDeclaration.Id;
                 var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
-                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName);
+                var childViewObject = _contentObjectModel.LoadViewObject(childViewDeclaration.ViewName, true);
                 bool templateContent = childViewObject.HasContentTemplates;
 
                 // put a comment if we are creating top-level views
@@ -1601,7 +1664,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets item type from item declaration.
         /// </summary>
-        private static Type GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
+        public static Type GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
         {
             var bindingSource = itemIdDeclaration.Sources.FirstOrDefault();
             if (bindingSource == null)
@@ -1757,7 +1820,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Updates property information in the view object.
         /// </summary>
-        private static void UpdateMappedProperties(ViewObject viewObject)
+        public static void UpdateMappedProperties(ViewObject viewObject, bool updateViewObjectModel = true)
         {
             if (viewObject.HasUpdatedItsMappedProperties)
                 return;
@@ -1785,7 +1848,7 @@ namespace Delight.Editor.Parser
                 if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View)
                 {
                     // get view reference and generate mappings for its declarations
-                    var childViewObject = _contentObjectModel.LoadViewObject(propertyDeclaration.Declaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(propertyDeclaration.Declaration.PropertyTypeName, updateViewObjectModel);
                     var declarations = GetPropertyDeclarations(childViewObject, true, true, false);
                     foreach (var declaration in declarations)
                     {
@@ -1959,7 +2022,7 @@ namespace Delight.Editor.Parser
                 }
                 else
                 {
-                    var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.PropertyTypeName);
+                    var childViewObject = _contentObjectModel.LoadViewObject(declaration.Declaration.PropertyTypeName, true);
                     if (childViewObject.NeedUpdate)
                     {
                         needUpdate = true;
@@ -2001,15 +2064,6 @@ namespace Delight.Editor.Parser
                 return true;
 
             return viewObject.BasedOn != null ? AnyParentHasContentTemplate(viewObject.BasedOn) : false;
-        }
-
-        private class TemplateItemInfo
-        {
-            public string Name;
-            public string VariableName;
-            public PropertyBinding ItemIdDeclaration;
-            public Type ItemType;
-            public string ItemTypeName;
         }
 
         #endregion
@@ -2471,7 +2525,7 @@ namespace Delight.Editor.Parser
                     var newModel = String.Format("new {0} {{ {1} }}", modelObject.Name, String.Join(", ", propertySetters));
                     if (hasId)
                     {
-                        sb.AppendLine("            {0} = {1};", modelId, newModel); 
+                        sb.AppendLine("            {0} = {1};", modelId, newModel);
                     }
 
                     sb.AppendLine("            Add({0});", hasId ? modelId : newModel);
@@ -2813,7 +2867,7 @@ namespace Delight.Editor.Parser
             }
 
             // print result
-            Debug.Log("#Delight# XSD schema generated.");
+            //Debug.Log("#Delight# XSD schema generated.");
             //Debug.Log(String.Format("Total XSD schema generation time: {0}", sw.ElapsedMilliseconds));
         }
 

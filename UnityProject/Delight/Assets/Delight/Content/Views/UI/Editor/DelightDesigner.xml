@@ -21,8 +21,9 @@
     <Region Id="ContentExplorer" Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#c3c3c3">
       <!--BackgroundColor="#fdfdfd">--> 
       <Label Text="Views | Models" FontSize="14" Font="Segoe UI SDF" Alignment="TopLeft" Margin="10,5,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Truncate" FontColor="#333333" />
-      <Region Margin="0,46,0,0">
-        <Button Text="+ New View" FontSize="16" Font="Segoe UI SDF" Alignment="TopLeft" Margin="8,0,2,2" Height="30" TextAlignment="Left" Click="AddNewView" />
+      <Region Margin="0,46,0,0"> 
+        <Button Text="+ New View" FontSize="16" Font="Segoe UI SDF" Alignment="TopLeft" Offset="8,0,0,0" Height="30" TextAlignment="Left" Click="AddNewView" TextPadding="10" />
+        <Button Text="Parse" FontSize="16" Font="Segoe UI SDF" Alignment="TopLeft" Offset="118,0,0,0" Height="30" TextAlignment="Left" Click="ParseView" TextPadding="10" /> 
         <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,35,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
               ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
               VerticalScrollbarVisibility="Never">

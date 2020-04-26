@@ -75,7 +75,43 @@ namespace Delight
         /// </summary>
         public override RowDefinitions Convert(string stringValue)
         {
-            return null;
+            var floatValueConverter = new FloatValueConverter();
+            var elementSizeConverter = new ElementSizeValueConverter();
+            var sb = new StringBuilder();
+
+            string[] valueList = stringValue.Split(',');
+            var rowDefinitions = new RowDefinitions();
+
+            for (int i = 0; i < valueList.Count(); ++i)
+            {
+                var defStr = valueList[i];
+                RowDefinition rowDefinition = new RowDefinition(elementSizeConverter.Convert(defStr));
+
+                if (valueList[i].Contains("["))
+                {
+                    var minMaxList = valueList[i].Split(MinMaxDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                    defStr = minMaxList[0];
+
+                    if (minMaxList.Length == 2)
+                    {
+                        rowDefinition.MinHeight = floatValueConverter.Convert(minMaxList[1]);
+                    }
+                    else if (minMaxList.Length == 3)
+                    {
+                        rowDefinition.MinHeight = floatValueConverter.Convert(minMaxList[1]);
+                        rowDefinition.MaxHeight = floatValueConverter.Convert(minMaxList[2]);
+                    }
+                    else
+                    {
+                        // improperly formatted string
+                        throw new Exception("Improperly formatted RowDefinitions string. Supported examples: *,10,50,2* | 100[50-200], 10 | 10%,40%,50% | 100,100[10]");
+                    }
+                }
+
+                rowDefinitions.Add(rowDefinition);
+            }
+
+            return rowDefinitions;
         }
 
         /// <summary>
@@ -83,7 +119,20 @@ namespace Delight
         /// </summary>
         public override RowDefinitions Convert(object objectValue)
         {
-            return null;
+            if (objectValue == null)
+                return default(RowDefinitions);
+
+            Type objectType = objectValue.GetType();
+            if (objectType == typeof(string))
+            {
+                return Convert(objectValue as string);
+            }
+            else if (objectType == typeof(RowDefinitions))
+            {
+                return (RowDefinitions)objectValue;
+            }
+
+            throw new Exception(String.Format("Can't convert object of type \"{0}\" to {1}", objectType.Name, nameof(RowDefinitions)));
         }
 
         #endregion

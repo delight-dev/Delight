@@ -25,7 +25,7 @@ namespace Delight
             }
 
             return String.Format("Assets.{0}[\"{1}\"]", typeName.Pluralize(), stringValue);
-        }        
+        }
 
         #endregion
     }

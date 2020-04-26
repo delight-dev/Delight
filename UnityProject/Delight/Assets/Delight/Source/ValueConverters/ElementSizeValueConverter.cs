@@ -49,7 +49,7 @@ namespace Delight
         public override ElementSize Convert(object objectValue)
         {
             if (objectValue == null)
-                return null;
+                return null; 
 
             Type objectType = objectValue.GetType();
             if (objectType == typeof(string))

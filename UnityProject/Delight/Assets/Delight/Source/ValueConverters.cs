@@ -40,7 +40,21 @@ namespace Delight
             {
                 return null;
             }
-        }        
+        }
+
+        /// <summary>
+        /// Gets value converter for type.
+        /// </summary>
+        public static ValueConverter Get(string typeName)
+        {
+            ValueConverter valueConverter;
+            if (!Converters.TryGetValue(typeName, out valueConverter))
+            {
+                return null;
+            }
+
+            return valueConverter;
+        }
 
         #endregion
 

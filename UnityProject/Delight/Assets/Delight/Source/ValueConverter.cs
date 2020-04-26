@@ -11,10 +11,33 @@ namespace Delight
     /// </summary
     public class ValueConverter
     {
+        #region Methods
+
+        /// <summary>
+        /// Gets initializer from string value.
+        /// </summary>
         public virtual string GetInitializer(string stringValue)
         {
             return null;
         }
+
+        /// <summary>
+        /// Converts value from string.
+        /// </summary>
+        public virtual object ConvertGeneric(string stringValue)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Converts value from object.
+        /// </summary>
+        public virtual object ConvertGeneric(object objectValue)
+        {
+            return null;
+        }
+
+        #endregion
     }
 
     /// <summary>
@@ -44,6 +67,22 @@ namespace Delight
         public virtual T Convert(object objectValue)
         {
             return default(T);
+        }
+
+        /// <summary>
+        /// Converts value from string.
+        /// </summary>
+        public override object ConvertGeneric(string stringValue)
+        {
+            return Convert(stringValue);
+        }
+
+        /// <summary>
+        /// Converts value from object.
+        /// </summary>
+        public override object ConvertGeneric(object objectValue)
+        {
+            return Convert(objectValue);
         }
 
         #endregion

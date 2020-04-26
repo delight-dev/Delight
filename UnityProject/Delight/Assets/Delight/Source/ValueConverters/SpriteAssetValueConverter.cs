@@ -27,7 +27,7 @@ namespace Delight
         /// </summary>
         public override SpriteAsset Convert(string stringValue)
         {
-            return null;
+            return Assets.Sprites[stringValue];
         }
 
         /// <summary>
@@ -38,7 +38,17 @@ namespace Delight
             if (objectValue == null)
                 return default(SpriteAsset);
 
-            return null;
+            Type objectType = objectValue.GetType();
+            if (objectType == typeof(string))
+            {
+                return Convert(objectValue as string);
+            }
+            else if (objectType == typeof(SpriteAsset))
+            {
+                return (SpriteAsset)objectValue;
+            }
+
+            throw new Exception(String.Format("Can't convert object of type \"{0}\" to {1}", objectType.Name, nameof(SpriteAsset)));
         }
 
         #endregion

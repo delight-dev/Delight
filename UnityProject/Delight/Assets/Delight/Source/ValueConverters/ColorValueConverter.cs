@@ -59,7 +59,7 @@ namespace Delight
             }
 
             throw new Exception("Improperly formatted color string. Supported formats: #aarrggbb | #rrggbb | ColorName | r,g,b,a");
-        }
+        } 
 
         /// <summary>
         /// Converts value from object.

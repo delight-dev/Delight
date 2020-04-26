@@ -41,7 +41,19 @@ namespace Delight
         /// </summary>
         public override CellIndex Convert(string stringValue)
         {
-            return null;
+            int[] valueList;
+            valueList = stringValue.Split(',').Select(x => System.Convert.ToInt32(x, CultureInfo.InvariantCulture)).ToArray();
+
+            if (valueList.Length == 1)
+            {
+                return new CellIndex(valueList[0], 0);
+            }
+            else if (valueList.Length == 2)
+            {
+                return new CellIndex(valueList[0], valueList[1]);
+            }
+
+            throw new Exception(String.Format("Improperly formatted string."));
         }
 
         /// <summary>
@@ -49,7 +61,20 @@ namespace Delight
         /// </summary>
         public override CellIndex Convert(object objectValue)
         {
-            return null;
+            if (objectValue == null)
+                return default(CellIndex);
+
+            Type objectType = objectValue.GetType();
+            if (objectType == typeof(string))
+            {
+                return Convert(objectValue as string);
+            }
+            else if (objectType == typeof(CellIndex))
+            {
+                return (CellIndex)objectValue;
+            }
+
+            throw new Exception(String.Format("Can't convert object of type \"{0}\" to {1}", objectType.Name, nameof(CellIndex)));
         }
 
         #endregion

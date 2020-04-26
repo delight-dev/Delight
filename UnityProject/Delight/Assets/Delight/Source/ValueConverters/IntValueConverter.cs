@@ -32,7 +32,7 @@ namespace Delight
         public override int Convert(string stringValue)
         {
             return System.Convert.ToInt32(stringValue, CultureInfo.InvariantCulture);
-        }
+        } 
 
         /// <summary>
         /// Converts value from object.
