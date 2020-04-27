@@ -97,9 +97,14 @@ namespace Delight
         /// </summary>
         public void OnEdit()
         {
-            if (_currentEditedView != null)
+            if (_currentEditedView == null)
+                return;
+            
+            _currentEditedView.IsDirty = true;
+            if (_currentEditedView.IsNew)
             {
-                _currentEditedView.IsDirty = true;
+                // TODO right now we only parse new views
+                ParseView();
             }
         }
 
@@ -224,9 +229,9 @@ namespace Delight
                         line = 1;
                     }
                 }
-
-                ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
-                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+                // TODO log to designer log 
+                //ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
+                //    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
 
@@ -326,18 +331,8 @@ namespace Delight
                 viewDeclaration, fileName, nestedPropertyExpressions, fullViewTypeName, localId,
                 out var nestedChildViewPropertyExpressions, true, dataTemplates[idPath]);
 
-            // set sub-template properties
-            var viewDeclarations = viewObject.GetViewDeclarations(true);
-            foreach (var declaration in viewDeclarations)
-            {
-                if (String.IsNullOrEmpty(declaration.Declaration.Id))
-                    continue;
-
-                // TODO set sub-template properties
-                //    sb.AppendLine("                    {0}.{1}TemplateProperty.SetDefault({2}, {3}{1});", fullViewTypeName, declaration.Declaration.Id, localId, idPath);
-            }
-
             var contentObjectModel = ContentObjectModel.GetInstance();
+            var viewDeclarations = viewObject.GetViewDeclarations(true);
 
             // print child view templates
             foreach (var declaration in viewDeclarations)
@@ -357,6 +352,20 @@ namespace Delight
                 CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
                     isParent && !declaration.IsInherited ? declaration.Declaration : null,
                     childPropertyAssignments, fileName, dataTemplates);
+            }
+
+            // set sub-template properties            
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                var templateDependencyProperty = CodeGenerator.GetViewObjectDependencyProperty(viewObject,
+                    String.Format("{0}TemplateProperty", declaration.Declaration.Id));
+                if (templateDependencyProperty == null)
+                    continue;
+
+                templateDependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplates[idPath + declaration.Declaration.Id]);
             }
         }
 
@@ -382,8 +391,6 @@ namespace Delight
                 // instantiate view from view declaration: _view = new View(this, layoutParent, id, initializer);
                 // TODO if childViewObject.TypeName doesn't exist create a placeholder view that just displays the name
                 // of the new view
-                // TODO bugix childId is Group1 when it should be NewViewGroup1 to properly reference the template
-                // or can we get away with just Group1?
                 var layoutParentContent = parentViewDeclaration == null ? layoutParent : layoutParent.Content;
                 var childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
 

@@ -271,6 +271,22 @@ namespace Delight
         }
 
         /// <summary>
+        /// Sets default value for type.
+        /// </summary>
+        public override void SetDefaultGeneric(Template template, object defaultValue)
+        {
+            SetDefault(template, (T)defaultValue);
+        }
+
+        /// <summary>
+        /// Sets default state value for type.
+        /// </summary>
+        public override void SetStateDefaultGeneric(string state, Template template, object defaultValue)
+        {
+            SetStateDefault(state, template, (T)defaultValue);
+        }
+
+        /// <summary>
         /// Returns boolean indicating if dependency property has any state values set.
         /// </summary>
         public override bool HasState(Template key)

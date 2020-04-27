@@ -1088,35 +1088,36 @@ namespace Delight.Editor.Parser
                 else
                 {
                     // instantiate data template value
-                    string ns = string.Empty;
-                    string typeName = fullViewTypeName;
-                    List<string> defaultNamespaces = null;
-
-                    int nsIndex = fullViewTypeName.LastIndexOf(".");
-                    if (nsIndex > 0)
-                    {
-                        ns = fullViewTypeName.Substring(0, nsIndex);
-                        typeName = fullViewTypeName.Substring(nsIndex + 1);                        
-                        defaultNamespaces = MasterConfig.GetInstance().Namespaces;
-                    } 
-
-                    var viewType = TypeHelper.GetType(typeName, ns, defaultNamespaces);
-                    var dependencyPropertyInfo = viewType.GetField(String.Format("{0}Property", propertyName));
-                    var dependencyPropertyInstance = dependencyPropertyInfo.GetValue(null) as DependencyProperty;
                     var typeValueConverter = ValueConverters.Get(propertyTypeName);
                     var dataTemplateValue = typeValueConverter.ConvertGeneric(propertyAssignment.PropertyValue);
+                    var dependencyProperty = GetViewObjectDependencyProperty(viewObject, propertyName + "Property");
 
-                    //var dataTemplateValue = ""; // TODO get data template value
                     if (String.IsNullOrEmpty(propertyAssignment.StateName))
                     {
-                        dependencyPropertyInstance.SetDefaultGeneric(dataTemplate, dataTemplateValue);
+                        dependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplateValue);
                     }
                     else
                     {
-                        dependencyPropertyInstance.SetStateDefaultGeneric(propertyAssignment.StateName, dataTemplate, dataTemplateValue);
+                        dependencyProperty.SetStateDefaultGeneric(propertyAssignment.StateName, dataTemplate, dataTemplateValue);
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets dependency property from view.
+        /// </summary>
+        public static DependencyProperty GetViewObjectDependencyProperty(ViewObject viewObject, string propertyName)
+        {
+            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : CodeGenerator.DefaultNamespace;
+            string typeName = viewObject.TypeName;
+            var viewType = TypeHelper.GetType(typeName, ns, MasterConfig.GetInstance().Namespaces);
+            if (viewType == null)
+                return null;
+
+            var dependencyPropertyInfo = viewType.GetField(propertyName);
+            var dependencyProperty = dependencyPropertyInfo?.GetValue(null) as DependencyProperty;
+            return dependencyProperty;
         }
 
         /// <summary>
