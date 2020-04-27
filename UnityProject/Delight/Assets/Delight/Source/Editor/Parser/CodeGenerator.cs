@@ -1092,13 +1092,16 @@ namespace Delight.Editor.Parser
                     var dataTemplateValue = typeValueConverter.ConvertGeneric(propertyAssignment.PropertyValue);
                     var dependencyProperty = GetViewObjectDependencyProperty(viewObject, propertyName + "Property");
 
-                    if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                    if (dependencyProperty != null)
                     {
-                        dependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplateValue);
-                    }
-                    else
-                    {
-                        dependencyProperty.SetStateDefaultGeneric(propertyAssignment.StateName, dataTemplate, dataTemplateValue);
+                        if (String.IsNullOrEmpty(propertyAssignment.StateName))
+                        {
+                            dependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplateValue);
+                        }
+                        else
+                        {
+                            dependencyProperty.SetStateDefaultGeneric(propertyAssignment.StateName, dataTemplate, dataTemplateValue);
+                        }
                     }
                 }
             }
@@ -1116,6 +1119,15 @@ namespace Delight.Editor.Parser
                 return null;
 
             var dependencyPropertyInfo = viewType.GetField(propertyName);
+            if (dependencyPropertyInfo == null)
+            {
+                if (viewObject.BasedOn == null)
+                    return null;
+
+                // look for dependency property in base view
+                return GetViewObjectDependencyProperty(viewObject.BasedOn, propertyName);
+            }
+
             var dependencyProperty = dependencyPropertyInfo?.GetValue(null) as DependencyProperty;
             return dependencyProperty;
         }

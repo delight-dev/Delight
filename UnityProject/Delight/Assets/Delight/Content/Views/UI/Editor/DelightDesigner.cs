@@ -101,11 +101,7 @@ namespace Delight
                 return;
             
             _currentEditedView.IsDirty = true;
-            if (_currentEditedView.IsNew)
-            {
-                // TODO right now we only parse new views
-                ParseView();
-            }
+            ParseView();            
         }
 
         /// <summary>
@@ -141,8 +137,7 @@ namespace Delight
 
             _currentEditedView = designerView;
 
-            // add "Designer" prefix to see if there is a dedicated designer wrapper for the view
-            if (!designerView.IsNew)
+            if (!designerView.IsRuntimeParsed)
             {
                 _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
 
@@ -186,7 +181,9 @@ namespace Delight
             }
             else
             {
+                // create runtime parsed view
                 XmlEditor.XmlText = _currentEditedView.XmlText;
+                ParseView();
             }
 
             // center on view
@@ -195,16 +192,24 @@ namespace Delight
         }
 
         /// <summary>
+        /// Logs parse errors to the designer console. 
+        /// </summary>
+        public static void LogParseErrorToDesignerConsole(string file, int line, string message)
+        {
+            Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
+        }
+
+        /// <summary>
         /// Parses run-time view XML and generates the view in the designer.
         /// </summary>
         public async void ParseView()
         {
 #if UNITY_EDITOR
-            // TODO this should be called automatically when the XML of a runtime view is edited
-
-            // only parse new views
-            if (_currentEditedView == null || !_currentEditedView.IsNew)
+            ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+            if (_currentEditedView == null)
                 return;
+
+            _currentEditedView.IsRuntimeParsed = true;
 
             // attempt to parse the xml
             string xml = XmlEditor.GetXmlText();
@@ -229,9 +234,9 @@ namespace Delight
                         line = 1;
                     }
                 }
-                // TODO log to designer log 
-                //ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
-                //    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
 
@@ -242,6 +247,8 @@ namespace Delight
             var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion);
             if (view == null)
                 return;
+
+            ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
 
             // destroy previous view
             if (_displayedView != null)
@@ -254,6 +261,7 @@ namespace Delight
             // load and present view
             await _displayedView?.LoadAsync();
             _displayedView?.PrepareForDesigner();
+
 #endif
         }
 
@@ -396,24 +404,6 @@ namespace Delight
 
                 // TODO maybe add action handlers and method assignments
 
-                // TODO support attached properties
-                // do we have attached properties?
-                //foreach (var attachedProperty in childViewDeclaration.AttachedPropertyAssignments)
-                //{
-                //    // yes. initialize attached property
-                //    var typeValueInitializer = ValueConverters.GetInitializer(attachedProperty.PropertyTypeFullName, attachedProperty.PropertyValue);
-                //    if (String.IsNullOrEmpty(typeValueInitializer))
-                //    {
-                //        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber,
-                //            String.Format("#Delight# Unable to assign value to attached property <{0} {4}.{1}=\"{2}\">. Unable to convert value to property of type \"{3}\". Makes sure to include the namespace in the attached property declaration.",
-                //            viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
-                //        continue;
-                //    }
-
-                //    var attachedParentIdVar = inTemplate ? attachedProperty.ParentId.ToLocalVariableName() : attachedProperty.ParentId;
-                //    sb.AppendLine(indent, "{0}.{1}.SetValue({2}, {3});", attachedParentIdVar, attachedProperty.PropertyName, childIdVar, typeValueInitializer);
-                //}
-
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
 
                 // get templated content data
@@ -438,6 +428,36 @@ namespace Delight
 
                         ti.ItemType = CodeGenerator.GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
                         ti.ItemTypeName = ti.ItemType != null ? ti.ItemType.TypeName() : null;
+                    }
+                }
+
+
+                // do we have attached properties?
+                foreach (var attachedProperty in childViewDeclaration.AttachedPropertyAssignments)
+                {
+                    // yes. initialize attached property
+                    var typeValueConverter = ValueConverters.Get(attachedProperty.PropertyTypeFullName);
+                    if (typeValueConverter == null)
+                    {
+                        ConsoleLogger.LogParseError(fileName, attachedProperty.LineNumber,
+                            String.Format("#Delight# Unable to assign value to attached property <{0} {4}.{1}=\"{2}\">. Unable to convert value to property of type \"{3}\". Makes sure to include the namespace in the attached property declaration.",
+                            viewObject.Name, attachedProperty.PropertyName, attachedProperty.PropertyValue, attachedProperty.PropertyTypeName, attachedProperty.ParentViewName));
+                        continue;
+                    }
+
+                    if (inTemplate)
+                    {
+                        // TODO handle attached properties in templates
+                        //var attachedParentIdVar = inTemplate ? attachedProperty.ParentId.ToLocalVariableName() : attachedProperty.ParentId;
+                    }
+                    else
+                    {
+                        var attachedParent = childView.FindParent<UIView>(attachedProperty.ParentId);
+                        var attachedPropertyValue = typeValueConverter.ConvertGeneric(attachedProperty.PropertyValue);
+
+                        // get attached property through reflection
+                        var childViewAttachedProperty = attachedParent.GetType()?.GetProperty(attachedProperty.PropertyName)?.GetValue(attachedParent) as AttachedProperty;
+                        childViewAttachedProperty?.SetValueGeneric(childView, attachedPropertyValue);
                     }
                 }
 
@@ -936,6 +956,7 @@ namespace Delight
 
             newView.IsDirty = false;
             newView.IsNew = true;
+            newView.IsRuntimeParsed = true;
             DesignerViews.Add(newView);
             DesignerViews.SelectAndScrollTo(newView);
         }

@@ -51,6 +51,17 @@ namespace Delight
             }
         }
 
+        private bool _isRuntimeParsed;
+        public bool IsRuntimeParsed
+        {
+            get { return _isRuntimeParsed; }
+            set
+            {
+                SetProperty(ref _isRuntimeParsed, value);
+                OnPropertyChanged(nameof(DisplayName));
+            }
+        }
+
         private string _filePath;
         public string FilePath
         {

@@ -81,12 +81,15 @@ namespace Delight
 
             string[] valueList = stringValue.Split(',');
             var rowDefinitions = new RowDefinitions();
+            float minHeight;
+            float maxHeight; 
 
             for (int i = 0; i < valueList.Count(); ++i)
             {
-                var defStr = valueList[i];
-                RowDefinition rowDefinition = new RowDefinition(elementSizeConverter.Convert(defStr));
+                minHeight = 0;
+                maxHeight = float.MaxValue;
 
+                var defStr = valueList[i];
                 if (valueList[i].Contains("["))
                 {
                     var minMaxList = valueList[i].Split(MinMaxDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
@@ -94,12 +97,12 @@ namespace Delight
 
                     if (minMaxList.Length == 2)
                     {
-                        rowDefinition.MinHeight = floatValueConverter.Convert(minMaxList[1]);
+                        minHeight = floatValueConverter.Convert(minMaxList[1]);
                     }
                     else if (minMaxList.Length == 3)
                     {
-                        rowDefinition.MinHeight = floatValueConverter.Convert(minMaxList[1]);
-                        rowDefinition.MaxHeight = floatValueConverter.Convert(minMaxList[2]);
+                        minHeight = floatValueConverter.Convert(minMaxList[1]);
+                        maxHeight = floatValueConverter.Convert(minMaxList[2]);
                     }
                     else
                     {
@@ -108,6 +111,7 @@ namespace Delight
                     }
                 }
 
+                RowDefinition rowDefinition = new RowDefinition(elementSizeConverter.Convert(defStr), minHeight, maxHeight);
                 rowDefinitions.Add(rowDefinition);
             }
 

@@ -23,14 +23,16 @@ namespace Delight.Editor
     public static class ConsoleLogger
     {
         public delegate void LogDelegate(object message);
+        public delegate void LogParseErrorDelegate(string file, int line, string message);
         public delegate void ExceptionLogDelegate(Exception e);
 
         public static LogDelegate Log = Debug.Log; 
         public static LogDelegate LogError = Debug.LogError; 
         public static LogDelegate LogWarning = Debug.LogWarning;         
         public static ExceptionLogDelegate LogException = Debug.LogException;
+        public static LogParseErrorDelegate LogParseError = LogParseErrorToDebug;
 
-        public static void LogParseError(string file, int line, string message)
+        public static void LogParseErrorToDebug(string file, int line, string message)
         {
             Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
         }

@@ -622,6 +622,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// Returns first ascendant with specified ID and type.
+        /// </summary>
+        public static T FindParent<T>(this View view, string id) where T : View
+        {
+            return view.FindParent<T>(x => String.Equals(x.Id, id, StringComparison.OrdinalIgnoreCase));
+        }
+
+        /// <summary>
         /// Traverses the view object tree and returns the first view that matches the predicate.
         /// </summary>
         public static T Find<T>(this View view, Predicate<T> predicate, bool recursive = true, View parent = null, TraversalAlgorithm traversalAlgorithm = TraversalAlgorithm.DepthFirst) where T : View

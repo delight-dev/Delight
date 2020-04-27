@@ -10,7 +10,7 @@ namespace Delight
     /// <summary>
     /// Base class for attached properties. Attached properties allows values to be associated with views, e.g. <Label Grid.Cell="1,1" /> tells the parent Grid which cell the label should be in.
     /// </summary>
-    public class AttachedProperty<T>
+    public class AttachedProperty<T> : AttachedProperty
     {
         #region Fields
 
@@ -85,6 +85,47 @@ namespace Delight
         {
             value = default(T);
             return _attachedValues != null ? _attachedValues.TryGetValue(child, out value) : false;
+        }
+
+        /// <summary>
+        /// Sets attached value and notifies parent.
+        /// </summary>
+        public override void SetValueGeneric(object child, object value)
+        {
+            SetValue(child, (T)value);
+        }
+
+        /// <summary>
+        /// Gets attached property value.
+        /// </summary>
+        public override object GetValueGeneric(object child)
+        {
+            return GetValue(child);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// Generic base class for attached properties.
+    /// </summary>
+    public class AttachedProperty
+    {
+        #region Methods
+
+        /// <summary>
+        /// Sets attached value and notifies parent.
+        /// </summary>
+        public virtual void SetValueGeneric(object child, object value)
+        {
+        }
+
+        /// <summary>
+        /// Gets attached property value.
+        /// </summary>
+        public virtual object GetValueGeneric(object child)
+        {
+            return null;
         }
 
         #endregion
