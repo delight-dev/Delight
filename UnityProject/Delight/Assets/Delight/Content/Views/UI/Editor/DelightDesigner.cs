@@ -535,7 +535,6 @@ namespace Delight
                             {
                                 var currentSourcePath = sourcePath.Take(i + sourcePathTake);
                                 sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
-                                //sourceObjectGetters.Add(() => GetBindableObjectFromPath(childView, sourcePath.Take(i + sourcePathTake)));
                             }
 
                             if (isTemplateItemSource)
@@ -556,8 +555,10 @@ namespace Delight
 
                             // TODO support converters and negated bindings
                             // add converter
+                            ValueConverter valueConverter = null; 
                             if (!String.IsNullOrEmpty(bindingSource.Converter))
                             {
+                                valueConverter = ValueConverters.Get(bindingSource.Converter);
                                 //convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
                             }
                             else if (isNegated)
@@ -565,7 +566,7 @@ namespace Delight
                                 //convertedSourceProperty = "!" + convertedSourceProperty;
                             }
 
-                            var bindingSourcePath = new BindingPath(sourceProperties, sourceObjectGetters);
+                            var bindingSourcePath = new RuntimeBindingPath(sourceProperties, sourceObjectGetters, isNegated, valueConverter);
                             bindingSources.Add(bindingSourcePath);
                         }
 
@@ -593,10 +594,6 @@ namespace Delight
                         {                            
                             var currentTargetPath = targetPath.Take(i + 1);
                             targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath) as BindableObject);
-
-                            // TODO cleanup
-                            //Debug.Log("Adding path: " + string.Join(".", targetPath.Take(i + 1)));
-                            //targetObjectGetters.Add(() => GetBindableObjectFromPath(childView, targetPath.Take(i + 1)));
                         }
 
                         string targetProperty = string.Join(".", targetPath);
@@ -620,8 +617,6 @@ namespace Delight
                         }
 
                         var bindingTargetPath = new BindingPath(targetProperties, targetObjectGetters);
-                        Action propagateSourceToTarget = null;
-                        Action propagateTargetToSource = null;
 
                         // TODO implement binding value propagation 
                         //string sourceToTargetValue = null;

@@ -40,8 +40,9 @@ namespace Delight
         /// </summary>
         public void PropagateSourceToTargetMethod()
         {
-            var sourceObject = Sources[0].Objects.Last();
-            var value = sourceObject.GetPropertyValue(Sources[0].Properties.Last());
+            var runtimeBindingSource = Sources[0] as RuntimeBindingPath;
+            var sourceObject = runtimeBindingSource.Objects.Last();
+            var value = sourceObject.GetPropertyValue(runtimeBindingSource.Properties.Last());
 
             var targetObject = Target.Objects.Last();
             targetObject.SetPropertyValue(Target.Properties.Last(), value);
