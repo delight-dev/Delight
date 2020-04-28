@@ -17,7 +17,7 @@ namespace Delight
         public List<BindableObject> Objects;
         public bool IsReachable;
         public Binding Binding;
-        public bool IsTarget; 
+        public bool IsTarget;
 
         #endregion
 
@@ -69,12 +69,12 @@ namespace Delight
             {
                 if (Binding.IsTwoWay)
                 {
-                    Binding.PropagateTargetPropertyValue();
+                    Binding.PropagateTargetToSource();
                 }
             }
             else
             {
-                Binding.PropagateSourcePropertyValue();
+                Binding.PropagateSourceToTarget();
             }
         }
 

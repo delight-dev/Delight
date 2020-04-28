@@ -1199,9 +1199,12 @@ namespace Delight.Editor.Parser
 
                 // parse binding string
                 var propertyBinding = ParseBinding(path, element, attributeName, attributeValue);
-                propertyBinding.AttachedNeedUpdate = attachedNeedUpdate;
-                propertyBinding.BindingNeedUpdate = true;
-                propertyExpressions.Add(propertyBinding);
+                if (propertyBinding != null)
+                {
+                    propertyBinding.AttachedNeedUpdate = attachedNeedUpdate;
+                    propertyBinding.BindingNeedUpdate = true;
+                    propertyExpressions.Add(propertyBinding);
+                }
                 return propertyExpressions;
             }
 

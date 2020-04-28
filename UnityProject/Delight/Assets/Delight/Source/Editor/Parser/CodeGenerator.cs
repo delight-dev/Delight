@@ -961,7 +961,11 @@ namespace Delight.Editor.Parser
                     }
                     else
                     {
-                        // TODO implement
+                        var dependencyProperty = GetViewObjectDependencyProperty(viewObject, propertyName + "Property");
+                        if (dependencyProperty != null)
+                        {
+                            dependencyProperty.SetHasBinding(dataTemplate);
+                        }
                     }
                     continue;
                 }
@@ -1600,7 +1604,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Get source path from binding declaration.
         /// </summary>
-        private static List<string> UpdateSourcePathWithCollectionIndexers(string fileName, ViewObject viewObject, List<string> bindingSource, TemplateItemInfo templateItemInfo, ViewDeclaration viewDeclaration)
+        public static List<string> UpdateSourcePathWithCollectionIndexers(string fileName, ViewObject viewObject, List<string> bindingSource, TemplateItemInfo templateItemInfo, ViewDeclaration viewDeclaration)
         {
             var sourcePath = new List<string>(bindingSource);
 

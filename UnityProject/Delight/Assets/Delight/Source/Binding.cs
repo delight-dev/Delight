@@ -17,8 +17,8 @@ namespace Delight
         public List<BindingPath> Sources;
         public BindingPath Target;
 
-        public Action PropagateSourcePropertyValue;
-        public Action PropagateTargetPropertyValue;
+        public Action PropagateSourceToTarget;
+        public Action PropagateTargetToSource;
         public bool SourcesReachable;
         public bool IsTwoWay;
 
@@ -29,7 +29,7 @@ namespace Delight
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
-        public Binding(List<BindingPath> sources, BindingPath target, Action propagateSourcePropertyValue, Action propagateTargetPropertyValue, bool isTwoWay)
+        public Binding(List<BindingPath> sources, BindingPath target, Action propagateSourceToTarget, Action propagateTargetToSource, bool isTwoWay)
         {
             Sources = sources;
             Target = target;
@@ -37,8 +37,8 @@ namespace Delight
             Target.IsTarget = true;
             Sources.ForEach(x => x.Binding = this);
 
-            PropagateSourcePropertyValue = propagateSourcePropertyValue;
-            PropagateTargetPropertyValue = propagateTargetPropertyValue;
+            PropagateSourceToTarget = propagateSourceToTarget;
+            PropagateTargetToSource = propagateTargetToSource;
             IsTwoWay = isTwoWay;
         }
 
@@ -115,13 +115,13 @@ namespace Delight
             //LogPropagation(propagateTargetToSource);
             if (!propagateTargetToSource)
             {
-                PropagateSourcePropertyValue();
+                PropagateSourceToTarget();
             }
             else
             {
                 if (IsTwoWay)
                 {
-                    PropagateTargetPropertyValue();
+                    PropagateTargetToSource();
                 }
             }
         }

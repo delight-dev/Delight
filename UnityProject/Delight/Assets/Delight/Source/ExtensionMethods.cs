@@ -328,6 +328,84 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets property value from path using reflection.
+        /// </summary>
+        public static object GetPropertyValue(this BindableObject obj, IEnumerable<string> path)
+        {
+            if (obj == null) return null;
+            var type = obj.GetType();
+
+            object currentObject = obj;
+            object nextObject = null;
+            var pathList = path.ToList();
+            for (int i = 0; i < pathList.Count; ++i)
+            {
+                var propertyName = pathList[i];
+                type = currentObject.GetType();
+
+                var fieldInfo = type.GetField(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                if (fieldInfo != null)
+                {
+                    nextObject = fieldInfo.GetValue(currentObject);
+                }
+                else
+                {
+                    var propertyInfo = type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+                    if (propertyInfo != null)
+                    {
+                        nextObject = propertyInfo.GetValue(currentObject);
+                    }
+                }
+
+                if (nextObject == null)
+                {
+                    // check if currentObject is a View and search for children
+                    var view = currentObject as View;
+                    if (view != null)
+                    {
+                        nextObject = view.Find<View>(propertyName, true, view);
+                    }
+                }
+
+                if (nextObject == null)
+                    return null;
+
+                currentObject = nextObject;
+            }
+
+            return currentObject;
+        }
+
+        /// <summary>
+        /// Gets property value from path using reflection.
+        /// </summary>
+        public static object GetPropertyValue(this BindableObject obj, string property)
+        {
+            return obj.GetPropertyValue(new string[] { property });
+        }
+
+        /// <summary>
+        /// Sets property value on view using reflection.
+        /// </summary>
+        public static void SetPropertyValue(this BindableObject obj, string property, object value)
+        {
+            if (obj == null) return;
+            var type = obj.GetType();
+            var fieldInfo = type.GetField(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+            if (fieldInfo != null)
+            {
+                fieldInfo.SetValue(obj, value);
+                return;
+            }
+
+            var propertyInfo = type.GetProperty(property, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
+            if (propertyInfo != null)
+            {
+                propertyInfo.SetValue(obj, value);
+            }
+        }
+
+        /// <summary>
         /// Gets member info (property or field) from a type.
         /// </summary>
         public static MemberInfo GetMemberInfo(this Type type, string field, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance)
@@ -762,7 +840,7 @@ namespace Delight
         /// <summary>
         /// Inserts item to list at index or adds if index is at the end.
         /// </summary>
-        public static void InsertOrAdd<T>(this List<T> list, int index, T item) 
+        public static void InsertOrAdd<T>(this List<T> list, int index, T item)
         {
             int count = list.Count();
             if (index < 0 || index > count)

@@ -50,6 +50,8 @@ namespace Delight
             ViewActivators.Add("ToggleGroup", (x, y, z, w) => new ToggleGroup(x, y, z, w));
             ViewActivators.Add("XmlEditor", (x, y, z, w) => new XmlEditor(x, y, z, w));
             ViewActivators.Add("InputField", (x, y, z, w) => new InputField(x, y, z, w));
+            ViewActivators.Add("Aa", (x, y, z, w) => new Aa(x, y, z, w));
+            ViewActivators.Add("TitleView", (x, y, z, w) => new TitleView(x, y, z, w));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w) => new AssetManagementTest(x, y, z, w));
             ViewActivators.Add("BindingTest", (x, y, z, w) => new BindingTest(x, y, z, w));
             ViewActivators.Add("ComboBoxExample", (x, y, z, w) => new ComboBoxExample(x, y, z, w));
@@ -110,6 +112,8 @@ namespace Delight
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("InputField", typeof(InputField));
+            ViewTypes.Add("Aa", typeof(Aa));
+            ViewTypes.Add("TitleView", typeof(TitleView));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
             ViewTypes.Add("BindingTest", typeof(BindingTest));
             ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));

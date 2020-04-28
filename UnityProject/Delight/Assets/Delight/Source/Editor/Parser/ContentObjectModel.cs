@@ -1069,16 +1069,6 @@ namespace Delight.Editor.Parser
     }
 
     /// <summary>
-    /// Property binding type.
-    /// </summary>
-    public enum BindingType
-    {
-        SingleBinding = 0,
-        MultiBindingTransform = 1,
-        MultiBindingFormatString = 2
-    }
-
-    /// <summary>
     /// Property binding source type.
     /// </summary>        
     [Flags]
