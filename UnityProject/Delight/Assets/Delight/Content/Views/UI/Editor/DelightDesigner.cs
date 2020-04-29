@@ -282,10 +282,9 @@ namespace Delight
             // or we simply reparse the entire view, that's fine too, and we make it so atomic views like
             // buttons, labels, groups, etc. can't really be changed in the editor. 
 
-            // TODO cleanup
-            // update view declarations (might not be necessary) 
-            //CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
-            //CodeGenerator.UpdateMappedProperties(viewObject);
+            // update view declarations and mapped properties
+            CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
+            CodeGenerator.UpdateMappedProperties(viewObject);
 
             // create the runtime data templates used when instantiating the view
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
