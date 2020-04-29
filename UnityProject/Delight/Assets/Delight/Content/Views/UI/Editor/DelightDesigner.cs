@@ -269,7 +269,7 @@ namespace Delight
         /// <summary>
         /// Instantiates a view object.
         /// </summary>
-        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew)
+        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null)
         {
             // TODO look at code generator and generate constructor logic in a similar way
             // TODO some operations we might cache if the runtime view is to instantiated more than once
@@ -289,7 +289,7 @@ namespace Delight
 
             // instantiate view
             var viewTypeName = isNew ? viewObject.BasedOn.TypeName : viewObject.TypeName;
-            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, dataTemplates[viewObject.TypeName], true) as UIView;
+            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true) as UIView;
             if (view == null)
                 return null;
 
@@ -297,86 +297,6 @@ namespace Delight
             view.AfterInitialize();
 
             return view;
-        }
-
-        /// <summary>
-        /// Creates runtime data templates.
-        /// </summary>
-        private static void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
-            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
-        {
-            if (String.IsNullOrEmpty(idPath))
-            {
-                idPath = viewObject.TypeName;
-            }
-
-            var isParent = String.IsNullOrEmpty(basedOnPath);
-
-            var templateBasedOn = isParent ?
-                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
-                basedOnPath;
-            var templateBasedOnViewTypeName = isParent ?
-                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
-                basedOnViewName;
-
-            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : CodeGenerator.DefaultNamespace;
-            var fullViewTypeName = String.Format("{0}.{1}", ns, viewObject.TypeName);
-            var localId = idPath.ToPrivateMemberName();
-
-            // create data template for main view object
-            // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);            
-            var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
-            var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
-            var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
-            var dataTemplate = new Template(templateBasedOnInstance);
-
-#if UNITY_EDITOR
-            // add name in editor so we can easy track which template is used where in the debugger
-            dataTemplate.Name = idPath;
-#endif
-            dataTemplates.Add(idPath, dataTemplate);
-
-            // generate data template values
-            CodeGenerator.GenerateDataTemplateValueInitializers(null, viewObject, isParent,
-                viewDeclaration, fileName, nestedPropertyExpressions, fullViewTypeName, localId,
-                out var nestedChildViewPropertyExpressions, true, dataTemplates[idPath]);
-
-            var contentObjectModel = ContentObjectModel.GetInstance();
-            var viewDeclarations = viewObject.GetViewDeclarations(true);
-
-            // create child view data templates
-            foreach (var declaration in viewDeclarations)
-            {
-                if (String.IsNullOrEmpty(declaration.Declaration.Id))
-                    continue;
-
-                var childViewObject = contentObjectModel.LoadViewObject(declaration.Declaration.ViewName, false);
-                var childIdPath = idPath + declaration.Declaration.Id;
-                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
-                    : basedOnPath + declaration.Declaration.Id;
-                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
-
-                List<PropertyExpression> childPropertyAssignments = null;
-                nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
-
-                CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
-                    isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName, dataTemplates);
-            }
-
-            // set sub-template properties            
-            foreach (var declaration in viewDeclarations)
-            {
-                if (String.IsNullOrEmpty(declaration.Declaration.Id))
-                    continue;
-
-                var templateDependencyProperty = CodeGenerator.GetViewObjectDependencyProperty(viewObject,
-                    String.Format("{0}TemplateProperty", declaration.Declaration.Id));
-                if (templateDependencyProperty == null)
-                    continue;
-
-                templateDependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplates[idPath + declaration.Declaration.Id]);
-            }
         }
 
         /// <summary>
@@ -408,7 +328,7 @@ namespace Delight
                 var designerView = DesignerViews.FirstOrDefault(x => x.ViewTypeName == childViewObject.TypeName);
                 if (designerView != null && designerView.IsRuntimeParsed)
                 {
-                    childView = InstantiateRuntimeView(childViewObject, parent, layoutParentContent, designerView.IsNew);
+                    childView = InstantiateRuntimeView(childViewObject, parent, layoutParentContent, designerView.IsNew, dataTemplates[templateIdPath]);
                 }
                 else
                 {
@@ -721,6 +641,86 @@ namespace Delight
                     // create child views from child view declarations
                     InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Creates runtime data templates.
+        /// </summary>
+        private static void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
+        {
+            if (String.IsNullOrEmpty(idPath))
+            {
+                idPath = viewObject.TypeName;
+            }
+
+            var isParent = String.IsNullOrEmpty(basedOnPath);
+
+            var templateBasedOn = isParent ?
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
+                basedOnPath;
+            var templateBasedOnViewTypeName = isParent ?
+                viewObject.BasedOn != null ? viewObject.BasedOn.TypeName : "View" :
+                basedOnViewName;
+
+            var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : CodeGenerator.DefaultNamespace;
+            var fullViewTypeName = String.Format("{0}.{1}", ns, viewObject.TypeName);
+            var localId = idPath.ToPrivateMemberName();
+
+            // create data template for main view object
+            // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);            
+            var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
+            var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
+            var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
+            var dataTemplate = new Template(templateBasedOnInstance);
+
+#if UNITY_EDITOR
+            // add name in editor so we can easy track which template is used where in the debugger
+            dataTemplate.Name = idPath;
+#endif
+            dataTemplates.Add(idPath, dataTemplate);
+
+            // generate data template values
+            CodeGenerator.GenerateDataTemplateValueInitializers(null, viewObject, isParent,
+                viewDeclaration, fileName, nestedPropertyExpressions, fullViewTypeName, localId,
+                out var nestedChildViewPropertyExpressions, true, dataTemplates[idPath]);
+
+            var contentObjectModel = ContentObjectModel.GetInstance();
+            var viewDeclarations = viewObject.GetViewDeclarations(true);
+
+            // create child view data templates
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                var childViewObject = contentObjectModel.LoadViewObject(declaration.Declaration.ViewName, false);
+                var childIdPath = idPath + declaration.Declaration.Id;
+                var childBasedOnPath = String.IsNullOrEmpty(basedOnPath) ? childViewObject.TypeName
+                    : basedOnPath + declaration.Declaration.Id;
+                var childBasedOnViewName = isParent ? childViewObject.TypeName : basedOnViewName;
+
+                List<PropertyExpression> childPropertyAssignments = null;
+                nestedChildViewPropertyExpressions.TryGetValue(declaration.Declaration.Id, out childPropertyAssignments);
+
+                CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
+                    isParent && !declaration.IsInherited ? declaration.Declaration : null,
+                    childPropertyAssignments, fileName, dataTemplates);
+            }
+
+            // set sub-template properties            
+            foreach (var declaration in viewDeclarations)
+            {
+                if (String.IsNullOrEmpty(declaration.Declaration.Id))
+                    continue;
+
+                var templateDependencyProperty = CodeGenerator.GetViewObjectDependencyProperty(viewObject,
+                    String.Format("{0}TemplateProperty", declaration.Declaration.Id));
+                if (templateDependencyProperty == null)
+                    continue;
+
+                templateDependencyProperty.SetDefaultGeneric(dataTemplate, dataTemplates[idPath + declaration.Declaration.Id]);
             }
         }
 
