@@ -1120,11 +1120,18 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static DependencyProperty GetViewObjectDependencyProperty(ViewObject viewObject, string propertyName)
         {
+            if (viewObject == null)
+                return null;
+
             var ns = !String.IsNullOrEmpty(viewObject.Namespace) ? viewObject.Namespace : CodeGenerator.DefaultNamespace;
             string typeName = viewObject.TypeName;
             var viewType = TypeHelper.GetType(typeName, ns, MasterConfig.GetInstance().Namespaces);
             if (viewType == null)
-                return null;
+            {
+                // can be null if it's runtime created view, then check for properties in the view it's based on
+                // TODO we might want to allow for runtime created dependency properties to be set
+                return GetViewObjectDependencyProperty(viewObject.BasedOn, propertyName);
+            }
 
             var dependencyPropertyInfo = viewType.GetField(propertyName);
             if (dependencyPropertyInfo == null)

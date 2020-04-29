@@ -30,6 +30,7 @@ namespace Delight
 
         private UIView _displayedView;
         private DesignerView _currentEditedView;
+        private Dictionary<string, Template> _runtimeTemplates;
 
         #endregion
 
@@ -70,6 +71,7 @@ namespace Delight
             // initialize designer views
             DesignerViews = new DesignerViewData();
             ChangedDesignerViews = new DesignerViewData();
+            _runtimeTemplates = new Dictionary<string, Template>();
 
             // load designer view data from the object model
             var contentObjectModel = ContentObjectModel.GetInstance();
@@ -100,9 +102,9 @@ namespace Delight
         {
             if (_currentEditedView == null)
                 return;
-            
+
             _currentEditedView.IsDirty = true;
-            ParseView();            
+            ParseView();
         }
 
         /// <summary>
@@ -243,6 +245,7 @@ namespace Delight
 
             // create view object
             var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
+            _currentEditedView.ViewObject = viewObject;
 
             // instantiate view
             var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
@@ -313,10 +316,14 @@ namespace Delight
             foreach (var childViewDeclaration in childViewDeclarations)
             {
                 // get identifier for view declaration
+                var designerView = DesignerViews.FirstOrDefault(x => x.ViewTypeName == childViewDeclaration.ViewName);
+                bool isRuntimeParsed = designerView != null && designerView.IsRuntimeParsed;
+
                 var childId = childViewDeclaration.Id;
                 var templateIdPath = idPath + childId;
                 var childIdVar = inTemplate ? childId.ToLocalVariableName() : childId;
-                var childViewObject = contentObjectModel.LoadViewObject(childViewDeclaration.ViewName, false);
+                var childViewObject = isRuntimeParsed ? designerView.ViewObject :
+                    contentObjectModel.LoadViewObject(childViewDeclaration.ViewName, false);
                 bool templateContent = childViewObject.HasContentTemplates;
 
                 // instantiate view from view declaration: _view = new View(this, layoutParent, id, initializer);
@@ -326,8 +333,7 @@ namespace Delight
 
                 // TODO if child is runtime parsed, then instantiate it through InstantiateRuntimeView()
                 UIView childView = null;
-                var designerView = DesignerViews.FirstOrDefault(x => x.ViewTypeName == childViewObject.TypeName);
-                if (designerView != null && designerView.IsRuntimeParsed)
+                if (isRuntimeParsed)
                 {
                     childView = InstantiateRuntimeView(childViewObject, parent, layoutParentContent, designerView.IsNew, dataTemplates[templateIdPath]);
                 }
@@ -487,7 +493,7 @@ namespace Delight
 
                             // TODO support converters and negated bindings
                             // add converter
-                            ValueConverter valueConverter = null; 
+                            ValueConverter valueConverter = null;
                             if (!String.IsNullOrEmpty(bindingSource.Converter))
                             {
                                 valueConverter = ValueConverters.Get(bindingSource.Converter);
@@ -523,7 +529,7 @@ namespace Delight
                             targetObjectGetters.Add(() => parent);
                         }
                         for (int i = 0; i < targetPath.Count - 1; ++i)
-                        {                            
+                        {
                             var currentTargetPath = targetPath.Take(i + 1);
                             targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath) as BindableObject);
                         }
@@ -559,28 +565,28 @@ namespace Delight
                             default:
                                 //propagateSourceToTarget = () => PropagateBindingValue(childView, targetPath);
                                 break;
-                        //        if (convertedSourceProperties.Count <= 0)
-                        //        {
-                        //            ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
-                        //                String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
-                        //                viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
-                        //            continue;
-                        //        }
+                                //        if (convertedSourceProperties.Count <= 0)
+                                //        {
+                                //            ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
+                                //                String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
+                                //                viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
+                                //            continue;
+                                //        }
 
-                        //        sourceToTargetValue = String.Format("{0}", convertedSourceProperties.First());
-                        //        if (isTwoWay)
-                        //        {
-                        //            targetToSourceValue = string.Format("{0}", convertedTargetProperty);
-                        //        }
-                        //        break;
+                                //        sourceToTargetValue = String.Format("{0}", convertedSourceProperties.First());
+                                //        if (isTwoWay)
+                                //        {
+                                //            targetToSourceValue = string.Format("{0}", convertedTargetProperty);
+                                //        }
+                                //        break;
 
-                        //    case BindingType.MultiBindingTransform:
-                        //        sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
-                        //        break;
+                                //    case BindingType.MultiBindingTransform:
+                                //        sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                                //        break;
 
-                        //    case BindingType.MultiBindingFormatString:
-                        //        sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
-                        //        break;
+                                //    case BindingType.MultiBindingFormatString:
+                                //        sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
+                                //        break;
                         }
 
                         // TODO implement attached binding logic
@@ -614,7 +620,7 @@ namespace Delight
                         // TODO add binding to template item if inside a template
                         childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType));
                     }
-                }                                
+                }
 
                 if (templateContent)
                 {
@@ -648,7 +654,7 @@ namespace Delight
         /// <summary>
         /// Creates runtime data templates.
         /// </summary>
-        private static void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
+        private void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
         {
             if (String.IsNullOrEmpty(idPath))
@@ -673,14 +679,35 @@ namespace Delight
             // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);
 
             // does existing template exist? 
-            var dataTemplate = TypeHelper.GetType(viewObject.TypeName + "Templates")?.GetProperty(idPath)?.GetValue(null) as Template;
+            Template dataTemplate = null;
+            if (isParent)
+            {
+                dataTemplate = TypeHelper.GetType(idPath + "Templates")?.GetProperty(idPath)?.GetValue(null) as Template;
+
+                // check for runtime data template if we're a parent
+                if (dataTemplate == null)
+                {
+                    _runtimeTemplates.TryGetValue(idPath, out dataTemplate);
+                }
+            }
+
             if (dataTemplate == null)
             {
                 // no. create a new one
-                var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
-                var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
-                var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
-                dataTemplate = new Template(templateBasedOnInstance);
+                var basedOnTemplate = TypeHelper.GetType(templateBasedOnViewTypeName + "Templates")?.GetProperty(templateBasedOn)?.GetValue(null) as Template;
+                if (basedOnTemplate == null)
+                {
+                    if (!_runtimeTemplates.TryGetValue(templateBasedOnViewTypeName, out basedOnTemplate))
+                    {
+                        Debug.LogError(String.Format("Data template for child view \"{0}\" missing.", templateBasedOnViewTypeName));
+                    }
+                }
+
+                dataTemplate = new Template(basedOnTemplate ?? ViewTemplates.View);
+                if (isParent)
+                {
+                    _runtimeTemplates.Add(idPath, dataTemplate);
+                }
             }
 
 #if UNITY_EDITOR
@@ -945,6 +972,7 @@ namespace Delight
             }
             newView.Id = viewName;
             newView.Name = viewName;
+            newView.ViewTypeName = viewName;
 
             // set view path
             // TODO ask user which content directory to put the new view in
@@ -964,6 +992,7 @@ namespace Delight
             newView.IsDirty = false;
             newView.IsNew = true;
             newView.IsRuntimeParsed = true;
+
             DesignerViews.Add(newView);
             DesignerViews.SelectAndScrollTo(newView);
         }
