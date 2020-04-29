@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public CheckBox(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? CheckBoxTemplates.Default, initializer)
+        public CheckBox(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? CheckBoxTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Group (CheckBoxGroup)
             CheckBoxGroup = new Group(this, this, "CheckBoxGroup", CheckBoxGroupTemplate);
 

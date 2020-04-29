@@ -16,7 +16,7 @@ namespace Delight
     {
         #region Fields
 
-        private static Dictionary<string, Func<View, View, string, Template, View>> ViewActivators;
+        private static Dictionary<string, Func<View, View, string, Template, bool, View>> ViewActivators;
         private static Dictionary<string, Type> ViewTypes;
 
         #endregion
@@ -25,35 +25,35 @@ namespace Delight
 
         public static View CreateView(string viewName)
         {
-            return CreateView(viewName, null, null, string.Empty, null);
+            return CreateView(viewName, null, null, string.Empty, null, false);
         }
 
         public static View CreateView(string viewName, View parent)
         {
-            return CreateView(viewName, parent, null, string.Empty, null);
+            return CreateView(viewName, parent, null, string.Empty, null, false);
         }
 
         public static View CreateView(string viewName, View parent, View layoutParent)
         {
-            return CreateView(viewName, parent, layoutParent, string.Empty, null);
+            return CreateView(viewName, parent, layoutParent, string.Empty, null, false);
         }
 
         public static View CreateView(string viewName, View parent, View layoutParent, string id)
         {
-            if (ViewActivators == null) return null;
-            if (ViewActivators.TryGetValue(viewName, out var activator))
-            {
-                return activator(parent, layoutParent, id, null);
-            }
-            return null;
+            return CreateView(viewName, parent, layoutParent, id, null, false);
         }
 
         public static View CreateView(string viewName, View parent, View layoutParent, string id, Template template)
         {
+            return CreateView(viewName, parent, layoutParent, id, template, false);
+        }
+
+        public static View CreateView(string viewName, View parent, View layoutParent, string id, Template template, bool deferInitialization)
+        {
             if (ViewActivators == null) return null;
             if (ViewActivators.TryGetValue(viewName, out var activator))
             {
-                return activator(parent, layoutParent, id, template);
+                return activator(parent, layoutParent, id, template, deferInitialization);
             }
             return null;
         }

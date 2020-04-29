@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public TabHeader(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? TabHeaderTemplates.Default, initializer)
+        public TabHeader(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? TabHeaderTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             ToggleClick.RegisterHandler(this, "TabToggleClick");
             this.AfterInitializeInternal();
         }

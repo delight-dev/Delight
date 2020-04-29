@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public Group(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? GroupTemplates.Default, initializer)
+        public Group(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? GroupTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             SortIndex = new AttachedProperty<System.Int32>(this, "SortIndex");
             this.AfterInitializeInternal();
         }

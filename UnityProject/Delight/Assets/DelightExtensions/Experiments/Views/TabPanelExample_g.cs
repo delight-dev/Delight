@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public TabPanelExample(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? TabPanelExampleTemplates.Default, initializer)
+        public TabPanelExample(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? TabPanelExampleTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing TabPanel (TabPanel1)
             TabPanel1 = new TabPanel(this, this, "TabPanel1", TabPanel1Template);
 

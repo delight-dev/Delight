@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ToggleGroup(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ToggleGroupTemplates.Default, initializer)
+        public ToggleGroup(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ToggleGroupTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             this.AfterInitializeInternal();
         }
 

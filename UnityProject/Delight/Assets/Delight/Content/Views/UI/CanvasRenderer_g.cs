@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public CanvasRendererView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? CanvasRendererViewTemplates.Default, initializer)
+        public CanvasRendererView(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? CanvasRendererViewTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             this.AfterInitializeInternal();
         }
 

@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public TabPanel(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? TabPanelTemplates.Default, initializer)
+        public TabPanel(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? TabPanelTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing ViewSwitcher (TabSwitcher)
             TabSwitcher = new ViewSwitcher(this, this, "TabSwitcher", TabSwitcherTemplate);
 

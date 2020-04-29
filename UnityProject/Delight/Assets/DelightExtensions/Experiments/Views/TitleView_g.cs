@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public TitleView(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? TitleViewTemplates.Default, initializer)
+        public TitleView(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? TitleViewTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Button (Button1)
             Button1 = new Button(this, this, "Button1", Button1Template);
 

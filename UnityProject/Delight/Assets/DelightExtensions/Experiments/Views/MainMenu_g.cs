@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public MainMenu(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? MainMenuTemplates.Default, initializer)
+        public MainMenu(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? MainMenuTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             Group1 = new Group(this, Region1.Content, "Group1", Group1Template);

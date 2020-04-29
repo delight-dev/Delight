@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public PerformanceTest(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? PerformanceTestTemplates.Default, initializer)
+        public PerformanceTest(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? PerformanceTestTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             this.AfterInitializeInternal();
         }
 

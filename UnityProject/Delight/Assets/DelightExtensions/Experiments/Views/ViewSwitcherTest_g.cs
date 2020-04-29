@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ViewSwitcherTest(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ViewSwitcherTestTemplates.Default, initializer)
+        public ViewSwitcherTest(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ViewSwitcherTestTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Region (Region1)
             Region1 = new Region(this, this, "Region1", Region1Template);
             ToggleGroup1 = new ToggleGroup(this, Region1.Content, "ToggleGroup1", ToggleGroup1Template);

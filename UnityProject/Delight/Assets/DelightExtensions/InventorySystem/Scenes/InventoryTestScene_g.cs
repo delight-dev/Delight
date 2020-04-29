@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public InventoryTestScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? InventoryTestSceneTemplates.Default, initializer)
+        public InventoryTestScene(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? InventoryTestSceneTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing List (List1)
             List1 = new List(this, this, "List1", List1Template);
 

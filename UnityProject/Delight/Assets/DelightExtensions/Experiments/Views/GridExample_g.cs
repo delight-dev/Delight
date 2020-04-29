@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public GridExample(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? GridExampleTemplates.Default, initializer)
+        public GridExample(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? GridExampleTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Grid (Grid1)
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             Cell00 = new Region(this, Grid1.Content, "Cell00", Cell00Template);

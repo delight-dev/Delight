@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public Aa(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? AaTemplates.Default, initializer)
+        public Aa(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? AaTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing TitleView (TitleView1)
             TitleView1 = new TitleView(this, this, "TitleView1", TitleView1Template);
             this.AfterInitializeInternal();

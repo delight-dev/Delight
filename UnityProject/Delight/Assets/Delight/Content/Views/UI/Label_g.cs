@@ -16,7 +16,7 @@ namespace Delight
         #region Constructors
 
         public Label(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? LabelTemplates.Default, initializer)
+            base(parent, layoutParent, id, template ?? LabelTemplates.Default, constructChildren)
         {
             this.AfterInitializeInternal();
         }

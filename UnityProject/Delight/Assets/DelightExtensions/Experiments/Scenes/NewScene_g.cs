@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public NewScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? NewSceneTemplates.Default, initializer)
+        public NewScene(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? NewSceneTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Label (Label1)
             Label1 = new Label(this, this, "Label1", Label1Template);
             this.AfterInitializeInternal();

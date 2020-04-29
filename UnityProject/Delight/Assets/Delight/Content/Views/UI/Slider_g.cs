@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public Slider(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? SliderTemplates.Default, initializer)
+        public Slider(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? SliderTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Region (SliderRegion)
             SliderRegion = new Region(this, this, "SliderRegion", SliderRegionTemplate);
             SliderBackgroundImageView = new Image(this, SliderRegion.Content, "SliderBackgroundImageView", SliderBackgroundImageViewTemplate);

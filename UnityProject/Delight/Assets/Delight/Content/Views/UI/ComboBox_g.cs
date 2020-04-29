@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ComboBox(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ComboBoxTemplates.Default, initializer)
+        public ComboBox(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ComboBoxTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Button (ComboBoxButton)
             ComboBoxButton = new Button(this, this, "ComboBoxButton", ComboBoxButtonTemplate);
             ComboBoxButton.Click.RegisterHandler(this, "ComboBoxButtonClick");

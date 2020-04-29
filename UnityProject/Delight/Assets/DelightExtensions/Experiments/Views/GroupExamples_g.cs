@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public GroupExamples(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? GroupExamplesTemplates.Default, initializer)
+        public GroupExamples(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? GroupExamplesTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing List (PlayerList)
             PlayerList = new List(this, this, "PlayerList", PlayerListTemplate);
 

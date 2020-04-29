@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public SelectionIndicator(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? SelectionIndicatorTemplates.Default, initializer)
+        public SelectionIndicator(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? SelectionIndicatorTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Button (SelectionTab)
             SelectionTab = new Button(this, this, "SelectionTab", SelectionTabTemplate);
             this.AfterInitializeInternal();

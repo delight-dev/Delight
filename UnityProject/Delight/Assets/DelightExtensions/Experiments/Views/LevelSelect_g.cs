@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public LevelSelect(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? LevelSelectTemplates.Default, initializer)
+        public LevelSelect(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? LevelSelectTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             this.AfterInitializeInternal();
         }
 

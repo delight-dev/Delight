@@ -245,7 +245,7 @@ namespace Delight
             var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
 
             // instantiate view
-            var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion);
+            var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
             if (view == null)
                 return;
 
@@ -269,7 +269,7 @@ namespace Delight
         /// <summary>
         /// Instantiates a view object.
         /// </summary>
-        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent)
+        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew)
         {
             // TODO look at code generator and generate constructor logic in a similar way
             // TODO some operations we might cache if the runtime view is to instantiated more than once
@@ -288,12 +288,13 @@ namespace Delight
             CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates);
 
             // instantiate view
-            var viewTypeName = viewObject.BasedOn.TypeName;
-            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, dataTemplates[viewObject.TypeName]) as UIView;
+            var viewTypeName = isNew ? viewObject.BasedOn.TypeName : viewObject.TypeName;
+            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, dataTemplates[viewObject.TypeName], true) as UIView;
             if (view == null)
                 return null;
 
             InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
+            view.AfterInitialize();
 
             return view;
         }
@@ -381,7 +382,7 @@ namespace Delight
         /// <summary>
         /// Instantiates view construction logic from view declaration.
         /// </summary>
-        private static void InstantiateRuntimeChildViews(string idPath, Dictionary<string, Template> dataTemplates, View parent, View layoutParent, string fileName, ViewObject viewObject,
+        private void InstantiateRuntimeChildViews(string idPath, Dictionary<string, Template> dataTemplates, View parent, View layoutParent, string fileName, ViewObject viewObject,
             string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
         {
             bool inTemplate = templateDepth > 0;
@@ -401,10 +402,20 @@ namespace Delight
                 // TODO if childViewObject.TypeName doesn't exist create a placeholder view that just displays the name
                 // of the new view
                 var layoutParentContent = parentViewDeclaration == null ? layoutParent : layoutParent.Content;
-                var childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
+
+                // TODO if child is runtime parsed, then instantiate it through InstantiateRuntimeView()
+                UIView childView = null;
+                var designerView = DesignerViews.FirstOrDefault(x => x.ViewTypeName == childViewObject.TypeName);
+                if (designerView != null && designerView.IsRuntimeParsed)
+                {
+                    childView = InstantiateRuntimeView(childViewObject, parent, layoutParentContent, designerView.IsNew);
+                }
+                else
+                {
+                    childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
+                }
 
                 // TODO maybe add action handlers and method assignments
-
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
 
                 // get templated content data
@@ -466,7 +477,7 @@ namespace Delight
                 {
                     foreach (var propertyBinding in propertyBindings)
                     {
-                        // create binding paths to sourcse
+                        // create binding paths to source
                         var bindingSources = new List<BindingPath>();
                         foreach (var bindingSource in propertyBinding.Sources)
                         {
@@ -711,36 +722,6 @@ namespace Delight
                     InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
             }
-        }
-
-        /// <summary>
-        /// Uses reflection to get the specified bindable object from a path like "NewView.Button.Label". 
-        /// </summary>
-        private static BindableObject GetBindableObjectFromPath(object obj, IEnumerable<string> path)
-        {
-            // TODO replace with extension method obj.GetPropertyValue()
-            if (obj == null) return null;
-            var type = obj.GetType();
-
-            var currentObj = obj;
-            foreach (var fieldName in path)
-            {
-                type = currentObj.GetType();
-                var fieldInfo = type.GetField(fieldName, BindingFlags.FlattenHierarchy);
-                if (fieldInfo != null)
-                {
-                    currentObj = fieldInfo.GetValue(currentObj);
-                    continue;
-                }
-
-                var propertyInfo = type.GetProperty(fieldName, BindingFlags.FlattenHierarchy);
-                if (propertyInfo != null)
-                {
-                    currentObj = propertyInfo.GetValue(currentObj);
-                }
-            }
-
-            return currentObj as BindableObject;
         }
 
         /// <summary>

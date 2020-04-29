@@ -178,9 +178,13 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
             if (!isBaseView)
             {
-                sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :", viewTypeName);
-                sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, initializer)", viewTypeName);
+                sb.AppendLine("        public {0}(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :", viewTypeName);
+                sb.AppendLine("            base(parent, layoutParent, id, template ?? {0}Templates.Default, deferInitialization)", viewTypeName);
                 sb.AppendLine("        {");
+                sb.AppendLine("            if (deferInitialization)");
+                sb.AppendLine("                return;");
+                sb.AppendLine();
+
                 GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
 
                 // register any action handlers specified on the root element
@@ -552,12 +556,12 @@ namespace Delight.Editor.Parser
             sb.AppendLine("    {");
             sb.AppendLine("        static Assets()");
             sb.AppendLine("        {");
-            sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, string, Template, View>>();");
+            sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, string, Template, bool, View>>();");
 
             var viewObjects = _contentObjectModel.ViewObjects.Where(x => x.HasCode && !x.IsEditorView && x.Name != "View").ToList();
             foreach (var viewObject in viewObjects)
             {
-                sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z, w) => new {0}(x, y, z, w));", viewObject.TypeName);
+                sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z, w, a) => new {0}(x, y, z, w, a));", viewObject.TypeName);
             }
 
             sb.AppendLine();

@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public LayoutGrid(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? LayoutGridTemplates.Default, initializer)
+        public LayoutGrid(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? LayoutGridTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             Cell = new AttachedProperty<Delight.CellIndex>(this, "Cell");
             CellSpan = new AttachedProperty<Delight.CellIndex>(this, "CellSpan");
             this.AfterInitializeInternal();

@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ModelBindingTest(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ModelBindingTestTemplates.Default, initializer)
+        public ModelBindingTest(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ModelBindingTestTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1.Content, "Group2", Group2Template);

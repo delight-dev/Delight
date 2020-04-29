@@ -16,7 +16,7 @@ namespace Delight
         #region Constructors
 
         public InputField(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? InputFieldTemplates.Default, initializer)
+            base(parent, layoutParent, id, template ?? InputFieldTemplates.Default, constructChildren)
         {
             // constructing Region (InputFieldPlaceholder)
             InputFieldPlaceholder = new Region(this, this, "InputFieldPlaceholder", InputFieldPlaceholderTemplate);

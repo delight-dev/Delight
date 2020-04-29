@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public Scrollbar(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ScrollbarTemplates.Default, initializer)
+        public Scrollbar(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ScrollbarTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Image (Bar)
             Bar = new Image(this, this, "Bar", BarTemplate);
             Handle = new Image(this, Bar.Content, "Handle", HandleTemplate);

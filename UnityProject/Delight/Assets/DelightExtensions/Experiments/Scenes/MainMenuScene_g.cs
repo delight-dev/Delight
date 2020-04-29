@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public MainMenuScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? MainMenuSceneTemplates.Default, initializer)
+        public MainMenuScene(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? MainMenuSceneTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing MainMenu (MainMenu1)
             MainMenu1 = new MainMenu(this, this, "MainMenu1", MainMenu1Template);
             this.AfterInitializeInternal();

@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ListItem(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ListItemTemplates.Default, initializer)
+        public ListItem(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ListItemTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             Click.RegisterHandler(this, "ListItemMouseClick");
             MouseEnter.RegisterHandler(this, "ListItemMouseEnter");
             MouseExit.RegisterHandler(this, "ListItemMouseExit");

@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public TestScene(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? TestSceneTemplates.Default, initializer)
+        public TestScene(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? TestSceneTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);

@@ -15,9 +15,12 @@ namespace Delight
     {
         #region Constructors
 
-        public XmlEditor(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? XmlEditorTemplates.Default, initializer)
+        public XmlEditor(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? XmlEditorTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing ScrollableRegion (ScrollableRegion)
             ScrollableRegion = new ScrollableRegion(this, this, "ScrollableRegion", ScrollableRegionTemplate);
             XmlEditRegion = new Region(this, ScrollableRegion.Content, "XmlEditRegion", XmlEditRegionTemplate);

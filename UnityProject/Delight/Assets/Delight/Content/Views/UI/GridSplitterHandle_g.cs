@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public GridSplitterHandle(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? GridSplitterHandleTemplates.Default, initializer)
+        public GridSplitterHandle(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? GridSplitterHandleTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Image (SplitterHandle)
             SplitterHandle = new Image(this, this, "SplitterHandle", SplitterHandleTemplate);
             Drag.RegisterHandler(this, "OnDrag");

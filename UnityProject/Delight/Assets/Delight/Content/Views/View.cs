@@ -26,7 +26,6 @@ namespace Delight
         protected View _content;
         protected List<View> _layoutChildren;
         protected List<Binding> _bindings;
-        protected Action<View> _initializer;
         protected bool _isLoaded;
         protected bool _isDynamic;
 
@@ -37,7 +36,7 @@ namespace Delight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public View(View parent, View layoutParent, string id, Template template, Action<View> initializer) : base(id, template ?? ViewTemplates.Default)
+        public View(View parent, View layoutParent, string id, Template template, bool deferInitialization) : base(id, template ?? ViewTemplates.Default)
         {
             _parent = parent;
             _bindings = new List<Binding>();
@@ -48,7 +47,6 @@ namespace Delight
                 _layoutParent.LayoutChildren.Add(this);
             }
 
-            _initializer = initializer;
             _previousState = string.Empty;
             _content = this;
             BeforeInitialize();
@@ -319,8 +317,6 @@ namespace Delight
             }
             UpdateBindings();
 
-            _initializer?.Invoke(this);
-
             AfterLoad();
 
             Loaded?.Invoke(this);
@@ -362,8 +358,6 @@ namespace Delight
 
             LoadDependencyProperties();
             UpdateBindings();
-
-            _initializer?.Invoke(this);
 
             AfterLoad();
 

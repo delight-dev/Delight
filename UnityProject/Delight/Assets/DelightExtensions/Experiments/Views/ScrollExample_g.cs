@@ -13,9 +13,12 @@ namespace Delight
     {
         #region Constructors
 
-        public ScrollExample(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? ScrollExampleTemplates.Default, initializer)
+        public ScrollExample(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ScrollExampleTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Grid (Grid1)
             Grid1 = new LayoutGrid(this, this, "Grid1", Grid1Template);
             ScrollableRegion1 = new ScrollableRegion(this, Grid1.Content, "ScrollableRegion1", ScrollableRegion1Template);
