@@ -28,8 +28,8 @@ namespace Delight
     {
         #region Fields
 
-        public UIView _displayedView;
-        public DesignerView _currentEditedView;
+        private UIView _displayedView;
+        private DesignerView _currentEditedView;
 
         #endregion
 
@@ -279,9 +279,10 @@ namespace Delight
             // or we simply reparse the entire view, that's fine too, and we make it so atomic views like
             // buttons, labels, groups, etc. can't really be changed in the editor. 
 
-            // update view declarations (might not be necessary)
-            CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
-            CodeGenerator.UpdateMappedProperties(viewObject);
+            // TODO cleanup
+            // update view declarations (might not be necessary) 
+            //CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
+            //CodeGenerator.UpdateMappedProperties(viewObject);
 
             // create the runtime data templates used when instantiating the view
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
@@ -669,11 +670,18 @@ namespace Delight
             var localId = idPath.ToPrivateMemberName();
 
             // create data template for main view object
-            // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);            
-            var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
-            var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
-            var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
-            var dataTemplate = new Template(templateBasedOnInstance);
+            // corresponds to e.g. ButtonTemplates.Button = new Template(UIImageViewTemplates.UIImageView);
+
+            // does existing template exist? 
+            var dataTemplate = TypeHelper.GetType(viewObject.TypeName + "Templates")?.GetProperty(idPath)?.GetValue(null) as Template;
+            if (dataTemplate == null)
+            {
+                // no. create a new one
+                var templateBasedOnType = TypeHelper.GetType(String.Format("{0}Templates", templateBasedOnViewTypeName));
+                var templateBasedOnTypeField = templateBasedOnType.GetProperty(templateBasedOn);
+                var templateBasedOnInstance = templateBasedOnTypeField.GetValue(null) as Template;
+                dataTemplate = new Template(templateBasedOnInstance);
+            }
 
 #if UNITY_EDITOR
             // add name in editor so we can easy track which template is used where in the debugger
