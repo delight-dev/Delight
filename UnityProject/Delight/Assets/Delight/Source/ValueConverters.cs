@@ -62,6 +62,7 @@ namespace Delight
 
         static ValueConverters()
         {
+            // TODO auto-generate these
             // initialize default converters for types
             Converters = new Dictionary<string, ValueConverter>();
             Converters.Add("string", new StringValueConverter());

@@ -77,7 +77,6 @@ namespace Delight
         {
             var floatValueConverter = new FloatValueConverter();
             var elementSizeConverter = new ElementSizeValueConverter();
-            var sb = new StringBuilder();
 
             string[] valueList = stringValue.Split(',');
             var rowDefinitions = new RowDefinitions();
@@ -111,7 +110,7 @@ namespace Delight
                     }
                 }
 
-                RowDefinition rowDefinition = new RowDefinition(elementSizeConverter.Convert(defStr), minHeight, maxHeight);
+                var rowDefinition = new RowDefinition(elementSizeConverter.Convert(defStr), minHeight, maxHeight);
                 rowDefinitions.Add(rowDefinition);
             }
 

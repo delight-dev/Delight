@@ -77,7 +77,6 @@ namespace Delight
         {
             var floatValueConverter = new FloatValueConverter();
             var elementSizeConverter = new ElementSizeValueConverter();
-            var sb = new StringBuilder();
 
             string[] valueList = stringValue.Split(',');
             var columnDefinitions = new ColumnDefinitions();
@@ -111,7 +110,7 @@ namespace Delight
                     }
                 }
 
-                ColumnDefinition columnDefinition = new ColumnDefinition(elementSizeConverter.Convert(defStr), minWidth, maxWidth);
+                var columnDefinition = new ColumnDefinition(elementSizeConverter.Convert(defStr), minWidth, maxWidth);
                 columnDefinitions.Add(columnDefinition);
             }
 

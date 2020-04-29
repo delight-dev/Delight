@@ -19,6 +19,7 @@
 
     <!-- Left Panel - Content Explorer -->
     <Region Id="ContentExplorer" Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#c3c3c3">
+      <!--<GridSplitterHandle BackgroundColor="Blue" />--> 
       <!--BackgroundColor="#fdfdfd">--> 
       <Label Text="Views | Models" FontSize="14" Font="Segoe UI SDF" Alignment="TopLeft" Margin="10,5,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Truncate" FontColor="#333333" />
       <Region Margin="0,46,0,0"> 
@@ -44,8 +45,8 @@
       <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
     </Region>
 
-    <GridSplitter Thickness="20" OverrideProportionalSize="False" />
-
+    <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,1" />
+    <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
   </Grid>
 
   <Region Id="SaveChangesPopup" IsActive="False" Width="450" Height="300" BackgroundColor="#dbdbdb">

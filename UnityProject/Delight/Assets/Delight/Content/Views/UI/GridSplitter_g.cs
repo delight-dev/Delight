@@ -30,7 +30,6 @@ namespace Delight
 
             dependencyProperties.Add(ThicknessProperty);
             dependencyProperties.Add(InteractionThicknessProperty);
-            dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(SetSizeOnDragEndedProperty);
             dependencyProperties.Add(IsEnabledProperty);
             dependencyProperties.Add(SplitModeProperty);
@@ -56,13 +55,6 @@ namespace Delight
         {
             get { return InteractionThicknessProperty.GetValue(this); }
             set { InteractionThicknessProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
-        public Delight.ElementSize Spacing
-        {
-            get { return SpacingProperty.GetValue(this); }
-            set { SpacingProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> SetSizeOnDragEndedProperty = new DependencyProperty<System.Boolean>("SetSizeOnDragEnded");

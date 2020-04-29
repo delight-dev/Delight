@@ -1,7 +1,6 @@
 <GridSplitter xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIView"
               Thickness="t:ElementSize = 10"
               InteractionThickness="t:ElementSize"
-              Spacing="t:ElementSize"
               SetSizeOnDragEnded="t:bool"
               IsEnabled="t:bool = True"
               HasContentTemplates="True"

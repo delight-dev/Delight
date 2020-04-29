@@ -57,6 +57,8 @@ namespace Delight
             XmlEditor = new XmlEditor(this, XmlEditorRegion.Content, "XmlEditor", XmlEditorTemplate);
             XmlEditor.Edit.RegisterHandler(this, "OnEdit");
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
+            Grid1.Cell.SetValue(GridSplitter1, new CellIndex(0, 1));
+            GridSplitter2 = new GridSplitter(this, Grid1.Content, "GridSplitter2", GridSplitter2Template);
 
             // constructing Region (SaveChangesPopup)
             SaveChangesPopup = new Region(this, this, "SaveChangesPopup", SaveChangesPopupTemplate);
@@ -130,6 +132,8 @@ namespace Delight
             dependencyProperties.Add(XmlEditorTemplateProperty);
             dependencyProperties.Add(GridSplitter1Property);
             dependencyProperties.Add(GridSplitter1TemplateProperty);
+            dependencyProperties.Add(GridSplitter2Property);
+            dependencyProperties.Add(GridSplitter2TemplateProperty);
             dependencyProperties.Add(SaveChangesPopupProperty);
             dependencyProperties.Add(SaveChangesPopupTemplateProperty);
             dependencyProperties.Add(Label3Property);
@@ -385,6 +389,20 @@ namespace Delight
             set { GridSplitter1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<GridSplitter> GridSplitter2Property = new DependencyProperty<GridSplitter>("GridSplitter2");
+        public GridSplitter GridSplitter2
+        {
+            get { return GridSplitter2Property.GetValue(this); }
+            set { GridSplitter2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> GridSplitter2TemplateProperty = new DependencyProperty<Template>("GridSplitter2Template");
+        public Template GridSplitter2Template
+        {
+            get { return GridSplitter2TemplateProperty.GetValue(this); }
+            set { GridSplitter2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> SaveChangesPopupProperty = new DependencyProperty<Region>("SaveChangesPopup");
         public Region SaveChangesPopup
         {
@@ -559,6 +577,7 @@ namespace Delight
                     Delight.DelightDesigner.XmlEditorRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorRegion);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
                     Delight.DelightDesigner.GridSplitter1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter1);
+                    Delight.DelightDesigner.GridSplitter2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter2);
                     Delight.DelightDesigner.SaveChangesPopupTemplateProperty.SetDefault(_delightDesigner, DelightDesignerSaveChangesPopup);
                     Delight.DelightDesigner.Label3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel3);
                     Delight.DelightDesigner.List2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList2);
@@ -1651,8 +1670,32 @@ namespace Delight
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_delightDesignerGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.OverrideProportionalSizeProperty.SetDefault(_delightDesignerGridSplitter1, false);
+                    Delight.GridSplitter.SplitModeProperty.SetDefault(_delightDesignerGridSplitter1, Delight.SplitMode.Rows);
                 }
                 return _delightDesignerGridSplitter1;
+            }
+        }
+
+        private static Template _delightDesignerGridSplitter2;
+        public static Template DelightDesignerGridSplitter2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerGridSplitter2 == null || _delightDesignerGridSplitter2.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerGridSplitter2 == null)
+#endif
+                {
+                    _delightDesignerGridSplitter2 = new Template(GridSplitterTemplates.GridSplitter);
+#if UNITY_EDITOR
+                    _delightDesignerGridSplitter2.Name = "DelightDesignerGridSplitter2";
+#endif
+                    Delight.GridSplitter.ThicknessProperty.SetDefault(_delightDesignerGridSplitter2, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.GridSplitter.OverrideProportionalSizeProperty.SetDefault(_delightDesignerGridSplitter2, false);
+                    Delight.GridSplitter.SplitModeProperty.SetDefault(_delightDesignerGridSplitter2, Delight.SplitMode.Columns);
+                }
+                return _delightDesignerGridSplitter2;
             }
         }
 
