@@ -86,7 +86,7 @@ namespace Delight
             }
 
             sw2.Stop();
-            Debug.Log(String.Format("Initialize view {0}: {1}", ViewTypeName, sw2.ElapsedMilliseconds));
+            //Debug.Log(String.Format("Initialize view {0}: {1}", ViewTypeName, sw2.ElapsedMilliseconds));
 
             GameObject go = null;
             if (_presentedView is UIView)
@@ -124,7 +124,7 @@ namespace Delight
             var sw = System.Diagnostics.Stopwatch.StartNew();
             _presentedView = type != null ? TypeHelper.CreateInstance(type) as View : null;
             sw.Stop();
-            Debug.Log(String.Format("Create view {0}: {1}", ViewTypeName, sw.ElapsedMilliseconds));
+            //Debug.Log(String.Format("Create view {0}: {1}", ViewTypeName, sw.ElapsedMilliseconds));
 
             if (_presentedView == null)
             {

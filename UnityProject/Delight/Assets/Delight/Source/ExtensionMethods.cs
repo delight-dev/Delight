@@ -341,7 +341,16 @@ namespace Delight
             for (int i = 0; i < pathList.Count; ++i)
             {
                 var propertyName = pathList[i];
-                type = currentObject.GetType();
+                if (i == 0 && currentObject == Models.RuntimeModelObject)
+                {
+                    // handle special case when accessing properties directly on the Models static class
+                    currentObject = null;
+                    type = typeof(Models);
+                }
+                else
+                {
+                    type = currentObject.GetType();
+                }
 
                 var fieldInfo = type.GetField(propertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy);
                 if (fieldInfo != null)

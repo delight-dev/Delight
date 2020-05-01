@@ -15,6 +15,7 @@ namespace Delight
     public static partial class Models
     {
         public static string DefaultRepositoryName = "Default";
+        public static DependencyObject RuntimeModelObject = new DependencyObject(); // used in runtime bindings
 
         //public ModelData ModelData;
         //public PersistenceManager LocalPersistanceManager;

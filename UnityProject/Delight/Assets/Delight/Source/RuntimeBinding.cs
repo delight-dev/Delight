@@ -16,6 +16,8 @@ namespace Delight
     {
         #region Fields
 
+        public Func<object[], object> TransformMethod;
+        public string FormatString;
         public BindingType BindingType;
 
         #endregion
@@ -24,11 +26,13 @@ namespace Delight
         /// <summary>
         /// Creates a new instance of the class. Used by runtime bindings.
         /// </summary>
-        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType) : base(sources, target, null, null, isTwoWay)
+        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType, Func<object[], object> transformMethod, string formatString) : base(sources, target, null, null, isTwoWay)
         {
             PropagateSourceToTarget = PropagateSourceToTargetMethod;
             PropagateTargetToSource = PropagateTargetToSourceMethod;
             BindingType = bindingType;
+            TransformMethod = transformMethod;
+            FormatString = formatString;
         }
 
         #endregion
@@ -50,16 +54,28 @@ namespace Delight
                     target.SetValue(value);
                     break;
 
-                default:
+
+                case BindingType.MultiBindingTransform:
+                    if (TransformMethod == null)
+                        return;
+
+                    var transformSourceValues = Sources.Select(x => (x as RuntimeBindingPath).GetValue()).ToArray();
+                    var transformedValue = TransformMethod(transformSourceValues);
+
+                    var transformTarget = Target as RuntimeBindingPath;
+                    transformTarget.SetValue(transformedValue);
                     break;
 
-                    //    case BindingType.MultiBindingTransform:
-                    //        sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
-                    //        break;
+                case BindingType.MultiBindingFormatString:
+                    var formatSourceValues = Sources.Select(x => (x as RuntimeBindingPath).GetValue()).ToArray();
+                    var formattedValue = String.Format(FormatString, formatSourceValues);
 
-                    //    case BindingType.MultiBindingFormatString:
-                    //        sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
-                    //        break;
+                    var formatStringTarget = Target as RuntimeBindingPath;
+                    formatStringTarget.SetValue(formattedValue);
+                    break;
+
+                default:
+                    break;
             }
         }
 

@@ -149,7 +149,9 @@ namespace Delight
                 _displayedView?.PrepareForDesigner();
 
                 sw2.Stop();
-                Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
+
+                // uncomment to log loading time 
+                //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
 
                 // load XML into the editor
                 if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
@@ -428,67 +430,82 @@ namespace Delight
                             bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
                             bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
 
-                            bool isLoc = false;
-                            string locId = string.Empty;
+                            // TODO handle loc source
+                            //bool isLoc = false;
+                            //string locId = string.Empty;
 
-                            // handle special case when source is localization dictionary
-                            if (isModelSource && sourcePath.Count == 3 &&
-                                (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
-                            {
-                                sourcePath[1] = "Loc";
+                            //// handle special case when source is localization dictionary
+                            //if (isModelSource && sourcePath.Count == 3 &&
+                            //    (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
+                            //{
+                            //    sourcePath[1] = "Loc";
 
-                                // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
-                                locId = sourcePath[2];
-                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
-                                sourcePath[2] = "Label";
-                                isLoc = true;
-                            }
+                            //    // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
+                            //    locId = sourcePath[2];
+                            //    sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
+                            //    sourcePath[2] = "Label";
+                            //    isLoc = true;
+                            //}
 
-                            // get property names along path
+                            //// get property names along path
                             var templateItemInfo = templateItems != null
                                 ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
                                 : null;
                             bool isTemplateItemSource = templateItemInfo != null;
 
-                            if (isTemplateItemSource)
-                            {
-                                if (templateItemInfo.ItemTypeName == null)
-                                    continue; // item type was not inferred so ignore binding
+                            //if (isTemplateItemSource)
+                            //{
+                            //    if (templateItemInfo.ItemTypeName == null)
+                            //        continue; // item type was not inferred so ignore binding
 
-                                sourcePath[0] = templateItemInfo.VariableName;
-                                sourcePath.Insert(1, "Item");
-                            }
+                            //    sourcePath[0] = templateItemInfo.VariableName;
+                            //    sourcePath.Insert(1, "Item");
+                            //}
 
                             // handle collection indexers in binding path
                             // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
                             //sourcePath = CodeGenerator.UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
 
-                            var sourceProperties = sourcePath.Skip(isModelSource ? 1 : (isTemplateItemSource ? 1 : 0)).ToList();
-                            if (isLoc)
-                            {
-                                sourceProperties.Insert(0, locId);
-                            }
+                            int skipCount = isModelSource || isTemplateItemSource ? 1 : 0;
+                            var sourceProperties = sourcePath.Skip(skipCount).ToList();
 
                             // get object getters along path
                             var sourceObjectGetters = new List<Func<BindableObject>>();
-                            int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
-                            int sourcePathTake = isModelSource ? 2 : 1;
-                            if (!isModelSource && !isTemplateItemSource)
+                            if (isModelSource)
+                            {
+                                sourceObjectGetters.Add(() => Models.RuntimeModelObject);
+                                var modelPropertyPath = sourcePath.Skip(1).ToList();
+                                for (int i = 0; i < modelPropertyPath.Count - 1; ++i)
+                                {
+                                    var currentSourcePath = modelPropertyPath.Take(i + 1);
+                                    sourceObjectGetters.Add(() => Models.RuntimeModelObject.GetPropertyValue(currentSourcePath) as BindableObject);
+                                }
+                            }
+                            else if (isTemplateItemSource)
+                            {
+                                // TODO implement
+                            }
+                            else
                             {
                                 sourceObjectGetters.Add(() => parent);
+                                for (int i = 0; i < sourcePath.Count - 1; ++i)
+                                {
+                                    var currentSourcePath = sourcePath.Take(i + 1);
+                                    sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
+                                }
                             }
 
-                            if (isLoc)
-                            {
-                                sourceObjectGetters.Add(() => Models.Loc);
-                            }
-                            
-                            for (int i = 0; i < sourcePathCount; ++i)
-                            {
-                                var currentSourcePath = sourcePath.Take(i + sourcePathTake);
-                                Debug.Log(String.Format("{0}: {1}", propertyBinding.PropertyName, String.Join(".", currentSourcePath)));
-                                sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
-                            }
+
+                            //if (isLoc)
+                            //{
+                            //    sourceProperties.Insert(0, locId);
+                            //}
+
+                            // TODO handle localization 
+                            //if (isLoc)
+                            //{
+                            //    sourceObjectGetters.Add(() => Models.Loc);
+                            //}
 
                             if (isTemplateItemSource)
                             {
@@ -576,9 +593,39 @@ namespace Delight
                         //    targetToSource,
                         //    isTwoWay ? "true" : "false");
 
+                        // create transform method
+                        Func<object[], object> transformMethod = null;
+                        if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
+                        {
+                            var transformMethodName = propertyBinding.TransformMethod;
+                            MethodInfo methodInfo = null;
+                            if (transformMethodName.IndexOf(".") >= 0)
+                            {
+                                // if method name contains "." it refers to a static class
+                                var methodPath = transformMethodName.Split('.').ToList();
+                                if (methodPath.Count == 2)
+                                {
+                                    var staticType = TypeHelper.GetType(methodPath[0], null, MasterConfig.GetInstance().Namespaces);
+                                    methodInfo = staticType?.GetType().GetMethod(transformMethodName);
+                                    if (methodInfo != null)
+                                    {
+                                        transformMethod = x => methodInfo.Invoke(null, x);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                methodInfo = parent.GetType().GetMethod(transformMethodName);
+                                if (methodInfo != null)
+                                {
+                                    transformMethod = x => methodInfo.Invoke(parent, x);
+                                }
+                            }
+                        }
+
                         // TODO add binding to template item if inside a template
                         bool isTwoWay = propertyBinding.BindingType == BindingType.SingleBinding && propertyBinding.Sources.First().SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
-                        childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType));
+                        childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType, transformMethod, propertyBinding.FormatString));
                     }
                 }
 
