@@ -169,9 +169,7 @@ namespace Delight
                     int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
                     string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
                     int directoryDepth = 1 + p1.Count(x => x == '/');
-                    var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
                     var schemaElement = " xsi:schemaLocation=\"Delight";
-                    //var schemaElement = String.Format(" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
 
                     int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
                     if (indexOfSchemaElement > 0)
@@ -274,14 +272,6 @@ namespace Delight
         /// </summary>
         public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null)
         {
-            // TODO look at code generator and generate constructor logic in a similar way
-            // TODO some operations we might cache if the runtime view is to instantiated more than once
-            // like the update calls and data templates
-            // TODO we might be able to use some smart logic to instantiate partially changed views 
-            // so we simply update the templates that aren't new and construct the views that are new
-            // or we simply reparse the entire view, that's fine too, and we make it so atomic views like
-            // buttons, labels, groups, etc. can't really be changed in the editor. 
-
             // update view declarations and mapped properties
             CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
             CodeGenerator.UpdateMappedProperties(viewObject);
@@ -326,11 +316,7 @@ namespace Delight
                 bool templateContent = childViewObject.HasContentTemplates;
 
                 // instantiate view from view declaration: _view = new View(this, layoutParent, id, initializer);
-                // TODO if childViewObject.TypeName doesn't exist create a placeholder view that just displays the name
-                // of the new view
                 var layoutParentContent = parentViewDeclaration == null ? layoutParent : layoutParent.Content;
-
-                // TODO if child is runtime parsed, then instantiate it through InstantiateRuntimeView()
                 UIView childView = null;
                 if (isRuntimeParsed)
                 {
@@ -341,7 +327,7 @@ namespace Delight
                     childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
                 }
 
-                // TODO maybe add action handlers and method assignments
+                // TODO add action handlers and method assignments
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
 
                 // get templated content data
@@ -490,19 +476,14 @@ namespace Delight
                                 //}
                             }
 
-                            // TODO support converters and negated bindings
-                            // add converter
+                            // add value converter
                             ValueConverter valueConverter = null;
                             if (!String.IsNullOrEmpty(bindingSource.Converter))
                             {
                                 valueConverter = ValueConverters.Get(bindingSource.Converter);
-                                //convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
-                            }
-                            else if (isNegated)
-                            {
-                                //convertedSourceProperty = "!" + convertedSourceProperty;
                             }
 
+                            // add binding path
                             var bindingSourcePath = new RuntimeBindingPath(sourceProperties, sourceObjectGetters, isNegated, valueConverter);
                             bindingSources.Add(bindingSourcePath);
                         }
@@ -535,58 +516,7 @@ namespace Delight
 
                         string targetProperty = string.Join(".", targetPath);
                         string convertedTargetProperty = targetProperty;
-
-                        // if the binding is two-way single binding and is converted, add conversion of target
-                        bool isTwoWay = false;
-                        if (propertyBinding.BindingType == BindingType.SingleBinding)
-                        {
-                            var bindingSource = propertyBinding.Sources.First();
-                            isTwoWay = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
-                            if (isTwoWay && !String.IsNullOrEmpty(bindingSource.Converter))
-                            {
-                                convertedTargetProperty = String.Format("ValueConverters.{0}.ConvertFrom({1})", bindingSource.Converter, targetProperty);
-                            }
-
-                            if (bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated))
-                            {
-                                convertedTargetProperty = "!" + convertedTargetProperty;
-                            }
-                        }
-
                         var bindingTargetPath = new BindingPath(targetProperties, targetObjectGetters);
-
-                        // TODO implement binding value propagation 
-                        //string sourceToTargetValue = null;
-                        //string targetToSourceValue = null;
-                        switch (propertyBinding.BindingType)
-                        {
-                            case BindingType.SingleBinding:
-                            default:
-                                //propagateSourceToTarget = () => PropagateBindingValue(childView, targetPath);
-                                break;
-                                //        if (convertedSourceProperties.Count <= 0)
-                                //        {
-                                //            ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
-                                //                String.Format("#Delight# Something wrong with binding <{0} {1}=\"{2}\">.",
-                                //                viewObject.Name, propertyBinding.PropertyName, propertyBinding.PropertyBindingString));
-                                //            continue;
-                                //        }
-
-                                //        sourceToTargetValue = String.Format("{0}", convertedSourceProperties.First());
-                                //        if (isTwoWay)
-                                //        {
-                                //            targetToSourceValue = string.Format("{0}", convertedTargetProperty);
-                                //        }
-                                //        break;
-
-                                //    case BindingType.MultiBindingTransform:
-                                //        sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
-                                //        break;
-
-                                //    case BindingType.MultiBindingFormatString:
-                                //        sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
-                                //        break;
-                        }
 
                         // TODO implement attached binding logic
                         //string sourceToTarget = !propertyBinding.IsAttached ?
@@ -617,6 +547,7 @@ namespace Delight
                         //    isTwoWay ? "true" : "false");
 
                         // TODO add binding to template item if inside a template
+                        bool isTwoWay = propertyBinding.BindingType == BindingType.SingleBinding && propertyBinding.Sources.First().SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
                         childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType));
                     }
                 }

@@ -1,3 +1,16 @@
-<TitleView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Title="t:string">
-  <Button Text="{Title}" />
+<TitleView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Title="t:string" Check="t:bool = True">
+  <Group Spacing="5">
+    <Button Text="{Title}" />
+    <CheckBox Text="Check" IsChecked="{=Check}" />
+    <CheckBox Text="Check" IsChecked="{!Check}" />
+
+    <InputField Id="Input" Text="Test 3" />
+    <Label Text="{Input.Text}" />  
+    <Label Text="{@DefaultRepositoryName}" />
+
+    <InputField Id="Input1" />
+    <InputField Id="Input2" />
+    <Label Text="$MyMethod({Input1.Text}, {Input2.Text})" />
+
+  </Group>
 </TitleView> 

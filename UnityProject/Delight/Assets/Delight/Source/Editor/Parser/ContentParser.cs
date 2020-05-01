@@ -45,7 +45,7 @@ namespace Delight.Editor.Parser
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         private static string _currentXmlFilePath;
-        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\.\[\]]+)(?<format>:[^}\|]+)?([ ]*\|[ ]*(?<converter>[^}]+))?[ ]*}");
+        private static Regex _bindingRegex = new Regex(@"{[ ]*((?<item>[A-Za-z0-9_#!=@\.\[\]]+)[ ]+in[ ]+)?(?<field>[A-Za-z0-9_#!=@\-\.\[\]]+)(?<format>:[^}\|]+)?([ ]*\|[ ]*(?<converter>[^}]+))?[ ]*}");
         private static Regex _dataInsertRegex = new Regex(@"[^\s,""']+|""(?<str>[^""]*)"":?|'(?<str>[^']*)':?");
 
         #endregion

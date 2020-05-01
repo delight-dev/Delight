@@ -361,6 +361,14 @@ namespace Delight
             BindingSet[template] = hasBinding;
         }
 
+        /// <summary>
+        /// Sets boolean indicating that value has been set. Used if value is modified directly and not through the dependency property.
+        /// </summary>
+        public void SetHasValue(DependencyObject key, bool hasValue = true)
+        {
+            ValueSet[key] = hasValue;
+        }
+
         #endregion
 
         #region Constructor

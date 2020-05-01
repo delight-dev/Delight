@@ -37,6 +37,22 @@ namespace Delight
             return null;
         }
 
+        /// <summary>
+        /// Converts value to target type. 
+        /// </summary>
+        public virtual object ConvertToGeneric(object objectValue)
+        {
+            return objectValue;
+        }
+
+        /// <summary>
+        /// Converts value from target type. 
+        /// </summary>
+        public virtual object ConvertFromGeneric(object objectValue)
+        {
+            return objectValue;
+        }
+
         #endregion
     }
 

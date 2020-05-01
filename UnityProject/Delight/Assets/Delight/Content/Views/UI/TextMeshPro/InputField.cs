@@ -99,10 +99,6 @@ namespace Delight
             if (OnlyTriggerValueChangedFromUI)
             {
                 TMP_InputFieldComponent.onValueChanged.RemoveAllListeners();
-            }
-            
-            if (OnlyTriggerValueChangedFromUI)
-            {
                 TMP_InputFieldComponent.onValueChanged.AddListener(TMProInputFieldValueChanged);
                 TMProUpdatePlaceholder();
             }
@@ -118,6 +114,7 @@ namespace Delight
                 TextChanged();
 
                 // notify text property has been changed
+                TextProperty.SetHasValue(this);
                 OnPropertyChanged("Text");  
             }
 
@@ -135,6 +132,7 @@ namespace Delight
                 TextChanged();
 
                 // notify text property has been changed
+                TextProperty.SetHasValue(this);
                 OnPropertyChanged("Text");  
             }
 

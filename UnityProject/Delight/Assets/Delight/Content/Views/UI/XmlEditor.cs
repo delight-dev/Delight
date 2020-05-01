@@ -99,7 +99,7 @@ namespace Delight
             var scrollableContentOffset = ScrollableRegion.GetContentOffset();
             XmlEditLeftMargin.Offset.Left = -scrollableContentOffset.x;
 
-            bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool ctrlDown = (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && !Input.GetKey(KeyCode.AltGr);
             bool scrollEngaged = ctrlDown || Input.GetMouseButton(2);
             bool mouseButtonDown = false;
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -769,10 +769,18 @@ namespace Delight
                         {
                             DeleteSelection();
                         }
-
                         // add ="" if caret isn't in a property value or comment
-                        _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c + "\"\"");
-                        _caretX = _caretX + 2;
+                        if (_caretElement != XmlSyntaxElement.PropertyValue && _caretElement != XmlSyntaxElement.EndPropertyValue && 
+                            _caretElement != XmlSyntaxElement.BeginPropertyValue && _caretElement != XmlSyntaxElement.Comment && _caretElement != XmlSyntaxElement.EndComment)
+                        {
+                            _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c + "\"\"");
+                            _caretX = _caretX + 2;
+                        }
+                        else
+                        {
+                            _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
+                            ++_caretX;
+                        }
                         break;
 
                     case KeyCode.PageDown:

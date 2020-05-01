@@ -103,6 +103,7 @@ namespace Delight
             Converters.Add("Delight.ColumnDefinitions", new ColumnDefinitionsValueConverter());
             Converters.Add("Delight.CellIndex", new CellIndexValueConverter());
             Converters.Add("CellIndex", new CellIndexValueConverter());
+            Converters.Add("ScrollbarVisibilityConverter", new ScrollbarVisibilityConverter());
         }
 
         #endregion
