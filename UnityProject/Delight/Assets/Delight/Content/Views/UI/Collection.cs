@@ -36,7 +36,7 @@ namespace Delight
             if (activator == null)
                 return null;
 
-            var templateData = new ContentTemplateData { Item = item };            
+            var templateData = new ContentTemplateData { Item = item };
             var itemView = activator(templateData);
 
             return itemView;

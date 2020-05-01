@@ -104,6 +104,21 @@ namespace Delight
         }
 
         #endregion
+
+        #region Properties
+
+        /// <summary>
+        /// Gets attached values.
+        /// </summary>
+        public Dictionary<object, T> AttachedValues
+        {
+            get
+            {
+                return _attachedValues;
+            }
+        }
+
+        #endregion
     }
 
     /// <summary>

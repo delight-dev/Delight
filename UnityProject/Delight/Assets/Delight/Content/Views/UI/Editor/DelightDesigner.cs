@@ -235,7 +235,7 @@ namespace Delight
                         line = 1;
                     }
                 }
-                
+
                 LogParseErrorToDesignerConsole(_currentEditedView.FilePath, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
@@ -253,7 +253,7 @@ namespace Delight
                 var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
                 if (view == null)
                     return;
-                
+
                 // load and present view
                 await view?.LoadAsync();
                 view?.PrepareForDesigner();
@@ -403,20 +403,12 @@ namespace Delight
                         continue;
                     }
 
-                    if (inTemplate)
-                    {
-                        // TODO handle attached properties in templates
-                        //var attachedParentIdVar = inTemplate ? attachedProperty.ParentId.ToLocalVariableName() : attachedProperty.ParentId;
-                    }
-                    else
-                    {
-                        var attachedParent = childView.FindParent<UIView>(attachedProperty.ParentId);
-                        var attachedPropertyValue = typeValueConverter.ConvertGeneric(attachedProperty.PropertyValue);
+                    var attachedParent = childView.FindParent<UIView>(attachedProperty.ParentId);
+                    var attachedPropertyValue = typeValueConverter.ConvertGeneric(attachedProperty.PropertyValue);
 
-                        // get attached property through reflection
-                        var childViewAttachedProperty = attachedParent.GetType()?.GetProperty(attachedProperty.PropertyName)?.GetValue(attachedParent) as AttachedProperty;
-                        childViewAttachedProperty?.SetValueGeneric(childView, attachedPropertyValue);
-                    }
+                    // get attached property through reflection
+                    var childViewAttachedProperty = attachedParent.GetType()?.GetProperty(attachedProperty.PropertyName)?.GetValue(attachedParent) as AttachedProperty;
+                    childViewAttachedProperty?.SetValueGeneric(childView, attachedPropertyValue);
                 }
 
                 // create bindings
@@ -446,16 +438,37 @@ namespace Delight
                                 ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
                                 : null;
                             bool isTemplateItemSource = templateItemInfo != null;
+                            bool isIndex = false;
 
                             if (isTemplateItemSource)
                             {
                                 if (templateItemInfo.ItemTypeName == null)
                                     continue; // item type was not inferred so ignore binding
 
-                                sourcePath[0] = "Item";
+                                // handle special case when binding to Index and ZeroIndex                                
+                                if (sourcePath.Count == 2)
+                                {
+                                    if (sourcePath[1].IEquals("Index"))
+                                    {
+                                        sourcePath.Clear();
+                                        sourcePath.Add("Index");
+                                        isIndex = true;
+                                    }
+                                    else if (sourcePath[1].IEquals("ZeroIndex"))
+                                    {
+                                        sourcePath.Clear();
+                                        sourcePath.Add("ZeroIndex");
+                                        isIndex = true;
+                                    }
+                                }
+
+                                if (!isIndex)
+                                {
+                                    sourcePath[0] = "Item";
+                                }
                             }
 
-                            int skipCount = isModelSource || isTemplateItemSource ? 1 : 0;
+                            int skipCount = isModelSource || (isTemplateItemSource && !isIndex) ? 1 : 0;
                             var sourceProperties = sourcePath.Skip(skipCount).ToList();
 
                             // get object getters along path depending on the type of binding

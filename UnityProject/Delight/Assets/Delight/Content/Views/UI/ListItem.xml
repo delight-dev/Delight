@@ -11,5 +11,6 @@
           MouseDown="ListItemMouseDown"
           MouseUp="ListItemMouseUp"
           ContentTemplateData="t:ContentTemplateData"
-          HideInDesigner="True">
+          HideInDesigner="True"
+          SetListItemState="at:bool">
 </ListItem> 

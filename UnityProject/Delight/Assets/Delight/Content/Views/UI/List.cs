@@ -594,6 +594,8 @@ namespace Delight
                         newVirtualItem.ContentTemplate = template;
                     }
                     newVirtualItem.Item = item;
+                    newVirtualItem.IsAlternate = IsOdd(_virtualItems.Count - 1);
+                    newVirtualItem.Index = _virtualItems.Count - 1;
                     _virtualItems.Add(newVirtualItem);
                     _indexOfItem.Add(item, _virtualItems.Count - 1);
                 }
@@ -617,6 +619,8 @@ namespace Delight
 
                 // set item data on list item for easy reference
                 listItem.Item = item;
+                listItem.IsAlternate = IsOdd(_presentedItems.Count - 1);
+                listItem.ContentTemplateData.ZeroIndex = _presentedItems.Count - 1;
             }
         }
 
@@ -719,6 +723,7 @@ namespace Delight
             realizedItem.Alignment = virtualItem.Alignment;
             realizedItem.IsSelected = virtualItem.IsSelected;
             realizedItem.Item = virtualItem.Item;
+            realizedItem.IsAlternate = virtualItem.IsAlternate;
             if (realizedItem.ContentTemplateData != null)
             {
                 realizedItem.ContentTemplateData.Item = virtualItem.Item;
@@ -731,7 +736,7 @@ namespace Delight
         /// </summary>
         protected ListItem CreateRealizedListItem(VirtualItem virtualItem)
         {
-            var listItem = virtualItem.ContentTemplate.Activator(new ContentTemplateData { Item = virtualItem.Item }) as ListItem;
+            var listItem = virtualItem.ContentTemplate.Activator(new ContentTemplateData { Item = virtualItem.Item, ZeroIndex = virtualItem.Index }) as ListItem;
             if (listItem == null)
                 return null;
 
@@ -743,6 +748,7 @@ namespace Delight
             listItem.IsSelected = virtualItem.IsSelected;
             listItem.Item = virtualItem.Item;
             listItem.DisableLayoutUpdate = false;
+            listItem.IsAlternate = virtualItem.IsAlternate;
 
             listItem.Load();
 
@@ -1540,14 +1546,21 @@ namespace Delight
             if (ContentTemplates == null)
                 return;
 
+            int index = 0;
             foreach (var contentTemplate in ContentTemplates)
             {
                 var templateData = new ContentTemplateData();
+                templateData.ZeroIndex = index;
+
                 var listItem = contentTemplate.Activator(templateData) as ListItem;
+                listItem.IsAlternate = IsOdd(index + 1);
                 listItem.Load();
                 UnblockListItemDragEvents(listItem);
+                ++index; 
             }
         }
+        
+
 
         /// <summary>
         /// Unblocks drag events from list items, which makes it so draggable items don't block the list from being scrolled.
@@ -1602,6 +1615,14 @@ namespace Delight
                 }
                 return listItems;
             }
+        }
+
+        /// <summary>
+        /// Gets bool inidcating if the number is odd.
+        /// </summary>
+        public static bool IsOdd(int value)
+        {
+            return value % 2 != 0;
         }
 
         #endregion

@@ -33,7 +33,7 @@ World1: 1, "World 1"
 World2: 2, "World 2"
 World3: 2, "World 2"
 
-+ Level (World, Name)
++ Level (World, Name) 
 Level1_1: World1, "Level 1-1"
 Level1_2: World1, "Level 1-2"
 Level1_3: World1, "Level 1-3"
@@ -44,24 +44,34 @@ Level3_1: World3, "Level 3-1"
 Level3_2: World3, "Level 3-2"
 
 + Highscore (Level, Player, Score)
-Level1_1, Player1, 380
-Level1_2, Player1, 5471
-Level1_3, Player1, 1547
-Level1_4, Player1, 33579
-Level1_1, Player2, 1235
-Level2_2, Player2, 187
-Level3_3, Player2, 13897
-Level1_4, Player3, 88789
-Level2_3, Player3, 12335
-Level1_1, Player3, 878
-Level1_1, Player4, 48
-Level1_2, Player4, 18
+Level1_1, Player1, 88789
+Level1_2, Player2, 33579
+Level1_3, Player3, 13897
+Level1_4, Player4, 12335
+Level1_1, Player5, 5471
+Level2_2, Player6, 1547  
+Level3_3, Player7, 1235 
+Level1_4, Player8, 878
+Level2_3, Player9, 380
+Level1_1, Player10, 187
+Level1_1, Player11, 48
+Level1_2, Player12, 18
+Level1_2, Player13, 18
 
 + Player (Name)
-Player1: "Player 1"
-Player2: "Player 2"
-Player3: "Player 3"
-Player4: "Player 4"
+Player1: "Wizball"
+Player2: "asdf"
+Player3: "Yesper"
+Player4: "Jacob4"
+Player5: "xCool"
+Player6: "pking1"
+Player7: "pjkminCoo"
+Player8: "Machin1st"
+Player9: "DWerck16"
+Player10: "Pfauxhypocricy"
+Player11: "Bananaman13"
+Player12: "Opwiz"
+Player13: "afauxicy"
 
 //Player5: "Player 5"
 //Player6: "Player 6"

@@ -72,6 +72,7 @@ namespace Delight
             ViewActivators.Add("ViewSwitcherTest", (x, y, z, w, a) => new ViewSwitcherTest(x, y, z, w, a));
             ViewActivators.Add("InventoryItemView", (x, y, z, w, a) => new InventoryItemView(x, y, z, w, a));
             ViewActivators.Add("InventoryView", (x, y, z, w, a) => new InventoryView(x, y, z, w, a));
+            ViewActivators.Add("Audionaut", (x, y, z, w, a) => new Audionaut(x, y, z, w, a));
             ViewActivators.Add("MainMenuScene", (x, y, z, w, a) => new MainMenuScene(x, y, z, w, a));
             ViewActivators.Add("NewScene", (x, y, z, w, a) => new NewScene(x, y, z, w, a));
             ViewActivators.Add("InventoryTestScene", (x, y, z, w, a) => new InventoryTestScene(x, y, z, w, a));
@@ -134,6 +135,7 @@ namespace Delight
             ViewTypes.Add("ViewSwitcherTest", typeof(ViewSwitcherTest));
             ViewTypes.Add("InventoryItemView", typeof(InventoryItemView));
             ViewTypes.Add("InventoryView", typeof(InventoryView));
+            ViewTypes.Add("Audionaut", typeof(Audionaut));
             ViewTypes.Add("MainMenuScene", typeof(MainMenuScene));
             ViewTypes.Add("NewScene", typeof(NewScene));
             ViewTypes.Add("InventoryTestScene", typeof(InventoryTestScene));

@@ -1,7 +1,5 @@
 <Aa xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
-  <Group>
-    <Label Text="{@TestBinding1}" />
-    <Label Text="{@Player1.Name}" />
-  </Group>
-  <!--<TitleView Title="Test title" />-->
+    
+  <TitleView Title="Test title" />
+  
 </Aa> 

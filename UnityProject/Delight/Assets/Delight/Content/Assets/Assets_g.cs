@@ -128,6 +128,8 @@ namespace Delight
         public readonly FontAsset Ebrima;
         public readonly FontAsset InconsolataRegular;
         public readonly FontAsset SegoeUI;
+        public readonly FontAsset Discol__;
+        public readonly FontAsset Disco___;
 
         #endregion
 
@@ -138,10 +140,14 @@ namespace Delight
             Ebrima = new FontAsset { Id = "Ebrima", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegular = new FontAsset { Id = "Inconsolata-Regular", IsResource = true, RelativePath = "Fonts/" };
             SegoeUI = new FontAsset { Id = "Segoe UI", IsResource = true, RelativePath = "Fonts/" };
+            Discol__ = new FontAsset { Id = "discol__", IsResource = true, RelativePath = "Fonts/" };
+            Disco___ = new FontAsset { Id = "disco___", IsResource = true, RelativePath = "Fonts/" };
 
             Add(Ebrima);
             Add(InconsolataRegular);
             Add(SegoeUI);
+            Add(Discol__);
+            Add(Disco___);
         }
 
         #endregion
@@ -198,6 +204,7 @@ namespace Delight
         public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
+        public readonly SpriteAsset Audionautbg;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -223,6 +230,7 @@ namespace Delight
             RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
+            Audionautbg = new SpriteAsset { Id = "audionautbg", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -242,6 +250,7 @@ namespace Delight
             Add(RadioButtonPressed);
             Add(RainbowSquare);
             Add(Selection);
+            Add(Audionautbg);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -293,6 +302,7 @@ namespace Delight
         public readonly TMP_FontAsset EbrimaSDF;
         public readonly TMP_FontAsset InconsolataRegularSDF;
         public readonly TMP_FontAsset SegoeUISDF;
+        public readonly TMP_FontAsset Discognate;
 
         #endregion
 
@@ -303,10 +313,12 @@ namespace Delight
             EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegularSDF = new TMP_FontAsset { Id = "Inconsolata-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             SegoeUISDF = new TMP_FontAsset { Id = "Segoe UI SDF", IsResource = true, RelativePath = "Fonts/" };
+            Discognate = new TMP_FontAsset { Id = "Discognate", IsResource = true, RelativePath = "Fonts/" };
 
             Add(EbrimaSDF);
             Add(InconsolataRegularSDF);
             Add(SegoeUISDF);
+            Add(Discognate);
         }
 
         #endregion
@@ -369,6 +381,60 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
+    }
+
+    #endregion
+
+    #region TextAssets
+
+    /// <summary>
+    /// Manages a UnityEngine.TextAsset object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TextAsset : AssetObject<UnityEngine.TextAsset>
+    {
+        public static implicit operator TextAsset(UnityEngine.TextAsset unityObject)
+        {
+            return new TextAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TextAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TextAssets[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TextAsset data provider. Contains references to all textassets in the project.
+    /// </summary>
+    public partial class TextAssetData : DataProvider<TextAsset>
+    {
+        #region Fields
+
+        public readonly TextAsset DiscognateFontReadMe;
+
+        #endregion
+
+        #region Constructor
+
+        public TextAssetData()
+        {
+            DiscognateFontReadMe = new TextAsset { Id = "Discognate Font ReadMe", IsResource = true, RelativePath = "Fonts/" };
+
+            Add(DiscognateFontReadMe);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static TextAssetData TextAssets = new TextAssetData();
     }
 
     #endregion

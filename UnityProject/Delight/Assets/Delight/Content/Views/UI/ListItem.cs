@@ -34,7 +34,7 @@ namespace Delight
         {
             get
             {
-                return IsAlternate ? "Alternate" : String.Empty;
+                return ParentList.AlternateItems && IsAlternate ? "Alternate" : String.Empty;
             }
         }
 
@@ -50,10 +50,25 @@ namespace Delight
             base.OnChanged(property);
             switch (property)
             {
+                case nameof(IsAlternate):
+                    IsAlternateChanged();
+                    break;
+
                 case nameof(IsSelected):
                     IsSelectedChanged();
                     break;
             }
+        }
+
+        /// <summary>
+        /// Called when IsAlternate changes.
+        /// </summary>
+        private void IsAlternateChanged()
+        {
+            if (IsSelected)
+                return;
+
+            SetState(DefaultItemStyle);
         }
 
         /// <summary>
@@ -73,6 +88,7 @@ namespace Delight
         protected override void BeforeLoad()
         {
             base.BeforeLoad();
+            IsAlternateChanged();
 
             if (Width != null || Height != null)
             {
@@ -347,6 +363,28 @@ namespace Delight
         public override void SetContentTemplateData(ContentTemplateData contentTemplateData)
         {
             ContentTemplateData = contentTemplateData;
+        }
+
+        /// <summary>
+        /// Sets state.
+        /// </summary>
+        public override void SetState(string newState)
+        {
+            if (newState.IEquals(_previousState))
+                return;
+
+            base.SetState(newState);
+            foreach (var kv in SetListItemState.AttachedValues)
+            {
+                if (!kv.Value)
+                    continue;
+
+                var view = kv.Key as View;
+                if (view != null)
+                {
+                    view.SetState(newState);
+                }
+            }
         }
 
         #endregion

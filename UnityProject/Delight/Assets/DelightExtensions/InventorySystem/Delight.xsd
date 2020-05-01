@@ -33,6 +33,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -227,6 +228,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -303,6 +305,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -527,6 +530,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -544,6 +548,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
@@ -1249,6 +1254,7 @@
     <xs:attribute name="Length" type="xs:string" />
     <xs:attribute name="Breadth" type="xs:string" />
     <xs:attribute name="ContentTemplateData" type="xs:string" />
+    <xs:attribute name="SetListItemState" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1319,6 +1325,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1407,6 +1414,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1501,6 +1509,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1518,6 +1527,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Thickness" type="xs:string" />
     <xs:attribute name="InteractionThickness" type="xs:string" />
     <xs:attribute name="SetSizeOnDragEnded" type="xs:string" />
@@ -1667,6 +1677,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1758,6 +1769,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1845,6 +1857,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -1944,6 +1957,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -2310,6 +2324,7 @@
     <xs:attribute name="ScrollableRegionIgnoreObject" type="xs:string" />
     <xs:attribute name="ScrollableRegionIsActive" type="xs:string" />
     <xs:attribute name="ScrollableRegionLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
@@ -2410,6 +2425,7 @@
     <xs:attribute name="Length" type="xs:string" />
     <xs:attribute name="Breadth" type="xs:string" />
     <xs:attribute name="ContentTemplateData" type="xs:string" />
+    <xs:attribute name="SetListItemState" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -2480,6 +2496,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -2569,6 +2586,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -2793,6 +2811,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -2881,6 +2900,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -2968,6 +2988,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -3348,6 +3369,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -3722,6 +3744,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -3896,6 +3919,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -4129,6 +4153,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -4350,6 +4375,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -4423,6 +4449,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -4619,6 +4646,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -4686,6 +4714,7 @@
     <xs:attribute name="TabListIgnoreObject" type="xs:string" />
     <xs:attribute name="TabListIsActive" type="xs:string" />
     <xs:attribute name="TabListLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
@@ -4996,6 +5025,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5136,6 +5166,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5227,6 +5258,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5326,6 +5358,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5419,6 +5452,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5506,6 +5540,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5575,6 +5610,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5648,6 +5684,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5738,6 +5775,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5759,6 +5797,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5767,6 +5806,76 @@
   </xs:complexType>
 
   <xs:simpleType name="Style_View">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="Audionaut" type="Audionaut" />
+  <xs:complexType name="Audionaut">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="ActualWidth" type="xs:string" />
+    <xs:attribute name="ActualHeight" type="xs:string" />
+    <xs:attribute name="IsFullScreen" type="xs:string" />
+    <xs:attribute name="RectTransform" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="CanvasGroup" type="xs:string" />
+    <xs:attribute name="UseFastShader" type="xs:string" />
+    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
+    <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="UnityScript" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="GameObject" type="xs:string" />
+    <xs:attribute name="EnableScriptEvents" type="xs:string" />
+    <xs:attribute name="IgnoreObject" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="Cancel" type="xs:string" />
+    <xs:attribute name="Click" type="xs:string" />
+    <xs:attribute name="Deselect" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="Drop" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Move" type="xs:string" />
+    <xs:attribute name="MouseDown" type="xs:string" />
+    <xs:attribute name="MouseEnter" type="xs:string" />
+    <xs:attribute name="MouseExit" type="xs:string" />
+    <xs:attribute name="MouseUp" type="xs:string" />
+    <xs:attribute name="Scroll" type="xs:string" />
+    <xs:attribute name="Select" type="xs:string" />
+    <xs:attribute name="Submit" type="xs:string" />
+    <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="LayoutChildren" type="xs:string" />
+    <xs:attribute name="IsLoaded" type="xs:string" />
+    <xs:attribute name="Bindings" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
+    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="Style_Audionaut" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:simpleType name="Style_Audionaut">
     <xs:restriction base="xs:string">
     </xs:restriction>
   </xs:simpleType>
@@ -5828,6 +5937,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5897,6 +6007,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -5966,6 +6077,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6069,6 +6181,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6142,6 +6255,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6241,6 +6355,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6340,6 +6455,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6409,6 +6525,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6511,6 +6628,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6580,6 +6698,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6649,6 +6768,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6751,6 +6871,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6820,6 +6941,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6920,6 +7042,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -6989,6 +7112,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7058,6 +7182,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7157,6 +7282,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7226,6 +7352,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7295,6 +7422,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7395,6 +7523,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7466,6 +7595,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7565,6 +7695,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7634,6 +7765,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7723,6 +7855,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -7740,6 +7873,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
@@ -7914,6 +8048,7 @@
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
     <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
@@ -8308,6 +8443,8 @@
       <xs:enumeration value="Ebrima" />
       <xs:enumeration value="Inconsolata-Regular" />
       <xs:enumeration value="Segoe UI" />
+      <xs:enumeration value="discol__" />
+      <xs:enumeration value="disco___" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -8326,6 +8463,7 @@
       <xs:enumeration value="RadioButtonPressed" />
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
+      <xs:enumeration value="audionautbg" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -8339,12 +8477,19 @@
       <xs:enumeration value="Ebrima SDF" />
       <xs:enumeration value="Inconsolata-Regular SDF" />
       <xs:enumeration value="Segoe UI SDF" />
+      <xs:enumeration value="Discognate" />
     </xs:restriction>
   </xs:simpleType>
 
   <xs:simpleType name="Asset_ShaderAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UI-Fast-Default" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Asset_TextAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Discognate Font ReadMe" />
     </xs:restriction>
   </xs:simpleType>
 

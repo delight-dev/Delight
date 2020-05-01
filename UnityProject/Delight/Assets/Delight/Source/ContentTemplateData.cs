@@ -12,18 +12,21 @@
             set { SetProperty(ref _item, value); }
         }
 
-        private int _index;
         public int Index
         {
-            get { return _index; }
-            set { SetProperty(ref _index, value); }
+            get { return _zeroIndex + 1; }
+            set { ZeroIndex = value - 1; }
         }
 
         private int _zeroIndex;
         public int ZeroIndex
         {
             get { return _zeroIndex; }
-            set { SetProperty(ref _zeroIndex, value); }
+            set
+            {
+                SetProperty(ref _zeroIndex, value);
+                OnPropertyChanged(nameof(Index));
+            }
         }
 
         public static readonly ContentTemplateData Empty = new ContentTemplateData();

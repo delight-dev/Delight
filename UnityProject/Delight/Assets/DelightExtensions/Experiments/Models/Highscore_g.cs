@@ -53,18 +53,19 @@ namespace Delight
 
         public HighscoreData()
         {
-            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player1", Score = 380 });
-            Add(new Highscore { LevelId = "Level1_2", PlayerId = "Player1", Score = 5471 });
-            Add(new Highscore { LevelId = "Level1_3", PlayerId = "Player1", Score = 1547 });
-            Add(new Highscore { LevelId = "Level1_4", PlayerId = "Player1", Score = 33579 });
-            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player2", Score = 1235 });
-            Add(new Highscore { LevelId = "Level2_2", PlayerId = "Player2", Score = 187 });
-            Add(new Highscore { LevelId = "Level3_3", PlayerId = "Player2", Score = 13897 });
-            Add(new Highscore { LevelId = "Level1_4", PlayerId = "Player3", Score = 88789 });
-            Add(new Highscore { LevelId = "Level2_3", PlayerId = "Player3", Score = 12335 });
-            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player3", Score = 878 });
-            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player4", Score = 48 });
-            Add(new Highscore { LevelId = "Level1_2", PlayerId = "Player4", Score = 18 });
+            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player1", Score = 88789 });
+            Add(new Highscore { LevelId = "Level1_2", PlayerId = "Player2", Score = 33579 });
+            Add(new Highscore { LevelId = "Level1_3", PlayerId = "Player3", Score = 13897 });
+            Add(new Highscore { LevelId = "Level1_4", PlayerId = "Player4", Score = 12335 });
+            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player5", Score = 5471 });
+            Add(new Highscore { LevelId = "Level2_2", PlayerId = "Player6", Score = 1547 });
+            Add(new Highscore { LevelId = "Level3_3", PlayerId = "Player7", Score = 1235 });
+            Add(new Highscore { LevelId = "Level1_4", PlayerId = "Player8", Score = 878 });
+            Add(new Highscore { LevelId = "Level2_3", PlayerId = "Player9", Score = 380 });
+            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player10", Score = 187 });
+            Add(new Highscore { LevelId = "Level1_1", PlayerId = "Player11", Score = 48 });
+            Add(new Highscore { LevelId = "Level1_2", PlayerId = "Player12", Score = 18 });
+            Add(new Highscore { LevelId = "Level1_2", PlayerId = "Player13", Score = 18 });
         }
 
         #endregion

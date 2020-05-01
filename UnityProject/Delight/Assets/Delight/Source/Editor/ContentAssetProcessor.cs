@@ -330,7 +330,7 @@ namespace Delight.Editor
             // TODO for tracking processing time
             if (contentChanged)
             {
-                Debug.Log(String.Format("Total content processing time: {0}", sw.ElapsedMilliseconds)); 
+                //Debug.Log(String.Format("Total content processing time: {0}", sw.ElapsedMilliseconds)); 
             }
         }
 

@@ -2,7 +2,8 @@
                  Module="TextMeshPro" EnableScriptEvents="True"
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
 
-  <Grid Columns="200[20],*" Rows="*,240[20]" BackgroundColor="#55a3ff">
+  <Grid Columns="200[20],*" Rows="*,240[20]" BackgroundColor="#394552">
+    <!--BackgroundColor="#55a3ff"-->
     <!--450[20]-->
 
     <!-- Right Menu -->
@@ -24,7 +25,6 @@
       <Label Text="Views | Models" FontSize="14" Font="Segoe UI SDF" Alignment="TopLeft" Margin="10,5,0,0" Height="40" TextAlignment="Left" Width="100%" OverflowMode="Truncate" FontColor="#333333" />
       <Region Margin="0,46,0,0"> 
         <Button Text="+ New View" FontSize="16" Font="Segoe UI SDF" Alignment="TopLeft" Offset="8,0,0,0" Height="30" TextAlignment="Left" Click="AddNewView" TextPadding="10" />
-        <Button Text="Parse" FontSize="16" Font="Segoe UI SDF" Alignment="TopLeft" Offset="118,0,0,0" Height="30" TextAlignment="Left" Click="ParseView" TextPadding="10" /> 
         <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,35,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
               ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
               VerticalScrollbarVisibility="Never">

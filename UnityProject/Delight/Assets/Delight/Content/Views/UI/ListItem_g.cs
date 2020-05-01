@@ -24,6 +24,7 @@ namespace Delight
             MouseExit.RegisterHandler(this, "ListItemMouseExit");
             MouseDown.RegisterHandler(this, "ListItemMouseDown");
             MouseUp.RegisterHandler(this, "ListItemMouseUp");
+            SetListItemState = new AttachedProperty<System.Boolean>(this, "SetListItemState");
             this.AfterInitializeInternal();
         }
 
@@ -121,6 +122,8 @@ namespace Delight
             get { return ContentTemplateDataProperty.GetValue(this); }
             set { ContentTemplateDataProperty.SetValue(this, value); }
         }
+
+        public AttachedProperty<System.Boolean> SetListItemState { get; private set; }
 
         #endregion
     }

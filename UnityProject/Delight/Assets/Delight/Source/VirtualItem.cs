@@ -23,6 +23,8 @@ namespace Delight
         public BindableObject Item { get; set; }
         public ListItem RealizedItem { get; set; }
         public bool IsSelected { get; set; }
+        public bool IsAlternate { get; set; }
+        public int Index { get; set; }
 
         public static readonly VirtualItem Default = new VirtualItem();
 

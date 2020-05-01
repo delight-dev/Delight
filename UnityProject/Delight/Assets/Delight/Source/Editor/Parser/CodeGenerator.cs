@@ -1408,6 +1408,7 @@ namespace Delight.Editor.Parser
                             string negatedString = isNegated ? "!" : string.Empty;
                             bool isLoc = false;
                             string locId = string.Empty;
+                            bool isIndex = false;
 
                             // handle special case when source is localization dictionary
                             if (isModelSource && sourcePath.Count == 3 &&
@@ -1433,8 +1434,23 @@ namespace Delight.Editor.Parser
                                 if (templateItemInfo.ItemTypeName == null)
                                     continue; // item type was not inferred so ignore binding
 
+                                if (sourcePath.Count == 2)
+                                {
+                                    if (sourcePath[1].IEquals("Index"))
+                                    {
+                                        isIndex = true;
+                                    }
+                                    else if (sourcePath[1].IEquals("ZeroIndex"))
+                                    {
+                                        isIndex = true;
+                                    }
+                                }
+
                                 sourcePath[0] = templateItemInfo.VariableName;
-                                sourcePath.Insert(1, "Item");
+                                if (!isIndex)
+                                {
+                                    sourcePath.Insert(1, "Item");
+                                }
                             }
 
                             // handle collection indexers in binding path
@@ -1472,15 +1488,18 @@ namespace Delight.Editor.Parser
                             if (isTemplateItemSource)
                             {
                                 // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
-                                var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
-                                var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
-                                sourcePath = sourcePath.Skip(2).ToList();
-                                sourcePath.Insert(0, castItemRef);
-
-                                for (int i = 0; i < sourceGetters.Count; ++i)
+                                if (!isIndex)
                                 {
-                                    // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
-                                    sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                                    var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
+                                    var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
+                                    sourcePath = sourcePath.Skip(2).ToList();
+                                    sourcePath.Insert(0, castItemRef);
+
+                                    for (int i = 0; i < sourceGetters.Count; ++i)
+                                    {
+                                        // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
+                                        sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                                    }
                                 }
                             }
 
