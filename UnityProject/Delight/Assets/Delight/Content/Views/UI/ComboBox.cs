@@ -19,7 +19,7 @@ namespace Delight
         /// <summary>
         /// Passes along the template to the combo-box list.
         /// </summary>
-        public BindableCollection<ContentTemplate> ContentTemplates
+        public override BindableCollection<ContentTemplate> ContentTemplates
         {
             get
             {

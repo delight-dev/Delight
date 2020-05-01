@@ -12,7 +12,14 @@ namespace Delight
     {
         #region Fields
 
-        public BindableCollection<ContentTemplate> ContentTemplates = new BindableCollection<ContentTemplate>();
+        private BindableCollection<ContentTemplate> _contentTemplates = new BindableCollection<ContentTemplate>();
+        public override BindableCollection<ContentTemplate> ContentTemplates
+        {
+            get
+            {
+                return _contentTemplates;
+            }
+        }
 
         #endregion
 

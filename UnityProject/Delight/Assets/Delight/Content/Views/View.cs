@@ -127,6 +127,17 @@ namespace Delight
             set { _isDynamic = value; }
         }
 
+        /// <summary>
+        /// Returns view content templates. 
+        /// </summary>
+        public virtual BindableCollection<ContentTemplate> ContentTemplates
+        {
+            get
+            {
+                return null;
+            }
+        }
+
         #endregion
 
         #region Methods

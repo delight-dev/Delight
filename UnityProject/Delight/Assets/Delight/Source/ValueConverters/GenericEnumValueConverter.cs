@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
@@ -8,13 +9,13 @@ using System.Globalization;
 namespace Delight
 {
     /// <summary>
-    /// Asset value converter.
+    /// Enum value converter.
     /// </summary>
-    public class AssetObjectValueConverter : ValueConverter
+    public class GenericEnumValueConverter : ValueConverter
     {
         #region Constructor
 
-        private string _assetTypeName;
+        private Type _enumType;
 
         #endregion
 
@@ -23,9 +24,9 @@ namespace Delight
         /// <summary>
         /// Initializes a new instance of the class.
         /// </summary>
-        public AssetObjectValueConverter(string assetTypeName)
+        public GenericEnumValueConverter(Type enumType)
         {
-            _assetTypeName = assetTypeName;
+            _enumType = enumType;
         }
 
         #endregion
@@ -35,14 +36,16 @@ namespace Delight
         /// <summary>
         /// Gets initializer from string value.
         /// </summary>
-        public static string GetInitializer(string typeName, string stringValue)
+        public override string GetInitializer(string stringValue)
         {
-            if (String.IsNullOrEmpty(stringValue))
+            var enumTypeName = _enumType.FullName.Replace('+', '.');
+
+            if (stringValue.Contains("|"))
             {
-                return "null";
+                return String.Join(" | ", stringValue.Split('|').Select(x => String.Format("{0}.{1}", enumTypeName, Enum.Parse(_enumType, x, true))));
             }
 
-            return String.Format("Assets.{0}[\"{1}\"]", typeName.Pluralize(), stringValue);
+            return String.Format("{0}.{1}", enumTypeName, Enum.Parse(_enumType, stringValue, true));
         }
 
         /// <summary>
@@ -50,9 +53,8 @@ namespace Delight
         /// </summary>
         public override object ConvertGeneric(string stringValue)
         {
-            // used for runtime conversions of strings to assets
-            var collection = Assets.RuntimeAssetObject.GetPropertyValue(_assetTypeName.Pluralize()) as BindableCollection;
-            return collection != null ? collection.Get(stringValue) : null;
+            // used for runtime conversions of strings to enums
+            return Enum.Parse(_enumType, stringValue, true);
         }
 
         /// <summary>
@@ -66,7 +68,7 @@ namespace Delight
             }
             return null;
         }
-
+        
         #endregion
     }
 }

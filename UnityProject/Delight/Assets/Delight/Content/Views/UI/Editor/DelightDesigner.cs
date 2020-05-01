@@ -326,11 +326,13 @@ namespace Delight
         /// <summary>
         /// Instantiates view construction logic from view declaration.
         /// </summary>
-        private void InstantiateRuntimeChildViews(string idPath, Dictionary<string, Template> dataTemplates, View parent, View layoutParent, string fileName, ViewObject viewObject,
-            string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null)
+        private List<View> InstantiateRuntimeChildViews(string idPath, Dictionary<string, Template> dataTemplates, View parent, View layoutParent, string fileName, ViewObject viewObject,
+            string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null,
+            ContentTemplateData contentTemplateData = null)
         {
             bool inTemplate = templateDepth > 0;
             var contentObjectModel = ContentObjectModel.GetInstance();
+            var instantiatedChildViews = new List<View>();
 
             // so we need to loop through all child views, print their construction logic
             foreach (var childViewDeclaration in childViewDeclarations)
@@ -357,6 +359,8 @@ namespace Delight
                 {
                     childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
                 }
+
+                instantiatedChildViews.Add(childView);
 
                 // TODO add action handlers and method assignments
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
@@ -430,49 +434,35 @@ namespace Delight
                             bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
                             bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
 
-                            // TODO handle loc source
-                            //bool isLoc = false;
-                            //string locId = string.Empty;
+                            // handle special case when source is localization dictionary
+                            if (isModelSource && sourcePath.Count == 3 &&
+                                (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
+                            {
+                                sourcePath.Add("Label");
+                            }
 
-                            //// handle special case when source is localization dictionary
-                            //if (isModelSource && sourcePath.Count == 3 &&
-                            //    (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
-                            //{
-                            //    sourcePath[1] = "Loc";
-
-                            //    // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
-                            //    locId = sourcePath[2];
-                            //    sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
-                            //    sourcePath[2] = "Label";
-                            //    isLoc = true;
-                            //}
-
-                            //// get property names along path
+                            // get property names along path
                             var templateItemInfo = templateItems != null
                                 ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
                                 : null;
                             bool isTemplateItemSource = templateItemInfo != null;
 
-                            //if (isTemplateItemSource)
-                            //{
-                            //    if (templateItemInfo.ItemTypeName == null)
-                            //        continue; // item type was not inferred so ignore binding
+                            if (isTemplateItemSource)
+                            {
+                                if (templateItemInfo.ItemTypeName == null)
+                                    continue; // item type was not inferred so ignore binding
 
-                            //    sourcePath[0] = templateItemInfo.VariableName;
-                            //    sourcePath.Insert(1, "Item");
-                            //}
-
-                            // handle collection indexers in binding path
-                            // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
-                            //sourcePath = CodeGenerator.UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
+                                sourcePath[0] = "Item";
+                            }
 
                             int skipCount = isModelSource || isTemplateItemSource ? 1 : 0;
                             var sourceProperties = sourcePath.Skip(skipCount).ToList();
 
-                            // get object getters along path
+                            // get object getters along path depending on the type of binding
                             var sourceObjectGetters = new List<Func<BindableObject>>();
                             if (isModelSource)
                             {
+                                // model binding
                                 sourceObjectGetters.Add(() => Models.RuntimeModelObject);
                                 var modelPropertyPath = sourcePath.Skip(1).ToList();
                                 for (int i = 0; i < modelPropertyPath.Count - 1; ++i)
@@ -483,10 +473,17 @@ namespace Delight
                             }
                             else if (isTemplateItemSource)
                             {
-                                // TODO implement
+                                // list item binding
+                                sourceObjectGetters.Add(() => contentTemplateData);
+                                for (int i = 0; i < sourcePath.Count - 1; ++i)
+                                {
+                                    var currentSourcePath = sourcePath.Take(i + 1);
+                                    sourceObjectGetters.Add(() => contentTemplateData.GetPropertyValue(currentSourcePath) as BindableObject);
+                                }
                             }
                             else
                             {
+                                // regular binding
                                 sourceObjectGetters.Add(() => parent);
                                 for (int i = 0; i < sourcePath.Count - 1; ++i)
                                 {
@@ -494,7 +491,6 @@ namespace Delight
                                     sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
                                 }
                             }
-
 
                             //if (isLoc)
                             //{
@@ -506,22 +502,6 @@ namespace Delight
                             //{
                             //    sourceObjectGetters.Add(() => Models.Loc);
                             //}
-
-                            if (isTemplateItemSource)
-                            {
-                                // TODO we might need to cast items in source getters if reference to template item
-                                // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
-                                //var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
-                                //var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
-                                //sourcePath = sourcePath.Skip(2).ToList();
-                                //sourcePath.Insert(0, castItemRef);
-
-                                //for (int i = 0; i < sourceGetters.Count; ++i)
-                                //{
-                                //    // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
-                                //    sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
-                                //}
-                            }
 
                             // add value converter
                             ValueConverter valueConverter = null;
@@ -581,18 +561,6 @@ namespace Delight
                         //    targetToSource = "{ }";
                         //}
 
-                        // create binding
-                        //sb.AppendLine(indent,
-                        //    "{0}Bindings.Add(new Binding(new List<BindingPath> {{ {1} }}, {2}, () => {3}, () => {4}, {5}));",
-                        //    inTemplate ? firstTemplateChild + "." : "",
-                        //    string.Join(", ", sourceBindingPathObjects),
-                        //    String.Format(
-                        //        "new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})",
-                        //        targetProperties, targetGettersString),
-                        //    sourceToTarget,
-                        //    targetToSource,
-                        //    isTwoWay ? "true" : "false");
-
                         // create transform method
                         Func<object[], object> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
@@ -631,31 +599,31 @@ namespace Delight
 
                 if (templateContent)
                 {
-                    // TODO support template content
-                    //        foreach (var templateChild in childViewDeclaration.ChildDeclarations)
-                    //        {
-                    //            var templateChildId = templateChild.Id.ToLocalVariableName();
+                    foreach (var templateChild in childViewDeclaration.ChildDeclarations)
+                    {
+                        var templateChildId = templateChild.Id.ToLocalVariableName();
+                        var viewType = TypeHelper.GetType(templateChild.ViewName, null, MasterConfig.GetInstance().Namespaces);
 
-                    //            sb.AppendLine();
-                    //            sb.AppendLine(indent, "// templates for {0}", childIdVar);
-                    //            sb.AppendLine(indent, "{0}.ContentTemplates.Add(new ContentTemplate({1} => ", childIdVar, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
-                    //            sb.AppendLine(indent, "{{");
-
-                    //            // print child view declaration
-                    //            InstantiateRuntimeChildViews(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId);
-
-                    //            sb.AppendLine(indent, "    {0}.IsDynamic = true;", templateChildId);
-                    //            sb.AppendLine(indent, "    {0}.SetContentTemplateData({1});", templateChildId, ti != null ? ti.VariableName : "x" + templateDepth.ToString());
-                    //            sb.AppendLine(indent, "    return {0};", templateChildId);
-                    //            sb.AppendLine(indent, "}}, typeof({0}), \"{1}\"));", templateChild.ViewName, templateChild.Id);
-                    //        }
+                        childView.ContentTemplates.Add(new ContentTemplate(x =>
+                        {
+                            var view = InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId, x).FirstOrDefault();
+                            if (view != null)
+                            {
+                                view.IsDynamic = true;
+                                view.SetContentTemplateData(x);
+                            }
+                            return view;
+                        }, viewType, templateChild.Id));
+                    }
                 }
                 else
                 {
                     // create child views from child view declarations
-                    InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
+                    InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild, contentTemplateData);
                 }
             }
+
+            return instantiatedChildViews;
         }
 
         /// <summary>

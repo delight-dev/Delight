@@ -336,16 +336,23 @@ namespace Delight
             var type = obj.GetType();
 
             object currentObject = obj;
-            object nextObject = null;
+            //object nextObject = null;
             var pathList = path.ToList();
             for (int i = 0; i < pathList.Count; ++i)
             {
+                object nextObject = null;
                 var propertyName = pathList[i];
                 if (i == 0 && currentObject == Models.RuntimeModelObject)
                 {
                     // handle special case when accessing properties directly on the Models static class
                     currentObject = null;
                     type = typeof(Models);
+                }
+                else if (i == 0 && currentObject == Assets.RuntimeAssetObject)
+                {
+                    // handle special case when accesing properties directly on the Assets static class
+                    currentObject = null;
+                    type = typeof(Assets);
                 }
                 else
                 {
@@ -373,6 +380,13 @@ namespace Delight
                     if (view != null)
                     {
                         nextObject = view.Find<View>(propertyName, true, view);
+                    }
+
+                    if (nextObject == null)
+                    {
+                        // check if currentObject is a collection and lookup item
+                        var collection = currentObject as BindableCollection;
+                        nextObject = collection?.Get(propertyName);
                     }
                 }
 

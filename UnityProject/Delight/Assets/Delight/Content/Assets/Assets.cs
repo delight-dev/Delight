@@ -18,6 +18,7 @@ namespace Delight
 
         private static Dictionary<string, Func<View, View, string, Template, bool, View>> ViewActivators;
         private static Dictionary<string, Type> ViewTypes;
+        public static DependencyObject RuntimeAssetObject = new DependencyObject();
 
         #endregion
 

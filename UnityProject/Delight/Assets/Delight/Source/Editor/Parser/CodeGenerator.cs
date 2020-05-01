@@ -1097,6 +1097,37 @@ namespace Delight.Editor.Parser
                 {
                     // instantiate data template value
                     var typeValueConverter = ValueConverters.Get(propertyTypeName);
+                    if (typeValueConverter == null)
+                    {
+                        if (decl.IsAssetReference)
+                        {
+                            // if asset initializer not found, use default initializer for asset types
+                            typeValueConverter = new AssetObjectValueConverter(decl.AssetType.Name);
+                        }
+                        else
+                        {
+                            // see if type is enum 
+                            Type type = null;
+                            if (!String.IsNullOrEmpty(decl.Declaration.AssemblyQualifiedType))
+                            {
+                                type = Type.GetType(decl.Declaration.AssemblyQualifiedType);
+                            }
+
+                            if (type != null && type.IsEnum)
+                            {
+                                typeValueConverter = new GenericEnumValueConverter(type);
+                            }
+                            else
+                            {
+                                // no value converter found for the type being assigned to
+                                ConsoleLogger.LogParseError(fileName, propertyAssignment.LineNumber,
+                                    String.Format("#Delight# Unable to assign value to property <{0} {1}=\"{2}\">. Unable to convert value to property of type \"{3}\".",
+                                    viewObject.Name, propertyAssignment.PropertyName, propertyAssignment.PropertyValue, decl.Declaration.PropertyTypeFullName));
+                                continue;
+                            }
+                        }
+                    }
+
                     var dataTemplateValue = typeValueConverter.ConvertGeneric(propertyAssignment.PropertyValue);
                     var dependencyProperty = GetViewObjectDependencyProperty(viewObject, propertyName + "Property");
 
