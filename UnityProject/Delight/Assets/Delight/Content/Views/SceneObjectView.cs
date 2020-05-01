@@ -299,6 +299,24 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Unloads and removes the child views. 
+        /// </summary>
+        public override void DestroyChildren()
+        {
+            base.DestroyChildren();
+
+            // destroy any remaining child objects that should not be there
+            if (GameObject != null && GameObject.transform.childCount > 0)
+            {
+                for (int i = GameObject.transform.childCount - 1; i >= 0; --i)
+                {
+                    var go = GameObject.transform.GetChild(i).gameObject;
+                    GameObject.DestroyImmediate(go);
+                }
+            }
+        }
+
         #endregion
 
         #region Properties
@@ -356,12 +374,12 @@ namespace Delight
 
         public void OnEnable()
         {
-            StartCoroutine( OnEnableCoroutine() );
+            StartCoroutine(OnEnableCoroutine());
         }
 
         public IEnumerator OnEnableCoroutine()
         {
-            yield return new WaitForSeconds( 0 );
+            yield return new WaitForSeconds(0);
             SceneObjectView?.OnEnable();
         }
 

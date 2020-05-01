@@ -133,10 +133,9 @@ namespace Delight
         public async void ViewSelected(DesignerView designerView)
         {
             UpdateCurrentEditedViewXml();
-            if (_displayedView != null)
-            {
-                _displayedView.Destroy();
-            }
+
+            // clear any existing displayed views
+            ViewContentRegion.DestroyChildren();
 
             _currentEditedView = designerView;
 
@@ -205,8 +204,7 @@ namespace Delight
         /// </summary>
         public async void ParseView()
         {
-#if UNITY_EDITOR
-            ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+#if UNITY_EDITOR            
             if (_currentEditedView == null)
                 return;
 
@@ -235,35 +233,66 @@ namespace Delight
                         line = 1;
                     }
                 }
-
-                ConsoleLogger.LogParseError(_currentEditedView.FilePath, line,
+                
+                LogParseErrorToDesignerConsole(_currentEditedView.FilePath, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
 
-            // create view object
-            var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
-            _currentEditedView.ViewObject = viewObject;
-
-            // instantiate view
-            var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
-            if (view == null)
-                return;
-
-            ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
-
-            // destroy previous view
-            if (_displayedView != null)
+            try
             {
-                _displayedView.Destroy();
+                ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+
+                // create view object
+                var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
+                _currentEditedView.ViewObject = viewObject;
+
+                // instantiate view
+                var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
+                if (view == null)
+                    return;
+                
+                // load and present view
+                await view?.LoadAsync();
+                view?.PrepareForDesigner();
+
+                // destroy previous view
+                if (_displayedView != null)
+                {
+                    _displayedView.Destroy();
+                }
+
+                _displayedView = view;
             }
+            catch (Exception e)
+            {
+                //ConsoleLogger.LogException(e);
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                    String.Format("#Delight# Error instantiating view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
+                ConsoleLogger.LogException(e);
 
-            _displayedView = view;
+                // if view failed to load make sure we remove the partially-constructed view from the content region
+                // while keeping the previously loaded view                
+                for (int i = ViewContentRegion.LayoutChildren.Count - 1; i >= 1; --i)
+                {
+                    var child = ViewContentRegion.LayoutChildren[i];
+                    child.Destroy();
+                }
 
-            // load and present view
-            await _displayedView?.LoadAsync();
-            _displayedView?.PrepareForDesigner();
-
+                // destroy any remaining child objects that should not be there
+                if (ViewContentRegion.GameObject.transform.childCount > 1)
+                {
+                    for (int i = ViewContentRegion.GameObject.transform.childCount - 1; i >= 1; --i)
+                    {
+                        var go = ViewContentRegion.GameObject.transform.GetChild(i).gameObject;
+                        GameObject.DestroyImmediate(go);
+                    }
+                }
+            }
+            finally
+            {
+                ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+            }
 #endif
         }
 
@@ -434,7 +463,7 @@ namespace Delight
                             // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
                             //sourcePath = CodeGenerator.UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
 
-                            var sourceProperties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
+                            var sourceProperties = sourcePath.Skip(isModelSource ? 1 : (isTemplateItemSource ? 1 : 0)).ToList();
                             if (isLoc)
                             {
                                 sourceProperties.Insert(0, locId);
@@ -453,10 +482,11 @@ namespace Delight
                             {
                                 sourceObjectGetters.Add(() => Models.Loc);
                             }
-
+                            
                             for (int i = 0; i < sourcePathCount; ++i)
                             {
                                 var currentSourcePath = sourcePath.Take(i + sourcePathTake);
+                                Debug.Log(String.Format("{0}: {1}", propertyBinding.PropertyName, String.Join(".", currentSourcePath)));
                                 sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
                             }
 
@@ -516,7 +546,7 @@ namespace Delight
 
                         string targetProperty = string.Join(".", targetPath);
                         string convertedTargetProperty = targetProperty;
-                        var bindingTargetPath = new BindingPath(targetProperties, targetObjectGetters);
+                        var bindingTargetPath = new RuntimeBindingPath(targetProperties, targetObjectGetters, false, null);
 
                         // TODO implement attached binding logic
                         //string sourceToTarget = !propertyBinding.IsAttached ?
@@ -911,7 +941,7 @@ namespace Delight
             var sb = new StringBuilder();
 
             var config = MasterConfig.GetInstance();
-            string path = String.Format("{0}/{1}Delight/Content{2}{3}.xml", Application.dataPath, config.DelightPath, ContentParser.ViewsFolder, viewName);
+            string path = String.Format("{0}/Content{1}{2}.xml", Application.dataPath, ContentParser.ViewsFolder, viewName);
             newView.FilePath = path;
 
             sb.AppendLine("<{0}>", viewName);

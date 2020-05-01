@@ -593,6 +593,18 @@ namespace Delight
         }
 
         /// <summary>
+        /// Unloads and removes the child views. 
+        /// </summary>
+        public virtual void DestroyChildren()
+        {
+            for (int i = LayoutChildren.Count - 1; i >= 0; --i)
+            {
+                var child = LayoutChildren[i];
+                child.Destroy();
+            }
+        }
+
+        /// <summary>
         /// Moves view to another layout parent. 
         /// </summary>
         public virtual void MoveTo(View newLayoutParent)

@@ -12,4 +12,10 @@ namespace Delight
     public partial class Aa
     {
     }
+
+    public static partial class Models
+    {
+        public static string TestBinding1 = "Hello";
+        public static Player Player1 = new Player { Name = "Patrik" };
+    }
 }

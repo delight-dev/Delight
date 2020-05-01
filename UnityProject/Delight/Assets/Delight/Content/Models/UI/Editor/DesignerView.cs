@@ -81,21 +81,10 @@ namespace Delight
         public string XmlText { get; internal set; }
     }
 
+    /// <summary>
+    /// Designer view collection.
+    /// </summary>
     public class DesignerViewData : BindableCollection<DesignerView>
     {
-        public DesignerViewData()
-        {
-            //// load designer view data from the object model
-            //var contentObjectModel = ContentObjectModel.GetInstance();
-            //foreach (var viewObject in contentObjectModel.ViewObjects)
-            //{
-            //    Add(new DesignerView { Id = viewObject.Name, Name = viewObject.Name });
-            //}
-        }
     }
-
-    //public static partial class Models
-    //{
-    //    public static DesignerViewData DesignerViews = new DesignerViewData();
-    //}
 }

@@ -43,24 +43,14 @@ namespace Delight
             switch (BindingType)
             {
                 case BindingType.SingleBinding:
+                    var source = Sources[0] as RuntimeBindingPath;
+                    var value = source.GetValue();
+
+                    var target = Target as RuntimeBindingPath;
+                    target.SetValue(value);
+                    break;
+
                 default:
-                    var sourcePath = Sources[0] as RuntimeBindingPath;
-                    var sourceObject = sourcePath.Objects.Last();
-                    var value = sourceObject.GetPropertyValue(sourcePath.Properties.Last());
-                    var transformedValue = value;
-
-                    if (sourcePath.IsNegated)
-                    {
-                        transformedValue = !(bool)value;
-                    }
-
-                    if (sourcePath.ValueConverter != null)
-                    {
-                        transformedValue = sourcePath.ValueConverter.ConvertToGeneric(transformedValue);
-                    }
-
-                    var targetObject = Target.Objects.Last();
-                    targetObject.SetPropertyValue(Target.Properties.Last(), transformedValue);
                     break;
 
                     //    case BindingType.MultiBindingTransform:
@@ -81,34 +71,17 @@ namespace Delight
             switch (BindingType)
             {
                 case BindingType.SingleBinding:
-                default:
-                    var sourcePath = Sources[0] as RuntimeBindingPath;
-                    var targetObject = Target.Objects.Last();
-                    var value = targetObject.GetPropertyValue(Target.Properties.Last());
-                    var transformedValue = value;
+                    var target = Target as RuntimeBindingPath;
+                    var value = target.GetValue();
 
-                    if (sourcePath.ValueConverter != null)
-                    {
-                        // convert value
-                        transformedValue = sourcePath.ValueConverter.ConvertFromGeneric(transformedValue);
-                    }
-
-                    if (sourcePath.IsNegated)
-                    {
-                        transformedValue = !(bool)value;
-                    }
-
-                    var sourceObject = sourcePath.Objects.Last();
-                    sourceObject.SetPropertyValue(sourcePath.Properties.Last(), transformedValue);
+                    var source = Sources[0] as RuntimeBindingPath;
+                    source.SetValue(value);
                     break;
 
-                    //    case BindingType.MultiBindingTransform:
-                    //        sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
-                    //        break;
-
-                    //    case BindingType.MultiBindingFormatString:
-                    //        sourceToTargetValue = string.Format("String.Format(\"{0}\", {1})", propertyBinding.FormatString, string.Join(", ", convertedSourceProperties));
-                    //        break;
+                case BindingType.MultiBindingTransform:
+                case BindingType.MultiBindingFormatString:
+                default:
+                    break;
             }
         }
 
