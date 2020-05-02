@@ -426,6 +426,8 @@ namespace Delight
             {
                 propertyInfo.SetValue(obj, value);
             }
+
+            // TODO here we might want to look if obj is a runtime view and set runtime dependency property values for type
         }
 
         /// <summary>

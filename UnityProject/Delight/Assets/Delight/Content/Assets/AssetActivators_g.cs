@@ -50,6 +50,7 @@ namespace Delight
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
             ViewActivators.Add("XmlEditor", (x, y, z, w, a) => new XmlEditor(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
+            ViewActivators.Add("HighscoreDemo", (x, y, z, w, a) => new HighscoreDemo(x, y, z, w, a));
             ViewActivators.Add("Aa", (x, y, z, w, a) => new Aa(x, y, z, w, a));
             ViewActivators.Add("TitleView", (x, y, z, w, a) => new TitleView(x, y, z, w, a));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w, a) => new AssetManagementTest(x, y, z, w, a));
@@ -113,6 +114,7 @@ namespace Delight
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("InputField", typeof(InputField));
+            ViewTypes.Add("HighscoreDemo", typeof(HighscoreDemo));
             ViewTypes.Add("Aa", typeof(Aa));
             ViewTypes.Add("TitleView", typeof(TitleView));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
@@ -139,6 +141,11 @@ namespace Delight
             ViewTypes.Add("MainMenuScene", typeof(MainMenuScene));
             ViewTypes.Add("NewScene", typeof(NewScene));
             ViewTypes.Add("InventoryTestScene", typeof(InventoryTestScene));
+
+            AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
+            AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));
+            AttachedPropertyActivators.Add("System.Boolean", (x, y) => new AttachedProperty<System.Boolean>(x, y));
+            AttachedPropertyActivators.Add("Delight.CellIndex", (x, y) => new AttachedProperty<Delight.CellIndex>(x, y));
         }
     }
 }

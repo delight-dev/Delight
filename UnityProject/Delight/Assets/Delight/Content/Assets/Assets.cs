@@ -16,6 +16,7 @@ namespace Delight
     {
         #region Fields
 
+        private static Dictionary<string, Func<View, string, AttachedProperty>> AttachedPropertyActivators;
         private static Dictionary<string, Func<View, View, string, Template, bool, View>> ViewActivators;
         private static Dictionary<string, Type> ViewTypes;
         public static DependencyObject RuntimeAssetObject = new DependencyObject();
@@ -67,6 +68,17 @@ namespace Delight
                 return viewType;
             }
             return null;
+        }
+
+        public static AttachedProperty CreateAttachedProperty(string fullTypeName, View parent, string propertyName)
+        {
+            if (AttachedPropertyActivators == null) return null;
+            if (AttachedPropertyActivators.TryGetValue(fullTypeName, out var activator))
+            {
+                return activator(parent, propertyName);
+            }
+            return null;
+
         }
 
         #endregion

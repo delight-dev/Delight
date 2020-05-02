@@ -318,8 +318,49 @@ namespace Delight
                 return null;
 
             InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
-            view.AfterInitialize();
 
+            // register action handlers, methods and initialize attached properties
+            var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
+            var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
+                            x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
+
+            // register action handlers
+            foreach (var actionAssignment in actionAssignments)
+            {
+                var action = view.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+                action?.RegisterHandler(view, actionAssignment.PropertyValue);
+            }
+
+            // register methods
+            var methodAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
+                x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Method).ToList();
+            foreach (var methodAssignment in methodAssignments)
+            {
+                var method = view.GetPropertyValue(methodAssignment.PropertyName) as ViewMethod;
+                method?.RegisterMethod(view, methodAssignment.PropertyValue);
+            }
+
+            // initialize attached properties        
+            var attachedProperties = viewObject.PropertyExpressions.OfType<Delight.Editor.Parser.AttachedProperty>();
+            foreach (var attachedProperty in attachedProperties)
+            {
+                var attachedPropertyInstance = Assets.CreateAttachedProperty(attachedProperty.PropertyTypeFullName, view, attachedProperty.PropertyName);
+                if (attachedPropertyInstance == null)
+                {
+                    ConsoleLogger.LogParseError(viewObject.FilePath, attachedProperty.LineNumber,
+                        String.Format("#Delight# Unable to instantiate attached property \"{0}\". Code-behind and property activator needs to be generated.", viewObject.Name, attachedProperty.PropertyName));
+                    continue;
+                }
+                view.SetPropertyValue(attachedProperty.PropertyName, Assets.CreateAttachedProperty(attachedProperty.PropertyTypeFullName, view, attachedProperty.PropertyName));
+            }
+
+            // set content container
+            if (viewObject.ContentContainer != null)
+            {
+                view.ContentContainer = view.GetPropertyValue(viewObject.ContentContainer.Id) as View;
+            }
+
+            view.AfterInitialize();
             return view;
         }
 
@@ -360,10 +401,95 @@ namespace Delight
                     childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
                 }
 
+                // set child view reference property if it exists
+                if (!inTemplate)
+                {
+                    parent.SetPropertyValue(childId, childView);
+                }
+
                 instantiatedChildViews.Add(childView);
 
-                // TODO add action handlers and method assignments
+                // add action handlers and method assignments
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
+                
+                // do we have action handlers?
+                var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
+                var actionAssignments = childPropertyAssignments.Where(x =>
+                {
+                    if (x.PropertyDeclarationInfo == null)
+                        return false;
+                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action;
+                });
+                if (actionAssignments.Any())
+                {
+                    // yes. add initializer for action handlers
+                    foreach (var actionAssignment in actionAssignments)
+                    {
+                        var actionValue = actionAssignment.PropertyValue;
+                        var actionHandlerName = actionValue;
+
+                        // does the action have parameters?
+                        if (actionValue.Contains("("))
+                        {
+                            // yes. parse the parameters
+                            string[] actionParameters = actionValue.Split(CodeGenerator.ActionDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
+                            actionHandlerName = actionParameters[0];
+                            if (actionParameters.Length > 1)
+                            {
+                                var paramGetters = new List<Func<object>>();
+
+                                foreach (var actionParameter in actionParameters.Skip(1))
+                                {
+                                    var actionParameterPath = new List<string>();
+                                    actionParameterPath.AddRange(actionParameter.Split('.'));
+
+                                    var templateItemInfo = templateItems != null
+                                        ? templateItems.FirstOrDefault(x => x.Name == actionParameterPath[0])
+                                        : null;
+                                    bool isTemplateItemSource = templateItemInfo != null;
+                                    if (isTemplateItemSource)
+                                    {
+                                        if (templateItemInfo.ItemTypeName == null)
+                                        {
+                                            paramGetters.Add(() => null);
+                                            continue; // item type was not inferred so ignore parameter
+                                        }
+
+                                        actionParameterPath[0] = "Item";
+                                    }
+
+                                    paramGetters.Add(() => contentTemplateData.GetPropertyValue(actionParameterPath));
+                                }
+
+                                // register action handler with parameters
+                                var actionWithParameters = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+                                actionWithParameters?.RegisterHandler(parent, actionHandlerName, paramGetters.ToArray());
+                                continue;
+                            }
+                        }
+
+                        // register action handler without parameters
+                        var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+                        action?.RegisterHandler(parent, actionHandlerName);
+                    }
+                }
+
+                // do we have method assignments?
+                var methodAssignments = childPropertyAssignments.Where(x =>
+                {
+                    if (x.PropertyDeclarationInfo == null)
+                        return false;
+                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Method;
+                });
+                if (methodAssignments.Any())
+                {
+                    // yes. register methods
+                    foreach (var methodAssignment in methodAssignments)
+                    {
+                        var method = childView.GetPropertyValue(methodAssignment.PropertyName) as ViewMethod;
+                        method?.RegisterMethod(parent, methodAssignment.PropertyValue);
+                    }
+                }
 
                 // get templated content data
                 var childTemplateDepth = templateDepth;
@@ -468,7 +594,7 @@ namespace Delight
                                 }
                             }
 
-                            int skipCount = isModelSource || (isTemplateItemSource && !isIndex) ? 1 : 0;
+                            int skipCount = isModelSource ? 1 : 0; //isModelSource || (isTemplateItemSource && !isIndex) ? 1 : 0;
                             var sourceProperties = sourcePath.Skip(skipCount).ToList();
 
                             // get object getters along path depending on the type of binding
@@ -504,17 +630,6 @@ namespace Delight
                                     sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
                                 }
                             }
-
-                            //if (isLoc)
-                            //{
-                            //    sourceProperties.Insert(0, locId);
-                            //}
-
-                            // TODO handle localization 
-                            //if (isLoc)
-                            //{
-                            //    sourceObjectGetters.Add(() => Models.Loc);
-                            //}
 
                             // add value converter
                             ValueConverter valueConverter = null;
@@ -604,7 +719,7 @@ namespace Delight
                             }
                         }
 
-                        // TODO add binding to template item if inside a template
+                        // TODO try add binding to first template child and see if it fixes binding issue
                         bool isTwoWay = propertyBinding.BindingType == BindingType.SingleBinding && propertyBinding.Sources.First().SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
                         childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType, transformMethod, propertyBinding.FormatString));
                     }

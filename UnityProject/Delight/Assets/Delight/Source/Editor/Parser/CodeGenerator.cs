@@ -27,8 +27,8 @@ namespace Delight.Editor.Parser
 
         public static string DefaultViewType = "UIView";
         public static string DefaultNamespace = "Delight";
-        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
-        private static readonly char[] ActionDelimiterChars = { ' ', ',', '(', ')' };
+        public static readonly char[] ActionDelimiterChars = { ' ', ',', '(', ')' };
+        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();        
 
         #endregion
 
@@ -558,17 +558,29 @@ namespace Delight.Editor.Parser
             sb.AppendLine("        {");
             sb.AppendLine("            ViewActivators = new Dictionary<string, Func<View, View, string, Template, bool, View>>();");
 
+            // generate view activators
             var viewObjects = _contentObjectModel.ViewObjects.Where(x => x.HasCode && !x.IsEditorView && x.Name != "View").ToList();
             foreach (var viewObject in viewObjects)
             {
                 sb.AppendLine("            ViewActivators.Add(\"{0}\", (x, y, z, w, a) => new {0}(x, y, z, w, a));", viewObject.TypeName);
             }
 
+            // generate view type dictionar
             sb.AppendLine();
             sb.AppendLine("            ViewTypes = new Dictionary<string, Type>();");
             foreach (var viewObject in viewObjects)
             {
                 sb.AppendLine("            ViewTypes.Add(\"{0}\", typeof({0}));", viewObject.TypeName);
+            }
+
+            // generate attached property activators
+            sb.AppendLine();
+            sb.AppendLine("            AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();");
+
+            var attachedPropertyTypes = GetAttachedPropertyTypes(viewObjects);
+            foreach (var attachedPropertyType in attachedPropertyTypes)
+            {                
+                sb.AppendLine("            AttachedPropertyActivators.Add(\"{0}\", (x, y) => new AttachedProperty<{0}>(x, y));", attachedPropertyType);
             }
 
             sb.AppendLine("        }");
@@ -583,6 +595,26 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+        }
+
+        /// <summary>
+        /// Gets all attached property types in the framework.
+        /// </summary>
+        public static List<string> GetAttachedPropertyTypes(List<ViewObject> viewObjects)
+        {
+            var attachedPropertyTypes = new HashSet<string>();
+            foreach (var viewObject in viewObjects)
+            {
+                var attachedProperties = viewObject.PropertyExpressions.OfType<AttachedProperty>();
+                foreach (var attachedProperty in attachedProperties)
+                {
+                    if (attachedPropertyTypes.Contains(attachedProperty.PropertyTypeFullName))
+                        continue;
+
+                    attachedPropertyTypes.Add(attachedProperty.PropertyTypeFullName);
+                }
+            }
+            return attachedPropertyTypes.ToList();
         }
 
         /// <summary>
@@ -1273,14 +1305,14 @@ namespace Delight.Editor.Parser
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
-                        var actionName = actionValue;
+                        var actionHandlerName = actionValue;
 
                         // does the action have parameters?
                         if (actionValue.Contains("("))
                         {
                             // yes. parse the parameters
                             string[] actionParameters = actionValue.Split(ActionDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
-                            actionName = actionParameters[0];
+                            actionHandlerName = actionParameters[0];
                             if (actionParameters.Length > 1)
                             {
                                 var formattedActionParameters = new List<string>();
@@ -1309,13 +1341,13 @@ namespace Delight.Editor.Parser
                                 }
 
                                 // generate action assignment with parameters
-                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionName, String.Join(", ", formattedActionParameters));
+                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionHandlerName, String.Join(", ", formattedActionParameters));
                                 continue;
                             }
                         }
 
                         // generate action assignment without parameters
-                        sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionName);
+                        sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionHandlerName);
                     }
                 }
 
@@ -1328,13 +1360,11 @@ namespace Delight.Editor.Parser
                 });
                 if (methodAssignments.Any())
                 {
-                    // yes. add initializer for action handlers
+                    // yes. add initializer for view method
                     foreach (var methodAssignment in methodAssignments)
                     {
-                        var actionName = methodAssignment.PropertyValue;
-
-                        // generate action assignment without parameters
-                        sb.AppendLine(indent, "{0}.{1}.RegisterMethod(this, \"{2}\");", childIdVar, methodAssignment.PropertyName, actionName);
+                        var methodName = methodAssignment.PropertyValue;
+                        sb.AppendLine(indent, "{0}.{1}.RegisterMethod(this, \"{2}\");", childIdVar, methodAssignment.PropertyName, methodName);
                     }
                 }
 
@@ -1454,7 +1484,7 @@ namespace Delight.Editor.Parser
                             }
 
                             // handle collection indexers in binding path
-                            // TODO below line might be unnecessary with update that generates readonly model fields. The call below translates e.g. Players.Player1 => Players["Player1"]
+                            // The call below translates e.g. Players.Player1 => Players["Player1"]
                             sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
 
                             var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();

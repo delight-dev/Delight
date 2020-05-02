@@ -1,0 +1,14 @@
+<HighscoreDemo xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+  <Image Sprite="audionautbg" Width="1240" Height="720" />
+  <Group Spacing="20">
+    <Label Text="High Scores" FontSize="45" AutoSize="True" FontColor="White" Font="Discognate" />
+    <List Items="{highscore in @Highscores}" AlternateItems="True">
+      <ListItem Width="500" Height="30" Alternate-BackgroundColor="#33111111">
+        <Label Text="{highscore.Index}. {highscore.Player.Name}" AutoSize="True" FontColor="White" FontSize="22" Alignment="Left"
+               Highlighted-FontColor="Black" ListItem.SetListItemState="True" />
+        <Label Text="{highscore.ScoreText}" AutoSize="True" FontColor="White" FontSize="22" Alignment="Right"
+               Highlighted-FontColor="Black" ListItem.SetListItemState="True" />
+      </ListItem>
+    </List>
+  </Group>
+</HighscoreDemo>
