@@ -662,12 +662,23 @@ namespace Delight
                         if (!inTemplate)
                         {
                             targetObjectGetters.Add(() => parent);
+                            for (int i = 0; i < targetPath.Count - 1; ++i)
+                            {
+                                var currentTargetPath = targetPath.Take(i + 1);
+                                targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath) as BindableObject);
+                            }
                         }
-                        for (int i = 0; i < targetPath.Count - 1; ++i)
+                        else
                         {
-                            var currentTargetPath = targetPath.Take(i + 1);
-                            targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath) as BindableObject);
+                            targetObjectGetters.Add(() => childView);
+                            var templateTargetPath = targetPath.Skip(1).ToList();
+                            for (int i = 0; i < templateTargetPath.Count - 1; ++i)
+                            {
+                                var currentTargetPath = templateTargetPath.Take(i + 1);
+                                targetObjectGetters.Add(() => childView.GetPropertyValue(currentTargetPath) as BindableObject);
+                            }
                         }
+
 
                         string targetProperty = string.Join(".", targetPath);
                         string convertedTargetProperty = targetProperty;

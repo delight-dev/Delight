@@ -432,6 +432,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestButton1.Name = "ModelBindingTestButton1";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_modelBindingTestButton1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton1, ModelBindingTestButton1Label);
                 }
                 return _modelBindingTestButton1;
@@ -474,6 +475,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestButton2.Name = "ModelBindingTestButton2";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_modelBindingTestButton2, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton2, ModelBindingTestButton2Label);
                 }
                 return _modelBindingTestButton2;
@@ -516,6 +518,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestButton3.Name = "ModelBindingTestButton3";
 #endif
+                    Delight.Button.WidthProperty.SetDefault(_modelBindingTestButton3, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Button.LabelTemplateProperty.SetDefault(_modelBindingTestButton3, ModelBindingTestButton3Label);
                 }
                 return _modelBindingTestButton3;
@@ -600,9 +603,9 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestPlayerList.Name = "ModelBindingTestPlayerList";
 #endif
-                    Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.WidthProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.List.HeightProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(500f, ElementSizeUnit.Pixels));
-                    Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.List.BackgroundColorProperty.SetDefault(_modelBindingTestPlayerList, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.List.SpacingProperty.SetDefault(_modelBindingTestPlayerList, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.List.IsScrollableProperty.SetDefault(_modelBindingTestPlayerList, true);
                     Delight.List.ItemsProperty.SetHasBinding(_modelBindingTestPlayerList);
@@ -855,10 +858,8 @@ namespace Delight
 #if UNITY_EDITOR
                     _modelBindingTestAchievementsList.Name = "ModelBindingTestAchievementsList";
 #endif
-                    Delight.List.IsVirtualizedProperty.SetDefault(_modelBindingTestAchievementsList, true);
                     Delight.List.OrientationProperty.SetDefault(_modelBindingTestAchievementsList, Delight.ElementOrientation.Vertical);
                     Delight.List.OffsetProperty.SetDefault(_modelBindingTestAchievementsList, new ElementMargin(new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.List.HeightProperty.SetDefault(_modelBindingTestAchievementsList, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.List.ItemsProperty.SetHasBinding(_modelBindingTestAchievementsList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_modelBindingTestAchievementsList, ModelBindingTestAchievementsListScrollableRegion);
                 }

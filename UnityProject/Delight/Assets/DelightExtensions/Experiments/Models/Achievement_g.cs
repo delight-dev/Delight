@@ -61,6 +61,8 @@ namespace Delight
             Add(new Achievement { PlayerId = "Player3", Title = "A3-1" });
             Add(new Achievement { PlayerId = "Player3", Title = "A3-2" });
             Add(new Achievement { PlayerId = "Player4", Title = "A4-1" });
+            Add(new Achievement { PlayerId = "Player5", Title = "A5-1" });
+            Add(new Achievement { PlayerId = "Player5", Title = "A5-2" });
         }
 
         #endregion
