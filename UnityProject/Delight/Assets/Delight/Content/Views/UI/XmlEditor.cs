@@ -950,7 +950,12 @@ namespace Delight
             {
                 var lines = new List<string>();
                 lines.Add(_lines[startLine].Substring(startChar));
-                lines.AddRange(_lines.GetRange(startLine + 1, endLine - startLine));
+                int startRange = startLine + 1;
+                if (endLine != startRange)
+                {
+                    int endRange = (endLine - startLine) - 1;
+                    lines.AddRange(_lines.GetRange(startRange, endRange));
+                }
                 lines.Add(_lines[endLine].Substring(0, endChar));
                 return String.Join(Environment.NewLine, lines);
             }
