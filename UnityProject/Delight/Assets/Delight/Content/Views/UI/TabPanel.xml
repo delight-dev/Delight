@@ -1,4 +1,5 @@
-<TabPanel xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="Collection" HasContentTemplates="True" ContentTemplateTypes="Tab;TabHeader" SelectedTabIndex="t:int = 0"
+<TabPanel xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="Collection" 
+          HasContentTemplates="True" ContentTemplateTypes="Tab;TabHeader" SelectedTabIndex="t:int = 0"
           IsStatic="t:bool" TabHeaderWidth="t:ElementSize" TabHeaderHeight="t:ElementSize"
           m.TabHeaderGroup="TabList"
           TabSelected="t:Action"
