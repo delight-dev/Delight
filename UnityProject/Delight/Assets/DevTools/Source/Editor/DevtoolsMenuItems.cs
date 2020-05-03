@@ -15,7 +15,6 @@ using UnityEngine.UI;
 
 namespace Delight.Editor
 {
-
     /// <summary>
     /// Editor menu items for Delight developer tools. 
     /// </summary>
@@ -37,7 +36,8 @@ namespace Delight.Editor
             // Creates API documentation from documentation XML. 
             // To generate the documenation XML add the following to the Assembly-CSharp.csproj file in first PropertyGroup:
             // <DocumentationFile>Assets\DevTools\Docs\Documentation.XML</DocumentationFile>
-            // And build the solution to generate the documentation XML, then the API docs can be built through the Delight menu item.
+            // And build the solution to generate the documentation XML. 
+            // Then the API docs can be built through the Delight menu item.
 
             // parse Assets\DevTools\Docs\Documentation.XML
             var docFile = "Assets/DevTools/Docs/Documentation.XML";
