@@ -57,6 +57,17 @@ namespace Delight
             Grid1.Cell.SetValue(XmlEditorRegion, new CellIndex(1, 1));
             XmlEditor = new XmlEditor(this, XmlEditorRegion.Content, "XmlEditor", XmlEditorTemplate);
             XmlEditor.Edit.RegisterHandler(this, "OnEdit");
+            XmlEditorStatusBar = new Region(this, XmlEditorRegion.Content, "XmlEditorStatusBar", XmlEditorStatusBarTemplate);
+            Group1 = new Group(this, XmlEditorStatusBar.Content, "Group1", Group1Template);
+            AutoParseCheckBox = new CheckBox(this, Group1.Content, "AutoParseCheckBox", AutoParseCheckBoxTemplate);
+
+            // binding <CheckBox IsChecked="{AutoParse}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoParse" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "AutoParseCheckBox", "IsChecked" }, new List<Func<BindableObject>> { () => this, () => AutoParseCheckBox }), () => AutoParseCheckBox.IsChecked = AutoParse, () => AutoParse = AutoParseCheckBox.IsChecked, true));
+            Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
+            Button2.Click.RegisterHandler(this, "ParseView");
+
+            // binding <Button IsDisabled="{AutoParse}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoParse" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Button2", "IsDisabled" }, new List<Func<BindableObject>> { () => this, () => Button2 }), () => Button2.IsDisabled = AutoParse, () => { }, false));
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             Grid1.Cell.SetValue(GridSplitter1, new CellIndex(0, 1));
             GridSplitter2 = new GridSplitter(this, Grid1.Content, "GridSplitter2", GridSplitter2Template);
@@ -81,13 +92,13 @@ namespace Delight
                 listItem2.SetContentTemplateData(tiView);
                 return listItem2;
             }, typeof(ListItem), "ListItem2"));
-            Group1 = new Group(this, SaveChangesPopup.Content, "Group1", Group1Template);
-            Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
-            Button2.Click.RegisterHandler(this, "SaveChangesAndQuit");
-            Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
-            Button3.Click.RegisterHandler(this, "DiscardChangesAndQuit");
-            Button4 = new Button(this, Group1.Content, "Button4", Button4Template);
-            Button4.Click.RegisterHandler(this, "CancelQuit");
+            Group2 = new Group(this, SaveChangesPopup.Content, "Group2", Group2Template);
+            Button3 = new Button(this, Group2.Content, "Button3", Button3Template);
+            Button3.Click.RegisterHandler(this, "SaveChangesAndQuit");
+            Button4 = new Button(this, Group2.Content, "Button4", Button4Template);
+            Button4.Click.RegisterHandler(this, "DiscardChangesAndQuit");
+            Button5 = new Button(this, Group2.Content, "Button5", Button5Template);
+            Button5.Click.RegisterHandler(this, "CancelQuit");
             this.AfterInitializeInternal();
         }
 
@@ -103,6 +114,7 @@ namespace Delight
             dependencyProperties.Add(DesignerViewsProperty);
             dependencyProperties.Add(ChangedDesignerViewsProperty);
             dependencyProperties.Add(XmlTextProperty);
+            dependencyProperties.Add(AutoParseProperty);
             dependencyProperties.Add(Grid1Property);
             dependencyProperties.Add(Grid1TemplateProperty);
             dependencyProperties.Add(ScrollableContentRegionProperty);
@@ -129,6 +141,14 @@ namespace Delight
             dependencyProperties.Add(XmlEditorRegionTemplateProperty);
             dependencyProperties.Add(XmlEditorProperty);
             dependencyProperties.Add(XmlEditorTemplateProperty);
+            dependencyProperties.Add(XmlEditorStatusBarProperty);
+            dependencyProperties.Add(XmlEditorStatusBarTemplateProperty);
+            dependencyProperties.Add(Group1Property);
+            dependencyProperties.Add(Group1TemplateProperty);
+            dependencyProperties.Add(AutoParseCheckBoxProperty);
+            dependencyProperties.Add(AutoParseCheckBoxTemplateProperty);
+            dependencyProperties.Add(Button2Property);
+            dependencyProperties.Add(Button2TemplateProperty);
             dependencyProperties.Add(GridSplitter1Property);
             dependencyProperties.Add(GridSplitter1TemplateProperty);
             dependencyProperties.Add(GridSplitter2Property);
@@ -143,14 +163,14 @@ namespace Delight
             dependencyProperties.Add(ListItem2TemplateProperty);
             dependencyProperties.Add(Label4Property);
             dependencyProperties.Add(Label4TemplateProperty);
-            dependencyProperties.Add(Group1Property);
-            dependencyProperties.Add(Group1TemplateProperty);
-            dependencyProperties.Add(Button2Property);
-            dependencyProperties.Add(Button2TemplateProperty);
+            dependencyProperties.Add(Group2Property);
+            dependencyProperties.Add(Group2TemplateProperty);
             dependencyProperties.Add(Button3Property);
             dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(Button4Property);
             dependencyProperties.Add(Button4TemplateProperty);
+            dependencyProperties.Add(Button5Property);
+            dependencyProperties.Add(Button5TemplateProperty);
         }
 
         #endregion
@@ -176,6 +196,13 @@ namespace Delight
         {
             get { return XmlTextProperty.GetValue(this); }
             set { XmlTextProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> AutoParseProperty = new DependencyProperty<System.Boolean>("AutoParse");
+        public System.Boolean AutoParse
+        {
+            get { return AutoParseProperty.GetValue(this); }
+            set { AutoParseProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<LayoutGrid> Grid1Property = new DependencyProperty<LayoutGrid>("Grid1");
@@ -360,6 +387,62 @@ namespace Delight
             set { XmlEditorTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Region> XmlEditorStatusBarProperty = new DependencyProperty<Region>("XmlEditorStatusBar");
+        public Region XmlEditorStatusBar
+        {
+            get { return XmlEditorStatusBarProperty.GetValue(this); }
+            set { XmlEditorStatusBarProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> XmlEditorStatusBarTemplateProperty = new DependencyProperty<Template>("XmlEditorStatusBarTemplate");
+        public Template XmlEditorStatusBarTemplate
+        {
+            get { return XmlEditorStatusBarTemplateProperty.GetValue(this); }
+            set { XmlEditorStatusBarTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
+        public Group Group1
+        {
+            get { return Group1Property.GetValue(this); }
+            set { Group1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>("Group1Template");
+        public Template Group1Template
+        {
+            get { return Group1TemplateProperty.GetValue(this); }
+            set { Group1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<CheckBox> AutoParseCheckBoxProperty = new DependencyProperty<CheckBox>("AutoParseCheckBox");
+        public CheckBox AutoParseCheckBox
+        {
+            get { return AutoParseCheckBoxProperty.GetValue(this); }
+            set { AutoParseCheckBoxProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> AutoParseCheckBoxTemplateProperty = new DependencyProperty<Template>("AutoParseCheckBoxTemplate");
+        public Template AutoParseCheckBoxTemplate
+        {
+            get { return AutoParseCheckBoxTemplateProperty.GetValue(this); }
+            set { AutoParseCheckBoxTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
+        public Button Button2
+        {
+            get { return Button2Property.GetValue(this); }
+            set { Button2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
+        public Template Button2Template
+        {
+            get { return Button2TemplateProperty.GetValue(this); }
+            set { Button2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<GridSplitter> GridSplitter1Property = new DependencyProperty<GridSplitter>("GridSplitter1");
         public GridSplitter GridSplitter1
         {
@@ -458,32 +541,18 @@ namespace Delight
             set { Label4TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
-        public Group Group1
+        public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
+        public Group Group2
         {
-            get { return Group1Property.GetValue(this); }
-            set { Group1Property.SetValue(this, value); }
+            get { return Group2Property.GetValue(this); }
+            set { Group2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Group1TemplateProperty = new DependencyProperty<Template>("Group1Template");
-        public Template Group1Template
+        public readonly static DependencyProperty<Template> Group2TemplateProperty = new DependencyProperty<Template>("Group2Template");
+        public Template Group2Template
         {
-            get { return Group1TemplateProperty.GetValue(this); }
-            set { Group1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Button> Button2Property = new DependencyProperty<Button>("Button2");
-        public Button Button2
-        {
-            get { return Button2Property.GetValue(this); }
-            set { Button2Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Button2TemplateProperty = new DependencyProperty<Template>("Button2Template");
-        public Template Button2Template
-        {
-            get { return Button2TemplateProperty.GetValue(this); }
-            set { Button2TemplateProperty.SetValue(this, value); }
+            get { return Group2TemplateProperty.GetValue(this); }
+            set { Group2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button3Property = new DependencyProperty<Button>("Button3");
@@ -512,6 +581,20 @@ namespace Delight
         {
             get { return Button4TemplateProperty.GetValue(this); }
             set { Button4TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
+        public Button Button5
+        {
+            get { return Button5Property.GetValue(this); }
+            set { Button5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
+        public Template Button5Template
+        {
+            get { return Button5TemplateProperty.GetValue(this); }
+            set { Button5TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -547,6 +630,7 @@ namespace Delight
                     _delightDesigner.Name = "DelightDesigner";
 #endif
                     Delight.DelightDesigner.EnableScriptEventsProperty.SetDefault(_delightDesigner, true);
+                    Delight.DelightDesigner.AutoParseProperty.SetDefault(_delightDesigner, true);
                     Delight.DelightDesigner.Grid1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGrid1);
                     Delight.DelightDesigner.ScrollableContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerScrollableContentRegion);
                     Delight.DelightDesigner.ContentRegionCanvasTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentRegionCanvas);
@@ -560,6 +644,10 @@ namespace Delight
                     Delight.DelightDesigner.Label2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel2);
                     Delight.DelightDesigner.XmlEditorRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorRegion);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
+                    Delight.DelightDesigner.XmlEditorStatusBarTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorStatusBar);
+                    Delight.DelightDesigner.Group1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup1);
+                    Delight.DelightDesigner.AutoParseCheckBoxTemplateProperty.SetDefault(_delightDesigner, DelightDesignerAutoParseCheckBox);
+                    Delight.DelightDesigner.Button2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton2);
                     Delight.DelightDesigner.GridSplitter1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter1);
                     Delight.DelightDesigner.GridSplitter2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter2);
                     Delight.DelightDesigner.SaveChangesPopupTemplateProperty.SetDefault(_delightDesigner, DelightDesignerSaveChangesPopup);
@@ -567,10 +655,10 @@ namespace Delight
                     Delight.DelightDesigner.List2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList2);
                     Delight.DelightDesigner.ListItem2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem2);
                     Delight.DelightDesigner.Label4TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel4);
-                    Delight.DelightDesigner.Group1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup1);
-                    Delight.DelightDesigner.Button2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton2);
+                    Delight.DelightDesigner.Group2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup2);
                     Delight.DelightDesigner.Button3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton3);
                     Delight.DelightDesigner.Button4TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton4);
+                    Delight.DelightDesigner.Button5TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton5);
                 }
                 return _delightDesigner;
             }
@@ -1225,7 +1313,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerXmlEditor.Name = "DelightDesignerXmlEditor";
 #endif
-                    Delight.XmlEditor.MarginProperty.SetDefault(_delightDesignerXmlEditor, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(21f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.XmlEditor.MarginProperty.SetDefault(_delightDesignerXmlEditor, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(21f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(30f, ElementSizeUnit.Pixels)));
                     Delight.XmlEditor.ScrollableRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorScrollableRegion);
                     Delight.XmlEditor.XmlEditRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditRegion);
                     Delight.XmlEditor.XmlTextRegionTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlTextRegion);
@@ -1588,6 +1676,187 @@ namespace Delight
             }
         }
 
+        private static Template _delightDesignerXmlEditorStatusBar;
+        public static Template DelightDesignerXmlEditorStatusBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorStatusBar == null || _delightDesignerXmlEditorStatusBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorStatusBar == null)
+#endif
+                {
+                    _delightDesignerXmlEditorStatusBar = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorStatusBar.Name = "DelightDesignerXmlEditorStatusBar";
+#endif
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new UnityEngine.Color(0.8588235f, 0.8588235f, 0.8588235f, 1f));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.Region.AlignmentProperty.SetDefault(_delightDesignerXmlEditorStatusBar, Delight.ElementAlignment.Bottom);
+                }
+                return _delightDesignerXmlEditorStatusBar;
+            }
+        }
+
+        private static Template _delightDesignerGroup1;
+        public static Template DelightDesignerGroup1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerGroup1 == null || _delightDesignerGroup1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerGroup1 == null)
+#endif
+                {
+                    _delightDesignerGroup1 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _delightDesignerGroup1.Name = "DelightDesignerGroup1";
+#endif
+                    Delight.Group.OrientationProperty.SetDefault(_delightDesignerGroup1, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetDefault(_delightDesignerGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.AlignmentProperty.SetDefault(_delightDesignerGroup1, Delight.ElementAlignment.Right);
+                    Delight.Group.MarginProperty.SetDefault(_delightDesignerGroup1, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _delightDesignerGroup1;
+            }
+        }
+
+        private static Template _delightDesignerAutoParseCheckBox;
+        public static Template DelightDesignerAutoParseCheckBox
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerAutoParseCheckBox == null || _delightDesignerAutoParseCheckBox.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerAutoParseCheckBox == null)
+#endif
+                {
+                    _delightDesignerAutoParseCheckBox = new Template(CheckBoxTemplates.CheckBox);
+#if UNITY_EDITOR
+                    _delightDesignerAutoParseCheckBox.Name = "DelightDesignerAutoParseCheckBox";
+#endif
+                    Delight.CheckBox.IsCheckedProperty.SetHasBinding(_delightDesignerAutoParseCheckBox);
+                    Delight.CheckBox.CheckBoxGroupTemplateProperty.SetDefault(_delightDesignerAutoParseCheckBox, DelightDesignerAutoParseCheckBoxCheckBoxGroup);
+                    Delight.CheckBox.CheckBoxImageViewTemplateProperty.SetDefault(_delightDesignerAutoParseCheckBox, DelightDesignerAutoParseCheckBoxCheckBoxImageView);
+                    Delight.CheckBox.CheckBoxLabelTemplateProperty.SetDefault(_delightDesignerAutoParseCheckBox, DelightDesignerAutoParseCheckBoxCheckBoxLabel);
+                }
+                return _delightDesignerAutoParseCheckBox;
+            }
+        }
+
+        private static Template _delightDesignerAutoParseCheckBoxCheckBoxGroup;
+        public static Template DelightDesignerAutoParseCheckBoxCheckBoxGroup
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerAutoParseCheckBoxCheckBoxGroup == null || _delightDesignerAutoParseCheckBoxCheckBoxGroup.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerAutoParseCheckBoxCheckBoxGroup == null)
+#endif
+                {
+                    _delightDesignerAutoParseCheckBoxCheckBoxGroup = new Template(CheckBoxTemplates.CheckBoxCheckBoxGroup);
+#if UNITY_EDITOR
+                    _delightDesignerAutoParseCheckBoxCheckBoxGroup.Name = "DelightDesignerAutoParseCheckBoxCheckBoxGroup";
+#endif
+                }
+                return _delightDesignerAutoParseCheckBoxCheckBoxGroup;
+            }
+        }
+
+        private static Template _delightDesignerAutoParseCheckBoxCheckBoxImageView;
+        public static Template DelightDesignerAutoParseCheckBoxCheckBoxImageView
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerAutoParseCheckBoxCheckBoxImageView == null || _delightDesignerAutoParseCheckBoxCheckBoxImageView.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerAutoParseCheckBoxCheckBoxImageView == null)
+#endif
+                {
+                    _delightDesignerAutoParseCheckBoxCheckBoxImageView = new Template(CheckBoxTemplates.CheckBoxCheckBoxImageView);
+#if UNITY_EDITOR
+                    _delightDesignerAutoParseCheckBoxCheckBoxImageView.Name = "DelightDesignerAutoParseCheckBoxCheckBoxImageView";
+#endif
+                    Delight.Image.WidthProperty.SetDefault(_delightDesignerAutoParseCheckBoxCheckBoxImageView, new ElementSize(15f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_delightDesignerAutoParseCheckBoxCheckBoxImageView, new ElementSize(15f, ElementSizeUnit.Pixels));
+                }
+                return _delightDesignerAutoParseCheckBoxCheckBoxImageView;
+            }
+        }
+
+        private static Template _delightDesignerAutoParseCheckBoxCheckBoxLabel;
+        public static Template DelightDesignerAutoParseCheckBoxCheckBoxLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerAutoParseCheckBoxCheckBoxLabel == null || _delightDesignerAutoParseCheckBoxCheckBoxLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerAutoParseCheckBoxCheckBoxLabel == null)
+#endif
+                {
+                    _delightDesignerAutoParseCheckBoxCheckBoxLabel = new Template(CheckBoxTemplates.CheckBoxCheckBoxLabel);
+#if UNITY_EDITOR
+                    _delightDesignerAutoParseCheckBoxCheckBoxLabel.Name = "DelightDesignerAutoParseCheckBoxCheckBoxLabel";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerAutoParseCheckBoxCheckBoxLabel, "Auto parse");
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerAutoParseCheckBoxCheckBoxLabel, 12f);
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerAutoParseCheckBoxCheckBoxLabel, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
+                }
+                return _delightDesignerAutoParseCheckBoxCheckBoxLabel;
+            }
+        }
+
+        private static Template _delightDesignerButton2;
+        public static Template DelightDesignerButton2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerButton2 == null || _delightDesignerButton2.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerButton2 == null)
+#endif
+                {
+                    _delightDesignerButton2 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _delightDesignerButton2.Name = "DelightDesignerButton2";
+#endif
+                    Delight.Button.HeightProperty.SetDefault(_delightDesignerButton2, new ElementSize(14f, ElementSizeUnit.Pixels));
+                    Delight.Button.IsDisabledProperty.SetHasBinding(_delightDesignerButton2);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_delightDesignerButton2, DelightDesignerButton2Label);
+                }
+                return _delightDesignerButton2;
+            }
+        }
+
+        private static Template _delightDesignerButton2Label;
+        public static Template DelightDesignerButton2Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerButton2Label == null || _delightDesignerButton2Label.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerButton2Label == null)
+#endif
+                {
+                    _delightDesignerButton2Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _delightDesignerButton2Label.Name = "DelightDesignerButton2Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton2Label, "Parse");
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerButton2Label, 12f);
+                }
+                return _delightDesignerButton2Label;
+            }
+        }
+
         private static Template _delightDesignerGridSplitter1;
         public static Template DelightDesignerGridSplitter1
         {
@@ -1931,72 +2200,27 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerGroup1;
-        public static Template DelightDesignerGroup1
+        private static Template _delightDesignerGroup2;
+        public static Template DelightDesignerGroup2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerGroup1 == null || _delightDesignerGroup1.CurrentVersion != Template.Version)
+                if (_delightDesignerGroup2 == null || _delightDesignerGroup2.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerGroup1 == null)
+                if (_delightDesignerGroup2 == null)
 #endif
                 {
-                    _delightDesignerGroup1 = new Template(GroupTemplates.Group);
+                    _delightDesignerGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _delightDesignerGroup1.Name = "DelightDesignerGroup1";
+                    _delightDesignerGroup2.Name = "DelightDesignerGroup2";
 #endif
-                    Delight.Group.OrientationProperty.SetDefault(_delightDesignerGroup1, Delight.ElementOrientation.Horizontal);
-                    Delight.Group.SpacingProperty.SetDefault(_delightDesignerGroup1, new ElementSize(8f, ElementSizeUnit.Pixels));
-                    Delight.Group.AlignmentProperty.SetDefault(_delightDesignerGroup1, Delight.ElementAlignment.BottomRight);
-                    Delight.Group.OffsetProperty.SetDefault(_delightDesignerGroup1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
+                    Delight.Group.OrientationProperty.SetDefault(_delightDesignerGroup2, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetDefault(_delightDesignerGroup2, new ElementSize(8f, ElementSizeUnit.Pixels));
+                    Delight.Group.AlignmentProperty.SetDefault(_delightDesignerGroup2, Delight.ElementAlignment.BottomRight);
+                    Delight.Group.OffsetProperty.SetDefault(_delightDesignerGroup2, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
                 }
-                return _delightDesignerGroup1;
-            }
-        }
-
-        private static Template _delightDesignerButton2;
-        public static Template DelightDesignerButton2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerButton2 == null || _delightDesignerButton2.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerButton2 == null)
-#endif
-                {
-                    _delightDesignerButton2 = new Template(ButtonTemplates.Button);
-#if UNITY_EDITOR
-                    _delightDesignerButton2.Name = "DelightDesignerButton2";
-#endif
-                    Delight.Button.WidthProperty.SetDefault(_delightDesignerButton2, new ElementSize(90f, ElementSizeUnit.Pixels));
-                    Delight.Button.HeightProperty.SetDefault(_delightDesignerButton2, new ElementSize(30f, ElementSizeUnit.Pixels));
-                    Delight.Button.LabelTemplateProperty.SetDefault(_delightDesignerButton2, DelightDesignerButton2Label);
-                }
-                return _delightDesignerButton2;
-            }
-        }
-
-        private static Template _delightDesignerButton2Label;
-        public static Template DelightDesignerButton2Label
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerButton2Label == null || _delightDesignerButton2Label.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerButton2Label == null)
-#endif
-                {
-                    _delightDesignerButton2Label = new Template(ButtonTemplates.ButtonLabel);
-#if UNITY_EDITOR
-                    _delightDesignerButton2Label.Name = "DelightDesignerButton2Label";
-#endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton2Label, "Yes");
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerButton2Label, 16f);
-                }
-                return _delightDesignerButton2Label;
+                return _delightDesignerGroup2;
             }
         }
 
@@ -2038,7 +2262,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerButton3Label.Name = "DelightDesignerButton3Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton3Label, "No");
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton3Label, "Yes");
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerButton3Label, 16f);
                 }
                 return _delightDesignerButton3Label;
@@ -2083,10 +2307,55 @@ namespace Delight
 #if UNITY_EDITOR
                     _delightDesignerButton4Label.Name = "DelightDesignerButton4Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton4Label, "Cancel");
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton4Label, "No");
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerButton4Label, 16f);
                 }
                 return _delightDesignerButton4Label;
+            }
+        }
+
+        private static Template _delightDesignerButton5;
+        public static Template DelightDesignerButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerButton5 == null || _delightDesignerButton5.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerButton5 == null)
+#endif
+                {
+                    _delightDesignerButton5 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _delightDesignerButton5.Name = "DelightDesignerButton5";
+#endif
+                    Delight.Button.WidthProperty.SetDefault(_delightDesignerButton5, new ElementSize(90f, ElementSizeUnit.Pixels));
+                    Delight.Button.HeightProperty.SetDefault(_delightDesignerButton5, new ElementSize(30f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_delightDesignerButton5, DelightDesignerButton5Label);
+                }
+                return _delightDesignerButton5;
+            }
+        }
+
+        private static Template _delightDesignerButton5Label;
+        public static Template DelightDesignerButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerButton5Label == null || _delightDesignerButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerButton5Label == null)
+#endif
+                {
+                    _delightDesignerButton5Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _delightDesignerButton5Label.Name = "DelightDesignerButton5Label";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerButton5Label, "Cancel");
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerButton5Label, 16f);
+                }
+                return _delightDesignerButton5Label;
             }
         }
 

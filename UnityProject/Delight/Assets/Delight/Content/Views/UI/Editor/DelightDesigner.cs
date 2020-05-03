@@ -104,7 +104,10 @@ namespace Delight
                 return;
 
             _currentEditedView.IsDirty = true;
-            ParseView();
+            if (AutoParse)
+            {
+                ParseView();
+            }
         }
 
         /// <summary>
@@ -142,6 +145,17 @@ namespace Delight
             if (!designerView.IsRuntimeParsed)
             {
                 _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
+                if (_displayedView == null)
+                {
+                    if (designerView.ViewTypeName == "DelightDesigner")
+                    {
+                        _displayedView = new DelightDesigner(this, ViewContentRegion);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
 
                 var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
@@ -315,7 +329,16 @@ namespace Delight
             var viewTypeName = isNew ? viewObject.BasedOn.TypeName : viewObject.TypeName;
             var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true) as UIView;
             if (view == null)
-                return null;
+            {
+                if (viewTypeName == "DelightDesigner")
+                {
+                    view = new DelightDesigner(parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true);
+                }
+                else
+                {
+                    return null;
+                }
+            }
 
             InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
 

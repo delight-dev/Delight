@@ -1,6 +1,7 @@
-<DelightDesigner xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd"
-                 Module="TextMeshPro" EnableScriptEvents="True"
-                 BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData" HideInDesigner="True" IsEditorView="True" XmlText="t:string">
+<DelightDesigner
+ xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd"                 Module="TextMeshPro" EnableScriptEvents="True"
+                 BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData" 
+                 IsEditorView="True" XmlText="t:string" AutoParse="t:bool = True">
 
   <Grid Columns="200[20],*" Rows="*,240[20]" BackgroundColor="#394552">
     <!--BackgroundColor="#55a3ff"-->
@@ -42,7 +43,13 @@
 
     <!-- Bottom Panel - XML editor -->
     <Region Id="XmlEditorRegion" Grid.Cell="1,1" BackgroundColor="#fbfbfb">
-      <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" />
+      <XmlEditor Id="XmlEditor" Margin="10,21,0,30" Edit="OnEdit" />
+      <Region Id="XmlEditorStatusBar" BackgroundColor="#dbdbdb" Height="20" Alignment="Bottom">
+        <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
+          <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" /> 
+          <Button Text="Parse" IsDisabled="{AutoParse}" Click="ParseView" FontSize="12" Height="14" />
+        </Group>
+      </Region>
     </Region>
 
     <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,1" />

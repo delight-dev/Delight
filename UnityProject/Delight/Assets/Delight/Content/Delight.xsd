@@ -8036,6 +8036,7 @@
     <xs:attribute name="DesignerViews" type="xs:string" />
     <xs:attribute name="ChangedDesignerViews" type="xs:string" />
     <xs:attribute name="XmlText" type="xs:string" />
+    <xs:attribute name="AutoParse" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />

@@ -34,6 +34,17 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called after the view is loaded.
+        /// </summary>
+        protected override void AfterLoad()
+        {
+            if (IgnoreObject)
+                return;
+            base.AfterLoad();
+            IsDisabledChanged();
+        }
+
+        /// <summary>
         /// Called when a child changes its layout.
         /// </summary>
         protected override void ChildLayoutChanged()
