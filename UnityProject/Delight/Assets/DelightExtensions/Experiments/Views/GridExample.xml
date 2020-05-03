@@ -1,4 +1,4 @@
-<GridExample xmlns="Delight" BasedOn="LayoutRoot">
+<GridExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot">
   <Grid Rows="200[20],*[20],200[20]" Columns="200[20],*[20],200[20]" Width="600" Height="600"> 
     <Region Id="Cell00" Grid.Cell="0,0" BackgroundColor="#5389e0" />
     <Region Id="Cell01" Grid.Cell="0,1" BackgroundColor="#e375f9" />
