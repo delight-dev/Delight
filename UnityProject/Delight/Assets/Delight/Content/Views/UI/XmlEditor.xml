@@ -1,5 +1,5 @@
-<XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-           BasedOn="UIImageView" BackgroundColor="#fbfbfb"
+<XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" 
+           BackgroundColor="#fbfbfb"
            EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True"
            Edit="t:Action">
   <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False"

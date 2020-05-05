@@ -31,6 +31,7 @@ namespace Delight
             ContentExplorer = new Region(this, Grid1.Content, "ContentExplorer", ContentExplorerTemplate);
             Grid1.Cell.SetValue(ContentExplorer, new CellIndex(0, 0));
             Grid1.CellSpan.SetValue(ContentExplorer, new CellIndex(2, 1));
+            Region1 = new Region(this, ContentExplorer.Content, "Region1", Region1Template);
             TabPanel1 = new TabPanel(this, ContentExplorer.Content, "TabPanel1", TabPanel1Template);
 
             // templates for TabPanel1
@@ -46,10 +47,10 @@ namespace Delight
             TabPanel1.ContentTemplates.Add(new ContentTemplate(x0 => 
             {
                 var tab1 = new Tab(this, TabPanel1.Content, "Tab1", Tab1Template);
-                var region1 = new Region(this, tab1.Content, "Region1", Region1Template);
-                var button1 = new Button(this, region1.Content, "Button1", Button1Template);
+                var region2 = new Region(this, tab1.Content, "Region2", Region2Template);
+                var button1 = new Button(this, region2.Content, "Button1", Button1Template);
                 button1.Click.RegisterHandler(this, "AddNewView");
-                var list1 = new List(this, region1.Content, "List1", List1Template);
+                var list1 = new List(this, region2.Content, "List1", List1Template);
                 list1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
                 // binding <List Items="{view in DesignerViews}">
@@ -152,14 +153,16 @@ namespace Delight
             dependencyProperties.Add(ViewContentRegionTemplateProperty);
             dependencyProperties.Add(ContentExplorerProperty);
             dependencyProperties.Add(ContentExplorerTemplateProperty);
+            dependencyProperties.Add(Region1Property);
+            dependencyProperties.Add(Region1TemplateProperty);
             dependencyProperties.Add(TabPanel1Property);
             dependencyProperties.Add(TabPanel1TemplateProperty);
             dependencyProperties.Add(TabHeader1Property);
             dependencyProperties.Add(TabHeader1TemplateProperty);
             dependencyProperties.Add(Tab1Property);
             dependencyProperties.Add(Tab1TemplateProperty);
-            dependencyProperties.Add(Region1Property);
-            dependencyProperties.Add(Region1TemplateProperty);
+            dependencyProperties.Add(Region2Property);
+            dependencyProperties.Add(Region2TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(List1Property);
@@ -308,6 +311,20 @@ namespace Delight
             set { ContentExplorerTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
+        public Region Region1
+        {
+            get { return Region1Property.GetValue(this); }
+            set { Region1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
+        public Template Region1Template
+        {
+            get { return Region1TemplateProperty.GetValue(this); }
+            set { Region1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<TabPanel> TabPanel1Property = new DependencyProperty<TabPanel>("TabPanel1");
         public TabPanel TabPanel1
         {
@@ -350,18 +367,18 @@ namespace Delight
             set { Tab1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
-        public Region Region1
+        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
+        public Region Region2
         {
-            get { return Region1Property.GetValue(this); }
-            set { Region1Property.SetValue(this, value); }
+            get { return Region2Property.GetValue(this); }
+            set { Region2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
-        public Template Region1Template
+        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
+        public Template Region2Template
         {
-            get { return Region1TemplateProperty.GetValue(this); }
-            set { Region1TemplateProperty.SetValue(this, value); }
+            get { return Region2TemplateProperty.GetValue(this); }
+            set { Region2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
@@ -711,10 +728,11 @@ namespace Delight
                     Delight.DelightDesigner.ContentRegionCanvasTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentRegionCanvas);
                     Delight.DelightDesigner.ViewContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewContentRegion);
                     Delight.DelightDesigner.ContentExplorerTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentExplorer);
+                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
                     Delight.DelightDesigner.TabPanel1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerTabPanel1);
                     Delight.DelightDesigner.TabHeader1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerTabHeader1);
                     Delight.DelightDesigner.Tab1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerTab1);
-                    Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
+                    Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
                     Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
                     Delight.DelightDesigner.ListItem1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem1);
@@ -999,6 +1017,30 @@ namespace Delight
             }
         }
 
+        private static Template _delightDesignerRegion1;
+        public static Template DelightDesignerRegion1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerRegion1 == null)
+#endif
+                {
+                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
+#endif
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerRegion1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.Region.AlignmentProperty.SetDefault(_delightDesignerRegion1, Delight.ElementAlignment.Top);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(0.6039216f, 0.6039216f, 0.6039216f, 1f));
+                    Delight.Region.MarginProperty.SetDefault(_delightDesignerRegion1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _delightDesignerRegion1;
+            }
+        }
+
         private static Template _delightDesignerTabPanel1;
         public static Template DelightDesignerTabPanel1
         {
@@ -1129,24 +1171,24 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerRegion1;
-        public static Template DelightDesignerRegion1
+        private static Template _delightDesignerRegion2;
+        public static Template DelightDesignerRegion2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerRegion1 == null || _delightDesignerRegion1.CurrentVersion != Template.Version)
+                if (_delightDesignerRegion2 == null || _delightDesignerRegion2.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerRegion1 == null)
+                if (_delightDesignerRegion2 == null)
 #endif
                 {
-                    _delightDesignerRegion1 = new Template(RegionTemplates.Region);
+                    _delightDesignerRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _delightDesignerRegion1.Name = "DelightDesignerRegion1";
+                    _delightDesignerRegion2.Name = "DelightDesignerRegion2";
 #endif
-                    Delight.Region.MarginProperty.SetDefault(_delightDesignerRegion1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(34f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Region.MarginProperty.SetDefault(_delightDesignerRegion2, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(34f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
-                return _delightDesignerRegion1;
+                return _delightDesignerRegion2;
             }
         }
 

@@ -1,5 +1,4 @@
-<InputField xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-            Module="TextMeshPro"
+<InputField xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" Module="TextMeshPro"
             BasedOn="UIImageView"
             TMP_InputFieldComponent="t:TMPro.TMP_InputField"
             m.TMP_InputFieldComponent="" m.InputText=""

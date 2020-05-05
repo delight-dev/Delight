@@ -1,6 +1,4 @@
-<MainMenu xmlns="Delight" 
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-          xsi:schemaLocation="Delight ../Delight.xsd">
+<MainMenu xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
   <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
           BackgroundColor="#ef706a">
     <Group Spacing="10px" Alignment="Top">

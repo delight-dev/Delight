@@ -662,7 +662,6 @@ namespace Delight
                     _listExampleButton3.Name = "ListExampleButton3";
 #endif
                     Delight.Button.WidthProperty.SetDefault(_listExampleButton3, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Button.MarginProperty.SetDefault(_listExampleButton3, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton3, ListExampleButton3Label);
                 }
                 return _listExampleButton3;
@@ -706,7 +705,6 @@ namespace Delight
                     _listExampleButton4.Name = "ListExampleButton4";
 #endif
                     Delight.Button.WidthProperty.SetDefault(_listExampleButton4, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Button.MarginProperty.SetDefault(_listExampleButton4, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton4, ListExampleButton4Label);
                 }
                 return _listExampleButton4;
@@ -750,7 +748,6 @@ namespace Delight
                     _listExampleButton5.Name = "ListExampleButton5";
 #endif
                     Delight.Button.WidthProperty.SetDefault(_listExampleButton5, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Button.MarginProperty.SetDefault(_listExampleButton5, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton5, ListExampleButton5Label);
                 }
                 return _listExampleButton5;
@@ -794,7 +791,6 @@ namespace Delight
                     _listExampleButton6.Name = "ListExampleButton6";
 #endif
                     Delight.Button.WidthProperty.SetDefault(_listExampleButton6, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Button.MarginProperty.SetDefault(_listExampleButton6, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton6, ListExampleButton6Label);
                 }
                 return _listExampleButton6;

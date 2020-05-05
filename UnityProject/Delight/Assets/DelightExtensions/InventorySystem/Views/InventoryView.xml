@@ -1,5 +1,5 @@
-<InventoryView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd"
-               BasedOn="Collection" HasContentTemplates="True" ContentTemplateTypes="InventoryItemView">
+<InventoryView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="Collection" 
+               HasContentTemplates="True" ContentTemplateTypes="InventoryItemView">
 
   <Label Text="Our awesome inventory view" />
   

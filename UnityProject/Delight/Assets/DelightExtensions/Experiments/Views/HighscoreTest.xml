@@ -1,4 +1,5 @@
-<HighscoreTest xmlns="Delight" BasedOn="LayoutRoot" SelectedHighscore="t:Highscore" Score="t:string" PlayerId="t:string">
+<HighscoreTest xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot" 
+               SelectedHighscore="t:Highscore" Score="t:string" PlayerId="t:string">
   
   <Group Orientation="Horizontal" Spacing="10">
     <Group Spacing="6">
