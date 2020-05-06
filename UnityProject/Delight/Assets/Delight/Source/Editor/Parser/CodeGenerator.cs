@@ -262,6 +262,7 @@ namespace Delight.Editor.Parser
 
                 sb.AppendLine();
                 sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\"{2});", typeName, declaration.PropertyName, activator);
+                GeneratePropertyComment(sb, viewObject, declaration);
                 sb.AppendLine("        public {0} {1}", typeName, declaration.PropertyName);
                 sb.AppendLine("        {");
                 sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", declaration.PropertyName);
@@ -280,6 +281,7 @@ namespace Delight.Editor.Parser
                     // the property maps to a dependency property in another view
                     sb.AppendLine();
                     sb.AppendLine("        public readonly static DependencyProperty {0}Property = {1}.{2}Property;", mappedDeclaration.PropertyName, mappedDeclaration.TargetObjectType, mappedDeclaration.TargetPropertyName);
+                    GenerateMappedPropertyComment(sb, viewObject, mappedDeclaration);
                     sb.AppendLine("        public {0} {1}", typeName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}.{1}; }}", mappedDeclaration.TargetObjectName, mappedDeclaration.TargetPropertyName);
@@ -292,6 +294,7 @@ namespace Delight.Editor.Parser
                     sb.AppendLine();
                     sb.AppendLine("        public readonly static MappedAssetDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedAssetDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, (x, y) => x.{3} = y?.UnityObject);",
                         mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
+                    GenerateMappedPropertyComment(sb, viewObject, mappedDeclaration);
                     sb.AppendLine("        public {0} {1}", mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", mappedDeclaration.PropertyName);
@@ -304,6 +307,7 @@ namespace Delight.Editor.Parser
                     sb.AppendLine();
                     sb.AppendLine("        public readonly static MappedDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, x => x.{3}, (x, y) => x.{3} = y);",
                         mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
+                    GenerateMappedPropertyComment(sb, viewObject, mappedDeclaration);
                     sb.AppendLine("        public {0} {1}", mappedDeclaration.TargetPropertyTypeFullName, mappedDeclaration.PropertyName);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}Property.GetValue(this); }}", mappedDeclaration.PropertyName);
@@ -317,6 +321,7 @@ namespace Delight.Editor.Parser
             foreach (var attachedProperty in attachedProperties)
             {
                 sb.AppendLine();
+                GenerateAttachedPropertyComment(sb, viewObject, attachedProperty);
                 sb.AppendLine("        public AttachedProperty<{0}> {1} {{ get; private set; }}", attachedProperty.PropertyTypeFullName, attachedProperty.PropertyName);
             }
 
@@ -370,7 +375,6 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
-            //EditorUtility.SetDirty(AssetDatabase.LoadAssetAtPath(sourceFile));
 
             // generate blank code-behind if it doesn't exist
             CodeGenerator.GenerateBlankCodeBehind(viewObject.Name, viewObject.TypeName, viewObject.FilePath);
@@ -380,6 +384,41 @@ namespace Delight.Editor.Parser
             {
                 GenerateActionHandlers(viewObject);
             }
+        }
+
+        /// <summary>
+        /// Generates XML comment for dependency property.
+        /// </summary>
+        private static void GeneratePropertyComment(StringBuilder sb, ViewObject viewObject, PropertyDeclaration propertyDeclaration)
+        {
+            var config = MasterConfig.GetInstance();
+            var docObject = config.DocObjects.FirstOrDefault(x => x.Name == viewObject.Name);
+            if (docObject == null)
+                return;
+
+            var docProperty = docObject.Properties.FirstOrDefault(x => x.Name == propertyDeclaration.PropertyName);
+            if (docProperty == null || String.IsNullOrWhiteSpace(docProperty.Comment))
+                return;
+
+            sb.AppendLine();
+            sb.AppendLine("        /// <summary>{0}</summary>", docProperty.Comment);
+        }
+
+        /// <summary>
+        /// Generates XML comment for mapped dependency property.
+        /// </summary>
+        private static void GenerateMappedPropertyComment(StringBuilder sb, ViewObject viewObject, MappedPropertyDeclaration mappedDeclaration)
+        {
+    //        sb.AppendLine("        public readonly static MappedAssetDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedAssetDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, (x, y) => x.{3} = y?.UnityObject);",
+    //mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
+        }
+
+        /// <summary>
+        /// Generates XML comment for attached dependency property.
+        /// </summary>
+        private static void GenerateAttachedPropertyComment(StringBuilder sb, ViewObject viewObject, AttachedProperty attachedProperty)
+        {
+
         }
 
         /// <summary>
