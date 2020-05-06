@@ -83,7 +83,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Sets scroll position. 
+        /// Sets normalized scroll position. 
         /// </summary>
         public void SetScrollPosition(float position, float? viewportRatio = null)
         {

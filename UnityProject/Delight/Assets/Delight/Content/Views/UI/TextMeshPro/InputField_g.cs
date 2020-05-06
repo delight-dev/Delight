@@ -122,6 +122,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> SetValueOnEndEditProperty = new DependencyProperty<System.Boolean>("SetValueOnEndEdit");
+        /// <summary>Boolean indicating if the value of the input field text should be set after the user is done editing.</summary>
         public System.Boolean SetValueOnEndEdit
         {
             get { return SetValueOnEndEditProperty.GetValue(this); }
@@ -129,6 +130,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> OnlyTriggerValueChangedFromUIProperty = new DependencyProperty<System.Boolean>("OnlyTriggerValueChangedFromUI");
+        /// <summary>Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.</summary>
         public System.Boolean OnlyTriggerValueChangedFromUI
         {
             get { return OnlyTriggerValueChangedFromUIProperty.GetValue(this); }
@@ -136,6 +138,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit", () => new ViewAction());
+        /// <summary>Action called when the user stops editing the input field text.</summary>
         public ViewAction EndEdit
         {
             get { return EndEditProperty.GetValue(this); }
@@ -143,6 +146,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
+        /// <summary>Action called when the input text changes.</summary>
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }
@@ -150,6 +154,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> TextMarginProperty = new DependencyProperty<Delight.ElementMargin>("TextMargin");
+        /// <summary>Margin of the input text.</summary>
         public Delight.ElementMargin TextMargin
         {
             get { return TextMarginProperty.GetValue(this); }

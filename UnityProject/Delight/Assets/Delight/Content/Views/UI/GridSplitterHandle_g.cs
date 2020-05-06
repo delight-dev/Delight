@@ -50,6 +50,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> IsEnabledProperty = new DependencyProperty<System.Boolean>("IsEnabled");
+        /// <summary>Boolean indicating if the user can interact with the grid splitter handle.</summary>
         public System.Boolean IsEnabled
         {
             get { return IsEnabledProperty.GetValue(this); }

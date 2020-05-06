@@ -34,6 +34,7 @@ namespace Delight.Editor
             // To generate the documenation XML add the following to the Assembly-CSharp.csproj file in first PropertyGroup:
             // <DocumentationFile>Assets\DevTools\Docs\Documentation.XML</DocumentationFile>
             // And build the solution to generate the documentation XML. 
+            // If the docs aren't built you might need to enable full builds by setting Tools -> Options -> Tools for Unity -> Disable the full build for unity, to false
             // Then the API docs can be built through the Delight menu item.
 
             // parse Assets\DevTools\Docs\Documentation.XML

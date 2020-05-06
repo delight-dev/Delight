@@ -67,6 +67,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementOrientation> OrientationProperty = new DependencyProperty<Delight.ElementOrientation>("Orientation");
+        /// <summary>Orientation of the list.</summary>
         public Delight.ElementOrientation Orientation
         {
             get { return OrientationProperty.GetValue(this); }
@@ -74,6 +75,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
+        /// <summary>Horizontal and vertical spacing between the list items.</summary>
         public Delight.ElementSize Spacing
         {
             get { return SpacingProperty.GetValue(this); }
@@ -81,6 +83,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> HorizontalSpacingProperty = new DependencyProperty<Delight.ElementSize>("HorizontalSpacing");
+        /// <summary>Horizontal spacing between the list items.</summary>
         public Delight.ElementSize HorizontalSpacing
         {
             get { return HorizontalSpacingProperty.GetValue(this); }
@@ -88,6 +91,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> VerticalSpacingProperty = new DependencyProperty<Delight.ElementSize>("VerticalSpacing");
+        /// <summary>Vertical spacing between the list items.</summary>
         public Delight.ElementSize VerticalSpacing
         {
             get { return VerticalSpacingProperty.GetValue(this); }
@@ -95,6 +99,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> PaddingProperty = new DependencyProperty<Delight.ElementMargin>("Padding");
+        /// <summary>Adds padding to the list.</summary>
         public Delight.ElementMargin Padding
         {
             get { return PaddingProperty.GetValue(this); }
@@ -102,6 +107,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> ContentAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("ContentAlignment");
+        /// <summary>Alignment of the list items.</summary>
         public Delight.ElementAlignment ContentAlignment
         {
             get { return ContentAlignmentProperty.GetValue(this); }
@@ -109,6 +115,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> AlternateItemsProperty = new DependencyProperty<System.Boolean>("AlternateItems");
+        /// <summary>Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items.</summary>
         public System.Boolean AlternateItems
         {
             get { return AlternateItemsProperty.GetValue(this); }
@@ -116,6 +123,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsScrollableProperty = new DependencyProperty<System.Boolean>("IsScrollable");
+        /// <summary>Boolean indicating if the list can be scrolled.</summary>
         public System.Boolean IsScrollable
         {
             get { return IsScrollableProperty.GetValue(this); }
@@ -123,6 +131,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsVirtualizedProperty = new DependencyProperty<System.Boolean>("IsVirtualized");
+        /// <summary>Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated.</summary>
         public System.Boolean IsVirtualized
         {
             get { return IsVirtualizedProperty.GetValue(this); }
@@ -130,6 +139,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.OverflowMode> OverflowProperty = new DependencyProperty<Delight.OverflowMode>("Overflow");
+        /// <summary>Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists.</summary>
         public Delight.OverflowMode Overflow
         {
             get { return OverflowProperty.GetValue(this); }
@@ -137,6 +147,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSortDirection> SortDirectionProperty = new DependencyProperty<Delight.ElementSortDirection>("SortDirection");
+        /// <summary>Determines the sort direction of the list items.</summary>
         public Delight.ElementSortDirection SortDirection
         {
             get { return SortDirectionProperty.GetValue(this); }
@@ -144,6 +155,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        /// <summary>Action called when an item is selected.</summary>
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
@@ -151,6 +163,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected", () => new ViewAction());
+        /// <summary>Action called when an item is deselected.</summary>
         public ViewAction ItemDeselected
         {
             get { return ItemDeselectedProperty.GetValue(this); }
@@ -158,6 +171,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
+        /// <summary>Boolean indicating if the user can select items in the list.</summary>
         public System.Boolean CanSelect
         {
             get { return CanSelectProperty.GetValue(this); }
@@ -165,6 +179,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanDeselectProperty = new DependencyProperty<System.Boolean>("CanDeselect");
+        /// <summary>Boolean indicating if selected list items can be deselected by clicking on them again.</summary>
         public System.Boolean CanDeselect
         {
             get { return CanDeselectProperty.GetValue(this); }
@@ -172,6 +187,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanMultiSelectProperty = new DependencyProperty<System.Boolean>("CanMultiSelect");
+        /// <summary>Boolean indicating if the user can select multiple list items.</summary>
         public System.Boolean CanMultiSelect
         {
             get { return CanMultiSelectProperty.GetValue(this); }
@@ -179,6 +195,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanReselectProperty = new DependencyProperty<System.Boolean>("CanReselect");
+        /// <summary>Boolean indicating if the selected item should be reselected if clicked on again.</summary>
         public System.Boolean CanReselect
         {
             get { return CanReselectProperty.GetValue(this); }
@@ -186,6 +203,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> DeselectAfterSelectProperty = new DependencyProperty<System.Boolean>("DeselectAfterSelect");
+        /// <summary>Boolean indicating if the item should immediatelly be deselected after being selected.</summary>
         public System.Boolean DeselectAfterSelect
         {
             get { return DeselectAfterSelectProperty.GetValue(this); }
@@ -193,6 +211,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> SelectOnMouseUpProperty = new DependencyProperty<System.Boolean>("SelectOnMouseUp");
+        /// <summary>Boolean indicating if list items should be selected on mouse up.</summary>
         public System.Boolean SelectOnMouseUp
         {
             get { return SelectOnMouseUpProperty.GetValue(this); }
@@ -200,6 +219,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.BindableObject> SelectedItemProperty = new DependencyProperty<Delight.BindableObject>("SelectedItem");
+        /// <summary>References the data collection item that corresponds to the currently selected list item.</summary>
         public Delight.BindableObject SelectedItem
         {
             get { return SelectedItemProperty.GetValue(this); }
@@ -207,6 +227,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsStaticProperty = new DependencyProperty<System.Boolean>("IsStatic");
+        /// <summary>Boolean indicating if the list is static.</summary>
         public System.Boolean IsStatic
         {
             get { return IsStaticProperty.GetValue(this); }
@@ -214,6 +235,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewMethod> VirtualItemGetterProperty = new DependencyProperty<ViewMethod>("VirtualItemGetter", () => new ViewMethod());
+        /// <summary>If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item.</summary>
         public ViewMethod VirtualItemGetter
         {
             get { return VirtualItemGetterProperty.GetValue(this); }
@@ -221,6 +243,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<UnityEngine.Vector2> RealizationMarginProperty = new DependencyProperty<UnityEngine.Vector2>("RealizationMargin");
+        /// <summary>Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized.</summary>
         public UnityEngine.Vector2 RealizationMargin
         {
             get { return RealizationMarginProperty.GetValue(this); }
@@ -228,6 +251,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> DisableItemArrangementProperty = new DependencyProperty<System.Boolean>("DisableItemArrangement");
+        /// <summary>Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere.</summary>
         public System.Boolean DisableItemArrangement
         {
             get { return DisableItemArrangementProperty.GetValue(this); }
@@ -309,13 +333,6 @@ namespace Delight
         {
             get { return ScrollableRegion.ScrollBounds; }
             set { ScrollableRegion.ScrollBounds = value; }
-        }
-
-        public readonly static DependencyProperty DebugOffsetTextProperty = ScrollableRegion.DebugOffsetTextProperty;
-        public System.String DebugOffsetText
-        {
-            get { return ScrollableRegion.DebugOffsetText; }
-            set { ScrollableRegion.DebugOffsetText = value; }
         }
 
         public readonly static DependencyProperty DisableInteractionScrollDeltaProperty = ScrollableRegion.DisableInteractionScrollDeltaProperty;

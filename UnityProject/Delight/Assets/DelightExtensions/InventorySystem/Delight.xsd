@@ -677,7 +677,6 @@
     <xs:attribute name="ScrollableRegionContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSizeContentRegion" type="xs:string" />
     <xs:attribute name="ScrollBounds" type="Enum_ScrollBounds" />
-    <xs:attribute name="DebugOffsetText" type="xs:string" />
     <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
     <xs:attribute name="ScrollSensitivity" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
@@ -2030,7 +2029,6 @@
     <xs:attribute name="ScrollableRegionContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSizeContentRegion" type="xs:string" />
     <xs:attribute name="ScrollBounds" type="Enum_ScrollBounds" />
-    <xs:attribute name="DebugOffsetText" type="xs:string" />
     <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
     <xs:attribute name="ScrollSensitivity" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
@@ -3057,7 +3055,6 @@
     <xs:attribute name="ContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSizeContentRegion" type="xs:string" />
     <xs:attribute name="ScrollBounds" type="Enum_ScrollBounds" />
-    <xs:attribute name="DebugOffsetText" type="xs:string" />
     <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
     <xs:attribute name="ScrollSensitivity" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
@@ -3438,7 +3435,6 @@
     <xs:attribute name="ContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="AutoSizeContentRegion" type="xs:string" />
     <xs:attribute name="ScrollBounds" type="Enum_ScrollBounds" />
-    <xs:attribute name="DebugOffsetText" type="xs:string" />
     <xs:attribute name="DisableInteractionScrollDelta" type="xs:string" />
     <xs:attribute name="ScrollSensitivity" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarVisibility" type="Enum_ScrollbarVisibilityMode" />
@@ -8104,7 +8100,6 @@
     </xs:sequence>
     <xs:attribute name="DesignerViews" type="xs:string" />
     <xs:attribute name="ChangedDesignerViews" type="xs:string" />
-    <xs:attribute name="XmlText" type="xs:string" />
     <xs:attribute name="AutoParse" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />

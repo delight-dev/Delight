@@ -54,6 +54,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Int32> SelectedTabIndexProperty = new DependencyProperty<System.Int32>("SelectedTabIndex");
+        /// <summary>Selected tab index.</summary>
         public System.Int32 SelectedTabIndex
         {
             get { return SelectedTabIndexProperty.GetValue(this); }
@@ -61,6 +62,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsStaticProperty = new DependencyProperty<System.Boolean>("IsStatic");
+        /// <summary>Boolean indicating if the tab panel is static.</summary>
         public System.Boolean IsStatic
         {
             get { return IsStaticProperty.GetValue(this); }
@@ -68,6 +70,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> TabHeaderWidthProperty = new DependencyProperty<Delight.ElementSize>("TabHeaderWidth");
+        /// <summary>Default width of tab headers.</summary>
         public Delight.ElementSize TabHeaderWidth
         {
             get { return TabHeaderWidthProperty.GetValue(this); }
@@ -75,6 +78,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> TabHeaderHeightProperty = new DependencyProperty<Delight.ElementSize>("TabHeaderHeight");
+        /// <summary>Default height of tab headers.</summary>
         public Delight.ElementSize TabHeaderHeight
         {
             get { return TabHeaderHeightProperty.GetValue(this); }
@@ -82,6 +86,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> TabSelectedProperty = new DependencyProperty<ViewAction>("TabSelected", () => new ViewAction());
+        /// <summary>Action called when a tab is selected.</summary>
         public ViewAction TabSelected
         {
             get { return TabSelectedProperty.GetValue(this); }
@@ -89,6 +94,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.SwitchMode> TabSwitchModeProperty = new DependencyProperty<Delight.SwitchMode>("TabSwitchMode");
+        /// <summary>Enum indicating view switch mode, e.g. if tabs should be loaded on-demand or be pre-loaded.</summary>
         public Delight.SwitchMode TabSwitchMode
         {
             get { return TabSwitchModeProperty.GetValue(this); }

@@ -400,7 +400,6 @@ namespace Delight.Editor.Parser
             if (docProperty == null || String.IsNullOrWhiteSpace(docProperty.Comment))
                 return;
 
-            sb.AppendLine();
             sb.AppendLine("        /// <summary>{0}</summary>", docProperty.Comment);
         }
 
@@ -409,6 +408,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateMappedPropertyComment(StringBuilder sb, ViewObject viewObject, MappedPropertyDeclaration mappedDeclaration)
         {
+            // TODO implement
     //        sb.AppendLine("        public readonly static MappedAssetDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedAssetDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, (x, y) => x.{3} = y?.UnityObject);",
     //mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
         }
@@ -418,7 +418,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateAttachedPropertyComment(StringBuilder sb, ViewObject viewObject, AttachedProperty attachedProperty)
         {
-
+            // TODO implement
         }
 
         /// <summary>

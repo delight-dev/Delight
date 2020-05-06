@@ -47,6 +47,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> ThicknessProperty = new DependencyProperty<Delight.ElementSize>("Thickness");
+        /// <summary>The thickness of the grid splitter handles.</summary>
         public Delight.ElementSize Thickness
         {
             get { return ThicknessProperty.GetValue(this); }
@@ -54,6 +55,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> InteractionThicknessProperty = new DependencyProperty<Delight.ElementSize>("InteractionThickness");
+        /// <summary>Indicates how thick the interactable region of the splitter handle is. Can be larger than the actual thickness to make it easer for the user to interact with the handle.</summary>
         public Delight.ElementSize InteractionThickness
         {
             get { return InteractionThicknessProperty.GetValue(this); }
@@ -61,6 +63,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> SetSizeOnDragEndedProperty = new DependencyProperty<System.Boolean>("SetSizeOnDragEnded");
+        /// <summary>Boolean indicating if the size of the row/column should be set after the user releases the handle.</summary>
         public System.Boolean SetSizeOnDragEnded
         {
             get { return SetSizeOnDragEndedProperty.GetValue(this); }
@@ -75,6 +78,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.SplitMode> SplitModeProperty = new DependencyProperty<Delight.SplitMode>("SplitMode");
+        /// <summary>Sets if the grid should be split by columns, rows or both.</summary>
         public Delight.SplitMode SplitMode
         {
             get { return SplitModeProperty.GetValue(this); }
@@ -82,6 +86,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<UnityEngine.Color> SplitterColorProperty = new DependencyProperty<UnityEngine.Color>("SplitterColor");
+        /// <summary>Color used by the grid splitter handles.</summary>
         public UnityEngine.Color SplitterColor
         {
             get { return SplitterColorProperty.GetValue(this); }
@@ -89,6 +94,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<SpriteAsset> SplitterSpriteProperty = new DependencyProperty<SpriteAsset>("SplitterSprite");
+        /// <summary>Sprite used by the grid splitter handles.</summary>
         public SpriteAsset SplitterSprite
         {
             get { return SplitterSpriteProperty.GetValue(this); }
@@ -96,6 +102,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> BePushyProperty = new DependencyProperty<System.Boolean>("BePushy");
+        /// <summary>Boolean indicating if resizing one column/row beyond min/max should push into and resize subsequent rows/columns.</summary>
         public System.Boolean BePushy
         {
             get { return BePushyProperty.GetValue(this); }
@@ -103,6 +110,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> OverrideProportionalSizeProperty = new DependencyProperty<System.Boolean>("OverrideProportionalSize");
+        /// <summary>Boolean indicating if the proportional size of the columns/rows should be overriden when resizing, and set to absolute (pixel) sizes instead.</summary>
         public System.Boolean OverrideProportionalSize
         {
             get { return OverrideProportionalSizeProperty.GetValue(this); }

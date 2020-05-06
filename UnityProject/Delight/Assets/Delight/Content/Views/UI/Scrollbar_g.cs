@@ -50,6 +50,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> LengthProperty = new DependencyProperty<Delight.ElementSize>("Length");
+        /// <summary>Length of the scrollbar. Corresponds to Width if horizontal and Height if vertical.</summary>
         public Delight.ElementSize Length
         {
             get { return LengthProperty.GetValue(this); }
@@ -57,6 +58,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> BreadthProperty = new DependencyProperty<Delight.ElementSize>("Breadth");
+        /// <summary>Breadth of the scrollbar. Corresponds to Height if horizontal and Width if vertical.</summary>
         public Delight.ElementSize Breadth
         {
             get { return BreadthProperty.GetValue(this); }
@@ -64,6 +66,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementOrientation> OrientationProperty = new DependencyProperty<Delight.ElementOrientation>("Orientation");
+        /// <summary>The orientation of the scrollbar.</summary>
         public Delight.ElementOrientation Orientation
         {
             get { return OrientationProperty.GetValue(this); }
@@ -71,6 +74,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> ScrollPositionProperty = new DependencyProperty<System.Single>("ScrollPosition");
+        /// <summary>Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).</summary>
         public System.Single ScrollPosition
         {
             get { return ScrollPositionProperty.GetValue(this); }
@@ -78,6 +82,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> ViewportRatioProperty = new DependencyProperty<System.Single>("ViewportRatio");
+        /// <summary>Value between 0-1 determining the size of the scrollbar handle relative to the viewport.</summary>
         public System.Single ViewportRatio
         {
             get { return ViewportRatioProperty.GetValue(this); }

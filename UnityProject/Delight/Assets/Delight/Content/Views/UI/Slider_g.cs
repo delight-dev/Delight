@@ -69,6 +69,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> LengthProperty = new DependencyProperty<Delight.ElementSize>("Length");
+        /// <summary>The length of the slider. Corresponds to Width if horizontal and Height if vertical.</summary>
         public Delight.ElementSize Length
         {
             get { return LengthProperty.GetValue(this); }
@@ -76,6 +77,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> BreadthProperty = new DependencyProperty<Delight.ElementSize>("Breadth");
+        /// <summary>The breadth of the slider. Corresponds to Height if horizontal and Width if vertical.</summary>
         public Delight.ElementSize Breadth
         {
             get { return BreadthProperty.GetValue(this); }
@@ -83,6 +85,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementOrientation> OrientationProperty = new DependencyProperty<Delight.ElementOrientation>("Orientation");
+        /// <summary>Orientation of the slider (horizontal or vertical).</summary>
         public Delight.ElementOrientation Orientation
         {
             get { return OrientationProperty.GetValue(this); }
@@ -90,6 +93,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> MinProperty = new DependencyProperty<System.Single>("Min");
+        /// <summary>Minimum value of the slider.</summary>
         public System.Single Min
         {
             get { return MinProperty.GetValue(this); }
@@ -97,6 +101,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> MaxProperty = new DependencyProperty<System.Single>("Max");
+        /// <summary>Maximum value of the slider.</summary>
         public System.Single Max
         {
             get { return MaxProperty.GetValue(this); }
@@ -104,6 +109,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> ValueProperty = new DependencyProperty<System.Single>("Value");
+        /// <summary>Current value of the slider.</summary>
         public System.Single Value
         {
             get { return ValueProperty.GetValue(this); }
@@ -111,6 +117,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSlideProperty = new DependencyProperty<System.Boolean>("CanSlide");
+        /// <summary>Boolean indicating if the user can interact with the slider.</summary>
         public System.Boolean CanSlide
         {
             get { return CanSlideProperty.GetValue(this); }
@@ -118,6 +125,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> SetValueOnDragEndedProperty = new DependencyProperty<System.Boolean>("SetValueOnDragEnded");
+        /// <summary>Boolean indicating that the slider value is set when the user releases the handle.</summary>
         public System.Boolean SetValueOnDragEnded
         {
             get { return SetValueOnDragEndedProperty.GetValue(this); }
@@ -125,6 +133,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsReversedProperty = new DependencyProperty<System.Boolean>("IsReversed");
+        /// <summary>Boolean indicating if slider direction is reversed.</summary>
         public System.Boolean IsReversed
         {
             get { return IsReversedProperty.GetValue(this); }
@@ -132,6 +141,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> StepsProperty = new DependencyProperty<System.Single>("Steps");
+        /// <summary>Specifies the number of steps there should be between min and max slider value.</summary>
         public System.Single Steps
         {
             get { return StepsProperty.GetValue(this); }
@@ -139,6 +149,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
+        /// <summary>Action called when the slider value changes.</summary>
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }

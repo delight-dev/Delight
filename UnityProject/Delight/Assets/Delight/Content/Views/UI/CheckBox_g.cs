@@ -56,6 +56,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> IsCheckedProperty = new DependencyProperty<System.Boolean>("IsChecked");
+        /// <summary>Boolean indicating if the check box is checked.</summary>
         public System.Boolean IsChecked
         {
             get { return IsCheckedProperty.GetValue(this); }
@@ -63,6 +64,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsDisabledProperty = new DependencyProperty<System.Boolean>("IsDisabled");
+        /// <summary>Boolean indicating if the check box is disabled.</summary>
         public System.Boolean IsDisabled
         {
             get { return IsDisabledProperty.GetValue(this); }
@@ -70,6 +72,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
+        /// <summary>Boolean indicating if the user can interact with the check box.</summary>
         public System.Boolean IsInteractable
         {
             get { return IsInteractableProperty.GetValue(this); }
@@ -77,6 +80,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
+        /// <summary>Spacing between the check box sprite and the text label.</summary>
         public Delight.ElementSize Spacing
         {
             get { return SpacingProperty.GetValue(this); }

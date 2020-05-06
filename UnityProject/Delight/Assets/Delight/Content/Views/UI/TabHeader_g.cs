@@ -41,6 +41,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ContentTemplateData> ContentTemplateDataProperty = new DependencyProperty<Delight.ContentTemplateData>("ContentTemplateData");
+        /// <summary>Holds the content template data.</summary>
         public Delight.ContentTemplateData ContentTemplateData
         {
             get { return ContentTemplateDataProperty.GetValue(this); }
@@ -48,6 +49,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Int32> TabIndexProperty = new DependencyProperty<System.Int32>("TabIndex");
+        /// <summary>Index of the tab.</summary>
         public System.Int32 TabIndex
         {
             get { return TabIndexProperty.GetValue(this); }

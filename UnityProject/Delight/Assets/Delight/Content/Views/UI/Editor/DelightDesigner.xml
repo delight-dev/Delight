@@ -1,6 +1,6 @@
 <DelightDesigner xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" Module="TextMeshPro" EnableScriptEvents="True"
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData"
-                 IsEditorView="True" XmlText="t:string" AutoParse="t:bool = True">
+                 IsEditorView="True" AutoParse="t:bool = True">
 
   <Region Id="TopToolbar" Height="20" Alignment="Top" BackgroundColor="#9a9a9a">
     <ToggleGroup Orientation="Horizontal" Alignment="Left">

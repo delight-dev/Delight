@@ -54,6 +54,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.BindableObject> ItemProperty = new DependencyProperty<Delight.BindableObject>("Item");
+        /// <summary>References the data collection item bound to this list item (set when the list item resides in a dynamic list).</summary>
         public Delight.BindableObject Item
         {
             get { return ItemProperty.GetValue(this); }
@@ -61,6 +62,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsDisabledProperty = new DependencyProperty<System.Boolean>("IsDisabled");
+        /// <summary>Boolean indicating if the list item is disabled.</summary>
         public System.Boolean IsDisabled
         {
             get { return IsDisabledProperty.GetValue(this); }
@@ -68,6 +70,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsAlternateProperty = new DependencyProperty<System.Boolean>("IsAlternate");
+        /// <summary>Boolean indicating if the default state of this list item should be Alternate. Used by lists that has AlternateItems set to True, to alternate the style of every other (odd) list item.</summary>
         public System.Boolean IsAlternate
         {
             get { return IsAlternateProperty.GetValue(this); }
@@ -75,6 +78,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsSelectedProperty = new DependencyProperty<System.Boolean>("IsSelected");
+        /// <summary>Boolean indicating if the list item is selected.</summary>
         public System.Boolean IsSelected
         {
             get { return IsSelectedProperty.GetValue(this); }
@@ -82,6 +86,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsPressedProperty = new DependencyProperty<System.Boolean>("IsPressed");
+        /// <summary>Boolean indicating if the list item is pressed.</summary>
         public System.Boolean IsPressed
         {
             get { return IsPressedProperty.GetValue(this); }
@@ -89,6 +94,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsMouseOverProperty = new DependencyProperty<System.Boolean>("IsMouseOver");
+        /// <summary>Boolean indicating if the mouse is over the list item.</summary>
         public System.Boolean IsMouseOver
         {
             get { return IsMouseOverProperty.GetValue(this); }
@@ -96,6 +102,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> AutoSizeToContentProperty = new DependencyProperty<System.Boolean>("AutoSizeToContent");
+        /// <summary>Boolean indicating if the list item automatically audjusts its size to its content.</summary>
         public System.Boolean AutoSizeToContent
         {
             get { return AutoSizeToContentProperty.GetValue(this); }
@@ -103,6 +110,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> LengthProperty = new DependencyProperty<Delight.ElementSize>("Length");
+        /// <summary>The length of the list item that corresponds to Height if list is horizontal and Width if vertical.</summary>
         public Delight.ElementSize Length
         {
             get { return LengthProperty.GetValue(this); }
@@ -110,6 +118,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> BreadthProperty = new DependencyProperty<Delight.ElementSize>("Breadth");
+        /// <summary>The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical.</summary>
         public Delight.ElementSize Breadth
         {
             get { return BreadthProperty.GetValue(this); }
@@ -117,6 +126,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ContentTemplateData> ContentTemplateDataProperty = new DependencyProperty<Delight.ContentTemplateData>("ContentTemplateData");
+        /// <summary>Holds the content template data.</summary>
         public Delight.ContentTemplateData ContentTemplateData
         {
             get { return ContentTemplateDataProperty.GetValue(this); }

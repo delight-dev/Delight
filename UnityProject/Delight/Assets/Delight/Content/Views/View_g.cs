@@ -26,6 +26,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.LoadMode> LoadModeProperty = new DependencyProperty<Delight.LoadMode>("LoadMode");
+        /// <summary>Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.</summary>
         public Delight.LoadMode LoadMode
         {
             get { return LoadModeProperty.GetValue(this); }

@@ -89,6 +89,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.String> RenderCameraProperty = new DependencyProperty<System.String>("RenderCamera");
+        /// <summary>ID of the world camera camera used when rendering the canvas.</summary>
         public System.String RenderCamera
         {
             get { return RenderCameraProperty.GetValue(this); }

@@ -40,6 +40,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.BindableCollection> ItemsProperty = new DependencyProperty<Delight.BindableCollection>("Items");
+        /// <summary>The data collection that is used to generate the collection view items.</summary>
         public Delight.BindableCollection Items
         {
             get { return ItemsProperty.GetValue(this); }
@@ -47,6 +48,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewMethod> TemplateSelectorProperty = new DependencyProperty<ViewMethod>("TemplateSelector", () => new ViewMethod());
+        /// <summary>Method used to select the template used by the collection. The method takes the data collection item as a parameter and returns the ID of the template that should be used to present the item.</summary>
         public ViewMethod TemplateSelector
         {
             get { return TemplateSelectorProperty.GetValue(this); }

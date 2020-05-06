@@ -117,7 +117,6 @@ namespace Delight
 
             dependencyProperties.Add(DesignerViewsProperty);
             dependencyProperties.Add(ChangedDesignerViewsProperty);
-            dependencyProperties.Add(XmlTextProperty);
             dependencyProperties.Add(AutoParseProperty);
             dependencyProperties.Add(TopToolbarProperty);
             dependencyProperties.Add(TopToolbarTemplateProperty);
@@ -190,6 +189,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.DesignerViewData> DesignerViewsProperty = new DependencyProperty<Delight.DesignerViewData>("DesignerViews");
+        /// <summary>List of views that can be edited by the designer.</summary>
         public Delight.DesignerViewData DesignerViews
         {
             get { return DesignerViewsProperty.GetValue(this); }
@@ -197,20 +197,15 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.DesignerViewData> ChangedDesignerViewsProperty = new DependencyProperty<Delight.DesignerViewData>("ChangedDesignerViews");
+        /// <summary>List of views that has been changed by the designer.</summary>
         public Delight.DesignerViewData ChangedDesignerViews
         {
             get { return ChangedDesignerViewsProperty.GetValue(this); }
             set { ChangedDesignerViewsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.String> XmlTextProperty = new DependencyProperty<System.String>("XmlText");
-        public System.String XmlText
-        {
-            get { return XmlTextProperty.GetValue(this); }
-            set { XmlTextProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<System.Boolean> AutoParseProperty = new DependencyProperty<System.Boolean>("AutoParse");
+        /// <summary>Boolean indicating if the designer should automatically parse XML of views as they changes.</summary>
         public System.Boolean AutoParse
         {
             get { return AutoParseProperty.GetValue(this); }

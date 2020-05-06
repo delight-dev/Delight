@@ -10,7 +10,6 @@
                   ContentAlignment="t:ElementAlignment"
                   AutoSizeContentRegion="t:bool = True"
                   ScrollBounds="t:ScrollBounds = Elastic"
-                  DebugOffsetText="t:string"
                   DisableInteractionScrollDelta="t:float"
                   ScrollSensitivity="t:float = 60"
                   i.ScrollbarVisibility="HorizontalScrollbarVisibility, VerticalScrollbarVisibility"

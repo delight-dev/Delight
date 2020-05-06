@@ -64,6 +64,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> DefaultWidthProperty = new DependencyProperty<Delight.ElementSize>("DefaultWidth");
+        /// <summary>Default width of the button when none is specified.</summary>
         public Delight.ElementSize DefaultWidth
         {
             get { return DefaultWidthProperty.GetValue(this); }
@@ -71,6 +72,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsToggleButtonProperty = new DependencyProperty<System.Boolean>("IsToggleButton");
+        /// <summary>Boolean indicating if the button is a toggle button.</summary>
         public System.Boolean IsToggleButton
         {
             get { return IsToggleButtonProperty.GetValue(this); }
@@ -78,6 +80,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsDisabledProperty = new DependencyProperty<System.Boolean>("IsDisabled");
+        /// <summary>Boolean indicating if this button is disabled.</summary>
         public System.Boolean IsDisabled
         {
             get { return IsDisabledProperty.GetValue(this); }
@@ -85,6 +88,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> ToggleValueProperty = new DependencyProperty<System.Boolean>("ToggleValue");
+        /// <summary>Toggle value of the button.</summary>
         public System.Boolean ToggleValue
         {
             get { return ToggleValueProperty.GetValue(this); }
@@ -92,6 +96,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> TextPaddingProperty = new DependencyProperty<Delight.ElementMargin>("TextPadding");
+        /// <summary>Padding applied when the button autosizes to its content.</summary>
         public Delight.ElementMargin TextPadding
         {
             get { return TextPaddingProperty.GetValue(this); }
@@ -99,6 +104,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanToggleOnProperty = new DependencyProperty<System.Boolean>("CanToggleOn");
+        /// <summary>Boolean indicating if the button can be toggled on.</summary>
         public System.Boolean CanToggleOn
         {
             get { return CanToggleOnProperty.GetValue(this); }
@@ -106,6 +112,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanToggleOffProperty = new DependencyProperty<System.Boolean>("CanToggleOff");
+        /// <summary>Boolean indicating if the button can be toggled off.</summary>
         public System.Boolean CanToggleOff
         {
             get { return CanToggleOffProperty.GetValue(this); }
@@ -113,6 +120,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ToggleClickProperty = new DependencyProperty<ViewAction>("ToggleClick", () => new ViewAction());
+        /// <summary>Action called when the button is toggled.</summary>
         public ViewAction ToggleClick
         {
             get { return ToggleClickProperty.GetValue(this); }
@@ -120,6 +128,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsMouseOverProperty = new DependencyProperty<System.Boolean>("IsMouseOver");
+        /// <summary>Boolean indicating if the mouse is over the button.</summary>
         public System.Boolean IsMouseOver
         {
             get { return IsMouseOverProperty.GetValue(this); }
@@ -127,6 +136,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsPressedProperty = new DependencyProperty<System.Boolean>("IsPressed");
+        /// <summary>Boolean indicating if the button is pressed.</summary>
         public System.Boolean IsPressed
         {
             get { return IsPressedProperty.GetValue(this); }
@@ -134,6 +144,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");
+        /// <summary>Enum indicating if and how the button should automatically resize itself to the size of the text.</summary>
         public Delight.AutoSize AutoSize
         {
             get { return AutoSizeProperty.GetValue(this); }
@@ -141,6 +152,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> TextOffsetProperty = new DependencyProperty<Delight.ElementMargin>("TextOffset");
+        /// <summary>The offset of the button text label.</summary>
         public Delight.ElementMargin TextOffset
         {
             get { return TextOffsetProperty.GetValue(this); }
@@ -148,6 +160,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsCloseButtonProperty = new DependencyProperty<System.Boolean>("IsCloseButton");
+        /// <summary>Boolean indicating if this is a close button.</summary>
         public System.Boolean IsCloseButton
         {
             get { return IsCloseButtonProperty.GetValue(this); }
@@ -155,6 +168,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsBackButtonProperty = new DependencyProperty<System.Boolean>("IsBackButton");
+        /// <summary>Boolean indicating if this is a back button.</summary>
         public System.Boolean IsBackButton
         {
             get { return IsBackButtonProperty.GetValue(this); }

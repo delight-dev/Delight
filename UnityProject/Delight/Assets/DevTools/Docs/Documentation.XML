@@ -375,6 +375,11 @@
             Called when a property has been changed. 
             </summary>
         </member>
+        <member name="M:Delight.CheckBox.AfterLoad">
+            <summary>
+            Called after the view is loaded.
+            </summary>
+        </member>
         <member name="M:Delight.CheckBox.ChildLayoutChanged">
             <summary>
             Called when a child changes its layout.
@@ -1060,6 +1065,11 @@
             Called when a property has been changed. 
             </summary>
         </member>
+        <member name="M:Delight.RadioButton.AfterLoad">
+            <summary>
+            Called after the view is loaded.
+            </summary>
+        </member>
         <member name="M:Delight.RadioButton.ChildLayoutChanged">
             <summary>
             Called when a child changes its layout.
@@ -1720,6 +1730,69 @@
             <summary>
             Gets boolean indicating if view takes up the entire screen.
             </summary>
+        </member>
+        <member name="P:Delight.UIView.Width">
+            <summary>The width of the view in pixels or percents.</summary>
+        </member>
+        <member name="P:Delight.UIView.Height">
+            <summary>The height of the view in pixels or percents.</summary>
+        </member>
+        <member name="P:Delight.UIView.OverrideWidth">
+            <summary>Overrides regular Width value. Used to e.g. automatically size items without changing the default Width value set.</summary>
+        </member>
+        <member name="P:Delight.UIView.OverrideHeight">
+            <summary>Overrides regular Height value. Used to e.g. automatically size items without changing the default Height value set.</summary>
+        </member>
+        <member name="P:Delight.UIView.Scale">
+            <summary>Scale of the view.</summary>
+        </member>
+        <member name="P:Delight.UIView.Alignment">
+            <summary>Used to align the view relative to the layout parent region it resides in.</summary>
+        </member>
+        <member name="P:Delight.UIView.Margin">
+            <summary>Adding margins to a view changes the size of the area in which its content resides, but it does not change the width or height of the view.</summary>
+        </member>
+        <member name="P:Delight.UIView.Offset">
+            <summary>Determines the offset of the view.</summary>
+        </member>
+        <member name="P:Delight.UIView.OffsetFromParent">
+            <summary>Offset set by a parent view. Used by views like Group to arrange children without changing their own Offset values.</summary>
+        </member>
+        <member name="P:Delight.UIView.Pivot">
+            <summary>Changes the pivot point of the view.</summary>
+        </member>
+        <member name="P:Delight.UIView.LayoutRoot">
+            <summary>Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root.</summary>
+        </member>
+        <member name="P:Delight.UIView.DisableLayoutUpdate">
+            <summary>Boolean indicating if automatic layout updates for this view should be disabled. When disabled the view doesn't call UpdateLayout() when properties such as Width, Height, etc. changes.</summary>
+        </member>
+        <member name="P:Delight.UIView.Alpha">
+            <summary>Can be used to adjust the alpha color of this view and all its children. E.g. used for fade in/out animations. Is separate from and different from the background color of the view as it affects the children as well.</summary>
+        </member>
+        <member name="P:Delight.UIView.IsVisible">
+            <summary>Boolean indicating if view is visible or hidden. Invisible views still take up space but aren't interactable and have their alpha set to 0.</summary>
+        </member>
+        <member name="P:Delight.UIView.RaycastBlockMode">
+            <summary>Enum indicating if raycasts should be blocked.</summary>
+        </member>
+        <member name="P:Delight.UIView.UseFastShader">
+            <summary>Boolean indicating if the default UI shader should be replaced by a simpler and faster one. The faster shader does not support masking and clipping.</summary>
+        </member>
+        <member name="P:Delight.UIView.FastMaterial">
+            <summary>Faster shader used to render the view when UseFastShader is set to True.</summary>
+        </member>
+        <member name="P:Delight.UIView.BubbleNotifyChildLayoutChanged">
+            <summary>Boolean indicating if parent always should be notified when the child changes layout.</summary>
+        </member>
+        <member name="P:Delight.UIView.IgnoreFlip">
+            <summary>Used when doing localization override default behavior of flipping the view Right to Left or Left to Rigth.</summary>
+        </member>
+        <member name="P:Delight.UIView.Rotation">
+            <summary>Rotation of the view.</summary>
+        </member>
+        <member name="P:Delight.UIView.Position">
+            <summary>Directly sets the local position of the view relative to parent. Position otherwise set using the Alignment and Offset properties.</summary>
         </member>
         <member name="T:Delight.ViewSwitcher">
             <summary>

@@ -2605,7 +2605,7 @@ namespace Delight.Editor.Parser
                     if (String.IsNullOrWhiteSpace(comment))
                         continue;
 
-                    Debug.Log("Adding " + docObject.Name + "." + name + ":" + comment);
+                    docObject.Properties.Add(new DocProperty { Name = name, Comment = comment });
                 }
             }
         }

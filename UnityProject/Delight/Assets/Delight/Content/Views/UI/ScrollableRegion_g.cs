@@ -59,7 +59,6 @@ namespace Delight
             dependencyProperties.Add(ContentAlignmentProperty);
             dependencyProperties.Add(AutoSizeContentRegionProperty);
             dependencyProperties.Add(ScrollBoundsProperty);
-            dependencyProperties.Add(DebugOffsetTextProperty);
             dependencyProperties.Add(DisableInteractionScrollDeltaProperty);
             dependencyProperties.Add(ScrollSensitivityProperty);
             dependencyProperties.Add(HorizontalScrollbarVisibilityProperty);
@@ -81,6 +80,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> MaskContentProperty = new DependencyProperty<System.Boolean>("MaskContent");
+        /// <summary>Boolean indicating if any content outside the bounds of the viewport should be masked.</summary>
         public System.Boolean MaskContent
         {
             get { return MaskContentProperty.GetValue(this); }
@@ -102,6 +102,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> HasInertiaProperty = new DependencyProperty<System.Boolean>("HasInertia");
+        /// <summary>Boolean indicating if the should stop immediatelly when the user stops scrolling (when set to False) or if it should decelerate based on DecelerationRate.</summary>
         public System.Boolean HasInertia
         {
             get { return HasInertiaProperty.GetValue(this); }
@@ -109,6 +110,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> DecelerationRateProperty = new DependencyProperty<System.Single>("DecelerationRate");
+        /// <summary>Determines how fast the scroll speed decelerates once the user stops scrolling.</summary>
         public System.Single DecelerationRate
         {
             get { return DecelerationRateProperty.GetValue(this); }
@@ -116,6 +118,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> ElasticityProperty = new DependencyProperty<System.Single>("Elasticity");
+        /// <summary>Determines how elastic the viewport is when scrolling outside the bounds of the scrollable content.</summary>
         public System.Single Elasticity
         {
             get { return ElasticityProperty.GetValue(this); }
@@ -123,6 +126,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanScrollHorizontallyProperty = new DependencyProperty<System.Boolean>("CanScrollHorizontally");
+        /// <summary>Boolean indicating if the region can be scrolled horizontally.</summary>
         public System.Boolean CanScrollHorizontally
         {
             get { return CanScrollHorizontallyProperty.GetValue(this); }
@@ -130,6 +134,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> CanScrollVerticallyProperty = new DependencyProperty<System.Boolean>("CanScrollVertically");
+        /// <summary>Boolean indicating if the region can be scrolled vertically.</summary>
         public System.Boolean CanScrollVertically
         {
             get { return CanScrollVerticallyProperty.GetValue(this); }
@@ -137,6 +142,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> ContentAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("ContentAlignment");
+        /// <summary>Alignment of the content.</summary>
         public Delight.ElementAlignment ContentAlignment
         {
             get { return ContentAlignmentProperty.GetValue(this); }
@@ -144,6 +150,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> AutoSizeContentRegionProperty = new DependencyProperty<System.Boolean>("AutoSizeContentRegion");
+        /// <summary>Boolean indicating if the scrollable content region should be adjusted to the size of its content or not.</summary>
         public System.Boolean AutoSizeContentRegion
         {
             get { return AutoSizeContentRegionProperty.GetValue(this); }
@@ -151,20 +158,15 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ScrollBounds> ScrollBoundsProperty = new DependencyProperty<Delight.ScrollBounds>("ScrollBounds");
+        /// <summary>Enum indicating what type of bounds the scrollable region has (Clamped, Elastic or None).</summary>
         public Delight.ScrollBounds ScrollBounds
         {
             get { return ScrollBoundsProperty.GetValue(this); }
             set { ScrollBoundsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.String> DebugOffsetTextProperty = new DependencyProperty<System.String>("DebugOffsetText");
-        public System.String DebugOffsetText
-        {
-            get { return DebugOffsetTextProperty.GetValue(this); }
-            set { DebugOffsetTextProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<System.Single> DisableInteractionScrollDeltaProperty = new DependencyProperty<System.Single>("DisableInteractionScrollDelta");
+        /// <summary>If set any interaction with child views (clicks, etc) are disabled when the specified amount of pixels has been scrolled. Used e.g. to disable items from being selected while scrolling a selectable list of items.</summary>
         public System.Single DisableInteractionScrollDelta
         {
             get { return DisableInteractionScrollDeltaProperty.GetValue(this); }
@@ -172,6 +174,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Single> ScrollSensitivityProperty = new DependencyProperty<System.Single>("ScrollSensitivity");
+        /// <summary>Sets the sensitivity of the scrolling using mouse wheel or track pad.</summary>
         public System.Single ScrollSensitivity
         {
             get { return ScrollSensitivityProperty.GetValue(this); }
@@ -179,6 +182,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ScrollbarVisibilityMode> HorizontalScrollbarVisibilityProperty = new DependencyProperty<Delight.ScrollbarVisibilityMode>("HorizontalScrollbarVisibility");
+        /// <summary>Enum indicating the visibility mode of the horizontal scrollbar.</summary>
         public Delight.ScrollbarVisibilityMode HorizontalScrollbarVisibility
         {
             get { return HorizontalScrollbarVisibilityProperty.GetValue(this); }
@@ -186,6 +190,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ScrollbarVisibilityMode> VerticalScrollbarVisibilityProperty = new DependencyProperty<Delight.ScrollbarVisibilityMode>("VerticalScrollbarVisibility");
+        /// <summary>Enum indicating the visibility mode of the vertical scrollbar.</summary>
         public Delight.ScrollbarVisibilityMode VerticalScrollbarVisibility
         {
             get { return VerticalScrollbarVisibilityProperty.GetValue(this); }
@@ -193,6 +198,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> DisableMouseWheelProperty = new DependencyProperty<System.Boolean>("DisableMouseWheel");
+        /// <summary>Boolean indicating if the mouse wheel is disabled.</summary>
         public System.Boolean DisableMouseWheel
         {
             get { return DisableMouseWheelProperty.GetValue(this); }
@@ -200,6 +206,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ContentScrolledProperty = new DependencyProperty<ViewAction>("ContentScrolled", () => new ViewAction());
+        /// <summary>Action called whenever the content is scrolled.</summary>
         public ViewAction ContentScrolled
         {
             get { return ContentScrolledProperty.GetValue(this); }
@@ -207,6 +214,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> UnblockDragEventsInChildrenProperty = new DependencyProperty<System.Boolean>("UnblockDragEventsInChildren");
+        /// <summary>Boolean indicating if draggable child views shouldn't block this scrollable region from being scrolled.</summary>
         public System.Boolean UnblockDragEventsInChildren
         {
             get { return UnblockDragEventsInChildrenProperty.GetValue(this); }
@@ -214,6 +222,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> ScrollEnabledProperty = new DependencyProperty<System.Boolean>("ScrollEnabled");
+        /// <summary>Boolean indicating if scrolling by the user is enabled.</summary>
         public System.Boolean ScrollEnabled
         {
             get { return ScrollEnabledProperty.GetValue(this); }

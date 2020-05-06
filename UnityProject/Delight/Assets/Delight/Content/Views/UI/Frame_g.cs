@@ -39,6 +39,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> AutoSizeToContentProperty = new DependencyProperty<System.Boolean>("AutoSizeToContent");
+        /// <summary>Boolean indicating if the view should resize itself to its content.</summary>
         public System.Boolean AutoSizeToContent
         {
             get { return AutoSizeToContentProperty.GetValue(this); }

@@ -55,6 +55,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> IsDropUpProperty = new DependencyProperty<System.Boolean>("IsDropUp");
+        /// <summary>Boolean indicating if the combo box list should open above instead of below the button.</summary>
         public System.Boolean IsDropUp
         {
             get { return IsDropUpProperty.GetValue(this); }
@@ -62,6 +63,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        /// <summary>Action called when an item is selected.</summary>
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
@@ -318,13 +320,6 @@ namespace Delight
         {
             get { return ComboBoxList.ScrollBounds; }
             set { ComboBoxList.ScrollBounds = value; }
-        }
-
-        public readonly static DependencyProperty DebugOffsetTextProperty = List.DebugOffsetTextProperty;
-        public System.String DebugOffsetText
-        {
-            get { return ComboBoxList.DebugOffsetText; }
-            set { ComboBoxList.DebugOffsetText = value; }
         }
 
         public readonly static DependencyProperty DisableInteractionScrollDeltaProperty = List.DisableInteractionScrollDeltaProperty;

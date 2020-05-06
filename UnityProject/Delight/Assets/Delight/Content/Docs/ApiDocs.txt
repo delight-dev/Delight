@@ -1,204 +1,201 @@
 ﻿Button  
-- AutoSize: 
-- CanToggleOff: 
-- CanToggleOn: 
-- DefaultWidth: 
-- IsBackButton: 
-- IsCloseButton: 
-- IsDisabled: 
-- IsMouseOver: 
-- IsPressed: 
-- IsToggleButton: 
-- TextOffset: 
-- TextPadding: 
-- ToggleClick: 
-- ToggleValue: 
+- AutoSize: Enum indicating if and how the button should automatically resize itself to the size of the text. 
+- CanToggleOff: Boolean indicating if the button can be toggled off.
+- CanToggleOn: Boolean indicating if the button can be toggled on.
+- DefaultWidth: Default width of the button when none is specified. 
+- IsBackButton: Boolean indicating if this is a back button. 
+- IsCloseButton: Boolean indicating if this is a close button.
+- IsDisabled: Boolean indicating if this button is disabled.
+- IsMouseOver: Boolean indicating if the mouse is over the button.
+- IsPressed: Boolean indicating if the button is pressed.
+- IsToggleButton: Boolean indicating if the button is a toggle button.
+- TextOffset: The offset of the button text label.
+- TextPadding: Padding applied when the button autosizes to its content. 
+- ToggleClick: Action called when the button is toggled.
+- ToggleValue: Toggle value of the button.
 
 CheckBox
-- IsChecked: 
-- IsDisabled: 
-- IsInteractable: 
-- Spacing: 
+- IsChecked: Boolean indicating if the check box is checked. 
+- IsDisabled: Boolean indicating if the check box is disabled.
+- IsInteractable: Boolean indicating if the user can interact with the check box.
+- Spacing: Spacing between the check box sprite and the text label. 
 
 Collection
-- Items: 
-- TemplateSelector: 
+- Items: The data collection that is used to generate the collection view items. 
+- TemplateSelector: Method used to select the template used by the collection. The method takes the data collection item as a parameter and returns the ID of the template that should be used to present the item. 
 
 ComboBox
-- IsDropUp: 
-- ItemSelected: 
+- IsDropUp: Boolean indicating if the combo box list should open above instead of below the button. 
+- ItemSelected: Action called when an item is selected.
 
 DelightDesigner
-- AutoParse: 
-- ChangedDesignerViews: 
-- DesignerViews: 
-- XmlText: 
+- AutoParse: Boolean indicating if the designer should automatically parse XML of views as they changes.
+- ChangedDesignerViews: List of views that has been changed by the designer. 
+- DesignerViews: List of views that can be edited by the designer.
 
 Frame
-- AutoSizeToContent: 
+- AutoSizeToContent: Boolean indicating if the view should resize itself to its content.  
 
 Grid
-- Columns: 
-- ColumnSpacing: 
-- Rows: 
-- RowSpacing: 
-- Spacing: 
+- Columns: Column definitions that determines the proportional or pixel size of each column in the grid as well as their min/max size.
+- ColumnSpacing: Spacing between grid columns.
+- Rows: Row definitions that determines the proportional or pixel size of each row in the grid as well as their min/max size.
+- RowSpacing: Spacing between grid rows.
+- Spacing: Spacing between grid row and columns. 
 
 GridSplitter
-- BePushy: 
-- InteractionThickness: 
-- IsEnabled: 
-- OverrideProportionalSize: 
-- SetSizeOnDragEnded: 
-- SplitMode: 
-- SplitterColor: 
-- SplitterSprite: 
-- Thickness: 
+- BePushy: Boolean indicating if resizing one column/row beyond min/max should push into and resize subsequent rows/columns. 
+- InteractionThickness: Indicates how thick the interactable region of the splitter handle is. Can be larger than the actual thickness to make it easer for the user to interact with the handle. 
+- OverrideProportionalSize: Boolean indicating if the proportional size of the columns/rows should be overriden when resizing, and set to absolute (pixel) sizes instead. 
+- SetSizeOnDragEnded: Boolean indicating if the size of the row/column should be set after the user releases the handle.
+- SplitMode: Sets if the grid should be split by columns, rows or both. 
+- SplitterColor: Color used by the grid splitter handles.
+- SplitterSprite: Sprite used by the grid splitter handles.
+- Thickness: The thickness of the grid splitter handles. 
 
 GridSplitterHandle
-- IsEnabled: 
+- IsEnabled: Boolean indicating if the user can interact with the grid splitter handle. 
 
 Group
-- ContentAlignment: 
-- Orientation: 
-- Spacing: 
+- ContentAlignment: Sets the alignment of the child views within the group.
+- Orientation: Sets if the group should arrange its item horizontally or vertically. 
+- Spacing: The spacing between the horizontally or vertically arranged child views. 
 
 InputField
-- EndEdit: 
-- OnlyTriggerValueChangedFromUI: 
-- SetValueOnEndEdit: 
-- TextMargin: 
-- ValueChanged: 
+- EndEdit: Action called when the user stops editing the input field text. 
+- OnlyTriggerValueChangedFromUI: Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.
+- SetValueOnEndEdit: Boolean indicating if the value of the input field text should be set after the user is done editing. 
+- TextMargin: Margin of the input text. 
+- ValueChanged: Action called when the input text changes.
 
 Label
-- AutoSize: 
+- AutoSize: Enum indicating if and how the label should automatically resize itself to the size of the text. 
 
 List
-- AlternateItems: 
-- CanDeselect: 
-- CanMultiSelect: 
-- CanReselect: 
-- CanSelect: 
-- ContentAlignment: 
-- DeselectAfterSelect: 
-- DisableItemArrangement: 
-- HorizontalSpacing: 
-- IsScrollable: 
-- IsStatic: 
-- IsVirtualized: 
-- ItemDeselected: 
-- ItemSelected: 
-- Orientation: 
-- Overflow: 
-- Padding: 
-- RealizationMargin: 
-- SelectedItem: 
-- SelectOnMouseUp: 
-- SortDirection: 
-- Spacing: 
-- VerticalSpacing: 
-- VirtualItemGetter: 
+- AlternateItems: Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items. 
+- CanDeselect: Boolean indicating if selected list items can be deselected by clicking on them again.
+- CanMultiSelect: Boolean indicating if the user can select multiple list items. 
+- CanReselect: Boolean indicating if the selected item should be reselected if clicked on again. 
+- CanSelect: Boolean indicating if the user can select items in the list. 
+- ContentAlignment: Alignment of the list items.
+- DeselectAfterSelect: Boolean indicating if the item should immediatelly be deselected after being selected.
+- DisableItemArrangement: Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere. 
+- HorizontalSpacing: Horizontal spacing between the list items.
+- IsScrollable: Boolean indicating if the list can be scrolled.
+- IsStatic: Boolean indicating if the list is static. 
+- IsVirtualized: Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated. 
+- ItemDeselected: Action called when an item is deselected.
+- ItemSelected: Action called when an item is selected.
+- Orientation: Orientation of the list.
+- Overflow: Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists. 
+- Padding: Adds padding to the list. 
+- RealizationMargin: Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized. 
+- SelectedItem: References the data collection item that corresponds to the currently selected list item.
+- SelectOnMouseUp: Boolean indicating if list items should be selected on mouse up.
+- SortDirection: Determines the sort direction of the list items. 
+- Spacing: Horizontal and vertical spacing between the list items.
+- VerticalSpacing: Vertical spacing between the list items.
+- VirtualItemGetter: If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item. 
 
 ListItem
-- AutoSizeToContent: 
-- Breadth: 
-- ContentTemplateData: 
-- IsAlternate: 
-- IsDisabled: 
-- IsMouseOver: 
-- IsPressed: 
-- IsSelected: 
-- Item: 
-- Length: 
+- AutoSizeToContent: Boolean indicating if the list item automatically audjusts its size to its content. 
+- Breadth: The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical. 
+- ContentTemplateData: Holds the content template data.
+- IsAlternate: Boolean indicating if the default state of this list item should be Alternate. Used by lists that has AlternateItems set to True, to alternate the style of every other (odd) list item.
+- IsDisabled: Boolean indicating if the list item is disabled.
+- IsMouseOver: Boolean indicating if the mouse is over the list item.
+- IsPressed: Boolean indicating if the list item is pressed. 
+- IsSelected: Boolean indicating if the list item is selected.
+- Item: References the data collection item bound to this list item (set when the list item resides in a dynamic list).
+- Length: The length of the list item that corresponds to Height if list is horizontal and Width if vertical. 
 
 RadioButton
-- IsChecked: 
-- IsDisabled: 
-- IsInteractable: 
-- Spacing: 
+- IsChecked: Boolean indicating if the radio button is selected. 
+- IsDisabled: Boolean indicating if the radio button is disabled.
+- IsInteractable: Boolean indicating if the user can toggle the radio button. 
+- Spacing: The spacing between the radio button image and the label. 
 
 SceneObjectView
-- BeginDrag: 
-- Cancel: 
-- Click: 
-- Deselect: 
-- Drag: 
-- Drop: 
-- EnableScriptEvents: 
-- EndDrag: 
-- GameObject: 
-- IgnoreObject: 
-- InitializePotentialDrag: 
-- IsActive: 
-- MouseDown: 
-- MouseEnter: 
-- MouseExit: 
-- MouseUp: 
-- Move: 
-- Scroll: 
-- Select: 
-- Submit: 
-- UpdateSelected: 
+- BeginDrag: Action called when the user begins to drag the view. 
+- Cancel: Action called when a cancel event occurs.
+- Click: Action called when the user clicks on the view.
+- Deselect: Action called when another view is selected.
+- Drag: Action called while the user drags the view. 
+- Drop: Action called when the view accepts a drop.
+- EnableScriptEvents: Boolean indicating if unity script events (Update, LateUpdate, Awake, etc) should be relayed to the view code-behind through the corresponding methods that can be overriden. 
+- EndDrag: Action called when the user stops dragging the view.
+- GameObject: GameObject in the hierarchy that corresponds to the view.
+- IgnoreObject: Boolean indicating if the view should be ignored. Ignored objects don't run any load logic and don't respond to property changed events.
+- InitializePotentialDrag: Called when the user initializes a potential drag on the view.
+- IsActive: Boolean indicating if the view is active. Deactivated views deactivates corresponding game object, components, renderers and scripts. 
+- MouseDown: Action called when the mouse/touch presses down over the view.
+- MouseEnter: Action called when the mouse enters the view.
+- MouseExit: Action called when the mouse exits the view.
+- MouseUp: Action called when the mouse/touch releases over the view.
+- Move: Action called when a move events occurs.
+- Scroll: Action called when the user scrolls with mouse wheel or track pad over the view.
+- Select: Action called when the view is selected.
+- Submit: Action called when a submit event occurs.
+- UpdateSelected: Action called when theobject associated with this EventTrigger is updated. 
 
 ScrollableRegion
-- AutoSizeContentRegion: 
-- CanScrollHorizontally: 
-- CanScrollVertically: 
-- ContentAlignment: 
-- ContentScrolled: 
-- DebugOffsetText: 
-- DecelerationRate: 
-- DisableInteractionScrollDelta: 
-- DisableMouseWheel: 
-- Elasticity: 
-- HasInertia: 
-- HorizontalScrollbarVisibility: 
-- MaskContent: 
-- ScrollBounds: 
-- ScrollEnabled: 
-- ScrollSensitivity: 
-- UnblockDragEventsInChildren: 
-- VerticalScrollbarVisibility: 
+- AutoSizeContentRegion: Boolean indicating if the scrollable content region should be adjusted to the size of its content or not. 
+- CanScrollHorizontally: Boolean indicating if the region can be scrolled horizontally.
+- CanScrollVertically: Boolean indicating if the region can be scrolled vertically.
+- ContentAlignment: Alignment of the content.
+- ContentScrolled: Action called whenever the content is scrolled.
+- DecelerationRate: Determines how fast the scroll speed decelerates once the user stops scrolling. 
+- DisableInteractionScrollDelta: If set any interaction with child views (clicks, etc) are disabled when the specified amount of pixels has been scrolled. Used e.g. to disable items from being selected while scrolling a selectable list of items. 
+- DisableMouseWheel: Boolean indicating if the mouse wheel is disabled. 
+- Elasticity: Determines how elastic the viewport is when scrolling outside the bounds of the scrollable content. 
+- HasInertia: Boolean indicating if the should stop immediatelly when the user stops scrolling (when set to False) or if it should decelerate based on DecelerationRate. 
+- HorizontalScrollbarVisibility: Enum indicating the visibility mode of the horizontal scrollbar.
+- MaskContent: Boolean indicating if any content outside the bounds of the viewport should be masked.
+- ScrollBounds: Enum indicating what type of bounds the scrollable region has (Clamped, Elastic or None). 
+- ScrollEnabled: Boolean indicating if scrolling by the user is enabled. 
+- ScrollSensitivity: Sets the sensitivity of the scrolling using mouse wheel or track pad. 
+- UnblockDragEventsInChildren: Boolean indicating if draggable child views shouldn't block this scrollable region from being scrolled.
+- VerticalScrollbarVisibility: Enum indicating the visibility mode of the vertical scrollbar.
 
 Scrollbar
-- Breadth: 
-- Length: 
-- Orientation: 
-- ScrollPosition: 
-- ViewportRatio: 
+- Breadth: Breadth of the scrollbar. Corresponds to Height if horizontal and Width if vertical.
+- Length: Length of the scrollbar. Corresponds to Width if horizontal and Height if vertical.
+- Orientation: The orientation of the scrollbar.
+- ScrollPosition: Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).
+- ViewportRatio: Value between 0-1 determining the size of the scrollbar handle relative to the viewport. 
 
 Slider
-- Breadth: 
-- CanSlide: 
-- IsReversed: 
-- Length: 
-- Max: 
-- Min: 
-- Orientation: 
-- SetValueOnDragEnded: 
-- Steps: 
-- Value: 
-- ValueChanged: 
+- Breadth: The breadth of the slider. Corresponds to Height if horizontal and Width if vertical.
+- CanSlide: Boolean indicating if the user can interact with the slider.
+- IsReversed: Boolean indicating if slider direction is reversed. 
+- Length: The length of the slider. Corresponds to Width if horizontal and Height if vertical.
+- Max: Maximum value of the slider.
+- Min: Minimum value of the slider.
+- Orientation: Orientation of the slider (horizontal or vertical).
+- SetValueOnDragEnded: Boolean indicating that the slider value is set when the user releases the handle. 
+- Steps: Specifies the number of steps there should be between min and max slider value.
+- Value: Current value of the slider.
+- ValueChanged: Action called when the slider value changes.
 
 Tab
-- ContentTemplateData: 
-- TabHeaderId: 
-- Text: 
+- ContentTemplateData: Holds the content template data. 
+- TabHeaderId: ID of TabHeader belonging to this tab. 
+- Text: Default tab header text. 
 
 TabHeader
-- ContentTemplateData: 
-- TabIndex: 
+- ContentTemplateData: Holds the content template data. 
+- TabIndex: Index of the tab.
 
 TabPanel
-- IsStatic: 
-- SelectedTabIndex: 
-- TabHeaderHeight: 
-- TabHeaderWidth: 
-- TabSelected: 
-- TabSwitchMode: 
+- IsStatic: Boolean indicating if the tab panel is static. 
+- SelectedTabIndex: Selected tab index.
+- TabHeaderHeight: Default height of tab headers.
+- TabHeaderWidth: Default width of tab headers.
+- TabSelected: Action called when a tab is selected. 
+- TabSwitchMode: Enum indicating view switch mode, e.g. if tabs should be loaded on-demand or be pre-loaded. 
 
 UICanvas
-- RenderCamera: 
+- RenderCamera: ID of the world camera camera used when rendering the canvas. 
 
 UIView
 - Alignment: Used to align the view relative to the layout parent region it resides in.
@@ -215,7 +212,7 @@ UIView
 - OffsetFromParent: Offset set by a parent view. Used by views like Group to arrange children without changing their own Offset values.
 - OverrideHeight: Overrides regular Height value. Used to e.g. automatically size items without changing the default Height value set.
 - OverrideWidth: Overrides regular Width value. Used to e.g. automatically size items without changing the default Width value set.
-- Pivot: Changes the pivot point of the view.
+- Pivot: The pivot point of the view.
 - Position: Directly sets the local position of the view relative to parent. Position otherwise set using the Alignment and Offset properties.
 - RaycastBlockMode: Enum indicating if raycasts should be blocked.
 - Rotation: Rotation of the view. 
@@ -224,16 +221,16 @@ UIView
 - Width: The width of the view in pixels or percents.
 
 View
-- LoadMode: 
+- LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
 
 ViewSwitcher
-- ChildLoadMode: 
-- ShowFirstByDefault: 
-- StartView: 
-- SwitchMode: 
+- ChildLoadMode: Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting. 
+- ShowFirstByDefault: Boolean indicating if the first view in the view switcher should be displayed initially by default. 
+- StartView: Sets the ID of the view that should be displayed initially. 
+- SwitchMode: Enum indicating view switch mode, e.g. if views should be loaded on-demand or be pre-loaded. 
 
 XmlEditor
-- Edit: 
-- IsFocused: 
-- XmlText: 
+- Edit: Action called when the user edits the view.
+- IsFocused: Boolean indicating if the editor is focused.
+- XmlText: Used to set the XML text in the editor. 
 

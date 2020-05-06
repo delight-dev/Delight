@@ -45,6 +45,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
+        /// <summary>Spacing between grid row and columns.</summary>
         public Delight.ElementSize Spacing
         {
             get { return SpacingProperty.GetValue(this); }
@@ -52,6 +53,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> ColumnSpacingProperty = new DependencyProperty<Delight.ElementSize>("ColumnSpacing");
+        /// <summary>Spacing between grid columns.</summary>
         public Delight.ElementSize ColumnSpacing
         {
             get { return ColumnSpacingProperty.GetValue(this); }
@@ -59,6 +61,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> RowSpacingProperty = new DependencyProperty<Delight.ElementSize>("RowSpacing");
+        /// <summary>Spacing between grid rows.</summary>
         public Delight.ElementSize RowSpacing
         {
             get { return RowSpacingProperty.GetValue(this); }
@@ -66,6 +69,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.RowDefinitions> RowsProperty = new DependencyProperty<Delight.RowDefinitions>("Rows");
+        /// <summary>Row definitions that determines the proportional or pixel size of each row in the grid as well as their min/max size.</summary>
         public Delight.RowDefinitions Rows
         {
             get { return RowsProperty.GetValue(this); }
@@ -73,6 +77,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ColumnDefinitions> ColumnsProperty = new DependencyProperty<Delight.ColumnDefinitions>("Columns");
+        /// <summary>Column definitions that determines the proportional or pixel size of each column in the grid as well as their min/max size.</summary>
         public Delight.ColumnDefinitions Columns
         {
             get { return ColumnsProperty.GetValue(this); }

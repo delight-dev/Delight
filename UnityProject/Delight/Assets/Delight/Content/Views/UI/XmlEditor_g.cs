@@ -76,6 +76,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.String> XmlTextProperty = new DependencyProperty<System.String>("XmlText");
+        /// <summary>Used to set the XML text in the editor.</summary>
         public System.String XmlText
         {
             get { return XmlTextProperty.GetValue(this); }
@@ -83,6 +84,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsFocusedProperty = new DependencyProperty<System.Boolean>("IsFocused");
+        /// <summary>Boolean indicating if the editor is focused.</summary>
         public System.Boolean IsFocused
         {
             get { return IsFocusedProperty.GetValue(this); }
@@ -90,6 +92,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> EditProperty = new DependencyProperty<ViewAction>("Edit", () => new ViewAction());
+        /// <summary>Action called when the user edits the view.</summary>
         public ViewAction Edit
         {
             get { return EditProperty.GetValue(this); }

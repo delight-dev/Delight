@@ -117,6 +117,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");
+        /// <summary>Enum indicating if and how the label should automatically resize itself to the size of the text.</summary>
         public Delight.AutoSize AutoSize
         {
             get { return AutoSizeProperty.GetValue(this); }

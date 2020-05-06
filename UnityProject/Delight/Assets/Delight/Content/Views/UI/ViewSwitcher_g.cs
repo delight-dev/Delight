@@ -42,6 +42,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.SwitchMode> SwitchModeProperty = new DependencyProperty<Delight.SwitchMode>("SwitchMode");
+        /// <summary>Enum indicating view switch mode, e.g. if views should be loaded on-demand or be pre-loaded.</summary>
         public Delight.SwitchMode SwitchMode
         {
             get { return SwitchModeProperty.GetValue(this); }
@@ -49,6 +50,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.String> StartViewProperty = new DependencyProperty<System.String>("StartView");
+        /// <summary>Sets the ID of the view that should be displayed initially.</summary>
         public System.String StartView
         {
             get { return StartViewProperty.GetValue(this); }
@@ -56,6 +58,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> ShowFirstByDefaultProperty = new DependencyProperty<System.Boolean>("ShowFirstByDefault");
+        /// <summary>Boolean indicating if the first view in the view switcher should be displayed initially by default.</summary>
         public System.Boolean ShowFirstByDefault
         {
             get { return ShowFirstByDefaultProperty.GetValue(this); }
@@ -63,6 +66,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.LoadMode> ChildLoadModeProperty = new DependencyProperty<Delight.LoadMode>("ChildLoadMode");
+        /// <summary>Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting.</summary>
         public Delight.LoadMode ChildLoadMode
         {
             get { return ChildLoadModeProperty.GetValue(this); }

@@ -42,6 +42,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
+        /// <summary>The spacing between the horizontally or vertically arranged child views.</summary>
         public Delight.ElementSize Spacing
         {
             get { return SpacingProperty.GetValue(this); }
@@ -49,6 +50,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementOrientation> OrientationProperty = new DependencyProperty<Delight.ElementOrientation>("Orientation");
+        /// <summary>Sets if the group should arrange its item horizontally or vertically.</summary>
         public Delight.ElementOrientation Orientation
         {
             get { return OrientationProperty.GetValue(this); }
@@ -56,6 +58,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> ContentAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("ContentAlignment");
+        /// <summary>Sets the alignment of the child views within the group.</summary>
         public Delight.ElementAlignment ContentAlignment
         {
             get { return ContentAlignmentProperty.GetValue(this); }
