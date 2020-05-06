@@ -205,6 +205,8 @@ namespace Delight
             // center on view
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
+
+            XmlEditorRegion.IsVisible = true;
         }
 
         /// <summary>
@@ -1132,6 +1134,8 @@ namespace Delight
 
             DesignerViews.Add(newView);
             DesignerViews.SelectAndScrollTo(newView);
+
+            XmlEditorRegion.IsVisible = true;
         }
 
         #endregion

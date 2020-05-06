@@ -36,7 +36,7 @@
       </Region>
 
       <!-- Bottom Panel - XML editor -->
-      <Region Id="XmlEditorRegion" Grid.Cell="1,1" BackgroundColor="#fbfbfb">
+      <Region Id="XmlEditorRegion" Grid.Cell="1,1" BackgroundColor="#fbfbfb" IsVisible="False">
         <XmlEditor Id="XmlEditor" Margin="10,21,0,20" Edit="OnEdit" />
         <Region Id="XmlEditorStatusBar" BackgroundColor="#e2e2e2" Height="20" Alignment="Bottom">
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">

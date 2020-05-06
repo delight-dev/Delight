@@ -1500,6 +1500,7 @@ namespace Delight
                     _delightDesignerXmlEditorRegion.Name = "DelightDesignerXmlEditorRegion";
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditorRegion, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
+                    Delight.Region.IsVisibleProperty.SetDefault(_delightDesignerXmlEditorRegion, false);
                 }
                 return _delightDesignerXmlEditorRegion;
             }
