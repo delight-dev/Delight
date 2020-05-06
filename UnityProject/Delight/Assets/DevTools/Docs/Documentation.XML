@@ -260,6 +260,69 @@
             Name of the scene view game object.
             </summary>
         </member>
+        <member name="P:Delight.SceneObjectView.GameObject">
+            <summary>GameObject in the hierarchy that corresponds to the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.EnableScriptEvents">
+            <summary>Boolean indicating if unity script events (Update, LateUpdate, Awake, etc) should be relayed to the view code-behind through the corresponding methods that can be overriden.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.IgnoreObject">
+            <summary>Boolean indicating if the view should be ignored. Ignored objects don't run any load logic and don't respond to property changed events.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.IsActive">
+            <summary>Boolean indicating if the view is active. Deactivated views deactivates corresponding game object, components, renderers and scripts.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.BeginDrag">
+            <summary>Action called when the user begins to drag the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Cancel">
+            <summary>Action called when a cancel event occurs.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Click">
+            <summary>Action called when the user clicks on the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Deselect">
+            <summary>Action called when another view is selected.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Drag">
+            <summary>Action called while the user drags the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Drop">
+            <summary>Action called when the view accepts a drop.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.EndDrag">
+            <summary>Action called when the user stops dragging the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.InitializePotentialDrag">
+            <summary>Called when the user initializes a potential drag on the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Move">
+            <summary>Action called when a move events occurs.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.MouseDown">
+            <summary>Action called when the mouse/touch presses down over the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.MouseEnter">
+            <summary>Action called when the mouse enters the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.MouseExit">
+            <summary>Action called when the mouse exits the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.MouseUp">
+            <summary>Action called when the mouse/touch releases over the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Scroll">
+            <summary>Action called when the user scrolls with mouse wheel or track pad over the view.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Select">
+            <summary>Action called when the view is selected.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.Submit">
+            <summary>Action called when a submit event occurs.</summary>
+        </member>
+        <member name="P:Delight.SceneObjectView.UpdateSelected">
+            <summary>Action called when theobject associated with this EventTrigger is updated.</summary>
+        </member>
         <member name="T:Delight.UnityScriptRelay">
             <summary>
             Simple unity component that relays script events (Awake, Update, etc) to scene view.
@@ -360,6 +423,48 @@
             Called by designer to make the view presentable in the designer.
             </summary>
         </member>
+        <member name="P:Delight.Button.DefaultWidth">
+            <summary>Default width of the button when none is specified.</summary>
+        </member>
+        <member name="P:Delight.Button.IsToggleButton">
+            <summary>Boolean indicating if the button is a toggle button.</summary>
+        </member>
+        <member name="P:Delight.Button.IsDisabled">
+            <summary>Boolean indicating if this button is disabled.</summary>
+        </member>
+        <member name="P:Delight.Button.ToggleValue">
+            <summary>Toggle value of the button.</summary>
+        </member>
+        <member name="P:Delight.Button.TextPadding">
+            <summary>Padding applied when the button autosizes to its content.</summary>
+        </member>
+        <member name="P:Delight.Button.CanToggleOn">
+            <summary>Boolean indicating if the button can be toggled on.</summary>
+        </member>
+        <member name="P:Delight.Button.CanToggleOff">
+            <summary>Boolean indicating if the button can be toggled off.</summary>
+        </member>
+        <member name="P:Delight.Button.ToggleClick">
+            <summary>Action called when the button is toggled.</summary>
+        </member>
+        <member name="P:Delight.Button.IsMouseOver">
+            <summary>Boolean indicating if the mouse is over the button.</summary>
+        </member>
+        <member name="P:Delight.Button.IsPressed">
+            <summary>Boolean indicating if the button is pressed.</summary>
+        </member>
+        <member name="P:Delight.Button.AutoSize">
+            <summary>Enum indicating if and how the button should automatically resize itself to the size of the text.</summary>
+        </member>
+        <member name="P:Delight.Button.TextOffset">
+            <summary>The offset of the button text label.</summary>
+        </member>
+        <member name="P:Delight.Button.IsCloseButton">
+            <summary>Boolean indicating if this is a close button.</summary>
+        </member>
+        <member name="P:Delight.Button.IsBackButton">
+            <summary>Boolean indicating if this is a back button.</summary>
+        </member>
         <member name="M:Delight.CanvasRendererView.BeforeLoad">
             <summary>
             Called before the view is loaded.
@@ -420,6 +525,18 @@
             Called by designer to make the view presentable in the designer.
             </summary>
         </member>
+        <member name="P:Delight.CheckBox.IsChecked">
+            <summary>Boolean indicating if the check box is checked.</summary>
+        </member>
+        <member name="P:Delight.CheckBox.IsDisabled">
+            <summary>Boolean indicating if the check box is disabled.</summary>
+        </member>
+        <member name="P:Delight.CheckBox.IsInteractable">
+            <summary>Boolean indicating if the user can interact with the check box.</summary>
+        </member>
+        <member name="P:Delight.CheckBox.Spacing">
+            <summary>Spacing between the check box sprite and the text label.</summary>
+        </member>
         <member name="T:Delight.Collection">
             <summary>
             Generic collection view. Used by views such as Lists and TabPanel that wants to display dynamic content through the Item property.
@@ -434,6 +551,12 @@
             <summary>
             Gets content template of the specified type and id. 
             </summary>
+        </member>
+        <member name="P:Delight.Collection.Items">
+            <summary>The data collection that is used to generate the collection view items.</summary>
+        </member>
+        <member name="P:Delight.Collection.TemplateSelector">
+            <summary>Method used to select the template used by the collection. The method takes the data collection item as a parameter and returns the ID of the template that should be used to present the item.</summary>
         </member>
         <member name="T:Delight.ComboBox">
             <summary>
@@ -485,6 +608,12 @@
             Selects item in the list.
             </summary>
         </member>
+        <member name="P:Delight.ComboBox.IsDropUp">
+            <summary>Boolean indicating if the combo box list should open above instead of below the button.</summary>
+        </member>
+        <member name="P:Delight.ComboBox.ItemSelected">
+            <summary>Action called when an item is selected.</summary>
+        </member>
         <member name="T:Delight.Frame">
             <summary>
             View that resizes itself to its content by default.
@@ -514,6 +643,9 @@
             <summary>
             Adjusts the size of the list item to its content. 
             </summary>
+        </member>
+        <member name="P:Delight.Frame.AutoSizeToContent">
+            <summary>Boolean indicating if the view should resize itself to its content.</summary>
         </member>
         <member name="T:Delight.LayoutGrid">
             <summary>
@@ -580,6 +712,21 @@
             Called when the cell index or span of a child has been changed. 
             </summary>
         </member>
+        <member name="P:Delight.LayoutGrid.Spacing">
+            <summary>Spacing between grid row and columns.</summary>
+        </member>
+        <member name="P:Delight.LayoutGrid.ColumnSpacing">
+            <summary>Spacing between grid columns.</summary>
+        </member>
+        <member name="P:Delight.LayoutGrid.RowSpacing">
+            <summary>Spacing between grid rows.</summary>
+        </member>
+        <member name="P:Delight.LayoutGrid.Rows">
+            <summary>Row definitions that determines the proportional or pixel size of each row in the grid as well as their min/max size.</summary>
+        </member>
+        <member name="P:Delight.LayoutGrid.Columns">
+            <summary>Column definitions that determines the proportional or pixel size of each column in the grid as well as their min/max size.</summary>
+        </member>
         <member name="T:Delight.RowDefinitions">
             <summary>
             List of row definitions.
@@ -614,6 +761,30 @@
             <summary>
             Called after the view has been loaded.
             </summary>
+        </member>
+        <member name="P:Delight.GridSplitter.Thickness">
+            <summary>The thickness of the grid splitter handles.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.InteractionThickness">
+            <summary>Indicates how thick the interactable region of the splitter handle is. Can be larger than the actual thickness to make it easer for the user to interact with the handle.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.SetSizeOnDragEnded">
+            <summary>Boolean indicating if the size of the row/column should be set after the user releases the handle.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.SplitMode">
+            <summary>Sets if the grid should be split by columns, rows or both.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.SplitterColor">
+            <summary>Color used by the grid splitter handles.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.SplitterSprite">
+            <summary>Sprite used by the grid splitter handles.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.BePushy">
+            <summary>Boolean indicating if resizing one column/row beyond min/max should push into and resize subsequent rows/columns.</summary>
+        </member>
+        <member name="P:Delight.GridSplitter.OverrideProportionalSize">
+            <summary>Boolean indicating if the proportional size of the columns/rows should be overriden when resizing, and set to absolute (pixel) sizes instead.</summary>
         </member>
         <member name="T:Delight.GridSplitterHandle">
             <summary>
@@ -670,6 +841,9 @@
             Called when the mouse exits the view.
             </summary>
         </member>
+        <member name="P:Delight.GridSplitterHandle.IsEnabled">
+            <summary>Boolean indicating if the user can interact with the grid splitter handle.</summary>
+        </member>
         <member name="T:Delight.Group">
             <summary>
             The group is used to spacially arrange child views next to each other either horizontally or vertically based on the Orientation property.
@@ -689,6 +863,15 @@
             <summary>
             Updates the layout of the group. 
             </summary>
+        </member>
+        <member name="P:Delight.Group.Spacing">
+            <summary>The spacing between the horizontally or vertically arranged child views.</summary>
+        </member>
+        <member name="P:Delight.Group.Orientation">
+            <summary>Sets if the group should arrange its item horizontally or vertically.</summary>
+        </member>
+        <member name="P:Delight.Group.ContentAlignment">
+            <summary>Sets the alignment of the child views within the group.</summary>
         </member>
         <member name="T:Delight.Image">
             <summary>
@@ -714,6 +897,54 @@
             <summary>
             Called whenever the UI fast default material has been loaded/changed.
             </summary>
+        </member>
+        <member name="P:Delight.Image.Sprite">
+            <summary>The sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".</summary>
+        </member>
+        <member name="P:Delight.Image.OverrideSprite">
+            <summary>Overrides the default sprite used by this view.</summary>
+        </member>
+        <member name="P:Delight.Image.Type">
+            <summary>Enum indicating what type of sprite the background is.</summary>
+        </member>
+        <member name="P:Delight.Image.PreserveAspect">
+            <summary>Boolean indicating if this sprite should preserve its aspect ratio.</summary>
+        </member>
+        <member name="P:Delight.Image.FillCenter">
+            <summary>Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.</summary>
+        </member>
+        <member name="P:Delight.Image.FillMethod">
+            <summary>Enum indicating the background fill method.</summary>
+        </member>
+        <member name="P:Delight.Image.FillAmount">
+            <summary>Amount of the view shown when Type is set to Filled.</summary>
+        </member>
+        <member name="P:Delight.Image.FillClockwise">
+            <summary>Boolean indicating if the sprite should be filled clockwise or counter-clockwise.</summary>
+        </member>
+        <member name="P:Delight.Image.FillOrigin">
+            <summary>Point of origin of the Fill process. Value means different things with each fill method.</summary>
+        </member>
+        <member name="P:Delight.Image.UseSpriteMesh">
+            <summary>Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.</summary>
+        </member>
+        <member name="P:Delight.Image.PixelsPerUnitMultiplier">
+            <summary>Pixel per unit modifier to change how sliced sprites are generated.</summary>
+        </member>
+        <member name="P:Delight.Image.Material">
+            <summary>Material used by the sprite.</summary>
+        </member>
+        <member name="P:Delight.Image.OnCullStateChanged">
+            <summary>Callback called when the culling state of this graphic either becomes culled or visible.</summary>
+        </member>
+        <member name="P:Delight.Image.Maskable">
+            <summary>Boolean indicating if the graphic allows masking.</summary>
+        </member>
+        <member name="P:Delight.Image.IsMaskingGraphic">
+            <summary>Boolean indicating if image is a masking graphic.</summary>
+        </member>
+        <member name="P:Delight.Image.RaycastTarget">
+            <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         </member>
         <member name="T:Delight.LayoutRoot">
             <summary>
@@ -950,6 +1181,78 @@
             Returns boolean indicating if list scrolls horizontally. 
             </summary>
         </member>
+        <member name="P:Delight.List.Orientation">
+            <summary>Orientation of the list.</summary>
+        </member>
+        <member name="P:Delight.List.Spacing">
+            <summary>Horizontal and vertical spacing between the list items.</summary>
+        </member>
+        <member name="P:Delight.List.HorizontalSpacing">
+            <summary>Horizontal spacing between the list items.</summary>
+        </member>
+        <member name="P:Delight.List.VerticalSpacing">
+            <summary>Vertical spacing between the list items.</summary>
+        </member>
+        <member name="P:Delight.List.Padding">
+            <summary>Adds padding to the list.</summary>
+        </member>
+        <member name="P:Delight.List.ContentAlignment">
+            <summary>Alignment of the list items.</summary>
+        </member>
+        <member name="P:Delight.List.AlternateItems">
+            <summary>Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items.</summary>
+        </member>
+        <member name="P:Delight.List.IsScrollable">
+            <summary>Boolean indicating if the list can be scrolled.</summary>
+        </member>
+        <member name="P:Delight.List.IsVirtualized">
+            <summary>Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated.</summary>
+        </member>
+        <member name="P:Delight.List.Overflow">
+            <summary>Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists.</summary>
+        </member>
+        <member name="P:Delight.List.SortDirection">
+            <summary>Determines the sort direction of the list items.</summary>
+        </member>
+        <member name="P:Delight.List.ItemSelected">
+            <summary>Action called when an item is selected.</summary>
+        </member>
+        <member name="P:Delight.List.ItemDeselected">
+            <summary>Action called when an item is deselected.</summary>
+        </member>
+        <member name="P:Delight.List.CanSelect">
+            <summary>Boolean indicating if the user can select items in the list.</summary>
+        </member>
+        <member name="P:Delight.List.CanDeselect">
+            <summary>Boolean indicating if selected list items can be deselected by clicking on them again.</summary>
+        </member>
+        <member name="P:Delight.List.CanMultiSelect">
+            <summary>Boolean indicating if the user can select multiple list items.</summary>
+        </member>
+        <member name="P:Delight.List.CanReselect">
+            <summary>Boolean indicating if the selected item should be reselected if clicked on again.</summary>
+        </member>
+        <member name="P:Delight.List.DeselectAfterSelect">
+            <summary>Boolean indicating if the item should immediatelly be deselected after being selected.</summary>
+        </member>
+        <member name="P:Delight.List.SelectOnMouseUp">
+            <summary>Boolean indicating if list items should be selected on mouse up.</summary>
+        </member>
+        <member name="P:Delight.List.SelectedItem">
+            <summary>References the data collection item that corresponds to the currently selected list item.</summary>
+        </member>
+        <member name="P:Delight.List.IsStatic">
+            <summary>Boolean indicating if the list is static.</summary>
+        </member>
+        <member name="P:Delight.List.VirtualItemGetter">
+            <summary>If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item.</summary>
+        </member>
+        <member name="P:Delight.List.RealizationMargin">
+            <summary>Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized.</summary>
+        </member>
+        <member name="P:Delight.List.DisableItemArrangement">
+            <summary>Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere.</summary>
+        </member>
         <member name="T:Delight.ListItem">
             <summary>
             Base view for items displayed within the List view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
@@ -1045,6 +1348,36 @@
             Sets state.
             </summary>
         </member>
+        <member name="P:Delight.ListItem.Item">
+            <summary>References the data collection item bound to this list item (set when the list item resides in a dynamic list).</summary>
+        </member>
+        <member name="P:Delight.ListItem.IsDisabled">
+            <summary>Boolean indicating if the list item is disabled.</summary>
+        </member>
+        <member name="P:Delight.ListItem.IsAlternate">
+            <summary>Boolean indicating if the default state of this list item should be Alternate. Used by lists that has AlternateItems set to True, to alternate the style of every other (odd) list item.</summary>
+        </member>
+        <member name="P:Delight.ListItem.IsSelected">
+            <summary>Boolean indicating if the list item is selected.</summary>
+        </member>
+        <member name="P:Delight.ListItem.IsPressed">
+            <summary>Boolean indicating if the list item is pressed.</summary>
+        </member>
+        <member name="P:Delight.ListItem.IsMouseOver">
+            <summary>Boolean indicating if the mouse is over the list item.</summary>
+        </member>
+        <member name="P:Delight.ListItem.AutoSizeToContent">
+            <summary>Boolean indicating if the list item automatically audjusts its size to its content.</summary>
+        </member>
+        <member name="P:Delight.ListItem.Length">
+            <summary>The length of the list item that corresponds to Height if list is horizontal and Width if vertical.</summary>
+        </member>
+        <member name="P:Delight.ListItem.Breadth">
+            <summary>The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical.</summary>
+        </member>
+        <member name="P:Delight.ListItem.ContentTemplateData">
+            <summary>Holds the content template data.</summary>
+        </member>
         <member name="T:Delight.Mask">
             <summary>
             A view that masks any content using the background sprite and color as mask.
@@ -1109,6 +1442,18 @@
             <summary>
             Called by designer to make the view presentable in the designer.
             </summary>
+        </member>
+        <member name="P:Delight.RadioButton.IsChecked">
+            <summary>Boolean indicating if the radio button is selected.</summary>
+        </member>
+        <member name="P:Delight.RadioButton.IsDisabled">
+            <summary>Boolean indicating if the radio button is disabled.</summary>
+        </member>
+        <member name="P:Delight.RadioButton.IsInteractable">
+            <summary>Boolean indicating if the user can toggle the radio button.</summary>
+        </member>
+        <member name="P:Delight.RadioButton.Spacing">
+            <summary>The spacing between the radio button image and the label.</summary>
         </member>
         <member name="T:Delight.RectMask2D">
             <summary>
@@ -1290,6 +1635,57 @@
             Gets or sets normalized scroll position. TODO make into dependency property so we can bind to it. 
             </summary>
         </member>
+        <member name="P:Delight.ScrollableRegion.MaskContent">
+            <summary>Boolean indicating if any content outside the bounds of the viewport should be masked.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.HasInertia">
+            <summary>Boolean indicating if the should stop immediatelly when the user stops scrolling (when set to False) or if it should decelerate based on DecelerationRate.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.DecelerationRate">
+            <summary>Determines how fast the scroll speed decelerates once the user stops scrolling.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.Elasticity">
+            <summary>Determines how elastic the viewport is when scrolling outside the bounds of the scrollable content.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.CanScrollHorizontally">
+            <summary>Boolean indicating if the region can be scrolled horizontally.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.CanScrollVertically">
+            <summary>Boolean indicating if the region can be scrolled vertically.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.ContentAlignment">
+            <summary>Alignment of the content.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.AutoSizeContentRegion">
+            <summary>Boolean indicating if the scrollable content region should be adjusted to the size of its content or not.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.ScrollBounds">
+            <summary>Enum indicating what type of bounds the scrollable region has (Clamped, Elastic or None).</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.DisableInteractionScrollDelta">
+            <summary>If set any interaction with child views (clicks, etc) are disabled when the specified amount of pixels has been scrolled. Used e.g. to disable items from being selected while scrolling a selectable list of items.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.ScrollSensitivity">
+            <summary>Sets the sensitivity of the scrolling using mouse wheel or track pad.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.HorizontalScrollbarVisibility">
+            <summary>Enum indicating the visibility mode of the horizontal scrollbar.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.VerticalScrollbarVisibility">
+            <summary>Enum indicating the visibility mode of the vertical scrollbar.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.DisableMouseWheel">
+            <summary>Boolean indicating if the mouse wheel is disabled.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.ContentScrolled">
+            <summary>Action called whenever the content is scrolled.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.UnblockDragEventsInChildren">
+            <summary>Boolean indicating if draggable child views shouldn't block this scrollable region from being scrolled.</summary>
+        </member>
+        <member name="P:Delight.ScrollableRegion.ScrollEnabled">
+            <summary>Boolean indicating if scrolling by the user is enabled.</summary>
+        </member>
         <member name="T:Delight.Scrollbar">
             <summary>
             A scrollbar with a draggable handle. Used by the ScrollableRegion view. 
@@ -1307,8 +1703,23 @@
         </member>
         <member name="M:Delight.Scrollbar.SetScrollPosition(System.Single,System.Nullable{System.Single})">
             <summary>
-            Sets scroll position. 
+            Sets normalized scroll position. 
             </summary>
+        </member>
+        <member name="P:Delight.Scrollbar.Length">
+            <summary>Length of the scrollbar. Corresponds to Width if horizontal and Height if vertical.</summary>
+        </member>
+        <member name="P:Delight.Scrollbar.Breadth">
+            <summary>Breadth of the scrollbar. Corresponds to Height if horizontal and Width if vertical.</summary>
+        </member>
+        <member name="P:Delight.Scrollbar.Orientation">
+            <summary>The orientation of the scrollbar.</summary>
+        </member>
+        <member name="P:Delight.Scrollbar.ScrollPosition">
+            <summary>Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).</summary>
+        </member>
+        <member name="P:Delight.Scrollbar.ViewportRatio">
+            <summary>Value between 0-1 determining the size of the scrollbar handle relative to the viewport.</summary>
         </member>
         <member name="T:Delight.SelectionIndicator">
             <summary>
@@ -1380,6 +1791,39 @@
             Sets slider position based on value.
             </summary>
         </member>
+        <member name="P:Delight.Slider.Length">
+            <summary>The length of the slider. Corresponds to Width if horizontal and Height if vertical.</summary>
+        </member>
+        <member name="P:Delight.Slider.Breadth">
+            <summary>The breadth of the slider. Corresponds to Height if horizontal and Width if vertical.</summary>
+        </member>
+        <member name="P:Delight.Slider.Orientation">
+            <summary>Orientation of the slider (horizontal or vertical).</summary>
+        </member>
+        <member name="P:Delight.Slider.Min">
+            <summary>Minimum value of the slider.</summary>
+        </member>
+        <member name="P:Delight.Slider.Max">
+            <summary>Maximum value of the slider.</summary>
+        </member>
+        <member name="P:Delight.Slider.Value">
+            <summary>Current value of the slider.</summary>
+        </member>
+        <member name="P:Delight.Slider.CanSlide">
+            <summary>Boolean indicating if the user can interact with the slider.</summary>
+        </member>
+        <member name="P:Delight.Slider.SetValueOnDragEnded">
+            <summary>Boolean indicating that the slider value is set when the user releases the handle.</summary>
+        </member>
+        <member name="P:Delight.Slider.IsReversed">
+            <summary>Boolean indicating if slider direction is reversed.</summary>
+        </member>
+        <member name="P:Delight.Slider.Steps">
+            <summary>Specifies the number of steps there should be between min and max slider value.</summary>
+        </member>
+        <member name="P:Delight.Slider.ValueChanged">
+            <summary>Action called when the slider value changes.</summary>
+        </member>
         <member name="T:Delight.Tab">
             <summary>
             Base views for tab content displayed within the TabPanel.
@@ -1389,6 +1833,15 @@
             <summary>
             Sets content template data.
             </summary>
+        </member>
+        <member name="P:Delight.Tab.ContentTemplateData">
+            <summary>Holds the content template data.</summary>
+        </member>
+        <member name="P:Delight.Tab.Text">
+            <summary>Default tab header text.</summary>
+        </member>
+        <member name="P:Delight.Tab.TabHeaderId">
+            <summary>ID of TabHeader belonging to this tab.</summary>
         </member>
         <member name="T:Delight.TabHeader">
             <summary>
@@ -1404,6 +1857,12 @@
             <summary>
             Sets content template data.
             </summary>
+        </member>
+        <member name="P:Delight.TabHeader.ContentTemplateData">
+            <summary>Holds the content template data.</summary>
+        </member>
+        <member name="P:Delight.TabHeader.TabIndex">
+            <summary>Index of the tab.</summary>
         </member>
         <member name="T:Delight.TabPanel">
             <summary>
@@ -1485,6 +1944,24 @@
             Switches to the specified tab.
             </summary>
         </member>
+        <member name="P:Delight.TabPanel.SelectedTabIndex">
+            <summary>Selected tab index.</summary>
+        </member>
+        <member name="P:Delight.TabPanel.IsStatic">
+            <summary>Boolean indicating if the tab panel is static.</summary>
+        </member>
+        <member name="P:Delight.TabPanel.TabHeaderWidth">
+            <summary>Default width of tab headers.</summary>
+        </member>
+        <member name="P:Delight.TabPanel.TabHeaderHeight">
+            <summary>Default height of tab headers.</summary>
+        </member>
+        <member name="P:Delight.TabPanel.TabSelected">
+            <summary>Action called when a tab is selected.</summary>
+        </member>
+        <member name="P:Delight.TabPanel.TabSwitchMode">
+            <summary>Enum indicating view switch mode, e.g. if tabs should be loaded on-demand or be pre-loaded.</summary>
+        </member>
         <member name="T:Delight.InputField">
             <summary>
             Interactable input field view enabling user to type single or multi-line text. Based on TextMeshPro input field component. 
@@ -1530,6 +2007,159 @@
             Shows or hides placeholder based on text.
             </summary>
         </member>
+        <member name="P:Delight.InputField.SetValueOnEndEdit">
+            <summary>Boolean indicating if the value of the input field text should be set after the user is done editing.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnlyTriggerValueChangedFromUI">
+            <summary>Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.</summary>
+        </member>
+        <member name="P:Delight.InputField.EndEdit">
+            <summary>Action called when the user stops editing the input field text.</summary>
+        </member>
+        <member name="P:Delight.InputField.ValueChanged">
+            <summary>Action called when the input text changes.</summary>
+        </member>
+        <member name="P:Delight.InputField.TextMargin">
+            <summary>Margin of the input text.</summary>
+        </member>
+        <member name="P:Delight.InputField.ShouldHideMobileInput">
+            <summary>Boolean indicating if mobile input should be hidden.</summary>
+        </member>
+        <member name="P:Delight.InputField.ShouldHideSoftKeyboard">
+            <summary>Boolean indicating if soft keyboard should be hidden.</summary>
+        </member>
+        <member name="P:Delight.InputField.Text">
+            <summary>Text of the input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.CaretBlinkRate">
+            <summary>The blinking rate of the input caret in cycles per second.</summary>
+        </member>
+        <member name="P:Delight.InputField.CaretWidth">
+            <summary>Width of the caret.</summary>
+        </member>
+        <member name="P:Delight.InputField.TextViewport">
+            <summary>Reference to the text viewport.</summary>
+        </member>
+        <member name="P:Delight.InputField.TextComponent">
+            <summary>Reference to the text component.</summary>
+        </member>
+        <member name="P:Delight.InputField.Placeholder">
+            <summary>Placeholder graphics used by the input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.VerticalScrollbar">
+            <summary>Reference to a vertical scrollbar used by the input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.ScrollSensitivity">
+            <summary>Indicates the sensitivity of scrolling the input field text.</summary>
+        </member>
+        <member name="P:Delight.InputField.CaretColor">
+            <summary>Color of the caret if CustomCaretColor is set.</summary>
+        </member>
+        <member name="P:Delight.InputField.CustomCaretColor">
+            <summary>Boolean indicating if caret color is customized by CaretColor.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnEndEdit">
+            <summary>Called when the user stops editing the input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnSubmit">
+            <summary>Called when submit event occurs.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnSelect">
+            <summary>Called when input field is selected.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnDeselect">
+            <summary>Called when input field is deselected.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnTextSelection">
+            <summary>Called when text is selected.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnEndTextSelection">
+            <summary>Called when text selections ends.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnValueChanged">
+            <summary>Called when value is changed.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnTouchScreenKeyboardStatusChanged">
+            <summary>Called when touch screen keyboard status changes.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnValidateInput">
+            <summary>Called when input is validated.</summary>
+        </member>
+        <member name="P:Delight.InputField.CharacterLimit">
+            <summary>How many characters the input field is limited to (0 = infinite).</summary>
+        </member>
+        <member name="P:Delight.InputField.PointSize">
+            <summary>Specifies the point size of the input field text.</summary>
+        </member>
+        <member name="P:Delight.InputField.FontAsset">
+            <summary>Font asset used by input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.OnFocusSelectAll">
+            <summary>Called when focused and all is selected.</summary>
+        </member>
+        <member name="P:Delight.InputField.ResetOnDeActivation">
+            <summary>Boolean indicating if input field is reset on deactivation.</summary>
+        </member>
+        <member name="P:Delight.InputField.RestoreOriginalTextOnEscape">
+            <summary>Boolean indicating if original text should be restored when user presses escape.</summary>
+        </member>
+        <member name="P:Delight.InputField.IsRichTextEditingAllowed">
+            <summary>Boolean indicating if rich text editing is allowed.</summary>
+        </member>
+        <member name="P:Delight.InputField.ContentType">
+            <summary>The type of input expected.</summary>
+        </member>
+        <member name="P:Delight.InputField.LineLimit">
+            <summary>How many lines the input field is limited to (0 = infinite).</summary>
+        </member>
+        <member name="P:Delight.InputField.InputType">
+            <summary>Type of input expected.</summary>
+        </member>
+        <member name="P:Delight.InputField.KeyboardType">
+            <summary>Enum indicating touch screen keyboard type.</summary>
+        </member>
+        <member name="P:Delight.InputField.CharacterValidation">
+            <summary>The type of validation to perform on a character.</summary>
+        </member>
+        <member name="P:Delight.InputField.InputValidator">
+            <summary>Input validator used by the input field.</summary>
+        </member>
+        <member name="P:Delight.InputField.ReadOnly">
+            <summary>Boolean indicating if the input field is read only.</summary>
+        </member>
+        <member name="P:Delight.InputField.RichText">
+            <summary>Boolean indicating if input is rich text.</summary>
+        </member>
+        <member name="P:Delight.InputField.AsteriskChar">
+            <summary>Character used for password fields.</summary>
+        </member>
+        <member name="P:Delight.InputField.CaretPosition">
+            <summary>Current InputField caret position (also selection tail).</summary>
+        </member>
+        <member name="P:Delight.InputField.SelectionAnchorPosition">
+            <summary>Determines the anchor position of selection.</summary>
+        </member>
+        <member name="P:Delight.InputField.StringPosition">
+            <summary>Position of the string.</summary>
+        </member>
+        <member name="P:Delight.InputField.SelectionStringFocusPosition">
+            <summary>Determines the focus position of the selection string.</summary>
+        </member>
+        <member name="P:Delight.InputField.Navigation">
+            <summary>Navigation settings.</summary>
+        </member>
+        <member name="P:Delight.InputField.Transition">
+            <summary>The type of transition that will be applied to the targetGraphic when the state changes.</summary>
+        </member>
+        <member name="P:Delight.InputField.SpriteState">
+            <summary>The sprite state of this selectable object.</summary>
+        </member>
+        <member name="P:Delight.InputField.TargetGraphic">
+            <summary>Graphic that will be transitioned upon.</summary>
+        </member>
+        <member name="P:Delight.InputField.Interactable">
+            <summary>Boolean indicating if input field is interactable.</summary>
+        </member>
         <member name="T:Delight.Label">
             <summary>
             View that presents text. Based on TextMeshPro text component.
@@ -1570,6 +2200,213 @@
             Preferred height of text.
             </summary>
         </member>
+        <member name="P:Delight.Label.AutoSize">
+            <summary>Enum indicating if and how the label should automatically resize itself to the size of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.AutoSizeTextContainer">
+            <summary>Boolean indicating if text container should be resized to text.</summary>
+        </member>
+        <member name="P:Delight.Label.MaskOffset">
+            <summary>Offset of mask graphics.</summary>
+        </member>
+        <member name="P:Delight.Label.Text">
+            <summary>A string containing the text to be displayed.</summary>
+        </member>
+        <member name="P:Delight.Label.IsRightToLeftText">
+            <summary>Boolean indicating if this text flows from right to left.</summary>
+        </member>
+        <member name="P:Delight.Label.Font">
+            <summary>The font of the label. The value is the name of the font asset file without extension, e.g. "myfont".</summary>
+        </member>
+        <member name="P:Delight.Label.FontSharedMaterial">
+            <summary>Shared font material.</summary>
+        </member>
+        <member name="P:Delight.Label.FontSharedMaterials">
+            <summary>Shared font materials.</summary>
+        </member>
+        <member name="P:Delight.Label.FontMaterial">
+            <summary>Font material to be used.</summary>
+        </member>
+        <member name="P:Delight.Label.FontMaterials">
+            <summary>Font materials to be used.</summary>
+        </member>
+        <member name="P:Delight.Label.FontColor">
+            <summary>Color of the font.</summary>
+        </member>
+        <member name="P:Delight.Label.TextMeshProUGUIAlpha">
+            <summary>Alpha value of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.EnableVertexGradient">
+            <summary>Determines if Vertex Color Gradient should be used.</summary>
+        </member>
+        <member name="P:Delight.Label.ColorGradient">
+            <summary>Sets the vertex colors for each of the 4 vertices of the character quads.</summary>
+        </member>
+        <member name="P:Delight.Label.ColorGradientPreset">
+            <summary>Set the vertex colors of the 4 vertices of each character quads.</summary>
+        </member>
+        <member name="P:Delight.Label.SpriteAsset">
+            <summary>Default Sprite Asset used by the text object.</summary>
+        </member>
+        <member name="P:Delight.Label.TintAllSprites">
+            <summary>Determines whether or not the sprite color is multiplies by the vertex color of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.OverrideColorTags">
+            <summary>This overrides the color tags forcing the vertex colors to be the default font color.</summary>
+        </member>
+        <member name="P:Delight.Label.FaceColor">
+            <summary>Sets the color of the _FaceColor property of the assigned material. Changing face color will result in an instance of the material.</summary>
+        </member>
+        <member name="P:Delight.Label.OutlineColor">
+            <summary>Sets the _OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.</summary>
+        </member>
+        <member name="P:Delight.Label.OutlineWidth">
+            <summary>Sets the thickness of the outline of the font. Setting this value will result in an instance of the material.</summary>
+        </member>
+        <member name="P:Delight.Label.FontSize">
+            <summary>The point size of the font.</summary>
+        </member>
+        <member name="P:Delight.Label.FontWeight">
+            <summary>Control the weight of the font if an alternative font asset is assigned for the given weight in the font asset editor.</summary>
+        </member>
+        <member name="P:Delight.Label.EnableAutoSizing">
+            <summary>Enable text auto-sizing.</summary>
+        </member>
+        <member name="P:Delight.Label.FontSizeMin">
+            <summary>Minimum point size of the font when text auto-sizing is enabled.</summary>
+        </member>
+        <member name="P:Delight.Label.FontSizeMax">
+            <summary>Maximum point size of the font when text auto-sizing is enabled.</summary>
+        </member>
+        <member name="P:Delight.Label.FontStyle">
+            <summary>Font style.</summary>
+        </member>
+        <member name="P:Delight.Label.TextAlignment">
+            <summary>Determines the alignment of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.CharacterSpacing">
+            <summary>Determines the spacing between characters in the text.</summary>
+        </member>
+        <member name="P:Delight.Label.WordSpacing">
+            <summary>The amount of additional spacing between words.</summary>
+        </member>
+        <member name="P:Delight.Label.LineSpacing">
+            <summary>The amount of additional spacing to add between each lines of text.</summary>
+        </member>
+        <member name="P:Delight.Label.LineSpacingAdjustment">
+            <summary>The amount of potential line spacing adjustment before text auto sizing kicks in.</summary>
+        </member>
+        <member name="P:Delight.Label.ParagraphSpacing">
+            <summary>The amount of additional spacing to add between each lines of text.</summary>
+        </member>
+        <member name="P:Delight.Label.CharacterWidthAdjustment">
+            <summary>Percentage the width of characters can be adjusted before text auto-sizing begins to reduce the point size.</summary>
+        </member>
+        <member name="P:Delight.Label.EnableWordWrapping">
+            <summary>Controls whether or not word wrapping is applied. When disabled, the text will be displayed on a single line.</summary>
+        </member>
+        <member name="P:Delight.Label.WordWrappingRatios">
+            <summary>Controls the blending between using character and word spacing to fill-in the space for justified text.</summary>
+        </member>
+        <member name="P:Delight.Label.OverflowMode">
+            <summary>Controls the text overflow mode.</summary>
+        </member>
+        <member name="P:Delight.Label.LinkedTextComponent">
+            <summary>The linked text component used for flowing the text from one text component to another.</summary>
+        </member>
+        <member name="P:Delight.Label.IsLinkedTextComponent">
+            <summary>Indicates whether this text component is linked to another.</summary>
+        </member>
+        <member name="P:Delight.Label.EnableKerning">
+            <summary>Determines if kerning is enabled or disabled.</summary>
+        </member>
+        <member name="P:Delight.Label.ExtraPadding">
+            <summary>Adds extra padding around each character. This may be necessary when the displayed text is very small to prevent clipping.</summary>
+        </member>
+        <member name="P:Delight.Label.RichText">
+            <summary>Enables or disables rich text tags.</summary>
+        </member>
+        <member name="P:Delight.Label.ParseCtrlCharacters">
+            <summary>Enables or Disables parsing of CTRL characters in input text.</summary>
+        </member>
+        <member name="P:Delight.Label.IsOverlay">
+            <summary>Sets the RenderQueue along with Ztest to force the text to be drawn last and on top of scene elements.</summary>
+        </member>
+        <member name="P:Delight.Label.IsOrthographic">
+            <summary>Boolean indicating if this graphic is orthographic.</summary>
+        </member>
+        <member name="P:Delight.Label.EnableCulling">
+            <summary>Sets the culling on the shaders. Note changing this value will result in an instance of the material.</summary>
+        </member>
+        <member name="P:Delight.Label.IgnoreRectMaskCulling">
+            <summary>Controls whether or not the text object will be culled when using a 2D Rect Mask.</summary>
+        </member>
+        <member name="P:Delight.Label.IgnoreVisibility">
+            <summary>Forces objects that are not visible to get refreshed.</summary>
+        </member>
+        <member name="P:Delight.Label.HorizontalMapping">
+            <summary>Controls how the face and outline textures will be applied to the text object.</summary>
+        </member>
+        <member name="P:Delight.Label.VerticalMapping">
+            <summary>Controls how the face and outline textures will be applied to the text object.</summary>
+        </member>
+        <member name="P:Delight.Label.MappingUvLineOffset">
+            <summary>Controls the horizontal offset of the UV of the texture mapping mode for each line of the text object.</summary>
+        </member>
+        <member name="P:Delight.Label.RenderMode">
+            <summary>Determines if the Mesh will be rendered.</summary>
+        </member>
+        <member name="P:Delight.Label.GeometrySortingOrder">
+            <summary>Determines the sorting order of the geometry of the text object.</summary>
+        </member>
+        <member name="P:Delight.Label.VertexBufferAutoSizeReduction">
+            <summary>Determines if the data structures allocated to contain the geometry of the text object will be reduced in size if the number of characters required to display the text is reduced by more than 256 characters.</summary>
+        </member>
+        <member name="P:Delight.Label.FirstVisibleCharacter">
+            <summary>The first character which should be made visible in conjunction with the Text Overflow Linked mode.</summary>
+        </member>
+        <member name="P:Delight.Label.MaxVisibleCharacters">
+            <summary>Allows to control how many characters are visible from the input.</summary>
+        </member>
+        <member name="P:Delight.Label.MaxVisibleWords">
+            <summary>Allows to control how many words are visible from the input.</summary>
+        </member>
+        <member name="P:Delight.Label.MaxVisibleLines">
+            <summary>Allows control over how many lines of text are displayed.</summary>
+        </member>
+        <member name="P:Delight.Label.UseMaxVisibleDescender">
+            <summary>Determines if the text's vertical alignment will be adjusted based on visible descender of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.PageToDisplay">
+            <summary>Controls which page of text is shown.</summary>
+        </member>
+        <member name="P:Delight.Label.TextMargin">
+            <summary>Determines the margin of the text.</summary>
+        </member>
+        <member name="P:Delight.Label.HavePropertiesChanged">
+            <summary>Property tracking if any of the text properties have changed. Flag is set before the text is regenerated.</summary>
+        </member>
+        <member name="P:Delight.Label.IsUsingLegacyAnimationComponent">
+            <summary>Property to handle legacy animation component.</summary>
+        </member>
+        <member name="P:Delight.Label.IsVolumetricText">
+            <summary>Determines if the geometry of the characters will be quads or volumetric (cubes).</summary>
+        </member>
+        <member name="P:Delight.Label.OnCullStateChanged">
+            <summary>Called when cull state changes.</summary>
+        </member>
+        <member name="P:Delight.Label.Maskable">
+            <summary>Boolean indicating if graphic is maskable.</summary>
+        </member>
+        <member name="P:Delight.Label.IsMaskingGraphic">
+            <summary>Boolean indicating if this is a masking graphic.</summary>
+        </member>
+        <member name="P:Delight.Label.RaycastTarget">
+            <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
+        </member>
+        <member name="P:Delight.Label.Material">
+            <summary>Material used by graphic.</summary>
+        </member>
         <member name="T:Delight.ToggleGroup">
             <summary>
             Group view that makes its child buttons into toggle buttons and ensures only one is toggled at a time.
@@ -1579,6 +2416,87 @@
             <summary>
             The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. Can also be used to reduce draw calls by sectioning off portion of the UI (i.e. that changes a lot) into a separate canvas.
             </summary>
+        </member>
+        <member name="P:Delight.UICanvas.RenderCamera">
+            <summary>ID of the world camera camera used when rendering the canvas.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.RenderMode">
+            <summary>Enum indicating if the canvas is in world or overlay mode.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.ScaleFactor">
+            <summary>Used to scale the entire canvas, while still making it fit the screen. Only applies with renderMode is Screen Space.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.ReferencePixelsPerUnit">
+            <summary>The number of pixels per unit that is considered the default.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.OverridePixelPerfect">
+            <summary>Allows for nested canvases to override pixelPerfect settings inherited from parent canvases.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.PixelPerfect">
+            <summary>Force elements in the canvas to be aligned with pixels. Only applies with renderMode is Screen Space.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.PlaneDistance">
+            <summary>How far away from the camera is the Canvas generated.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.OverrideSorting">
+            <summary>Override the sorting of canvas.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.SortingOrder">
+            <summary>Canvas order within a sorting layer.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.TargetDisplay">
+            <summary>For Overlay mode, display index on which the UI canvas will appear.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.SortingLayerID">
+            <summary>Unique ID of the Canvas sorting layer.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.AdditionalShaderChannels">
+            <summary>Enum mask of possible shader channel properties that can also be included when the Canvas mesh is created.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.SortingLayerName">
+            <summary>Name of the Canvas sorting layer.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.WorldCamera">
+            <summary>Reference to the world camera, is automatically set if RenderCamera is set.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.NormalizedSortingGridSize">
+            <summary>The normalized grid size that the canvas will split the renderable area into.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.UiScaleMode">
+            <summary>Determines how UI elements in the Canvas are scaled.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.CanvasScalerReferencePixelsPerUnit">
+            <summary>If a sprite has 'Pixels Per Unit' setting, one pixel in the sprite will cover one unit in the UI.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.CanvasScalerScaleFactor">
+            <summary>Scales all children within the canvas by this factor.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.ReferenceResolution">
+            <summary>The resolution the UI layout is designed for.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.ScreenMatchMode">
+            <summary>A mode used to scale the canvas area if the aspect ratio of the current resolution doesn't fit the reference resolution.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.MatchWidthOrHeight">
+            <summary>Setting to scale the Canvas to match the width or height of the reference resolution, or a combination.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.PhysicalUnit">
+            <summary>The physical unit to specify positions and sizes in.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.FallbackScreenDPI">
+            <summary>The DPI to assume if the screen DPI is not known.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.DefaultSpriteDPI">
+            <summary>The pixels per inch to use for sprites that have a 'Pixels Per Unit' setting that matches the 'Reference Pixels Per Unit' setting.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.DynamicPixelsPerUnit">
+            <summary>The amount of pixels per unit to use for dynamically created bitmaps in the UI, such as Text.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.IgnoreReversedGraphics">
+            <summary>Boolean indicating if graphics facing away from the raycaster should be ignored.</summary>
+        </member>
+        <member name="P:Delight.UICanvas.BlockingObjects">
+            <summary>Type of objects that will block graphic raycasts.</summary>
         </member>
         <member name="T:Delight.UIImageView">
             <summary>
@@ -1614,6 +2532,60 @@
             <summary>
             Called whenever the UI fast default material has been loaded/changed.
             </summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundSprite">
+            <summary>The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundOverrideSprite">
+            <summary>Overrides the default sprite used by this view.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundType">
+            <summary>Enum indicating what type of sprite the background is.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundPreserveAspect">
+            <summary>Boolean indicating if this sprite should preserve its aspect ratio.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundFillCenter">
+            <summary>Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundFillMethod">
+            <summary>Enum indicating the background fill method.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundFillAmount">
+            <summary>Amount of the view shown when BackgroundType is set to Filled.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundFillClockwise">
+            <summary>Boolean indicating if the sprite should be filled clockwise or counter-clockwise.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundFillOrigin">
+            <summary>Point of origin of the Fill process. Value means different things with each fill method.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundAlphaHitTestMinimumThreshold">
+            <summary>Alpha values less than the threshold will cause raycast events to pass through the view.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundUseSpriteMesh">
+            <summary>Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundPixelsPerUnitMultiplier">
+            <summary>Pixel per unit modifier to change how sliced sprites are generated.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundMaterial">
+            <summary>Material used by the sprite.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundOnCullStateChanged">
+            <summary>Callback called when the culling state of this graphic either becomes culled or visible.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundMaskable">
+            <summary>Boolean indicating if the graphic allows masking.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundIsMaskingGraphic">
+            <summary>Boolean indicating if image is a masking graphic.</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundColor">
+            <summary>Background color of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").</summary>
+        </member>
+        <member name="P:Delight.UIImageView.BackgroundRaycastTarget">
+            <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         </member>
         <member name="T:Delight.UIView">
             <summary>
@@ -1759,7 +2731,7 @@
             <summary>Offset set by a parent view. Used by views like Group to arrange children without changing their own Offset values.</summary>
         </member>
         <member name="P:Delight.UIView.Pivot">
-            <summary>Changes the pivot point of the view.</summary>
+            <summary>The pivot point of the view.</summary>
         </member>
         <member name="P:Delight.UIView.LayoutRoot">
             <summary>Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root.</summary>
@@ -1828,6 +2800,18 @@
             <summary>
             Switches to the view specified.
             </summary>
+        </member>
+        <member name="P:Delight.ViewSwitcher.SwitchMode">
+            <summary>Enum indicating view switch mode, e.g. if views should be loaded on-demand or be pre-loaded.</summary>
+        </member>
+        <member name="P:Delight.ViewSwitcher.StartView">
+            <summary>Sets the ID of the view that should be displayed initially.</summary>
+        </member>
+        <member name="P:Delight.ViewSwitcher.ShowFirstByDefault">
+            <summary>Boolean indicating if the first view in the view switcher should be displayed initially by default.</summary>
+        </member>
+        <member name="P:Delight.ViewSwitcher.ChildLoadMode">
+            <summary>Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting.</summary>
         </member>
         <member name="M:Delight.XmlEditor.OnChanged(System.String)">
             <summary>
@@ -1908,6 +2892,15 @@
             <summary>
             Makes caret visible and resets caret repeat delay. Used when caret is moved to make sure it's visible.
             </summary>
+        </member>
+        <member name="P:Delight.XmlEditor.XmlText">
+            <summary>Used to set the XML text in the editor.</summary>
+        </member>
+        <member name="P:Delight.XmlEditor.IsFocused">
+            <summary>Boolean indicating if the editor is focused.</summary>
+        </member>
+        <member name="P:Delight.XmlEditor.Edit">
+            <summary>Action called when the user edits the view.</summary>
         </member>
         <member name="T:Delight.View">
             <summary>
@@ -2123,6 +3116,9 @@
             <summary>
             Sets content template data.
             </summary>
+        </member>
+        <member name="P:Delight.View.LoadMode">
+            <summary>Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.</summary>
         </member>
         <member name="T:Delight.ActionData">
             <summary>

@@ -204,6 +204,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> ShouldHideMobileInputProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("ShouldHideMobileInput", x => x.TMP_InputFieldComponent, x => x.shouldHideMobileInput, (x, y) => x.shouldHideMobileInput = y);
+        /// <summary>Boolean indicating if mobile input should be hidden.</summary>
         public System.Boolean ShouldHideMobileInput
         {
             get { return ShouldHideMobileInputProperty.GetValue(this); }
@@ -211,6 +212,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> ShouldHideSoftKeyboardProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("ShouldHideSoftKeyboard", x => x.TMP_InputFieldComponent, x => x.shouldHideSoftKeyboard, (x, y) => x.shouldHideSoftKeyboard = y);
+        /// <summary>Boolean indicating if soft keyboard should be hidden.</summary>
         public System.Boolean ShouldHideSoftKeyboard
         {
             get { return ShouldHideSoftKeyboardProperty.GetValue(this); }
@@ -218,6 +220,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.String, TMPro.TMP_InputField, InputField> TextProperty = new MappedDependencyProperty<System.String, TMPro.TMP_InputField, InputField>("Text", x => x.TMP_InputFieldComponent, x => x.text, (x, y) => x.text = y);
+        /// <summary>Text of the input field.</summary>
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
@@ -225,6 +228,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField> CaretBlinkRateProperty = new MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField>("CaretBlinkRate", x => x.TMP_InputFieldComponent, x => x.caretBlinkRate, (x, y) => x.caretBlinkRate = y);
+        /// <summary>The blinking rate of the input caret in cycles per second.</summary>
         public System.Single CaretBlinkRate
         {
             get { return CaretBlinkRateProperty.GetValue(this); }
@@ -232,6 +236,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> CaretWidthProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("CaretWidth", x => x.TMP_InputFieldComponent, x => x.caretWidth, (x, y) => x.caretWidth = y);
+        /// <summary>Width of the caret.</summary>
         public System.Int32 CaretWidth
         {
             get { return CaretWidthProperty.GetValue(this); }
@@ -239,6 +244,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.RectTransform, TMPro.TMP_InputField, InputField> TextViewportProperty = new MappedDependencyProperty<UnityEngine.RectTransform, TMPro.TMP_InputField, InputField>("TextViewport", x => x.TMP_InputFieldComponent, x => x.textViewport, (x, y) => x.textViewport = y);
+        /// <summary>Reference to the text viewport.</summary>
         public UnityEngine.RectTransform TextViewport
         {
             get { return TextViewportProperty.GetValue(this); }
@@ -246,6 +252,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_Text, TMPro.TMP_InputField, InputField> TextComponentProperty = new MappedDependencyProperty<TMPro.TMP_Text, TMPro.TMP_InputField, InputField>("TextComponent", x => x.TMP_InputFieldComponent, x => x.textComponent, (x, y) => x.textComponent = y);
+        /// <summary>Reference to the text component.</summary>
         public TMPro.TMP_Text TextComponent
         {
             get { return TextComponentProperty.GetValue(this); }
@@ -253,6 +260,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Graphic, TMPro.TMP_InputField, InputField> PlaceholderProperty = new MappedDependencyProperty<UnityEngine.UI.Graphic, TMPro.TMP_InputField, InputField>("Placeholder", x => x.TMP_InputFieldComponent, x => x.placeholder, (x, y) => x.placeholder = y);
+        /// <summary>Placeholder graphics used by the input field.</summary>
         public UnityEngine.UI.Graphic Placeholder
         {
             get { return PlaceholderProperty.GetValue(this); }
@@ -260,6 +268,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Scrollbar, TMPro.TMP_InputField, InputField> VerticalScrollbarProperty = new MappedDependencyProperty<UnityEngine.UI.Scrollbar, TMPro.TMP_InputField, InputField>("VerticalScrollbar", x => x.TMP_InputFieldComponent, x => x.verticalScrollbar, (x, y) => x.verticalScrollbar = y);
+        /// <summary>Reference to a vertical scrollbar used by the input field.</summary>
         public UnityEngine.UI.Scrollbar VerticalScrollbar
         {
             get { return VerticalScrollbarProperty.GetValue(this); }
@@ -267,6 +276,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField> ScrollSensitivityProperty = new MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField>("ScrollSensitivity", x => x.TMP_InputFieldComponent, x => x.scrollSensitivity, (x, y) => x.scrollSensitivity = y);
+        /// <summary>Indicates the sensitivity of scrolling the input field text.</summary>
         public System.Single ScrollSensitivity
         {
             get { return ScrollSensitivityProperty.GetValue(this); }
@@ -274,6 +284,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, TMPro.TMP_InputField, InputField> CaretColorProperty = new MappedDependencyProperty<UnityEngine.Color, TMPro.TMP_InputField, InputField>("CaretColor", x => x.TMP_InputFieldComponent, x => x.caretColor, (x, y) => x.caretColor = y);
+        /// <summary>Color of the caret if CustomCaretColor is set.</summary>
         public UnityEngine.Color CaretColor
         {
             get { return CaretColorProperty.GetValue(this); }
@@ -281,6 +292,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> CustomCaretColorProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("CustomCaretColor", x => x.TMP_InputFieldComponent, x => x.customCaretColor, (x, y) => x.customCaretColor = y);
+        /// <summary>Boolean indicating if caret color is customized by CaretColor.</summary>
         public System.Boolean CustomCaretColor
         {
             get { return CustomCaretColorProperty.GetValue(this); }
@@ -295,6 +307,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.SubmitEvent, TMPro.TMP_InputField, InputField> OnEndEditProperty = new MappedDependencyProperty<TMPro.TMP_InputField.SubmitEvent, TMPro.TMP_InputField, InputField>("OnEndEdit", x => x.TMP_InputFieldComponent, x => x.onEndEdit, (x, y) => x.onEndEdit = y);
+        /// <summary>Called when the user stops editing the input field.</summary>
         public TMPro.TMP_InputField.SubmitEvent OnEndEdit
         {
             get { return OnEndEditProperty.GetValue(this); }
@@ -302,6 +315,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.SubmitEvent, TMPro.TMP_InputField, InputField> OnSubmitProperty = new MappedDependencyProperty<TMPro.TMP_InputField.SubmitEvent, TMPro.TMP_InputField, InputField>("OnSubmit", x => x.TMP_InputFieldComponent, x => x.onSubmit, (x, y) => x.onSubmit = y);
+        /// <summary>Called when submit event occurs.</summary>
         public TMPro.TMP_InputField.SubmitEvent OnSubmit
         {
             get { return OnSubmitProperty.GetValue(this); }
@@ -309,6 +323,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.SelectionEvent, TMPro.TMP_InputField, InputField> OnSelectProperty = new MappedDependencyProperty<TMPro.TMP_InputField.SelectionEvent, TMPro.TMP_InputField, InputField>("OnSelect", x => x.TMP_InputFieldComponent, x => x.onSelect, (x, y) => x.onSelect = y);
+        /// <summary>Called when input field is selected.</summary>
         public TMPro.TMP_InputField.SelectionEvent OnSelect
         {
             get { return OnSelectProperty.GetValue(this); }
@@ -316,6 +331,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.SelectionEvent, TMPro.TMP_InputField, InputField> OnDeselectProperty = new MappedDependencyProperty<TMPro.TMP_InputField.SelectionEvent, TMPro.TMP_InputField, InputField>("OnDeselect", x => x.TMP_InputFieldComponent, x => x.onDeselect, (x, y) => x.onDeselect = y);
+        /// <summary>Called when input field is deselected.</summary>
         public TMPro.TMP_InputField.SelectionEvent OnDeselect
         {
             get { return OnDeselectProperty.GetValue(this); }
@@ -323,6 +339,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.TextSelectionEvent, TMPro.TMP_InputField, InputField> OnTextSelectionProperty = new MappedDependencyProperty<TMPro.TMP_InputField.TextSelectionEvent, TMPro.TMP_InputField, InputField>("OnTextSelection", x => x.TMP_InputFieldComponent, x => x.onTextSelection, (x, y) => x.onTextSelection = y);
+        /// <summary>Called when text is selected.</summary>
         public TMPro.TMP_InputField.TextSelectionEvent OnTextSelection
         {
             get { return OnTextSelectionProperty.GetValue(this); }
@@ -330,6 +347,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.TextSelectionEvent, TMPro.TMP_InputField, InputField> OnEndTextSelectionProperty = new MappedDependencyProperty<TMPro.TMP_InputField.TextSelectionEvent, TMPro.TMP_InputField, InputField>("OnEndTextSelection", x => x.TMP_InputFieldComponent, x => x.onEndTextSelection, (x, y) => x.onEndTextSelection = y);
+        /// <summary>Called when text selections ends.</summary>
         public TMPro.TMP_InputField.TextSelectionEvent OnEndTextSelection
         {
             get { return OnEndTextSelectionProperty.GetValue(this); }
@@ -337,6 +355,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.OnChangeEvent, TMPro.TMP_InputField, InputField> OnValueChangedProperty = new MappedDependencyProperty<TMPro.TMP_InputField.OnChangeEvent, TMPro.TMP_InputField, InputField>("OnValueChanged", x => x.TMP_InputFieldComponent, x => x.onValueChanged, (x, y) => x.onValueChanged = y);
+        /// <summary>Called when value is changed.</summary>
         public TMPro.TMP_InputField.OnChangeEvent OnValueChanged
         {
             get { return OnValueChangedProperty.GetValue(this); }
@@ -344,6 +363,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.TouchScreenKeyboardEvent, TMPro.TMP_InputField, InputField> OnTouchScreenKeyboardStatusChangedProperty = new MappedDependencyProperty<TMPro.TMP_InputField.TouchScreenKeyboardEvent, TMPro.TMP_InputField, InputField>("OnTouchScreenKeyboardStatusChanged", x => x.TMP_InputFieldComponent, x => x.onTouchScreenKeyboardStatusChanged, (x, y) => x.onTouchScreenKeyboardStatusChanged = y);
+        /// <summary>Called when touch screen keyboard status changes.</summary>
         public TMPro.TMP_InputField.TouchScreenKeyboardEvent OnTouchScreenKeyboardStatusChanged
         {
             get { return OnTouchScreenKeyboardStatusChangedProperty.GetValue(this); }
@@ -351,6 +371,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.OnValidateInput, TMPro.TMP_InputField, InputField> OnValidateInputProperty = new MappedDependencyProperty<TMPro.TMP_InputField.OnValidateInput, TMPro.TMP_InputField, InputField>("OnValidateInput", x => x.TMP_InputFieldComponent, x => x.onValidateInput, (x, y) => x.onValidateInput = y);
+        /// <summary>Called when input is validated.</summary>
         public TMPro.TMP_InputField.OnValidateInput OnValidateInput
         {
             get { return OnValidateInputProperty.GetValue(this); }
@@ -358,6 +379,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> CharacterLimitProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("CharacterLimit", x => x.TMP_InputFieldComponent, x => x.characterLimit, (x, y) => x.characterLimit = y);
+        /// <summary>How many characters the input field is limited to (0 = infinite).</summary>
         public System.Int32 CharacterLimit
         {
             get { return CharacterLimitProperty.GetValue(this); }
@@ -365,6 +387,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField> PointSizeProperty = new MappedDependencyProperty<System.Single, TMPro.TMP_InputField, InputField>("PointSize", x => x.TMP_InputFieldComponent, x => x.pointSize, (x, y) => x.pointSize = y);
+        /// <summary>Specifies the point size of the input field text.</summary>
         public System.Single PointSize
         {
             get { return PointSizeProperty.GetValue(this); }
@@ -372,6 +395,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<TMP_FontAsset, TMPro.TMP_InputField, InputField> FontAssetProperty = new MappedAssetDependencyProperty<TMP_FontAsset, TMPro.TMP_InputField, InputField>("FontAsset", x => x.TMP_InputFieldComponent, (x, y) => x.fontAsset = y?.UnityObject);
+        /// <summary>Font asset used by input field.</summary>
         public TMP_FontAsset FontAsset
         {
             get { return FontAssetProperty.GetValue(this); }
@@ -379,6 +403,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> OnFocusSelectAllProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("OnFocusSelectAll", x => x.TMP_InputFieldComponent, x => x.onFocusSelectAll, (x, y) => x.onFocusSelectAll = y);
+        /// <summary>Called when focused and all is selected.</summary>
         public System.Boolean OnFocusSelectAll
         {
             get { return OnFocusSelectAllProperty.GetValue(this); }
@@ -386,6 +411,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> ResetOnDeActivationProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("ResetOnDeActivation", x => x.TMP_InputFieldComponent, x => x.resetOnDeActivation, (x, y) => x.resetOnDeActivation = y);
+        /// <summary>Boolean indicating if input field is reset on deactivation.</summary>
         public System.Boolean ResetOnDeActivation
         {
             get { return ResetOnDeActivationProperty.GetValue(this); }
@@ -393,6 +419,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> RestoreOriginalTextOnEscapeProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("RestoreOriginalTextOnEscape", x => x.TMP_InputFieldComponent, x => x.restoreOriginalTextOnEscape, (x, y) => x.restoreOriginalTextOnEscape = y);
+        /// <summary>Boolean indicating if original text should be restored when user presses escape.</summary>
         public System.Boolean RestoreOriginalTextOnEscape
         {
             get { return RestoreOriginalTextOnEscapeProperty.GetValue(this); }
@@ -400,6 +427,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> IsRichTextEditingAllowedProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("IsRichTextEditingAllowed", x => x.TMP_InputFieldComponent, x => x.isRichTextEditingAllowed, (x, y) => x.isRichTextEditingAllowed = y);
+        /// <summary>Boolean indicating if rich text editing is allowed.</summary>
         public System.Boolean IsRichTextEditingAllowed
         {
             get { return IsRichTextEditingAllowedProperty.GetValue(this); }
@@ -407,6 +435,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.ContentType, TMPro.TMP_InputField, InputField> ContentTypeProperty = new MappedDependencyProperty<TMPro.TMP_InputField.ContentType, TMPro.TMP_InputField, InputField>("ContentType", x => x.TMP_InputFieldComponent, x => x.contentType, (x, y) => x.contentType = y);
+        /// <summary>The type of input expected.</summary>
         public TMPro.TMP_InputField.ContentType ContentType
         {
             get { return ContentTypeProperty.GetValue(this); }
@@ -421,6 +450,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> LineLimitProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("LineLimit", x => x.TMP_InputFieldComponent, x => x.lineLimit, (x, y) => x.lineLimit = y);
+        /// <summary>How many lines the input field is limited to (0 = infinite).</summary>
         public System.Int32 LineLimit
         {
             get { return LineLimitProperty.GetValue(this); }
@@ -428,6 +458,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.InputType, TMPro.TMP_InputField, InputField> InputTypeProperty = new MappedDependencyProperty<TMPro.TMP_InputField.InputType, TMPro.TMP_InputField, InputField>("InputType", x => x.TMP_InputFieldComponent, x => x.inputType, (x, y) => x.inputType = y);
+        /// <summary>Type of input expected.</summary>
         public TMPro.TMP_InputField.InputType InputType
         {
             get { return InputTypeProperty.GetValue(this); }
@@ -435,6 +466,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.TouchScreenKeyboardType, TMPro.TMP_InputField, InputField> KeyboardTypeProperty = new MappedDependencyProperty<UnityEngine.TouchScreenKeyboardType, TMPro.TMP_InputField, InputField>("KeyboardType", x => x.TMP_InputFieldComponent, x => x.keyboardType, (x, y) => x.keyboardType = y);
+        /// <summary>Enum indicating touch screen keyboard type.</summary>
         public UnityEngine.TouchScreenKeyboardType KeyboardType
         {
             get { return KeyboardTypeProperty.GetValue(this); }
@@ -442,6 +474,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.CharacterValidation, TMPro.TMP_InputField, InputField> CharacterValidationProperty = new MappedDependencyProperty<TMPro.TMP_InputField.CharacterValidation, TMPro.TMP_InputField, InputField>("CharacterValidation", x => x.TMP_InputFieldComponent, x => x.characterValidation, (x, y) => x.characterValidation = y);
+        /// <summary>The type of validation to perform on a character.</summary>
         public TMPro.TMP_InputField.CharacterValidation CharacterValidation
         {
             get { return CharacterValidationProperty.GetValue(this); }
@@ -449,6 +482,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<TMP_InputValidatorAsset, TMPro.TMP_InputField, InputField> InputValidatorProperty = new MappedAssetDependencyProperty<TMP_InputValidatorAsset, TMPro.TMP_InputField, InputField>("InputValidator", x => x.TMP_InputFieldComponent, (x, y) => x.inputValidator = y?.UnityObject);
+        /// <summary>Input validator used by the input field.</summary>
         public TMP_InputValidatorAsset InputValidator
         {
             get { return InputValidatorProperty.GetValue(this); }
@@ -456,6 +490,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> ReadOnlyProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("ReadOnly", x => x.TMP_InputFieldComponent, x => x.readOnly, (x, y) => x.readOnly = y);
+        /// <summary>Boolean indicating if the input field is read only.</summary>
         public System.Boolean ReadOnly
         {
             get { return ReadOnlyProperty.GetValue(this); }
@@ -463,6 +498,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> RichTextProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("RichText", x => x.TMP_InputFieldComponent, x => x.richText, (x, y) => x.richText = y);
+        /// <summary>Boolean indicating if input is rich text.</summary>
         public System.Boolean RichText
         {
             get { return RichTextProperty.GetValue(this); }
@@ -470,6 +506,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Char, TMPro.TMP_InputField, InputField> AsteriskCharProperty = new MappedDependencyProperty<System.Char, TMPro.TMP_InputField, InputField>("AsteriskChar", x => x.TMP_InputFieldComponent, x => x.asteriskChar, (x, y) => x.asteriskChar = y);
+        /// <summary>Character used for password fields.</summary>
         public System.Char AsteriskChar
         {
             get { return AsteriskCharProperty.GetValue(this); }
@@ -477,6 +514,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> CaretPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("CaretPosition", x => x.TMP_InputFieldComponent, x => x.caretPosition, (x, y) => x.caretPosition = y);
+        /// <summary>Current InputField caret position (also selection tail).</summary>
         public System.Int32 CaretPosition
         {
             get { return CaretPositionProperty.GetValue(this); }
@@ -484,6 +522,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> SelectionAnchorPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("SelectionAnchorPosition", x => x.TMP_InputFieldComponent, x => x.selectionAnchorPosition, (x, y) => x.selectionAnchorPosition = y);
+        /// <summary>Determines the anchor position of selection.</summary>
         public System.Int32 SelectionAnchorPosition
         {
             get { return SelectionAnchorPositionProperty.GetValue(this); }
@@ -498,6 +537,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> StringPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("StringPosition", x => x.TMP_InputFieldComponent, x => x.stringPosition, (x, y) => x.stringPosition = y);
+        /// <summary>Position of the string.</summary>
         public System.Int32 StringPosition
         {
             get { return StringPositionProperty.GetValue(this); }
@@ -512,6 +552,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> SelectionStringFocusPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("SelectionStringFocusPosition", x => x.TMP_InputFieldComponent, x => x.selectionStringFocusPosition, (x, y) => x.selectionStringFocusPosition = y);
+        /// <summary>Determines the focus position of the selection string.</summary>
         public System.Int32 SelectionStringFocusPosition
         {
             get { return SelectionStringFocusPositionProperty.GetValue(this); }
@@ -519,6 +560,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Navigation, TMPro.TMP_InputField, InputField> NavigationProperty = new MappedDependencyProperty<UnityEngine.UI.Navigation, TMPro.TMP_InputField, InputField>("Navigation", x => x.TMP_InputFieldComponent, x => x.navigation, (x, y) => x.navigation = y);
+        /// <summary>Navigation settings.</summary>
         public UnityEngine.UI.Navigation Navigation
         {
             get { return NavigationProperty.GetValue(this); }
@@ -526,6 +568,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Selectable.Transition, TMPro.TMP_InputField, InputField> TransitionProperty = new MappedDependencyProperty<UnityEngine.UI.Selectable.Transition, TMPro.TMP_InputField, InputField>("Transition", x => x.TMP_InputFieldComponent, x => x.transition, (x, y) => x.transition = y);
+        /// <summary>The type of transition that will be applied to the targetGraphic when the state changes.</summary>
         public UnityEngine.UI.Selectable.Transition Transition
         {
             get { return TransitionProperty.GetValue(this); }
@@ -540,6 +583,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.SpriteState, TMPro.TMP_InputField, InputField> SpriteStateProperty = new MappedDependencyProperty<UnityEngine.UI.SpriteState, TMPro.TMP_InputField, InputField>("SpriteState", x => x.TMP_InputFieldComponent, x => x.spriteState, (x, y) => x.spriteState = y);
+        /// <summary>The sprite state of this selectable object.</summary>
         public UnityEngine.UI.SpriteState SpriteState
         {
             get { return SpriteStateProperty.GetValue(this); }
@@ -554,6 +598,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Graphic, TMPro.TMP_InputField, InputField> TargetGraphicProperty = new MappedDependencyProperty<UnityEngine.UI.Graphic, TMPro.TMP_InputField, InputField>("TargetGraphic", x => x.TMP_InputFieldComponent, x => x.targetGraphic, (x, y) => x.targetGraphic = y);
+        /// <summary>Graphic that will be transitioned upon.</summary>
         public UnityEngine.UI.Graphic TargetGraphic
         {
             get { return TargetGraphicProperty.GetValue(this); }
@@ -561,6 +606,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField> InteractableProperty = new MappedDependencyProperty<System.Boolean, TMPro.TMP_InputField, InputField>("Interactable", x => x.TMP_InputFieldComponent, x => x.interactable, (x, y) => x.interactable = y);
+        /// <summary>Boolean indicating if input field is interactable.</summary>
         public System.Boolean Interactable
         {
             get { return InteractableProperty.GetValue(this); }

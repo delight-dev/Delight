@@ -64,6 +64,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> SpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("Sprite", x => x.ImageComponent, (x, y) => x.sprite = y?.UnityObject);
+        /// <summary>The sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".</summary>
         public SpriteAsset Sprite
         {
             get { return SpriteProperty.GetValue(this); }
@@ -71,6 +72,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image> OverrideSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, Image>("OverrideSprite", x => x.ImageComponent, (x, y) => x.overrideSprite = y?.UnityObject);
+        /// <summary>Overrides the default sprite used by this view.</summary>
         public SpriteAsset OverrideSprite
         {
             get { return OverrideSpriteProperty.GetValue(this); }
@@ -78,6 +80,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image.Type, UnityEngine.UI.Image, Image> TypeProperty = new MappedDependencyProperty<UnityEngine.UI.Image.Type, UnityEngine.UI.Image, Image>("Type", x => x.ImageComponent, x => x.type, (x, y) => x.type = y);
+        /// <summary>Enum indicating what type of sprite the background is.</summary>
         public UnityEngine.UI.Image.Type Type
         {
             get { return TypeProperty.GetValue(this); }
@@ -85,6 +88,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> PreserveAspectProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("PreserveAspect", x => x.ImageComponent, x => x.preserveAspect, (x, y) => x.preserveAspect = y);
+        /// <summary>Boolean indicating if this sprite should preserve its aspect ratio.</summary>
         public System.Boolean PreserveAspect
         {
             get { return PreserveAspectProperty.GetValue(this); }
@@ -92,6 +96,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> FillCenterProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("FillCenter", x => x.ImageComponent, x => x.fillCenter, (x, y) => x.fillCenter = y);
+        /// <summary>Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.</summary>
         public System.Boolean FillCenter
         {
             get { return FillCenterProperty.GetValue(this); }
@@ -99,6 +104,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image.FillMethod, UnityEngine.UI.Image, Image> FillMethodProperty = new MappedDependencyProperty<UnityEngine.UI.Image.FillMethod, UnityEngine.UI.Image, Image>("FillMethod", x => x.ImageComponent, x => x.fillMethod, (x, y) => x.fillMethod = y);
+        /// <summary>Enum indicating the background fill method.</summary>
         public UnityEngine.UI.Image.FillMethod FillMethod
         {
             get { return FillMethodProperty.GetValue(this); }
@@ -106,6 +112,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image> FillAmountProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image>("FillAmount", x => x.ImageComponent, x => x.fillAmount, (x, y) => x.fillAmount = y);
+        /// <summary>Amount of the view shown when Type is set to Filled.</summary>
         public System.Single FillAmount
         {
             get { return FillAmountProperty.GetValue(this); }
@@ -113,6 +120,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> FillClockwiseProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("FillClockwise", x => x.ImageComponent, x => x.fillClockwise, (x, y) => x.fillClockwise = y);
+        /// <summary>Boolean indicating if the sprite should be filled clockwise or counter-clockwise.</summary>
         public System.Boolean FillClockwise
         {
             get { return FillClockwiseProperty.GetValue(this); }
@@ -120,6 +128,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.Image, Image> FillOriginProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.Image, Image>("FillOrigin", x => x.ImageComponent, x => x.fillOrigin, (x, y) => x.fillOrigin = y);
+        /// <summary>Point of origin of the Fill process. Value means different things with each fill method.</summary>
         public System.Int32 FillOrigin
         {
             get { return FillOriginProperty.GetValue(this); }
@@ -134,6 +143,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> UseSpriteMeshProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("UseSpriteMesh", x => x.ImageComponent, x => x.useSpriteMesh, (x, y) => x.useSpriteMesh = y);
+        /// <summary>Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.</summary>
         public System.Boolean UseSpriteMesh
         {
             get { return UseSpriteMeshProperty.GetValue(this); }
@@ -141,6 +151,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image> PixelsPerUnitMultiplierProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image>("PixelsPerUnitMultiplier", x => x.ImageComponent, x => x.pixelsPerUnitMultiplier, (x, y) => x.pixelsPerUnitMultiplier = y);
+        /// <summary>Pixel per unit modifier to change how sliced sprites are generated.</summary>
         public System.Single PixelsPerUnitMultiplier
         {
             get { return PixelsPerUnitMultiplierProperty.GetValue(this); }
@@ -148,6 +159,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, Image>("Material", x => x.ImageComponent, (x, y) => x.material = y?.UnityObject);
+        /// <summary>Material used by the sprite.</summary>
         public MaterialAsset Material
         {
             get { return MaterialProperty.GetValue(this); }
@@ -155,6 +167,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Image, Image> OnCullStateChangedProperty = new MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Image, Image>("OnCullStateChanged", x => x.ImageComponent, x => x.onCullStateChanged, (x, y) => x.onCullStateChanged = y);
+        /// <summary>Callback called when the culling state of this graphic either becomes culled or visible.</summary>
         public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent OnCullStateChanged
         {
             get { return OnCullStateChangedProperty.GetValue(this); }
@@ -162,6 +175,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> MaskableProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("Maskable", x => x.ImageComponent, x => x.maskable, (x, y) => x.maskable = y);
+        /// <summary>Boolean indicating if the graphic allows masking.</summary>
         public System.Boolean Maskable
         {
             get { return MaskableProperty.GetValue(this); }
@@ -169,6 +183,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> IsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("IsMaskingGraphic", x => x.ImageComponent, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        /// <summary>Boolean indicating if image is a masking graphic.</summary>
         public System.Boolean IsMaskingGraphic
         {
             get { return IsMaskingGraphicProperty.GetValue(this); }
@@ -183,6 +198,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> RaycastTargetProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("RaycastTarget", x => x.ImageComponent, x => x.raycastTarget, (x, y) => x.raycastTarget = y);
+        /// <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         public System.Boolean RaycastTarget
         {
             get { return RaycastTargetProperty.GetValue(this); }

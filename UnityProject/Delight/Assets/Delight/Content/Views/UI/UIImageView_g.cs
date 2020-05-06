@@ -64,6 +64,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView> BackgroundSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView>("BackgroundSprite", x => x.ImageComponent, (x, y) => x.sprite = y?.UnityObject);
+        /// <summary>The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".</summary>
         public SpriteAsset BackgroundSprite
         {
             get { return BackgroundSpriteProperty.GetValue(this); }
@@ -71,6 +72,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView> BackgroundOverrideSpriteProperty = new MappedAssetDependencyProperty<SpriteAsset, UnityEngine.UI.Image, UIImageView>("BackgroundOverrideSprite", x => x.ImageComponent, (x, y) => x.overrideSprite = y?.UnityObject);
+        /// <summary>Overrides the default sprite used by this view.</summary>
         public SpriteAsset BackgroundOverrideSprite
         {
             get { return BackgroundOverrideSpriteProperty.GetValue(this); }
@@ -78,6 +80,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image.Type, UnityEngine.UI.Image, UIImageView> BackgroundTypeProperty = new MappedDependencyProperty<UnityEngine.UI.Image.Type, UnityEngine.UI.Image, UIImageView>("BackgroundType", x => x.ImageComponent, x => x.type, (x, y) => x.type = y);
+        /// <summary>Enum indicating what type of sprite the background is.</summary>
         public UnityEngine.UI.Image.Type BackgroundType
         {
             get { return BackgroundTypeProperty.GetValue(this); }
@@ -85,6 +88,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundPreserveAspectProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundPreserveAspect", x => x.ImageComponent, x => x.preserveAspect, (x, y) => x.preserveAspect = y);
+        /// <summary>Boolean indicating if this sprite should preserve its aspect ratio.</summary>
         public System.Boolean BackgroundPreserveAspect
         {
             get { return BackgroundPreserveAspectProperty.GetValue(this); }
@@ -92,6 +96,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundFillCenterProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundFillCenter", x => x.ImageComponent, x => x.fillCenter, (x, y) => x.fillCenter = y);
+        /// <summary>Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.</summary>
         public System.Boolean BackgroundFillCenter
         {
             get { return BackgroundFillCenterProperty.GetValue(this); }
@@ -99,6 +104,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image.FillMethod, UnityEngine.UI.Image, UIImageView> BackgroundFillMethodProperty = new MappedDependencyProperty<UnityEngine.UI.Image.FillMethod, UnityEngine.UI.Image, UIImageView>("BackgroundFillMethod", x => x.ImageComponent, x => x.fillMethod, (x, y) => x.fillMethod = y);
+        /// <summary>Enum indicating the background fill method.</summary>
         public UnityEngine.UI.Image.FillMethod BackgroundFillMethod
         {
             get { return BackgroundFillMethodProperty.GetValue(this); }
@@ -106,6 +112,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView> BackgroundFillAmountProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView>("BackgroundFillAmount", x => x.ImageComponent, x => x.fillAmount, (x, y) => x.fillAmount = y);
+        /// <summary>Amount of the view shown when BackgroundType is set to Filled.</summary>
         public System.Single BackgroundFillAmount
         {
             get { return BackgroundFillAmountProperty.GetValue(this); }
@@ -113,6 +120,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundFillClockwiseProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundFillClockwise", x => x.ImageComponent, x => x.fillClockwise, (x, y) => x.fillClockwise = y);
+        /// <summary>Boolean indicating if the sprite should be filled clockwise or counter-clockwise.</summary>
         public System.Boolean BackgroundFillClockwise
         {
             get { return BackgroundFillClockwiseProperty.GetValue(this); }
@@ -120,6 +128,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.Image, UIImageView> BackgroundFillOriginProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.Image, UIImageView>("BackgroundFillOrigin", x => x.ImageComponent, x => x.fillOrigin, (x, y) => x.fillOrigin = y);
+        /// <summary>Point of origin of the Fill process. Value means different things with each fill method.</summary>
         public System.Int32 BackgroundFillOrigin
         {
             get { return BackgroundFillOriginProperty.GetValue(this); }
@@ -127,6 +136,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView> BackgroundAlphaHitTestMinimumThresholdProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView>("BackgroundAlphaHitTestMinimumThreshold", x => x.ImageComponent, x => x.alphaHitTestMinimumThreshold, (x, y) => x.alphaHitTestMinimumThreshold = y);
+        /// <summary>Alpha values less than the threshold will cause raycast events to pass through the view.</summary>
         public System.Single BackgroundAlphaHitTestMinimumThreshold
         {
             get { return BackgroundAlphaHitTestMinimumThresholdProperty.GetValue(this); }
@@ -134,6 +144,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundUseSpriteMeshProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundUseSpriteMesh", x => x.ImageComponent, x => x.useSpriteMesh, (x, y) => x.useSpriteMesh = y);
+        /// <summary>Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.</summary>
         public System.Boolean BackgroundUseSpriteMesh
         {
             get { return BackgroundUseSpriteMeshProperty.GetValue(this); }
@@ -141,6 +152,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView> BackgroundPixelsPerUnitMultiplierProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, UIImageView>("BackgroundPixelsPerUnitMultiplier", x => x.ImageComponent, x => x.pixelsPerUnitMultiplier, (x, y) => x.pixelsPerUnitMultiplier = y);
+        /// <summary>Pixel per unit modifier to change how sliced sprites are generated.</summary>
         public System.Single BackgroundPixelsPerUnitMultiplier
         {
             get { return BackgroundPixelsPerUnitMultiplierProperty.GetValue(this); }
@@ -148,6 +160,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView> BackgroundMaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Image, UIImageView>("BackgroundMaterial", x => x.ImageComponent, (x, y) => x.material = y?.UnityObject);
+        /// <summary>Material used by the sprite.</summary>
         public MaterialAsset BackgroundMaterial
         {
             get { return BackgroundMaterialProperty.GetValue(this); }
@@ -155,6 +168,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Image, UIImageView> BackgroundOnCullStateChangedProperty = new MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Image, UIImageView>("BackgroundOnCullStateChanged", x => x.ImageComponent, x => x.onCullStateChanged, (x, y) => x.onCullStateChanged = y);
+        /// <summary>Callback called when the culling state of this graphic either becomes culled or visible.</summary>
         public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent BackgroundOnCullStateChanged
         {
             get { return BackgroundOnCullStateChangedProperty.GetValue(this); }
@@ -162,6 +176,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundMaskableProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundMaskable", x => x.ImageComponent, x => x.maskable, (x, y) => x.maskable = y);
+        /// <summary>Boolean indicating if the graphic allows masking.</summary>
         public System.Boolean BackgroundMaskable
         {
             get { return BackgroundMaskableProperty.GetValue(this); }
@@ -169,6 +184,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundIsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundIsMaskingGraphic", x => x.ImageComponent, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        /// <summary>Boolean indicating if image is a masking graphic.</summary>
         public System.Boolean BackgroundIsMaskingGraphic
         {
             get { return BackgroundIsMaskingGraphicProperty.GetValue(this); }
@@ -176,6 +192,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, UIImageView> BackgroundColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, UIImageView>("BackgroundColor", x => x.ImageComponent, x => x.color, (x, y) => x.color = y);
+        /// <summary>Background color of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").</summary>
         public UnityEngine.Color BackgroundColor
         {
             get { return BackgroundColorProperty.GetValue(this); }
@@ -183,6 +200,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundRaycastTargetProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundRaycastTarget", x => x.ImageComponent, x => x.raycastTarget, (x, y) => x.raycastTarget = y);
+        /// <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         public System.Boolean BackgroundRaycastTarget
         {
             get { return BackgroundRaycastTargetProperty.GetValue(this); }

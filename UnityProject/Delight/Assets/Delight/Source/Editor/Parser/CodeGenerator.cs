@@ -408,9 +408,16 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateMappedPropertyComment(StringBuilder sb, ViewObject viewObject, MappedPropertyDeclaration mappedDeclaration)
         {
-            // TODO implement
-    //        sb.AppendLine("        public readonly static MappedAssetDependencyProperty<{0}, {1}, {4}> {2}Property = new MappedAssetDependencyProperty<{0}, {1}, {4}>(\"{2}\", x => x.{5}, (x, y) => x.{3} = y?.UnityObject);",
-    //mappedDeclaration.AssetType.FormattedTypeName, mappedDeclaration.TargetObjectType, mappedDeclaration.PropertyName, mappedDeclaration.TargetPropertyName, viewTypeName, mappedDeclaration.TargetObjectName);
+            var config = MasterConfig.GetInstance();
+            var docObject = config.DocObjects.FirstOrDefault(x => x.Name == viewObject.Name);
+            if (docObject == null)
+                return;
+
+            var docProperty = docObject.Properties.FirstOrDefault(x => x.Name == mappedDeclaration.PropertyName);
+            if (docProperty == null || String.IsNullOrWhiteSpace(docProperty.Comment))
+                return;
+
+            sb.AppendLine("        /// <summary>{0}</summary>", docProperty.Comment);
         }
 
         /// <summary>
@@ -418,7 +425,16 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateAttachedPropertyComment(StringBuilder sb, ViewObject viewObject, AttachedProperty attachedProperty)
         {
-            // TODO implement
+            var config = MasterConfig.GetInstance();
+            var docObject = config.DocObjects.FirstOrDefault(x => x.Name == viewObject.Name);
+            if (docObject == null)
+                return;
+
+            var docProperty = docObject.Properties.FirstOrDefault(x => x.Name == attachedProperty.PropertyName);
+            if (docProperty == null || String.IsNullOrWhiteSpace(docProperty.Comment))
+                return;
+
+            sb.AppendLine("        /// <summary>{0}</summary>", docProperty.Comment);
         }
 
         /// <summary>
