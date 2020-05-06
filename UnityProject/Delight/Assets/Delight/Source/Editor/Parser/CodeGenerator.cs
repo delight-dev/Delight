@@ -370,6 +370,7 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+            //EditorUtility.SetDirty(AssetDatabase.LoadAssetAtPath(sourceFile));
 
             // generate blank code-behind if it doesn't exist
             CodeGenerator.GenerateBlankCodeBehind(viewObject.Name, viewObject.TypeName, viewObject.FilePath);

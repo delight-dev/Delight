@@ -132,6 +132,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="LabelWidth" type="xs:string" />
@@ -174,6 +175,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -342,6 +344,7 @@
     <xs:attribute name="CheckBoxMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="CheckBoxOnCullStateChanged" type="xs:string" />
     <xs:attribute name="CheckBoxMaskable" type="xs:string" />
+    <xs:attribute name="CheckBoxIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="CheckBoxColor" type="xs:string" />
     <xs:attribute name="CheckBoxRaycastTarget" type="xs:string" />
     <xs:attribute name="CheckBoxWidth" type="xs:string" />
@@ -434,6 +437,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="CheckBoxLabelWidth" type="xs:string" />
@@ -476,6 +480,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -567,6 +572,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -699,6 +705,7 @@
     <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
@@ -740,6 +747,7 @@
     <xs:attribute name="HorizontalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleWidth" type="xs:string" />
@@ -781,6 +789,7 @@
     <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
@@ -827,6 +836,7 @@
     <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
@@ -868,6 +878,7 @@
     <xs:attribute name="VerticalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleWidth" type="xs:string" />
@@ -909,6 +920,7 @@
     <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
@@ -1002,6 +1014,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ComboBoxListWidth" type="xs:string" />
@@ -1107,6 +1120,7 @@
     <xs:attribute name="ButtonIsVolumetricText" type="xs:string" />
     <xs:attribute name="ButtonOnCullStateChanged" type="xs:string" />
     <xs:attribute name="ButtonMaskable" type="xs:string" />
+    <xs:attribute name="ButtonIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="ButtonRaycastTarget" type="xs:string" />
     <xs:attribute name="ButtonMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="ButtonLabelWidth" type="xs:string" />
@@ -1148,6 +1162,7 @@
     <xs:attribute name="ButtonBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="ButtonBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="ButtonBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="ButtonBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="ButtonBackgroundColor" type="xs:string" />
     <xs:attribute name="ButtonBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ButtonWidth" type="xs:string" />
@@ -1271,6 +1286,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -1360,6 +1376,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -1455,6 +1472,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -1623,6 +1641,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -1715,6 +1734,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -1803,6 +1823,7 @@
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="Color" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2037,6 +2058,7 @@
     <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
@@ -2078,6 +2100,7 @@
     <xs:attribute name="HorizontalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleWidth" type="xs:string" />
@@ -2119,6 +2142,7 @@
     <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
@@ -2165,6 +2189,7 @@
     <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
@@ -2206,6 +2231,7 @@
     <xs:attribute name="VerticalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleWidth" type="xs:string" />
@@ -2247,6 +2273,7 @@
     <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
@@ -2343,6 +2370,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2442,6 +2470,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2532,6 +2561,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2623,6 +2653,7 @@
     <xs:attribute name="RadioButtonMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="RadioButtonOnCullStateChanged" type="xs:string" />
     <xs:attribute name="RadioButtonMaskable" type="xs:string" />
+    <xs:attribute name="RadioButtonIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RadioButtonColor" type="xs:string" />
     <xs:attribute name="RadioButtonRaycastTarget" type="xs:string" />
     <xs:attribute name="RadioButtonWidth" type="xs:string" />
@@ -2715,6 +2746,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="RadioButtonLabelWidth" type="xs:string" />
@@ -2757,6 +2789,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2846,6 +2879,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -2934,6 +2968,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -3051,6 +3086,7 @@
     <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
@@ -3092,6 +3128,7 @@
     <xs:attribute name="HorizontalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleWidth" type="xs:string" />
@@ -3133,6 +3170,7 @@
     <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
@@ -3179,6 +3217,7 @@
     <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
@@ -3220,6 +3259,7 @@
     <xs:attribute name="VerticalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleWidth" type="xs:string" />
@@ -3261,6 +3301,7 @@
     <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
@@ -3426,6 +3467,7 @@
     <xs:attribute name="HorizontalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarWidth" type="xs:string" />
@@ -3467,6 +3509,7 @@
     <xs:attribute name="HorizontalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleWidth" type="xs:string" />
@@ -3508,6 +3551,7 @@
     <xs:attribute name="HorizontalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="HorizontalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarWidth" type="xs:string" />
@@ -3554,6 +3598,7 @@
     <xs:attribute name="VerticalScrollbarBarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarWidth" type="xs:string" />
@@ -3595,6 +3640,7 @@
     <xs:attribute name="VerticalScrollbarHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleWidth" type="xs:string" />
@@ -3636,6 +3682,7 @@
     <xs:attribute name="VerticalScrollbarBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="VerticalScrollbarBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundColor" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="VerticalScrollbarWidth" type="xs:string" />
@@ -3782,6 +3829,7 @@
     <xs:attribute name="BarMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BarOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BarMaskable" type="xs:string" />
+    <xs:attribute name="BarIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BarColor" type="xs:string" />
     <xs:attribute name="BarRaycastTarget" type="xs:string" />
     <xs:attribute name="BarWidth" type="xs:string" />
@@ -3823,6 +3871,7 @@
     <xs:attribute name="HandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="HandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="HandleMaskable" type="xs:string" />
+    <xs:attribute name="HandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="HandleColor" type="xs:string" />
     <xs:attribute name="HandleRaycastTarget" type="xs:string" />
     <xs:attribute name="HandleWidth" type="xs:string" />
@@ -3865,6 +3914,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -4016,6 +4066,7 @@
     <xs:attribute name="SelectionTabIsVolumetricText" type="xs:string" />
     <xs:attribute name="SelectionTabOnCullStateChanged" type="xs:string" />
     <xs:attribute name="SelectionTabMaskable" type="xs:string" />
+    <xs:attribute name="SelectionTabIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="SelectionTabRaycastTarget" type="xs:string" />
     <xs:attribute name="SelectionTabMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="SelectionTabLabelWidth" type="xs:string" />
@@ -4057,6 +4108,7 @@
     <xs:attribute name="SelectionTabBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="SelectionTabBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="SelectionTabBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="SelectionTabBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="SelectionTabBackgroundColor" type="xs:string" />
     <xs:attribute name="SelectionTabBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="SelectionTabWidth" type="xs:string" />
@@ -4099,6 +4151,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -4197,6 +4250,7 @@
     <xs:attribute name="SliderMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="SliderOnCullStateChanged" type="xs:string" />
     <xs:attribute name="SliderMaskable" type="xs:string" />
+    <xs:attribute name="SliderIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="SliderColor" type="xs:string" />
     <xs:attribute name="SliderRaycastTarget" type="xs:string" />
     <xs:attribute name="SliderWidth" type="xs:string" />
@@ -4238,6 +4292,7 @@
     <xs:attribute name="SliderFillMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="SliderFillOnCullStateChanged" type="xs:string" />
     <xs:attribute name="SliderFillMaskable" type="xs:string" />
+    <xs:attribute name="SliderFillIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="SliderFillColor" type="xs:string" />
     <xs:attribute name="SliderFillRaycastTarget" type="xs:string" />
     <xs:attribute name="SliderFillWidth" type="xs:string" />
@@ -4279,6 +4334,7 @@
     <xs:attribute name="SliderHandleMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="SliderHandleOnCullStateChanged" type="xs:string" />
     <xs:attribute name="SliderHandleMaskable" type="xs:string" />
+    <xs:attribute name="SliderHandleIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="SliderHandleColor" type="xs:string" />
     <xs:attribute name="SliderHandleRaycastTarget" type="xs:string" />
     <xs:attribute name="SliderHandleWidth" type="xs:string" />
@@ -4321,6 +4377,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -4550,6 +4607,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="LabelWidth" type="xs:string" />
@@ -4592,6 +4650,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -4688,6 +4747,7 @@
     <xs:attribute name="TabListBackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="TabListBackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="TabListBackgroundMaskable" type="xs:string" />
+    <xs:attribute name="TabListBackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="TabListBackgroundColor" type="xs:string" />
     <xs:attribute name="TabListBackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="TabListWidth" type="xs:string" />
@@ -4733,6 +4793,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -4929,6 +4990,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="InputTextWidth" type="xs:string" />
@@ -4971,6 +5033,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -5112,6 +5175,7 @@
     <xs:attribute name="IsVolumetricText" type="xs:string" />
     <xs:attribute name="OnCullStateChanged" type="xs:string" />
     <xs:attribute name="Maskable" type="xs:string" />
+    <xs:attribute name="IsMaskingGraphic" type="xs:string" />
     <xs:attribute name="RaycastTarget" type="xs:string" />
     <xs:attribute name="Material" type="Asset_MaterialAsset" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -5204,6 +5268,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -5486,6 +5551,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -5721,6 +5787,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -6095,6 +6162,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="SelectedWeapon" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -7871,6 +7939,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
@@ -7962,6 +8031,7 @@
     <xs:attribute name="BackgroundMaterial" type="Asset_MaterialAsset" />
     <xs:attribute name="BackgroundOnCullStateChanged" type="xs:string" />
     <xs:attribute name="BackgroundMaskable" type="xs:string" />
+    <xs:attribute name="BackgroundIsMaskingGraphic" type="xs:string" />
     <xs:attribute name="BackgroundColor" type="xs:string" />
     <xs:attribute name="BackgroundRaycastTarget" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />

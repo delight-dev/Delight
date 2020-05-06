@@ -100,6 +100,7 @@ namespace Delight
             dependencyProperties.Add(IsVolumetricTextProperty);
             dependencyProperties.Add(OnCullStateChangedProperty);
             dependencyProperties.Add(MaskableProperty);
+            dependencyProperties.Add(IsMaskingGraphicProperty);
             dependencyProperties.Add(RaycastTargetProperty);
             dependencyProperties.Add(MaterialProperty);
         }
@@ -575,6 +576,13 @@ namespace Delight
         {
             get { return MaskableProperty.GetValue(this); }
             set { MaskableProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IsMaskingGraphic", x => x.TextMeshProUGUI, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return IsMaskingGraphicProperty.GetValue(this); }
+            set { IsMaskingGraphicProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> RaycastTargetProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("RaycastTarget", x => x.TextMeshProUGUI, x => x.raycastTarget, (x, y) => x.raycastTarget = y);

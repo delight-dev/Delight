@@ -47,6 +47,7 @@ namespace Delight
             dependencyProperties.Add(MaterialProperty);
             dependencyProperties.Add(OnCullStateChangedProperty);
             dependencyProperties.Add(MaskableProperty);
+            dependencyProperties.Add(IsMaskingGraphicProperty);
             dependencyProperties.Add(ColorProperty);
             dependencyProperties.Add(RaycastTargetProperty);
         }
@@ -165,6 +166,13 @@ namespace Delight
         {
             get { return MaskableProperty.GetValue(this); }
             set { MaskableProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image> IsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, Image>("IsMaskingGraphic", x => x.ImageComponent, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return IsMaskingGraphicProperty.GetValue(this); }
+            set { IsMaskingGraphicProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, Image> ColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, Image>("Color", x => x.ImageComponent, x => x.color, (x, y) => x.color = y);

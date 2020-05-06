@@ -230,6 +230,13 @@ namespace Delight
             set { RadioButtonImageView.Maskable = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean RadioButtonIsMaskingGraphic
+        {
+            get { return RadioButtonImageView.IsMaskingGraphic; }
+            set { RadioButtonImageView.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonColorProperty = Image.ColorProperty;
         public UnityEngine.Color RadioButtonColor
         {
@@ -879,6 +886,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.Maskable; }
             set { RadioButtonLabel.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty IsMaskingGraphicProperty = Label.IsMaskingGraphicProperty;
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return RadioButtonLabel.IsMaskingGraphic; }
+            set { RadioButtonLabel.IsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;

@@ -223,6 +223,7 @@ namespace Delight.Editor
             bool assetsChanged = addedOrUpdatedAssetObjects.Count() > 0 || deletedAssetObjects.Count() > 0 || movedAssetObjects.Count() > 0;
             bool schemasChanged = addedOrUpdatedSchemaObjects.Count() > 0 || deletedSchemaObjects.Count() > 0 || movedSchemaObjects.Count() > 0;
             bool contentChanged = assetsChanged || rebuildViews || viewsChanged || schemasChanged || rebuildConfig;
+            bool logComplete = contentChanged;
             bool refreshScripts = false;
             bool generateXsdSchema = false;
 
@@ -244,12 +245,7 @@ namespace Delight.Editor
             if (contentObjectModel.NeedRebuild)
             {
                 ContentParser.RebuildAll(true, true, true);
-                assetsChanged = false;
-                schemasChanged = false;
-                rebuildViews = false;
-                generateXsdSchema = false;
-                viewsChanged = false;
-                rebuildConfig = false;
+                return;
             }
 
             // any config changed? 
@@ -259,11 +255,7 @@ namespace Delight.Editor
                 if (result.HasFlag(ConfigParseResult.RebuildAll))
                 {
                     ContentParser.RebuildAll(true, true, false);
-                    assetsChanged = false;
-                    schemasChanged = false;
-                    rebuildViews = false;
-                    generateXsdSchema = false;
-                    viewsChanged = false;
+                    return;
                 }
                 else 
                 {
@@ -327,9 +319,9 @@ namespace Delight.Editor
                 CodeGenerator.GenerateXsdSchema();
             }
 
-            // TODO for tracking processing time
             if (contentChanged)
             {
+                ConsoleLogger.Log(String.Format("#Delight# Content processed. {0}", DateTime.Now));
                 //Debug.Log(String.Format("Total content processing time: {0}", sw.ElapsedMilliseconds)); 
             }
         }

@@ -608,6 +608,13 @@ namespace Delight
             set { SelectionTab.Maskable = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabIsMaskingGraphicProperty = Button.IsMaskingGraphicProperty;
+        public System.Boolean SelectionTabIsMaskingGraphic
+        {
+            get { return SelectionTab.IsMaskingGraphic; }
+            set { SelectionTab.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabRaycastTargetProperty = Button.RaycastTargetProperty;
         public System.Boolean SelectionTabRaycastTarget
         {
@@ -900,6 +907,13 @@ namespace Delight
         {
             get { return SelectionTab.BackgroundMaskable; }
             set { SelectionTab.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty SelectionTabBackgroundIsMaskingGraphicProperty = Button.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean SelectionTabBackgroundIsMaskingGraphic
+        {
+            get { return SelectionTab.BackgroundIsMaskingGraphic; }
+            set { SelectionTab.BackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty SelectionTabBackgroundColorProperty = Button.BackgroundColorProperty;

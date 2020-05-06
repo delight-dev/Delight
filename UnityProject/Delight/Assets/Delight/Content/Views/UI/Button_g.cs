@@ -637,6 +637,13 @@ namespace Delight
             set { Label.Maskable = value; }
         }
 
+        public readonly static DependencyProperty IsMaskingGraphicProperty = Label.IsMaskingGraphicProperty;
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return Label.IsMaskingGraphic; }
+            set { Label.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;
         public System.Boolean RaycastTarget
         {

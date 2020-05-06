@@ -217,6 +217,13 @@ namespace Delight
             set { Bar.Maskable = value; }
         }
 
+        public readonly static DependencyProperty BarIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean BarIsMaskingGraphic
+        {
+            get { return Bar.IsMaskingGraphic; }
+            set { Bar.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty BarColorProperty = Image.ColorProperty;
         public UnityEngine.Color BarColor
         {
@@ -509,6 +516,13 @@ namespace Delight
         {
             get { return Handle.Maskable; }
             set { Handle.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty HandleIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean HandleIsMaskingGraphic
+        {
+            get { return Handle.IsMaskingGraphic; }
+            set { Handle.IsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty HandleColorProperty = Image.ColorProperty;

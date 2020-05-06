@@ -516,6 +516,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsMaskingGraphicProperty = List.HorizontalScrollbarBarIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBarIsMaskingGraphic
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIsMaskingGraphic; }
+            set { ComboBoxList.HorizontalScrollbarBarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarColorProperty = List.HorizontalScrollbarBarColorProperty;
         public UnityEngine.Color HorizontalScrollbarBarColor
         {
@@ -810,6 +817,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarHandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsMaskingGraphicProperty = List.HorizontalScrollbarHandleIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarHandleIsMaskingGraphic
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIsMaskingGraphic; }
+            set { ComboBoxList.HorizontalScrollbarHandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleColorProperty = List.HorizontalScrollbarHandleColorProperty;
         public UnityEngine.Color HorizontalScrollbarHandleColor
         {
@@ -1102,6 +1116,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarBackgroundMaskable; }
             set { ComboBoxList.HorizontalScrollbarBackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundIsMaskingGraphicProperty = List.HorizontalScrollbarBackgroundIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return ComboBoxList.HorizontalScrollbarBackgroundIsMaskingGraphic; }
+            set { ComboBoxList.HorizontalScrollbarBackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundColorProperty = List.HorizontalScrollbarBackgroundColorProperty;
@@ -1433,6 +1454,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsMaskingGraphicProperty = List.VerticalScrollbarBarIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBarIsMaskingGraphic
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIsMaskingGraphic; }
+            set { ComboBoxList.VerticalScrollbarBarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarColorProperty = List.VerticalScrollbarBarColorProperty;
         public UnityEngine.Color VerticalScrollbarBarColor
         {
@@ -1727,6 +1755,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarHandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleIsMaskingGraphicProperty = List.VerticalScrollbarHandleIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarHandleIsMaskingGraphic
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIsMaskingGraphic; }
+            set { ComboBoxList.VerticalScrollbarHandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleColorProperty = List.VerticalScrollbarHandleColorProperty;
         public UnityEngine.Color VerticalScrollbarHandleColor
         {
@@ -2019,6 +2054,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarBackgroundMaskable; }
             set { ComboBoxList.VerticalScrollbarBackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundIsMaskingGraphicProperty = List.VerticalScrollbarBackgroundIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return ComboBoxList.VerticalScrollbarBackgroundIsMaskingGraphic; }
+            set { ComboBoxList.VerticalScrollbarBackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundColorProperty = List.VerticalScrollbarBackgroundColorProperty;
@@ -2684,6 +2726,13 @@ namespace Delight
         {
             get { return ComboBoxList.BackgroundMaskable; }
             set { ComboBoxList.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty BackgroundIsMaskingGraphicProperty = List.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean BackgroundIsMaskingGraphic
+        {
+            get { return ComboBoxList.BackgroundIsMaskingGraphic; }
+            set { ComboBoxList.BackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty BackgroundColorProperty = List.BackgroundColorProperty;
@@ -3428,6 +3477,13 @@ namespace Delight
             set { ComboBoxButton.Maskable = value; }
         }
 
+        public readonly static DependencyProperty ButtonIsMaskingGraphicProperty = Button.IsMaskingGraphicProperty;
+        public System.Boolean ButtonIsMaskingGraphic
+        {
+            get { return ComboBoxButton.IsMaskingGraphic; }
+            set { ComboBoxButton.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty ButtonRaycastTargetProperty = Button.RaycastTargetProperty;
         public System.Boolean ButtonRaycastTarget
         {
@@ -3720,6 +3776,13 @@ namespace Delight
         {
             get { return ComboBoxButton.BackgroundMaskable; }
             set { ComboBoxButton.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty ButtonBackgroundIsMaskingGraphicProperty = Button.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean ButtonBackgroundIsMaskingGraphic
+        {
+            get { return ComboBoxButton.BackgroundIsMaskingGraphic; }
+            set { ComboBoxButton.BackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty ButtonBackgroundColorProperty = Button.BackgroundColorProperty;

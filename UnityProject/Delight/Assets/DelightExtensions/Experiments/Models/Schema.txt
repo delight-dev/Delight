@@ -13,20 +13,20 @@ Highscores
 = Highscore
 Level
 Player
-int Score
-
+int Score 
+ 
 = Player
 string Name
 Color Color
 Highscores
-Achievements
+Achievements 
 
 = Achievement
 Player
 Sprite Icon
 string Title
 
-// Data
+// Data 
 
 + World (Order, Name)
 World1: 1, "World 1"

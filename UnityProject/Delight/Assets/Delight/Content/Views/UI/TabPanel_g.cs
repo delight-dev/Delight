@@ -249,6 +249,13 @@ namespace Delight
             set { TabHeaderGroup.BackgroundMaskable = value; }
         }
 
+        public readonly static DependencyProperty TabListBackgroundIsMaskingGraphicProperty = ToggleGroup.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean TabListBackgroundIsMaskingGraphic
+        {
+            get { return TabHeaderGroup.BackgroundIsMaskingGraphic; }
+            set { TabHeaderGroup.BackgroundIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty TabListBackgroundColorProperty = ToggleGroup.BackgroundColorProperty;
         public UnityEngine.Color TabListBackgroundColor
         {

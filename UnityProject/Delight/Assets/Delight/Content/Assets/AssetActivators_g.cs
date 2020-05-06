@@ -52,7 +52,6 @@ namespace Delight
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
             ViewActivators.Add("HighscoreDemo", (x, y, z, w, a) => new HighscoreDemo(x, y, z, w, a));
             ViewActivators.Add("Aa", (x, y, z, w, a) => new Aa(x, y, z, w, a));
-            ViewActivators.Add("TitleView", (x, y, z, w, a) => new TitleView(x, y, z, w, a));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w, a) => new AssetManagementTest(x, y, z, w, a));
             ViewActivators.Add("BindingTest", (x, y, z, w, a) => new BindingTest(x, y, z, w, a));
             ViewActivators.Add("ComboBoxExample", (x, y, z, w, a) => new ComboBoxExample(x, y, z, w, a));
@@ -70,6 +69,7 @@ namespace Delight
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
             ViewActivators.Add("TestScene", (x, y, z, w, a) => new TestScene(x, y, z, w, a));
+            ViewActivators.Add("TitleView", (x, y, z, w, a) => new TitleView(x, y, z, w, a));
             ViewActivators.Add("ViewSwitcherTest", (x, y, z, w, a) => new ViewSwitcherTest(x, y, z, w, a));
             ViewActivators.Add("InventoryItemView", (x, y, z, w, a) => new InventoryItemView(x, y, z, w, a));
             ViewActivators.Add("InventoryView", (x, y, z, w, a) => new InventoryView(x, y, z, w, a));
@@ -116,7 +116,6 @@ namespace Delight
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("HighscoreDemo", typeof(HighscoreDemo));
             ViewTypes.Add("Aa", typeof(Aa));
-            ViewTypes.Add("TitleView", typeof(TitleView));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
             ViewTypes.Add("BindingTest", typeof(BindingTest));
             ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));
@@ -134,6 +133,7 @@ namespace Delight
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
             ViewTypes.Add("TestScene", typeof(TestScene));
+            ViewTypes.Add("TitleView", typeof(TitleView));
             ViewTypes.Add("ViewSwitcherTest", typeof(ViewSwitcherTest));
             ViewTypes.Add("InventoryItemView", typeof(InventoryItemView));
             ViewTypes.Add("InventoryView", typeof(InventoryView));

@@ -320,6 +320,13 @@ namespace Delight
             set { SliderBackgroundImageView.Maskable = value; }
         }
 
+        public readonly static DependencyProperty SliderIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean SliderIsMaskingGraphic
+        {
+            get { return SliderBackgroundImageView.IsMaskingGraphic; }
+            set { SliderBackgroundImageView.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty SliderColorProperty = Image.ColorProperty;
         public UnityEngine.Color SliderColor
         {
@@ -614,6 +621,13 @@ namespace Delight
             set { SliderFillImageView.Maskable = value; }
         }
 
+        public readonly static DependencyProperty SliderFillIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean SliderFillIsMaskingGraphic
+        {
+            get { return SliderFillImageView.IsMaskingGraphic; }
+            set { SliderFillImageView.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty SliderFillColorProperty = Image.ColorProperty;
         public UnityEngine.Color SliderFillColor
         {
@@ -906,6 +920,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.Maskable; }
             set { SliderHandleImageView.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandleIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean SliderHandleIsMaskingGraphic
+        {
+            get { return SliderHandleImageView.IsMaskingGraphic; }
+            set { SliderHandleImageView.IsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty SliderHandleColorProperty = Image.ColorProperty;

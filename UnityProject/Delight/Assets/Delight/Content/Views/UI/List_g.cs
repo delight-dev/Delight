@@ -507,6 +507,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsMaskingGraphicProperty = ScrollableRegion.HorizontalScrollbarBarIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBarIsMaskingGraphic
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarIsMaskingGraphic; }
+            set { ScrollableRegion.HorizontalScrollbarBarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarColorProperty = ScrollableRegion.HorizontalScrollbarBarColorProperty;
         public UnityEngine.Color HorizontalScrollbarBarColor
         {
@@ -801,6 +808,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarHandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsMaskingGraphicProperty = ScrollableRegion.HorizontalScrollbarHandleIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarHandleIsMaskingGraphic
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandleIsMaskingGraphic; }
+            set { ScrollableRegion.HorizontalScrollbarHandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleColorProperty = ScrollableRegion.HorizontalScrollbarHandleColorProperty;
         public UnityEngine.Color HorizontalScrollbarHandleColor
         {
@@ -1093,6 +1107,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarBackgroundMaskable; }
             set { ScrollableRegion.HorizontalScrollbarBackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundIsMaskingGraphicProperty = ScrollableRegion.HorizontalScrollbarBackgroundIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBackgroundIsMaskingGraphic; }
+            set { ScrollableRegion.HorizontalScrollbarBackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundColorProperty = ScrollableRegion.HorizontalScrollbarBackgroundColorProperty;
@@ -1424,6 +1445,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsMaskingGraphicProperty = ScrollableRegion.VerticalScrollbarBarIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBarIsMaskingGraphic
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarIsMaskingGraphic; }
+            set { ScrollableRegion.VerticalScrollbarBarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarColorProperty = ScrollableRegion.VerticalScrollbarBarColorProperty;
         public UnityEngine.Color VerticalScrollbarBarColor
         {
@@ -1718,6 +1746,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarHandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleIsMaskingGraphicProperty = ScrollableRegion.VerticalScrollbarHandleIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarHandleIsMaskingGraphic
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandleIsMaskingGraphic; }
+            set { ScrollableRegion.VerticalScrollbarHandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleColorProperty = ScrollableRegion.VerticalScrollbarHandleColorProperty;
         public UnityEngine.Color VerticalScrollbarHandleColor
         {
@@ -2010,6 +2045,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarBackgroundMaskable; }
             set { ScrollableRegion.VerticalScrollbarBackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundIsMaskingGraphicProperty = ScrollableRegion.VerticalScrollbarBackgroundIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return ScrollableRegion.VerticalScrollbarBackgroundIsMaskingGraphic; }
+            set { ScrollableRegion.VerticalScrollbarBackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundColorProperty = ScrollableRegion.VerticalScrollbarBackgroundColorProperty;

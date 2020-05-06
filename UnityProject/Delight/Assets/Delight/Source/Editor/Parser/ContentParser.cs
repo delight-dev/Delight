@@ -83,6 +83,8 @@ namespace Delight.Editor.Parser
 
             // generate XSD schemas
             CodeGenerator.GenerateXsdSchema();
+
+            ConsoleLogger.Log(String.Format("#Delight# Content processed. {0}", DateTime.Now));
         }
 
         /// <summary>
@@ -269,7 +271,7 @@ namespace Delight.Editor.Parser
             sb.AppendLine("</{0}>", sceneName);
 
             // write file
-            Debug.Log("Creating " + xumlFile.Path);
+            //Debug.Log("Creating " + xumlFile.Path);
             File.WriteAllText(xumlFile.Path, sb.ToString());
         }
 
@@ -356,7 +358,6 @@ namespace Delight.Editor.Parser
             }
             finally
             {
-                ConsoleLogger.Log(String.Format("#Delight# Content processed. {0}", DateTime.Now));
             }
         }
 
@@ -631,7 +632,7 @@ namespace Delight.Editor.Parser
             var styleName = rootXmlElement.Name.LocalName;
             var styleObject = _contentObjectModel.LoadStyleObject(styleName);
 
-            // clear style object
+            // clear style objects
             styleObject.Clear();
             styleObject.Name = styleName;
             styleObject.FilePath = xmlFilePath;
@@ -1550,8 +1551,6 @@ namespace Delight.Editor.Parser
 
             var emptyList = new List<string>();
             ParseSchemaFiles(schemaFiles, emptyList, emptyList, emptyList);
-
-            //ConsoleLogger.Log("#Delight# Schema rebuild completed.");
         }
 
         /// <summary>
@@ -1570,6 +1569,8 @@ namespace Delight.Editor.Parser
             CodeGenerator.GenerateModelCode();
 
             _contentObjectModel.SaveObjectModel();
+
+            //ConsoleLogger.Log("#Delight# Schema rebuild completed.");
         }
 
         /// <summary>

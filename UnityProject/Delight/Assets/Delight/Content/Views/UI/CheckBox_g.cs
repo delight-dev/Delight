@@ -230,6 +230,13 @@ namespace Delight
             set { CheckBoxImageView.Maskable = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxIsMaskingGraphicProperty = Image.IsMaskingGraphicProperty;
+        public System.Boolean CheckBoxIsMaskingGraphic
+        {
+            get { return CheckBoxImageView.IsMaskingGraphic; }
+            set { CheckBoxImageView.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxColorProperty = Image.ColorProperty;
         public UnityEngine.Color CheckBoxColor
         {
@@ -879,6 +886,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.Maskable; }
             set { CheckBoxLabel.Maskable = value; }
+        }
+
+        public readonly static DependencyProperty IsMaskingGraphicProperty = Label.IsMaskingGraphicProperty;
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return CheckBoxLabel.IsMaskingGraphic; }
+            set { CheckBoxLabel.IsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty RaycastTargetProperty = Label.RaycastTargetProperty;

@@ -47,6 +47,7 @@ namespace Delight
             dependencyProperties.Add(BackgroundMaterialProperty);
             dependencyProperties.Add(BackgroundOnCullStateChangedProperty);
             dependencyProperties.Add(BackgroundMaskableProperty);
+            dependencyProperties.Add(BackgroundIsMaskingGraphicProperty);
             dependencyProperties.Add(BackgroundColorProperty);
             dependencyProperties.Add(BackgroundRaycastTargetProperty);
         }
@@ -165,6 +166,13 @@ namespace Delight
         {
             get { return BackgroundMaskableProperty.GetValue(this); }
             set { BackgroundMaskableProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView> BackgroundIsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Image, UIImageView>("BackgroundIsMaskingGraphic", x => x.ImageComponent, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        public System.Boolean BackgroundIsMaskingGraphic
+        {
+            get { return BackgroundIsMaskingGraphicProperty.GetValue(this); }
+            set { BackgroundIsMaskingGraphicProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, UIImageView> BackgroundColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, UIImageView>("BackgroundColor", x => x.ImageComponent, x => x.color, (x, y) => x.color = y);

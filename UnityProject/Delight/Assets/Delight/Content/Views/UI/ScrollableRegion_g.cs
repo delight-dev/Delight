@@ -402,6 +402,13 @@ namespace Delight
             set { HorizontalScrollbar.BarMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsMaskingGraphicProperty = Scrollbar.BarIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBarIsMaskingGraphic
+        {
+            get { return HorizontalScrollbar.BarIsMaskingGraphic; }
+            set { HorizontalScrollbar.BarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarColorProperty = Scrollbar.BarColorProperty;
         public UnityEngine.Color HorizontalScrollbarBarColor
         {
@@ -696,6 +703,13 @@ namespace Delight
             set { HorizontalScrollbar.HandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsMaskingGraphicProperty = Scrollbar.HandleIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarHandleIsMaskingGraphic
+        {
+            get { return HorizontalScrollbar.HandleIsMaskingGraphic; }
+            set { HorizontalScrollbar.HandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarHandleColorProperty = Scrollbar.HandleColorProperty;
         public UnityEngine.Color HorizontalScrollbarHandleColor
         {
@@ -988,6 +1002,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.BackgroundMaskable; }
             set { HorizontalScrollbar.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundIsMaskingGraphicProperty = Scrollbar.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean HorizontalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return HorizontalScrollbar.BackgroundIsMaskingGraphic; }
+            set { HorizontalScrollbar.BackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundColorProperty = Scrollbar.BackgroundColorProperty;
@@ -1319,6 +1340,13 @@ namespace Delight
             set { VerticalScrollbar.BarMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsMaskingGraphicProperty = Scrollbar.BarIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBarIsMaskingGraphic
+        {
+            get { return VerticalScrollbar.BarIsMaskingGraphic; }
+            set { VerticalScrollbar.BarIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarColorProperty = Scrollbar.BarColorProperty;
         public UnityEngine.Color VerticalScrollbarBarColor
         {
@@ -1613,6 +1641,13 @@ namespace Delight
             set { VerticalScrollbar.HandleMaskable = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarHandleIsMaskingGraphicProperty = Scrollbar.HandleIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarHandleIsMaskingGraphic
+        {
+            get { return VerticalScrollbar.HandleIsMaskingGraphic; }
+            set { VerticalScrollbar.HandleIsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarHandleColorProperty = Scrollbar.HandleColorProperty;
         public UnityEngine.Color VerticalScrollbarHandleColor
         {
@@ -1905,6 +1940,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.BackgroundMaskable; }
             set { VerticalScrollbar.BackgroundMaskable = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundIsMaskingGraphicProperty = Scrollbar.BackgroundIsMaskingGraphicProperty;
+        public System.Boolean VerticalScrollbarBackgroundIsMaskingGraphic
+        {
+            get { return VerticalScrollbar.BackgroundIsMaskingGraphic; }
+            set { VerticalScrollbar.BackgroundIsMaskingGraphic = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundColorProperty = Scrollbar.BackgroundColorProperty;

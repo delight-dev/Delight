@@ -12,5 +12,6 @@
           MouseUp="ListItemMouseUp"
           ContentTemplateData="t:ContentTemplateData"
           HideInDesigner="True"
-          SetListItemState="at:bool">
+          SetListItemState="at:bool"
+          RaycastBlockMode="Always">
 </ListItem> 
