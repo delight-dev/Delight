@@ -1,0 +1,239 @@
+﻿Button  
+- AutoSize: 
+- CanToggleOff: 
+- CanToggleOn: 
+- DefaultWidth: 
+- IsBackButton: 
+- IsCloseButton: 
+- IsDisabled: 
+- IsMouseOver: 
+- IsPressed: 
+- IsToggleButton: 
+- TextOffset: 
+- TextPadding: 
+- ToggleClick: 
+- ToggleValue: 
+
+CheckBox
+- IsChecked: 
+- IsDisabled: 
+- IsInteractable: 
+- Spacing: 
+
+Collection
+- Items: 
+- TemplateSelector: 
+
+ComboBox
+- IsDropUp: 
+- ItemSelected: 
+
+DelightDesigner
+- AutoParse: 
+- ChangedDesignerViews: 
+- DesignerViews: 
+- XmlText: 
+
+Frame
+- AutoSizeToContent: 
+
+Grid
+- Columns: 
+- ColumnSpacing: 
+- Rows: 
+- RowSpacing: 
+- Spacing: 
+
+GridSplitter
+- BePushy: 
+- InteractionThickness: 
+- IsEnabled: 
+- OverrideProportionalSize: 
+- SetSizeOnDragEnded: 
+- SplitMode: 
+- SplitterColor: 
+- SplitterSprite: 
+- Thickness: 
+
+GridSplitterHandle
+- IsEnabled: 
+
+Group
+- ContentAlignment: 
+- Orientation: 
+- Spacing: 
+
+InputField
+- EndEdit: 
+- OnlyTriggerValueChangedFromUI: 
+- SetValueOnEndEdit: 
+- TextMargin: 
+- ValueChanged: 
+
+Label
+- AutoSize: 
+
+List
+- AlternateItems: 
+- CanDeselect: 
+- CanMultiSelect: 
+- CanReselect: 
+- CanSelect: 
+- ContentAlignment: 
+- DeselectAfterSelect: 
+- DisableItemArrangement: 
+- HorizontalSpacing: 
+- IsScrollable: 
+- IsStatic: 
+- IsVirtualized: 
+- ItemDeselected: 
+- ItemSelected: 
+- Orientation: 
+- Overflow: 
+- Padding: 
+- RealizationMargin: 
+- SelectedItem: 
+- SelectOnMouseUp: 
+- SortDirection: 
+- Spacing: 
+- VerticalSpacing: 
+- VirtualItemGetter: 
+
+ListItem
+- AutoSizeToContent: 
+- Breadth: 
+- ContentTemplateData: 
+- IsAlternate: 
+- IsDisabled: 
+- IsMouseOver: 
+- IsPressed: 
+- IsSelected: 
+- Item: 
+- Length: 
+
+RadioButton
+- IsChecked: 
+- IsDisabled: 
+- IsInteractable: 
+- Spacing: 
+
+SceneObjectView
+- BeginDrag: 
+- Cancel: 
+- Click: 
+- Deselect: 
+- Drag: 
+- Drop: 
+- EnableScriptEvents: 
+- EndDrag: 
+- GameObject: 
+- IgnoreObject: 
+- InitializePotentialDrag: 
+- IsActive: 
+- MouseDown: 
+- MouseEnter: 
+- MouseExit: 
+- MouseUp: 
+- Move: 
+- Scroll: 
+- Select: 
+- Submit: 
+- UpdateSelected: 
+
+ScrollableRegion
+- AutoSizeContentRegion: 
+- CanScrollHorizontally: 
+- CanScrollVertically: 
+- ContentAlignment: 
+- ContentScrolled: 
+- DebugOffsetText: 
+- DecelerationRate: 
+- DisableInteractionScrollDelta: 
+- DisableMouseWheel: 
+- Elasticity: 
+- HasInertia: 
+- HorizontalScrollbarVisibility: 
+- MaskContent: 
+- ScrollBounds: 
+- ScrollEnabled: 
+- ScrollSensitivity: 
+- UnblockDragEventsInChildren: 
+- VerticalScrollbarVisibility: 
+
+Scrollbar
+- Breadth: 
+- Length: 
+- Orientation: 
+- ScrollPosition: 
+- ViewportRatio: 
+
+Slider
+- Breadth: 
+- CanSlide: 
+- IsReversed: 
+- Length: 
+- Max: 
+- Min: 
+- Orientation: 
+- SetValueOnDragEnded: 
+- Steps: 
+- Value: 
+- ValueChanged: 
+
+Tab
+- ContentTemplateData: 
+- TabHeaderId: 
+- Text: 
+
+TabHeader
+- ContentTemplateData: 
+- TabIndex: 
+
+TabPanel
+- IsStatic: 
+- SelectedTabIndex: 
+- TabHeaderHeight: 
+- TabHeaderWidth: 
+- TabSelected: 
+- TabSwitchMode: 
+
+UICanvas
+- RenderCamera: 
+
+UIView
+- Alignment: Used to align the view relative to the layout parent region it resides in.
+- Alpha: Can be used to adjust the alpha color of this view and all its children. E.g. used for fade in/out animations. Is separate from and different from the background color of the view as it affects the children as well.
+- BubbleNotifyChildLayoutChanged: Boolean indicating if parent always should be notified when the child changes layout.
+- DisableLayoutUpdate: Boolean indicating if automatic layout updates for this view should be disabled. When disabled the view doesn't call UpdateLayout() when properties such as Width, Height, etc. changes.
+- FastMaterial: Faster shader used to render the view when UseFastShader is set to True. 
+- Height: The height of the view in pixels or percents.
+- IgnoreFlip: Used when doing localization override default behavior of flipping the view Right to Left or Left to Rigth. 
+- IsVisible: Boolean indicating if view is visible or hidden. Invisible views still take up space but aren't interactable and have their alpha set to 0. 
+- LayoutRoot: Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root. 
+- Margin: Adding margins to a view changes the size of the area in which its content resides, but it does not change the width or height of the view. 
+- Offset: Determines the offset of the view.
+- OffsetFromParent: Offset set by a parent view. Used by views like Group to arrange children without changing their own Offset values.
+- OverrideHeight: Overrides regular Height value. Used to e.g. automatically size items without changing the default Height value set.
+- OverrideWidth: Overrides regular Width value. Used to e.g. automatically size items without changing the default Width value set.
+- Pivot: Changes the pivot point of the view.
+- Position: Directly sets the local position of the view relative to parent. Position otherwise set using the Alignment and Offset properties.
+- RaycastBlockMode: Enum indicating if raycasts should be blocked.
+- Rotation: Rotation of the view. 
+- Scale: Scale of the view.
+- UseFastShader: Boolean indicating if the default UI shader should be replaced by a simpler and faster one. The faster shader does not support masking and clipping. 
+- Width: The width of the view in pixels or percents.
+
+View
+- LoadMode: 
+
+ViewSwitcher
+- ChildLoadMode: 
+- ShowFirstByDefault: 
+- StartView: 
+- SwitchMode: 
+
+XmlEditor
+- Edit: 
+- IsFocused: 
+- XmlText: 
+

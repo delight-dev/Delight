@@ -766,6 +766,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(10)]
         public bool TwoWayImplicit;
+
+        [ProtoMember(11)]
+        public string Comment;
     }
 
     /// <summary>

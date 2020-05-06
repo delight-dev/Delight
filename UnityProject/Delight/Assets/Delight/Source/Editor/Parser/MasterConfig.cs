@@ -79,6 +79,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(16)]
         public bool GenerateBlankCodeBehind;
 
+        [ProtoMember(17, AsReference = true)]
+        public List<DocObject> DocObjects;
+
         private static MasterConfig _config;
 
         #endregion
@@ -96,6 +99,7 @@ namespace Delight.Editor.Parser
             StreamedBundles = new List<string>();
             Namespaces = new List<string>();
             Modules = new List<string>();
+            DocObjects = new List<DocObject>();
         }
 
         #endregion
@@ -334,6 +338,31 @@ namespace Delight.Editor.Parser
         }
 
         #endregion
+    }
+
+    [ProtoContract]
+    public class DocObject
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2, AsReference = true)]
+        public List<DocProperty> Properties;
+
+        public DocObject()
+        {
+            Properties = new List<DocProperty>();
+        }
+    }
+
+    [ProtoContract]
+    public class DocProperty
+    {
+        [ProtoMember(1)]
+        public string Name;
+
+        [ProtoMember(2)]
+        public string Comment;
     }
 }
 

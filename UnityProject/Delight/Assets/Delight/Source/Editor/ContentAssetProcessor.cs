@@ -12,6 +12,7 @@ using UnityEditor;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Text.RegularExpressions;
+using Delight;
 using Delight.Editor.Parser;
 #endregion
 
@@ -244,7 +245,7 @@ namespace Delight.Editor
             var contentObjectModel = ContentObjectModel.GetInstance();
             if (contentObjectModel.NeedRebuild)
             {
-                ContentParser.RebuildAll(true, true, true);
+                ContentParser.RebuildAll(true, true, true, true);
                 return;
             }
 
@@ -254,7 +255,7 @@ namespace Delight.Editor
                 var result = ContentParser.ParseAllConfigFiles();
                 if (result.HasFlag(ConfigParseResult.RebuildAll))
                 {
-                    ContentParser.RebuildAll(true, true, false);
+                    ContentParser.RebuildAll(true, true, false, false);
                     return;
                 }
                 else 

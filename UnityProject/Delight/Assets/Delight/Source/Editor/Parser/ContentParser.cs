@@ -33,6 +33,7 @@ namespace Delight.Editor.Parser
         public const string ViewsFolder = "/Views/";
         public const string StylesFolder = "/Styles/";
         public const string ScenesFolder = "/Scenes/";
+        public const string DocsFolder = "/Docs/";
         public const string StreamingPath = "Assets/StreamingAssets/";
         public const string RemoteAssetBundlesBasePath = "AssetBundles/";
         private const string DefaultViewType = "UIView";
@@ -55,7 +56,7 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Processes all content and generates code.
         /// </summary>
-        public static void RebuildAll(bool buildAssets, bool buildBundlesLater = false, bool parseConfigFiles = true)
+        public static void RebuildAll(bool buildAssets, bool buildBundlesLater = false, bool parseConfigFiles = true, bool parseDocFiles = true)
         {
             // wait for any uncompiled scripts to be compiled first
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
@@ -70,6 +71,12 @@ namespace Delight.Editor.Parser
             if (buildAssets)
             {
                 RebuildAssets(buildBundlesLater);
+            }
+
+            // parse all doc files
+            if (parseDocFiles)
+            {
+                ParseAllDocFiles();
             }
 
             // parse all schema files
@@ -2497,6 +2504,127 @@ namespace Delight.Editor.Parser
                         continue;
 
                     if (!unformattedFilePath.IContains("Config"))
+                        continue;
+
+                    var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);
+                    if (ignoreFiles != null && ignoreFiles.Contains(filePath))
+                        continue;
+
+                    files.Add(filePath);
+                }
+            }
+
+            return files;
+        }
+
+        #endregion
+
+        #region Docs
+
+        /// <summary>
+        /// Parses documentation files.
+        /// </summary>
+        public static void ParseAllDocFiles()
+        {
+            var config = MasterConfig.GetInstance();
+            
+            // get all assets
+            var ignoreFiles = new HashSet<string>();
+            var docFiles = new List<string>();
+            foreach (var localPath in config.ContentFolders)
+            {
+                string path = String.Format("{0}/{1}{2}", Application.dataPath,
+                    localPath.StartsWith("Assets/") ? localPath.Substring(7) : localPath,
+                    DocsFolder.Substring(1));
+
+                foreach (var configFile in GetDocFilesAtPath(path, ignoreFiles))
+                {
+                    docFiles.Add(configFile);
+                    ignoreFiles.Add(configFile);
+                }
+            }
+
+            ParseDocFiles(docFiles);
+            //ConsoleLogger.Log("#Delight# Doc rebuild completed.");
+        }
+
+        /// <summary>
+        /// Parses documentation files. 
+        /// </summary>
+        public static void ParseDocFiles(List<string> docFiles)
+        {
+            var config = MasterConfig.GetInstance();
+            config.DocObjects.Clear();
+
+            // parse config files
+            foreach (var docFile in docFiles)
+            {
+                var content = File.ReadAllLines(docFile);
+                ParseDocFile(content, docFile);
+            }
+
+            config.SaveConfig();
+        }
+
+        /// <summary>
+        /// Parses documentation file. 
+        /// </summary>
+        private static void ParseDocFile(string[] fileContent, string path)
+        {
+            var config = MasterConfig.GetInstance();
+            var filename = Path.GetFileName(path);
+            DocObject docObject = null;
+
+            // parse schema file
+            for (int i = 0; i < fileContent.Length; ++i)
+            {
+                string line = fileContent[i].Trim().RemoveComments();
+                if (String.IsNullOrWhiteSpace(line)) // ignore comments and empty lines
+                    continue;
+
+                int dashIndex = line.IndexOf("-");
+                if (dashIndex < 0)
+                {
+                    // parse doc object declaration
+                    string docObjectName = line.Trim();
+                    docObject = new DocObject { Name = docObjectName };
+                    config.DocObjects.Add(docObject);
+                    continue;
+                }
+                else
+                {
+                    if (docObject == null)
+                        continue;
+
+                    int colonIndex = line.IndexOf(":");
+                    if (colonIndex < 0)
+                        continue;
+
+                    var name = line.Substring(1, colonIndex - 1).Trim();
+                    var comment = line.Substring(colonIndex + 1).Trim();
+                    if (String.IsNullOrWhiteSpace(comment))
+                        continue;
+
+                    Debug.Log("Adding " + docObject.Name + "." + name + ":" + comment);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets all config files at a path.
+        /// </summary>
+        private static List<string> GetDocFilesAtPath(string path, HashSet<string> ignoreFiles = null)
+        {
+            var files = new List<string>();
+            if (Directory.Exists(path))
+            {
+                string[] filePaths = Directory.GetFiles(path, "*.txt", SearchOption.AllDirectories);
+                foreach (string unformattedFilePath in filePaths)
+                {
+                    if (unformattedFilePath.EndsWith(".cs") || unformattedFilePath.EndsWith(".meta"))
+                        continue;
+
+                    if (!unformattedFilePath.IContains("ApiDocs"))
                         continue;
 
                     var filePath = MasterConfig.GetFormattedPath(unformattedFilePath);

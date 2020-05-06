@@ -11,6 +11,8 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using Delight;
+using UnityEditor.Graphs;
 #endregion
 
 namespace Delight.Editor
@@ -22,15 +24,10 @@ namespace Delight.Editor
     {
         #region Methods
 
-        [MenuItem("Window/Delight - Generate Documentation", false, 0)]
-        private static void CreateSceneXml()
-        {
-            GenerateDocumentation();
-        }
-
         /// <summary>
         /// Generates API .md docs from documentation XML, for the delight-dev.github.io website.
         /// </summary>
+        [MenuItem("Window/Delight - Generate Documentation", false, 0)]
         public static void GenerateDocumentation()
         {
             // Creates API documentation from documentation XML. 
@@ -71,15 +68,6 @@ namespace Delight.Editor
             {
                 var data = new DocData();
                 data.FullTypeName = element.Attribute("name").Value.Substring(2);
-
-                // ignore examples, editor, textmeshpro and dev-tools               
-                //if (data.FullTypeName.StartsWith("MarkLight.Examples") || data.FullTypeName.StartsWith("MarkLight.DevTools") ||
-                //    data.FullTypeName.StartsWith("MarkLight.Editor") || data.FullTypeName.StartsWith("MarkLight.Views.UI.DemoMessage") ||
-                //    data.FullTypeName.StartsWith("TMPro"))
-                //{
-                //    continue;
-                //}
-
                 data.TypeName = data.FullTypeName.Substring(data.FullTypeName.LastIndexOf(".") + 1);
                 data.HtmlTypeName = data.TypeName.Replace("`1", "<T>");
                 data.View = contentObjectModel.ViewObjects?.FirstOrDefault(x => x.TypeName == data.TypeName);
@@ -328,6 +316,45 @@ namespace Delight.Editor
             }
 
             Debug.Log("#Delight# Documentation generated");
+        }
+
+        /// <summary>
+        /// Generates API doc template file that is used to define XML comments to be added to the dependency properties generated in code-behind.
+        /// </summary>
+        [MenuItem("Window/Delight - Generate API docs template", false, 0)]
+        public static void GenerateApiDocTemplate()
+        {
+            var sb = new StringBuilder();
+            var apiDocsTemplateFile = "Assets/DevTools/Docs/ApiDocs-Template.txt";
+
+            var contentObjectModel = ContentObjectModel.GetInstance();
+
+            // iterate through all views and their dependency properties
+            foreach (var viewObject in contentObjectModel.ViewObjects.OrderBy(x => x.Name))
+            {
+                var propertyDeclarations = CodeGenerator.GetPropertyDeclarations(viewObject, false, false, true).Where(x => x.Declaration.DeclarationType != PropertyDeclarationType.Template &&
+                        x.Declaration.DeclarationType != PropertyDeclarationType.View && x.Declaration.DeclarationType != PropertyDeclarationType.UnityComponent).OrderBy(x => x.Declaration.PropertyName);
+
+                if (!propertyDeclarations.Any())
+                    continue;
+
+                sb.AppendLine("{0}", viewObject.Name);
+                foreach (var propertyDeclaration in propertyDeclarations)
+                {
+                    if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.Template ||
+                        propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View || 
+                        propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.UnityComponent)
+                        continue; // ignore component, template and view properties as we'll generate default docs for those
+
+                    sb.AppendLine("- {0}: {1}", propertyDeclaration.Declaration.PropertyName, propertyDeclaration.Declaration.Comment);
+                }
+
+                sb.AppendLine();
+            }
+
+            // write text to file
+            File.WriteAllText(apiDocsTemplateFile, sb.ToString());
+            Debug.Log(String.Format("#Delight# Documentation generated at \"{0}\"", apiDocsTemplateFile));
         }
 
         #endregion

@@ -6162,7 +6162,6 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="SelectedWeapon" type="xs:string" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
