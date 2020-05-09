@@ -178,21 +178,7 @@ namespace Delight
                     var path = designerView.FilePath;
                     var xmlText = File.ReadAllText(path);
 
-                    // strip namespace and schema elements from XML root
-                    xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
-                    xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
-
-                    int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-                    string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-                    int directoryDepth = 1 + p1.Count(x => x == '/');
-                    var schemaElement = " xsi:schemaLocation=\"Delight";
-
-                    int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
-                    if (indexOfSchemaElement > 0)
-                    {
-                        xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
-                    }
-
+                    xmlText = StripNamespaceAndSchema(xmlText, path);
                     XmlEditor.XmlText = xmlText;
                 }
             }
@@ -208,6 +194,29 @@ namespace Delight
             SetScale(Vector3.one);
 
             XmlEditorRegion.IsVisible = true;
+        }
+
+        /// <summary>
+        /// Strips namespace and schema from XML root.
+        /// </summary>
+        private string StripNamespaceAndSchema(string xmlText, string path)
+        {
+            // strip namespace and schema elements from XML root
+            xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
+            xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
+
+            int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+            string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+            int directoryDepth = 1 + p1.Count(x => x == '/');
+            var schemaElement = " xsi:schemaLocation=\"Delight";
+
+            int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
+            if (indexOfSchemaElement > 0)
+            {
+                xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
+            }
+
+            return xmlText;
         }
 
         /// <summary>
@@ -235,6 +244,58 @@ namespace Delight
             try
             {
                 rootXmlElement = XElement.Parse(xml, LoadOptions.SetLineInfo);
+
+                // check if root element has been renamed
+                // if root element has changed, then rename the view. 
+                var viewName = rootXmlElement.Name.LocalName;
+                if (!viewName.IEquals(_currentEditedView.Name))
+                {
+                    var changedView = _currentEditedView;
+
+                    // rename view
+                    var oldViewName = changedView.Name;
+                    changedView.Name = viewName;
+
+                    if (!changedView.IsNew)
+                    {
+                        changedView.IsRenamed = true;
+                        if (String.IsNullOrEmpty(changedView.OriginalName))
+                        {
+                            changedView.OriginalName = oldViewName;
+                        }
+                    }
+
+                    // update all references to the view 
+                    foreach (var view in DesignerViews)
+                    {
+                        if (view == changedView)
+                            continue;
+
+                        var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
+                            File.ReadAllText(view.FilePath);
+
+                        // see if the view references the old view and update the xml
+                        // the regex pattern below matches start/end tags with the specified view name
+                        bool foundMatch = false;
+                        var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
+                        var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
+                        {
+                            foundMatch = true;
+                            return viewName;
+                        });
+
+                        if (foundMatch)
+                        {
+                            // update XML and add to list of changed views
+                            replacedXml = StripNamespaceAndSchema(replacedXml, view.FilePath);
+
+                            view.XmlText = replacedXml;
+                            view.IsDirty = true;
+                            view.IsRuntimeParsed = true;
+                        }
+                    }
+                }
+
             }
             catch (Exception e)
             {
@@ -267,7 +328,8 @@ namespace Delight
                 _currentEditedView.ViewObject = viewObject;
 
                 // instantiate view
-                var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew);
+                var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew,
+                    null, _currentEditedView);
                 if (view == null)
                     return;
 
@@ -318,7 +380,8 @@ namespace Delight
         /// <summary>
         /// Instantiates a view object.
         /// </summary>
-        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null)
+        public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null,
+            DesignerView inDesignerView = null)
         {
             // update view declarations and mapped properties
             CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
@@ -328,8 +391,23 @@ namespace Delight
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
             CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates);
 
+            // get view type name
+            var viewTypeName = viewObject.TypeName;
+            if (isNew)
+            {
+                viewTypeName = viewObject.BasedOn.TypeName;
+            }
+            else
+            {
+                // use original name to lookup view type in renamed views
+                var designerView = inDesignerView ?? DesignerViews.FirstOrDefault(x => x.Name == viewObject.Name);
+                if (designerView != null && designerView.IsRenamed && !viewObject.HasNonDefaultTypeName)
+                {
+                    viewTypeName = designerView.OriginalName;
+                }
+            }
+
             // instantiate view
-            var viewTypeName = isNew ? viewObject.BasedOn.TypeName : viewObject.TypeName;
             var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true) as UIView;
             if (view == null)
             {
@@ -405,7 +483,7 @@ namespace Delight
             foreach (var childViewDeclaration in childViewDeclarations)
             {
                 // get identifier for view declaration
-                var designerView = DesignerViews.FirstOrDefault(x => x.ViewTypeName == childViewDeclaration.ViewName);
+                var designerView = DesignerViews.FirstOrDefault(x => x.Name == childViewDeclaration.ViewName);
                 bool isRuntimeParsed = designerView != null && designerView.IsRuntimeParsed;
 
                 var childId = childViewDeclaration.Id;
@@ -975,159 +1053,112 @@ namespace Delight
                 var changedView = changedViews[viewIndex];
                 var xmlText = changedView.XmlText;
 
-                // add namespace and schema elements to XML root
-                int startIndex = 0;
-                int charCount = xmlText.Length;
-
-                // find root element
-                // ignore leading comments
-                for (int i = 0; i < charCount; ++i)
+                // add namespace and schema elements to XML root if it's missing
+                if (!xmlText.Contains("xmlns="))
                 {
-                    var rootElementIndex = xmlText.IndexOf('<', startIndex);
-                    if (startIndex + 3 < charCount)
+                    int startIndex = 0;
+                    int charCount = xmlText.Length;
+
+                    // find root element
+                    // ignore leading comments
+                    for (int i = 0; i < charCount; ++i)
                     {
-                        if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
+                        var rootElementIndex = xmlText.IndexOf('<', startIndex);
+                        if (startIndex + 3 < charCount)
                         {
-                            startIndex = xmlText.IndexOf("-->", startIndex);
-                            if (startIndex < 0)
-                                break;
-                            continue;
+                            if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
+                            {
+                                startIndex = xmlText.IndexOf("-->", startIndex);
+                                if (startIndex < 0)
+                                    break;
+                                continue;
+                            }
                         }
-                    }
-                    break;
-                }
-
-                // find insert point after root view name
-                for (int i = startIndex + 1; ; ++i)
-                {
-                    if (i >= charCount)
-                    {
-                        startIndex = -1; // insert point not found
                         break;
                     }
 
-                    char c = xmlText[i];
-                    if (c == ' ' || c == '>')
+                    // find insert point after root view name
+                    for (int i = startIndex + 1; ; ++i)
                     {
-                        startIndex = i;
-                        break;
-                    }
-                }
-
-                if (startIndex > 0)
-                {
-                    var path = changedView.FilePath;
-                    int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-                    string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-                    int directoryDepth = 1 + p1.Count(x => x == '/');
-                    var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
-                    var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
-                    xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
-                }
-
-                // attempt to parse the xml
-                XElement rootXmlElement = null;
-                try
-                {
-                    rootXmlElement = XElement.Parse(xmlText);
-                }
-                catch
-                {
-                }
-
-                if (rootXmlElement != null)
-                {
-                    // if root element has changed, then rename the view. 
-                    var viewName = rootXmlElement.Name.LocalName;
-                    if (!viewName.IEquals(changedView.Name))
-                    {
-                        // rename view
-                        var oldViewName = changedView.Name;
-                        changedView.Name = viewName;
-
-                        string dir = Path.GetDirectoryName(changedView.FilePath);
-                        string newPath = Path.Combine(dir, viewName);
-                        changedView.FilePath = newPath + ".xml";
-
-                        if (!changedView.IsNew)
+                        if (i >= charCount)
                         {
-                            // rename existing .xml and .cs files
-                            try
-                            {
-                                File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.LogException(e);
-                            }
-
-                            try
-                            {
-                                File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.LogException(e);
-                            }
-
-                            try
-                            {
-                                string csFile = newPath + ".cs";
-                                File.Move(Path.Combine(dir, oldViewName + ".cs"), csFile);
-
-                                if (!changedView.ViewObject.HasNonDefaultTypeName)
-                                {
-                                    // rename the class in the file
-                                    var csFileText = File.ReadAllText(csFile);
-                                    csFileText = csFileText.Replace("public partial class " + oldViewName, "public partial class " + viewName);
-                                    File.WriteAllText(csFile, csFileText);
-                                }
-                            }
-                            catch (Exception e)
-                            {
-                                Debug.LogException(e);
-                            }
-
-                            // rename the view object
-                            var contentObjectModel = ContentObjectModel.GetInstance();
-                            changedView.ViewObject.Name = viewName;
-                            contentObjectModel.RenameViewObject(oldViewName, viewName);
-                            contentObjectModel.SaveObjectModel();
+                            startIndex = -1; // insert point not found
+                            break;
                         }
 
-                        // update all references to the view 
-                        //foreach (var view in DesignerViews)
-                        //{
-                        //    if (view == changedView)
-                        //        continue;
-
-                        //    var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
-                        //        File.ReadAllText(view.FilePath);
-
-                        //    // see if the view references the old view and update the xml
-                        //    // the regex pattern below matches start/end tags with the specified view name
-                        //    bool foundMatch = false;
-                        //    var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
-                        //    var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
-                        //    {
-                        //        foundMatch = true;
-                        //        return viewName;
-                        //    });
-
-                        //    if (foundMatch)
-                        //    {
-                        //        // update XML and add to list of changed views
-                        //        view.XmlText = replacedXml;
-                        //        view.IsDirty = true;
-
-                        //        // add view to list of changed views unless its in there 
-                        //        if (!changedViews.Skip(viewIndex + 1).Any(x => x == view))
-                        //        {
-                        //            changedViews.Add(view);
-                        //        }
-                        //    }
-                        //}
+                        char c = xmlText[i];
+                        if (c == ' ' || c == '>')
+                        {
+                            startIndex = i;
+                            break;
+                        }
                     }
+
+                    if (startIndex > 0)
+                    {
+                        var path = changedView.FilePath;
+                        int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+                        string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                        int directoryDepth = 1 + p1.Count(x => x == '/');
+                        var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+                        var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
+                        xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
+                    }
+                }
+
+                // check if view has changed name and rename files
+                if (changedView.IsRenamed && !changedView.IsNew)
+                {
+                    var viewName = changedView.Name;
+                    var oldViewName = String.IsNullOrEmpty(changedView.LastSavedName) ? changedView.OriginalName : changedView.LastSavedName;
+                    string dir = Path.GetDirectoryName(changedView.FilePath);
+                    string newPath = Path.Combine(dir, viewName);
+                    changedView.FilePath = newPath + ".xml";
+
+                    // rename existing .xml and .cs files
+                    try
+                    {
+                        File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+
+                    try
+                    {
+                        File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+
+                    try
+                    {
+                        string csFile = newPath + ".cs";
+                        File.Move(Path.Combine(dir, oldViewName + ".cs"), csFile);
+
+                        if (!changedView.ViewObject.HasNonDefaultTypeName)
+                        {
+                            // rename the class in the file
+                            var csFileText = File.ReadAllText(csFile);
+                            csFileText = csFileText.Replace("public partial class " + oldViewName, "public partial class " + viewName);
+                            File.WriteAllText(csFile, csFileText);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                    }
+
+                    changedView.LastSavedName = viewName;
+
+                    // rename the view object
+                    var contentObjectModel = ContentObjectModel.GetInstance();
+                    changedView.ViewObject.Name = viewName;
+                    contentObjectModel.RenameViewObject(oldViewName, viewName);
+                    contentObjectModel.SaveObjectModel();
                 }
 
                 File.WriteAllText(changedView.FilePath, xmlText);

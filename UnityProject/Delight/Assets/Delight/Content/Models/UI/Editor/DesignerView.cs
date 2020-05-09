@@ -55,6 +55,36 @@ namespace Delight
             }
         }
 
+        private bool _isRenamed;
+        public bool IsRenamed
+        {
+            get { return _isRenamed; }
+            set
+            {
+                SetProperty(ref _isRenamed, value);
+            }
+        }
+
+        private string _originalName;
+        public string OriginalName
+        {
+            get { return _originalName; }
+            set
+            {
+                SetProperty(ref _originalName, value);
+            }
+        }
+
+        private string _lastSavedName;
+        public string LastSavedName
+        {
+            get { return _lastSavedName; }
+            set
+            {
+                SetProperty(ref _lastSavedName, value);
+            }
+        }
+
         private bool _isRuntimeParsed;
         public bool IsRuntimeParsed
         {
