@@ -13,6 +13,7 @@ using System.IO;
 using System.Text;
 using System.Xml.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
@@ -963,149 +964,179 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
-            var changedViews = DesignerViews.Where(x => x.IsDirty);
+            var changedViews = DesignerViews.Where(x => x.IsDirty).ToList();
             UpdateCurrentEditedViewXml();
 
-            if (changedViews.Any())
+            if (!changedViews.Any())
+                return;
+
+            for (int viewIndex = 0; viewIndex < changedViews.Count(); ++viewIndex)
             {
-                foreach (var changedView in changedViews)
-                {                    
-                    var xmlText = changedView.XmlText;
+                var changedView = changedViews[viewIndex];
+                var xmlText = changedView.XmlText;
 
-                    // add namespace and schema elements to XML root
-                    int startIndex = 0;
-                    int charCount = xmlText.Length;
+                // add namespace and schema elements to XML root
+                int startIndex = 0;
+                int charCount = xmlText.Length;
 
-                    // find root element
-                    // ignore leading comments
-                    for (int i = 0; i < charCount; ++i)
+                // find root element
+                // ignore leading comments
+                for (int i = 0; i < charCount; ++i)
+                {
+                    var rootElementIndex = xmlText.IndexOf('<', startIndex);
+                    if (startIndex + 3 < charCount)
                     {
-                        var rootElementIndex = xmlText.IndexOf('<', startIndex);
-                        if (startIndex + 3 < charCount)
+                        if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
                         {
-                            if (xmlText[startIndex + 1] == '!' && xmlText[startIndex + 2] == '-' && xmlText[startIndex + 3] == '-')
-                            {
-                                startIndex = xmlText.IndexOf("-->", startIndex);
-                                if (startIndex < 0)
-                                    break;
-                                continue;
-                            }
+                            startIndex = xmlText.IndexOf("-->", startIndex);
+                            if (startIndex < 0)
+                                break;
+                            continue;
                         }
+                    }
+                    break;
+                }
+
+                // find insert point after root view name
+                for (int i = startIndex + 1; ; ++i)
+                {
+                    if (i >= charCount)
+                    {
+                        startIndex = -1; // insert point not found
                         break;
                     }
 
-                    // find insert point after root view name
-                    for (int i = startIndex + 1; ; ++i)
+                    char c = xmlText[i];
+                    if (c == ' ' || c == '>')
                     {
-                        if (i >= charCount)
-                        {
-                            startIndex = -1; // insert point not found
-                            break;
-                        }
-
-                        char c = xmlText[i];
-                        if (c == ' ' || c == '>')
-                        {
-                            // TODO look for last " in the same line
-                            startIndex = i;
-                            break;
-                        }
+                        startIndex = i;
+                        break;
                     }
-
-                    if (startIndex > 0)
-                    {
-                        var path = changedView.FilePath;
-                        int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-                        string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-                        int directoryDepth = 1 + p1.Count(x => x == '/');
-                        var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
-                        var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
-                        xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
-                    }
-                    
-                    // attempt to parse the xml
-                    XElement rootXmlElement = null;
-                    try
-                    {
-                        rootXmlElement = XElement.Parse(xmlText);
-                    }
-                    catch
-                    {
-                    }
-
-                    if (rootXmlElement != null)
-                    {
-                        // if root element has changed, then rename the view. 
-                        var viewName = rootXmlElement.Name.LocalName;
-                        if (!viewName.IEquals(changedView.Name))
-                        {
-                            // rename view
-                            var oldViewName = changedView.Name;
-                            changedView.Name = viewName;
-
-                            string dir = Path.GetDirectoryName(changedView.FilePath);
-                            string newPath = Path.Combine(dir, viewName);                            
-                            changedView.FilePath = newPath + ".xml";
-
-                            if (!changedView.IsNew)
-                            {
-                                // move old files
-                                try
-                                {
-                                    File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.LogException(e);
-                                }
-
-                                try
-                                {
-                                    File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.LogException(e);
-                                }
-
-                                try
-                                {
-                                    string csFile = newPath + ".cs";
-                                    File.Move(Path.Combine(dir, oldViewName + ".cs"), csFile);
-
-                                    if (!changedView.ViewObject.HasNonDefaultTypeName)
-                                    {
-                                        // rename the class in the file
-                                        var csFileText = File.ReadAllText(csFile);
-                                        csFileText = csFileText.Replace("public partial class " + oldViewName, "public partial class " + viewName);
-                                        File.WriteAllText(csFile, csFileText);
-                                    }
-                                }
-                                catch (Exception e)
-                                {
-                                    Debug.LogException(e);
-                                }
-
-                                // rename the view object
-                                var contentObjectModel = ContentObjectModel.GetInstance();
-                                changedView.ViewObject.Name = viewName;
-                                contentObjectModel.RenameViewObject(oldViewName, viewName);
-                                //contentObjectModel.NeedRebuild = true;
-                                contentObjectModel.SaveObjectModel();
-
-                                // TODO update all references to the view 
-                            }
-                        }
-                    }
-
-                    File.WriteAllText(changedView.FilePath, xmlText);
-                    changedView.IsDirty = false;
                 }
 
-#if UNITY_EDITOR
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-#endif
+                if (startIndex > 0)
+                {
+                    var path = changedView.FilePath;
+                    int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
+                    string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                    int directoryDepth = 1 + p1.Count(x => x == '/');
+                    var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
+                    var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
+                    xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
+                }
+
+                // attempt to parse the xml
+                XElement rootXmlElement = null;
+                try
+                {
+                    rootXmlElement = XElement.Parse(xmlText);
+                }
+                catch
+                {
+                }
+
+                if (rootXmlElement != null)
+                {
+                    // if root element has changed, then rename the view. 
+                    var viewName = rootXmlElement.Name.LocalName;
+                    if (!viewName.IEquals(changedView.Name))
+                    {
+                        // rename view
+                        var oldViewName = changedView.Name;
+                        changedView.Name = viewName;
+
+                        string dir = Path.GetDirectoryName(changedView.FilePath);
+                        string newPath = Path.Combine(dir, viewName);
+                        changedView.FilePath = newPath + ".xml";
+
+                        if (!changedView.IsNew)
+                        {
+                            // rename existing .xml and .cs files
+                            try
+                            {
+                                File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
+
+                            try
+                            {
+                                File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
+
+                            try
+                            {
+                                string csFile = newPath + ".cs";
+                                File.Move(Path.Combine(dir, oldViewName + ".cs"), csFile);
+
+                                if (!changedView.ViewObject.HasNonDefaultTypeName)
+                                {
+                                    // rename the class in the file
+                                    var csFileText = File.ReadAllText(csFile);
+                                    csFileText = csFileText.Replace("public partial class " + oldViewName, "public partial class " + viewName);
+                                    File.WriteAllText(csFile, csFileText);
+                                }
+                            }
+                            catch (Exception e)
+                            {
+                                Debug.LogException(e);
+                            }
+
+                            // rename the view object
+                            var contentObjectModel = ContentObjectModel.GetInstance();
+                            changedView.ViewObject.Name = viewName;
+                            contentObjectModel.RenameViewObject(oldViewName, viewName);
+                            contentObjectModel.SaveObjectModel();
+                        }
+
+                        // update all references to the view 
+                        //foreach (var view in DesignerViews)
+                        //{
+                        //    if (view == changedView)
+                        //        continue;
+
+                        //    var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
+                        //        File.ReadAllText(view.FilePath);
+
+                        //    // see if the view references the old view and update the xml
+                        //    // the regex pattern below matches start/end tags with the specified view name
+                        //    bool foundMatch = false;
+                        //    var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
+                        //    var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
+                        //    {
+                        //        foundMatch = true;
+                        //        return viewName;
+                        //    });
+
+                        //    if (foundMatch)
+                        //    {
+                        //        // update XML and add to list of changed views
+                        //        view.XmlText = replacedXml;
+                        //        view.IsDirty = true;
+
+                        //        // add view to list of changed views unless its in there 
+                        //        if (!changedViews.Skip(viewIndex + 1).Any(x => x == view))
+                        //        {
+                        //            changedViews.Add(view);
+                        //        }
+                        //    }
+                        //}
+                    }
+                }
+
+                File.WriteAllText(changedView.FilePath, xmlText);
+                changedView.IsDirty = false;
             }
+
+#if UNITY_EDITOR
+            AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+#endif            
         }
 
         /// <summary>
