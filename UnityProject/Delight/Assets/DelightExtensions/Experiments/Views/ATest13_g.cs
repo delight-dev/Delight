@@ -1,4 +1,4 @@
-// Internal view logic generated from "Aa.xml"
+// Internal view logic generated from "ATest13.xml"
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Aa : UIView
+    public partial class ATest13 : UIView
     {
         #region Constructors
 
-        public Aa(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
-            base(parent, layoutParent, id, template ?? AaTemplates.Default, deferInitialization)
+        public ATest13(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? ATest13Templates.Default, deferInitialization)
         {
             if (deferInitialization)
                 return;
@@ -24,14 +24,14 @@ namespace Delight
             this.AfterInitializeInternal();
         }
 
-        public Aa() : this(null)
+        public ATest13() : this(null)
         {
         }
 
-        static Aa()
+        static ATest13()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(AaTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(ATest13Templates.Default, dependencyProperties);
 
             dependencyProperties.Add(MyStringProperty);
             dependencyProperties.Add(MyButtonProperty);
@@ -68,7 +68,7 @@ namespace Delight
 
     #region Data Templates
 
-    public static class AaTemplates
+    public static class ATest13Templates
     {
         #region Properties
 
@@ -76,70 +76,70 @@ namespace Delight
         {
             get
             {
-                return Aa;
+                return ATest13;
             }
         }
 
-        private static Template _aa;
-        public static Template Aa
+        private static Template _aTest13;
+        public static Template ATest13
         {
             get
             {
 #if UNITY_EDITOR
-                if (_aa == null || _aa.CurrentVersion != Template.Version)
+                if (_aTest13 == null || _aTest13.CurrentVersion != Template.Version)
 #else
-                if (_aa == null)
+                if (_aTest13 == null)
 #endif
                 {
-                    _aa = new Template(UIViewTemplates.UIView);
+                    _aTest13 = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
-                    _aa.Name = "Aa";
+                    _aTest13.Name = "ATest13";
 #endif
-                    Delight.Aa.MyButtonTemplateProperty.SetDefault(_aa, AaMyButton);
+                    Delight.ATest13.MyButtonTemplateProperty.SetDefault(_aTest13, ATest13MyButton);
                 }
-                return _aa;
+                return _aTest13;
             }
         }
 
-        private static Template _aaMyButton;
-        public static Template AaMyButton
+        private static Template _aTest13MyButton;
+        public static Template ATest13MyButton
         {
             get
             {
 #if UNITY_EDITOR
-                if (_aaMyButton == null || _aaMyButton.CurrentVersion != Template.Version)
+                if (_aTest13MyButton == null || _aTest13MyButton.CurrentVersion != Template.Version)
 #else
-                if (_aaMyButton == null)
+                if (_aTest13MyButton == null)
 #endif
                 {
-                    _aaMyButton = new Template(ButtonTemplates.Button);
+                    _aTest13MyButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
-                    _aaMyButton.Name = "AaMyButton";
+                    _aTest13MyButton.Name = "ATest13MyButton";
 #endif
-                    Delight.Button.LabelTemplateProperty.SetDefault(_aaMyButton, AaMyButtonLabel);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_aTest13MyButton, ATest13MyButtonLabel);
                 }
-                return _aaMyButton;
+                return _aTest13MyButton;
             }
         }
 
-        private static Template _aaMyButtonLabel;
-        public static Template AaMyButtonLabel
+        private static Template _aTest13MyButtonLabel;
+        public static Template ATest13MyButtonLabel
         {
             get
             {
 #if UNITY_EDITOR
-                if (_aaMyButtonLabel == null || _aaMyButtonLabel.CurrentVersion != Template.Version)
+                if (_aTest13MyButtonLabel == null || _aTest13MyButtonLabel.CurrentVersion != Template.Version)
 #else
-                if (_aaMyButtonLabel == null)
+                if (_aTest13MyButtonLabel == null)
 #endif
                 {
-                    _aaMyButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+                    _aTest13MyButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
-                    _aaMyButtonLabel.Name = "AaMyButtonLabel";
+                    _aTest13MyButtonLabel.Name = "ATest13MyButtonLabel";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_aaMyButtonLabel, "Hello");
+                    Delight.Label.TextProperty.SetDefault(_aTest13MyButtonLabel, "Hello");
                 }
-                return _aaMyButtonLabel;
+                return _aTest13MyButtonLabel;
             }
         }
 

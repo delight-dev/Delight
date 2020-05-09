@@ -61,19 +61,6 @@ namespace Delight.Editor
             switch (state)
             {
                 case PlayModeStateChange.EnteredEditMode:
-                    // call any queued code processing methods
-                    if (!QueuedAssetsToBeProcessed)
-                        break;
-
-                    QueuedAssetsToBeProcessed = false;
-
-                    var importedAssets = PostprocessBatch.ImportedAssets.ToArray();
-                    var deletedAssets = PostprocessBatch.DeletedAssets.ToArray();
-                    var movedAssets = PostprocessBatch.MovedAssets.ToArray();
-                    var movedFromAssets = PostprocessBatch.MovedFromAssets.ToArray();
-                    PostprocessBatch.Clear();
-
-                    ContentAssetProcessor.OnPostprocessAllAssets(importedAssets, deletedAssets, movedAssets, movedFromAssets);
                     break;
 
                 case PlayModeStateChange.ExitingEditMode:
@@ -102,6 +89,7 @@ namespace Delight.Editor
                     break;
 
                 case PlayModeStateChange.ExitingPlayMode:
+                    bool exitInterrupted = false;
                     if (IsInDelightDesigner)
                     {
                         //var activeScene = EditorSceneManager.GetActiveScene(); // TODO cleanup
@@ -118,8 +106,23 @@ namespace Delight.Editor
                         if (delightDesignerView.CheckForUnsavedChanges())
                         {
                             EditorApplication.isPlaying = true;
-                            break;
+                            exitInterrupted = true;
                         }
+                    }
+
+                    if (!exitInterrupted && QueuedAssetsToBeProcessed)
+                    {
+                        // call any queued code processing methods
+                        var importedAssets = PostprocessBatch.ImportedAssets.ToArray();
+                        var deletedAssets = PostprocessBatch.DeletedAssets.ToArray();
+                        var movedAssets = PostprocessBatch.MovedAssets.ToArray();
+                        var movedFromAssets = PostprocessBatch.MovedFromAssets.ToArray();
+                        PostprocessBatch.Clear();
+                        QueuedAssetsToBeProcessed = false;
+
+                        ContentAssetProcessor.ForceProcessing = true;
+                        ContentAssetProcessor.OnPostprocessAllAssets(importedAssets, deletedAssets, movedAssets, movedFromAssets);
+                        ContentAssetProcessor.ForceProcessing = false;                        
                     }
 
                     break;

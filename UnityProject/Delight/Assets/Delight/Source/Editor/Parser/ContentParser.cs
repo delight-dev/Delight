@@ -527,6 +527,7 @@ namespace Delight.Editor.Parser
                 if (attributeName.IEquals("TypeName"))
                 {
                     viewObject.TypeName = attributeValue;
+                    viewObject.HasNonDefaultTypeName = true;
                     continue;
                 }
 

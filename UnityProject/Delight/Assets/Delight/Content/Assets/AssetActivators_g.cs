@@ -51,8 +51,8 @@ namespace Delight
             ViewActivators.Add("XmlEditor", (x, y, z, w, a) => new XmlEditor(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
             ViewActivators.Add("HighscoreDemo", (x, y, z, w, a) => new HighscoreDemo(x, y, z, w, a));
-            ViewActivators.Add("Aa", (x, y, z, w, a) => new Aa(x, y, z, w, a));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w, a) => new AssetManagementTest(x, y, z, w, a));
+            ViewActivators.Add("ATest13", (x, y, z, w, a) => new ATest13(x, y, z, w, a));
             ViewActivators.Add("BindingTest", (x, y, z, w, a) => new BindingTest(x, y, z, w, a));
             ViewActivators.Add("ComboBoxExample", (x, y, z, w, a) => new ComboBoxExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
@@ -115,8 +115,8 @@ namespace Delight
             ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("HighscoreDemo", typeof(HighscoreDemo));
-            ViewTypes.Add("Aa", typeof(Aa));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
+            ViewTypes.Add("ATest13", typeof(ATest13));
             ViewTypes.Add("BindingTest", typeof(BindingTest));
             ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));
             ViewTypes.Add("GridExample", typeof(GridExample));

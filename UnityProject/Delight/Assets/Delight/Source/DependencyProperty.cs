@@ -37,6 +37,9 @@ namespace Delight
         /// </summary>
         public virtual T GetValue(DependencyObject key)
         {
+            if (key == null)
+                return default(T);
+
             T currentValue;
             if (Values.TryGetValue(key, out currentValue))
             {
@@ -333,6 +336,9 @@ namespace Delight
 
             // try get default value
             var template = key.Template;
+            if (template == null)
+                return false;
+
             while (true)
             {
                 if (Defaults.TryGetValue(template, out defaultValue))
@@ -341,7 +347,7 @@ namespace Delight
                 }
 
                 template = template.BasedOn;
-                if (template == ViewTemplates.Default)
+                if (template == ViewTemplates.Default || template == null)
                 {
                     return false;
                 }

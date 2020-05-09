@@ -1040,22 +1040,62 @@ namespace Delight
                         if (!viewName.IEquals(changedView.Name))
                         {
                             // rename view
+                            var oldViewName = changedView.Name;
                             changedView.Name = viewName;
 
                             string dir = Path.GetDirectoryName(changedView.FilePath);
-                            string newPath = Path.Combine(dir, viewName);
+                            string newPath = Path.Combine(dir, viewName);                            
+                            changedView.FilePath = newPath + ".xml";
 
-                            if (changedView.IsNew)
+                            if (!changedView.IsNew)
                             {
-                                changedView.FilePath = newPath + ".xml";
-                            }
-                            else
-                            {
-                                // TODO rename view and files, and update view object
-                                // System.IO.File.Move("oldfilename", "newfilename");
+                                // move old files
+                                try
+                                {
+                                    File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.LogException(e);
+                                }
+
+                                try
+                                {
+                                    File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.LogException(e);
+                                }
+
+                                try
+                                {
+                                    string csFile = newPath + ".cs";
+                                    File.Move(Path.Combine(dir, oldViewName + ".cs"), csFile);
+
+                                    if (!changedView.ViewObject.HasNonDefaultTypeName)
+                                    {
+                                        // rename the class in the file
+                                        var csFileText = File.ReadAllText(csFile);
+                                        csFileText = csFileText.Replace("public partial class " + oldViewName, "public partial class " + viewName);
+                                        File.WriteAllText(csFile, csFileText);
+                                    }
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.LogException(e);
+                                }
+
+                                // rename the view object
+                                var contentObjectModel = ContentObjectModel.GetInstance();
+                                changedView.ViewObject.Name = viewName;
+                                contentObjectModel.RenameViewObject(oldViewName, viewName);
+                                //contentObjectModel.NeedRebuild = true;
+                                contentObjectModel.SaveObjectModel();
+
+                                // TODO update all references to the view 
                             }
                         }
-
                     }
 
                     File.WriteAllText(changedView.FilePath, xmlText);

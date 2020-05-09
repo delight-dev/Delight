@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
-    public partial class Aa
+    public partial class ATest13
     {
     }
 

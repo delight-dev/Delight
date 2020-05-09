@@ -111,6 +111,17 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
+        /// Notifies that the specified view object has been renamed
+        /// </summary>
+        public void RenameViewObject(string oldName, string newName)
+        {
+            _viewObjects = null;
+
+            var viewObject = ViewObjects.FirstOrDefault(x => x.Name == oldName);
+            viewObject.Name = newName;
+        }
+
+        /// <summary>
         /// Loads specified scene object, creates new one if it doesn't exist.
         /// </summary>
         public SceneObject LoadSceneObject(string sceneName)
@@ -575,6 +586,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(18)]
         public bool IsEditorView;
 
+        [ProtoMember(19)]
+        public bool HasNonDefaultTypeName;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -639,6 +653,7 @@ namespace Delight.Editor.Parser
             HasContentTemplates = false;
             HasCode = false;
             HasXml = false;
+            HasNonDefaultTypeName = false;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)

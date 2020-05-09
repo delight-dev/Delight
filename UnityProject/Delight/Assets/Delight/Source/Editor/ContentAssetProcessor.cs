@@ -25,6 +25,7 @@ namespace Delight.Editor
     {
         #region Fields
 
+        public static bool ForceProcessing = false;
         public static bool IgnoreChanges = true;
 
         #endregion
@@ -36,7 +37,7 @@ namespace Delight.Editor
         /// </summary>
         public static void OnPostprocessAllAssets(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {
-            if (EditorPrefs.GetBool("Delight_DisableAutoContentParser"))
+            if (EditorPrefs.GetBool("Delight_DisableAutoContentParser") && !ForceProcessing)
                 return;
 
             // check if any views have been added or changed
@@ -229,7 +230,7 @@ namespace Delight.Editor
             bool generateXsdSchema = false;
 
             // if editor is playing queue assets to be processed after exiting play mode
-            if (Application.isPlaying)
+            if (Application.isPlaying && !ForceProcessing)
             {
                 if (contentChanged)
                 {
