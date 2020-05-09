@@ -19,7 +19,11 @@ namespace Delight
         public string Name
         {
             get { return _name; }
-            set { SetProperty(ref _name, value); }
+            set 
+            { 
+                SetProperty(ref _name, value);
+                OnPropertyChanged(nameof(DisplayName));
+            }
         }
 
         private string _viewTypeName;

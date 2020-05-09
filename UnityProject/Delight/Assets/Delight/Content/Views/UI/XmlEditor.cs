@@ -865,7 +865,13 @@ namespace Delight
                         string str = c.ToString();
                         if (_caretElement == XmlSyntaxElement.Undefined)
                         {
-                            str = "<" + str;
+                            // if previous character isn't a "<" add it
+                            int previousChar = _caretX - 1;
+                            if (previousChar < 0 || previousChar >= _lines[_caretY].Length ||
+                                _lines[_caretY][previousChar] != '<')
+                            {
+                                str = "<" + str;
+                            }
                         }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, str);
                         _caretX += str.Length;

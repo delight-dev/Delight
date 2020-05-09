@@ -436,7 +436,7 @@ namespace Delight
 
                 // add action handlers and method assignments
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
-                
+
                 // do we have action handlers?
                 var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
                 var actionAssignments = childPropertyAssignments.Where(x =>
@@ -969,8 +969,7 @@ namespace Delight
             if (changedViews.Any())
             {
                 foreach (var changedView in changedViews)
-                {
-                    var path = changedView.FilePath;
+                {                    
                     var xmlText = changedView.XmlText;
 
                     // add namespace and schema elements to XML root
@@ -1015,6 +1014,7 @@ namespace Delight
 
                     if (startIndex > 0)
                     {
+                        var path = changedView.FilePath;
                         int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
                         string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
                         int directoryDepth = 1 + p1.Count(x => x == '/');
@@ -1022,8 +1022,43 @@ namespace Delight
                         var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
                         xmlText = xmlText.Insert(startIndex, namespaceAndSchema);
                     }
+                    
+                    // attempt to parse the xml
+                    XElement rootXmlElement = null;
+                    try
+                    {
+                        rootXmlElement = XElement.Parse(xmlText);
+                    }
+                    catch
+                    {
+                    }
 
-                    File.WriteAllText(path, xmlText);
+                    if (rootXmlElement != null)
+                    {
+                        // if root element has changed, then rename the view. 
+                        var viewName = rootXmlElement.Name.LocalName;
+                        if (!viewName.IEquals(changedView.Name))
+                        {
+                            // rename view
+                            changedView.Name = viewName;
+
+                            string dir = Path.GetDirectoryName(changedView.FilePath);
+                            string newPath = Path.Combine(dir, viewName);
+
+                            if (changedView.IsNew)
+                            {
+                                changedView.FilePath = newPath + ".xml";
+                            }
+                            else
+                            {
+                                // TODO rename view and files, and update view object
+                                // System.IO.File.Move("oldfilename", "newfilename");
+                            }
+                        }
+
+                    }
+
+                    File.WriteAllText(changedView.FilePath, xmlText);
                     changedView.IsDirty = false;
                 }
 
