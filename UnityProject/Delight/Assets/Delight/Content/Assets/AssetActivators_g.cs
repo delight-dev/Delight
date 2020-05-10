@@ -52,8 +52,6 @@ namespace Delight
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
             ViewActivators.Add("HighscoreDemo", (x, y, z, w, a) => new HighscoreDemo(x, y, z, w, a));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w, a) => new AssetManagementTest(x, y, z, w, a));
-            ViewActivators.Add("ATest15", (x, y, z, w, a) => new ATest15(x, y, z, w, a));
-            ViewActivators.Add("ATest16", (x, y, z, w, a) => new ATest16(x, y, z, w, a));
             ViewActivators.Add("BindingTest", (x, y, z, w, a) => new BindingTest(x, y, z, w, a));
             ViewActivators.Add("ComboBoxExample", (x, y, z, w, a) => new ComboBoxExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
@@ -65,7 +63,6 @@ namespace Delight
             ViewActivators.Add("MainMenu", (x, y, z, w, a) => new MainMenu(x, y, z, w, a));
             ViewActivators.Add("Options", (x, y, z, w, a) => new Options(x, y, z, w, a));
             ViewActivators.Add("ModelBindingTest", (x, y, z, w, a) => new ModelBindingTest(x, y, z, w, a));
-            ViewActivators.Add("ATest1", (x, y, z, w, a) => new ATest1(x, y, z, w, a));
             ViewActivators.Add("PerformanceTest", (x, y, z, w, a) => new PerformanceTest(x, y, z, w, a));
             ViewActivators.Add("ScrollExample", (x, y, z, w, a) => new ScrollExample(x, y, z, w, a));
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
@@ -118,8 +115,6 @@ namespace Delight
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("HighscoreDemo", typeof(HighscoreDemo));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));
-            ViewTypes.Add("ATest15", typeof(ATest15));
-            ViewTypes.Add("ATest16", typeof(ATest16));
             ViewTypes.Add("BindingTest", typeof(BindingTest));
             ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));
             ViewTypes.Add("GridExample", typeof(GridExample));
@@ -131,7 +126,6 @@ namespace Delight
             ViewTypes.Add("MainMenu", typeof(MainMenu));
             ViewTypes.Add("Options", typeof(Options));
             ViewTypes.Add("ModelBindingTest", typeof(ModelBindingTest));
-            ViewTypes.Add("ATest1", typeof(ATest1));
             ViewTypes.Add("PerformanceTest", typeof(PerformanceTest));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
             ViewTypes.Add("SliderExample", typeof(SliderExample));

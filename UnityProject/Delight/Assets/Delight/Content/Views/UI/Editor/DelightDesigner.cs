@@ -252,23 +252,35 @@ namespace Delight
                 {
                     var changedView = _currentEditedView;
 
+                    // check if name already exist
+                    int i = 1;
+                    var name = viewName;
+                    bool renameThisViewXml = false;
+                    while (true)
+                    {
+                        if (!DesignerViews.Any(x => x.Name ==  viewName))
+                        {
+                            break;
+                        }
+
+                        renameThisViewXml = true;
+                        viewName = name + i;
+                        ++i;
+                    }
+
                     // rename view
                     var oldViewName = changedView.Name;
                     changedView.Name = viewName;
-
-                    if (!changedView.IsNew)
+                    changedView.IsRenamed = true;
+                    if (String.IsNullOrEmpty(changedView.OriginalName))
                     {
-                        changedView.IsRenamed = true;
-                        if (String.IsNullOrEmpty(changedView.OriginalName))
-                        {
-                            changedView.OriginalName = oldViewName;
-                        }
+                        changedView.OriginalName = oldViewName;
                     }
 
                     // update all references to the view 
                     foreach (var view in DesignerViews)
                     {
-                        if (view == changedView)
+                        if (view == changedView && !renameThisViewXml)
                             continue;
 
                         var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
@@ -292,6 +304,12 @@ namespace Delight
                             view.XmlText = replacedXml;
                             view.IsDirty = true;
                             view.IsRuntimeParsed = true;
+
+                            if (view == changedView)
+                            {
+                                // update current editor XML
+                                XmlEditor.XmlText = view.XmlText;
+                            }
                         }
                     }
                 }
@@ -1107,7 +1125,7 @@ namespace Delight
                 }
 
                 // check if view has changed name and rename files
-                if (changedView.IsRenamed && !changedView.IsNew)
+                if (changedView.IsRenamed)
                 {
                     var viewName = changedView.Name;
                     var oldViewName = String.IsNullOrEmpty(changedView.LastSavedName) ? changedView.OriginalName : changedView.LastSavedName;
@@ -1122,7 +1140,6 @@ namespace Delight
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
                     }
 
                     try
@@ -1131,7 +1148,6 @@ namespace Delight
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
                     }
 
                     try
@@ -1149,7 +1165,6 @@ namespace Delight
                     }
                     catch (Exception e)
                     {
-                        Debug.LogException(e);
                     }
 
                     changedView.LastSavedName = viewName;

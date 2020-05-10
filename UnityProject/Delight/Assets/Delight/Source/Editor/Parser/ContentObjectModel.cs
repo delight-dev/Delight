@@ -118,6 +118,9 @@ namespace Delight.Editor.Parser
             _viewObjects = null;
 
             var viewObject = ViewObjects.FirstOrDefault(x => x.Name == oldName);
+            if (viewObject == null)
+                return;
+
             viewObject.Name = newName;
         }
 
