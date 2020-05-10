@@ -65,6 +65,7 @@ namespace Delight
             ViewActivators.Add("MainMenu", (x, y, z, w, a) => new MainMenu(x, y, z, w, a));
             ViewActivators.Add("Options", (x, y, z, w, a) => new Options(x, y, z, w, a));
             ViewActivators.Add("ModelBindingTest", (x, y, z, w, a) => new ModelBindingTest(x, y, z, w, a));
+            ViewActivators.Add("ATest1", (x, y, z, w, a) => new ATest1(x, y, z, w, a));
             ViewActivators.Add("PerformanceTest", (x, y, z, w, a) => new PerformanceTest(x, y, z, w, a));
             ViewActivators.Add("ScrollExample", (x, y, z, w, a) => new ScrollExample(x, y, z, w, a));
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
@@ -130,6 +131,7 @@ namespace Delight
             ViewTypes.Add("MainMenu", typeof(MainMenu));
             ViewTypes.Add("Options", typeof(Options));
             ViewTypes.Add("ModelBindingTest", typeof(ModelBindingTest));
+            ViewTypes.Add("ATest1", typeof(ATest1));
             ViewTypes.Add("PerformanceTest", typeof(PerformanceTest));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
             ViewTypes.Add("SliderExample", typeof(SliderExample));

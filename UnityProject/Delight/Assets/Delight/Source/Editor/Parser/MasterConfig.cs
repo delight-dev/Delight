@@ -82,6 +82,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(17, AsReference = true)]
         public List<DocObject> DocObjects;
 
+        [ProtoMember(18)]
+        public string DefaultContentFolder;
+
         private static MasterConfig _config;
 
         #endregion
@@ -238,6 +241,7 @@ namespace Delight.Editor.Parser
             }
 
             DelightPath = SanitizePath(DelightPath);
+            DefaultContentFolder = SanitizePath(DefaultContentFolder);
         }
 
         /// <summary>
@@ -297,6 +301,7 @@ namespace Delight.Editor.Parser
             BaseView = String.Empty;
             AssetBundleVersion = 0;
             Modules = new List<string>();
+            DefaultContentFolder = string.Empty;
         }
 
         /// <summary>

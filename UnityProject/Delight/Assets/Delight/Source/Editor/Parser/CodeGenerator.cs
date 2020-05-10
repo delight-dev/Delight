@@ -3015,7 +3015,8 @@ namespace Delight.Editor.Parser
             // save XSD schema in each content folder
             foreach (var contentFolder in config.ContentFolders)
             {
-                var contentFolderPath = String.Format("{0}/{1}", Application.dataPath, contentFolder.Substring(7));
+                string contentFolderPath = String.Format("{0}/{1}", Application.dataPath,
+                    contentFolder.StartsWith("Assets/") ? contentFolder.Substring(7) : contentFolder);
                 if (Directory.Exists(contentFolderPath))
                 {
                     try

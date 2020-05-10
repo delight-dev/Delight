@@ -2325,6 +2325,23 @@ namespace Delight.Editor.Parser
                         }
                         break;
 
+                    case "defaultcontentfolder":
+                        if (String.IsNullOrWhiteSpace(configValue))
+                        {
+                            // parse values
+                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                            i += linesParsed;
+                            if (values.Count() > 0)
+                            {
+                                config.DefaultContentFolder = values.FirstOrDefault();
+                            }
+                        }
+                        else
+                        {
+                            config.DefaultContentFolder = configValue;
+                        }
+                        break;
+
                     case "streamedbundles":
                         if (String.IsNullOrWhiteSpace(configValue))
                         {

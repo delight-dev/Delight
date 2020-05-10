@@ -1257,7 +1257,11 @@ namespace Delight
             var sb = new StringBuilder();
 
             var config = MasterConfig.GetInstance();
-            string path = String.Format("{0}/Content{1}{2}.xml", Application.dataPath, ContentParser.ViewsFolder, viewName);
+            string path = !String.IsNullOrEmpty(config.DefaultContentFolder) ?
+                String.Format("{0}/{1}{2}{3}.xml", Application.dataPath,
+                config.DefaultContentFolder.StartsWith("Assets/") ? config.DefaultContentFolder.Substring(7) : config.DefaultContentFolder, ContentParser.ViewsFolder, viewName) :
+                String.Format("{0}/Content{1}{2}.xml", Application.dataPath, ContentParser.ViewsFolder, viewName);
+
             newView.FilePath = path;
 
             sb.AppendLine("<{0}>", viewName);
