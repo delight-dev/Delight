@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Net;
 #endregion
 
 namespace Delight
@@ -231,7 +232,7 @@ namespace Delight
                     }
                     else
                     {
-                        SelectItem(e.Item);
+                        SelectItem(e.Item, true);
                     }
                     break;
 
@@ -368,6 +369,10 @@ namespace Delight
         /// </summary>
         private void ReplaceItems()
         {
+            // deselect all items
+            // TODO retain previous selection
+            DeselectAll();
+
             if (IsVirtualized)
             {
                 ClearItems();
@@ -415,7 +420,6 @@ namespace Delight
                 {
                     var listItem = Content.LayoutChildren[i];
                     listItem.Unload();
-                    Content.LayoutChildren.RemoveAt(i);
                 }
             }
         }
@@ -814,6 +818,9 @@ namespace Delight
                 children = new List<UIView>();
                 Content.ForEach<UIView>(x =>
                 {
+                    if (!x.IsActive)
+                        return; // don't arrange disabled items
+                    
                     children.Add(x);
                 }, false);
             }
@@ -1034,6 +1041,9 @@ namespace Delight
                 children = new List<UIView>();
                 Content.ForEach<UIView>(x =>
                 {
+                    if (!x.IsActive)
+                        return; // don't arrange disabled items
+
                     children.Add(x);
                 }, false);
             }
@@ -1623,6 +1633,107 @@ namespace Delight
         public static bool IsOdd(int value)
         {
             return value % 2 != 0;
+        }
+
+        /// <summary>
+        /// Gets the index of the currently selected item.
+        /// </summary>
+        public int GetSelectedItemIndex()
+        {
+            if (SelectedItem == null)
+                return -1;
+
+            if (IsVirtualized)
+            {
+                return _indexOfItem.TryGetValue(SelectedItem, out var selectedIndex) ? selectedIndex : -1;
+            }
+            else
+            {
+                var listItem = GetListItem(SelectedItem);
+                return listItem != null ? listItem.ContentTemplateData.ZeroIndex : -1;
+            }
+        }
+
+        /// <summary>
+        /// Selects next item in list. 
+        /// </summary>
+        public void SelectNext(bool scrollTo = true, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            // find next item in list 
+            int index = GetSelectedItemIndex();
+            if (index == -1)
+                return;
+
+            var nextItem = Items.Get(index + 1);
+            if (nextItem == null)
+                return;
+
+            // scroll to next item
+            if (scrollTo)
+            {
+                alignment = alignment ?? (ScrollsHorizontally ? ElementAlignment.Right : ElementAlignment.Bottom);
+                SelectAndScrollToItem(nextItem, alignment, offset);
+            }
+            else
+            {
+                SelectItem(nextItem, true);
+            }
+        }
+
+        /// <summary>
+        /// Selects previous item in list. 
+        /// </summary>
+        public void SelectPrevious(bool scrollTo = true, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
+            // find previous item in list 
+            int index = GetSelectedItemIndex();
+            if (index == -1)
+                return;
+
+            var nextItem = Items.Get(index - 1);
+            if (nextItem == null)
+                return;
+
+            // scroll to previous item
+            if (scrollTo)
+            {
+                alignment = alignment ?? (ScrollsHorizontally ? ElementAlignment.Left : ElementAlignment.Top);
+                SelectAndScrollToItem(nextItem, alignment, offset);
+            }
+            else
+            {
+                SelectItem(nextItem, true);
+            }
+        }
+
+        /// <summary>
+        /// Scrolls the list down a page.
+        /// </summary>
+        public void ScrollPageDown(bool moveSelection = false)
+        {
+            if (!IsScrollable)
+            {
+                return;
+            }
+
+            // TODO implement
+            // moves the page down
+            // find all items visible in viewport and select last one
+        }
+
+        /// <summary>
+        /// Scrolls the list up a page.
+        /// </summary>
+        public void ScrollPageUp(bool moveSelection = false)
+        {
+            if (!IsScrollable)
+            {
+                return;
+            }
+
+            // TODO implement
+            // moves the page down
+            // find all items visible in viewport and select first one
         }
 
         #endregion
