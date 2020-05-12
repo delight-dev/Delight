@@ -11,5 +11,9 @@ namespace Delight
 {
     public partial class Audionaut
     {
+        public void MyHandler(string message)
+        {
+            Debug.Log("Message");
+        }
     }
 }

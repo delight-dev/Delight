@@ -6,5 +6,4 @@
       <Button Id="ButtonTest" Text="{player.Name}" Width="100" Height="20" />
     </ListItem>
   </List>
-
 </GroupExamples>

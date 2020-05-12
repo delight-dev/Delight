@@ -48,7 +48,6 @@ namespace Delight
             ViewActivators.Add("TabPanel", (x, y, z, w, a) => new TabPanel(x, y, z, w, a));
             ViewActivators.Add("ViewSwitcher", (x, y, z, w, a) => new ViewSwitcher(x, y, z, w, a));
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
-            ViewActivators.Add("XmlEditor", (x, y, z, w, a) => new XmlEditor(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
             ViewActivators.Add("HighscoreDemo", (x, y, z, w, a) => new HighscoreDemo(x, y, z, w, a));
             ViewActivators.Add("AssetManagementTest", (x, y, z, w, a) => new AssetManagementTest(x, y, z, w, a));
@@ -111,7 +110,6 @@ namespace Delight
             ViewTypes.Add("TabPanel", typeof(TabPanel));
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
-            ViewTypes.Add("XmlEditor", typeof(XmlEditor));
             ViewTypes.Add("InputField", typeof(InputField));
             ViewTypes.Add("HighscoreDemo", typeof(HighscoreDemo));
             ViewTypes.Add("AssetManagementTest", typeof(AssetManagementTest));

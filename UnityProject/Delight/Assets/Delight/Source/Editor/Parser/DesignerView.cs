@@ -1,4 +1,3 @@
-// Internal view logic generated from "EditorMainView.xml"
 #region Using Statements
 using Delight.Editor.Parser;
 using System;
@@ -8,7 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 #endregion
 
-namespace Delight
+namespace Delight.Editor.Parser
 {
     /// <summary>
     /// Contains information about a view in the designer.

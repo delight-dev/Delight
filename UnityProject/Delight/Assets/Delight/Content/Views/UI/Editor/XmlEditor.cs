@@ -10,6 +10,11 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System.Text;
+using System.Diagnostics;
+using System.Runtime.Remoting.Messaging;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using Delight.Editor.Parser;
 #endregion
 
 namespace Delight
@@ -34,6 +39,9 @@ namespace Delight
         public static float DoubleClickDelay = 0.5f;
         public static float CaretRepeatDelay = 0.5f;
         public static float CaretRepeatRate = 1.15f;
+        public static float MaxAutoCompleteBoxHeight = 150;
+        public static Regex ViewNameStartRegex = new Regex(@"(?<=<)[A-Za-z0-9_]+(?=[\s>/])");
+        public static Regex QuoteContentRegex = new Regex(@"""(\\""|[^""])*"""); // "(\\"|[^"])*"
 
         private List<string> _lines = new List<string>();
         private int _caretX;
@@ -53,6 +61,11 @@ namespace Delight
         private int _selectionOriginY;
         private int _selectionTargetX;
         private int _selectionTargetY;
+        private int _autoCompleteWordOriginX;
+        private int _autoCompleteWordTargetX;
+        private XmlSyntaxElement _autoCompleteType = XmlSyntaxElement.Undefined;
+        private string _lastWordAtCaret;
+        private bool _autoCompleteActive;
         private bool _hasSelection;
         private CanvasRenderer _caretCanvasRenderer;
         private Vector3 _mouseDownPosition;
@@ -80,6 +93,15 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called after the view has been initialized.
+        /// </summary>
+        public override void AfterInitialize()
+        {
+            base.AfterInitialize();
+            AutoCompleteOptions = new AutoCompleteOptionData();
+        }
+
+        /// <summary>
         /// Called every frame and handles keyboard and mouse input.
         /// </summary>
         public override void Update()
@@ -93,6 +115,11 @@ namespace Delight
                     _caretRepeatTimeElapsed += Time.deltaTime;
                     Caret.IsActive = _caretRepeatTimeElapsed % CaretRepeatRate > CaretRepeatRate / 2;
                 }
+            }
+            else
+            {
+                // hide autocomplete box
+                DeactivateAutoComplete();
             }
 
             // update XML editor left margin based on scroll position so the line numbers follow along with scrolling
@@ -114,6 +141,7 @@ namespace Delight
                     _hasSelection = false;
                     Caret.IsActive = false;
                     _clickedInsideEditor = false;
+                    DeactivateAutoComplete();
                     GenerateCaretAndSelectionMeshes();
                 }
                 else
@@ -122,6 +150,19 @@ namespace Delight
                     _clickedInsideEditor = true;
                     mouseButtonDown = true;
                     _mouseDownPosition = Input.mousePosition;
+                    if (AutoCompleteBox.IsVisible)
+                    {
+                        if (!AutoCompleteBox.ContainsMouse(Input.mousePosition) || scrollEngaged || shiftDown)
+                        {
+                            // if clicked outside the autocomplete box, hide it
+                            DeactivateAutoComplete();
+                        }
+                        else
+                        {
+                            // clicked inside box
+                            return;
+                        }
+                    }
 
                     if (!scrollEngaged && !shiftDown)
                     {
@@ -156,7 +197,9 @@ namespace Delight
                 }
             }
 
-            if ((mouseButtonDown && shiftDown) || (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) 
+            if (((mouseButtonDown && shiftDown) || 
+                (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) &&
+                !AutoCompleteBox.IsVisible) 
             {
                 // if we've dragged beyond a certain threshold update selection (or if we shift+mouse click)
                 Vector3 delta = _mouseDownPosition - Input.mousePosition;
@@ -198,7 +241,7 @@ namespace Delight
         {
             return XmlTextLabel.TextMeshProUGUI.text;
         }
-
+       
         /// <summary>
         /// Selects the word at the current caret position.
         /// </summary>
@@ -386,18 +429,27 @@ namespace Delight
                 _trackKeyDown = KeyCode.PageUp;
                 _keyDownDelayTimeElapsed = 0;
             }
+            else if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                inputString = (char)KeyCode.Escape + inputString;
+            }
 
             if (inputString.Length <= 0)
                 return;
 
             var shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             bool updateDesiredCaretX = true;
+            bool activateAutoComplete = _autoCompleteActive;
+            KeyCode lastKeyCode;
+
             for (int i = 0; i < inputString.Length; ++i)
             {
                 char c = inputString[i];
+                KeyCode keyCode = (KeyCode)c;
+                lastKeyCode = keyCode;
                 //Debug.Log((int)c);
 
-                switch ((KeyCode)c)
+                switch (keyCode)
                 {
                     case KeyCode.Space:
                     case KeyCode.Less:
@@ -408,10 +460,20 @@ namespace Delight
                         }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
                         ++_caretX;
+
+                        activateAutoComplete = true;
                         break;
 
                     case KeyCode.KeypadEnter:
                     case KeyCode.Return:
+                        // if autocomplete active, complete selected suggestion and break
+                        if (AutoCompleteBox.IsVisible)
+                        {
+                            FinishAutoComplete();
+                            activateAutoComplete = false;
+                            break;
+                        }
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -434,6 +496,7 @@ namespace Delight
                                     _lines[_caretY] = trimmedLine.Substring(0, trimmedLine.Length - 1).TrimEnd() + " />";
                                     _caretX = _lines[_caretY].Length;
                                     _caretElement = XmlSyntaxElement.Undefined;
+                                    break;
                                 }
                                 else if (trimmedLine.EndsWith(","))
                                 {
@@ -517,6 +580,13 @@ namespace Delight
                         break;
 
                     case KeyCode.Tab:
+                        if (AutoCompleteBox.IsVisible)
+                        {
+                            FinishAutoComplete();
+                            activateAutoComplete = false;
+                            break;
+                        }
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -563,7 +633,7 @@ namespace Delight
                                 _selectionTargetY = _selectionOriginY;
                             }
                         }
-
+                        
                         --_caretX;
                         if (_caretX < 0)
                         {
@@ -636,6 +706,8 @@ namespace Delight
                         // handle selection
                         if (shiftDown)
                         {
+                            activateAutoComplete = false;
+
                             if (!_hasSelection)
                             {
                                 // set origin of selection
@@ -644,6 +716,12 @@ namespace Delight
                                 _selectionTargetX = _selectionOriginX;
                                 _selectionTargetY = _selectionOriginY;
                             }
+                        }
+                        else if (AutoCompleteBox.IsVisible)
+                        {
+                            // if auto complete open, scroll in list and break
+                            AutoCompleteOptionsList.SelectPrevious();
+                            break;
                         }
 
                         updateDesiredCaretX = false;
@@ -670,6 +748,8 @@ namespace Delight
                         // handle selection
                         if (shiftDown)
                         {
+                            activateAutoComplete = false;
+
                             if (!_hasSelection)
                             {
                                 // set origin of selection
@@ -678,6 +758,12 @@ namespace Delight
                                 _selectionTargetX = _selectionOriginX;
                                 _selectionTargetY = _selectionOriginY;
                             }
+                        }
+                        else if (AutoCompleteBox.IsVisible)
+                        {
+                            // if auto complete open, scroll in list and break
+                            AutoCompleteOptionsList.SelectNext();
+                            break;
                         }
 
                         updateDesiredCaretX = false;
@@ -781,12 +867,15 @@ namespace Delight
                             _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
                             ++_caretX;
                         }
+                        activateAutoComplete = true;
                         break;
 
                     case KeyCode.PageDown:
                         // handle selection
                         if (shiftDown)
                         {
+                            activateAutoComplete = false;
+
                             if (!_hasSelection)
                             {
                                 // set origin of selection
@@ -795,6 +884,12 @@ namespace Delight
                                 _selectionTargetX = _selectionOriginX;
                                 _selectionTargetY = _selectionOriginY;
                             }
+                        }
+                        else if (AutoCompleteBox.IsVisible)
+                        {
+                            // if auto complete open, scroll in list and break
+                            AutoCompleteOptionsList.ScrollPageDown(true);
+                            break;
                         }
 
                         updateDesiredCaretX = false;
@@ -819,10 +914,16 @@ namespace Delight
                         }
                         break;
 
+                    case KeyCode.Escape:
+                        activateAutoComplete = false;
+                        break;
+
                     case KeyCode.PageUp:
                         // handle selection
                         if (shiftDown)
                         {
+                            activateAutoComplete = false;
+
                             if (!_hasSelection)
                             {
                                 // set origin of selection
@@ -831,6 +932,12 @@ namespace Delight
                                 _selectionTargetX = _selectionOriginX;
                                 _selectionTargetY = _selectionOriginY;
                             }
+                        }
+                        else if (AutoCompleteBox.IsVisible)
+                        {
+                            // if auto complete open, scroll in list and break
+                            AutoCompleteOptionsList.ScrollPageUp(true);
+                            break;
                         }
 
                         updateDesiredCaretX = false;
@@ -870,11 +977,20 @@ namespace Delight
                             if (previousChar < 0 || previousChar >= _lines[_caretY].Length ||
                                 _lines[_caretY][previousChar] != '<')
                             {
-                                str = "<" + str;
+                                str = "<" + str;                                
                             }
+
+                            activateAutoComplete = true;
                         }
+
+                        if (activateAutoComplete && (c == ',' || c == '.'))
+                        {
+                            // terminate autocomplete when typing certain special characters to end the tag
+                            activateAutoComplete = false;
+                        }
+
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, str);
-                        _caretX += str.Length;
+                        _caretX += str.Length;                        
                         break;
                 }
 
@@ -884,9 +1000,27 @@ namespace Delight
                     _desiredCaretX = _caretX;
                 }
             }
-            
+
+            OnTextOrCaretChanged(textChanged, activateAutoComplete);
+        }
+
+        /// <summary>
+        /// Called when text or caret has changed.
+        /// </summary>
+        private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete)
+        {
             ActivateCaret();
             OnEditorChanged();
+
+            // handle autocomplete
+            if (activateAutoComplete)
+            {
+                ActivateAutoComplete();
+            }
+            else
+            {
+                DeactivateAutoComplete();
+            }
 
             // check if caret is outside viewport and update scroll position
             float viewportWidth = ScrollableRegion.ViewportWidth;
@@ -898,13 +1032,13 @@ namespace Delight
             float caretOffsetY = _caretY * LineHeight;
             float scrollOffsetX = -1;
             float scrollOffsetY = -1;
-       
+
             if ((caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) > (contentOffset.x + viewportWidth))
             {
                 scrollOffsetX = (caretOffsetX + CharWidth + ScrollableRegion.VerticalScrollbar.ActualWidth) - viewportWidth;
             }
             else if (caretOffsetX - XmlEditLeftMargin.Width < contentOffset.x)
-            {                
+            {
                 scrollOffsetX = caretOffsetX - XmlEditLeftMargin.Width;
             }
 
@@ -1149,13 +1283,19 @@ namespace Delight
                 }
             }
 
+            // CTRL+Space - trigger intellisense/autocomplete
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ActivateAutoComplete();
+            }
+
             if (updateText)
             {
                 OnEditorChanged();
                 Edit.Invoke(this, null);
             }
         }
-
+            
         /// <summary>
         /// Called after the view has been loaded.
         /// </summary>
@@ -1231,6 +1371,12 @@ namespace Delight
                 Caret.OffsetFromParent = new ElementMargin();
             Caret.OffsetFromParent.Left = CharWidth * _caretX;
             Caret.OffsetFromParent.Top = LineHeight * _caretY;
+
+            // position intellisense box
+            if (AutoCompleteBox.OffsetFromParent == null)
+                AutoCompleteBox.OffsetFromParent = new ElementMargin();
+            AutoCompleteBox.OffsetFromParent.Left = CharWidth * _caretX;
+            AutoCompleteBox.OffsetFromParent.Top = LineHeight * (_caretY + 1);
 
             _caretElement = XmlSyntaxElement.Undefined;
             string xmlText = XmlTextLabel.TextMeshProUGUI.text;
@@ -1416,7 +1562,7 @@ namespace Delight
             GenerateCaretAndSelectionMeshes();
 
             // TODO for debugging purposes show which element we are in
-            //CaretElement.Text = _caretElement.ToString();
+            //DebugTextLabel.Text = _caretElement.ToString();
         }
 
         /// <summary>
@@ -1490,6 +1636,221 @@ namespace Delight
             _caretDelayTimeElapsed = 0;
             _caretRepeatTimeElapsed = 0;
             Caret.IsActive = true;
+        }
+
+        /// <summary>
+        /// Activates autocomplete box and content based on caret position. 
+        /// </summary>
+        private void ActivateAutoComplete()
+        {
+            string wordAtCaret = GetWordAtCaret();
+            DebugTextLabel.Text = String.Format("{0}: {1}", _caretElement.ToString(), wordAtCaret);
+            bool updateOptions = _lastWordAtCaret != wordAtCaret;
+            _lastWordAtCaret = wordAtCaret;
+
+            if (!_autoCompleteActive)
+            {
+                // auto-complete activated, populate list
+                var options = new List<AutoCompleteOption>();
+                switch (_caretElement)
+                {
+                    case XmlSyntaxElement.ViewName:
+                    case XmlSyntaxElement.BeginViewName:                    
+                        foreach (var view in DesignerViews)
+                        {
+                            options.Add(new AutoCompleteOption { Text = view.Name });
+                        }
+                        break;
+
+                    case XmlSyntaxElement.EndViewName:
+                    case XmlSyntaxElement.PropertyName:
+                        // get property names from current view
+                        var viewNameAtCaret = GetViewAtCaret();
+                        var viewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewNameAtCaret);
+                        if (viewAtCaret == null)
+                            break;
+
+                        var properties = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).OrderBy(x => x.Declaration.PropertyName);
+                        foreach (var property in properties)
+                        {
+                            options.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
+                        }
+                        break;
+
+                    default:
+                        break;
+                }
+
+                AutoCompleteOptions.Replace(options);
+                if (options.Any())
+                {
+                    AutoCompleteOptions.SelectAndScrollTo(0, ElementAlignment.Center);
+                    updateOptions = true;
+                }
+                else
+                {
+                    DeactivateAutoComplete();
+                    return;
+                }                
+            }
+            else
+            {
+                // in some cases if caret element type changes we want to deactivate autocomplete
+                if (_caretElement != _autoCompleteType)
+                {
+                    DeactivateAutoComplete();
+                    return;
+                }
+            }
+
+            _autoCompleteActive = true;
+            _autoCompleteType = _caretElement;
+
+            if (!updateOptions)
+                return;
+
+            bool hasAnyMatch = false;
+            AutoCompleteOption firstMatch = null;
+            int matches = 0;
+            int longestOption = 0;
+            foreach (var option in AutoCompleteOptions)
+            {
+                bool match = option.MatchWithWord(wordAtCaret);
+                hasAnyMatch |= match;
+
+                if (match)
+                {
+                    if (firstMatch == null)
+                    {
+                        firstMatch = option;
+                    }
+
+                    int optionLength = option.Text.Length;
+                    longestOption = optionLength > longestOption ? optionLength : longestOption;
+                    ++matches; 
+                }
+            }
+
+            // arrange size of auto-complete box based on number of matches and the longest match in list            
+            AutoCompleteBox.IsVisible = hasAnyMatch;
+            if (hasAnyMatch)
+            {
+                AutoCompleteBox.Width = longestOption * CharWidth + 40;
+                float height = matches * LineHeight;
+                if (height > MaxAutoCompleteBoxHeight)
+                {
+                    height = MaxAutoCompleteBoxHeight; 
+                }
+
+                AutoCompleteBox.Height = height;
+                AutoCompleteOptionsList.Height = height;
+                AutoCompleteOptions.Select(firstMatch);
+            }
+        }
+
+        /// <summary>
+        /// Gets the view at the current caret position.
+        /// </summary>
+        private string GetViewAtCaret()
+        {
+            for (int lineIndex = _caretY; lineIndex >= 0; --lineIndex)
+            {
+                string line = _lines[lineIndex];
+                
+                // remove everything in the line within quotes "" so we don't match elements within strings
+                line = QuoteContentRegex.Replace(line, String.Empty);
+                var match = ViewNameStartRegex.Match(line);
+                if (match.Success)
+                {
+                    return match.Value;
+                }
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Hides autocomplete box.
+        /// </summary>
+        private void DeactivateAutoComplete()
+        {
+            _autoCompleteActive = false;
+            _autoCompleteType = XmlSyntaxElement.Undefined;
+            AutoCompleteBox.IsVisible = false;
+        }
+
+        /// <summary>
+        /// Called when option is selected in the autocomplete box.
+        /// </summary>
+        public void AutoCompleteOptionSelected(AutoCompleteOption option)
+        {
+            FinishAutoComplete();
+            OnTextOrCaretChanged(true, false);
+        }
+
+        /// <summary>
+        /// Auto-completes the current text. 
+        /// </summary>
+        private void FinishAutoComplete()
+        {
+            var option = SelectedAutoCompleteOption;
+            _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + _lines[_caretY].Substring(_autoCompleteWordTargetX);
+            _caretX = _autoCompleteWordOriginX + option.Text.Length;
+            DeactivateAutoComplete();
+        }
+
+        /// <summary>
+        /// Gets the word at the current caret position.
+        /// </summary>
+        private string GetWordAtCaret()
+        {
+            string word = string.Empty;
+            if (_lines[_caretY].Length <= 0)
+                return word;
+
+            _autoCompleteWordOriginX = _caretX - 1;
+            _autoCompleteWordTargetX = _caretX;
+            
+            if (_autoCompleteWordOriginX < 0)
+                _autoCompleteWordOriginX = 0;
+
+            // get characters to the left and right of caret that are digits or letters
+            Func<char, bool> selectChar = c => Char.IsLetterOrDigit(c); // select letters and digits by default
+            while (_autoCompleteWordTargetX < _lines[_caretY].Length)
+            {
+                if (!selectChar(_lines[_caretY][_autoCompleteWordTargetX]))
+                {
+                    break;
+                }
+
+                ++_autoCompleteWordTargetX;
+            }
+
+            while (_autoCompleteWordOriginX >= 0)
+            {
+                if (!selectChar(_lines[_caretY][_autoCompleteWordOriginX]))
+                {
+                    _autoCompleteWordOriginX = _autoCompleteWordOriginX == _lines[_caretY].Length - 1 ? _autoCompleteWordOriginX : _autoCompleteWordOriginX + 1;
+                    break;
+                }
+
+                --_autoCompleteWordOriginX;
+            }
+
+            if (_autoCompleteWordOriginX < 0)
+                _autoCompleteWordOriginX = 0;
+
+            int length = _autoCompleteWordTargetX - _autoCompleteWordOriginX;
+            bool wordAtCaret = length == 1 ? selectChar(_lines[_caretY][_autoCompleteWordOriginX]) : length > 0;
+            if (wordAtCaret)
+            {
+                return _lines[_caretY].Substring(_autoCompleteWordOriginX, length);
+            }
+            else
+            {
+                _autoCompleteWordOriginX = _autoCompleteWordTargetX;
+                return string.Empty;
+            }
         }
 
         #endregion

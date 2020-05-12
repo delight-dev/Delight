@@ -1176,6 +1176,8 @@ namespace Delight
                     contentObjectModel.SaveObjectModel();
                 }
 
+                // TODO check if view references new views that haven't been created and create them
+
                 File.WriteAllText(changedView.FilePath, xmlText);
                 changedView.IsDirty = false;
             }
