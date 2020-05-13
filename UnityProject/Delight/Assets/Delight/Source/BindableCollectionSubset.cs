@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Delight
 {
     /// <summary>
-    /// Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered collections. 
+    /// Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered and sorted collections. 
     /// </summary>
     public class BindableCollectionSubset<T> : BindableCollection<T>
         where T : BindableObject
@@ -26,7 +26,8 @@ namespace Delight
 
         #region Constructor
 
-        public BindableCollectionSubset(BindableCollection<T> parentCollection, Func<T, bool> filter, Action<T> fkSetter)
+        public BindableCollectionSubset(BindableCollection<T> parentCollection, 
+            Func<T, bool> filter, Action<T> fkSetter)
         {
             _parentCollection = parentCollection;
             _parentCollection.CollectionChanged += ParentCollectionChanged;

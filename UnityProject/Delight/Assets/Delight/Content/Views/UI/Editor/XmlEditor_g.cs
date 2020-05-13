@@ -42,9 +42,6 @@ namespace Delight
             {
                 var listItem1 = new ListItem(this, AutoCompleteOptionsList.Content, "ListItem1", ListItem1Template);
                 listItem1.Click.RegisterHandler(this, "AutoCompleteOptionSelected", () => (tiOption.Item as Delight.AutoCompleteOption));
-
-                // binding <ListItem IsActive="{option.IsMatch}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "IsMatch" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "IsActive" }, new List<Func<BindableObject>> { () => listItem1 }), () => listItem1.IsActive = (tiOption.Item as Delight.AutoCompleteOption).IsMatch, () => { }, false));
                 var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{option.DisplayText}">
@@ -734,7 +731,7 @@ namespace Delight
                     _xmlEditorAutoCompleteBox.Name = "XmlEditorAutoCompleteBox";
 #endif
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorAutoCompleteBox, new ElementSize(300f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_xmlEditorAutoCompleteBox, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_xmlEditorAutoCompleteBox, new ElementSize(150f, ElementSizeUnit.Pixels));
                     Delight.Region.AlignmentProperty.SetDefault(_xmlEditorAutoCompleteBox, Delight.ElementAlignment.TopLeft);
                     Delight.Region.BackgroundColorProperty.SetDefault(_xmlEditorAutoCompleteBox, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
                     Delight.Region.IsVisibleProperty.SetDefault(_xmlEditorAutoCompleteBox, false);
@@ -760,8 +757,9 @@ namespace Delight
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, true);
                     Delight.List.WidthProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.List.HeightProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, new ElementSize(200f, ElementSizeUnit.Pixels));
+                    Delight.List.HeightProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, new ElementSize(150f, ElementSizeUnit.Pixels));
                     Delight.List.BackgroundColorProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
+                    Delight.List.IsVirtualizedProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, true);
                     Delight.List.ItemsProperty.SetHasBinding(_xmlEditorAutoCompleteOptionsList);
                     Delight.List.SelectedItemProperty.SetHasBinding(_xmlEditorAutoCompleteOptionsList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, XmlEditorAutoCompleteOptionsListScrollableRegion);
@@ -956,7 +954,6 @@ namespace Delight
                     Delight.ListItem.HeightProperty.SetDefault(_xmlEditorListItem1, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.ListItem.BackgroundColorProperty.SetDefault(_xmlEditorListItem1, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _xmlEditorListItem1, new UnityEngine.Color(0.7843137f, 0.7843137f, 0.7843137f, 1f));
-                    Delight.ListItem.IsActiveProperty.SetHasBinding(_xmlEditorListItem1);
                 }
                 return _xmlEditorListItem1;
             }

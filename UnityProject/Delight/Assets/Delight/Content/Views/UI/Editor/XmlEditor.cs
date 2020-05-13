@@ -63,6 +63,7 @@ namespace Delight
         private int _selectionTargetY;
         private int _autoCompleteWordOriginX;
         private int _autoCompleteWordTargetX;
+        private List<AutoCompleteOption> _autoCompleteOptions = new List<AutoCompleteOption>();
         private XmlSyntaxElement _autoCompleteType = XmlSyntaxElement.Undefined;
         private string _lastWordAtCaret;
         private bool _autoCompleteActive;
@@ -1651,14 +1652,14 @@ namespace Delight
             if (!_autoCompleteActive)
             {
                 // auto-complete activated, populate list
-                var options = new List<AutoCompleteOption>();
+                _autoCompleteOptions.Clear();
                 switch (_caretElement)
                 {
                     case XmlSyntaxElement.ViewName:
                     case XmlSyntaxElement.BeginViewName:                    
                         foreach (var view in DesignerViews)
                         {
-                            options.Add(new AutoCompleteOption { Text = view.Name });
+                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = view.Name });
                         }
                         break;
 
@@ -1673,7 +1674,7 @@ namespace Delight
                         var properties = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).OrderBy(x => x.Declaration.PropertyName);
                         foreach (var property in properties)
                         {
-                            options.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
+                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
                         }
                         break;
 
@@ -1681,8 +1682,8 @@ namespace Delight
                         break;
                 }
 
-                AutoCompleteOptions.Replace(options);
-                if (options.Any())
+                AutoCompleteOptions.Replace(_autoCompleteOptions);
+                if (AutoCompleteOptions.Any())
                 {
                     AutoCompleteOptions.SelectAndScrollTo(0, ElementAlignment.Center);
                     updateOptions = true;
@@ -1713,7 +1714,7 @@ namespace Delight
             AutoCompleteOption firstMatch = null;
             int matches = 0;
             int longestOption = 0;
-            foreach (var option in AutoCompleteOptions)
+            foreach (var option in _autoCompleteOptions)
             {
                 bool match = option.MatchWithWord(wordAtCaret);
                 hasAnyMatch |= match;
@@ -1744,6 +1745,8 @@ namespace Delight
 
                 AutoCompleteBox.Height = height;
                 AutoCompleteOptionsList.Height = height;
+
+                AutoCompleteOptions.Replace(_autoCompleteOptions.Where(x => x.IsMatch));
                 AutoCompleteOptions.Select(firstMatch);
             }
         }
