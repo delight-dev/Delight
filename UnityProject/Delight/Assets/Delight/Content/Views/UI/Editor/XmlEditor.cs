@@ -467,6 +467,8 @@ namespace Delight
 
                     case KeyCode.KeypadEnter:
                     case KeyCode.Return:
+                        textChanged = true;
+
                         // if autocomplete active, complete selected suggestion and break
                         if (AutoCompleteBox.IsVisible)
                         {
@@ -474,7 +476,6 @@ namespace Delight
                             break;
                         }
 
-                        textChanged = true;
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -580,13 +581,13 @@ namespace Delight
                         break;
 
                     case KeyCode.Tab:
+                        textChanged = true;
                         if (AutoCompleteBox.IsVisible)
                         {
                             activateAutoComplete = FinishAutoComplete();
                             break;
                         }
-
-                        textChanged = true;
+                        
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -1748,7 +1749,6 @@ namespace Delight
                                         _autoCompleteOptions.Add(new AutoCompleteOption { Text = name });
                                     }
                                 }
-
                             }
                         }
                         break;
