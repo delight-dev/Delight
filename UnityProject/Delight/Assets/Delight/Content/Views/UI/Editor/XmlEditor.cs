@@ -469,9 +469,8 @@ namespace Delight
                     case KeyCode.Return:
                         // if autocomplete active, complete selected suggestion and break
                         if (AutoCompleteBox.IsVisible)
-                        {
-                            FinishAutoComplete();
-                            activateAutoComplete = false;
+                        {                            
+                            activateAutoComplete = FinishAutoComplete();
                             break;
                         }
 
@@ -583,8 +582,7 @@ namespace Delight
                     case KeyCode.Tab:
                         if (AutoCompleteBox.IsVisible)
                         {
-                            FinishAutoComplete();
-                            activateAutoComplete = false;
+                            activateAutoComplete = FinishAutoComplete();
                             break;
                         }
 
@@ -622,6 +620,21 @@ namespace Delight
                         break;
 
                     case KeyCode.LeftArrow:
+                        // if we move over non-alphanumeric character deactivate auto-complete
+                        int walkedOverCaret = _caretX - 1;
+                        if (walkedOverCaret < _lines[_caretY].Length && walkedOverCaret >= 0)
+                        {
+                            char walkedOverChar = _lines[_caretY][walkedOverCaret];
+                            if (!Char.IsLetterOrDigit(walkedOverChar))
+                            {
+                                activateAutoComplete = false;
+                            }
+                        }
+                        else
+                        {
+                            activateAutoComplete = false;
+                        }
+
                         // handle selection
                         if (shiftDown)
                         {
@@ -666,6 +679,21 @@ namespace Delight
                         break;
 
                     case KeyCode.RightArrow:
+                        // if we move over non-alphanumeric character deactivate auto-complete
+                        int rightWalkedOverCaret = _caretX;
+                        if (rightWalkedOverCaret < _lines[_caretY].Length && rightWalkedOverCaret >= 0)
+                        {
+                            char walkedOverChar = _lines[_caretY][rightWalkedOverCaret];
+                            if (!Char.IsLetterOrDigit(walkedOverChar))
+                            {
+                                activateAutoComplete = false;
+                            }
+                        }
+                        else
+                        {
+                            activateAutoComplete = false;
+                        }
+
                         // handle selection
                         if (shiftDown)
                         {
@@ -1678,6 +1706,15 @@ namespace Delight
                         }
                         break;
 
+                    case XmlSyntaxElement.PropertyValue:
+                    case XmlSyntaxElement.EndPropertyValue:
+                        // TODO populate enum and asset auto-complete
+                        //for (int i = 0; i < 20; ++i)
+                        //{
+                        //    _autoCompleteOptions.Add(new AutoCompleteOption { Text = "Value" + i });
+                        //}
+                        break;
+
                     default:
                         break;
                 }
@@ -1697,7 +1734,32 @@ namespace Delight
             else
             {
                 // in some cases if caret element type changes we want to deactivate autocomplete
-                if (_caretElement != _autoCompleteType)
+                bool deactivateAutoComplete = false;
+                switch (_caretElement)
+                {
+                    case XmlSyntaxElement.ViewName:
+                    case XmlSyntaxElement.BeginViewName:
+                        deactivateAutoComplete = _autoCompleteType != XmlSyntaxElement.ViewName &&
+                            _autoCompleteType != XmlSyntaxElement.BeginViewName;
+                        break;
+
+                    case XmlSyntaxElement.EndViewName:
+                    case XmlSyntaxElement.PropertyName:
+                        deactivateAutoComplete = _autoCompleteType != XmlSyntaxElement.EndViewName &&
+                            _autoCompleteType != XmlSyntaxElement.PropertyName;
+                        break;
+
+                    case XmlSyntaxElement.PropertyValue:
+                    case XmlSyntaxElement.EndPropertyValue:
+                        deactivateAutoComplete = _autoCompleteType != XmlSyntaxElement.PropertyValue &&
+                            _autoCompleteType != XmlSyntaxElement.EndPropertyValue;
+                        break;
+                    default:
+                        deactivateAutoComplete = _caretElement != _autoCompleteType;
+                        break;
+                }
+
+                if (deactivateAutoComplete)
                 {
                     DeactivateAutoComplete();
                     return;
@@ -1794,12 +1856,28 @@ namespace Delight
         /// <summary>
         /// Auto-completes the current text. 
         /// </summary>
-        private void FinishAutoComplete()
+        private bool FinishAutoComplete()
         {
             var option = SelectedAutoCompleteOption;
-            _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + _lines[_caretY].Substring(_autoCompleteWordTargetX);
-            _caretX = _autoCompleteWordOriginX + option.Text.Length;
+            var autoCompleteType = _autoCompleteType;
             DeactivateAutoComplete();
+
+            if (autoCompleteType == XmlSyntaxElement.PropertyName || autoCompleteType == XmlSyntaxElement.EndViewName)
+            {
+                // when completing property name add ="" to the end and activate auto-complete for property values
+                _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + "=\"\"" + _lines[_caretY].Substring(_autoCompleteWordTargetX);
+                _caretX = _autoCompleteWordOriginX + option.Text.Length + 2;
+                _autoCompleteType = XmlSyntaxElement.PropertyValue;
+                _caretElement = XmlSyntaxElement.PropertyValue;
+                ActivateAutoComplete();
+                return true;
+            }
+            else
+            {
+                _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + _lines[_caretY].Substring(_autoCompleteWordTargetX);
+                _caretX = _autoCompleteWordOriginX + option.Text.Length;
+                return false;
+            }            
         }
 
         /// <summary>
