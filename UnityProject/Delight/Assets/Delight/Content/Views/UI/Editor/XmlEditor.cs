@@ -462,6 +462,7 @@ namespace Delight
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
                         ++_caretX;
 
+                        DeactivateAutoComplete();
                         activateAutoComplete = true;
                         break;
 
@@ -891,6 +892,8 @@ namespace Delight
                         {
                             _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c + "\"\"");
                             _caretX = _caretX + 2;
+                            DeactivateAutoComplete(); // re-trigger auto-complete
+                            activateAutoComplete = true;
                         }
                         else
                         {
@@ -1810,34 +1813,40 @@ namespace Delight
             if (!updateOptions)
                 return;
 
-            bool hasAnyMatch = false;
-            AutoCompleteOption firstMatch = null;
-            int matches = 0;
             int longestOption = 0;
+            var matchedStartOptions = new List<AutoCompleteOption>();
+            var matchedAnyOptions = new List<AutoCompleteOption>();
+            var matchedOptions = new List<AutoCompleteOption>();
+
             foreach (var option in _autoCompleteOptions)
             {
-                bool match = option.MatchWithWord(wordAtCaret);
-                hasAnyMatch |= match;
-
-                if (match)
+                if (option.MatchWithWord(wordAtCaret))
                 {
-                    if (firstMatch == null)
+                    if (option.IsMatchStart)
                     {
-                        firstMatch = option;
+                        matchedStartOptions.Add(option);
+                    }
+                    else
+                    {
+                        matchedAnyOptions.Add(option);
                     }
 
                     int optionLength = option.Text.Length;
                     longestOption = optionLength > longestOption ? optionLength : longestOption;
-                    ++matches;
                 }
             }
+
+            matchedOptions.AddRange(matchedStartOptions);
+            matchedOptions.AddRange(matchedAnyOptions);
+            bool hasAnyMatch = matchedOptions.Any();
 
             // arrange size of auto-complete box based on number of matches and the longest match in list            
             AutoCompleteBox.IsVisible = hasAnyMatch;
             if (hasAnyMatch)
             {
+                int matchCount = matchedOptions.Count();
                 AutoCompleteBox.Width = longestOption * CharWidth + 40;
-                float height = matches * LineHeight;
+                float height = matchCount * LineHeight;
                 if (height > MaxAutoCompleteBoxHeight)
                 {
                     height = MaxAutoCompleteBoxHeight;
@@ -1846,8 +1855,8 @@ namespace Delight
                 AutoCompleteBox.Height = height;
                 AutoCompleteOptionsList.Height = height;
 
-                AutoCompleteOptions.Replace(_autoCompleteOptions.Where(x => x.IsMatch));
-                AutoCompleteOptions.Select(firstMatch);
+                AutoCompleteOptions.Replace(matchedOptions);
+                AutoCompleteOptions.SelectAndScrollTo(matchedOptions.First());
             }
         }
 
@@ -1885,7 +1894,7 @@ namespace Delight
             }
 
             line = line.Substring(0, equalIndex);
-            string lastWord = line.Split(' ').LastOrDefault();
+            string lastWord = line.Split(' ', '-').LastOrDefault();
             if (String.IsNullOrEmpty(lastWord))
             {
                 return string.Empty;
