@@ -569,6 +569,44 @@ namespace Delight
 
     #endregion
 
+    #region Textures
+
+    /// <summary>
+    /// Manages a UnityEngine.Texture object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TextureAsset : AssetObject<UnityEngine.Texture>
+    {
+        public static implicit operator TextureAsset(UnityEngine.Texture unityObject)
+        {
+            return new TextureAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TextureAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.Textures[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TextureAsset data provider. Contains references to all textures in the project.
+    /// </summary>
+    public partial class TextureAssetData : DataProvider<TextureAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TextureAssetData Textures = new TextureAssetData();
+    }
+
+    #endregion
+
     #region TMP_InputValidators
 
     /// <summary>

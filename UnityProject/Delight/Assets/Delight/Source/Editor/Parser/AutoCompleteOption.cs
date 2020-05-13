@@ -1,7 +1,9 @@
 #region Using Statements
+using Delight.Editor.Parser;
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -39,6 +41,42 @@ namespace Delight
         {
             get { return _isMatchStart; }
             set { SetProperty(ref _isMatchStart, value); }
+        }
+
+        private bool _isAsset;
+        public bool IsAsset
+        {
+            get { return _isAsset; }
+            set { SetProperty(ref _isAsset, value); }
+        }
+
+        private UnityAssetObject _assetObject;
+        public UnityAssetObject AssetObject
+        {
+            get { return _assetObject; }
+            set { SetProperty(ref _assetObject, value); }
+        }
+
+        /// <summary>
+        /// Gets preview thumbnail of the asset.
+        /// </summary>
+        private TextureAsset _previewThumbnail;
+        public TextureAsset PreviewThumbnail
+        {
+            get
+            {
+                if (_previewThumbnail == null)
+                {
+                    // load preview thumbnail
+                    var icon = AssetDatabase.GetCachedIcon(_assetObject.Path);
+                    if (icon != null)
+                    {
+                        _previewThumbnail = icon;
+                    }
+                }
+
+                return _previewThumbnail;           
+            }
         }
 
         /// <summary>

@@ -2,18 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 #endregion
 
 namespace Delight
 {
-    /// <summary>
-    /// View that displays an image sprite. Based on the UGUI ImageComponent. Adjusts its size and image type (spliced, etc) to the native sprite if not explicitly set.
-    /// </summary>
-    public partial class Image
+    public partial class RawImage
     {
+        #region Methods
+
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -25,8 +24,8 @@ namespace Delight
                 case nameof(Color):
                     ImageChanged();
                     break;
-                case nameof(Sprite):
-                    SpriteChanged();
+                case nameof(Texture):
+                    TextureChanged();
                     break;
             }
         }
@@ -40,14 +39,14 @@ namespace Delight
             if (IgnoreObject)
                 return;
 
-            // always add image component
-            if (ImageComponent == null)
+            // always add raw image component
+            if (RawImageComponent == null)
             {
-                ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                RawImageComponent = GameObject.AddComponent<UnityEngine.UI.RawImage>();
                 FastMaterialChanged(); // apply fast material if specified
             }
 
-            SpriteChanged();
+            TextureChanged();
         }
 
         /// <summary>
@@ -60,53 +59,44 @@ namespace Delight
             // enable to have fonts pop in instead
             if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
-                if (Sprite != null && !Sprite.IsLoaded)
+                if (Texture != null && !Texture.IsLoaded)
                 {
                     // hide image while loading
-                    ImageComponent.enabled = false;
+                    RawImageComponent.enabled = false;
                 }
             }
         }
 
         /// <summary>
-        /// Called when the sprite is changed. 
+        /// Called when the texture is changed. 
         /// </summary>
-        protected virtual void SpriteChanged()
+        protected virtual void TextureChanged()
         {
             if (GameObject == null)
                 return;
 
             if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
-                if (Sprite != null && Sprite.IsLoaded)
+                if (Texture != null && Texture.IsLoaded)
                 {
-                    ImageComponent.enabled = true;
+                    RawImageComponent.enabled = true;
                 }
             }
 
-            // uncomment for tracking sprite sets
+            // uncomment for tracking texture sets
             //var spriteInfo = Sprite == null ? "null" : String.Format("{0} (IsLoaded: {1})", Sprite.Id, Sprite.IsLoaded);
             //Debugger.Info(String.Format("{0}: Setting Sprite = {1}", Name, spriteInfo), LogCategory.Delight);
 
-            var sprite = Sprite?.UnityObject;
-            if (sprite != null && ImageComponent == null)
+            var texture = Texture?.UnityObject;
+            if (texture != null && RawImageComponent == null)
             {
-                ImageComponent = GameObject.AddComponent<UnityEngine.UI.Image>();
+                RawImageComponent = GameObject.AddComponent<UnityEngine.UI.RawImage>();
                 FastMaterialChanged(); // apply fast material if specified
             }
 
-            if (ImageComponent != null)
+            if (RawImageComponent != null)
             {
-                ImageComponent.sprite = sprite;
-
-                if (sprite != null && TypeProperty.IsUndefined(this))
-                {
-                    // if type is undefined auto-detect if sprite is sliced
-                    if (sprite.border != Vector4.zero)
-                    {
-                        ImageComponent.type = UnityEngine.UI.Image.Type.Sliced;
-                    }
-                }
+                RawImageComponent.texture = texture;
             }
 
             ImageChanged();
@@ -117,45 +107,45 @@ namespace Delight
         /// </summary>
         public virtual void ImageChanged()
         {
-            if (ImageComponent == null)
+            if (RawImageComponent == null)
                 return;
 
             if (ColorProperty.IsUndefined(this))
             {
-                if (ImageComponent.sprite != null || ImageComponent.overrideSprite != null)
+                if (RawImageComponent.texture != null)
                 {
                     // use white color by default if image is set
-                    ImageComponent.color = Color.white;
+                    RawImageComponent.color = Color.white;
                 }
                 else
                 {
                     // use clear color by default if image isn't set
-                    ImageComponent.color = Color.clear;
+                    RawImageComponent.color = Color.clear;
                 }
             }
 
-            var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
+            var texture = RawImageComponent.texture;
             if (WidthProperty.IsUndefined(this) && HeightProperty.IsUndefined(this))
             {
                 // if width and height is undefined, adjust size to native size of sprite                
-                if (sprite != null)
+                if (texture != null)
                 {
-                    ImageComponent.SetNativeSize();
-                    OverrideWidth = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.x);
-                    OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
+                    RawImageComponent.SetNativeSize();
+                    OverrideWidth = ElementSize.FromPixels(RawImageComponent.rectTransform.sizeDelta.x);
+                    OverrideHeight = ElementSize.FromPixels(RawImageComponent.rectTransform.sizeDelta.y);
                 }
             }
 
-            bool isLoading = Sprite != null && !Sprite.IsLoaded;
-            if (isLoading && sprite == null)
+            bool isLoading = Texture != null && !Texture.IsLoaded;
+            if (isLoading && texture == null)
             {
                 // always disable image while loading
-                ImageComponent.enabled = false;
+                RawImageComponent.enabled = false;
             }
             else
             {
                 // disable raycast blocks if image is transparent
-                ImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : ImageComponent.color.a > 0;
+                RawImageComponent.enabled = RaycastBlockMode == RaycastBlockMode.Always ? true : RawImageComponent.color.a > 0;
             }
         }
 
@@ -168,10 +158,11 @@ namespace Delight
             if (!UseFastShader)
                 return;
 
-            if (ImageComponent == null)
+            if (RawImageComponent == null)
                 return;
 
-            ImageComponent.material = FastMaterial?.UnityObject;
+            RawImageComponent.material = FastMaterial?.UnityObject;
         }
+        #endregion
     }
 }

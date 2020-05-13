@@ -15,6 +15,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Delight.Editor.Parser;
+using UnityEditor;
 #endregion
 
 namespace Delight
@@ -1737,7 +1738,7 @@ namespace Delight
                                 var assetObjects = contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).Where(x => x.Type == property.AssetType).OrderBy(x => x.Name).ToList();
                                 foreach (var assetObject in assetObjects)
                                 {
-                                    _autoCompleteOptions.Add(new AutoCompleteOption { Text = assetObject.Name });
+                                    _autoCompleteOptions.Add(new AutoCompleteOption { Text = assetObject.Name, IsAsset = true, AssetObject = assetObject });
                                 }
                             }
                             else if (property.Declaration.DeclarationType == PropertyDeclarationType.Default)
@@ -2001,6 +2002,14 @@ namespace Delight
                 _autoCompleteWordOriginX = _autoCompleteWordTargetX;
                 return string.Empty;
             }
+        }
+
+        /// <summary>
+        /// Selects auto-complete item template based on option type.
+        /// </summary>
+        public string AutoCompleteOptionSelector(AutoCompleteOption option)
+        {
+            return option.IsAsset ? "AssetOptionItem" : "DefaultOptionItem";
         }
 
         #endregion

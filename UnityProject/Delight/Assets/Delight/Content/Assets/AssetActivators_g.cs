@@ -38,6 +38,7 @@ namespace Delight
             ViewActivators.Add("ScrollableRegion", (x, y, z, w, a) => new ScrollableRegion(x, y, z, w, a));
             ViewActivators.Add("Mask", (x, y, z, w, a) => new Mask(x, y, z, w, a));
             ViewActivators.Add("RadioButton", (x, y, z, w, a) => new RadioButton(x, y, z, w, a));
+            ViewActivators.Add("RawImage", (x, y, z, w, a) => new RawImage(x, y, z, w, a));
             ViewActivators.Add("RectMask2D", (x, y, z, w, a) => new RectMask2D(x, y, z, w, a));
             ViewActivators.Add("Region", (x, y, z, w, a) => new Region(x, y, z, w, a));
             ViewActivators.Add("Scrollbar", (x, y, z, w, a) => new Scrollbar(x, y, z, w, a));
@@ -100,6 +101,7 @@ namespace Delight
             ViewTypes.Add("ScrollableRegion", typeof(ScrollableRegion));
             ViewTypes.Add("Mask", typeof(Mask));
             ViewTypes.Add("RadioButton", typeof(RadioButton));
+            ViewTypes.Add("RawImage", typeof(RawImage));
             ViewTypes.Add("RectMask2D", typeof(RectMask2D));
             ViewTypes.Add("Region", typeof(Region));
             ViewTypes.Add("Scrollbar", typeof(Scrollbar));

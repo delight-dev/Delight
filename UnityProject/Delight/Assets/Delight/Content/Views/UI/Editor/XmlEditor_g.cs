@@ -30,6 +30,7 @@ namespace Delight
             Caret = new Label(this, XmlTextRegion.Content, "Caret", CaretTemplate);
             AutoCompleteBox = new Region(this, XmlTextRegion.Content, "AutoCompleteBox", AutoCompleteBoxTemplate);
             AutoCompleteOptionsList = new List(this, AutoCompleteBox.Content, "AutoCompleteOptionsList", AutoCompleteOptionsListTemplate);
+            AutoCompleteOptionsList.TemplateSelector.RegisterMethod(this, "AutoCompleteOptionSelector");
 
             // binding <List Items="{option in AutoCompleteOptions}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoCompleteOptions" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "AutoCompleteOptionsList", "Items" }, new List<Func<BindableObject>> { () => this, () => AutoCompleteOptionsList }), () => AutoCompleteOptionsList.Items = AutoCompleteOptions, () => { }, false));
@@ -40,16 +41,34 @@ namespace Delight
             // templates for AutoCompleteOptionsList
             AutoCompleteOptionsList.ContentTemplates.Add(new ContentTemplate(tiOption => 
             {
-                var listItem1 = new ListItem(this, AutoCompleteOptionsList.Content, "ListItem1", ListItem1Template);
-                listItem1.Click.RegisterHandler(this, "AutoCompleteOptionSelected", () => (tiOption.Item as Delight.AutoCompleteOption));
-                var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
+                var defaultOptionItem = new ListItem(this, AutoCompleteOptionsList.Content, "DefaultOptionItem", DefaultOptionItemTemplate);
+                defaultOptionItem.Click.RegisterHandler(this, "AutoCompleteOptionSelected", () => (tiOption.Item as Delight.AutoCompleteOption));
+                var label1 = new Label(this, defaultOptionItem.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{option.DisplayText}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
-                listItem1.IsDynamic = true;
-                listItem1.SetContentTemplateData(tiOption);
-                return listItem1;
-            }, typeof(ListItem), "ListItem1"));
+                defaultOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
+                defaultOptionItem.IsDynamic = true;
+                defaultOptionItem.SetContentTemplateData(tiOption);
+                return defaultOptionItem;
+            }, typeof(ListItem), "DefaultOptionItem"));
+
+            // templates for AutoCompleteOptionsList
+            AutoCompleteOptionsList.ContentTemplates.Add(new ContentTemplate(tiOption => 
+            {
+                var assetOptionItem = new ListItem(this, AutoCompleteOptionsList.Content, "AssetOptionItem", AssetOptionItemTemplate);
+                assetOptionItem.Click.RegisterHandler(this, "AutoCompleteOptionSelected", () => (tiOption.Item as Delight.AutoCompleteOption));
+                var rawImage1 = new RawImage(this, assetOptionItem.Content, "RawImage1", RawImage1Template);
+
+                // binding <RawImage Texture="{option.PreviewThumbnail}">
+                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "PreviewThumbnail" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Texture" }, new List<Func<BindableObject>> { () => rawImage1 }), () => rawImage1.Texture = (tiOption.Item as Delight.AutoCompleteOption).PreviewThumbnail, () => { }, false));
+                var label2 = new Label(this, assetOptionItem.Content, "Label2", Label2Template);
+
+                // binding <Label Text="{option.DisplayText}">
+                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
+                assetOptionItem.IsDynamic = true;
+                assetOptionItem.SetContentTemplateData(tiOption);
+                return assetOptionItem;
+            }, typeof(ListItem), "AssetOptionItem"));
             DebugTextLabel = new Label(this, AutoCompleteBox.Content, "DebugTextLabel", DebugTextLabelTemplate);
             XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
             LineNumbersLabel = new Label(this, XmlEditLeftMargin.Content, "LineNumbersLabel", LineNumbersLabelTemplate);
@@ -88,10 +107,16 @@ namespace Delight
             dependencyProperties.Add(AutoCompleteBoxTemplateProperty);
             dependencyProperties.Add(AutoCompleteOptionsListProperty);
             dependencyProperties.Add(AutoCompleteOptionsListTemplateProperty);
-            dependencyProperties.Add(ListItem1Property);
-            dependencyProperties.Add(ListItem1TemplateProperty);
+            dependencyProperties.Add(DefaultOptionItemProperty);
+            dependencyProperties.Add(DefaultOptionItemTemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(AssetOptionItemProperty);
+            dependencyProperties.Add(AssetOptionItemTemplateProperty);
+            dependencyProperties.Add(RawImage1Property);
+            dependencyProperties.Add(RawImage1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(DebugTextLabelProperty);
             dependencyProperties.Add(DebugTextLabelTemplateProperty);
             dependencyProperties.Add(XmlEditLeftMarginProperty);
@@ -263,18 +288,18 @@ namespace Delight
             set { AutoCompleteOptionsListTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ListItem> ListItem1Property = new DependencyProperty<ListItem>("ListItem1");
-        public ListItem ListItem1
+        public readonly static DependencyProperty<ListItem> DefaultOptionItemProperty = new DependencyProperty<ListItem>("DefaultOptionItem");
+        public ListItem DefaultOptionItem
         {
-            get { return ListItem1Property.GetValue(this); }
-            set { ListItem1Property.SetValue(this, value); }
+            get { return DefaultOptionItemProperty.GetValue(this); }
+            set { DefaultOptionItemProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> ListItem1TemplateProperty = new DependencyProperty<Template>("ListItem1Template");
-        public Template ListItem1Template
+        public readonly static DependencyProperty<Template> DefaultOptionItemTemplateProperty = new DependencyProperty<Template>("DefaultOptionItemTemplate");
+        public Template DefaultOptionItemTemplate
         {
-            get { return ListItem1TemplateProperty.GetValue(this); }
-            set { ListItem1TemplateProperty.SetValue(this, value); }
+            get { return DefaultOptionItemTemplateProperty.GetValue(this); }
+            set { DefaultOptionItemTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
@@ -289,6 +314,48 @@ namespace Delight
         {
             get { return Label1TemplateProperty.GetValue(this); }
             set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ListItem> AssetOptionItemProperty = new DependencyProperty<ListItem>("AssetOptionItem");
+        public ListItem AssetOptionItem
+        {
+            get { return AssetOptionItemProperty.GetValue(this); }
+            set { AssetOptionItemProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> AssetOptionItemTemplateProperty = new DependencyProperty<Template>("AssetOptionItemTemplate");
+        public Template AssetOptionItemTemplate
+        {
+            get { return AssetOptionItemTemplateProperty.GetValue(this); }
+            set { AssetOptionItemTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<RawImage> RawImage1Property = new DependencyProperty<RawImage>("RawImage1");
+        public RawImage RawImage1
+        {
+            get { return RawImage1Property.GetValue(this); }
+            set { RawImage1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> RawImage1TemplateProperty = new DependencyProperty<Template>("RawImage1Template");
+        public Template RawImage1Template
+        {
+            get { return RawImage1TemplateProperty.GetValue(this); }
+            set { RawImage1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> DebugTextLabelProperty = new DependencyProperty<Label>("DebugTextLabel");
@@ -390,8 +457,11 @@ namespace Delight
                     Delight.XmlEditor.CaretTemplateProperty.SetDefault(_xmlEditor, XmlEditorCaret);
                     Delight.XmlEditor.AutoCompleteBoxTemplateProperty.SetDefault(_xmlEditor, XmlEditorAutoCompleteBox);
                     Delight.XmlEditor.AutoCompleteOptionsListTemplateProperty.SetDefault(_xmlEditor, XmlEditorAutoCompleteOptionsList);
-                    Delight.XmlEditor.ListItem1TemplateProperty.SetDefault(_xmlEditor, XmlEditorListItem1);
+                    Delight.XmlEditor.DefaultOptionItemTemplateProperty.SetDefault(_xmlEditor, XmlEditorDefaultOptionItem);
                     Delight.XmlEditor.Label1TemplateProperty.SetDefault(_xmlEditor, XmlEditorLabel1);
+                    Delight.XmlEditor.AssetOptionItemTemplateProperty.SetDefault(_xmlEditor, XmlEditorAssetOptionItem);
+                    Delight.XmlEditor.RawImage1TemplateProperty.SetDefault(_xmlEditor, XmlEditorRawImage1);
+                    Delight.XmlEditor.Label2TemplateProperty.SetDefault(_xmlEditor, XmlEditorLabel2);
                     Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorDebugTextLabel);
                     Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditLeftMargin);
                     Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersLabel);
@@ -935,27 +1005,27 @@ namespace Delight
             }
         }
 
-        private static Template _xmlEditorListItem1;
-        public static Template XmlEditorListItem1
+        private static Template _xmlEditorDefaultOptionItem;
+        public static Template XmlEditorDefaultOptionItem
         {
             get
             {
 #if UNITY_EDITOR
-                if (_xmlEditorListItem1 == null || _xmlEditorListItem1.CurrentVersion != Template.Version)
+                if (_xmlEditorDefaultOptionItem == null || _xmlEditorDefaultOptionItem.CurrentVersion != Template.Version)
 #else
-                if (_xmlEditorListItem1 == null)
+                if (_xmlEditorDefaultOptionItem == null)
 #endif
                 {
-                    _xmlEditorListItem1 = new Template(ListItemTemplates.ListItem);
+                    _xmlEditorDefaultOptionItem = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
-                    _xmlEditorListItem1.Name = "XmlEditorListItem1";
+                    _xmlEditorDefaultOptionItem.Name = "XmlEditorDefaultOptionItem";
 #endif
-                    Delight.ListItem.WidthProperty.SetDefault(_xmlEditorListItem1, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.ListItem.HeightProperty.SetDefault(_xmlEditorListItem1, new ElementSize(20f, ElementSizeUnit.Pixels));
-                    Delight.ListItem.BackgroundColorProperty.SetDefault(_xmlEditorListItem1, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
-                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _xmlEditorListItem1, new UnityEngine.Color(0.7843137f, 0.7843137f, 0.7843137f, 1f));
+                    Delight.ListItem.WidthProperty.SetDefault(_xmlEditorDefaultOptionItem, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.ListItem.HeightProperty.SetDefault(_xmlEditorDefaultOptionItem, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.BackgroundColorProperty.SetDefault(_xmlEditorDefaultOptionItem, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _xmlEditorDefaultOptionItem, new UnityEngine.Color(0.7843137f, 0.7843137f, 0.7843137f, 1f));
                 }
-                return _xmlEditorListItem1;
+                return _xmlEditorDefaultOptionItem;
             }
         }
 
@@ -988,6 +1058,86 @@ namespace Delight
                     Delight.Label.TextProperty.SetHasBinding(_xmlEditorLabel1);
                 }
                 return _xmlEditorLabel1;
+            }
+        }
+
+        private static Template _xmlEditorAssetOptionItem;
+        public static Template XmlEditorAssetOptionItem
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorAssetOptionItem == null || _xmlEditorAssetOptionItem.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorAssetOptionItem == null)
+#endif
+                {
+                    _xmlEditorAssetOptionItem = new Template(ListItemTemplates.ListItem);
+#if UNITY_EDITOR
+                    _xmlEditorAssetOptionItem.Name = "XmlEditorAssetOptionItem";
+#endif
+                    Delight.ListItem.WidthProperty.SetDefault(_xmlEditorAssetOptionItem, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.ListItem.HeightProperty.SetDefault(_xmlEditorAssetOptionItem, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.ListItem.BackgroundColorProperty.SetDefault(_xmlEditorAssetOptionItem, new UnityEngine.Color(0.8862745f, 0.8862745f, 0.8862745f, 1f));
+                    Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _xmlEditorAssetOptionItem, new UnityEngine.Color(0.7843137f, 0.7843137f, 0.7843137f, 1f));
+                }
+                return _xmlEditorAssetOptionItem;
+            }
+        }
+
+        private static Template _xmlEditorRawImage1;
+        public static Template XmlEditorRawImage1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorRawImage1 == null || _xmlEditorRawImage1.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorRawImage1 == null)
+#endif
+                {
+                    _xmlEditorRawImage1 = new Template(RawImageTemplates.RawImage);
+#if UNITY_EDITOR
+                    _xmlEditorRawImage1.Name = "XmlEditorRawImage1";
+#endif
+                    Delight.RawImage.WidthProperty.SetDefault(_xmlEditorRawImage1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.RawImage.HeightProperty.SetDefault(_xmlEditorRawImage1, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.RawImage.AlignmentProperty.SetDefault(_xmlEditorRawImage1, Delight.ElementAlignment.Left);
+                    Delight.RawImage.TextureProperty.SetHasBinding(_xmlEditorRawImage1);
+                }
+                return _xmlEditorRawImage1;
+            }
+        }
+
+        private static Template _xmlEditorLabel2;
+        public static Template XmlEditorLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorLabel2 == null || _xmlEditorLabel2.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorLabel2 == null)
+#endif
+                {
+                    _xmlEditorLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _xmlEditorLabel2.Name = "XmlEditorLabel2";
+#endif
+                    Delight.Label.WidthProperty.SetDefault(_xmlEditorLabel2, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.HeightProperty.SetDefault(_xmlEditorLabel2, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_xmlEditorLabel2, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.RichTextProperty.SetDefault(_xmlEditorLabel2, true);
+                    Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorLabel2, TMPro.TextOverflowModes.Truncate);
+                    Delight.Label.EnableWordWrappingProperty.SetDefault(_xmlEditorLabel2, false);
+                    Delight.Label.FontProperty.SetDefault(_xmlEditorLabel2, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLabel2, 20f);
+                    Delight.Label.FontColorProperty.SetDefault(_xmlEditorLabel2, new UnityEngine.Color(0.3568628f, 0.3568628f, 0.3568628f, 1f));
+                    Delight.Label.MarginProperty.SetDefault(_xmlEditorLabel2, new ElementMargin(new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorLabel2, TMPro.TextAlignmentOptions.TopLeft);
+                    Delight.Label.TextProperty.SetHasBinding(_xmlEditorLabel2);
+                }
+                return _xmlEditorLabel2;
             }
         }
 

@@ -20,12 +20,17 @@
         <!-- Auto-complete -->
         <Region Id="AutoCompleteBox" Width="300" Height="150" Alignment="TopLeft" BackgroundColor="#E2E2E2" IsVisible="False">
           <List Id="AutoCompleteOptionsList" Items="{option in AutoCompleteOptions}" IsScrollable="True" Width="100%" Height="150" BackgroundColor="#E2E2E2"
-                SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True">
+                SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True" TemplateSelector="AutoCompleteOptionSelector">
             
             <!--Selected-BackgroundColor="#C6C6C6"-->
-            <ListItem Width="100%" Height="20" BackgroundColor="#E2E2E2" Selected-BackgroundColor="#C8C8C8" Click="AutoCompleteOptionSelected(option)">
+            <ListItem Id="DefaultOptionItem" Width="100%" Height="20" BackgroundColor="#E2E2E2" Selected-BackgroundColor="#C8C8C8" Click="AutoCompleteOptionSelected(option)">
               <Label Text="{option.DisplayText}" Width="100%" Height="21" Alignment="TopLeft" RichText="True" OverflowMode="Truncate" EnableWordWrapping="False"
                  Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Margin="0,0,0,0" TextAlignment="TopLeft" />
+            </ListItem>
+            <ListItem Id="AssetOptionItem" Width="100%" Height="20" BackgroundColor="#E2E2E2" Selected-BackgroundColor="#C8C8C8" Click="AutoCompleteOptionSelected(option)">
+              <RawImage Texture="{option.PreviewThumbnail}" Width="20" Height="20" Alignment="Left" />
+              <Label Text="{option.DisplayText}" Width="100%" Height="21" Alignment="TopLeft" RichText="True" OverflowMode="Truncate" EnableWordWrapping="False"
+                 Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Margin="25,0,0,0" TextAlignment="TopLeft" />
             </ListItem>
           </List>
 

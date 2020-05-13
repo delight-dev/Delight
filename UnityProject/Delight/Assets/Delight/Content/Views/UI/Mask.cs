@@ -18,8 +18,7 @@ namespace Delight
         /// </summary>
         protected override void BeforeLoad()
         {
-            base.BeforeLoad();
-
+            base.BeforeLoad();            
             MaskComponent = GameObject.AddComponent<UnityEngine.UI.Mask>();
         }
     }
