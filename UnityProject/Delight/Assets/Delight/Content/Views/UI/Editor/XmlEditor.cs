@@ -198,9 +198,9 @@ namespace Delight
                 }
             }
 
-            if (((mouseButtonDown && shiftDown) || 
+            if (((mouseButtonDown && shiftDown) ||
                 (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) &&
-                !AutoCompleteBox.IsVisible) 
+                !AutoCompleteBox.IsVisible)
             {
                 // if we've dragged beyond a certain threshold update selection (or if we shift+mouse click)
                 Vector3 delta = _mouseDownPosition - Input.mousePosition;
@@ -221,7 +221,7 @@ namespace Delight
             }
 
             if (Input.anyKey && IsFocused)
-            {                
+            {
                 if (ctrlDown)
                 {
                     // handle control commands
@@ -242,7 +242,7 @@ namespace Delight
         {
             return XmlTextLabel.TextMeshProUGUI.text;
         }
-       
+
         /// <summary>
         /// Selects the word at the current caret position.
         /// </summary>
@@ -469,7 +469,7 @@ namespace Delight
                     case KeyCode.Return:
                         // if autocomplete active, complete selected suggestion and break
                         if (AutoCompleteBox.IsVisible)
-                        {                            
+                        {
                             activateAutoComplete = FinishAutoComplete();
                             break;
                         }
@@ -484,7 +484,7 @@ namespace Delight
                         int indentLevel = 0;
                         bool hasGottenIndentLevel = false;
                         bool addIndentation = false;
-                        
+
                         if (_caretElement == XmlSyntaxElement.PropertyName || _caretElement == XmlSyntaxElement.ViewName)
                         {
                             if (_caretX >= _lines[_caretY].Length && _lines[_caretY].Length > 0)
@@ -647,7 +647,7 @@ namespace Delight
                                 _selectionTargetY = _selectionOriginY;
                             }
                         }
-                        
+
                         --_caretX;
                         if (_caretX < 0)
                         {
@@ -885,7 +885,7 @@ namespace Delight
                             DeleteSelection();
                         }
                         // add ="" if caret isn't in a property value or comment
-                        if (_caretElement != XmlSyntaxElement.PropertyValue && _caretElement != XmlSyntaxElement.EndPropertyValue && 
+                        if (_caretElement != XmlSyntaxElement.PropertyValue && _caretElement != XmlSyntaxElement.EndPropertyValue &&
                             _caretElement != XmlSyntaxElement.BeginPropertyValue && _caretElement != XmlSyntaxElement.Comment && _caretElement != XmlSyntaxElement.EndComment)
                         {
                             _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c + "\"\"");
@@ -1006,7 +1006,7 @@ namespace Delight
                             if (previousChar < 0 || previousChar >= _lines[_caretY].Length ||
                                 _lines[_caretY][previousChar] != '<')
                             {
-                                str = "<" + str;                                
+                                str = "<" + str;
                             }
 
                             activateAutoComplete = true;
@@ -1019,7 +1019,7 @@ namespace Delight
                         }
 
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, str);
-                        _caretX += str.Length;                        
+                        _caretX += str.Length;
                         break;
                 }
 
@@ -1153,7 +1153,7 @@ namespace Delight
 
             _caretX = startChar;
             _caretY = startLine;
-        }    
+        }
 
         /// <summary>
         /// Gets indendation level and viewname of the next line.
@@ -1275,7 +1275,7 @@ namespace Delight
                     if (pasteLines[0].Length == 1)
                     {
                         _lines[_caretY] = leftStr + pasteLines[0] + rightStr;
-                        _caretX += pasteLines[0].Length;                        
+                        _caretX += pasteLines[0].Length;
                     }
                     else
                     {
@@ -1324,7 +1324,7 @@ namespace Delight
                 Edit.Invoke(this, null);
             }
         }
-            
+
         /// <summary>
         /// Called after the view has been loaded.
         /// </summary>
@@ -1684,7 +1684,7 @@ namespace Delight
                 switch (_caretElement)
                 {
                     case XmlSyntaxElement.ViewName:
-                    case XmlSyntaxElement.BeginViewName:                    
+                    case XmlSyntaxElement.BeginViewName:
                         foreach (var view in DesignerViews)
                         {
                             _autoCompleteOptions.Add(new AutoCompleteOption { Text = view.Name });
@@ -1693,26 +1693,64 @@ namespace Delight
 
                     case XmlSyntaxElement.EndViewName:
                     case XmlSyntaxElement.PropertyName:
-                        // get property names from current view
-                        var viewNameAtCaret = GetViewAtCaret();
-                        var viewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewNameAtCaret);
-                        if (viewAtCaret == null)
-                            break;
-
-                        var properties = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).OrderBy(x => x.Declaration.PropertyName);
-                        foreach (var property in properties)
                         {
-                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
+                            // get property names from current view
+                            var viewNameAtCaret = GetViewAtCaret();
+                            var viewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewNameAtCaret);
+                            if (viewAtCaret == null)
+                                break;
+
+                            var properties = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).OrderBy(x => x.Declaration.PropertyName);
+                            foreach (var property in properties)
+                            {
+                                if (property.Declaration.DeclarationType == PropertyDeclarationType.Template ||
+                                    property.Declaration.DeclarationType == PropertyDeclarationType.UnityComponent ||
+                                    property.Declaration.DeclarationType == PropertyDeclarationType.View)
+                                    continue; // ignore properties not set from XML
+
+                                _autoCompleteOptions.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
+                            }
                         }
                         break;
 
                     case XmlSyntaxElement.PropertyValue:
                     case XmlSyntaxElement.EndPropertyValue:
-                        // TODO populate enum and asset auto-complete
-                        //for (int i = 0; i < 20; ++i)
-                        //{
-                        //    _autoCompleteOptions.Add(new AutoCompleteOption { Text = "Value" + i });
-                        //}
+                        {
+                            var viewNameAtCaret = GetViewAtCaret();
+                            var viewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewNameAtCaret);
+                            if (viewAtCaret == null)
+                                break; 
+
+                            var propertyNameAtCaret = GetPropertyAtCaret();
+                            var property = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).FirstOrDefault(x => x.Declaration.PropertyName == propertyNameAtCaret);
+                            if (property == null)
+                                break;
+
+                            if (property.IsAssetReference)
+                            {
+                                // populate depending on asset type
+                                var contentObjectModel = ContentObjectModel.GetInstance();
+                                var assetObjects = contentObjectModel.AssetBundleObjects.SelectMany(x => x.AssetObjects).Where(x => x.Type == property.AssetType).OrderBy(x => x.Name).ToList();
+                                foreach (var assetObject in assetObjects)
+                                {
+                                    _autoCompleteOptions.Add(new AutoCompleteOption { Text = assetObject.Name });
+                                }
+                            }
+                            else if (property.Declaration.DeclarationType == PropertyDeclarationType.Default)
+                            {
+                                // see if type is an enum
+                                var type = MasterConfig.GetType(property.Declaration.PropertyTypeName);
+                                if (type != null && type.IsEnum)
+                                {
+                                    var names = Enum.GetNames(type);
+                                    foreach (var name in names.OrderBy(x => x))
+                                    {
+                                        _autoCompleteOptions.Add(new AutoCompleteOption { Text = name });
+                                    }
+                                }
+
+                            }
+                        }
                         break;
 
                     default:
@@ -1729,7 +1767,7 @@ namespace Delight
                 {
                     DeactivateAutoComplete();
                     return;
-                }                
+                }
             }
             else
             {
@@ -1790,7 +1828,7 @@ namespace Delight
 
                     int optionLength = option.Text.Length;
                     longestOption = optionLength > longestOption ? optionLength : longestOption;
-                    ++matches; 
+                    ++matches;
                 }
             }
 
@@ -1802,7 +1840,7 @@ namespace Delight
                 float height = matches * LineHeight;
                 if (height > MaxAutoCompleteBoxHeight)
                 {
-                    height = MaxAutoCompleteBoxHeight; 
+                    height = MaxAutoCompleteBoxHeight;
                 }
 
                 AutoCompleteBox.Height = height;
@@ -1821,7 +1859,7 @@ namespace Delight
             for (int lineIndex = _caretY; lineIndex >= 0; --lineIndex)
             {
                 string line = _lines[lineIndex];
-                
+
                 // remove everything in the line within quotes "" so we don't match elements within strings
                 line = QuoteContentRegex.Replace(line, String.Empty);
                 var match = ViewNameStartRegex.Match(line);
@@ -1832,6 +1870,28 @@ namespace Delight
             }
 
             return string.Empty;
+        }
+
+        /// <summary>
+        /// Gets the property name at the current caret position.
+        /// </summary>
+        private string GetPropertyAtCaret()
+        {
+            string line = _lines[_caretY].Substring(0, _caretX);
+            int equalIndex = line.LastIndexOf('=');
+            if (equalIndex < 0)
+            {
+                return string.Empty;
+            }
+
+            line = line.Substring(0, equalIndex);
+            string lastWord = line.Split(' ').LastOrDefault();
+            if (String.IsNullOrEmpty(lastWord))
+            {
+                return string.Empty;
+            }
+
+            return lastWord;
         }
 
         /// <summary>
@@ -1877,7 +1937,7 @@ namespace Delight
                 _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + _lines[_caretY].Substring(_autoCompleteWordTargetX);
                 _caretX = _autoCompleteWordOriginX + option.Text.Length;
                 return false;
-            }            
+            }
         }
 
         /// <summary>
@@ -1891,7 +1951,7 @@ namespace Delight
 
             _autoCompleteWordOriginX = _caretX - 1;
             _autoCompleteWordTargetX = _caretX;
-            
+
             if (_autoCompleteWordOriginX < 0)
                 _autoCompleteWordOriginX = 0;
 
