@@ -68,7 +68,7 @@ GridSplitter: Allows for resizing of columns and rows in the Grid view.
 GridSplitterHandle: Handle used to resize a rows or column in the Grid view. Created and managed by the GridSplitter view.
 - IsEnabled: Boolean indicating if the user can interact with the grid splitter handle.
 
-Group: The group is used to spacially arrange child views next to each other either horizontally or vertically based on the Orientation property.
+Group: The group is used to snug views together either horizontally or vertically.
 - ContentAlignment: Sets the alignment of the child views within the group.
 - Orientation: Sets if the group should arrange its item horizontally or vertically.
 - Spacing: The spacing between the horizontally or vertically arranged child views.
@@ -451,6 +451,7 @@ UIView: Base class for UI views. Has properties for doing layout: Width, Height,
 - HasContentTemplates: Boolean indicating if this view can have content templates defined. 
 - BasedOn: Name of the view this view is based on.
 - LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
+- Style: Name of the style that should be applied to the view. 
 
 View: Base class for views.
 - Id: The identifier of the view.

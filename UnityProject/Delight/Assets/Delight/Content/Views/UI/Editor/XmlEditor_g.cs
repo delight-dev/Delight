@@ -28,7 +28,8 @@ namespace Delight
             TextSelection = new CanvasRendererView(this, XmlTextRegion.Content, "TextSelection", TextSelectionTemplate);
             XmlTextLabel = new Label(this, XmlTextRegion.Content, "XmlTextLabel", XmlTextLabelTemplate);
             Caret = new Label(this, XmlTextRegion.Content, "Caret", CaretTemplate);
-            AutoCompleteBox = new Region(this, XmlTextRegion.Content, "AutoCompleteBox", AutoCompleteBoxTemplate);
+            UICanvas1 = new UICanvas(this, XmlTextRegion.Content, "UICanvas1", UICanvas1Template);
+            AutoCompleteBox = new Region(this, UICanvas1.Content, "AutoCompleteBox", AutoCompleteBoxTemplate);
             AutoCompleteOptionsList = new List(this, AutoCompleteBox.Content, "AutoCompleteOptionsList", AutoCompleteOptionsListTemplate);
             AutoCompleteOptionsList.TemplateSelector.RegisterMethod(this, "AutoCompleteOptionSelector");
 
@@ -70,7 +71,7 @@ namespace Delight
                 return assetOptionItem;
             }, typeof(ListItem), "AssetOptionItem"));
             DebugTextLabel = new Label(this, AutoCompleteBox.Content, "DebugTextLabel", DebugTextLabelTemplate);
-            TooltipBox = new Frame(this, XmlTextRegion.Content, "TooltipBox", TooltipBoxTemplate);
+            TooltipBox = new Frame(this, UICanvas1.Content, "TooltipBox", TooltipBoxTemplate);
             TooltipLabel = new Label(this, TooltipBox.Content, "TooltipLabel", TooltipLabelTemplate);
             Image1 = new Image(this, TooltipBox.Content, "Image1", Image1Template);
             XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
@@ -106,6 +107,8 @@ namespace Delight
             dependencyProperties.Add(XmlTextLabelTemplateProperty);
             dependencyProperties.Add(CaretProperty);
             dependencyProperties.Add(CaretTemplateProperty);
+            dependencyProperties.Add(UICanvas1Property);
+            dependencyProperties.Add(UICanvas1TemplateProperty);
             dependencyProperties.Add(AutoCompleteBoxProperty);
             dependencyProperties.Add(AutoCompleteBoxTemplateProperty);
             dependencyProperties.Add(AutoCompleteOptionsListProperty);
@@ -270,6 +273,20 @@ namespace Delight
         {
             get { return CaretTemplateProperty.GetValue(this); }
             set { CaretTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<UICanvas> UICanvas1Property = new DependencyProperty<UICanvas>("UICanvas1");
+        public UICanvas UICanvas1
+        {
+            get { return UICanvas1Property.GetValue(this); }
+            set { UICanvas1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> UICanvas1TemplateProperty = new DependencyProperty<Template>("UICanvas1Template");
+        public Template UICanvas1Template
+        {
+            get { return UICanvas1TemplateProperty.GetValue(this); }
+            set { UICanvas1TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> AutoCompleteBoxProperty = new DependencyProperty<Region>("AutoCompleteBox");
@@ -509,6 +526,7 @@ namespace Delight
                     Delight.XmlEditor.TextSelectionTemplateProperty.SetDefault(_xmlEditor, XmlEditorTextSelection);
                     Delight.XmlEditor.XmlTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlTextLabel);
                     Delight.XmlEditor.CaretTemplateProperty.SetDefault(_xmlEditor, XmlEditorCaret);
+                    Delight.XmlEditor.UICanvas1TemplateProperty.SetDefault(_xmlEditor, XmlEditorUICanvas1);
                     Delight.XmlEditor.AutoCompleteBoxTemplateProperty.SetDefault(_xmlEditor, XmlEditorAutoCompleteBox);
                     Delight.XmlEditor.AutoCompleteOptionsListTemplateProperty.SetDefault(_xmlEditor, XmlEditorAutoCompleteOptionsList);
                     Delight.XmlEditor.DefaultOptionItemTemplateProperty.SetDefault(_xmlEditor, XmlEditorDefaultOptionItem);
@@ -839,6 +857,28 @@ namespace Delight
                     Delight.Label.AlignmentProperty.SetDefault(_xmlEditorCaret, Delight.ElementAlignment.TopLeft);
                 }
                 return _xmlEditorCaret;
+            }
+        }
+
+        private static Template _xmlEditorUICanvas1;
+        public static Template XmlEditorUICanvas1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorUICanvas1 == null || _xmlEditorUICanvas1.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorUICanvas1 == null)
+#endif
+                {
+                    _xmlEditorUICanvas1 = new Template(UICanvasTemplates.UICanvas);
+#if UNITY_EDITOR
+                    _xmlEditorUICanvas1.Name = "XmlEditorUICanvas1";
+#endif
+                    Delight.UICanvas.SortingOrderProperty.SetDefault(_xmlEditorUICanvas1, 1);
+                    Delight.UICanvas.OverrideSortingProperty.SetDefault(_xmlEditorUICanvas1, true);
+                }
+                return _xmlEditorUICanvas1;
             }
         }
 
