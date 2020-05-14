@@ -39,6 +39,13 @@
                  Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="200,0,0,0" TextAlignment="TopLeft"
                  IsVisible="False" /> <!-- TODO cleanup -->
         </Region>
+
+        <!-- Tooltip -->
+        <Frame Id="TooltipBox" BackgroundColor="#cee7d2" Alignment="TopLeft" IsVisible="False">
+          <Label Id="TooltipLabel" Text="TooltipLabel" Font="Segoe UI SDF" FontSize="14" AutoSize="True" Margin="5,0,5,0" />
+          <Image Sprite="TooltipArrow" Alignment="BottomLeft" Offset="10,6,0,0" Color="#cee7d2" />
+        </Frame>
+        
       </Region>
     
       <Region Id="XmlEditLeftMargin" Width="50" Height="21" Alignment="TopLeft" Offset="0" Margin="0" BackgroundColor="#fbfbfb"> 

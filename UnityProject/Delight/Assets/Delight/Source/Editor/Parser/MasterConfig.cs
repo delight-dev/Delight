@@ -354,6 +354,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(2, AsReference = true)]
         public List<DocProperty> Properties;
 
+        [ProtoMember(3)]
+        public string Comment;
+
         public DocObject()
         {
             Properties = new List<DocProperty>();

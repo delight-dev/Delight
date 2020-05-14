@@ -70,6 +70,9 @@ namespace Delight
                 return assetOptionItem;
             }, typeof(ListItem), "AssetOptionItem"));
             DebugTextLabel = new Label(this, AutoCompleteBox.Content, "DebugTextLabel", DebugTextLabelTemplate);
+            TooltipBox = new Frame(this, XmlTextRegion.Content, "TooltipBox", TooltipBoxTemplate);
+            TooltipLabel = new Label(this, TooltipBox.Content, "TooltipLabel", TooltipLabelTemplate);
+            Image1 = new Image(this, TooltipBox.Content, "Image1", Image1Template);
             XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
             LineNumbersLabel = new Label(this, XmlEditLeftMargin.Content, "LineNumbersLabel", LineNumbersLabelTemplate);
             LineNumbersRightBorder = new Region(this, XmlEditLeftMargin.Content, "LineNumbersRightBorder", LineNumbersRightBorderTemplate);
@@ -119,6 +122,12 @@ namespace Delight
             dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(DebugTextLabelProperty);
             dependencyProperties.Add(DebugTextLabelTemplateProperty);
+            dependencyProperties.Add(TooltipBoxProperty);
+            dependencyProperties.Add(TooltipBoxTemplateProperty);
+            dependencyProperties.Add(TooltipLabelProperty);
+            dependencyProperties.Add(TooltipLabelTemplateProperty);
+            dependencyProperties.Add(Image1Property);
+            dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(XmlEditLeftMarginProperty);
             dependencyProperties.Add(XmlEditLeftMarginTemplateProperty);
             dependencyProperties.Add(LineNumbersLabelProperty);
@@ -372,6 +381,48 @@ namespace Delight
             set { DebugTextLabelTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Frame> TooltipBoxProperty = new DependencyProperty<Frame>("TooltipBox");
+        public Frame TooltipBox
+        {
+            get { return TooltipBoxProperty.GetValue(this); }
+            set { TooltipBoxProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> TooltipBoxTemplateProperty = new DependencyProperty<Template>("TooltipBoxTemplate");
+        public Template TooltipBoxTemplate
+        {
+            get { return TooltipBoxTemplateProperty.GetValue(this); }
+            set { TooltipBoxTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> TooltipLabelProperty = new DependencyProperty<Label>("TooltipLabel");
+        public Label TooltipLabel
+        {
+            get { return TooltipLabelProperty.GetValue(this); }
+            set { TooltipLabelProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> TooltipLabelTemplateProperty = new DependencyProperty<Template>("TooltipLabelTemplate");
+        public Template TooltipLabelTemplate
+        {
+            get { return TooltipLabelTemplateProperty.GetValue(this); }
+            set { TooltipLabelTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
+        public Image Image1
+        {
+            get { return Image1Property.GetValue(this); }
+            set { Image1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image1TemplateProperty = new DependencyProperty<Template>("Image1Template");
+        public Template Image1Template
+        {
+            get { return Image1TemplateProperty.GetValue(this); }
+            set { Image1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> XmlEditLeftMarginProperty = new DependencyProperty<Region>("XmlEditLeftMargin");
         public Region XmlEditLeftMargin
         {
@@ -463,6 +514,9 @@ namespace Delight
                     Delight.XmlEditor.RawImage1TemplateProperty.SetDefault(_xmlEditor, XmlEditorRawImage1);
                     Delight.XmlEditor.Label2TemplateProperty.SetDefault(_xmlEditor, XmlEditorLabel2);
                     Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorDebugTextLabel);
+                    Delight.XmlEditor.TooltipBoxTemplateProperty.SetDefault(_xmlEditor, XmlEditorTooltipBox);
+                    Delight.XmlEditor.TooltipLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorTooltipLabel);
+                    Delight.XmlEditor.Image1TemplateProperty.SetDefault(_xmlEditor, XmlEditorImage1);
                     Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditLeftMargin);
                     Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersLabel);
                     Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersRightBorder);
@@ -1170,6 +1224,78 @@ namespace Delight
                     Delight.Label.IsVisibleProperty.SetDefault(_xmlEditorDebugTextLabel, false);
                 }
                 return _xmlEditorDebugTextLabel;
+            }
+        }
+
+        private static Template _xmlEditorTooltipBox;
+        public static Template XmlEditorTooltipBox
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorTooltipBox == null || _xmlEditorTooltipBox.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorTooltipBox == null)
+#endif
+                {
+                    _xmlEditorTooltipBox = new Template(FrameTemplates.Frame);
+#if UNITY_EDITOR
+                    _xmlEditorTooltipBox.Name = "XmlEditorTooltipBox";
+#endif
+                    Delight.Frame.BackgroundColorProperty.SetDefault(_xmlEditorTooltipBox, new UnityEngine.Color(0.8078431f, 0.9058824f, 0.8235294f, 1f));
+                    Delight.Frame.AlignmentProperty.SetDefault(_xmlEditorTooltipBox, Delight.ElementAlignment.TopLeft);
+                    Delight.Frame.IsVisibleProperty.SetDefault(_xmlEditorTooltipBox, false);
+                }
+                return _xmlEditorTooltipBox;
+            }
+        }
+
+        private static Template _xmlEditorTooltipLabel;
+        public static Template XmlEditorTooltipLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorTooltipLabel == null || _xmlEditorTooltipLabel.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorTooltipLabel == null)
+#endif
+                {
+                    _xmlEditorTooltipLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _xmlEditorTooltipLabel.Name = "XmlEditorTooltipLabel";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_xmlEditorTooltipLabel, "TooltipLabel");
+                    Delight.Label.FontProperty.SetDefault(_xmlEditorTooltipLabel, Assets.TMP_FontAssets["Segoe UI SDF"]);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorTooltipLabel, 14f);
+                    Delight.Label.AutoSizeProperty.SetDefault(_xmlEditorTooltipLabel, Delight.AutoSize.Default);
+                    Delight.Label.MarginProperty.SetDefault(_xmlEditorTooltipLabel, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _xmlEditorTooltipLabel;
+            }
+        }
+
+        private static Template _xmlEditorImage1;
+        public static Template XmlEditorImage1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorImage1 == null || _xmlEditorImage1.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorImage1 == null)
+#endif
+                {
+                    _xmlEditorImage1 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _xmlEditorImage1.Name = "XmlEditorImage1";
+#endif
+                    Delight.Image.SpriteProperty.SetDefault(_xmlEditorImage1, Assets.Sprites["TooltipArrow"]);
+                    Delight.Image.AlignmentProperty.SetDefault(_xmlEditorImage1, Delight.ElementAlignment.BottomLeft);
+                    Delight.Image.OffsetProperty.SetDefault(_xmlEditorImage1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(6f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Image.ColorProperty.SetDefault(_xmlEditorImage1, new UnityEngine.Color(0.8078431f, 0.9058824f, 0.8235294f, 1f));
+                }
+                return _xmlEditorImage1;
             }
         }
 

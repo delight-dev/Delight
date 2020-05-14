@@ -1,4 +1,4 @@
 <UIImageView xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
              BasedOn="UIView" ImageComponent="t:UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null" 
-             m.ImageComponent="Background" HideInDesigner="True">
+             m.ImageComponent="Background">
 </UIImageView> 

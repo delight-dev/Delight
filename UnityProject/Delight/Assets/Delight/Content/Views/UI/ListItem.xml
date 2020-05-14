@@ -11,7 +11,6 @@
           MouseDown="ListItemMouseDown"
           MouseUp="ListItemMouseUp"
           ContentTemplateData="t:ContentTemplateData"
-          HideInDesigner="True"
           SetListItemState="at:bool"
           RaycastBlockMode="Always">
 </ListItem> 

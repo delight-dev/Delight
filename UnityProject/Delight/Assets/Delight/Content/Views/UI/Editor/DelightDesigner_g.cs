@@ -1540,6 +1540,9 @@ namespace Delight
                     Delight.XmlEditor.RawImage1TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorRawImage1);
                     Delight.XmlEditor.Label2TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLabel2);
                     Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorDebugTextLabel);
+                    Delight.XmlEditor.TooltipBoxTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorTooltipBox);
+                    Delight.XmlEditor.TooltipLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorTooltipLabel);
+                    Delight.XmlEditor.Image1TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorImage1);
                     Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditLeftMargin);
                     Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersLabel);
                     Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersRightBorder);
@@ -2140,6 +2143,66 @@ namespace Delight
 #endif
                 }
                 return _delightDesignerXmlEditorDebugTextLabel;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorTooltipBox;
+        public static Template DelightDesignerXmlEditorTooltipBox
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorTooltipBox == null || _delightDesignerXmlEditorTooltipBox.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorTooltipBox == null)
+#endif
+                {
+                    _delightDesignerXmlEditorTooltipBox = new Template(XmlEditorTemplates.XmlEditorTooltipBox);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorTooltipBox.Name = "DelightDesignerXmlEditorTooltipBox";
+#endif
+                }
+                return _delightDesignerXmlEditorTooltipBox;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorTooltipLabel;
+        public static Template DelightDesignerXmlEditorTooltipLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorTooltipLabel == null || _delightDesignerXmlEditorTooltipLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorTooltipLabel == null)
+#endif
+                {
+                    _delightDesignerXmlEditorTooltipLabel = new Template(XmlEditorTemplates.XmlEditorTooltipLabel);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorTooltipLabel.Name = "DelightDesignerXmlEditorTooltipLabel";
+#endif
+                }
+                return _delightDesignerXmlEditorTooltipLabel;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorImage1;
+        public static Template DelightDesignerXmlEditorImage1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorImage1 == null || _delightDesignerXmlEditorImage1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorImage1 == null)
+#endif
+                {
+                    _delightDesignerXmlEditorImage1 = new Template(XmlEditorTemplates.XmlEditorImage1);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorImage1.Name = "DelightDesignerXmlEditorImage1";
+#endif
+                }
+                return _delightDesignerXmlEditorImage1;
             }
         }
 

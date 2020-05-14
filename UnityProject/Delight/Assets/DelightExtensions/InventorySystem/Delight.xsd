@@ -6423,36 +6423,6 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="Canvas" type="xs:string" />
-    <xs:attribute name="CanvasScaler" type="xs:string" />
-    <xs:attribute name="GraphicRaycaster" type="xs:string" />
-    <xs:attribute name="RenderCamera" type="xs:string" />
-    <xs:attribute name="RenderMode" type="Enum_RenderMode" />
-    <xs:attribute name="ScaleFactor" type="xs:string" />
-    <xs:attribute name="ReferencePixelsPerUnit" type="xs:string" />
-    <xs:attribute name="OverridePixelPerfect" type="xs:string" />
-    <xs:attribute name="PixelPerfect" type="xs:string" />
-    <xs:attribute name="PlaneDistance" type="xs:string" />
-    <xs:attribute name="OverrideSorting" type="xs:string" />
-    <xs:attribute name="SortingOrder" type="xs:string" />
-    <xs:attribute name="TargetDisplay" type="xs:string" />
-    <xs:attribute name="SortingLayerID" type="xs:string" />
-    <xs:attribute name="AdditionalShaderChannels" type="Enum_AdditionalCanvasShaderChannels" />
-    <xs:attribute name="SortingLayerName" type="xs:string" />
-    <xs:attribute name="WorldCamera" type="xs:string" />
-    <xs:attribute name="NormalizedSortingGridSize" type="xs:string" />
-    <xs:attribute name="UiScaleMode" type="Enum_ScaleMode" />
-    <xs:attribute name="CanvasScalerReferencePixelsPerUnit" type="xs:string" />
-    <xs:attribute name="CanvasScalerScaleFactor" type="xs:string" />
-    <xs:attribute name="ReferenceResolution" type="xs:string" />
-    <xs:attribute name="ScreenMatchMode" type="Enum_ScreenMatchMode" />
-    <xs:attribute name="MatchWidthOrHeight" type="xs:string" />
-    <xs:attribute name="PhysicalUnit" type="Enum_Unit" />
-    <xs:attribute name="FallbackScreenDPI" type="xs:string" />
-    <xs:attribute name="DefaultSpriteDPI" type="xs:string" />
-    <xs:attribute name="DynamicPixelsPerUnit" type="xs:string" />
-    <xs:attribute name="IgnoreReversedGraphics" type="xs:string" />
-    <xs:attribute name="BlockingObjects" type="Enum_BlockingObjects" />
     <xs:attribute name="ActualWidth" type="xs:string" />
     <xs:attribute name="ActualHeight" type="xs:string" />
     <xs:attribute name="IsFullScreen" type="xs:string" />
@@ -8610,6 +8580,7 @@
       <xs:enumeration value="RadioButtonPressed" />
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
+      <xs:enumeration value="TooltipArrow" />
       <xs:enumeration value="audionautbg" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
@@ -8642,6 +8613,7 @@
 
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="TooltipArrow" />
       <xs:enumeration value="bluefloral01" />
     </xs:restriction>
   </xs:simpleType>

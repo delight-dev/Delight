@@ -1,4 +1,4 @@
-﻿Button  
+﻿Button
 - AutoSize: Enum indicating if and how the button should automatically resize itself to the size of the text. 
 - CanToggleOff: Boolean indicating if the button can be toggled off.
 - CanToggleOn: Boolean indicating if the button can be toggled on.

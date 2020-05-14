@@ -17,8 +17,7 @@
            Scroll="t:Action"
            Select="t:Action"
            Submit="t:Action"
-           UpdateSelected="t:Action"
-           HideInDesigner="True">
+           UpdateSelected="t:Action">
 </SceneObjectView>
 
 <!-- 

@@ -40,6 +40,8 @@ namespace Delight
         public static float DoubleClickDelay = 0.5f;
         public static float CaretRepeatDelay = 0.5f;
         public static float CaretRepeatRate = 1.15f;
+        public static float TooltipOffset = 0;
+        public static float TooltipDelay = 0.30f;
         public static float MaxAutoCompleteBoxHeight = 150;
         public static Regex ViewNameStartRegex = new Regex(@"(?<=<)[A-Za-z0-9_]+(?=[\s>/])");
         public static Regex QuoteContentRegex = new Regex(@"""(\\""|[^""])*"""); // "(\\"|[^"])*"
@@ -57,6 +59,9 @@ namespace Delight
         private float _keyDownDelayTimeElapsed;
         private float _keyDownRepeatTimeElapsed;
         private float _mouseClickStart;
+        private float _tooltipHoverTimeElapsed;
+        private string _lastViewHover;
+        private string _lastWordHover;
         private Mesh _selectionMesh = new Mesh();
         private int _selectionOriginX;
         private int _selectionOriginY;
@@ -133,10 +138,12 @@ namespace Delight
             bool mouseButtonDown = false;
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
             ScrollableRegion.ScrollEnabled = scrollEngaged;
+            bool containsMouse = ContainsMouse(Input.mousePosition);
 
+            // handle mouse clicks
             if (Input.GetMouseButtonDown(0))
             {
-                if (!ContainsMouse(Input.mousePosition))
+                if (!containsMouse)
                 {
                     // user has clicked outside the editor - deselect and deactivate caret
                     IsFocused = false;
@@ -199,6 +206,7 @@ namespace Delight
                 }
             }
 
+            // handle mouse drags
             if (((mouseButtonDown && shiftDown) ||
                 (Input.GetMouseButton(0) && _clickedInsideEditor && !scrollEngaged && !mouseButtonDown)) &&
                 !AutoCompleteBox.IsVisible)
@@ -221,6 +229,79 @@ namespace Delight
                 }
             }
 
+            // handle tooltip hovers
+            if (containsMouse)
+            {
+                // TODO show tooltip after mouse hovers for now always show the tooltip
+                GetMouseCaretPosition(out var caretX, out var caretY);
+
+                var viewAtCaret = GetViewAtCaret(caretY);
+                var wordAtCaret = GetWordAtCaret(caretX, caretY, out var originX, out var targetX);
+
+                if (viewAtCaret == _lastViewHover && wordAtCaret == _lastWordHover)
+                {
+                    _tooltipHoverTimeElapsed += Time.deltaTime;
+                }
+                else
+                {
+                    DeactivateTooltip();
+                }
+
+                _lastViewHover = viewAtCaret;
+                _lastWordHover = wordAtCaret;
+
+                if (_tooltipHoverTimeElapsed >= TooltipDelay)
+                {
+                    if (String.IsNullOrEmpty(viewAtCaret) || String.IsNullOrEmpty(wordAtCaret))
+                    {
+                        DeactivateTooltip();
+                    }
+                    else if (wordAtCaret == viewAtCaret)
+                    {
+                        // hovering over view
+                        var comment = GetElementDoc(viewAtCaret);
+                        if (!String.IsNullOrWhiteSpace(comment))
+                        {
+                            TooltipLabel.Text = comment;
+                            TooltipBox.IsVisible = true;
+                        }
+                        else
+                        {
+                            DeactivateTooltip();
+                        }
+                    }
+                    else
+                    {
+                        // hovering over a word inside view tag
+                        // see if word has "=" to the right then it's a property name
+                        var comment = GetElementDoc(viewAtCaret, wordAtCaret);
+                        if (!String.IsNullOrWhiteSpace(comment))
+                        {
+                            TooltipLabel.Text = comment;
+                            TooltipBox.IsVisible = true;
+                        }
+                        else
+                        {
+                            DeactivateTooltip();
+                        }
+                    }
+
+                    if (TooltipBox.IsVisible)
+                    {
+                        // position tooltip box
+                        if (TooltipBox.OffsetFromParent == null)
+                            TooltipBox.OffsetFromParent = new ElementMargin();
+                        TooltipBox.OffsetFromParent.Left = CharWidth * originX;
+                        TooltipBox.OffsetFromParent.Top = LineHeight * (caretY - 1) + TooltipOffset;
+                    }
+                }
+            }
+            else
+            {
+                DeactivateTooltip();
+            }
+
+            // handle keyboard input
             if (Input.anyKey && IsFocused)
             {
                 if (ctrlDown)
@@ -234,6 +315,17 @@ namespace Delight
                     HandleKeyInput();
                 }
             }
+        }
+
+        /// <summary>
+        /// Deactivates the tooltip box.
+        /// </summary>
+        private void DeactivateTooltip()
+        {
+            TooltipBox.IsVisible = false;
+            _tooltipHoverTimeElapsed = 0;
+            _lastViewHover = null;
+            _lastWordHover = null;
         }
 
         /// <summary>
@@ -589,7 +681,7 @@ namespace Delight
                             activateAutoComplete = FinishAutoComplete();
                             break;
                         }
-                        
+
                         if (_hasSelection)
                         {
                             DeleteSelection();
@@ -1677,7 +1769,7 @@ namespace Delight
         /// </summary>
         private void ActivateAutoComplete()
         {
-            string wordAtCaret = GetWordAtCaret();
+            string wordAtCaret = GetWordAtCaret(out _autoCompleteWordOriginX, out _autoCompleteWordTargetX);
             DebugTextLabel.Text = String.Format("{0}: {1}", _caretElement.ToString(), wordAtCaret);
             bool updateOptions = _lastWordAtCaret != wordAtCaret;
             _lastWordAtCaret = wordAtCaret;
@@ -1724,7 +1816,7 @@ namespace Delight
                             var viewNameAtCaret = GetViewAtCaret();
                             var viewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewNameAtCaret);
                             if (viewAtCaret == null)
-                                break; 
+                                break;
 
                             var propertyNameAtCaret = GetPropertyAtCaret();
                             var property = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).FirstOrDefault(x => x.Declaration.PropertyName == propertyNameAtCaret);
@@ -1866,7 +1958,15 @@ namespace Delight
         /// </summary>
         private string GetViewAtCaret()
         {
-            for (int lineIndex = _caretY; lineIndex >= 0; --lineIndex)
+            return GetViewAtCaret(_caretY);
+        }
+
+        /// <summary>
+        /// Gets the view at the specified caret position.
+        /// </summary>
+        private string GetViewAtCaret(int caretY)
+        {
+            for (int lineIndex = caretY; lineIndex >= 0; --lineIndex)
             {
                 string line = _lines[lineIndex];
 
@@ -1887,7 +1987,15 @@ namespace Delight
         /// </summary>
         private string GetPropertyAtCaret()
         {
-            string line = _lines[_caretY].Substring(0, _caretX);
+            return GetPropertyAtCaret(_caretX, _caretY);
+        }
+
+        /// <summary>
+        /// Gets the property name at the specified caret position.
+        /// </summary>
+        private string GetPropertyAtCaret(int caretX, int caretY)
+        {
+            string line = _lines[caretY].Substring(0, caretX);
             int equalIndex = line.LastIndexOf('=');
             if (equalIndex < 0)
             {
@@ -1902,6 +2010,71 @@ namespace Delight
             }
 
             return lastWord;
+        }
+
+        /// <summary>
+        /// Gets the word at the current caret position.
+        /// </summary>
+        private string GetWordAtCaret(out int originX, out int targetX)
+        {
+            return GetWordAtCaret(_caretX, _caretY, out originX, out targetX);
+        }
+
+        /// <summary>
+        /// Gets the word at the specified caret position.
+        /// </summary>
+        private string GetWordAtCaret(int caretX, int caretY, out int originX, out int targetX)
+        {
+            if (_lines[caretY].Length <= 0)
+            {
+                originX = caretX;
+                targetX = caretX;
+                return string.Empty;
+            }
+
+            originX = caretX - 1;
+            targetX = caretX;
+
+            if (originX < 0)
+                originX = 0;
+
+            // get characters to the left and right of caret that are digits or letters
+            Func<char, bool> selectChar = c => Char.IsLetterOrDigit(c); // select letters and digits by default
+            while (targetX < _lines[caretY].Length)
+            {
+                if (!selectChar(_lines[caretY][targetX]))
+                {
+                    break;
+                }
+
+                ++targetX;
+            }
+
+            while (originX >= 0)
+            {
+                if (!selectChar(_lines[caretY][originX]))
+                {
+                    originX = originX == _lines[caretY].Length - 1 ? originX : originX + 1;
+                    break;
+                }
+
+                --originX;
+            }
+
+            if (originX < 0)
+                originX = 0;
+
+            int length = targetX - originX;
+            bool wordAtCaret = length == 1 ? selectChar(_lines[caretY][originX]) : length > 0;
+            if (wordAtCaret)
+            {
+                return _lines[caretY].Substring(originX, length);
+            }
+            else
+            {
+                originX = targetX;
+                return string.Empty;
+            }
         }
 
         /// <summary>
@@ -1951,65 +2124,48 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets the word at the current caret position.
-        /// </summary>
-        private string GetWordAtCaret()
-        {
-            string word = string.Empty;
-            if (_lines[_caretY].Length <= 0)
-                return word;
-
-            _autoCompleteWordOriginX = _caretX - 1;
-            _autoCompleteWordTargetX = _caretX;
-
-            if (_autoCompleteWordOriginX < 0)
-                _autoCompleteWordOriginX = 0;
-
-            // get characters to the left and right of caret that are digits or letters
-            Func<char, bool> selectChar = c => Char.IsLetterOrDigit(c); // select letters and digits by default
-            while (_autoCompleteWordTargetX < _lines[_caretY].Length)
-            {
-                if (!selectChar(_lines[_caretY][_autoCompleteWordTargetX]))
-                {
-                    break;
-                }
-
-                ++_autoCompleteWordTargetX;
-            }
-
-            while (_autoCompleteWordOriginX >= 0)
-            {
-                if (!selectChar(_lines[_caretY][_autoCompleteWordOriginX]))
-                {
-                    _autoCompleteWordOriginX = _autoCompleteWordOriginX == _lines[_caretY].Length - 1 ? _autoCompleteWordOriginX : _autoCompleteWordOriginX + 1;
-                    break;
-                }
-
-                --_autoCompleteWordOriginX;
-            }
-
-            if (_autoCompleteWordOriginX < 0)
-                _autoCompleteWordOriginX = 0;
-
-            int length = _autoCompleteWordTargetX - _autoCompleteWordOriginX;
-            bool wordAtCaret = length == 1 ? selectChar(_lines[_caretY][_autoCompleteWordOriginX]) : length > 0;
-            if (wordAtCaret)
-            {
-                return _lines[_caretY].Substring(_autoCompleteWordOriginX, length);
-            }
-            else
-            {
-                _autoCompleteWordOriginX = _autoCompleteWordTargetX;
-                return string.Empty;
-            }
-        }
-
-        /// <summary>
         /// Selects auto-complete item template based on option type.
         /// </summary>
         public string AutoCompleteOptionSelector(AutoCompleteOption option)
         {
             return option.IsAsset ? "AssetOptionItem" : "DefaultOptionItem";
+        }
+
+        /// <summary>
+        /// Gets property documentation for specified element.
+        /// </summary>
+        private string GetElementDoc(string viewName, string propertyName = null)
+        {
+            var config = MasterConfig.GetInstance();
+            var docObject = config.DocObjects.FirstOrDefault(x => x.Name == viewName);
+            if (docObject == null)
+            {
+                if (propertyName == null)
+                {
+                    return string.Empty;
+                }
+                else
+                {
+                    var basedOnView = DesignerViews.FirstOrDefault(x => x.Name == viewName)?.ViewObject?.BasedOn;
+                    return basedOnView != null ? GetElementDoc(basedOnView.Name, propertyName) : null;
+                }
+            }
+
+            if (propertyName == null)
+                return docObject.Comment;
+
+            var docProperty = docObject.Properties.FirstOrDefault(x => x.Name == propertyName);
+            if (docProperty == null)
+            {
+                // check if property resides in parent view
+                var basedOnView = DesignerViews.FirstOrDefault(x => x.Name == viewName)?.ViewObject?.BasedOn;
+                if (basedOnView == null)
+                    return string.Empty;
+
+                return GetElementDoc(basedOnView.Name, propertyName);
+            }
+
+            return docProperty.Comment;
         }
 
         #endregion

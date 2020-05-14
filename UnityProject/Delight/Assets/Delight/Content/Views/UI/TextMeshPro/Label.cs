@@ -15,7 +15,7 @@ namespace Delight
     /// </summary>
     public partial class Label
     {
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Called when a property has been changed. 
@@ -106,19 +106,21 @@ namespace Delight
                     EnableWordWrapping = false;
                 }
 
+                var margin = Margin ?? new ElementMargin();
+
                 // adjust label size to text
                 if (AutoSize == AutoSize.Width)
                 {
-                    Width = new ElementSize(PreferredWidth);
+                    Width = new ElementSize(PreferredWidth + margin.Left + margin.Right);
                 }
                 else if (AutoSize == AutoSize.Height)
                 {
-                    Height = new ElementSize(PreferredHeight);
+                    Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
                 }
                 else if (AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.Default)
                 {
-                    Width = new ElementSize(PreferredWidth);
-                    Height = new ElementSize(PreferredHeight);
+                    Width = new ElementSize(PreferredWidth + margin.Left + margin.Right);
+                    Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
                 }
             }
             catch
@@ -127,9 +129,9 @@ namespace Delight
             }
         }
 
-#endregion
+        #endregion
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Preferred width of text.
@@ -153,7 +155,7 @@ namespace Delight
             }
         }
 
-#endregion
+        #endregion
     }
 }
 
