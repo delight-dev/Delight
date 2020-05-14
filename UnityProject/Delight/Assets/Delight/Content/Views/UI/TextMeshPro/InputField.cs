@@ -18,7 +18,7 @@ namespace Delight
     /// </summary>
     public partial class InputField
     {
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Called when a property has been changed. 
@@ -70,7 +70,7 @@ namespace Delight
             if (IgnoreObject)
                 return;
             base.AfterLoad();
-            
+
             // hook up input field event system triggers
             TMP_InputFieldComponent.onEndEdit.RemoveAllListeners();
             TMP_InputFieldComponent.onEndEdit.AddListener(TMProInputFieldEndEdit);
@@ -115,7 +115,7 @@ namespace Delight
 
                 // notify text property has been changed
                 TextProperty.SetHasValue(this);
-                OnPropertyChanged("Text");  
+                OnPropertyChanged("Text");
             }
 
             TMProUpdatePlaceholder();
@@ -133,7 +133,7 @@ namespace Delight
 
                 // notify text property has been changed
                 TextProperty.SetHasValue(this);
-                OnPropertyChanged("Text");  
+                OnPropertyChanged("Text");
             }
 
             TMProUpdatePlaceholder();
@@ -155,7 +155,7 @@ namespace Delight
             }
         }
 
-#endregion
+        #endregion
     }
 }
 

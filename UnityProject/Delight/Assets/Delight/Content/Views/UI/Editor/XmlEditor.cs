@@ -20,6 +20,9 @@ using UnityEditor;
 
 namespace Delight
 {
+    /// <summary>
+    /// Editor for changing view XML during runtime, part of the designer. 
+    /// </summary>
     public partial class XmlEditor
     {
         #region Fields

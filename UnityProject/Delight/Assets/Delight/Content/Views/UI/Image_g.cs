@@ -136,6 +136,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image> AlphaHitTestMinimumThresholdProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Image, Image>("AlphaHitTestMinimumThreshold", x => x.ImageComponent, x => x.alphaHitTestMinimumThreshold, (x, y) => x.alphaHitTestMinimumThreshold = y);
+        /// <summary>Alpha values less than the threshold will cause raycast events to pass through the view.</summary>
         public System.Single AlphaHitTestMinimumThreshold
         {
             get { return AlphaHitTestMinimumThresholdProperty.GetValue(this); }
@@ -191,6 +192,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, Image> ColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Image, Image>("Color", x => x.ImageComponent, x => x.color, (x, y) => x.color = y);
+        /// <summary>Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").</summary>
         public UnityEngine.Color Color
         {
             get { return ColorProperty.GetValue(this); }

@@ -165,6 +165,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.AutoCompleteOptionData> AutoCompleteOptionsProperty = new DependencyProperty<Delight.AutoCompleteOptionData>("AutoCompleteOptions");
+        /// <summary>Contains a list of options presented when auto-complete is activated.</summary>
         public Delight.AutoCompleteOptionData AutoCompleteOptions
         {
             get { return AutoCompleteOptionsProperty.GetValue(this); }
@@ -172,6 +173,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.AutoCompleteOption> SelectedAutoCompleteOptionProperty = new DependencyProperty<Delight.AutoCompleteOption>("SelectedAutoCompleteOption");
+        /// <summary>The currently selected auto-complete option.</summary>
         public Delight.AutoCompleteOption SelectedAutoCompleteOption
         {
             get { return SelectedAutoCompleteOptionProperty.GetValue(this); }
@@ -179,6 +181,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.Editor.Parser.DesignerViewData> DesignerViewsProperty = new DependencyProperty<Delight.Editor.Parser.DesignerViewData>("DesignerViews");
+        /// <summary>Contains the list of all views.</summary>
         public Delight.Editor.Parser.DesignerViewData DesignerViews
         {
             get { return DesignerViewsProperty.GetValue(this); }

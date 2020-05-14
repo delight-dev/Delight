@@ -452,6 +452,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        /// <summary>Radio button text.</summary>
         public System.String Text
         {
             get { return RadioButtonLabel.Text; }

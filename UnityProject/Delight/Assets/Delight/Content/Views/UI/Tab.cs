@@ -9,7 +9,7 @@ using UnityEngine.UI;
 namespace Delight
 {
     /// <summary>
-    /// Base views for tab content displayed within the TabPanel.
+    /// Base view for tab content displayed within the TabPanel.
     /// </summary>
     public partial class Tab
     {

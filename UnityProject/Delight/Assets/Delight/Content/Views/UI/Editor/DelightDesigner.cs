@@ -23,7 +23,7 @@ using Delight.Editor;
 namespace Delight
 {
     /// <summary>
-    /// Delight designer.
+    /// Designer for editing view XML and data models during runtime.
     /// </summary>
     public partial class DelightDesigner
     {

@@ -9,6 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
+    /// <summary>
+    /// Similar to the Image view but displays a Texture2D asset.
+    /// </summary>
     public partial class RawImage
     {
         #region Methods

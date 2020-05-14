@@ -2593,24 +2593,31 @@ namespace Delight.Editor.Parser
             var filename = Path.GetFileName(path);
             DocObject docObject = null;
 
-            // parse schema file
+            // parse doc file
             for (int i = 0; i < fileContent.Length; ++i)
             {
                 string line = fileContent[i].Trim().RemoveComments();
                 if (String.IsNullOrWhiteSpace(line)) // ignore comments and empty lines
                     continue;
 
-                int dashIndex = line.IndexOf("-");
-                if (dashIndex < 0)
+                bool isDocObjectDeclaration = !line.StartsWith("-");
+                if (isDocObjectDeclaration)
                 {
                     // parse doc object declaration
-                    string docObjectName = line.Trim();
-                    docObject = new DocObject { Name = docObjectName };
+                    int colonIndex = line.IndexOf(":");
+                    if (colonIndex < 0)
+                        continue;
+
+                    var name = line.Substring(0, colonIndex).Trim();
+                    var comment = line.Substring(colonIndex + 1).Trim();
+
+                    docObject = new DocObject { Name = name, Comment = comment };
                     config.DocObjects.Add(docObject);
                     continue;
                 }
                 else
                 {
+                    // parse doc property declaration
                     if (docObject == null)
                         continue;
 

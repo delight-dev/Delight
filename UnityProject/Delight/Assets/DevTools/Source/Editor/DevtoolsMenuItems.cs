@@ -334,13 +334,15 @@ namespace Delight.Editor
             foreach (var viewObject in contentObjectModel.ViewObjects.OrderBy(x => x.Name))
             {
                 var docObject = config.DocObjects.FirstOrDefault(x => x.Name == viewObject.Name);
-                var propertyDeclarations = CodeGenerator.GetPropertyDeclarations(viewObject, false, false, true).Where(x => x.Declaration.DeclarationType != PropertyDeclarationType.Template &&
+                var propertyDeclarations = CodeGenerator.GetPropertyDeclarations(viewObject, false, true, true).Where(x => x.Declaration.DeclarationType != PropertyDeclarationType.Template &&
                         x.Declaration.DeclarationType != PropertyDeclarationType.View && x.Declaration.DeclarationType != PropertyDeclarationType.UnityComponent).OrderBy(x => x.Declaration.PropertyName);
+
+                string docObjectComment = docObject?.Comment ?? string.Empty;
+                sb.AppendLine("{0}: {1}", viewObject.Name, docObjectComment);
 
                 if (!propertyDeclarations.Any())
                     continue;
 
-                sb.AppendLine("{0}", viewObject.Name);
                 foreach (var propertyDeclaration in propertyDeclarations)
                 {
                     if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.Template ||
@@ -349,7 +351,7 @@ namespace Delight.Editor
                         continue; // ignore component, template and view properties as we'll generate default docs for those
 
                     var docProperty = docObject?.Properties.FirstOrDefault(x => x.Name == propertyDeclaration.Declaration.PropertyName);
-                    string comment = docProperty != null ? docProperty.Comment : string.Empty;
+                    string comment = docProperty?.Comment ?? string.Empty;
 
                     sb.AppendLine("- {0}: {1}", propertyDeclaration.Declaration.PropertyName, comment);
                 }

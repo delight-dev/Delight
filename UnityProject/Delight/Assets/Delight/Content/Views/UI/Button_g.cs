@@ -211,6 +211,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        /// <summary>Button text.</summary>
         public System.String Text
         {
             get { return Label.Text; }

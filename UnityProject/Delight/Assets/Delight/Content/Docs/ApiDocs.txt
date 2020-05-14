@@ -1,107 +1,126 @@
-﻿Button
-- AutoSize: Enum indicating if and how the button should automatically resize itself to the size of the text. 
+﻿Button: The button view is a clickable region with text. Has the additional states: Highlighted, Pressed and Disabled. The button can be set to toggle through IsToggleButton and to adjust its size to its text through the AutoSize field.
+- Text: Button text.
+- AutoSize: Enum indicating if and how the button should automatically resize itself to the size of the text.
 - CanToggleOff: Boolean indicating if the button can be toggled off.
 - CanToggleOn: Boolean indicating if the button can be toggled on.
-- DefaultWidth: Default width of the button when none is specified. 
-- IsBackButton: Boolean indicating if this is a back button. 
+- DefaultWidth: Default width of the button when none is specified.
+- IsBackButton: Boolean indicating if this is a back button.
 - IsCloseButton: Boolean indicating if this is a close button.
 - IsDisabled: Boolean indicating if this button is disabled.
 - IsMouseOver: Boolean indicating if the mouse is over the button.
 - IsPressed: Boolean indicating if the button is pressed.
 - IsToggleButton: Boolean indicating if the button is a toggle button.
 - TextOffset: The offset of the button text label.
-- TextPadding: Padding applied when the button autosizes to its content. 
+- TextPadding: Padding applied when the button autosizes to its content.
 - ToggleClick: Action called when the button is toggled.
 - ToggleValue: Toggle value of the button.
 
-CheckBox
-- IsChecked: Boolean indicating if the check box is checked. 
+CanvasRenderer: Renders a graphical UI object contained within a Canvas.
+- Cull: Indicates whether geometry emitted by the renderer is ignored.
+- CullTransparentMesh: Indicates whether geometry emitted by the renderer can be ignored when the vertex color alpha is close to zero for every vertex of the mesh.
+- HasPopInstruction: Enable 'render stack' pop draw call.
+- MaterialCount: The number of materials usable by this renderer.
+- PopMaterialCount: The number of materials usable by this renderer. Used internally for masking.
+
+CheckBox: A check box view consisting of a box that can be ticked and a text label.
+- Text: Check box text.
+- IsChecked: Boolean indicating if the check box is checked.
 - IsDisabled: Boolean indicating if the check box is disabled.
 - IsInteractable: Boolean indicating if the user can interact with the check box.
-- Spacing: Spacing between the check box sprite and the text label. 
+- Spacing: Spacing between the check box sprite and the text label.
 
-Collection
-- Items: The data collection that is used to generate the collection view items. 
-- TemplateSelector: Method used to select the template used by the collection. The method takes the data collection item as a parameter and returns the ID of the template that should be used to present the item. 
+Collection: Generic collection view. Used by views such as Lists and TabPanel that wants to display dynamic content through the Item property.
+- Items: The data collection that is used to generate the collection view items.
+- TemplateSelector: Method used to select the template used by the collection. The method takes the data collection item as a parameter and returns the ID of the template that should be used to present the item.
 
-ComboBox
-- IsDropUp: Boolean indicating if the combo box list should open above instead of below the button. 
+ComboBox: Presents a static or dynamic list of items in a drop-down.
+- IsDropUp: Boolean indicating if the combo box list should open above instead of below the button.
 - ItemSelected: Action called when an item is selected.
 
-DelightDesigner
+ComboBoxListItem: Base view for items displayed within the ComboBox view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+
+DelightDesigner: Designer for editing view XML and data models during runtime.
 - AutoParse: Boolean indicating if the designer should automatically parse XML of views as they changes.
-- ChangedDesignerViews: List of views that has been changed by the designer. 
+- ChangedDesignerViews: List of views that has been changed by the designer.
 - DesignerViews: List of views that can be edited by the designer.
 
-Frame
-- AutoSizeToContent: Boolean indicating if the view should resize itself to its content.  
+Frame: View that resizes itself to its content by default.
+- AutoSizeToContent: Boolean indicating if the view should resize itself to its content.
 
-Grid
+Grid: View that displays static content in a grid layout.
 - Columns: Column definitions that determines the proportional or pixel size of each column in the grid as well as their min/max size.
 - ColumnSpacing: Spacing between grid columns.
 - Rows: Row definitions that determines the proportional or pixel size of each row in the grid as well as their min/max size.
 - RowSpacing: Spacing between grid rows.
-- Spacing: Spacing between grid row and columns. 
-
-GridSplitter
-- BePushy: Boolean indicating if resizing one column/row beyond min/max should push into and resize subsequent rows/columns. 
-- InteractionThickness: Indicates how thick the interactable region of the splitter handle is. Can be larger than the actual thickness to make it easer for the user to interact with the handle. 
-- OverrideProportionalSize: Boolean indicating if the proportional size of the columns/rows should be overriden when resizing, and set to absolute (pixel) sizes instead. 
+- Spacing: Spacing between grid row and columns.
+ 
+GridSplitter: Allows for resizing of columns and rows in the Grid view. 
+- BePushy: Boolean indicating if resizing one column/row beyond min/max should push into and resize subsequent rows/columns.
+- InteractionThickness: Indicates how thick the interactable region of the splitter handle is. Can be larger than the actual thickness to make it easer for the user to interact with the handle.
+- IsEnabled: 
+- OverrideProportionalSize: Boolean indicating if the proportional size of the columns/rows should be overriden when resizing, and set to absolute (pixel) sizes instead.
 - SetSizeOnDragEnded: Boolean indicating if the size of the row/column should be set after the user releases the handle.
-- SplitMode: Sets if the grid should be split by columns, rows or both. 
+- SplitMode: Sets if the grid should be split by columns, rows or both.
 - SplitterColor: Color used by the grid splitter handles.
 - SplitterSprite: Sprite used by the grid splitter handles.
-- Thickness: The thickness of the grid splitter handles. 
+- Thickness: The thickness of the grid splitter handles.
 
-GridSplitterHandle
-- IsEnabled: Boolean indicating if the user can interact with the grid splitter handle. 
+GridSplitterHandle: Handle used to resize a rows or column in the Grid view. Created and managed by the GridSplitter view.
+- IsEnabled: Boolean indicating if the user can interact with the grid splitter handle.
 
-Group
+Group: The group is used to spacially arrange child views next to each other either horizontally or vertically based on the Orientation property.
 - ContentAlignment: Sets the alignment of the child views within the group.
-- Orientation: Sets if the group should arrange its item horizontally or vertically. 
-- Spacing: The spacing between the horizontally or vertically arranged child views. 
+- Orientation: Sets if the group should arrange its item horizontally or vertically.
+- Spacing: The spacing between the horizontally or vertically arranged child views.
 
-Image
-- FillAmount: Amount of the view shown when Type is set to Filled. 
+Image: View that displays an image sprite. Based on the UGUI ImageComponent. Adjusts its size and image type (spliced, etc) to the native sprite if not explicitly set.
+- AlphaHitTestMinimumThreshold: Alpha values less than the threshold will cause raycast events to pass through the view.
+- Color: Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").
+- FillAmount: Amount of the view shown when Type is set to Filled.
 - FillCenter: Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.
-- FillClockwise: Boolean indicating if the sprite should be filled clockwise or counter-clockwise. 
-- FillMethod: Enum indicating the background fill method. 
+- FillClockwise: Boolean indicating if the sprite should be filled clockwise or counter-clockwise.
+- FillMethod: Enum indicating the background fill method.
 - FillOrigin: Point of origin of the Fill process. Value means different things with each fill method.
-- IsMaskingGraphic: Boolean indicating if image is a masking graphic. 
-- Maskable: Boolean indicating if the graphic allows masking. 
+- IsMaskingGraphic: Boolean indicating if image is a masking graphic.
+- Maskable: Boolean indicating if the graphic allows masking.
 - Material: Material used by the sprite.
 - OnCullStateChanged: Callback called when the culling state of this graphic either becomes culled or visible.
-- OverrideSprite: Overrides the default sprite used by this view. 
-- PixelsPerUnitMultiplier: Pixel per unit modifier to change how sliced sprites are generated. 
+- OverrideSprite: Overrides the default sprite used by this view.
+- PixelsPerUnitMultiplier: Pixel per unit modifier to change how sliced sprites are generated.
 - PreserveAspect: Boolean indicating if this sprite should preserve its aspect ratio.
-- RaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting. 
+- RaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting.
 - Sprite: The sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".
-- Type: Enum indicating what type of sprite the background is. 
+- Type: Enum indicating what type of sprite the background is.
 - UseSpriteMesh: Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.
 
-InputField
-- AsteriskChar: Character used for password fields. 
-- CaretBlinkRate: The blinking rate of the input caret in cycles per second. 
+InputField: Interactable input field enabling user to type single or multi-line text.
+- AnimationTriggers: The animation triggers for this selectable object.
+- AsteriskChar: Character used for password fields.
+- CaretBlinkRate: The blinking rate of the input caret in cycles per second.
 - CaretColor: Color of the caret if CustomCaretColor is set.
 - CaretPosition: Current InputField caret position (also selection tail).
 - CaretWidth: Width of the caret.
 - CharacterLimit: How many characters the input field is limited to (0 = infinite).
 - CharacterValidation: The type of validation to perform on a character.
-- Colors:
+- Colors: The ColorBlock for this selectable object.
 - ContentType: The type of input expected.
 - CustomCaretColor: Boolean indicating if caret color is customized by CaretColor.
-- FontAsset: Font asset used by input field. 
+- EndEdit: Action called when the user stops editing the input field text.
+- FontAsset: Font asset used by input field.
+- Image: Convenience function that converts the referenced Graphic to a Image, if possible.
 - InputType: Type of input expected.
-- InputValidator: Input validator used by the input field. 
+- InputValidator: Input validator used by the input field.
 - Interactable: Boolean indicating if input field is interactable.
 - IsRichTextEditingAllowed: Boolean indicating if rich text editing is allowed.
 - KeyboardType: Enum indicating touch screen keyboard type.
 - LineLimit: How many lines the input field is limited to (0 = infinite).
+- LineType: Line type used by the input field.
 - Navigation: Navigation settings.
 - OnDeselect: Called when input field is deselected.
 - OnEndEdit: Called when the user stops editing the input field.
 - OnEndTextSelection: Called when text selections ends.
 - OnFocusSelectAll: Called when focused and all is selected.
+- OnlyTriggerValueChangedFromUI: Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.
 - OnSelect: Called when input field is selected.
 - OnSubmit: Called when submit event occurs.
 - OnTextSelection: Called when text is selected.
@@ -109,32 +128,33 @@ InputField
 - OnValidateInput: Called when input is validated.
 - OnValueChanged: Called when value is changed.
 - Placeholder: Placeholder graphics used by the input field.
-- PointSize: Specifies the point size of the input field text. 
-- EndEdit: Action called when the user stops editing the input field text. 
-- OnlyTriggerValueChangedFromUI: Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.
-- ReadOnly: Boolean indicating if the input field is read only. 
+- PointSize: Specifies the point size of the input field text.
+- ReadOnly: Boolean indicating if the input field is read only.
 - ResetOnDeActivation: Boolean indicating if input field is reset on deactivation.
-- RestoreOriginalTextOnEscape: Boolean indicating if original text should be restored when user presses escape. 
+- RestoreOriginalTextOnEscape: Boolean indicating if original text should be restored when user presses escape.
 - RichText: Boolean indicating if input is rich text.
-- ScrollSensitivity: Indicates the sensitivity of scrolling the input field text. 
+- ScrollSensitivity: Indicates the sensitivity of scrolling the input field text.
 - SelectionAnchorPosition: Determines the anchor position of selection.
-- SelectionStringFocusPosition: Determines the focus position of the selection string. 
+- SelectionColor: 
+- SelectionFocusPosition: 
+- SelectionStringAnchorPosition: 
+- SelectionStringFocusPosition: Determines the focus position of the selection string.
+- SetValueOnEndEdit: Boolean indicating if the value of the input field text should be set after the user is done editing.
 - ShouldHideMobileInput: Boolean indicating if mobile input should be hidden.
 - ShouldHideSoftKeyboard: Boolean indicating if soft keyboard should be hidden.
 - SpriteState: The sprite state of this selectable object.
-- StringPosition: Position of the string. 
+- StringPosition: Position of the string.
 - TargetGraphic: Graphic that will be transitioned upon.
-- Text: Text of the input field. 
-- TextComponent: Reference to the text component. 
-- TextViewport: Reference to the text viewport. 
+- Text: Text of the input field.
+- TextComponent: Reference to the text component.
+- TextMargin: Margin of the input text.
+- TextViewport: Reference to the text viewport.
 - Transition: The type of transition that will be applied to the targetGraphic when the state changes.
-- VerticalScrollbar: Reference to a vertical scrollbar used by the input field. 
-- SetValueOnEndEdit: Boolean indicating if the value of the input field text should be set after the user is done editing. 
-- TextMargin: Margin of the input text. 
 - ValueChanged: Action called when the input text changes.
+- VerticalScrollbar: Reference to a vertical scrollbar used by the input field.
 
-Label
-- AutoSize: Enum indicating if and how the label should automatically resize itself to the size of the text. 
+Label: View that presents text.
+- AutoSize: Enum indicating if and how the label should automatically resize itself to the size of the text.
 - AutoSizeTextContainer: Boolean indicating if text container should be resized to text.
 - CharacterSpacing: Determines the spacing between characters in the text.
 - CharacterWidthAdjustment: Percentage the width of characters can be adjusted before text auto-sizing begins to reduce the point size.
@@ -149,7 +169,7 @@ Label
 - FaceColor: Sets the color of the _FaceColor property of the assigned material. Changing face color will result in an instance of the material.
 - FirstVisibleCharacter: The first character which should be made visible in conjunction with the Text Overflow Linked mode.
 - Font: The font of the label. The value is the name of the font asset file without extension, e.g. "myfont".
-- FontColor: Color of the font. 
+- FontColor: Color of the font.
 - FontMaterial: Font material to be used.
 - FontMaterials: Font materials to be used.
 - FontSharedMaterial: Shared font material.
@@ -175,7 +195,7 @@ Label
 - LineSpacingAdjustment: The amount of potential line spacing adjustment before text auto sizing kicks in.
 - LinkedTextComponent: The linked text component used for flowing the text from one text component to another.
 - MappingUvLineOffset: Controls the horizontal offset of the UV of the texture mapping mode for each line of the text object.
-- Maskable: Boolean indicating if graphic is maskable. 
+- Maskable: Boolean indicating if graphic is maskable.
 - MaskOffset: Offset of mask graphics.
 - Material: Material used by graphic.
 - MaxVisibleCharacters: Allows to control how many characters are visible from the input.
@@ -189,13 +209,13 @@ Label
 - PageToDisplay: Controls which page of text is shown.
 - ParagraphSpacing: The amount of additional spacing to add between each lines of text.
 - ParseCtrlCharacters: Enables or Disables parsing of CTRL characters in input text.
-- RaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting. 
+- RaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting.
 - RenderMode: Determines if the Mesh will be rendered.
 - RichText: Enables or disables rich text tags.
 - SpriteAsset: Default Sprite Asset used by the text object.
 - Text: A string containing the text to be displayed.
-- TextAlignment: Determines the alignment of the text. 
-- TextMargin: Determines the margin of the text. 
+- TextAlignment: Determines the alignment of the text.
+- TextMargin: Determines the margin of the text.
 - TextMeshProUGUIAlpha: Alpha value of the text.
 - TintAllSprites: Determines whether or not the sprite color is multiplies by the vertex color of the text.
 - UseMaxVisibleDescender: Determines if the text's vertical alignment will be adjusted based on visible descender of the text.
@@ -204,66 +224,83 @@ Label
 - WordSpacing: The amount of additional spacing between words.
 - WordWrappingRatios: Controls the blending between using character and word spacing to fill-in the space for justified text.
 
-List
-- AlternateItems: Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items. 
+LayoutRoot: Represents a layout root canvas under which all UI views must reside.
+
+List: The list presents a static or dynamic list of items. The list can be set to be scrollable through the IsScrollable property. items can be made selectable. Items can be arranged vertically or horizontally. The items can overflow or be wrapped to create flowing lists.
+- AlternateItems: Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items.
 - CanDeselect: Boolean indicating if selected list items can be deselected by clicking on them again.
-- CanMultiSelect: Boolean indicating if the user can select multiple list items. 
-- CanReselect: Boolean indicating if the selected item should be reselected if clicked on again. 
-- CanSelect: Boolean indicating if the user can select items in the list. 
+- CanMultiSelect: Boolean indicating if the user can select multiple list items.
+- CanReselect: Boolean indicating if the selected item should be reselected if clicked on again.
+- CanSelect: Boolean indicating if the user can select items in the list.
 - ContentAlignment: Alignment of the list items.
 - DeselectAfterSelect: Boolean indicating if the item should immediatelly be deselected after being selected.
-- DisableItemArrangement: Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere. 
+- DisableItemArrangement: Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere.
 - HorizontalSpacing: Horizontal spacing between the list items.
 - IsScrollable: Boolean indicating if the list can be scrolled.
-- IsStatic: Boolean indicating if the list is static. 
-- IsVirtualized: Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated. 
+- IsStatic: Boolean indicating if the list is static.
+- IsVirtualized: Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated.
 - ItemDeselected: Action called when an item is deselected.
 - ItemSelected: Action called when an item is selected.
 - Orientation: Orientation of the list.
-- Overflow: Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists. 
-- Padding: Adds padding to the list. 
-- RealizationMargin: Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized. 
+- Overflow: Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists.
+- Padding: Adds padding to the list.
+- RealizationMargin: Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized.
 - SelectedItem: References the data collection item that corresponds to the currently selected list item.
 - SelectOnMouseUp: Boolean indicating if list items should be selected on mouse up.
-- SortDirection: Determines the sort direction of the list items. 
+- SortDirection: Determines the sort direction of the list items.
 - Spacing: Horizontal and vertical spacing between the list items.
 - VerticalSpacing: Vertical spacing between the list items.
-- VirtualItemGetter: If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item. 
+- VirtualItemGetter: If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item.
 
-ListItem
-- AutoSizeToContent: Boolean indicating if the list item automatically audjusts its size to its content. 
-- Breadth: The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical. 
+ListItem: Base view for items displayed within the List view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+- AutoSizeToContent: Boolean indicating if the list item automatically audjusts its size to its content.
+- Breadth: The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical.
 - ContentTemplateData: Holds the content template data.
 - IsAlternate: Boolean indicating if the default state of this list item should be Alternate. Used by lists that has AlternateItems set to True, to alternate the style of every other (odd) list item.
 - IsDisabled: Boolean indicating if the list item is disabled.
 - IsMouseOver: Boolean indicating if the mouse is over the list item.
-- IsPressed: Boolean indicating if the list item is pressed. 
+- IsPressed: Boolean indicating if the list item is pressed.
 - IsSelected: Boolean indicating if the list item is selected.
 - Item: References the data collection item bound to this list item (set when the list item resides in a dynamic list).
-- Length: The length of the list item that corresponds to Height if list is horizontal and Width if vertical. 
+- Length: The length of the list item that corresponds to Height if list is horizontal and Width if vertical.
 
-Mask:
-- ShowMaskGraphic: Boolean indicating if mask graphic itself should be shown or if it should just mask.
+Mask: A view that masks any content using the background sprite and color as mask.
+- ShowMaskGraphic: Show the graphic that is associated with the Mask render area.
 
-RadioButton
-- IsChecked: Boolean indicating if the radio button is selected. 
+RadioButton: Presents a one-of-many selection option. If multiple radio buttons shares the same parent only one is selected at a time.
+- Text: Radio button text. 
+- IsChecked: Boolean indicating if the radio button is selected.
 - IsDisabled: Boolean indicating if the radio button is disabled.
-- IsInteractable: Boolean indicating if the user can toggle the radio button. 
-- Spacing: The spacing between the radio button image and the label. 
+- IsInteractable: Boolean indicating if the user can toggle the radio button.
+- Spacing: The spacing between the radio button image and the label.
 
-SceneObjectView
-- BeginDrag: Action called when the user begins to drag the view. 
+RawImage: Similar to the Image view but displays a Texture2D asset.
+- Color: Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").
+- IsMaskingGraphic: Boolean indicating if image is a masking graphic.
+- Maskable: Boolean indicating if the graphic allows masking.
+- Material: Material used by the image.
+- OnCullStateChanged: Callback called when the culling state of this graphic either becomes culled or visible.
+- RaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting.
+- Texture: The texture of the view. The value is the name of the texture asset file without extension, e.g. "mytexture".
+- UvRect: The texture coordinates.
+
+RectMask2D: A view that masks any content using the background sprite and color as mask. Based on RectMask2D component which has better performance than the regular mask.
+
+Region: View used primarily to section off a region of space in order to spacially arrange child views. Has 100% size by default.
+
+SceneObjectView: Base class for all views that has a game object in the scene. 
+- BeginDrag: Action called when the user begins to drag the view.
 - Cancel: Action called when a cancel event occurs.
 - Click: Action called when the user clicks on the view.
 - Deselect: Action called when another view is selected.
-- Drag: Action called while the user drags the view. 
+- Drag: Action called while the user drags the view.
 - Drop: Action called when the view accepts a drop.
-- EnableScriptEvents: Boolean indicating if unity script events (Update, LateUpdate, Awake, etc) should be relayed to the view code-behind through the corresponding methods that can be overriden. 
+- EnableScriptEvents: Boolean indicating if unity script events (Update, LateUpdate, Awake, etc) should be relayed to the view code-behind through the corresponding methods that can be overriden.
 - EndDrag: Action called when the user stops dragging the view.
 - GameObject: GameObject in the hierarchy that corresponds to the view.
 - IgnoreObject: Boolean indicating if the view should be ignored. Ignored objects don't run any load logic and don't respond to property changed events.
 - InitializePotentialDrag: Called when the user initializes a potential drag on the view.
-- IsActive: Boolean indicating if the view is active. Deactivated views deactivates corresponding game object, components, renderers and scripts. 
+- IsActive: Boolean indicating if the view is active. Deactivated views deactivates corresponding game object, components, renderers and scripts.
 - MouseDown: Action called when the mouse/touch presses down over the view.
 - MouseEnter: Action called when the mouse enters the view.
 - MouseExit: Action called when the mouse exits the view.
@@ -272,65 +309,67 @@ SceneObjectView
 - Scroll: Action called when the user scrolls with mouse wheel or track pad over the view.
 - Select: Action called when the view is selected.
 - Submit: Action called when a submit event occurs.
-- UpdateSelected: Action called when theobject associated with this EventTrigger is updated. 
+- UpdateSelected: Action called when theobject associated with this EventTrigger is updated.
 
-ScrollableRegion
-- AutoSizeContentRegion: Boolean indicating if the scrollable content region should be adjusted to the size of its content or not. 
+ScrollableRegion: Presents scrollable content with optional scrollbars. Behaves similar to the UGUI Panel component. 
+- AutoSizeContentRegion: Boolean indicating if the scrollable content region should be adjusted to the size of its content or not.
 - CanScrollHorizontally: Boolean indicating if the region can be scrolled horizontally.
 - CanScrollVertically: Boolean indicating if the region can be scrolled vertically.
 - ContentAlignment: Alignment of the content.
 - ContentScrolled: Action called whenever the content is scrolled.
-- DecelerationRate: Determines how fast the scroll speed decelerates once the user stops scrolling. 
-- DisableInteractionScrollDelta: If set any interaction with child views (clicks, etc) are disabled when the specified amount of pixels has been scrolled. Used e.g. to disable items from being selected while scrolling a selectable list of items. 
-- DisableMouseWheel: Boolean indicating if the mouse wheel is disabled. 
-- Elasticity: Determines how elastic the viewport is when scrolling outside the bounds of the scrollable content. 
-- HasInertia: Boolean indicating if the should stop immediatelly when the user stops scrolling (when set to False) or if it should decelerate based on DecelerationRate. 
+- DecelerationRate: Determines how fast the scroll speed decelerates once the user stops scrolling.
+- DisableInteractionScrollDelta: If set any interaction with child views (clicks, etc) are disabled when the specified amount of pixels has been scrolled. Used e.g. to disable items from being selected while scrolling a selectable list of items.
+- DisableMouseWheel: Boolean indicating if the mouse wheel is disabled.
+- Elasticity: Determines how elastic the viewport is when scrolling outside the bounds of the scrollable content.
+- HasInertia: Boolean indicating if the should stop immediatelly when the user stops scrolling (when set to False) or if it should decelerate based on DecelerationRate.
 - HorizontalScrollbarVisibility: Enum indicating the visibility mode of the horizontal scrollbar.
 - MaskContent: Boolean indicating if any content outside the bounds of the viewport should be masked.
-- ScrollBounds: Enum indicating what type of bounds the scrollable region has (Clamped, Elastic or None). 
-- ScrollEnabled: Boolean indicating if scrolling by the user is enabled. 
-- ScrollSensitivity: Sets the sensitivity of the scrolling using mouse wheel or track pad. 
+- ScrollBounds: Enum indicating what type of bounds the scrollable region has (Clamped, Elastic or None).
+- ScrollEnabled: Boolean indicating if scrolling by the user is enabled.
+- ScrollSensitivity: Sets the sensitivity of the scrolling using mouse wheel or track pad.
 - UnblockDragEventsInChildren: Boolean indicating if draggable child views shouldn't block this scrollable region from being scrolled.
 - VerticalScrollbarVisibility: Enum indicating the visibility mode of the vertical scrollbar.
 
-Scrollbar
+Scrollbar: A scrollbar with a draggable handle. Used by the ScrollableRegion view. 
 - Breadth: Breadth of the scrollbar. Corresponds to Height if horizontal and Width if vertical.
 - Length: Length of the scrollbar. Corresponds to Width if horizontal and Height if vertical.
 - Orientation: The orientation of the scrollbar.
 - ScrollPosition: Sets normalized scroll position (0-1 where 0.5 is scrolled half-way).
-- ViewportRatio: Value between 0-1 determining the size of the scrollbar handle relative to the viewport. 
+- ViewportRatio: Value between 0-1 determining the size of the scrollbar handle relative to the viewport.
 
-Slider
+Slider: Slider with a handle that can be moved with the mouse. Can be oriented horizontally or vertically.
 - Breadth: The breadth of the slider. Corresponds to Height if horizontal and Width if vertical.
 - CanSlide: Boolean indicating if the user can interact with the slider.
-- IsReversed: Boolean indicating if slider direction is reversed. 
+- IsReversed: Boolean indicating if slider direction is reversed.
 - Length: The length of the slider. Corresponds to Width if horizontal and Height if vertical.
 - Max: Maximum value of the slider.
 - Min: Minimum value of the slider.
 - Orientation: Orientation of the slider (horizontal or vertical).
-- SetValueOnDragEnded: Boolean indicating that the slider value is set when the user releases the handle. 
+- SetValueOnDragEnded: Boolean indicating that the slider value is set when the user releases the handle.
 - Steps: Specifies the number of steps there should be between min and max slider value.
 - Value: Current value of the slider.
 - ValueChanged: Action called when the slider value changes.
 
-Tab
-- ContentTemplateData: Holds the content template data. 
-- TabHeaderId: ID of TabHeader belonging to this tab. 
-- Text: Default tab header text. 
+Tab: Base view for tab content displayed within the TabPanel.
+- ContentTemplateData: Holds the content template data.
+- TabHeaderId: ID of TabHeader belonging to this tab.
+- Text: Default tab header text.
 
-TabHeader
-- ContentTemplateData: Holds the content template data. 
+TabHeader: Base view for tab headers displayed by the TabPanel.
+- ContentTemplateData: Holds the content template data.
 - TabIndex: Index of the tab.
 
-TabPanel
-- IsStatic: Boolean indicating if the tab panel is static. 
+TabPanel: Arranges content in a series of tabs that can be switched between. Tabs can be oriented horizontallt/vertically and aligned topleft/bottom/etc. Tabs and headers can be static or generated dynamically.
+- IsStatic: Boolean indicating if the tab panel is static.
 - SelectedTabIndex: Selected tab index.
 - TabHeaderHeight: Default height of tab headers.
 - TabHeaderWidth: Default width of tab headers.
-- TabSelected: Action called when a tab is selected. 
-- TabSwitchMode: Enum indicating view switch mode, e.g. if tabs should be loaded on-demand or be pre-loaded. 
+- TabSelected: Action called when a tab is selected.
+- TabSwitchMode: Enum indicating view switch mode, e.g. if tabs should be loaded on-demand or be pre-loaded.
 
-UICanvas
+ToggleGroup: Group view that makes its child buttons into toggle buttons and ensures only one is toggled at a time.
+
+UICanvas: The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. Can also be used to reduce draw calls by sectioning off portion of the UI (i.e. that changes a lot) into a separate canvas.
 - AdditionalShaderChannels: Enum mask of possible shader channel properties that can also be included when the Canvas mesh is created.
 - BlockingObjects: Type of objects that will block graphic raycasts.
 - CanvasScalerReferencePixelsPerUnit: If a sprite has 'Pixels Per Unit' setting, one pixel in the sprite will cover one unit in the UI.
@@ -348,7 +387,7 @@ UICanvas
 - PlaneDistance: How far away from the camera is the Canvas generated.
 - ReferencePixelsPerUnit: The number of pixels per unit that is considered the default.
 - ReferenceResolution: The resolution the UI layout is designed for.
-- RenderCamera: ID of the world camera camera used when rendering the canvas. 
+- RenderCamera: ID of the world camera camera used when rendering the canvas.
 - RenderMode: Enum indicating if the canvas is in world or overlay mode.
 - ScaleFactor: Used to scale the entire canvas, while still making it fit the screen. Only applies with renderMode is Screen Space.
 - ScreenMatchMode: A mode used to scale the canvas area if the aspect ratio of the current resolution doesn't fit the reference resolution.
@@ -357,39 +396,39 @@ UICanvas
 - SortingOrder: Canvas order within a sorting layer.
 - TargetDisplay: For Overlay mode, display index on which the UI canvas will appear.
 - UiScaleMode: Determines how UI elements in the Canvas are scaled.
-- WorldCamera: Reference to the world camera, is automatically set if RenderCamera is set. 
+- WorldCamera: Reference to the world camera, is automatically set if RenderCamera is set.
 
-UIImageView
+UIImageView: Base class for views that has a background sprite and color. 
 - BackgroundAlphaHitTestMinimumThreshold: Alpha values less than the threshold will cause raycast events to pass through the view.
-- BackgroundColor: Background color of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5"). 
-- BackgroundFillAmount: Amount of the view shown when BackgroundType is set to Filled. 
+- BackgroundColor: Background color of the view. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").
+- BackgroundFillAmount: Amount of the view shown when BackgroundType is set to Filled.
 - BackgroundFillCenter: Boolean indicating if the center of a Tiled or Sliced sprite should be rendered.
-- BackgroundFillClockwise: Boolean indicating if the sprite should be filled clockwise or counter-clockwise. 
-- BackgroundFillMethod: Enum indicating the background fill method. 
+- BackgroundFillClockwise: Boolean indicating if the sprite should be filled clockwise or counter-clockwise.
+- BackgroundFillMethod: Enum indicating the background fill method.
 - BackgroundFillOrigin: Point of origin of the Fill process. Value means different things with each fill method.
-- BackgroundIsMaskingGraphic: Boolean indicating if image is a masking graphic. 
-- BackgroundMaskable: Boolean indicating if the graphic allows masking. 
+- BackgroundIsMaskingGraphic: Boolean indicating if image is a masking graphic.
+- BackgroundMaskable: Boolean indicating if the graphic allows masking.
 - BackgroundMaterial: Material used by the sprite.
 - BackgroundOnCullStateChanged: Callback called when the culling state of this graphic either becomes culled or visible.
-- BackgroundOverrideSprite: Overrides the default sprite used by this view. 
-- BackgroundPixelsPerUnitMultiplier: Pixel per unit modifier to change how sliced sprites are generated. 
+- BackgroundOverrideSprite: Overrides the default sprite used by this view.
+- BackgroundPixelsPerUnitMultiplier: Pixel per unit modifier to change how sliced sprites are generated.
 - BackgroundPreserveAspect: Boolean indicating if this sprite should preserve its aspect ratio.
-- BackgroundRaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting. 
+- BackgroundRaycastTarget: Boolean indicating if the graphic should be considered a target for raycasting.
 - BackgroundSprite: The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".
-- BackgroundType: Enum indicating what type of sprite the background is. 
+- BackgroundType: Enum indicating what type of sprite the background is.
 - BackgroundUseSpriteMesh: Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.
 
-UIView
+UIView: Base class for UI views. Has properties for doing layout: Width, Height, Margin, Alignment and Offset.
 - Alignment: Used to align the view relative to the layout parent region it resides in.
 - Alpha: Can be used to adjust the alpha color of this view and all its children. E.g. used for fade in/out animations. Is separate from and different from the background color of the view as it affects the children as well.
 - BubbleNotifyChildLayoutChanged: Boolean indicating if parent always should be notified when the child changes layout.
 - DisableLayoutUpdate: Boolean indicating if automatic layout updates for this view should be disabled. When disabled the view doesn't call UpdateLayout() when properties such as Width, Height, etc. changes.
-- FastMaterial: Faster shader used to render the view when UseFastShader is set to True. 
+- FastMaterial: Faster shader used to render the view when UseFastShader is set to True.
 - Height: The height of the view in pixels or percents.
-- IgnoreFlip: Used when doing localization override default behavior of flipping the view Right to Left or Left to Rigth. 
-- IsVisible: Boolean indicating if view is visible or hidden. Invisible views still take up space but aren't interactable and have their alpha set to 0. 
-- LayoutRoot: Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root. 
-- Margin: Adding margins to a view changes the size of the area in which its content resides, but it does not change the width or height of the view. 
+- IgnoreFlip: Used when doing localization override default behavior of flipping the view Right to Left or Left to Rigth.
+- IsVisible: Boolean indicating if view is visible or hidden. Invisible views still take up space but aren't interactable and have their alpha set to 0.
+- LayoutRoot: Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root.
+- Margin: Adding margins to a view changes the size of the area in which its content resides, but it does not change the width or height of the view.
 - Offset: Determines the offset of the view.
 - OffsetFromParent: Offset set by a parent view. Used by views like Group to arrange children without changing their own Offset values.
 - OverrideHeight: Overrides regular Height value. Used to e.g. automatically size items without changing the default Height value set.
@@ -397,22 +436,25 @@ UIView
 - Pivot: The pivot point of the view.
 - Position: Directly sets the local position of the view relative to parent. Position otherwise set using the Alignment and Offset properties.
 - RaycastBlockMode: Enum indicating if raycasts should be blocked.
-- Rotation: Rotation of the view. 
+- Rotation: Rotation of the view.
 - Scale: Scale of the view.
-- UseFastShader: Boolean indicating if the default UI shader should be replaced by a simpler and faster one. The faster shader does not support masking and clipping. 
+- UseFastShader: Boolean indicating if the default UI shader should be replaced by a simpler and faster one. The faster shader does not support masking and clipping.
 - Width: The width of the view in pixels or percents.
 
-View
+View: Base class for views.
 - LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
 
-ViewSwitcher
-- ChildLoadMode: Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting. 
-- ShowFirstByDefault: Boolean indicating if the first view in the view switcher should be displayed initially by default. 
-- StartView: Sets the ID of the view that should be displayed initially. 
-- SwitchMode: Enum indicating view switch mode, e.g. if views should be loaded on-demand or be pre-loaded. 
+ViewSwitcher: Provides logic for switching between mutliple child views and displaying one at a time. By default the views are loaded when they are displayed, behavior can be changed through the SwitchMode property. 
+- ChildLoadMode: Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting.
+- ShowFirstByDefault: Boolean indicating if the first view in the view switcher should be displayed initially by default.
+- StartView: Sets the ID of the view that should be displayed initially.
+- SwitchMode: Enum indicating view switch mode, e.g. if views should be loaded on-demand or be pre-loaded.
 
-XmlEditor
+XmlEditor: Editor for changing view XML during runtime, part of the designer. 
+- AutoCompleteOptions: Contains a list of options presented when auto-complete is activated.
+- DesignerViews: Contains the list of all views.
 - Edit: Action called when the user edits the view.
 - IsFocused: Boolean indicating if the editor is focused.
-- XmlText: Used to set the XML text in the editor. 
+- SelectedAutoCompleteOption: The currently selected auto-complete option.
+- XmlText: Used to set the XML text in the editor.
 

@@ -443,6 +443,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<TMPro.TMP_InputField.LineType, TMPro.TMP_InputField, InputField> LineTypeProperty = new MappedDependencyProperty<TMPro.TMP_InputField.LineType, TMPro.TMP_InputField, InputField>("LineType", x => x.TMP_InputFieldComponent, x => x.lineType, (x, y) => x.lineType = y);
+        /// <summary>Line type used by the input field.</summary>
         public TMPro.TMP_InputField.LineType LineType
         {
             get { return LineTypeProperty.GetValue(this); }
@@ -576,6 +577,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.ColorBlock, TMPro.TMP_InputField, InputField> ColorsProperty = new MappedDependencyProperty<UnityEngine.UI.ColorBlock, TMPro.TMP_InputField, InputField>("Colors", x => x.TMP_InputFieldComponent, x => x.colors, (x, y) => x.colors = y);
+        /// <summary>The ColorBlock for this selectable object.</summary>
         public UnityEngine.UI.ColorBlock Colors
         {
             get { return ColorsProperty.GetValue(this); }
@@ -591,6 +593,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.AnimationTriggers, TMPro.TMP_InputField, InputField> AnimationTriggersProperty = new MappedDependencyProperty<UnityEngine.UI.AnimationTriggers, TMPro.TMP_InputField, InputField>("AnimationTriggers", x => x.TMP_InputFieldComponent, x => x.animationTriggers, (x, y) => x.animationTriggers = y);
+        /// <summary>The animation triggers for this selectable object.</summary>
         public UnityEngine.UI.AnimationTriggers AnimationTriggers
         {
             get { return AnimationTriggersProperty.GetValue(this); }
@@ -614,6 +617,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image, TMPro.TMP_InputField, InputField> ImageProperty = new MappedDependencyProperty<UnityEngine.UI.Image, TMPro.TMP_InputField, InputField>("Image", x => x.TMP_InputFieldComponent, x => x.image, (x, y) => x.image = y);
+        /// <summary>Convenience function that converts the referenced Graphic to a Image, if possible.</summary>
         public UnityEngine.UI.Image Image
         {
             get { return ImageProperty.GetValue(this); }

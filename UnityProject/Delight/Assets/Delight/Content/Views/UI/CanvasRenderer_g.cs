@@ -51,6 +51,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView> HasPopInstructionProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView>("HasPopInstruction", x => x.CanvasRendererComponent, x => x.hasPopInstruction, (x, y) => x.hasPopInstruction = y);
+        /// <summary>Enable 'render stack' pop draw call.</summary>
         public System.Boolean HasPopInstruction
         {
             get { return HasPopInstructionProperty.GetValue(this); }
@@ -58,6 +59,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.CanvasRenderer, CanvasRendererView> MaterialCountProperty = new MappedDependencyProperty<System.Int32, UnityEngine.CanvasRenderer, CanvasRendererView>("MaterialCount", x => x.CanvasRendererComponent, x => x.materialCount, (x, y) => x.materialCount = y);
+        /// <summary>The number of materials usable by this renderer.</summary>
         public System.Int32 MaterialCount
         {
             get { return MaterialCountProperty.GetValue(this); }
@@ -65,6 +67,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.CanvasRenderer, CanvasRendererView> PopMaterialCountProperty = new MappedDependencyProperty<System.Int32, UnityEngine.CanvasRenderer, CanvasRendererView>("PopMaterialCount", x => x.CanvasRendererComponent, x => x.popMaterialCount, (x, y) => x.popMaterialCount = y);
+        /// <summary>The number of materials usable by this renderer. Used internally for masking.</summary>
         public System.Int32 PopMaterialCount
         {
             get { return PopMaterialCountProperty.GetValue(this); }
@@ -72,6 +75,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView> CullTransparentMeshProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView>("CullTransparentMesh", x => x.CanvasRendererComponent, x => x.cullTransparentMesh, (x, y) => x.cullTransparentMesh = y);
+        /// <summary>Indicates whether geometry emitted by the renderer can be ignored when the vertex color alpha is close to zero for every vertex of the mesh.</summary>
         public System.Boolean CullTransparentMesh
         {
             get { return CullTransparentMeshProperty.GetValue(this); }
@@ -79,6 +83,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView> CullProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.CanvasRenderer, CanvasRendererView>("Cull", x => x.CanvasRendererComponent, x => x.cull, (x, y) => x.cull = y);
+        /// <summary>Indicates whether geometry emitted by the renderer is ignored.</summary>
         public System.Boolean Cull
         {
             get { return CullProperty.GetValue(this); }

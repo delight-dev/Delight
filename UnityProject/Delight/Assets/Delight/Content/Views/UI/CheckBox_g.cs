@@ -452,6 +452,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty TextProperty = Label.TextProperty;
+        /// <summary>Check box text.</summary>
         public System.String Text
         {
             get { return CheckBoxLabel.Text; }

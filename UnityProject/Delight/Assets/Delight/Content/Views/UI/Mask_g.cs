@@ -47,6 +47,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Mask, Mask> ShowMaskGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Mask, Mask>("ShowMaskGraphic", x => x.MaskComponent, x => x.showMaskGraphic, (x, y) => x.showMaskGraphic = y);
+        /// <summary>Show the graphic that is associated with the Mask render area.</summary>
         public System.Boolean ShowMaskGraphic
         {
             get { return ShowMaskGraphicProperty.GetValue(this); }

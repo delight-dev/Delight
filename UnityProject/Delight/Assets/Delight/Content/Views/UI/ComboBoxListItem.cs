@@ -9,6 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
+    /// <summary>
+    /// Base view for items displayed within the ComboBox view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+    /// </summary>
     public partial class ComboBoxListItem
     {
     }
