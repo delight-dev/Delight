@@ -66,6 +66,7 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />
@@ -371,6 +372,7 @@
     <xs:attribute name="CheckBoxIgnoreObject" type="xs:string" />
     <xs:attribute name="CheckBoxIsActive" type="xs:string" />
     <xs:attribute name="CheckBoxLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />
@@ -1053,6 +1055,7 @@
     <xs:attribute name="ButtonTextOffset" type="xs:string" />
     <xs:attribute name="ButtonIsCloseButton" type="xs:string" />
     <xs:attribute name="ButtonIsBackButton" type="xs:string" />
+    <xs:attribute name="ButtonMaxWidth" type="xs:string" />
     <xs:attribute name="ButtonLabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="ButtonAutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="ButtonMaskOffset" type="xs:string" />
@@ -2678,6 +2681,7 @@
     <xs:attribute name="RadioButtonIgnoreObject" type="xs:string" />
     <xs:attribute name="RadioButtonIsActive" type="xs:string" />
     <xs:attribute name="RadioButtonLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />
@@ -4075,6 +4079,7 @@
     <xs:attribute name="SelectionTabTextOffset" type="xs:string" />
     <xs:attribute name="SelectionTabIsCloseButton" type="xs:string" />
     <xs:attribute name="SelectionTabIsBackButton" type="xs:string" />
+    <xs:attribute name="SelectionTabMaxWidth" type="xs:string" />
     <xs:attribute name="SelectionTabLabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="SelectionTabAutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="SelectionTabMaskOffset" type="xs:string" />
@@ -4616,6 +4621,7 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />
@@ -4999,6 +5005,7 @@
     <xs:attribute name="TargetGraphic" type="xs:string" />
     <xs:attribute name="Interactable" type="xs:string" />
     <xs:attribute name="Image" type="xs:string" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />
@@ -5184,6 +5191,7 @@
     <xs:attribute name="PreferredWidth" type="xs:string" />
     <xs:attribute name="PreferredHeight" type="xs:string" />
     <xs:attribute name="TextMeshProUGUI" type="xs:string" />
+    <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="AutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
     <xs:attribute name="MaskOffset" type="xs:string" />

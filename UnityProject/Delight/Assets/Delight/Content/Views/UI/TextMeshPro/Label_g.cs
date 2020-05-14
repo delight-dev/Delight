@@ -34,6 +34,7 @@ namespace Delight
             DependencyProperties.Add(LabelTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(TextMeshProUGUIProperty);
+            dependencyProperties.Add(MaxWidthProperty);
             dependencyProperties.Add(AutoSizeProperty);
             dependencyProperties.Add(AutoSizeTextContainerProperty);
             dependencyProperties.Add(MaskOffsetProperty);
@@ -114,6 +115,14 @@ namespace Delight
         {
             get { return TextMeshProUGUIProperty.GetValue(this); }
             set { TextMeshProUGUIProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> MaxWidthProperty = new DependencyProperty<Delight.ElementSize>("MaxWidth");
+        /// <summary>Used when AutoSize is true and extends the label to the maxsize then expands vertically.</summary>
+        public Delight.ElementSize MaxWidth
+        {
+            get { return MaxWidthProperty.GetValue(this); }
+            set { MaxWidthProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");

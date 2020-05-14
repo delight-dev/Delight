@@ -295,7 +295,7 @@ namespace Delight
                         if (TooltipBox.OffsetFromParent == null)
                             TooltipBox.OffsetFromParent = new ElementMargin();
                         TooltipBox.OffsetFromParent.Left = CharWidth * originX;
-                        TooltipBox.OffsetFromParent.Top = LineHeight * (caretY - 1) + TooltipOffset;
+                        TooltipBox.OffsetFromParent.Bottom = LineHeight * (_lines.Count - (caretY - 2)) + TooltipOffset;
                     }
                 }
             }

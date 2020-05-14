@@ -624,6 +624,13 @@ namespace Delight
             set { ImageProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty MaxWidthProperty = Label.MaxWidthProperty;
+        public Delight.ElementSize MaxWidth
+        {
+            get { return InputText.MaxWidth; }
+            set { InputText.MaxWidth = value; }
+        }
+
         public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
         public Delight.AutoSize AutoSize
         {

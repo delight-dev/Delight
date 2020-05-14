@@ -1,4 +1,4 @@
-﻿Button: The button view is a clickable region with text. Has the additional states: Highlighted, Pressed and Disabled. The button can be set to toggle through IsToggleButton and to adjust its size to its text through the AutoSize field.
+﻿Button: The button view is a clickable region with text. Adjusts its width to the text if width not set. 
 - Text: Button text.
 - AutoSize: Enum indicating if and how the button should automatically resize itself to the size of the text.
 - CanToggleOff: Boolean indicating if the button can be toggled off.
@@ -37,7 +37,7 @@ ComboBox: Presents a static or dynamic list of items in a drop-down.
 - IsDropUp: Boolean indicating if the combo box list should open above instead of below the button.
 - ItemSelected: Action called when an item is selected.
 
-ComboBoxListItem: Base view for items displayed within the ComboBox view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+ComboBoxListItem: Base view for items displayed within the ComboBox view.
 
 DelightDesigner: Designer for editing view XML and data models during runtime.
 - AutoParse: Boolean indicating if the designer should automatically parse XML of views as they changes.
@@ -73,7 +73,7 @@ Group: The group is used to spacially arrange child views next to each other eit
 - Orientation: Sets if the group should arrange its item horizontally or vertically.
 - Spacing: The spacing between the horizontally or vertically arranged child views.
 
-Image: View that displays an image sprite. Based on the UGUI ImageComponent. Adjusts its size and image type (spliced, etc) to the native sprite if not explicitly set.
+Image: View that displays an image sprite. Adjusts its size to the native sprite if not explicitly set.
 - AlphaHitTestMinimumThreshold: Alpha values less than the threshold will cause raycast events to pass through the view.
 - Color: Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").
 - FillAmount: Amount of the view shown when Type is set to Filled.
@@ -201,6 +201,7 @@ Label: View that presents text.
 - MaxVisibleCharacters: Allows to control how many characters are visible from the input.
 - MaxVisibleLines: Allows control over how many lines of text are displayed.
 - MaxVisibleWords: Allows to control how many words are visible from the input.
+- MaxWidth: Used when AutoSize is true and extends the label to the maxsize then expands vertically.
 - OnCullStateChanged: Called when cull state changes.
 - OutlineColor: Sets the _OutlineColor property of the assigned material. Changing outline color will result in an instance of the material.
 - OutlineWidth: Sets the thickness of the outline of the font. Setting this value will result in an instance of the material.
@@ -226,7 +227,7 @@ Label: View that presents text.
 
 LayoutRoot: Represents a layout root canvas under which all UI views must reside.
 
-List: The list presents a static or dynamic list of items. The list can be set to be scrollable through the IsScrollable property. items can be made selectable. Items can be arranged vertically or horizontally. The items can overflow or be wrapped to create flowing lists.
+List: The list presents a static or dynamic list of items. Can be set to be scrollable, virtual, flowing, horizontal/vertical, etc.
 - AlternateItems: Boolean indicating if the state of every other (odd) list items should be Alternate by default. Used to alternate the style of list items.
 - CanDeselect: Boolean indicating if selected list items can be deselected by clicking on them again.
 - CanMultiSelect: Boolean indicating if the user can select multiple list items.
@@ -252,7 +253,7 @@ List: The list presents a static or dynamic list of items. The list can be set t
 - VerticalSpacing: Vertical spacing between the list items.
 - VirtualItemGetter: If the list is virtualized and when the size of the virtual items are dynamic, the user can specify a VirtualItemGetter that returns the size of the virtual item that corresponds to the data collection item.
 
-ListItem: Base view for items displayed within the List view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+ListItem: Base view for items displayed within the List view.
 - AutoSizeToContent: Boolean indicating if the list item automatically audjusts its size to its content.
 - Breadth: The breadth of the list item that corresponds to Width if list is horizontal and Height if vertical.
 - ContentTemplateData: Holds the content template data.
@@ -359,7 +360,7 @@ TabHeader: Base view for tab headers displayed by the TabPanel.
 - ContentTemplateData: Holds the content template data.
 - TabIndex: Index of the tab.
 
-TabPanel: Arranges content in a series of tabs that can be switched between. Tabs can be oriented horizontallt/vertically and aligned topleft/bottom/etc. Tabs and headers can be static or generated dynamically.
+TabPanel: Arranges content in a series of tabs that can be switched between. 
 - IsStatic: Boolean indicating if the tab panel is static.
 - SelectedTabIndex: Selected tab index.
 - TabHeaderHeight: Default height of tab headers.
@@ -369,7 +370,7 @@ TabPanel: Arranges content in a series of tabs that can be switched between. Tab
 
 ToggleGroup: Group view that makes its child buttons into toggle buttons and ensures only one is toggled at a time.
 
-UICanvas: The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode. Can also be used to reduce draw calls by sectioning off portion of the UI (i.e. that changes a lot) into a separate canvas.
+UICanvas: The canvas view is used to render UI components and controls things like draw sort order, scaling and render mode.
 - AdditionalShaderChannels: Enum mask of possible shader channel properties that can also be included when the Canvas mesh is created.
 - BlockingObjects: Type of objects that will block graphic raycasts.
 - CanvasScalerReferencePixelsPerUnit: If a sprite has 'Pixels Per Unit' setting, one pixel in the sprite will cover one unit in the UI.
@@ -440,8 +441,27 @@ UIView: Base class for UI views. Has properties for doing layout: Width, Height,
 - Scale: Scale of the view.
 - UseFastShader: Boolean indicating if the default UI shader should be replaced by a simpler and faster one. The faster shader does not support masking and clipping.
 - Width: The width of the view in pixels or percents.
+- Id: The identifier of the view.
+- Namespace: The namespace the view resides within. 
+- Module: The name of the module the view belongs to. If module isn't activated the view isn't processed by the framework.
+- HideInDesigner: View is invisible to the designer. 
+- IsEditorView: View resides inside the unity editor project.
+- TypeName: If the type name of the view should differ from its XML alias, it's specified by this property.
+- ContentTemplateTypes: Name of views that serve as content templates to this view.
+- HasContentTemplates: Boolean indicating if this view can have content templates defined. 
+- BasedOn: Name of the view this view is based on.
+- LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
 
 View: Base class for views.
+- Id: The identifier of the view.
+- Namespace: The namespace the view resides within. 
+- Module: The name of the module the view belongs to. If module isn't activated the view isn't processed by the framework.
+- HideInDesigner: View is invisible to the designer. 
+- IsEditorView: View resides inside the unity editor project.
+- TypeName: If the type name of the view should differ from its XML alias, it's specified by this property.
+- ContentTemplateTypes: Name of views that serve as content templates to this view.
+- HasContentTemplates: Boolean indicating if this view can have content templates defined. 
+- BasedOn: Name of the view this view is based on.
 - LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
 
 ViewSwitcher: Provides logic for switching between mutliple child views and displaying one at a time. By default the views are loaded when they are displayed, behavior can be changed through the SwitchMode property. 

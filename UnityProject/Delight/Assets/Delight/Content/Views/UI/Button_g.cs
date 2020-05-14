@@ -189,6 +189,13 @@ namespace Delight
             set { LabelTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty MaxWidthProperty = Label.MaxWidthProperty;
+        public Delight.ElementSize MaxWidth
+        {
+            get { return Label.MaxWidth; }
+            set { Label.MaxWidth = value; }
+        }
+
         public readonly static DependencyProperty LabelAutoSizeProperty = Label.AutoSizeProperty;
         public Delight.AutoSize LabelAutoSize
         {

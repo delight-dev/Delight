@@ -1246,7 +1246,7 @@ namespace Delight
                     _xmlEditorTooltipBox.Name = "XmlEditorTooltipBox";
 #endif
                     Delight.Frame.BackgroundColorProperty.SetDefault(_xmlEditorTooltipBox, new UnityEngine.Color(0.8078431f, 0.9058824f, 0.8235294f, 1f));
-                    Delight.Frame.AlignmentProperty.SetDefault(_xmlEditorTooltipBox, Delight.ElementAlignment.TopLeft);
+                    Delight.Frame.AlignmentProperty.SetDefault(_xmlEditorTooltipBox, Delight.ElementAlignment.BottomLeft);
                     Delight.Frame.IsVisibleProperty.SetDefault(_xmlEditorTooltipBox, false);
                 }
                 return _xmlEditorTooltipBox;
@@ -1273,6 +1273,7 @@ namespace Delight
                     Delight.Label.FontSizeProperty.SetDefault(_xmlEditorTooltipLabel, 14f);
                     Delight.Label.AutoSizeProperty.SetDefault(_xmlEditorTooltipLabel, Delight.AutoSize.Default);
                     Delight.Label.MarginProperty.SetDefault(_xmlEditorTooltipLabel, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.MaxWidthProperty.SetDefault(_xmlEditorTooltipLabel, new ElementSize(400f, ElementSizeUnit.Pixels));
                 }
                 return _xmlEditorTooltipLabel;
             }

@@ -118,9 +118,30 @@ namespace Delight
                     Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
                 }
                 else if (AutoSize == AutoSize.WidthAndHeight || AutoSize == AutoSize.Default)
-                {
-                    Width = new ElementSize(PreferredWidth + margin.Left + margin.Right);
-                    Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
+                {                    
+                    if (MaxWidth != null)
+                    {
+                        // if MaxWidth is set we want the label to expand and then wrap when reaching the max width                        
+                        float actualPreferredWidth = PreferredWidth + margin.Left + margin.Right;
+                        if (actualPreferredWidth > MaxWidth)
+                        {
+                            EnableWordWrapping = true;
+                            Width = new ElementSize(MaxWidth);
+                        }
+                        else
+                        {
+                            EnableWordWrapping = false;
+                            Width = new ElementSize(actualPreferredWidth);                            
+                        }
+
+                        UpdateLayout(false);
+                        Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
+                    }
+                    else
+                    {
+                        Width = new ElementSize(PreferredWidth + margin.Left + margin.Right);
+                        Height = new ElementSize(PreferredHeight + margin.Top + margin.Bottom);
+                    }
                 }
             }
             catch

@@ -3010,6 +3010,13 @@ namespace Delight
             set { ComboBoxButton.IsBackButton = value; }
         }
 
+        public readonly static DependencyProperty ButtonMaxWidthProperty = Button.MaxWidthProperty;
+        public Delight.ElementSize ButtonMaxWidth
+        {
+            get { return ComboBoxButton.MaxWidth; }
+            set { ComboBoxButton.MaxWidth = value; }
+        }
+
         public readonly static DependencyProperty ButtonLabelAutoSizeProperty = Button.LabelAutoSizeProperty;
         public Delight.AutoSize ButtonLabelAutoSize
         {

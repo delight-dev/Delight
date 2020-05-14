@@ -430,6 +430,13 @@ namespace Delight
             set { CheckBoxImageView.LoadMode = value; }
         }
 
+        public readonly static DependencyProperty MaxWidthProperty = Label.MaxWidthProperty;
+        public Delight.ElementSize MaxWidth
+        {
+            get { return CheckBoxLabel.MaxWidth; }
+            set { CheckBoxLabel.MaxWidth = value; }
+        }
+
         public readonly static DependencyProperty AutoSizeProperty = Label.AutoSizeProperty;
         public Delight.AutoSize AutoSize
         {

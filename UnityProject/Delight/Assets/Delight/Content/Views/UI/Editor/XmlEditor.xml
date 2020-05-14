@@ -41,8 +41,9 @@
         </Region>
 
         <!-- Tooltip -->
-        <Frame Id="TooltipBox" BackgroundColor="#cee7d2" Alignment="TopLeft" IsVisible="False">
-          <Label Id="TooltipLabel" Text="TooltipLabel" Font="Segoe UI SDF" FontSize="14" AutoSize="True" Margin="5,0,5,0" />
+        <Frame Id="TooltipBox" BackgroundColor="#cee7d2" Alignment="BottomLeft" IsVisible="False">
+          <Label Id="TooltipLabel" Text="TooltipLabel" Font="Segoe UI SDF" FontSize="14" AutoSize="True" Margin="5,0,5,0"
+                 MaxWidth="400" />
           <Image Sprite="TooltipArrow" Alignment="BottomLeft" Offset="10,6,0,0" Color="#cee7d2" />
         </Frame>
         
