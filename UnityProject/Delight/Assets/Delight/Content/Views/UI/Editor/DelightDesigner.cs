@@ -32,6 +32,7 @@ namespace Delight
         private UIView _displayedView;
         private DesignerView _currentEditedView;
         private Dictionary<string, Template> _runtimeTemplates;
+        private DesignerView _lastOpenView;
 
         #endregion
 
@@ -53,6 +54,26 @@ namespace Delight
                 // center on view
                 ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
                 SetScale(Vector3.one);
+            }
+
+            // F12 jumps to definition
+            if (Input.GetKeyDown(KeyCode.F12) && _currentEditedView != null)
+            {
+                var viewAtCaret = XmlEditor.GetViewAtCaret();
+                if (!String.IsNullOrEmpty(viewAtCaret))
+                {
+                    var designerViewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewAtCaret);
+                    if (designerViewAtCaret != null && designerViewAtCaret != _currentEditedView)
+                    {
+                        DesignerViews.Select(designerViewAtCaret);
+                    }
+                }
+            }
+
+            // F10 jumps to last open view
+            if (Input.GetKeyDown(KeyCode.F10) && _lastOpenView != null)
+            {
+                DesignerViews.Select(_lastOpenView);
             }
 
             // CTRL+S and CTRL+SHIFT+S saves all changes
@@ -141,6 +162,7 @@ namespace Delight
             // clear any existing displayed views
             ViewContentRegion.DestroyChildren();
 
+            _lastOpenView = _currentEditedView;
             _currentEditedView = designerView;
 
             if (!designerView.IsRuntimeParsed)

@@ -1959,7 +1959,7 @@ namespace Delight
         /// <summary>
         /// Gets the view at the current caret position.
         /// </summary>
-        private string GetViewAtCaret()
+        public string GetViewAtCaret()
         {
             return GetViewAtCaret(_caretY);
         }
