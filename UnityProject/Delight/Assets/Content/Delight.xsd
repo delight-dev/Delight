@@ -8443,6 +8443,7 @@
       <xs:enumeration value="Never" />
       <xs:enumeration value="Remove" />
       <xs:enumeration value="Manual" />
+      <xs:enumeration value="MouseOver" />
     </xs:restriction>
   </xs:simpleType>
 

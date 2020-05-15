@@ -13,6 +13,7 @@ namespace Delight
         Auto = 1,
         Never = 2,
         Remove = 2,
-        Manual = 3
+        Manual = 3,
+        MouseOver = 4,
     }
 }

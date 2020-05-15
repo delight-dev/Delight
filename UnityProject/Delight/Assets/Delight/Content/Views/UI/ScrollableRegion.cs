@@ -106,12 +106,13 @@ namespace Delight
             }
 
             // has the size of the scrollable region changed?
+            bool scrollbarsNeedUpdate = false;
             if (_actualWidth != ActualWidth || _actualHeight != ActualHeight)
             {
                 // yes. adjust content region to bounds
                 _actualWidth = ActualWidth;
                 _actualHeight = ActualHeight;
-                bool scrollbarsNeedUpdate = true;
+                scrollbarsNeedUpdate = true;
 
                 if (_offsetChangedFromStartPosition)
                 {
@@ -129,11 +130,18 @@ namespace Delight
                         }
                     }
                 }
+            }
 
-                if (scrollbarsNeedUpdate)
-                {
-                    UpdateScrollbars();
-                }
+            // update scrollbars every frame if they are to be shown on mouse over 
+            if (HorizontalScrollbarVisibility == ScrollbarVisibilityMode.MouseOver ||
+                VerticalScrollbarVisibility == ScrollbarVisibilityMode.MouseOver)
+            {
+                scrollbarsNeedUpdate = true;
+            }
+
+            if (scrollbarsNeedUpdate)
+            {
+                UpdateScrollbars();
             }
 
             _previousContentOffset = contentOffset;
@@ -943,12 +951,24 @@ namespace Delight
                 clampedOffset.y = Mathf.Min(clampedOffset.y, min.y);
             }
 
+            bool mouseOverModeActive = false;
+            if (HorizontalScrollbarVisibility == ScrollbarVisibilityMode.MouseOver ||
+                VerticalScrollbarVisibility == ScrollbarVisibilityMode.MouseOver)
+            {
+                // see if scrollable region contains mouse 
+                mouseOverModeActive = _isDragging || _isOutOfBoundsElastic || _velocity != Vector2.zero || 
+                    ContainsMouse(Input.mousePosition);
+            }
+
             if (CanScrollHorizontally && !HorizontalScrollbar.IgnoreObject)
             {
                 switch (HorizontalScrollbarVisibility)
                 {
                     case ScrollbarVisibilityMode.Always:
                         HorizontalScrollbar.IsVisible = true;
+                        break;
+                    case ScrollbarVisibilityMode.MouseOver:
+                        HorizontalScrollbar.IsVisible = !hideHorizontal && mouseOverModeActive;
                         break;
                     case ScrollbarVisibilityMode.Auto:
                         HorizontalScrollbar.IsVisible = !hideHorizontal;
@@ -970,6 +990,9 @@ namespace Delight
                 {
                     case ScrollbarVisibilityMode.Always:
                         VerticalScrollbar.IsVisible = true;
+                        break;
+                    case ScrollbarVisibilityMode.MouseOver:
+                        VerticalScrollbar.IsVisible = !hideVertical && mouseOverModeActive;
                         break;
                     case ScrollbarVisibilityMode.Auto:
                         VerticalScrollbar.IsVisible = !hideVertical;

@@ -25,7 +25,7 @@
           <Button Text="Add View" FontSize="14" Alignment="TopLeft" Offset="14,0,0,0" Height="22" TextAlignment="Left" Click="AddNewView" TextPadding="10" />
           <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,26,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
                 ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
-                VerticalScrollbarVisibility="Auto" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
+                VerticalScrollbarVisibility="MouseOver" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0">
             <ListItem Margin="4,0,8,0" Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
               <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="12,0,0,0" EnableWordWrapping="False" 
