@@ -205,6 +205,7 @@ namespace Delight
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
+        public readonly SpriteAsset Delighticon;
         public readonly SpriteAsset Audionautbg;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
@@ -232,6 +233,7 @@ namespace Delight
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
+            Delighticon = new SpriteAsset { Id = "delight-icon", IsResource = true, RelativePath = "Sprites/" };
             Audionautbg = new SpriteAsset { Id = "audionautbg", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
@@ -253,6 +255,7 @@ namespace Delight
             Add(RainbowSquare);
             Add(Selection);
             Add(TooltipArrow);
+            Add(Delighticon);
             Add(Audionautbg);
             Add(Frame1);
             Add(Frame2);
@@ -474,6 +477,7 @@ namespace Delight
         #region Fields
 
         public readonly Texture2DAsset TooltipArrow;
+        public readonly Texture2DAsset Delighticon;
         public readonly Texture2DAsset Bluefloral01;
 
         #endregion
@@ -483,9 +487,11 @@ namespace Delight
         public Texture2DAssetData()
         {
             TooltipArrow = new Texture2DAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
+            Delighticon = new Texture2DAsset { Id = "delight-icon", IsResource = true, RelativePath = "Sprites/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
 
             Add(TooltipArrow);
+            Add(Delighticon);
             Add(Bluefloral01);
         }
 

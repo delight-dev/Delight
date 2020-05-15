@@ -2,17 +2,16 @@
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData"
                  IsEditorView="True" AutoParse="t:bool = True">
 
-  <Region Id="TopToolbar" Height="20" Alignment="Top" BackgroundColor="#9a9a9a">
-    <ToggleGroup Orientation="Horizontal" Alignment="Left">
-      <Button Text="Views" Height="20" Font="Segoe UI SDF" Pressed-FontColor="#333333" FontColor="#333333" FontSize="14" TextPadding="10,0,10,0" Pressed-BackgroundColor="#c3c3c3" ToggleValue="True" />
-      <Button Text="Models" Height="20" Font="Segoe UI SDF" Pressed-FontColor="#333333" FontColor="#333333" FontSize="14" TextPadding="10,0,10,0" Pressed-BackgroundColor="#c3c3c3" />
-    </ToggleGroup>
-  </Region>
   <Region Id="ViewsDesigner">
-    <Grid Columns="200[20],*" Rows="*,240[20]" BackgroundColor="#394552" Margin="0,20,0,0">
+    <Grid Columns="50[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
+
+      <!-- Left navigation bar #494b52 -->
+      <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1"> 
+        <Image Sprite="delight-icon" Alignment="Top" Offset="0,5,0,0" />
+      </Region>
 
       <!-- Designer Content Region -->
-      <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,1" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
+      <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,2" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
                         UnblockDragEventsInChildren="False">
         <Canvas Id="ContentRegionCanvas" Scale="1">
           <Region Id="ViewContentRegion">
@@ -20,23 +19,24 @@
         </Canvas>
       </ScrollableRegion>
 
-      <!-- Left Panel - Content Explorer -->
-      <Region Id="ContentExplorer" Grid.Cell="0,0" Grid.CellSpan="2,1" BackgroundColor="#c3c3c3">
+      <!-- Left Panel - Content Explorer #686a72 -->
+      <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#d0d0d3">
         <Region Margin="0,8,0,0">
           <Button Text="Add View" FontSize="14" Alignment="TopLeft" Offset="14,0,0,0" Height="22" TextAlignment="Left" Click="AddNewView" TextPadding="10" />
           <List IsScrollable="True" Items="{view in DesignerViews}" Alignment="Top" Margin="4,26,2,2" BackgroundColor="clear" Width="100%" Height="100%" CanReselect="True"
                 ScrollableRegionContentAlignment="Top" DisableInteractionScrollDelta="1" SelectOnMouseUp="True" HasInertia="False" ItemSelected="ViewSelected"
-                VerticalScrollbarVisibility="Auto" VerticalScrollbarBackgroundColor="#c3c3c3" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="#c3c3c3"
+                VerticalScrollbarVisibility="Auto" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0">
-            <ListItem Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
-              <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="16,0,0,0" EnableWordWrapping="False" OverflowMode="Truncate" ExtraPadding="True"  />
+            <ListItem Margin="4,0,8,0" Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
+              <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="12,0,0,0" EnableWordWrapping="False" 
+                     OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
             </ListItem>
           </List>
         </Region>
       </Region>
 
       <!-- Bottom Panel - XML editor -->
-      <Region Id="XmlEditorRegion" Grid.Cell="1,1" BackgroundColor="#fbfbfb" IsVisible="False">
+      <Region Id="XmlEditorRegion" Grid.Cell="1,2" BackgroundColor="#fbfbfb" IsVisible="False">
         <XmlEditor Id="XmlEditor" Margin="10,21,0,20" Edit="OnEdit" DesignerViews="{DesignerViews}" />
         <Region Id="XmlEditorStatusBar" BackgroundColor="#e2e2e2" Height="20" Alignment="Bottom">
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
@@ -46,7 +46,7 @@
         </Region>
       </Region>
 
-      <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,1" />
+      <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,2" />
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
     </Grid>
 

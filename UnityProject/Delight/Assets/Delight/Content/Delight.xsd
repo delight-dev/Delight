@@ -8619,6 +8619,7 @@
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
+      <xs:enumeration value="delight-icon" />
       <xs:enumeration value="audionautbg" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
@@ -8652,6 +8653,7 @@
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="TooltipArrow" />
+      <xs:enumeration value="delight-icon" />
       <xs:enumeration value="bluefloral01" />
     </xs:restriction>
   </xs:simpleType>

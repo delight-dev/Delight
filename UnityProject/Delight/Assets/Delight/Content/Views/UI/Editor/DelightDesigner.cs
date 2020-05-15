@@ -145,17 +145,10 @@ namespace Delight
 
             if (!designerView.IsRuntimeParsed)
             {
-                _displayedView = Assets.CreateView(designerView.ViewTypeName, this, ViewContentRegion) as UIView;
+                _displayedView = CreateView(designerView.ViewTypeName, this, ViewContentRegion);
                 if (_displayedView == null)
                 {
-                    if (designerView.ViewTypeName == "DelightDesigner")
-                    {
-                        _displayedView = new DelightDesigner(this, ViewContentRegion);
-                    }
-                    else
-                    {
-                        return;
-                    }
+                    return;
                 }
 
                 var sw2 = System.Diagnostics.Stopwatch.StartNew();
@@ -426,17 +419,10 @@ namespace Delight
             }
 
             // instantiate view
-            var view = Assets.CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true) as UIView;
+            var view = CreateView(viewTypeName, parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true) as UIView;
             if (view == null)
             {
-                if (viewTypeName == "DelightDesigner")
-                {
-                    view = new DelightDesigner(parent, layoutParent, viewObject.TypeName, template ?? dataTemplates[viewObject.TypeName], true);
-                }
-                else
-                {
-                    return null;
-                }
+                return null;
             }
 
             InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
@@ -520,7 +506,13 @@ namespace Delight
                 }
                 else
                 {
-                    childView = Assets.CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
+                    childView = CreateView(childViewObject.TypeName, parent, layoutParentContent, childId, dataTemplates[templateIdPath]) as UIView;
+                }
+
+                if (childView == null)
+                {
+                    ConsoleLogger.LogParseError(fileName, childViewDeclaration.LineNumber, String.Format("#Delight# Unable to instantiate view <{0}>.", viewObject.Name));
+                    continue;
                 }
 
                 // set child view reference property if it exists
@@ -1294,6 +1286,48 @@ namespace Delight
             DesignerViews.SelectAndScrollTo(newView);
 
             XmlEditorRegion.IsVisible = true;
+        }
+
+        public static UIView CreateView(string viewName)
+        {
+            return CreateView(viewName, null, null, string.Empty, null, false);
+        }
+
+        public static UIView CreateView(string viewName, View parent)
+        {
+            return CreateView(viewName, parent, null, string.Empty, null, false);
+        }
+
+        public static UIView CreateView(string viewName, View parent, View layoutParent)
+        {
+            return CreateView(viewName, parent, layoutParent, string.Empty, null, false);
+        }
+
+        public static UIView CreateView(string viewName, View parent, View layoutParent, string id)
+        {
+            return CreateView(viewName, parent, layoutParent, id, null, false);
+        }
+
+        public static UIView CreateView(string viewName, View parent, View layoutParent, string id, Template template)
+        {
+            return CreateView(viewName, parent, layoutParent, id, template, false);
+        }
+
+        public static UIView CreateView(string viewName, View parent, View layoutParent, string id, Template template, bool deferInitialization)
+        {
+            // handle special case when instantiating editor views
+            if (viewName == "DelightDesigner")
+            {
+                return new DelightDesigner(parent, layoutParent, id, template, deferInitialization);
+            }
+            else if (viewName == "XmlEditor")
+            {
+                return new XmlEditor(parent, layoutParent, id, template, deferInitialization);
+            }
+            else
+            {
+                return Assets.CreateView(viewName, parent, layoutParent, id, template, deferInitialization) as UIView;
+            }
         }
 
         #endregion
