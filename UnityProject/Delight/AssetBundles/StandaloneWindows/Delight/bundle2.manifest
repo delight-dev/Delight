@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 4175786132
+CRC: 136885327
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 50a8bfc6269e3e68cdbf2c67737140aa
+    Hash: 4e863404ab93245b0ba029bc4e3e5327
   TypeTreeHash:
     serializedVersion: 2
     Hash: 9e6ad29cbd2df8fbe1a15315db0e51ab
@@ -14,8 +14,8 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/DelightExtensions/Experiments/Assets/Bundle2/Frame4.psd
-- Assets/DelightExtensions/Experiments/Assets/Bundle2/Frame3.psd
-- Assets/DelightExtensions/Experiments/Assets/Bundle2/bluefloral01.png
-- Assets/DelightExtensions/Experiments/Assets/Bundle2/BigSprite.psd
+- Assets/Delight/Extensions/Examples/Assets/Bundle2/Frame4.psd
+- Assets/Delight/Extensions/Examples/Assets/Bundle2/Frame3.psd
+- Assets/Delight/Extensions/Examples/Assets/Bundle2/bluefloral01.png
+- Assets/Delight/Extensions/Examples/Assets/Bundle2/BigSprite.psd
 Dependencies: []

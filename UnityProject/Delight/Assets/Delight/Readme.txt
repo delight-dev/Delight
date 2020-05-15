@@ -1,4 +1,4 @@
-Delight 2019.1.0
+Delight 2019.1.1
 ----------------
 
 Check out https://delight-dev.github.io/ for latest API docs, tutorials, extras and news.

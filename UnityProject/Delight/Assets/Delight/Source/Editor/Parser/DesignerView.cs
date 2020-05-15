@@ -35,7 +35,7 @@ namespace Delight.Editor.Parser
         private bool _isDirty;
         public bool IsDirty
         {
-            get { return _isDirty; }
+            get { return IsLocked ? false : _isDirty; }
             set
             {
                 SetProperty(ref _isDirty, value);
@@ -107,6 +107,14 @@ namespace Delight.Editor.Parser
             get
             {
                 return IsDirty ? Name + "*" : Name;
+            }
+        }
+
+        public bool IsLocked
+        {
+            get
+            {
+                return ViewObject != null ? ViewObject.IsLocked : false;
             }
         }
 

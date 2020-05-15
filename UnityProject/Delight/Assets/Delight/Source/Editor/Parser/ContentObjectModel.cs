@@ -13,6 +13,7 @@ using Delight.Editor;
 using UnityEngine;
 using System.Xml.Serialization;
 using ProtoBuf;
+using NUnit.Framework;
 #endregion
 
 namespace Delight.Editor.Parser
@@ -592,6 +593,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(19)]
         public bool HasNonDefaultTypeName;
 
+        [ProtoMember(20)]
+        public bool IsLocked;
+
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
 
@@ -657,6 +661,8 @@ namespace Delight.Editor.Parser
             HasCode = false;
             HasXml = false;
             HasNonDefaultTypeName = false;
+            IsEditorView = false;
+            IsLocked = false;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)

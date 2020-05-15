@@ -65,7 +65,7 @@ namespace Delight
                     var designerViewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewAtCaret);
                     if (designerViewAtCaret != null && designerViewAtCaret != _currentEditedView)
                     {
-                        DesignerViews.Select(designerViewAtCaret);
+                        OpenView(designerViewAtCaret);
                     }
                 }
             }
@@ -73,13 +73,29 @@ namespace Delight
             // F10 jumps to last open view
             if (Input.GetKeyDown(KeyCode.F10) && _lastOpenView != null)
             {
-                DesignerViews.Select(_lastOpenView);
+                OpenView(_lastOpenView);
             }
 
             // CTRL+S and CTRL+SHIFT+S saves all changes
             if (ctrlDown && Input.GetKeyDown(KeyCode.S))
             {
                 SaveChanges();
+            }
+        }
+
+        /// <summary>
+        /// Opens the specified view in the designer.
+        /// </summary>
+        private void OpenView(DesignerView designerViewAtCaret)
+        {
+            if (EditableDesignerViews.Contains(designerViewAtCaret))
+            {
+                EditableDesignerViews.Select(designerViewAtCaret);
+            }
+            else
+            {
+                // open readonly designer view
+                ViewSelected(designerViewAtCaret);
             }
         }
 
@@ -92,6 +108,7 @@ namespace Delight
 
             // initialize designer views
             DesignerViews = new DesignerViewData();
+            EditableDesignerViews = new DesignerViewData();
             ChangedDesignerViews = new DesignerViewData();
             _runtimeTemplates = new Dictionary<string, Template>();
 
@@ -104,17 +121,20 @@ namespace Delight
                 if (!IsUIView(viewObject))
                     continue;
 
-                designerViews.Add(new DesignerView
+                var designerView = new DesignerView
                 {
                     Id = viewObject.Name,
                     Name = viewObject.Name,
                     ViewTypeName = viewObject.TypeName,
                     ViewObject = viewObject,
                     FilePath = viewObject.FilePath
-                });
+                };
+
+                designerViews.Add(designerView);
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
+            EditableDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked).OrderBy(y => y.Id));
         }
 
         /// <summary>
@@ -1074,7 +1094,7 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
-            var changedViews = DesignerViews.Where(x => x.IsDirty).ToList();
+            var changedViews = EditableDesignerViews.Where(x => x.IsDirty).ToList();
             UpdateCurrentEditedViewXml();
 
             if (!changedViews.Any())
@@ -1217,7 +1237,7 @@ namespace Delight
         /// </summary>
         public bool CheckForUnsavedChanges()
         {
-            ChangedDesignerViews.Replace(DesignerViews.Where(x => x.IsDirty));
+            ChangedDesignerViews.Replace(EditableDesignerViews.Where(x => x.IsDirty));
             var isDirty = ChangedDesignerViews.Any();
 
             // show popup: save changes to following items? Yes No Cancel
@@ -1244,7 +1264,7 @@ namespace Delight
         /// </summary>
         public void DiscardChangesAndQuit()
         {
-            DesignerViews.ForEach(x =>
+            EditableDesignerViews.ForEach(x =>
             {
                 x.IsDirty = false;
                 x.XmlText = null;
@@ -1305,7 +1325,8 @@ namespace Delight
             newView.IsRuntimeParsed = true;
 
             DesignerViews.Add(newView);
-            DesignerViews.SelectAndScrollTo(newView);
+            EditableDesignerViews.Add(newView);
+            EditableDesignerViews.SelectAndScrollTo(newView);
 
             XmlEditorRegion.IsVisible = true;
         }

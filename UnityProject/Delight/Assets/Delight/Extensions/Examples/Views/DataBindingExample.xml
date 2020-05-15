@@ -1,0 +1,24 @@
+<DataBindingExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Button2.BackgroundColor="Red" Player1="t:Player" TestBinding="t:string" TestBinding2="t:Color" TestBinding3="t:TestType2">
+
+  <Region Width="25%" Alignment="Left" Margin="30,30,15,30"
+    BackgroundColor="#ef706a">
+    <Group Spacing="6" Alignment="Top" Margin="0,30,0,0">
+      <Button Text="Test 1" BackgroundColor="Blue" TextAlignment="Center" Click="Test1" />
+      <Button Text="Test 2" TextAlignment="Center" Click="Test2" />
+      <Button Text="Bg" TextAlignment="Center" BackgroundColor="{TestBinding2}" />
+      <Button Text="Large Button" TextAlignment="Center" />
+      <Label Width="130" Height="50" Text="{TestBinding}" />
+      <Button Text="{TestBinding}" />
+      <Button Text="{Player1.Name}" /> 
+    </Group> 
+  </Region> 
+  
+  <Region Id="RegionOnDemand" Width="75%" Alignment="Right" Margin="15,30,30,30"
+      BackgroundColor="#949494">
+    <Group>
+      <Label Text="{TestBinding}" Height="40" />
+      <Label Text="{Player1.Name}" Height="40" />
+    </Group>
+  </Region>
+
+</DataBindingExample>

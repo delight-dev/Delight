@@ -42,8 +42,8 @@ namespace Delight
             List1 = new List(this, Region2.Content, "List1", List1Template);
             List1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
-            // binding <List Items="{view in DesignerViews}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = DesignerViews, () => { }, false));
+            // binding <List Items="{view in EditableDesignerViews}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "EditableDesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = EditableDesignerViews, () => { }, false));
 
             // templates for List1
             List1.ContentTemplates.Add(new ContentTemplate(tiView => 
@@ -119,6 +119,7 @@ namespace Delight
 
             dependencyProperties.Add(DesignerViewsProperty);
             dependencyProperties.Add(ChangedDesignerViewsProperty);
+            dependencyProperties.Add(EditableDesignerViewsProperty);
             dependencyProperties.Add(AutoParseProperty);
             dependencyProperties.Add(ViewsDesignerProperty);
             dependencyProperties.Add(ViewsDesignerTemplateProperty);
@@ -200,6 +201,13 @@ namespace Delight
         {
             get { return ChangedDesignerViewsProperty.GetValue(this); }
             set { ChangedDesignerViewsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.Editor.Parser.DesignerViewData> EditableDesignerViewsProperty = new DependencyProperty<Delight.Editor.Parser.DesignerViewData>("EditableDesignerViews");
+        public Delight.Editor.Parser.DesignerViewData EditableDesignerViews
+        {
+            get { return EditableDesignerViewsProperty.GetValue(this); }
+            set { EditableDesignerViewsProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> AutoParseProperty = new DependencyProperty<System.Boolean>("AutoParse");

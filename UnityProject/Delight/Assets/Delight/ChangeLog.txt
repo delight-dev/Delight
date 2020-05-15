@@ -1,2 +1,13 @@
-﻿2019.1.0
+﻿2020.1.0
+- Delight Designer for LIVE editing of XML
+- New content type "API Doc" files for adding XML comments to generated dependency properties
+- Run-time parsing and instantiation of views (currently limited to editor)
+- Attached property "ListItem.SetListItemState" for propagating list item state to child views
+- AltarnateItems property for lists for alternating item styles
+- Index binding for list items through syntax, e.g. <Label Text="{item.Index}." /> or <Label Text="{item.ZeroIndex}." />
+- Added scrollbar visiblity mode "MouseOver" for showing scrollbars when the mouse hovers over the scrollable region
+- RawImage view, similar to Image view but for presenting Texture2D assets
+- Automatic parsing of extensions to the framework inside Delight/Extensions folder
+
+2019.1.0
 - Initial release

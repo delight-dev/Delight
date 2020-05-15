@@ -510,6 +510,13 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
+                if (attributeName.IEquals("IsLocked"))
+                {
+                    Boolean.TryParse(attributeValue, out var isLocked);
+                    viewObject.IsLocked = isLocked;
+                    continue;
+                }
+
                 if (attributeName.IEquals("BasedOn"))
                 {
                     // set default 

@@ -1,6 +1,0 @@
-<TestTheme>
-  <ScrollableRegion HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
-                    HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"
-                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf"
-                    HorizontalScrollbarBarMargin="3,5,3,5" VerticalScrollbarBarMargin="5,3,5,3" />
-</TestTheme> 

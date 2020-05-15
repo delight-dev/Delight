@@ -1,5 +1,4 @@
 #region Using Statements
-using OdinSerializer;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,49 +15,5 @@ namespace Delight
     {
         public static string DefaultRepositoryName = "Default";
         public static DependencyObject RuntimeModelObject = new DependencyObject(); // used in runtime bindings
-
-        //public ModelData ModelData;
-        //public PersistenceManager LocalPersistanceManager;
-        //public PersistenceManager RemotePersistanceManager;
-
-        static Models()
-        {
-            // TODO lookup model bootstrappers and execute them
-        }
-
-        public static void Save(string repositoryId = null, string segmentId = null)
-        {
-            var modelData = new ModelData();
-            modelData.Highscores = Highscores.Count > 0 ? new List<Highscore>(Highscores) : null;
-
-            string path = String.Format("{0}/Data/{1}.data", Application.dataPath, repositoryId ?? DefaultRepositoryName);
-            string directory = Path.GetDirectoryName(path);
-            if (!Directory.Exists(directory))
-                Directory.CreateDirectory(directory);
-
-            byte[] bytes = SerializationUtility.SerializeValue(modelData, DataFormat.Binary);
-            File.WriteAllBytes(path, bytes);
-        }
-
-        public static void Load(string repositoryId = null, string segmentId = null)
-        {
-            string path = String.Format("{0}/Data/{1}.data", Application.dataPath, repositoryId ?? DefaultRepositoryName);
-            if (!File.Exists(path))
-                return;
-
-            byte[] bytes = File.ReadAllBytes(path);
-            var modelData = SerializationUtility.DeserializeValue<ModelData>(bytes, DataFormat.Binary);
-            Highscores.AddRange(modelData.Highscores);
-        }
-
-        public static void Clear(string segmentId = null)
-        {
-            Highscores.Clear();
-        }
-    }
-
-    public class ModelData
-    {
-        public List<Highscore> Highscores; 
     }
 }

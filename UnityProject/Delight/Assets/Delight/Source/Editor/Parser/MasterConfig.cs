@@ -309,7 +309,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public void UpdateExtensionContentFolders()
         {
-            string path = String.Format("{0}/DelightExtensions/", Application.dataPath);
+            string path = String.Format("{0}/Delight/Extensions/", Application.dataPath);
             if (!Directory.Exists(path))
                 return;
 
@@ -319,7 +319,7 @@ namespace Delight.Editor.Parser
                 {
                     var directoryName = Path.GetFileName(directoryPath.TrimEnd(Path.DirectorySeparatorChar));
 
-                    string contentFolder = String.Format("Assets/DelightExtensions/{0}/", directoryName);
+                    string contentFolder = String.Format("Assets/Delight/Extensions/{0}/", directoryName);
                     if (!ContentFolders.Contains(contentFolder))
                     {
                         ContentFolders.Add(contentFolder);

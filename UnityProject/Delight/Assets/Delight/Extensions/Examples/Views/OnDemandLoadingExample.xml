@@ -1,0 +1,40 @@
+<OnDemandLoadingExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot" TimeString="t:string" 
+                        EnableScriptEvents="True"
+                        LoadedAssetsString="t:string" LoadedAssetBundlesString="t:string" LoadProgress="t:string">
+  
+  <Label Text="{TimeString}" Width="400" Alignment="Top" TextAlignment="Left" />
+  <Label Text="{LoadedAssetsString}" Width="400" Alignment="TopRight" TextAlignment="TopLeft" />
+  <Label Text="{LoadedAssetBundlesString}" Width="400" Alignment="TopLeft" TextAlignment="TopLeft" />
+
+  <Region>
+    <Group Spacing="5" Orientation="Vertical" Alignment="TopLeft" Offset="20,100,0,0">
+      <Button Id="LoadAllButton" Text="LoadAll" Click="LoadAll" Width="200" />
+      <Button Id="Load1Button" Text="Load Set 1" Click="ToggleLoad1" Width="200" />
+      <Button Id="Load2Button" Text="Load Set 2" Click="ToggleLoad2" Width="200" />
+      <Button Id="Load3Button" Text="Load Set 3" Click="ToggleLoad3" Width="200" />
+      <Button Id="Load4Button" Text="Load Set 4" Click="ToggleLoad4" Width="200" />
+      <Button Text="UnloadAll" Click="UnloadAll" Width="200" />
+      <Button Text="SetSprite" Click="SetSprite" Width="200" /> 
+    </Group>  
+    
+    <!-- Three sets of images we want to load on-demand -->
+    <Group Id="ImageGroup" Orientation="Horizontal" Spacing="5">
+      <Group Id="ImageSet1" Spacing="5" LoadMode="Manual">
+        <Image Sprite="Frame1" Size="100,100" />
+        <Image Sprite="Frame2" Size="100,100" />
+      </Group>  
+      <Group Id="ImageSet2" Spacing="5" LoadMode="Manual">
+        <Image Sprite="Frame3" Size="100,100" />
+        <Image Sprite="Frame4" Size="100,100" />   
+      </Group>
+      <Group Id="ImageSet3" Spacing="5" LoadMode="Manual">
+        <Image Sprite="Frame2" Size="100,100" />
+        <Image Sprite="Frame3" Size="100,100" />
+      </Group>
+      <Group Id="ImageSet4" Spacing="5" LoadMode="Manual">
+        <Image Id="BigSpriteImage" Sprite="BigSprite" Size="100,205" />
+      </Group>
+    </Group> 
+    <Label Text="{LoadProgress}" Width="400" Alignment="Center" TextAlignment="Center" />
+  </Region>
+</OnDemandLoadingExample> 
