@@ -33,6 +33,7 @@ namespace Delight
         private DesignerView _currentEditedView;
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
+        private bool _readOnlyOverride; 
 
         #endregion
 
@@ -68,6 +69,13 @@ namespace Delight
                         OpenView(designerViewAtCaret);
                     }
                 }
+            }
+
+            // unlocks read-only views to be edited
+            if (Input.GetKeyDown(KeyCode.L) && ctrlDown && shiftDown)
+            {
+                _readOnlyOverride = !_readOnlyOverride;
+                UpdateXmlEditorReadonly();
             }
 
             // F10 jumps to last open view
@@ -134,7 +142,7 @@ namespace Delight
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
-            DisplayedDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked || DisplayLockedViews).OrderBy(y => y.Id));
+            DisplayedDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
         }
 
         /// <summary>
@@ -231,7 +239,15 @@ namespace Delight
             XmlEditorRegion.IsVisible = true;
 
             // change display if editor is readonly
-            bool isReadOnly = _displayedView != null ? _currentEditedView.IsLocked : false;
+            UpdateXmlEditorReadonly();
+        }
+
+        /// <summary>
+        /// Updates the xml editor based on read-only mode. 
+        /// </summary>
+        public void UpdateXmlEditorReadonly()
+        {
+            bool isReadOnly = _displayedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
             var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
             XmlEditor.IsReadOnly = isReadOnly;
             XmlEditor.BackgroundColor = color;
@@ -1106,7 +1122,7 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
-            var changedViews = DesignerViews.Where(x => x.IsDirty && !x.IsLocked).ToList();
+            var changedViews = DesignerViews.Where(x => x.IsDirty).ToList();
             UpdateCurrentEditedViewXml();
 
             if (!changedViews.Any())
@@ -1343,6 +1359,16 @@ namespace Delight
             XmlEditorRegion.IsVisible = true;
         }
 
+        /// <summary>
+        /// Toggles if read-only views should be shown in the list or not.
+        /// </summary>
+        public void ToggleShowReadOnlyViews()
+        {
+            DisplayReadOnlyViews = !DisplayReadOnlyViews;
+            DisplayReadOnlyViewsText = DisplayReadOnlyViews ? "Hide Read-Only Views" : "Show Read-Only Views";
+            DisplayedDesignerViews.Replace(DesignerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
+        }
+
         public static UIView CreateView(string viewName)
         {
             return CreateView(viewName, null, null, string.Empty, null, false);
@@ -1383,6 +1409,11 @@ namespace Delight
             {
                 return Assets.CreateView(viewName, parent, layoutParent, id, template, deferInitialization) as UIView;
             }
+        }
+
+        public void ViewMenuItemSelected(ItemSelectionActionData selectionData)
+        {
+
         }
 
         #endregion

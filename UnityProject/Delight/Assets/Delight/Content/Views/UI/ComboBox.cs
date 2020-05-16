@@ -143,13 +143,16 @@ namespace Delight
             // close list and set selected item text
             ComboBoxButton.ToggleValue = false;
 
-            // take the text data from the first label in the list item
-            if (selectionData.ListItem == null)
-                ComboBoxButton.Text = string.Empty;
-            else
+            if (ShowSelectedItem)
             {
-                var label = selectionData.ListItem.Find<Label>();
-                ComboBoxButton.Text = label.Text;
+                // take the text data from the first label in the list item
+                if (selectionData.ListItem == null)
+                    ComboBoxButton.Text = string.Empty;
+                else
+                {
+                    var label = selectionData.ListItem.Find<Label>();
+                    ComboBoxButton.Text = label.Text;
+                }
             }
 
             ComboBoxList.IsActive = false;

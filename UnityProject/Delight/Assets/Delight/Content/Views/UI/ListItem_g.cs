@@ -47,6 +47,7 @@ namespace Delight
             dependencyProperties.Add(LengthProperty);
             dependencyProperties.Add(BreadthProperty);
             dependencyProperties.Add(ContentTemplateDataProperty);
+            dependencyProperties.Add(ItemSelectedProperty);
         }
 
         #endregion
@@ -131,6 +132,13 @@ namespace Delight
         {
             get { return ContentTemplateDataProperty.GetValue(this); }
             set { ContentTemplateDataProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        public ViewAction ItemSelected
+        {
+            get { return ItemSelectedProperty.GetValue(this); }
+            set { ItemSelectedProperty.SetValue(this, value); }
         }
 
         public AttachedProperty<System.Boolean> SetListItemState { get; private set; }

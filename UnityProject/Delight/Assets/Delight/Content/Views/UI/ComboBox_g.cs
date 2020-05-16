@@ -41,6 +41,7 @@ namespace Delight
             DependencyProperties.Add(ComboBoxTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(IsDropUpProperty);
+            dependencyProperties.Add(ShowSelectedItemProperty);
             dependencyProperties.Add(ItemSelectedProperty);
             dependencyProperties.Add(ComboBoxButtonProperty);
             dependencyProperties.Add(ComboBoxButtonTemplateProperty);
@@ -60,6 +61,14 @@ namespace Delight
         {
             get { return IsDropUpProperty.GetValue(this); }
             set { IsDropUpProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> ShowSelectedItemProperty = new DependencyProperty<System.Boolean>("ShowSelectedItem");
+        /// <summary>Boolean indicating if the selected item should be shown in the button.</summary>
+        public System.Boolean ShowSelectedItem
+        {
+            get { return ShowSelectedItemProperty.GetValue(this); }
+            set { ShowSelectedItemProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
@@ -4011,6 +4020,7 @@ namespace Delight
                     Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.EnableScriptEventsProperty.SetDefault(_comboBox, true);
+                    Delight.ComboBox.ShowSelectedItemProperty.SetDefault(_comboBox, true);
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(32f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_comboBox, ComboBoxComboBoxButton);

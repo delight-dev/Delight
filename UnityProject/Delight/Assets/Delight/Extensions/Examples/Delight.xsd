@@ -648,6 +648,7 @@
     </xs:sequence>
     <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="IsDropUp" type="xs:string" />
+    <xs:attribute name="ShowSelectedItem" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
     <xs:attribute name="Spacing" type="xs:string" />
@@ -1271,6 +1272,7 @@
     <xs:attribute name="Length" type="xs:string" />
     <xs:attribute name="Breadth" type="xs:string" />
     <xs:attribute name="ContentTemplateData" type="xs:string" />
+    <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="SetListItemState" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
@@ -2790,6 +2792,7 @@
     <xs:attribute name="Length" type="xs:string" />
     <xs:attribute name="Breadth" type="xs:string" />
     <xs:attribute name="ContentTemplateData" type="xs:string" />
+    <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="SetListItemState" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
@@ -7278,7 +7281,8 @@
     <xs:attribute name="ChangedDesignerViews" type="xs:string" />
     <xs:attribute name="DisplayedDesignerViews" type="xs:string" />
     <xs:attribute name="AutoParse" type="xs:string" />
-    <xs:attribute name="DisplayLockedViews" type="xs:string" />
+    <xs:attribute name="DisplayReadOnlyViews" type="xs:string" />
+    <xs:attribute name="DisplayReadOnlyViewsText" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />
@@ -7869,6 +7873,8 @@
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
+      <xs:enumeration value="HamburgerMenuIcon" />
+      <xs:enumeration value="HamburgerMenuIconPressed" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -7893,6 +7899,8 @@
 
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="HamburgerMenuIcon" />
+      <xs:enumeration value="HamburgerMenuIconPressed" />
       <xs:enumeration value="bluefloral01" />
     </xs:restriction>
   </xs:simpleType>

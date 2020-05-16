@@ -257,7 +257,9 @@ namespace Delight
                 return;
 
             SetState("Selected");
+            var data = new ItemSelectionActionData { IsSelected = IsSelected, ListItem = this, Item = Item };
             ParentList.SelectItem(this, true);
+            ItemSelected?.Invoke(this, data);
         }
 
         /// <summary>
@@ -308,7 +310,9 @@ namespace Delight
             if (!ParentList.SelectOnMouseUp)
             {
                 SetState("Selected");
+                var data = new ItemSelectionActionData { IsSelected = IsSelected, ListItem = this, Item = Item };
                 ParentList.SelectItem(this, true);
+                ItemSelected?.Invoke(this, data);
             }
             else
             {
@@ -349,7 +353,7 @@ namespace Delight
         {
             if (State == "Disabled")
                 return;
-
+                        
             if (IsSelected)
             {
                 SetState("Selected");

@@ -12,5 +12,6 @@
           MouseUp="ListItemMouseUp"
           ContentTemplateData="t:ContentTemplateData"
           SetListItemState="at:bool"
-          RaycastBlockMode="Always">
+          RaycastBlockMode="Always"
+          ItemSelected="t:Action">
 </ListItem> 

@@ -3,6 +3,7 @@
           IsDropUp="t:bool"
           HasContentTemplates="True" ContentTemplateTypes="ComboBoxListItem"
           EnableScriptEvents="True"
+          ShowSelectedItem="t:bool = True"
           m.ComboBoxList=""
           m.ComboBoxButton="Button"
           ItemSelected="t:Action"> 

@@ -36,6 +36,7 @@ Collection: Generic collection view. Used by views such as Lists and TabPanel th
 ComboBox: Presents a static or dynamic list of items in a drop-down.
 - IsDropUp: Boolean indicating if the combo box list should open above instead of below the button.
 - ItemSelected: Action called when an item is selected.
+- ShowSelectedItem: Boolean indicating if the selected item should be shown in the button.
 
 ComboBoxListItem: Base view for items displayed within the ComboBox view.
 

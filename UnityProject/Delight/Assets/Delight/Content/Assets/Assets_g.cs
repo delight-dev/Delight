@@ -203,6 +203,8 @@ namespace Delight
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
+        public readonly SpriteAsset HamburgerMenuIcon;
+        public readonly SpriteAsset HamburgerMenuIconPressed;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -233,6 +235,8 @@ namespace Delight
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
+            HamburgerMenuIcon = new SpriteAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
+            HamburgerMenuIconPressed = new SpriteAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -257,6 +261,8 @@ namespace Delight
             Add(RainbowSquare);
             Add(Selection);
             Add(TooltipArrow);
+            Add(HamburgerMenuIcon);
+            Add(HamburgerMenuIconPressed);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -419,6 +425,8 @@ namespace Delight
     {
         #region Fields
 
+        public readonly Texture2DAsset HamburgerMenuIcon;
+        public readonly Texture2DAsset HamburgerMenuIconPressed;
         public readonly Texture2DAsset Bluefloral01;
 
         #endregion
@@ -427,8 +435,12 @@ namespace Delight
 
         public Texture2DAssetData()
         {
+            HamburgerMenuIcon = new Texture2DAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
+            HamburgerMenuIconPressed = new Texture2DAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
 
+            Add(HamburgerMenuIcon);
+            Add(HamburgerMenuIconPressed);
             Add(Bluefloral01);
         }
 

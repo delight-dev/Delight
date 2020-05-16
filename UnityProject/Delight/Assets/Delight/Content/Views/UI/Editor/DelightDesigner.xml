@@ -2,7 +2,8 @@
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData"
                  DisplayedDesignerViews="t:DesignerViewData"
                  IsEditorView="True" AutoParse="t:bool = True"
-                 DisplayLockedViews="t:bool = True">
+                 DisplayReadOnlyViews="t:bool = False"
+                 DisplayReadOnlyViewsText="t:string = Show Read-Only Views">
 
   <Region Id="ViewsDesigner">
     <Grid Columns="50[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
@@ -23,9 +24,8 @@
 
       <!-- Left Panel - Content Explorer #686a72 -->
       <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#d0d0d3">
-        <Region Margin="0,8,0,0"> 
-
-          <!--<Button Text="Add View" FontSize="14" Alignment="TopLeft" Offset="14,0,0,0" Height="22" TextAlignment="Left" Click="AddNewView" TextPadding="10" />-->
+        <Region Margin="0,8,0,0">
+          
           <ScrollableRegion Width="100%" Height="100%" ContentAlignment="Top" DisableInteractionScrollDelta="1" HasInertia="False"
                 VerticalScrollbarVisibility="MouseOver" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0">
@@ -43,6 +43,17 @@
           </ScrollableRegion>
           
         </Region>
+
+        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,4,10,0" ItemSelected="ViewMenuItemSelected" 
+                  ButtonBackgroundSprite="HamburgerMenuIcon" Pressed-ButtonBackgroundSprite="HamburgerMenuIconPressed"
+                  ComboBoxListWidth="180" ShowSelectedItem="False" ComboBoxListOffset="70,2,0,0" DeselectAfterSelect="True">
+          <ComboBoxListItem Height="20" ItemSelected="AddNewView">
+            <Label Text="Create View" FontSize="14" Font="Segoe UI SDF" Height="20" Margin="5,0,0,0" Width="100%" />
+          </ComboBoxListItem>
+          <ComboBoxListItem Height="20" ItemSelected="ToggleShowReadOnlyViews">
+            <Label Text="{DisplayReadOnlyViewsText}" FontSize="14" Font="Segoe UI SDF" Height="20" Margin="5,0,0,0" Width="100%" />
+          </ComboBoxListItem>
+        </ComboBox>
       </Region>
 
       <!-- Bottom Panel - XML editor -->
@@ -60,7 +71,7 @@
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,2" />
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
     </Grid>
-
+    
     <Region Id="SaveChangesPopup" IsActive="False" Width="450" Height="300" BackgroundColor="#dbdbdb">
       <Label Text="Do you want to save changes to the following items?" FontSize="16" Font="Segoe UI SDF" Width="100%" Alignment="TopLeft" Margin="10,0,0,0" />
 

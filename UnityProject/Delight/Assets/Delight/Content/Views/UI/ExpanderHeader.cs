@@ -49,8 +49,11 @@ namespace Delight
         /// </summary>
         public void ExpanderHeaderClick()
         {
-            if (ParentExpander == null)
+            if (ParentExpander == null || !ParentExpander.IsInteractable || 
+                ParentExpander.IsDisabled)
+            {
                 return;
+            }
 
             ParentExpander.IsExpanded = !ParentExpander.IsExpanded;
         }

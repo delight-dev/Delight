@@ -35,7 +35,7 @@ namespace Delight.Editor.Parser
         private bool _isDirty;
         public bool IsDirty
         {
-            get { return IsLocked ? false : _isDirty; }
+            get { return _isDirty; }
             set
             {
                 SetProperty(ref _isDirty, value);
