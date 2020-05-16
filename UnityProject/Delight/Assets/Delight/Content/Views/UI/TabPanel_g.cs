@@ -484,7 +484,7 @@ namespace Delight
                     _tabPanel.Name = "TabPanel";
 #endif
                     Delight.TabPanel.SelectedTabIndexProperty.SetDefault(_tabPanel, 0);
-                    Delight.TabPanel.TabSwitchModeProperty.SetDefault(_tabPanel, Delight.SwitchMode.Load);
+                    Delight.TabPanel.TabSwitchModeProperty.SetDefault(_tabPanel, Delight.SwitchMode.Enable);
                     Delight.TabPanel.TabSwitcherTemplateProperty.SetDefault(_tabPanel, TabPanelTabSwitcher);
                     Delight.TabPanel.TabHeaderGroupTemplateProperty.SetDefault(_tabPanel, TabPanelTabHeaderGroup);
                 }

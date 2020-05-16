@@ -34,6 +34,9 @@ namespace Delight
         {
             get
             {
+                if (ParentList == null)
+                    return String.Empty;
+
                 return ParentList.AlternateItems && IsAlternate ? "Alternate" : String.Empty;
             }
         }

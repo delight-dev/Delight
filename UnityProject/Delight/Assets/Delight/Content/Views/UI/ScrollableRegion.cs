@@ -351,8 +351,8 @@ namespace Delight
             bool hasNewSize = false;
 
             // the default behavior of the scrollable region is to adjust its height and width to its content
-            float maxWidth = 0f;
-            float maxHeight = 0f;
+            float maxWidth = -1f;
+            float maxHeight = -1f;
             int childCount = ContentRegion.LayoutChildren.Count;
 
             // get size of content and set content offsets and alignment
@@ -362,8 +362,8 @@ namespace Delight
                 if (childView == null)
                     continue;
 
-                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.Default);
-                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.Default);
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.DefaultLayout);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.DefaultLayout);
 
                 // get size of content
                 if (childWidth.Unit != ElementSizeUnit.Percents)
@@ -381,17 +381,23 @@ namespace Delight
             ContentRegion.DisableLayoutUpdate = true;
 
             // adjust size to content unless it has been set
-            var newWidth = new ElementSize(maxWidth);
-            if (!newWidth.Equals(ContentRegion.Width))
+            if (maxWidth >= 0)
             {
-                ContentRegion.Width = newWidth;
-                hasNewSize = true;
+                var newWidth = new ElementSize(maxWidth);
+                if (!newWidth.Equals(ContentRegion.Width))
+                {
+                    ContentRegion.Width = newWidth;
+                    hasNewSize = true;
+                }
             }
-            var newHeight = new ElementSize(maxHeight);
-            if (!newHeight.Equals(ContentRegion.Height))
+            if (maxHeight >= 0)
             {
-                ContentRegion.Height = newHeight;
-                hasNewSize = true;
+                var newHeight = new ElementSize(maxHeight);
+                if (!newHeight.Equals(ContentRegion.Height))
+                {
+                    ContentRegion.Height = newHeight;
+                    hasNewSize = true;
+                }
             }
 
             ContentRegion.DisableLayoutUpdate = defaultContentDisableLayoutUpdate;

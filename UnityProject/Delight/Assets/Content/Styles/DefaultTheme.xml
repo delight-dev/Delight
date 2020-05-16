@@ -29,4 +29,6 @@
   <SelectionIndicator BackgroundSprite="Selection"
                       SelectionTabFontColor="#7a6e6e" Highlighted-SelectionTabFontColor="#7a6e6e" Pressed-SelectionTabFontColor="#7a6e6e"
                       SelectionTabBackgroundColor="#f4f4f4" Highlighted-SelectionTabBackgroundColor="#f4f4f4" Pressed-SelectionTabBackgroundColor="#f4f4f4" />
+
+  <Expander Sprite="ExpanderArrowRight" Expanded-Sprite="ExpanderArrowDown" />
 </DefaultTheme> 

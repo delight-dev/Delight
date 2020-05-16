@@ -194,6 +194,8 @@ namespace Delight
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
         public readonly SpriteAsset EditorGrid;
+        public readonly SpriteAsset ExpanderArrowDown;
+        public readonly SpriteAsset ExpanderArrowRight;
         public readonly SpriteAsset ListSelection;
         public readonly SpriteAsset RadioButton;
         public readonly SpriteAsset RadioButtonPressed;
@@ -221,6 +223,8 @@ namespace Delight
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
+            ExpanderArrowDown = new SpriteAsset { Id = "ExpanderArrowDown", IsResource = true, RelativePath = "Sprites/" };
+            ExpanderArrowRight = new SpriteAsset { Id = "ExpanderArrowRight", IsResource = true, RelativePath = "Sprites/" };
             ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
             RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
             RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
@@ -242,6 +246,8 @@ namespace Delight
             Add(DesignerGrid);
             Add(DesignerGrid2);
             Add(EditorGrid);
+            Add(ExpanderArrowDown);
+            Add(ExpanderArrowRight);
             Add(ListSelection);
             Add(RadioButton);
             Add(RadioButtonPressed);

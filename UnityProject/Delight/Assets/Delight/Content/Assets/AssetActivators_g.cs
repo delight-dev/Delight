@@ -30,6 +30,10 @@ namespace Delight
             ViewActivators.Add("UICanvas", (x, y, z, w, a) => new UICanvas(x, y, z, w, a));
             ViewActivators.Add("List", (x, y, z, w, a) => new List(x, y, z, w, a));
             ViewActivators.Add("ListItem", (x, y, z, w, a) => new ListItem(x, y, z, w, a));
+            ViewActivators.Add("DefaultExpanderHeader", (x, y, z, w, a) => new DefaultExpanderHeader(x, y, z, w, a));
+            ViewActivators.Add("ExpanderHeader", (x, y, z, w, a) => new ExpanderHeader(x, y, z, w, a));
+            ViewActivators.Add("Expander", (x, y, z, w, a) => new Expander(x, y, z, w, a));
+            ViewActivators.Add("ExpanderContent", (x, y, z, w, a) => new ExpanderContent(x, y, z, w, a));
             ViewActivators.Add("Frame", (x, y, z, w, a) => new Frame(x, y, z, w, a));
             ViewActivators.Add("LayoutGrid", (x, y, z, w, a) => new LayoutGrid(x, y, z, w, a));
             ViewActivators.Add("GridSplitter", (x, y, z, w, a) => new GridSplitter(x, y, z, w, a));
@@ -79,6 +83,10 @@ namespace Delight
             ViewTypes.Add("UICanvas", typeof(UICanvas));
             ViewTypes.Add("List", typeof(List));
             ViewTypes.Add("ListItem", typeof(ListItem));
+            ViewTypes.Add("DefaultExpanderHeader", typeof(DefaultExpanderHeader));
+            ViewTypes.Add("ExpanderHeader", typeof(ExpanderHeader));
+            ViewTypes.Add("Expander", typeof(Expander));
+            ViewTypes.Add("ExpanderContent", typeof(ExpanderContent));
             ViewTypes.Add("Frame", typeof(Frame));
             ViewTypes.Add("LayoutGrid", typeof(LayoutGrid));
             ViewTypes.Add("GridSplitter", typeof(GridSplitter));

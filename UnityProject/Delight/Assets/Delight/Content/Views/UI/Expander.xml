@@ -1,0 +1,12 @@
+<Expander xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView"
+          HasContentTemplates="True" ContentTemplateTypes="ExpanderContent;ExpanderHeader"
+          IsExpanded="t:bool = True" IsDisabled="t:bool"
+          IsInteractable="t:bool = True"
+          HeaderHeight="t:ElementSize"
+          ContentMargin="t:ElementMargin = 0,10,0,0"
+          HeaderAlignment="t:ElementAlignment = TopLeft"
+          Text="t:string"
+          Sprite="t:Sprite"
+          defaultBinding.IsExpanded="TwoWay"
+          ToggleMode="t:SwitchMode = Enable">
+</Expander>

@@ -3,7 +3,7 @@
           IsStatic="t:bool" TabHeaderWidth="t:ElementSize" TabHeaderHeight="t:ElementSize"
           m.TabHeaderGroup="TabList"
           TabSelected="t:Action"
-          TabSwitchMode="t:SwitchMode = Load"> 
+          TabSwitchMode="t:SwitchMode = Enable"> 
   <ViewSwitcher Id="TabSwitcher" IsContentContainer="True">
   </ViewSwitcher>
   <ToggleGroup Id="TabHeaderGroup" Orientation="Horizontal" Alignment="TopLeft"> 

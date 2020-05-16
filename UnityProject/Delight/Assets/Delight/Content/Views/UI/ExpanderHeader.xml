@@ -1,0 +1,4 @@
+<ExpanderHeader xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIView"
+                SetExpanderState="at:bool" Alignment="TopLeft" Click="ExpanderHeaderClick" RaycastBlockMode="Always"
+                Text="t:string" Sprite="t:Sprite">
+</ExpanderHeader>

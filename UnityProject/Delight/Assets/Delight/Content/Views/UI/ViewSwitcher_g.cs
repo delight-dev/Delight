@@ -105,7 +105,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _viewSwitcher.Name = "ViewSwitcher";
 #endif
-                    Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcher, Delight.SwitchMode.Load);
+                    Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcher, Delight.SwitchMode.Enable);
                     Delight.ViewSwitcher.ShowFirstByDefaultProperty.SetDefault(_viewSwitcher, true);
                 }
                 return _viewSwitcher;

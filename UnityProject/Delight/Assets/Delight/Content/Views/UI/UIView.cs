@@ -470,6 +470,135 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Adjusts the size of the view to its content. 
+        /// </summary>
+        public bool AdjustSizeToContent()
+        {
+            bool hasNewSize = false;
+
+            // the default behavior of the list-item is to adjust its height and width to its content
+            float maxWidth = -1f;
+            float maxHeight = -1f;
+            int childCount = LayoutChildren.Count;
+
+            // get size of content and set content offsets and alignment
+            for (int i = 0; i < childCount; ++i)
+            {
+                var childView = LayoutChildren[i] as UIView;
+                if (childView == null || !childView.IsActive)
+                    continue;
+
+                var childWidth = childView.OverrideWidth ?? (childView.Width ?? ElementSize.DefaultLayout);
+                var childHeight = childView.OverrideHeight ?? (childView.Height ?? ElementSize.DefaultLayout);
+
+                // get size of content
+                if (childWidth.Unit != ElementSizeUnit.Percents)
+                {
+                    maxWidth = childWidth.Pixels > maxWidth ? childWidth.Pixels : maxWidth;
+                }
+
+                if (childHeight.Unit != ElementSizeUnit.Percents)
+                {
+                    maxHeight = childHeight.Pixels > maxHeight ? childHeight.Pixels : maxHeight;
+                }
+            }
+
+            // add margins
+            var margin = Margin ?? ElementMargin.Default;
+
+            if (maxWidth >= 0)
+            {
+                maxWidth += margin.Left.Pixels + margin.Right.Pixels;
+
+                // adjust size to content unless it has been set
+                var newWidth = new ElementSize(maxWidth);
+                if (!newWidth.Equals(Width))
+                {
+                    Width = newWidth;
+                    hasNewSize = true;
+                }
+            }
+
+            if (maxHeight >= 0)
+            {
+                maxHeight += margin.Top.Pixels + margin.Bottom.Pixels;
+                var newHeight = new ElementSize(maxHeight);
+                if (!newHeight.Equals(Height))
+                {
+                    Height = newHeight;
+                    hasNewSize = true;
+                }
+            }
+
+            return hasNewSize;
+        }
+
+        /// <summary>
+        /// Adjusts the size of the view to the size of another view. 
+        /// </summary>
+        public bool AdjustSizeToView(UIView targetView)
+        {
+            bool hasNewSize = false;
+            float maxWidth = -1f;
+            float maxHeight = -1f;
+
+            // get size of content and set content offsets and alignment
+            var targetWidth = targetView.OverrideWidth ?? (targetView.Width ?? ElementSize.DefaultLayout);
+            var targetHeight = targetView.OverrideHeight ?? (targetView.Height ?? ElementSize.DefaultLayout);
+
+            // get size of view
+            if (targetWidth.Unit != ElementSizeUnit.Percents)
+            {
+                maxWidth = targetWidth.Pixels > maxWidth ? targetWidth.Pixels : maxWidth;
+            }
+
+            if (targetHeight.Unit != ElementSizeUnit.Percents)
+            {
+                maxHeight = targetHeight.Pixels > maxHeight ? targetHeight.Pixels : maxHeight;
+            }
+
+            // adjust size to view
+            var margin = Margin ?? ElementMargin.Default;
+            var newWidth = maxWidth >= 0 ? new ElementSize(maxWidth + margin.Left.Pixels + margin.Right.Pixels)
+                : ElementSize.DefaultLayout;
+            if (!newWidth.Equals(Width))
+            {
+                Width = newWidth;
+                hasNewSize = true;
+            }
+
+            var newHeight = maxHeight >= 0 ? new ElementSize(maxHeight + margin.Top.Pixels + margin.Bottom.Pixels)
+                : ElementSize.DefaultLayout;
+            if (!newHeight.Equals(Height))
+            {
+                Height = newHeight;
+                hasNewSize = true;
+            }
+
+            return hasNewSize;
+        }
+
+        /// <summary>
+        /// Helper method for getting pixel width of a view.
+        /// </summary>
+        public static float GetPixelWidth(UIView view)
+        {
+            if (view == null || !view.IsActive) return 0;
+            var width = view.OverrideWidth ?? view.Width;
+            return width != null ? width.Pixels : 0;
+        }
+
+        /// <summary>
+        /// Helper method for getting pixel width of a view.
+        /// </summary>
+        public static float GetPixelHeight(UIView view)
+        {
+            if (view == null || !view.IsActive) return 0;
+            var height = view.OverrideHeight ?? view.Height;
+            return height != null ? height.Pixels : 0;
+        }
+
         #endregion
 
         #region Properties
