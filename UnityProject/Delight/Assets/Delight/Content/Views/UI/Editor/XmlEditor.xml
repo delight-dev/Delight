@@ -1,7 +1,7 @@
-<XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" BasedOn="UIImageView"
+<XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
            BackgroundColor="#fbfbfb" EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True"
            Edit="t:Action" AutoCompleteOptions="t:AutoCompleteOptionData" SelectedAutoCompleteOption="t:AutoCompleteOption"
-           DesignerViews="t:DesignerViewData" IsEditorView="True">
+           DesignerViews="t:DesignerViewData" IsEditorView="True" IsReadOnly="t:bool = False">
   <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False"
                     HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
                     HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"

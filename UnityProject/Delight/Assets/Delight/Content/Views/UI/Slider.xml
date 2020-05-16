@@ -1,4 +1,4 @@
-<Slider xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" 
+<Slider xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
         Drag="SliderDrag" BeginDrag="SliderBeginDrag" EndDrag="SliderEndDrag" InitializePotentialDrag="SliderInitializePotentialDrag"
         Length="t:ElementSize = 160" Breadth="t:ElementSize = 40" Orientation="t:ElementOrientation = Horizontal"
         Min="t:float = 0" Max="t:float = 100" Value="t:float" CanSlide="t:bool = True" SetValueOnDragEnded="t:bool" IsReversed="t:bool"

@@ -88,13 +88,13 @@ namespace Delight
         /// </summary>
         private void OpenView(DesignerView designerViewAtCaret)
         {
-            if (EditableDesignerViews.Contains(designerViewAtCaret))
+            if (DisplayedDesignerViews.Contains(designerViewAtCaret))
             {
-                EditableDesignerViews.Select(designerViewAtCaret);
+                DisplayedDesignerViews.Select(designerViewAtCaret);
             }
             else
             {
-                // open readonly designer view
+                // open unlisted designer view
                 ViewSelected(designerViewAtCaret);
             }
         }
@@ -108,7 +108,7 @@ namespace Delight
 
             // initialize designer views
             DesignerViews = new DesignerViewData();
-            EditableDesignerViews = new DesignerViewData();
+            DisplayedDesignerViews = new DesignerViewData();
             ChangedDesignerViews = new DesignerViewData();
             _runtimeTemplates = new Dictionary<string, Template>();
 
@@ -134,7 +134,7 @@ namespace Delight
             }
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
-            EditableDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked).OrderBy(y => y.Id));
+            DisplayedDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked || DisplayLockedViews).OrderBy(y => y.Id));
         }
 
         /// <summary>
@@ -229,6 +229,18 @@ namespace Delight
             SetScale(Vector3.one);
 
             XmlEditorRegion.IsVisible = true;
+
+            // change display if editor is readonly
+            bool isReadOnly = _displayedView != null ? _currentEditedView.IsLocked : false;
+            var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
+            XmlEditor.IsReadOnly = isReadOnly;
+            XmlEditor.BackgroundColor = color;
+            XmlEditor.XmlEditLeftMargin.BackgroundColor = color;
+            XmlEditor.LineNumbersRightBorder.BackgroundColor = color;
+            XmlEditor.ScrollableRegion.HorizontalScrollbarBackgroundColor = color;
+            XmlEditor.ScrollableRegion.VerticalScrollbarBackgroundColor = color;
+            XmlEditorRegion.BackgroundColor = color;
+            LockIcon.IsActive = isReadOnly;
         }
 
         /// <summary>
@@ -293,7 +305,7 @@ namespace Delight
                     bool renameThisViewXml = false;
                     while (true)
                     {
-                        if (!DesignerViews.Any(x => x.Name ==  viewName))
+                        if (!DesignerViews.Any(x => x.Name == viewName))
                         {
                             break;
                         }
@@ -1094,7 +1106,7 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
-            var changedViews = EditableDesignerViews.Where(x => x.IsDirty).ToList();
+            var changedViews = DesignerViews.Where(x => x.IsDirty && !x.IsLocked).ToList();
             UpdateCurrentEditedViewXml();
 
             if (!changedViews.Any())
@@ -1237,7 +1249,7 @@ namespace Delight
         /// </summary>
         public bool CheckForUnsavedChanges()
         {
-            ChangedDesignerViews.Replace(EditableDesignerViews.Where(x => x.IsDirty));
+            ChangedDesignerViews.Replace(DesignerViews.Where(x => x.IsDirty));
             var isDirty = ChangedDesignerViews.Any();
 
             // show popup: save changes to following items? Yes No Cancel
@@ -1264,7 +1276,7 @@ namespace Delight
         /// </summary>
         public void DiscardChangesAndQuit()
         {
-            EditableDesignerViews.ForEach(x =>
+            DesignerViews.ForEach(x =>
             {
                 x.IsDirty = false;
                 x.XmlText = null;
@@ -1325,8 +1337,8 @@ namespace Delight
             newView.IsRuntimeParsed = true;
 
             DesignerViews.Add(newView);
-            EditableDesignerViews.Add(newView);
-            EditableDesignerViews.SelectAndScrollTo(newView);
+            DisplayedDesignerViews.Add(newView);
+            DisplayedDesignerViews.SelectAndScrollTo(newView);
 
             XmlEditorRegion.IsVisible = true;
         }

@@ -1,4 +1,4 @@
-<Expander xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView"
+<Expander xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
           HasContentTemplates="True" ContentTemplateTypes="ExpanderContent;ExpanderHeader"
           IsExpanded="t:bool = True" IsDisabled="t:bool"
           IsInteractable="t:bool = True"

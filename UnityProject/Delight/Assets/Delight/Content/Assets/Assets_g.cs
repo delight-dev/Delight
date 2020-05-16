@@ -197,6 +197,7 @@ namespace Delight
         public readonly SpriteAsset ExpanderArrowDown;
         public readonly SpriteAsset ExpanderArrowRight;
         public readonly SpriteAsset ListSelection;
+        public readonly SpriteAsset Lock;
         public readonly SpriteAsset RadioButton;
         public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
@@ -226,6 +227,7 @@ namespace Delight
             ExpanderArrowDown = new SpriteAsset { Id = "ExpanderArrowDown", IsResource = true, RelativePath = "Sprites/" };
             ExpanderArrowRight = new SpriteAsset { Id = "ExpanderArrowRight", IsResource = true, RelativePath = "Sprites/" };
             ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
+            Lock = new SpriteAsset { Id = "Lock", IsResource = true, RelativePath = "Sprites/" };
             RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
             RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
@@ -249,6 +251,7 @@ namespace Delight
             Add(ExpanderArrowDown);
             Add(ExpanderArrowRight);
             Add(ListSelection);
+            Add(Lock);
             Add(RadioButton);
             Add(RadioButtonPressed);
             Add(RainbowSquare);

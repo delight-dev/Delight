@@ -91,14 +91,16 @@ namespace Delight
         public override void OnChanged(string property)
         {
             base.OnChanged(property);
-            if (property == nameof(XmlText))
+            switch (property)
             {
-                ClearEditor();
-                if (XmlText != null)
-                {
-                    _lines = new List<string>(XmlText.GetLines());
-                }
-                OnEditorChanged();
+                case nameof(XmlText):
+                    ClearEditor();
+                    if (XmlText != null)
+                    {
+                        _lines = new List<string>(XmlText.GetLines());
+                    }
+                    OnEditorChanged();
+                    break;
             }
         }
 
@@ -550,6 +552,9 @@ namespace Delight
                 {
                     case KeyCode.Space:
                     case KeyCode.Less:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -564,6 +569,9 @@ namespace Delight
 
                     case KeyCode.KeypadEnter:
                     case KeyCode.Return:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
 
                         // if autocomplete active, complete selected suggestion and break
@@ -644,6 +652,9 @@ namespace Delight
                         break;
 
                     case KeyCode.Backspace: // backspace
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -678,6 +689,9 @@ namespace Delight
                         break;
 
                     case KeyCode.Tab:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (AutoCompleteBox.IsVisible)
                         {
@@ -694,6 +708,9 @@ namespace Delight
                         break;
 
                     case KeyCode.Delete:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -977,6 +994,9 @@ namespace Delight
 
                     case KeyCode.KeypadEquals:
                     case KeyCode.Equals:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -1092,6 +1112,9 @@ namespace Delight
                         break;
 
                     default:
+                        if (IsReadOnly)
+                            break;
+
                         textChanged = true;
                         if (_hasSelection)
                         {
@@ -1190,7 +1213,7 @@ namespace Delight
                     ScrollableRegion.SetVerticalAbsoluteScrollPosition(scrollOffsetY);
             }
 
-            if (textChanged)
+            if (textChanged && !IsReadOnly)
             {
                 // trigger edit invent unless only arrow keys has been pressed
                 Edit.Invoke(this, null);
@@ -1326,14 +1349,17 @@ namespace Delight
                 if (_hasSelection)
                 {
                     GUIUtility.systemCopyBuffer = GetSelection();
-                    DeleteSelection();
 
-                    updateText = true;
+                    if (!IsReadOnly)
+                    {
+                        DeleteSelection();
+                        updateText = true;
+                    }
                 }
             }
 
             // CTRL+V - paste
-            if (Input.GetKeyDown(KeyCode.V))
+            if (Input.GetKeyDown(KeyCode.V) && !IsReadOnly)
             {
                 var pasteText = GUIUtility.systemCopyBuffer;
                 if (String.IsNullOrEmpty(pasteText))
@@ -1413,7 +1439,7 @@ namespace Delight
             }
 
             // CTRL+Space - trigger intellisense/autocomplete
-            else if (Input.GetKeyDown(KeyCode.Space))
+            else if (Input.GetKeyDown(KeyCode.Space) && !IsReadOnly)
             {
                 ActivateAutoComplete();
             }
@@ -2104,6 +2130,9 @@ namespace Delight
         /// </summary>
         private bool FinishAutoComplete()
         {
+            if (IsReadOnly)
+                return false;
+
             var option = SelectedAutoCompleteOption;
             var autoCompleteType = _autoCompleteType;
             DeactivateAutoComplete();

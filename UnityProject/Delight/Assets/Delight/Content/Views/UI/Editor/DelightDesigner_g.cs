@@ -47,8 +47,8 @@ namespace Delight
                 var list1 = new List(this, expander1Content.Content, "List1", List1Template);
                 list1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
-                // binding <List Items="{view in EditableDesignerViews}">
-                expander1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "EditableDesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => list1 }), () => list1.Items = EditableDesignerViews, () => { }, false));
+                // binding <List Items="{view in DisplayedDesignerViews}">
+                expander1Content.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayedDesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => list1 }), () => list1.Items = DisplayedDesignerViews, () => { }, false));
 
                 // templates for list1
                 list1.ContentTemplates.Add(new ContentTemplate(tiView => 
@@ -75,6 +75,7 @@ namespace Delight
             // binding <XmlEditor DesignerViews="{DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "XmlEditor", "DesignerViews" }, new List<Func<BindableObject>> { () => this, () => XmlEditor }), () => XmlEditor.DesignerViews = DesignerViews, () => { }, false));
             XmlEditorStatusBar = new Region(this, XmlEditorRegion.Content, "XmlEditorStatusBar", XmlEditorStatusBarTemplate);
+            LockIcon = new Image(this, XmlEditorStatusBar.Content, "LockIcon", LockIconTemplate);
             Group1 = new Group(this, XmlEditorStatusBar.Content, "Group1", Group1Template);
             AutoParseCheckBox = new CheckBox(this, Group1.Content, "AutoParseCheckBox", AutoParseCheckBoxTemplate);
 
@@ -128,8 +129,9 @@ namespace Delight
 
             dependencyProperties.Add(DesignerViewsProperty);
             dependencyProperties.Add(ChangedDesignerViewsProperty);
-            dependencyProperties.Add(EditableDesignerViewsProperty);
+            dependencyProperties.Add(DisplayedDesignerViewsProperty);
             dependencyProperties.Add(AutoParseProperty);
+            dependencyProperties.Add(DisplayLockedViewsProperty);
             dependencyProperties.Add(ViewsDesignerProperty);
             dependencyProperties.Add(ViewsDesignerTemplateProperty);
             dependencyProperties.Add(Grid1Property);
@@ -164,6 +166,8 @@ namespace Delight
             dependencyProperties.Add(XmlEditorTemplateProperty);
             dependencyProperties.Add(XmlEditorStatusBarProperty);
             dependencyProperties.Add(XmlEditorStatusBarTemplateProperty);
+            dependencyProperties.Add(LockIconProperty);
+            dependencyProperties.Add(LockIconTemplateProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(AutoParseCheckBoxProperty);
@@ -216,11 +220,11 @@ namespace Delight
             set { ChangedDesignerViewsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.Editor.Parser.DesignerViewData> EditableDesignerViewsProperty = new DependencyProperty<Delight.Editor.Parser.DesignerViewData>("EditableDesignerViews");
-        public Delight.Editor.Parser.DesignerViewData EditableDesignerViews
+        public readonly static DependencyProperty<Delight.Editor.Parser.DesignerViewData> DisplayedDesignerViewsProperty = new DependencyProperty<Delight.Editor.Parser.DesignerViewData>("DisplayedDesignerViews");
+        public Delight.Editor.Parser.DesignerViewData DisplayedDesignerViews
         {
-            get { return EditableDesignerViewsProperty.GetValue(this); }
-            set { EditableDesignerViewsProperty.SetValue(this, value); }
+            get { return DisplayedDesignerViewsProperty.GetValue(this); }
+            set { DisplayedDesignerViewsProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> AutoParseProperty = new DependencyProperty<System.Boolean>("AutoParse");
@@ -229,6 +233,13 @@ namespace Delight
         {
             get { return AutoParseProperty.GetValue(this); }
             set { AutoParseProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> DisplayLockedViewsProperty = new DependencyProperty<System.Boolean>("DisplayLockedViews");
+        public System.Boolean DisplayLockedViews
+        {
+            get { return DisplayLockedViewsProperty.GetValue(this); }
+            set { DisplayLockedViewsProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> ViewsDesignerProperty = new DependencyProperty<Region>("ViewsDesigner");
@@ -467,6 +478,20 @@ namespace Delight
         {
             get { return XmlEditorStatusBarTemplateProperty.GetValue(this); }
             set { XmlEditorStatusBarTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> LockIconProperty = new DependencyProperty<Image>("LockIcon");
+        public Image LockIcon
+        {
+            get { return LockIconProperty.GetValue(this); }
+            set { LockIconProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> LockIconTemplateProperty = new DependencyProperty<Template>("LockIconTemplate");
+        public Template LockIconTemplate
+        {
+            get { return LockIconTemplateProperty.GetValue(this); }
+            set { LockIconTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
@@ -713,6 +738,7 @@ namespace Delight
 #endif
                     Delight.DelightDesigner.EnableScriptEventsProperty.SetDefault(_delightDesigner, true);
                     Delight.DelightDesigner.AutoParseProperty.SetDefault(_delightDesigner, true);
+                    Delight.DelightDesigner.DisplayLockedViewsProperty.SetDefault(_delightDesigner, true);
                     Delight.DelightDesigner.ViewsDesignerTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewsDesigner);
                     Delight.DelightDesigner.Grid1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGrid1);
                     Delight.DelightDesigner.Region1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion1);
@@ -731,6 +757,7 @@ namespace Delight
                     Delight.DelightDesigner.XmlEditorRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorRegion);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
                     Delight.DelightDesigner.XmlEditorStatusBarTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorStatusBar);
+                    Delight.DelightDesigner.LockIconTemplateProperty.SetDefault(_delightDesigner, DelightDesignerLockIcon);
                     Delight.DelightDesigner.Group1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup1);
                     Delight.DelightDesigner.AutoParseCheckBoxTemplateProperty.SetDefault(_delightDesigner, DelightDesignerAutoParseCheckBox);
                     Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
@@ -2386,6 +2413,29 @@ namespace Delight
                     Delight.Region.AlignmentProperty.SetDefault(_delightDesignerXmlEditorStatusBar, Delight.ElementAlignment.Bottom);
                 }
                 return _delightDesignerXmlEditorStatusBar;
+            }
+        }
+
+        private static Template _delightDesignerLockIcon;
+        public static Template DelightDesignerLockIcon
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerLockIcon == null || _delightDesignerLockIcon.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerLockIcon == null)
+#endif
+                {
+                    _delightDesignerLockIcon = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _delightDesignerLockIcon.Name = "DelightDesignerLockIcon";
+#endif
+                    Delight.Image.SpriteProperty.SetDefault(_delightDesignerLockIcon, Assets.Sprites["Lock"]);
+                    Delight.Image.AlignmentProperty.SetDefault(_delightDesignerLockIcon, Delight.ElementAlignment.Left);
+                    Delight.Image.OffsetProperty.SetDefault(_delightDesignerLockIcon, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _delightDesignerLockIcon;
             }
         }
 

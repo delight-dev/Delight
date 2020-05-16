@@ -1,4 +1,4 @@
-<InputField xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+<InputField xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" IsLocked="True"
             Module="!TextMeshPro"
             BasedOn="UIImageView"
             InputFieldComponent="t:UnityEngine.UI.InputField"

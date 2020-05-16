@@ -1,4 +1,4 @@
-<Button xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" 
+<Button xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
         Height="40" m.Label=""
         DefaultWidth="t:ElementSize = 160"
         Click="ButtonMouseClick"

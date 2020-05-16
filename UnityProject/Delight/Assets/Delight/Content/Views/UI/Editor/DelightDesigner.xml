@@ -1,7 +1,8 @@
-<DelightDesigner xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" Module="TextMeshPro" EnableScriptEvents="True"
+<DelightDesigner xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" Module="TextMeshPro" IsLocked="True" EnableScriptEvents="True"
                  BasedOn="LayoutRoot" DesignerViews="t:DesignerViewData" ChangedDesignerViews="t:DesignerViewData"
-                 EditableDesignerViews="t:DesignerViewData"
-                 IsEditorView="True" AutoParse="t:bool = True">
+                 DisplayedDesignerViews="t:DesignerViewData"
+                 IsEditorView="True" AutoParse="t:bool = True"
+                 DisplayLockedViews="t:bool = True">
 
   <Region Id="ViewsDesigner">
     <Grid Columns="50[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
@@ -30,7 +31,7 @@
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0">
  
             <Expander Text="Views" Width="100%" Margin="4,0,0,0">  
-              <List Items="{view in EditableDesignerViews}" Alignment="TopLeft" Margin="4,2,2,2" BackgroundColor="clear" Width="100%"
+              <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="4,2,2,2" BackgroundColor="clear" Width="100%"
                     CanReselect="True" ItemSelected="ViewSelected">
                 <ListItem Margin="4,0,8,0" Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
                   <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="12,0,0,0" EnableWordWrapping="False"
@@ -48,6 +49,7 @@
       <Region Id="XmlEditorRegion" Grid.Cell="1,2" BackgroundColor="#fbfbfb" IsVisible="False">
         <XmlEditor Id="XmlEditor" Margin="10,21,0,20" Edit="OnEdit" DesignerViews="{DesignerViews}" />
         <Region Id="XmlEditorStatusBar" BackgroundColor="#e2e2e2" Height="20" Alignment="Bottom">
+          <Image Id="LockIcon" Sprite="Lock" Alignment="Left" Offset="5,0,0,0" />
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
             <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" />
             <Button Text="Parse" IsDisabled="{AutoParse}" Click="ParseView" FontSize="12" Height="14" />

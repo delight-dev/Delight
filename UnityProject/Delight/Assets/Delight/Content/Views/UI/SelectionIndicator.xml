@@ -1,4 +1,4 @@
-<SelectionIndicator xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" 
+<SelectionIndicator xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
                     m.SelectionTab="SelectionTab" Width="100%" Height="100%">
   <Button Id="SelectionTab" Height="15" Alignment="TopLeft" Offset="0,0,0,15" Text="Button" FontSize="10">
   </Button>

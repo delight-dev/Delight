@@ -1,5 +1,5 @@
-<ListItem xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
-          BasedOn="UIImageView" Item="t:BindableObject"
+<ListItem xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
+          Item="t:BindableObject"
           IsDisabled="t:bool" IsAlternate="t:bool" IsSelected="t:bool"
           IsPressed="t:bool" IsMouseOver="t:bool"
           AutoSizeToContent="t:bool = True" 

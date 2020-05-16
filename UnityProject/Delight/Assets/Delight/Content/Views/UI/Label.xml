@@ -1,4 +1,4 @@
-<Label xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd"
+<Label xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" IsLocked="True"
        Module="!TextMeshPro"
        BasedOn="UIView" TextComponent="t:UnityEngine.UI.Text" TextAlignment="t:ElementAlignment = Left"
        m.TextComponent="" rename.TextComponentAlignment="TextAlignment" rename.Color="FontColor" Width="180" Height="40" FontColor="Black" FontSize="24"

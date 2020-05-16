@@ -452,7 +452,7 @@ UIView: Base class for UI views. Has properties for doing layout: Width, Height,
 - BasedOn: Name of the view this view is based on.
 - LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
 - Style: Name of the style that should be applied to the view. 
-- IsLocked: View can't be edited in designer. 
+- IsLocked: Indicates if view can be edited in the designer. 
 
 View: Base class for views.
 - Id: The identifier of the view.

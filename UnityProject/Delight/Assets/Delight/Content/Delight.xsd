@@ -7276,8 +7276,9 @@
     </xs:sequence>
     <xs:attribute name="DesignerViews" type="xs:string" />
     <xs:attribute name="ChangedDesignerViews" type="xs:string" />
-    <xs:attribute name="EditableDesignerViews" type="xs:string" />
+    <xs:attribute name="DisplayedDesignerViews" type="xs:string" />
     <xs:attribute name="AutoParse" type="xs:string" />
+    <xs:attribute name="DisplayLockedViews" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />
@@ -7384,6 +7385,7 @@
     <xs:attribute name="AutoCompleteOptions" type="xs:string" />
     <xs:attribute name="SelectedAutoCompleteOption" type="xs:string" />
     <xs:attribute name="DesignerViews" type="xs:string" />
+    <xs:attribute name="IsReadOnly" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -7861,6 +7863,7 @@
       <xs:enumeration value="ExpanderArrowDown" />
       <xs:enumeration value="ExpanderArrowRight" />
       <xs:enumeration value="ListSelection" />
+      <xs:enumeration value="Lock" />
       <xs:enumeration value="RadioButton" />
       <xs:enumeration value="RadioButtonPressed" />
       <xs:enumeration value="RainbowSquare" />

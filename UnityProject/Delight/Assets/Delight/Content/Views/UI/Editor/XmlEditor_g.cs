@@ -95,6 +95,7 @@ namespace Delight
             dependencyProperties.Add(AutoCompleteOptionsProperty);
             dependencyProperties.Add(SelectedAutoCompleteOptionProperty);
             dependencyProperties.Add(DesignerViewsProperty);
+            dependencyProperties.Add(IsReadOnlyProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
             dependencyProperties.Add(XmlEditRegionProperty);
@@ -189,6 +190,13 @@ namespace Delight
         {
             get { return DesignerViewsProperty.GetValue(this); }
             set { DesignerViewsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsReadOnlyProperty = new DependencyProperty<System.Boolean>("IsReadOnly");
+        public System.Boolean IsReadOnly
+        {
+            get { return IsReadOnlyProperty.GetValue(this); }
+            set { IsReadOnlyProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
@@ -520,6 +528,7 @@ namespace Delight
                     Delight.XmlEditor.BackgroundColorProperty.SetDefault(_xmlEditor, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
                     Delight.XmlEditor.EnableScriptEventsProperty.SetDefault(_xmlEditor, true);
                     Delight.XmlEditor.IsFocusedProperty.SetDefault(_xmlEditor, true);
+                    Delight.XmlEditor.IsReadOnlyProperty.SetDefault(_xmlEditor, false);
                     Delight.XmlEditor.ScrollableRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorScrollableRegion);
                     Delight.XmlEditor.XmlEditRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditRegion);
                     Delight.XmlEditor.XmlTextRegionTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlTextRegion);

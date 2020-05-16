@@ -1,4 +1,4 @@
-<UICanvas xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIView" 
+<UICanvas xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIView" IsLocked="True"
           Canvas="t:UnityEngine.Canvas, UnityEngine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           CanvasScaler="t:UnityEngine.UI.CanvasScaler, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           GraphicRaycaster="t:UnityEngine.UI.GraphicRaycaster, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"

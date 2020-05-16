@@ -1,4 +1,4 @@
-<DefaultExpanderHeader xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="ExpanderHeader"
+<DefaultExpanderHeader xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="ExpanderHeader" IsLocked="True"
                        Height="20">
   <Group Id="HeaderGroup" Orientation="Horizontal" Spacing="5" Alignment="TopLeft">
     <Image Id="HeaderIcon" Sprite="{Sprite}" />
