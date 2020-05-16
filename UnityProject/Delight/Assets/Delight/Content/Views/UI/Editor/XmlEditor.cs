@@ -63,6 +63,8 @@ namespace Delight
         private float _keyDownRepeatTimeElapsed;
         private float _mouseClickStart;
         private float _tooltipHoverTimeElapsed;
+        private bool _tooltipDeactivatedUntilMouseMove;
+        private Vector3 _previousMousePosition;
         private string _lastViewHover;
         private string _lastWordHover;
         private Mesh _selectionMesh = new Mesh();
@@ -234,10 +236,19 @@ namespace Delight
                 }
             }
 
+            if (_tooltipDeactivatedUntilMouseMove)
+            {
+                // see if mouse has moved beyond threshold
+                Vector3 delta = _previousMousePosition - Input.mousePosition;
+                if (Mathf.Abs(delta.x) > 3 || Mathf.Abs(delta.y) > 3)
+                {
+                    _tooltipDeactivatedUntilMouseMove = false;
+                }                
+            }
+
             // handle tooltip hovers
             if (containsMouse)
             {
-                // TODO show tooltip after mouse hovers for now always show the tooltip
                 GetMouseCaretPosition(out var caretX, out var caretY);
 
                 var viewAtCaret = GetViewAtCaret(caretY);
@@ -267,8 +278,7 @@ namespace Delight
                         var comment = GetElementDoc(viewAtCaret);
                         if (!String.IsNullOrWhiteSpace(comment))
                         {
-                            TooltipLabel.Text = comment;
-                            TooltipBox.IsVisible = true;
+                            ActivateTooltip(comment);
                         }
                         else
                         {
@@ -282,8 +292,7 @@ namespace Delight
                         var comment = GetElementDoc(viewAtCaret, wordAtCaret);
                         if (!String.IsNullOrWhiteSpace(comment))
                         {
-                            TooltipLabel.Text = comment;
-                            TooltipBox.IsVisible = true;
+                            ActivateTooltip(comment);
                         }
                         else
                         {
@@ -320,17 +329,36 @@ namespace Delight
                     HandleKeyInput();
                 }
             }
+
+            _previousMousePosition = Input.mousePosition;
+        }
+
+        /// <summary>
+        /// Activates tooltip.
+        /// </summary>
+        private void ActivateTooltip(string tooltipText)
+        {
+            if (_tooltipDeactivatedUntilMouseMove)
+                return;
+
+            TooltipLabel.Text = tooltipText;
+            TooltipBox.IsVisible = true;
         }
 
         /// <summary>
         /// Deactivates the tooltip box.
         /// </summary>
-        private void DeactivateTooltip()
+        private void DeactivateTooltip(bool deactivateUntilMouseMove = false)
         {
             TooltipBox.IsVisible = false;
             _tooltipHoverTimeElapsed = 0;
             _lastViewHover = null;
             _lastWordHover = null;
+            if (deactivateUntilMouseMove)
+            {
+                _tooltipDeactivatedUntilMouseMove = true;
+            }
+            _previousMousePosition = Input.mousePosition;
         }
 
         /// <summary>
@@ -1161,6 +1189,8 @@ namespace Delight
         /// </summary>
         private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete)
         {
+            DeactivateTooltip(true);
+
             ActivateCaret();
             OnEditorChanged();
 
