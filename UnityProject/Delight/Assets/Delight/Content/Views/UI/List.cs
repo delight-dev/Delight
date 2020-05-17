@@ -597,11 +597,12 @@ namespace Delight
                         var template = GetContentTemplate(null, templateId);
                         newVirtualItem.ContentTemplate = template;
                     }
+                    _virtualItems.Add(newVirtualItem);
+                    _indexOfItem.Add(item, _virtualItems.Count - 1);
+
                     newVirtualItem.Item = item;
                     newVirtualItem.IsAlternate = IsOdd(_virtualItems.Count - 1);
                     newVirtualItem.Index = _virtualItems.Count - 1;
-                    _virtualItems.Add(newVirtualItem);
-                    _indexOfItem.Add(item, _virtualItems.Count - 1);
                 }
                 return;
             }
@@ -635,19 +636,6 @@ namespace Delight
         {
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
-
-            // disable items not in current page
-            if (IsPaged && !IsVirtualized)
-            {
-                int itemIndex = 0;
-                int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
-                foreach (var listItem in _presentedItems.Values)
-                {
-                    int pageIndex = Mathf.FloorToInt(itemIndex / itemsPerPage);
-                    listItem.IsActive = pageIndex == PageIndex;
-                    ++itemIndex;
-                }
-            }
 
             bool hasNewSize = false;
             if (Overflow == OverflowMode.Overflow)
@@ -779,6 +767,17 @@ namespace Delight
         /// </summary>
         private bool IsVirtualItemInViewport(VirtualItem virtualItem)
         {
+            if (IsPaged)
+            {
+                int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+                int pageIndex = Mathf.FloorToInt(virtualItem.Index / itemsPerPage);
+                if (pageIndex != PageIndex)
+                {
+                    // item not in current page
+                    return false;
+                }
+            }
+
             var contentOffset = ScrollableRegion.GetContentOffset();
             float vpXMin = 0 - RealizationMargin.x;
             float vpYMin = 0 - RealizationMargin.y;
@@ -824,13 +823,22 @@ namespace Delight
             bool percentageWidth = false;
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
+            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
 
             List<UIView> children = null;
             if (!IsVirtualized)
             {
                 children = new List<UIView>();
+                int itemIndex = 0;
                 Content.ForEach<UIView>(x =>
                 {
+                    if (IsPaged)
+                    {
+                        int pageIndex = Mathf.FloorToInt(itemIndex / itemsPerPage);
+                        x.IsActive = pageIndex == PageIndex;
+                        ++itemIndex;
+                    }
+
                     if (!x.IsActive)
                         return; // don't arrange disabled items
 
@@ -843,8 +851,10 @@ namespace Delight
             var spacing = isHorizontal ? (HorizontalSpacing != null ? HorizontalSpacing.Pixels : spacingSize.Pixels)
                  : (VerticalSpacing != null ? VerticalSpacing.Pixels : spacingSize.Pixels);
 
-            int childCount = !IsVirtualized ? children.Count : _virtualItems.Count;
+            var virtualItems = IsVirtualized ? _virtualItems.Skip(PageIndex * itemsPerPage).Take(itemsPerPage).ToList() : null;
+            int childCount = !IsVirtualized ? children.Count : virtualItems.Count;
             int childIndex = 0;
+
             for (int i = 0; i < childCount; ++i)
             {
                 var childView = !IsVirtualized ? children[i] : null;
@@ -857,7 +867,7 @@ namespace Delight
                 }
                 else
                 {
-                    childSize = _virtualItems[i];
+                    childSize = virtualItems[i];
                 }
 
                 if (childSize.Width.Unit == ElementSizeUnit.Percents)
@@ -1049,11 +1059,20 @@ namespace Delight
             float maxHeight = 0f;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
             List<UIView> children = null;
+            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
             if (!IsVirtualized)
             {
                 children = new List<UIView>();
+                int itemIndex = 0;
                 Content.ForEach<UIView>(x =>
                 {
+                    if (IsPaged)
+                    {
+                        int pageIndex = Mathf.FloorToInt(itemIndex / itemsPerPage);
+                        x.IsActive = pageIndex == PageIndex;
+                        ++itemIndex;
+                    }
+
                     if (!x.IsActive)
                         return; // don't arrange disabled items
 
@@ -1069,7 +1088,9 @@ namespace Delight
             float yOffset = 0f;
             float maxColumnWidth = 0;
             float maxRowHeight = 0;
-            int childCount = !IsVirtualized ? children.Count : _virtualItems.Count;
+
+            var virtualItems = IsVirtualized ? _virtualItems.Skip(PageIndex * itemsPerPage).Take(itemsPerPage).ToList() : null;
+            int childCount = !IsVirtualized ? children.Count : virtualItems.Count;
             int childIndex = 0;
             bool firstItem = true;
 
@@ -1085,7 +1106,7 @@ namespace Delight
                 }
                 else
                 {
-                    childSize = _virtualItems[i];
+                    childSize = virtualItems[i];
                 }
 
                 if (childSize.Width.Unit == ElementSizeUnit.Percents && isHorizontal)

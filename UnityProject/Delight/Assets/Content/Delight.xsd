@@ -673,6 +673,7 @@
     <xs:attribute name="DisableItemArrangement" type="xs:string" />
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
+    <xs:attribute name="PageIndex" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -2365,6 +2366,7 @@
     <xs:attribute name="DisableItemArrangement" type="xs:string" />
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
+    <xs:attribute name="PageIndex" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />

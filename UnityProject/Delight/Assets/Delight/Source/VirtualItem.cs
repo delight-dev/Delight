@@ -24,6 +24,10 @@ namespace Delight
         public ListItem RealizedItem { get; set; }
         public bool IsSelected { get; set; }
         public bool IsAlternate { get; set; }
+
+        /// <summary>
+        /// Zero-based index of the item.
+        /// </summary>
         public int Index { get; set; }
 
         public static readonly VirtualItem Default = new VirtualItem();
