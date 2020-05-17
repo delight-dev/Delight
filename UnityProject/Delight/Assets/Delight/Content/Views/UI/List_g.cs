@@ -58,6 +58,9 @@ namespace Delight
             dependencyProperties.Add(VirtualItemGetterProperty);
             dependencyProperties.Add(RealizationMarginProperty);
             dependencyProperties.Add(DisableItemArrangementProperty);
+            dependencyProperties.Add(IsPagedProperty);
+            dependencyProperties.Add(ItemsPerPageProperty);
+            dependencyProperties.Add(PageIndexProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
@@ -256,6 +259,27 @@ namespace Delight
         {
             get { return DisableItemArrangementProperty.GetValue(this); }
             set { DisableItemArrangementProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsPagedProperty = new DependencyProperty<System.Boolean>("IsPaged");
+        public System.Boolean IsPaged
+        {
+            get { return IsPagedProperty.GetValue(this); }
+            set { IsPagedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Int32> ItemsPerPageProperty = new DependencyProperty<System.Int32>("ItemsPerPage");
+        public System.Int32 ItemsPerPage
+        {
+            get { return ItemsPerPageProperty.GetValue(this); }
+            set { ItemsPerPageProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Int32> PageIndexProperty = new DependencyProperty<System.Int32>("PageIndex");
+        public System.Int32 PageIndex
+        {
+            get { return PageIndexProperty.GetValue(this); }
+            set { PageIndexProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
@@ -2657,6 +2681,7 @@ namespace Delight
                     _list.Name = "List";
 #endif
                     Delight.List.CanSelectProperty.SetDefault(_list, true);
+                    Delight.List.ItemsPerPageProperty.SetDefault(_list, 20);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;

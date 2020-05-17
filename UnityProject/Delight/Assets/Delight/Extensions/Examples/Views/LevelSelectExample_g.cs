@@ -277,6 +277,8 @@ namespace Delight
                     Delight.List.OffsetProperty.SetDefault(_levelSelectExampleList1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(180f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.DeselectAfterSelectProperty.SetDefault(_levelSelectExampleList1, true);
                     Delight.List.AlignmentProperty.SetDefault(_levelSelectExampleList1, Delight.ElementAlignment.Top);
+                    Delight.List.IsPagedProperty.SetDefault(_levelSelectExampleList1, true);
+                    Delight.List.ItemsPerPageProperty.SetDefault(_levelSelectExampleList1, 6);
                     Delight.List.ItemsProperty.SetHasBinding(_levelSelectExampleList1);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_levelSelectExampleList1, LevelSelectExampleList1ScrollableRegion);
                 }

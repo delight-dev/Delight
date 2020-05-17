@@ -268,6 +268,27 @@ namespace Delight
             set { ComboBoxList.DisableItemArrangement = value; }
         }
 
+        public readonly static DependencyProperty IsPagedProperty = List.IsPagedProperty;
+        public System.Boolean IsPaged
+        {
+            get { return ComboBoxList.IsPaged; }
+            set { ComboBoxList.IsPaged = value; }
+        }
+
+        public readonly static DependencyProperty ItemsPerPageProperty = List.ItemsPerPageProperty;
+        public System.Int32 ItemsPerPage
+        {
+            get { return ComboBoxList.ItemsPerPage; }
+            set { ComboBoxList.ItemsPerPage = value; }
+        }
+
+        public readonly static DependencyProperty PageIndexProperty = List.PageIndexProperty;
+        public System.Int32 PageIndex
+        {
+            get { return ComboBoxList.PageIndex; }
+            set { ComboBoxList.PageIndex = value; }
+        }
+
         public readonly static DependencyProperty MaskContentProperty = List.MaskContentProperty;
         public System.Boolean MaskContent
         {

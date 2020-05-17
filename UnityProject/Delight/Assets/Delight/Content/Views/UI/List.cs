@@ -636,6 +636,19 @@ namespace Delight
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
 
+            // disable items not in current page
+            if (IsPaged && !IsVirtualized)
+            {
+                int itemIndex = 0;
+                int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+                foreach (var listItem in _presentedItems.Values)
+                {
+                    int pageIndex = Mathf.FloorToInt(itemIndex / itemsPerPage);
+                    listItem.IsActive = pageIndex == PageIndex;
+                    ++itemIndex;
+                }
+            }
+
             bool hasNewSize = false;
             if (Overflow == OverflowMode.Overflow)
             {
@@ -820,7 +833,7 @@ namespace Delight
                 {
                     if (!x.IsActive)
                         return; // don't arrange disabled items
-                    
+
                     children.Add(x);
                 }, false);
             }
@@ -1566,10 +1579,10 @@ namespace Delight
                 listItem.IsAlternate = IsOdd(index + 1);
                 listItem.Load();
                 UnblockListItemDragEvents(listItem);
-                ++index; 
+                ++index;
             }
         }
-        
+
 
 
         /// <summary>
