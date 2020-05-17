@@ -1,62 +1,12 @@
 ﻿// Models
 
-= World
-int Order
-string Name
-Levels
-
 = Level
-World
 string Name
-Highscores
- 
-= Highscore
-Level
-Player
-int Score 
- 
+int Score
+bool IsLocked
+
 = Player
 string Name
-Color Color
-Highscores
-Achievements 
-
-= Achievement
-Player
-Sprite Icon
-string Title
-
-// Data 
-
-+ World (Order, Name)
-World1: 1, "World 1"
-World2: 2, "World 2"
-World3: 2, "World 2"
-
-+ Level (World, Name) 
-Level1_1: World1, "Level 1-1"
-Level1_2: World1, "Level 1-2"
-Level1_3: World1, "Level 1-3"
-Level2_1: World2, "Level 2-1"
-Level2_2: World2, "Level 2-2"
-Level2_3: World2, "Level 2-3"
-Level3_1: World3, "Level 3-1"
-Level3_2: World3, "Level 3-2"
-
-+ Highscore (Level, Player, Score)
-Level1_1, Player1, 88789
-Level1_2, Player2, 33579
-Level1_3, Player3, 13897
-Level1_4, Player4, 12335
-Level1_1, Player5, 5471
-Level2_2, Player6, 1547  
-Level3_3, Player7, 1235 
-Level1_4, Player8, 878
-Level2_3, Player9, 380
-Level1_1, Player10, 187
-Level1_1, Player11, 48
-Level1_2, Player12, 18
-Level1_2, Player13, 18
 
 + Player (Name)
 Player1: "Wizball"
@@ -73,27 +23,12 @@ Player11: "Bananaman13"
 Player12: "Opwiz"
 Player13: "afauxicy"
 
-//Player5: "Player 5"
-//Player6: "Player 6"
-//Player7: "Player 7"
-//Player8: "Player 8"
-//Player9: "Player 9"
-//Player10: "Player 10"
-//Player11: "Player 11"
-//Player12: "Player 12"
-//Player13: "Player 13"
-//Player14: "Player 14"
-//Player15: "Player 15"
-
-+ Achievement (Player, Title)
-Player1, "A1-3" 
-Player1, "A1-4" 
-Player2, "A2-1" 
-Player2, "A2-2"
-Player2, "A2-3"
-Player3, "A3-1"
-Player3, "A3-2"
-Player4, "A4-1"
-Player5, "A5-1"
-Player5, "A5-2"
- 
++ Level (Name, Score, IsLocked) 
+Level1_1: "Level 1-1", 3, false
+Level1_2: "Level 1-2", 3, false
+Level1_3: "Level 1-3", 2, false
+Level2_1: "Level 2-1", 1, false
+Level2_2: "Level 2-2", 1, false
+Level2_3: "Level 2-3", 0, true
+Level3_1: "Level 3-1", 0, true
+Level3_2: "Level 3-2", 0, true

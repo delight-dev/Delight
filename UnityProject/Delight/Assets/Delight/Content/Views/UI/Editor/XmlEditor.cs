@@ -1847,6 +1847,7 @@ namespace Delight
                         }
                         break;
 
+                    case XmlSyntaxElement.EndView:
                     case XmlSyntaxElement.EndViewName:
                     case XmlSyntaxElement.PropertyName:
                         {

@@ -14,14 +14,6 @@ namespace Delight
         #region Properties
 
         [SerializeField]
-        public string WorldId { get; set; }
-        public World World
-        {
-            get { return Models.Worlds[WorldId]; }
-            set { WorldId = value?.Id; }
-        }
-
-        [SerializeField]
         private string _name;
         public string Name
         {
@@ -29,9 +21,20 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
-        public BindableCollection<Highscore> Highscores
+        [SerializeField]
+        private int _score;
+        public int Score
         {
-            get { return Models.Highscores.Get(this); }
+            get { return _score; }
+            set { SetProperty(ref _score, value); }
+        }
+
+        [SerializeField]
+        private bool _isLocked;
+        public bool IsLocked
+        {
+            get { return _isLocked; }
+            set { SetProperty(ref _isLocked, value); }
         }
 
         #endregion
@@ -58,42 +61,22 @@ namespace Delight
 
         public LevelData()
         {
-            Level1_1 = new Level { Id = "Level1_1", WorldId = "World1", Name = "Level 1-1" };
+            Level1_1 = new Level { Id = "Level1_1", Name = "Level 1-1", Score = 3, IsLocked = false };
             Add(Level1_1);
-            Level1_2 = new Level { Id = "Level1_2", WorldId = "World1", Name = "Level 1-2" };
+            Level1_2 = new Level { Id = "Level1_2", Name = "Level 1-2", Score = 3, IsLocked = false };
             Add(Level1_2);
-            Level1_3 = new Level { Id = "Level1_3", WorldId = "World1", Name = "Level 1-3" };
+            Level1_3 = new Level { Id = "Level1_3", Name = "Level 1-3", Score = 2, IsLocked = false };
             Add(Level1_3);
-            Level2_1 = new Level { Id = "Level2_1", WorldId = "World2", Name = "Level 2-1" };
+            Level2_1 = new Level { Id = "Level2_1", Name = "Level 2-1", Score = 1, IsLocked = false };
             Add(Level2_1);
-            Level2_2 = new Level { Id = "Level2_2", WorldId = "World2", Name = "Level 2-2" };
+            Level2_2 = new Level { Id = "Level2_2", Name = "Level 2-2", Score = 1, IsLocked = false };
             Add(Level2_2);
-            Level2_3 = new Level { Id = "Level2_3", WorldId = "World2", Name = "Level 2-3" };
+            Level2_3 = new Level { Id = "Level2_3", Name = "Level 2-3", Score = 0, IsLocked = true };
             Add(Level2_3);
-            Level3_1 = new Level { Id = "Level3_1", WorldId = "World3", Name = "Level 3-1" };
+            Level3_1 = new Level { Id = "Level3_1", Name = "Level 3-1", Score = 0, IsLocked = true };
             Add(Level3_1);
-            Level3_2 = new Level { Id = "Level3_2", WorldId = "World3", Name = "Level 3-2" };
+            Level3_2 = new Level { Id = "Level3_2", Name = "Level 3-2", Score = 0, IsLocked = true };
             Add(Level3_2);
-        }
-
-        #endregion
-
-        #region Methods
-
-        protected Dictionary<string, BindableCollectionSubset<Level>> _worldLevels = new Dictionary<string, BindableCollectionSubset<Level>>();
-        public virtual BindableCollectionSubset<Level> Get(World world)
-        {
-            if (world == null)
-                return null;
-
-            string worldId = world.Id;
-            BindableCollectionSubset<Level> worldLevels;
-            if (_worldLevels.TryGetValue(worldId, out worldLevels))
-                return worldLevels;
-
-            worldLevels = new BindableCollectionSubset<Level>(this, x => x.WorldId == worldId, x => x.WorldId = worldId);
-            _worldLevels.Add(worldId, worldLevels);
-            return worldLevels;
         }
 
         #endregion

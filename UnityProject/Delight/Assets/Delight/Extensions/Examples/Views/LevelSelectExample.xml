@@ -1,0 +1,12 @@
+<LevelSelectExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Width="750" Height="600">
+  <Image Sprite="LevelSelectBg" PreserveAspect="True" Width="600" />
+  <Label Text="Level Select" AutoSize="True" FontSize="50" Offset="0,0,0,225" FontColor="White" Font="AveriaSansLibre-Bold SDF" />
+  <List Items="{level in @Levels}" Overflow="Wrap" Orientation="Horizontal" Width="500" Spacing="10"
+        Offset="10,180,0,0" DeselectAfterSelect="True" Alignment="Top">
+    <ListItem Size="150,150" BackgroundColor="White" BackgroundSprite="LevelSelectItemBg">
+      <Label Text="{level.Index:0}" FontSize="50" AutoSize="True" Font="AveriaSansLibre-Bold SDF"
+             FontColor="#ecce2d" Offset="0,0,0,30" />
+      <Image Sprite="{level.Stars}" PreserveAspect="True" Width="110" Offset="0,20,0,0" />
+    </ListItem>
+  </List>
+</LevelSelectExample>

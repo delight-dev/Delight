@@ -128,6 +128,7 @@ namespace Delight
         public readonly FontAsset Ebrima;
         public readonly FontAsset InconsolataRegular;
         public readonly FontAsset SegoeUI;
+        public readonly FontAsset AveriaSansLibreBold;
 
         #endregion
 
@@ -138,10 +139,12 @@ namespace Delight
             Ebrima = new FontAsset { Id = "Ebrima", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegular = new FontAsset { Id = "Inconsolata-Regular", IsResource = true, RelativePath = "Fonts/" };
             SegoeUI = new FontAsset { Id = "Segoe UI", IsResource = true, RelativePath = "Fonts/" };
+            AveriaSansLibreBold = new FontAsset { Id = "AveriaSansLibre-Bold", IsResource = true, RelativePath = "" };
 
             Add(Ebrima);
             Add(InconsolataRegular);
             Add(SegoeUI);
+            Add(AveriaSansLibreBold);
         }
 
         #endregion
@@ -210,6 +213,12 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
+        public readonly SpriteAsset LevelSelectBg;
+        public readonly SpriteAsset LevelSelectItemBg;
+        public readonly SpriteAsset Stars0;
+        public readonly SpriteAsset Stars1;
+        public readonly SpriteAsset Stars2;
+        public readonly SpriteAsset Stars3;
 
         #endregion
 
@@ -242,6 +251,12 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
+            LevelSelectBg = new SpriteAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "" };
+            LevelSelectItemBg = new SpriteAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "" };
+            Stars0 = new SpriteAsset { Id = "Stars0", IsResource = true, RelativePath = "" };
+            Stars1 = new SpriteAsset { Id = "Stars1", IsResource = true, RelativePath = "" };
+            Stars2 = new SpriteAsset { Id = "Stars2", IsResource = true, RelativePath = "" };
+            Stars3 = new SpriteAsset { Id = "Stars3", IsResource = true, RelativePath = "" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
@@ -268,6 +283,12 @@ namespace Delight
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
+            Add(LevelSelectBg);
+            Add(LevelSelectItemBg);
+            Add(Stars0);
+            Add(Stars1);
+            Add(Stars2);
+            Add(Stars3);
         }
 
         #endregion
@@ -314,6 +335,7 @@ namespace Delight
         public readonly TMP_FontAsset EbrimaSDF;
         public readonly TMP_FontAsset InconsolataRegularSDF;
         public readonly TMP_FontAsset SegoeUISDF;
+        public readonly TMP_FontAsset AveriaSansLibreBoldSDF;
 
         #endregion
 
@@ -324,10 +346,12 @@ namespace Delight
             EbrimaSDF = new TMP_FontAsset { Id = "Ebrima SDF", IsResource = true, RelativePath = "Fonts/" };
             InconsolataRegularSDF = new TMP_FontAsset { Id = "Inconsolata-Regular SDF", IsResource = true, RelativePath = "Fonts/" };
             SegoeUISDF = new TMP_FontAsset { Id = "Segoe UI SDF", IsResource = true, RelativePath = "Fonts/" };
+            AveriaSansLibreBoldSDF = new TMP_FontAsset { Id = "AveriaSansLibre-Bold SDF", IsResource = true, RelativePath = "" };
 
             Add(EbrimaSDF);
             Add(InconsolataRegularSDF);
             Add(SegoeUISDF);
+            Add(AveriaSansLibreBoldSDF);
         }
 
         #endregion
@@ -428,6 +452,12 @@ namespace Delight
         public readonly Texture2DAsset HamburgerMenuIcon;
         public readonly Texture2DAsset HamburgerMenuIconPressed;
         public readonly Texture2DAsset Bluefloral01;
+        public readonly Texture2DAsset LevelSelectBg;
+        public readonly Texture2DAsset LevelSelectItemBg;
+        public readonly Texture2DAsset Stars3;
+        public readonly Texture2DAsset Stars2;
+        public readonly Texture2DAsset Stars1;
+        public readonly Texture2DAsset Stars0;
 
         #endregion
 
@@ -438,10 +468,22 @@ namespace Delight
             HamburgerMenuIcon = new Texture2DAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIconPressed = new Texture2DAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
+            LevelSelectBg = new Texture2DAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "" };
+            LevelSelectItemBg = new Texture2DAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "" };
+            Stars3 = new Texture2DAsset { Id = "Stars3", IsResource = true, RelativePath = "" };
+            Stars2 = new Texture2DAsset { Id = "Stars2", IsResource = true, RelativePath = "" };
+            Stars1 = new Texture2DAsset { Id = "Stars1", IsResource = true, RelativePath = "" };
+            Stars0 = new Texture2DAsset { Id = "Stars0", IsResource = true, RelativePath = "" };
 
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
             Add(Bluefloral01);
+            Add(LevelSelectBg);
+            Add(LevelSelectItemBg);
+            Add(Stars3);
+            Add(Stars2);
+            Add(Stars1);
+            Add(Stars0);
         }
 
         #endregion
