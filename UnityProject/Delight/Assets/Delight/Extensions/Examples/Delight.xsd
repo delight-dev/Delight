@@ -160,6 +160,8 @@
     <xs:attribute name="LabelIgnoreObject" type="xs:string" />
     <xs:attribute name="LabelIsActive" type="xs:string" />
     <xs:attribute name="LabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -466,6 +468,8 @@
     <xs:attribute name="CheckBoxLabelIgnoreObject" type="xs:string" />
     <xs:attribute name="CheckBoxLabelIsActive" type="xs:string" />
     <xs:attribute name="CheckBoxLabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -558,6 +562,8 @@
     <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -674,7 +680,7 @@
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
     <xs:attribute name="PageIndex" type="xs:string" />
-    <xs:attribute name="MaskContent" type="xs:string" />
+    <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
     <xs:attribute name="Elasticity" type="xs:string" />
@@ -779,6 +785,7 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
@@ -910,6 +917,7 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
@@ -1004,6 +1012,7 @@
     <xs:attribute name="ScrollableRegionIsActive" type="xs:string" />
     <xs:attribute name="ScrollableRegionLoadMode" type="Enum_LoadMode" />
     <xs:attribute name="Items" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundType" type="Enum_Type" />
@@ -1153,6 +1162,7 @@
     <xs:attribute name="ButtonLabelIgnoreObject" type="xs:string" />
     <xs:attribute name="ButtonLabelIsActive" type="xs:string" />
     <xs:attribute name="ButtonLabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="ButtonMaskContent" type="xs:string" />
     <xs:attribute name="ButtonBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="ButtonBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="ButtonBackgroundType" type="Enum_Type" />
@@ -1277,6 +1287,8 @@
     <xs:attribute name="ContentTemplateData" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="SetListItemState" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1449,6 +1461,8 @@
     <xs:attribute name="Text" type="xs:string" />
     <xs:attribute name="Sprite" type="Asset_SpriteAsset" />
     <xs:attribute name="ToggleMode" type="Enum_SwitchMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1540,6 +1554,8 @@
     <xs:attribute name="ContentTemplateData" type="xs:string" />
     <xs:attribute name="Text" type="xs:string" />
     <xs:attribute name="AutoSizeToContent" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1703,6 +1719,8 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="AutoSizeToContent" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1799,6 +1817,8 @@
     <xs:attribute name="Columns" type="xs:string" />
     <xs:attribute name="Cell" type="xs:string" />
     <xs:attribute name="CellSpan" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -1968,6 +1988,8 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="IsEnabled" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -2061,6 +2083,8 @@
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
     <xs:attribute name="ContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -2367,7 +2391,7 @@
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
     <xs:attribute name="PageIndex" type="xs:string" />
-    <xs:attribute name="MaskContent" type="xs:string" />
+    <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
     <xs:attribute name="Elasticity" type="xs:string" />
@@ -2472,6 +2496,7 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
@@ -2603,6 +2628,7 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
@@ -2699,6 +2725,8 @@
     <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -2800,6 +2828,8 @@
     <xs:attribute name="ContentTemplateData" type="xs:string" />
     <xs:attribute name="ItemSelected" type="xs:string" />
     <xs:attribute name="SetListItemState" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -2891,6 +2921,8 @@
     </xs:sequence>
     <xs:attribute name="MaskComponent" type="xs:string" />
     <xs:attribute name="ShowMaskGraphic" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -3120,6 +3152,8 @@
     <xs:attribute name="RadioButtonLabelIgnoreObject" type="xs:string" />
     <xs:attribute name="RadioButtonLabelIsActive" type="xs:string" />
     <xs:attribute name="RadioButtonLabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -3289,6 +3323,8 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="RectMask2DComponent" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -3378,6 +3414,8 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -3580,6 +3618,7 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
@@ -3711,6 +3750,7 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
@@ -3960,6 +4000,7 @@
     <xs:attribute name="HorizontalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="HorizontalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="HorizontalScrollbarBackgroundType" type="Enum_Type" />
@@ -4091,6 +4132,7 @@
     <xs:attribute name="VerticalScrollbarHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsActive" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="VerticalScrollbarMaskContent" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="VerticalScrollbarBackgroundType" type="Enum_Type" />
@@ -4322,6 +4364,8 @@
     <xs:attribute name="HandleIgnoreObject" type="xs:string" />
     <xs:attribute name="HandleIsActive" type="xs:string" />
     <xs:attribute name="HandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -4518,6 +4562,7 @@
     <xs:attribute name="SelectionTabLabelIgnoreObject" type="xs:string" />
     <xs:attribute name="SelectionTabLabelIsActive" type="xs:string" />
     <xs:attribute name="SelectionTabLabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="SelectionTabMaskContent" type="xs:string" />
     <xs:attribute name="SelectionTabBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="SelectionTabBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="SelectionTabBackgroundType" type="Enum_Type" />
@@ -4560,6 +4605,8 @@
     <xs:attribute name="SelectionTabIgnoreObject" type="xs:string" />
     <xs:attribute name="SelectionTabIsActive" type="xs:string" />
     <xs:attribute name="SelectionTabLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -4786,6 +4833,8 @@
     <xs:attribute name="SliderHandleIgnoreObject" type="xs:string" />
     <xs:attribute name="SliderHandleIsActive" type="xs:string" />
     <xs:attribute name="SliderHandleLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -5060,6 +5109,8 @@
     <xs:attribute name="LabelIgnoreObject" type="xs:string" />
     <xs:attribute name="LabelIsActive" type="xs:string" />
     <xs:attribute name="LabelLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -5158,6 +5209,7 @@
     <xs:attribute name="TabListSpacing" type="xs:string" />
     <xs:attribute name="TabListOrientation" type="Enum_ElementOrientation" />
     <xs:attribute name="TabListContentAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="TabListMaskContent" type="xs:string" />
     <xs:attribute name="TabListBackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="TabListBackgroundOverrideSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="TabListBackgroundType" type="Enum_Type" />
@@ -5203,6 +5255,8 @@
     <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="Items" type="xs:string" />
     <xs:attribute name="TemplateSelector" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -5444,6 +5498,8 @@
     <xs:attribute name="InputTextIgnoreObject" type="xs:string" />
     <xs:attribute name="InputTextIsActive" type="xs:string" />
     <xs:attribute name="InputTextLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -5680,6 +5736,8 @@
     <xs:attribute name="Orientation" type="Enum_ElementOrientation" />
     <xs:attribute name="ContentAlignment" type="Enum_ElementAlignment" />
     <xs:attribute name="SortIndex" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -5963,6 +6021,8 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -7085,6 +7145,8 @@
     <xs:attribute name="SelectedAutoCompleteOption" type="xs:string" />
     <xs:attribute name="DesignerViews" type="xs:string" />
     <xs:attribute name="IsReadOnly" type="xs:string" />
+    <xs:attribute name="Mask" type="xs:string" />
+    <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
     <xs:attribute name="BackgroundSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="BackgroundOverrideSprite" type="Asset_SpriteAsset" />
@@ -7571,6 +7633,7 @@
       <xs:enumeration value="TooltipArrow" />
       <xs:enumeration value="HamburgerMenuIcon" />
       <xs:enumeration value="HamburgerMenuIconPressed" />
+      <xs:enumeration value="ContextMenuBg" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -7604,6 +7667,7 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="HamburgerMenuIcon" />
       <xs:enumeration value="HamburgerMenuIconPressed" />
+      <xs:enumeration value="ContextMenuBg" />
       <xs:enumeration value="bluefloral01" />
       <xs:enumeration value="LevelSelectBg" />
       <xs:enumeration value="LevelSelectItemBg" />

@@ -811,6 +811,13 @@ namespace Delight
             set { SelectionTab.LabelLoadMode = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabMaskContentProperty = Button.MaskContentProperty;
+        public System.Boolean SelectionTabMaskContent
+        {
+            get { return SelectionTab.MaskContent; }
+            set { SelectionTab.MaskContent = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabBackgroundSpriteProperty = Button.BackgroundSpriteProperty;
         public SpriteAsset SelectionTabBackgroundSprite
         {

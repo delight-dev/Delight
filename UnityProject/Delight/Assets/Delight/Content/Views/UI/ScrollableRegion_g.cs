@@ -908,6 +908,13 @@ namespace Delight
             set { HorizontalScrollbar.HandleLoadMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarMaskContentProperty = Scrollbar.MaskContentProperty;
+        public System.Boolean HorizontalScrollbarMaskContent
+        {
+            get { return HorizontalScrollbar.MaskContent; }
+            set { HorizontalScrollbar.MaskContent = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBackgroundSpriteProperty = Scrollbar.BackgroundSpriteProperty;
         public SpriteAsset HorizontalScrollbarBackgroundSprite
         {
@@ -1844,6 +1851,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandleLoadMode; }
             set { VerticalScrollbar.HandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarMaskContentProperty = Scrollbar.MaskContentProperty;
+        public System.Boolean VerticalScrollbarMaskContent
+        {
+            get { return VerticalScrollbar.MaskContent; }
+            set { VerticalScrollbar.MaskContent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundSpriteProperty = Scrollbar.BackgroundSpriteProperty;

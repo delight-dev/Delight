@@ -289,11 +289,11 @@ namespace Delight
             set { ComboBoxList.PageIndex = value; }
         }
 
-        public readonly static DependencyProperty MaskContentProperty = List.MaskContentProperty;
-        public System.Boolean MaskContent
+        public readonly static DependencyProperty ScrollableRegionMaskContentProperty = List.ScrollableRegionMaskContentProperty;
+        public System.Boolean ScrollableRegionMaskContent
         {
-            get { return ComboBoxList.MaskContent; }
-            set { ComboBoxList.MaskContent = value; }
+            get { return ComboBoxList.ScrollableRegionMaskContent; }
+            set { ComboBoxList.ScrollableRegionMaskContent = value; }
         }
 
         public readonly static DependencyProperty HasInertiaProperty = List.HasInertiaProperty;
@@ -1036,6 +1036,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarHandleLoadMode; }
             set { ComboBoxList.HorizontalScrollbarHandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarMaskContentProperty = List.HorizontalScrollbarMaskContentProperty;
+        public System.Boolean HorizontalScrollbarMaskContent
+        {
+            get { return ComboBoxList.HorizontalScrollbarMaskContent; }
+            set { ComboBoxList.HorizontalScrollbarMaskContent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundSpriteProperty = List.HorizontalScrollbarBackgroundSpriteProperty;
@@ -1976,6 +1983,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarHandleLoadMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarMaskContentProperty = List.VerticalScrollbarMaskContentProperty;
+        public System.Boolean VerticalScrollbarMaskContent
+        {
+            get { return ComboBoxList.VerticalScrollbarMaskContent; }
+            set { ComboBoxList.VerticalScrollbarMaskContent = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBackgroundSpriteProperty = List.VerticalScrollbarBackgroundSpriteProperty;
         public SpriteAsset VerticalScrollbarBackgroundSprite
         {
@@ -2646,6 +2660,13 @@ namespace Delight
         {
             get { return ComboBoxList.Items; }
             set { ComboBoxList.Items = value; }
+        }
+
+        public readonly static DependencyProperty MaskContentProperty = List.MaskContentProperty;
+        public System.Boolean MaskContent
+        {
+            get { return ComboBoxList.MaskContent; }
+            set { ComboBoxList.MaskContent = value; }
         }
 
         public readonly static DependencyProperty BackgroundSpriteProperty = List.BackgroundSpriteProperty;
@@ -3703,6 +3724,13 @@ namespace Delight
         {
             get { return ComboBoxButton.LabelLoadMode; }
             set { ComboBoxButton.LabelLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty ButtonMaskContentProperty = Button.MaskContentProperty;
+        public System.Boolean ButtonMaskContent
+        {
+            get { return ComboBoxButton.MaskContent; }
+            set { ComboBoxButton.MaskContent = value; }
         }
 
         public readonly static DependencyProperty ButtonBackgroundSpriteProperty = Button.BackgroundSpriteProperty;

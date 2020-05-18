@@ -31,6 +31,8 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(UIImageViewTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(MaskProperty);
+            dependencyProperties.Add(MaskContentProperty);
             dependencyProperties.Add(ImageComponentProperty);
             dependencyProperties.Add(BackgroundSpriteProperty);
             dependencyProperties.Add(BackgroundOverrideSpriteProperty);
@@ -55,6 +57,20 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<UnityEngine.UI.Mask> MaskProperty = new DependencyProperty<UnityEngine.UI.Mask>("Mask");
+        public UnityEngine.UI.Mask Mask
+        {
+            get { return MaskProperty.GetValue(this); }
+            set { MaskProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> MaskContentProperty = new DependencyProperty<System.Boolean>("MaskContent");
+        public System.Boolean MaskContent
+        {
+            get { return MaskContentProperty.GetValue(this); }
+            set { MaskContentProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<UnityEngine.UI.Image> ImageComponentProperty = new DependencyProperty<UnityEngine.UI.Image>("ImageComponent");
         public UnityEngine.UI.Image ImageComponent
@@ -239,6 +255,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _uIImageView.Name = "UIImageView";
 #endif
+                    Delight.UIImageView.MaskContentProperty.SetDefault(_uIImageView, false);
                 }
                 return _uIImageView;
             }

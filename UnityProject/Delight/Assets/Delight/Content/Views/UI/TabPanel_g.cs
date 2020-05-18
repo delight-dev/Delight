@@ -150,6 +150,13 @@ namespace Delight
             set { TabHeaderGroup.ContentAlignment = value; }
         }
 
+        public readonly static DependencyProperty TabListMaskContentProperty = ToggleGroup.MaskContentProperty;
+        public System.Boolean TabListMaskContent
+        {
+            get { return TabHeaderGroup.MaskContent; }
+            set { TabHeaderGroup.MaskContent = value; }
+        }
+
         public readonly static DependencyProperty TabListBackgroundSpriteProperty = ToggleGroup.BackgroundSpriteProperty;
         public SpriteAsset TabListBackgroundSprite
         {

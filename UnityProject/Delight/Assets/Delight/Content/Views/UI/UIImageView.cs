@@ -42,6 +42,11 @@ namespace Delight
 
             base.BeforeLoad();
 
+            if (MaskContent)
+            {
+                Mask = GameObject.AddComponent<UnityEngine.UI.Mask>();
+            }
+
             if (ImageComponent == null)
             {
                 // check if image color or sprite has binding

@@ -208,6 +208,7 @@ namespace Delight
         public readonly SpriteAsset TooltipArrow;
         public readonly SpriteAsset HamburgerMenuIcon;
         public readonly SpriteAsset HamburgerMenuIconPressed;
+        public readonly SpriteAsset ContextMenuBg;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -246,6 +247,7 @@ namespace Delight
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIcon = new SpriteAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIconPressed = new SpriteAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
+            ContextMenuBg = new SpriteAsset { Id = "ContextMenuBg", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -278,6 +280,7 @@ namespace Delight
             Add(TooltipArrow);
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
+            Add(ContextMenuBg);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -451,6 +454,7 @@ namespace Delight
 
         public readonly Texture2DAsset HamburgerMenuIcon;
         public readonly Texture2DAsset HamburgerMenuIconPressed;
+        public readonly Texture2DAsset ContextMenuBg;
         public readonly Texture2DAsset Bluefloral01;
         public readonly Texture2DAsset LevelSelectBg;
         public readonly Texture2DAsset LevelSelectItemBg;
@@ -467,6 +471,7 @@ namespace Delight
         {
             HamburgerMenuIcon = new Texture2DAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIconPressed = new Texture2DAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
+            ContextMenuBg = new Texture2DAsset { Id = "ContextMenuBg", IsResource = true, RelativePath = "Sprites/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
             LevelSelectBg = new Texture2DAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "" };
             LevelSelectItemBg = new Texture2DAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "" };
@@ -477,6 +482,7 @@ namespace Delight
 
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
+            Add(ContextMenuBg);
             Add(Bluefloral01);
             Add(LevelSelectBg);
             Add(LevelSelectItemBg);

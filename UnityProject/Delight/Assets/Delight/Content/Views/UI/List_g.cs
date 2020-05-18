@@ -296,8 +296,8 @@ namespace Delight
             set { ScrollableRegionTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty MaskContentProperty = ScrollableRegion.MaskContentProperty;
-        public System.Boolean MaskContent
+        public readonly static DependencyProperty ScrollableRegionMaskContentProperty = ScrollableRegion.MaskContentProperty;
+        public System.Boolean ScrollableRegionMaskContent
         {
             get { return ScrollableRegion.MaskContent; }
             set { ScrollableRegion.MaskContent = value; }
@@ -1043,6 +1043,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarHandleLoadMode; }
             set { ScrollableRegion.HorizontalScrollbarHandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarMaskContentProperty = ScrollableRegion.HorizontalScrollbarMaskContentProperty;
+        public System.Boolean HorizontalScrollbarMaskContent
+        {
+            get { return ScrollableRegion.HorizontalScrollbarMaskContent; }
+            set { ScrollableRegion.HorizontalScrollbarMaskContent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBackgroundSpriteProperty = ScrollableRegion.HorizontalScrollbarBackgroundSpriteProperty;
@@ -1981,6 +1988,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarHandleLoadMode; }
             set { ScrollableRegion.VerticalScrollbarHandleLoadMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarMaskContentProperty = ScrollableRegion.VerticalScrollbarMaskContentProperty;
+        public System.Boolean VerticalScrollbarMaskContent
+        {
+            get { return ScrollableRegion.VerticalScrollbarMaskContent; }
+            set { ScrollableRegion.VerticalScrollbarMaskContent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarBackgroundSpriteProperty = ScrollableRegion.VerticalScrollbarBackgroundSpriteProperty;

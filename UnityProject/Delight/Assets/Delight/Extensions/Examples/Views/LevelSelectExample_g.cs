@@ -270,7 +270,6 @@ namespace Delight
 #if UNITY_EDITOR
                     _levelSelectExampleList1.Name = "LevelSelectExampleList1";
 #endif
-                    Delight.List.IsVirtualizedProperty.SetDefault(_levelSelectExampleList1, true);
                     Delight.List.OverflowProperty.SetDefault(_levelSelectExampleList1, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_levelSelectExampleList1, Delight.ElementOrientation.Horizontal);
                     Delight.List.WidthProperty.SetDefault(_levelSelectExampleList1, new ElementSize(500f, ElementSizeUnit.Pixels));

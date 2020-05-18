@@ -1824,6 +1824,8 @@ namespace Delight
                     Delight.List.OffsetProperty.SetDefault(_delightDesignerViewMenuComboBoxList, new ElementMargin(new ElementSize(70f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.DeselectAfterSelectProperty.SetDefault(_delightDesignerViewMenuComboBoxList, true);
                     Delight.List.BackgroundColorProperty.SetDefault(_delightDesignerViewMenuComboBoxList, new UnityEngine.Color(0.9647059f, 0.9647059f, 0.9647059f, 1f));
+                    Delight.List.BackgroundSpriteProperty.SetDefault(_delightDesignerViewMenuComboBoxList, Assets.Sprites["ContextMenuBg"]);
+                    Delight.List.MaskContentProperty.SetDefault(_delightDesignerViewMenuComboBoxList, true);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_delightDesignerViewMenuComboBoxList, DelightDesignerViewMenuComboBoxListScrollableRegion);
                 }
                 return _delightDesignerViewMenuComboBoxList;

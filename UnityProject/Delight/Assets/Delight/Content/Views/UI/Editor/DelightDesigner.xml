@@ -47,7 +47,7 @@
         <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,4,10,0" ItemSelected="ViewMenuItemSelected" 
                   ButtonBackgroundSprite="HamburgerMenuIcon" Pressed-ButtonBackgroundSprite="HamburgerMenuIconPressed"
                   ComboBoxListWidth="180" ShowSelectedItem="False" ComboBoxListOffset="70,2,0,0" DeselectAfterSelect="True"
-                  BackgroundColor="#F6F6F6">
+                  BackgroundColor="#F6F6F6" BackgroundSprite="ContextMenuBg" MaskContent="True">
           <ComboBoxListItem Height="20" ItemSelected="AddNewView">
             <Label Text="Create View" FontSize="14" Font="Segoe UI SDF" Height="20" Margin="5,0,0,0" Width="100%" />
           </ComboBoxListItem>
