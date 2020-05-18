@@ -2,7 +2,7 @@
       Orientation="t:ElementOrientation" 
       Spacing="t:ElementSize" HorizontalSpacing="t:ElementSize" VerticalSpacing="t:ElementSize" Padding="t:ElementMargin"      
       ContentAlignment="t:ElementAlignment" 
-      HasContentTemplates="True" ContentTemplateTypes="ListItem"
+      HasContentTemplates="True" ContentTemplateTypes="ListItem; NavigationButton"
       AlternateItems="t:bool"
       IsScrollable="t:bool"
       IsVirtualized="t:bool"

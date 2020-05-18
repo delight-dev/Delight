@@ -39,6 +39,7 @@ namespace Delight
             ViewActivators.Add("GridSplitter", (x, y, z, w, a) => new GridSplitter(x, y, z, w, a));
             ViewActivators.Add("GridSplitterHandle", (x, y, z, w, a) => new GridSplitterHandle(x, y, z, w, a));
             ViewActivators.Add("LayoutRoot", (x, y, z, w, a) => new LayoutRoot(x, y, z, w, a));
+            ViewActivators.Add("NavigationButton", (x, y, z, w, a) => new NavigationButton(x, y, z, w, a));
             ViewActivators.Add("ScrollableRegion", (x, y, z, w, a) => new ScrollableRegion(x, y, z, w, a));
             ViewActivators.Add("Mask", (x, y, z, w, a) => new Mask(x, y, z, w, a));
             ViewActivators.Add("RadioButton", (x, y, z, w, a) => new RadioButton(x, y, z, w, a));
@@ -89,6 +90,7 @@ namespace Delight
             ViewTypes.Add("GridSplitter", typeof(GridSplitter));
             ViewTypes.Add("GridSplitterHandle", typeof(GridSplitterHandle));
             ViewTypes.Add("LayoutRoot", typeof(LayoutRoot));
+            ViewTypes.Add("NavigationButton", typeof(NavigationButton));
             ViewTypes.Add("ScrollableRegion", typeof(ScrollableRegion));
             ViewTypes.Add("Mask", typeof(Mask));
             ViewTypes.Add("RadioButton", typeof(RadioButton));

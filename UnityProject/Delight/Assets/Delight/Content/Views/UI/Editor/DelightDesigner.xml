@@ -26,9 +26,9 @@
       <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#d0d0d3">
         <Region Margin="0,8,0,0">
           
-          <ScrollableRegion Width="100%" Height="100%" ContentAlignment="Top" DisableInteractionScrollDelta="1" HasInertia="False"
+          <ScrollableRegion Id="ContentExplorerScrollableRegion" Width="100%" Height="100%" ContentAlignment="Top" DisableInteractionScrollDelta="1" HasInertia="False"
                 VerticalScrollbarVisibility="MouseOver" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
-                VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0">
+                VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0" CanScrollHorizontally="False">
  
             <Expander Text="Views" Width="100%" Margin="4,0,0,0">  
               <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="4,2,2,2" BackgroundColor="clear" Width="100%"

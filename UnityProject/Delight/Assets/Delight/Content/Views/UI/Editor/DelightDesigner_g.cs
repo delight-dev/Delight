@@ -37,8 +37,8 @@ namespace Delight
             Grid1.Cell.SetValue(ContentExplorer, new CellIndex(0, 1));
             Grid1.CellSpan.SetValue(ContentExplorer, new CellIndex(2, 1));
             Region2 = new Region(this, ContentExplorer.Content, "Region2", Region2Template);
-            ScrollableRegion1 = new ScrollableRegion(this, Region2.Content, "ScrollableRegion1", ScrollableRegion1Template);
-            Expander1 = new Expander(this, ScrollableRegion1.Content, "Expander1", Expander1Template);
+            ContentExplorerScrollableRegion = new ScrollableRegion(this, Region2.Content, "ContentExplorerScrollableRegion", ContentExplorerScrollableRegionTemplate);
+            Expander1 = new Expander(this, ContentExplorerScrollableRegion.Content, "Expander1", Expander1Template);
 
             // templates for Expander1
             Expander1.ContentTemplates.Add(new ContentTemplate(x0 => 
@@ -178,8 +178,8 @@ namespace Delight
             dependencyProperties.Add(ContentExplorerTemplateProperty);
             dependencyProperties.Add(Region2Property);
             dependencyProperties.Add(Region2TemplateProperty);
-            dependencyProperties.Add(ScrollableRegion1Property);
-            dependencyProperties.Add(ScrollableRegion1TemplateProperty);
+            dependencyProperties.Add(ContentExplorerScrollableRegionProperty);
+            dependencyProperties.Add(ContentExplorerScrollableRegionTemplateProperty);
             dependencyProperties.Add(Expander1Property);
             dependencyProperties.Add(Expander1TemplateProperty);
             dependencyProperties.Add(List1Property);
@@ -413,18 +413,18 @@ namespace Delight
             set { Region2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ScrollableRegion> ScrollableRegion1Property = new DependencyProperty<ScrollableRegion>("ScrollableRegion1");
-        public ScrollableRegion ScrollableRegion1
+        public readonly static DependencyProperty<ScrollableRegion> ContentExplorerScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ContentExplorerScrollableRegion");
+        public ScrollableRegion ContentExplorerScrollableRegion
         {
-            get { return ScrollableRegion1Property.GetValue(this); }
-            set { ScrollableRegion1Property.SetValue(this, value); }
+            get { return ContentExplorerScrollableRegionProperty.GetValue(this); }
+            set { ContentExplorerScrollableRegionProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> ScrollableRegion1TemplateProperty = new DependencyProperty<Template>("ScrollableRegion1Template");
-        public Template ScrollableRegion1Template
+        public readonly static DependencyProperty<Template> ContentExplorerScrollableRegionTemplateProperty = new DependencyProperty<Template>("ContentExplorerScrollableRegionTemplate");
+        public Template ContentExplorerScrollableRegionTemplate
         {
-            get { return ScrollableRegion1TemplateProperty.GetValue(this); }
-            set { ScrollableRegion1TemplateProperty.SetValue(this, value); }
+            get { return ContentExplorerScrollableRegionTemplateProperty.GetValue(this); }
+            set { ContentExplorerScrollableRegionTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Expander> Expander1Property = new DependencyProperty<Expander>("Expander1");
@@ -864,7 +864,7 @@ namespace Delight
                     Delight.DelightDesigner.ViewContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewContentRegion);
                     Delight.DelightDesigner.ContentExplorerTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentExplorer);
                     Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
-                    Delight.DelightDesigner.ScrollableRegion1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerScrollableRegion1);
+                    Delight.DelightDesigner.ContentExplorerScrollableRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentExplorerScrollableRegion);
                     Delight.DelightDesigner.Expander1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerExpander1);
                     Delight.DelightDesigner.Expander1ContentTemplateProperty.SetDefault(_delightDesigner, DelightDesignerExpander1Content);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
@@ -1240,182 +1240,183 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1;
-        public static Template DelightDesignerScrollableRegion1
+        private static Template _delightDesignerContentExplorerScrollableRegion;
+        public static Template DelightDesignerContentExplorerScrollableRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1 == null || _delightDesignerScrollableRegion1.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegion == null || _delightDesignerContentExplorerScrollableRegion.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1 == null)
+                if (_delightDesignerContentExplorerScrollableRegion == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1 = new Template(ScrollableRegionTemplates.ScrollableRegion);
+                    _delightDesignerContentExplorerScrollableRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1.Name = "DelightDesignerScrollableRegion1";
+                    _delightDesignerContentExplorerScrollableRegion.Name = "DelightDesignerContentExplorerScrollableRegion";
 #endif
-                    Delight.ScrollableRegion.WidthProperty.SetDefault(_delightDesignerScrollableRegion1, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.ScrollableRegion.HeightProperty.SetDefault(_delightDesignerScrollableRegion1, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_delightDesignerScrollableRegion1, Delight.ElementAlignment.Top);
-                    Delight.ScrollableRegion.DisableInteractionScrollDeltaProperty.SetDefault(_delightDesignerScrollableRegion1, 1f);
-                    Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerScrollableRegion1, false);
-                    Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_delightDesignerScrollableRegion1, Delight.ScrollbarVisibilityMode.MouseOver);
-                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerScrollableRegion1, DelightDesignerScrollableRegion1ContentRegion);
-                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerScrollableRegion1, DelightDesignerScrollableRegion1HorizontalScrollbar);
-                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerScrollableRegion1, DelightDesignerScrollableRegion1VerticalScrollbar);
+                    Delight.ScrollableRegion.WidthProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.ScrollableRegion.HeightProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.ScrollableRegion.ContentAlignmentProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, Delight.ElementAlignment.Top);
+                    Delight.ScrollableRegion.DisableInteractionScrollDeltaProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, 1f);
+                    Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, false);
+                    Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, Delight.ScrollbarVisibilityMode.MouseOver);
+                    Delight.ScrollableRegion.CanScrollHorizontallyProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, false);
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, DelightDesignerContentExplorerScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, DelightDesignerContentExplorerScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, DelightDesignerContentExplorerScrollableRegionVerticalScrollbar);
                 }
-                return _delightDesignerScrollableRegion1;
+                return _delightDesignerContentExplorerScrollableRegion;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1ContentRegion;
-        public static Template DelightDesignerScrollableRegion1ContentRegion
+        private static Template _delightDesignerContentExplorerScrollableRegionContentRegion;
+        public static Template DelightDesignerContentExplorerScrollableRegionContentRegion
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1ContentRegion == null || _delightDesignerScrollableRegion1ContentRegion.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionContentRegion == null || _delightDesignerContentExplorerScrollableRegionContentRegion.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1ContentRegion == null)
+                if (_delightDesignerContentExplorerScrollableRegionContentRegion == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1ContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
+                    _delightDesignerContentExplorerScrollableRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1ContentRegion.Name = "DelightDesignerScrollableRegion1ContentRegion";
+                    _delightDesignerContentExplorerScrollableRegionContentRegion.Name = "DelightDesignerContentExplorerScrollableRegionContentRegion";
 #endif
                 }
-                return _delightDesignerScrollableRegion1ContentRegion;
+                return _delightDesignerContentExplorerScrollableRegionContentRegion;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1HorizontalScrollbar;
-        public static Template DelightDesignerScrollableRegion1HorizontalScrollbar
+        private static Template _delightDesignerContentExplorerScrollableRegionHorizontalScrollbar;
+        public static Template DelightDesignerContentExplorerScrollableRegionHorizontalScrollbar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1HorizontalScrollbar == null || _delightDesignerScrollableRegion1HorizontalScrollbar.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbar == null || _delightDesignerContentExplorerScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1HorizontalScrollbar == null)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbar == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1HorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1HorizontalScrollbar.Name = "DelightDesignerScrollableRegion1HorizontalScrollbar";
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbar.Name = "DelightDesignerContentExplorerScrollableRegionHorizontalScrollbar";
 #endif
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerScrollableRegion1HorizontalScrollbar, DelightDesignerScrollableRegion1HorizontalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerScrollableRegion1HorizontalScrollbar, DelightDesignerScrollableRegion1HorizontalScrollbarHandle);
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionHorizontalScrollbar, DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionHorizontalScrollbar, DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle);
                 }
-                return _delightDesignerScrollableRegion1HorizontalScrollbar;
+                return _delightDesignerContentExplorerScrollableRegionHorizontalScrollbar;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1HorizontalScrollbarBar;
-        public static Template DelightDesignerScrollableRegion1HorizontalScrollbarBar
+        private static Template _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar;
+        public static Template DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1HorizontalScrollbarBar == null || _delightDesignerScrollableRegion1HorizontalScrollbarBar.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar == null || _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1HorizontalScrollbarBar == null)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1HorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1HorizontalScrollbarBar.Name = "DelightDesignerScrollableRegion1HorizontalScrollbarBar";
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar.Name = "DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar";
 #endif
                 }
-                return _delightDesignerScrollableRegion1HorizontalScrollbarBar;
+                return _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarBar;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1HorizontalScrollbarHandle;
-        public static Template DelightDesignerScrollableRegion1HorizontalScrollbarHandle
+        private static Template _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle;
+        public static Template DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1HorizontalScrollbarHandle == null || _delightDesignerScrollableRegion1HorizontalScrollbarHandle.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle == null || _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1HorizontalScrollbarHandle == null)
+                if (_delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1HorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1HorizontalScrollbarHandle.Name = "DelightDesignerScrollableRegion1HorizontalScrollbarHandle";
+                    _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle.Name = "DelightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle";
 #endif
                 }
-                return _delightDesignerScrollableRegion1HorizontalScrollbarHandle;
+                return _delightDesignerContentExplorerScrollableRegionHorizontalScrollbarHandle;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1VerticalScrollbar;
-        public static Template DelightDesignerScrollableRegion1VerticalScrollbar
+        private static Template _delightDesignerContentExplorerScrollableRegionVerticalScrollbar;
+        public static Template DelightDesignerContentExplorerScrollableRegionVerticalScrollbar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1VerticalScrollbar == null || _delightDesignerScrollableRegion1VerticalScrollbar.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbar == null || _delightDesignerContentExplorerScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1VerticalScrollbar == null)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbar == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1VerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1VerticalScrollbar.Name = "DelightDesignerScrollableRegion1VerticalScrollbar";
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbar.Name = "DelightDesignerContentExplorerScrollableRegionVerticalScrollbar";
 #endif
-                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbar, new UnityEngine.Color(0f, 0f, 0f, 0f));
-                    Delight.Scrollbar.WidthProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbar, new ElementSize(6f, ElementSizeUnit.Pixels));
-                    Delight.Scrollbar.OffsetProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbar, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbar, DelightDesignerScrollableRegion1VerticalScrollbarBar);
-                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbar, DelightDesignerScrollableRegion1VerticalScrollbarHandle);
+                    Delight.Scrollbar.BackgroundColorProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbar, new UnityEngine.Color(0f, 0f, 0f, 0f));
+                    Delight.Scrollbar.WidthProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbar, new ElementSize(6f, ElementSizeUnit.Pixels));
+                    Delight.Scrollbar.OffsetProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbar, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbar, DelightDesignerContentExplorerScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbar, DelightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle);
                 }
-                return _delightDesignerScrollableRegion1VerticalScrollbar;
+                return _delightDesignerContentExplorerScrollableRegionVerticalScrollbar;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1VerticalScrollbarBar;
-        public static Template DelightDesignerScrollableRegion1VerticalScrollbarBar
+        private static Template _delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar;
+        public static Template DelightDesignerContentExplorerScrollableRegionVerticalScrollbarBar
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1VerticalScrollbarBar == null || _delightDesignerScrollableRegion1VerticalScrollbarBar.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar == null || _delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1VerticalScrollbarBar == null)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1VerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1VerticalScrollbarBar.Name = "DelightDesignerScrollableRegion1VerticalScrollbarBar";
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar.Name = "DelightDesignerContentExplorerScrollableRegionVerticalScrollbarBar";
 #endif
-                    Delight.Image.ColorProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbarBar, new UnityEngine.Color(0f, 0f, 0f, 0f));
-                    Delight.Image.MarginProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbarBar, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Image.ColorProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar, new UnityEngine.Color(0f, 0f, 0f, 0f));
+                    Delight.Image.MarginProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
-                return _delightDesignerScrollableRegion1VerticalScrollbarBar;
+                return _delightDesignerContentExplorerScrollableRegionVerticalScrollbarBar;
             }
         }
 
-        private static Template _delightDesignerScrollableRegion1VerticalScrollbarHandle;
-        public static Template DelightDesignerScrollableRegion1VerticalScrollbarHandle
+        private static Template _delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle;
+        public static Template DelightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerScrollableRegion1VerticalScrollbarHandle == null || _delightDesignerScrollableRegion1VerticalScrollbarHandle.CurrentVersion != Template.Version)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle == null || _delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerScrollableRegion1VerticalScrollbarHandle == null)
+                if (_delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle == null)
 #endif
                 {
-                    _delightDesignerScrollableRegion1VerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
-                    _delightDesignerScrollableRegion1VerticalScrollbarHandle.Name = "DelightDesignerScrollableRegion1VerticalScrollbarHandle";
+                    _delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle.Name = "DelightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle";
 #endif
-                    Delight.Image.ColorProperty.SetDefault(_delightDesignerScrollableRegion1VerticalScrollbarHandle, new UnityEngine.Color(0.6235294f, 0.6235294f, 0.6235294f, 1f));
+                    Delight.Image.ColorProperty.SetDefault(_delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.6235294f, 0.6235294f, 0.6235294f, 1f));
                 }
-                return _delightDesignerScrollableRegion1VerticalScrollbarHandle;
+                return _delightDesignerContentExplorerScrollableRegionVerticalScrollbarHandle;
             }
         }
 

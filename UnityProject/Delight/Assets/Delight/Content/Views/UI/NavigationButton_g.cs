@@ -1,0 +1,120 @@
+// Internal view logic generated from "NavigationButton.xml"
+#region Using Statements
+using System;
+using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using UnityEngine;
+using UnityEngine.UI;
+#endregion
+
+namespace Delight
+{
+    public partial class NavigationButton : Button
+    {
+        #region Constructors
+
+        public NavigationButton(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? NavigationButtonTemplates.Default, deferInitialization)
+        {
+            if (deferInitialization)
+                return;
+
+            Click.RegisterHandler(this, "NavigationButtonClick");
+            this.AfterInitializeInternal();
+        }
+
+        public NavigationButton() : this(null)
+        {
+        }
+
+        static NavigationButton()
+        {
+            var dependencyProperties = new List<DependencyProperty>();
+            DependencyProperties.Add(NavigationButtonTemplates.Default, dependencyProperties);
+
+            dependencyProperties.Add(NavigationTypeProperty);
+            dependencyProperties.Add(PageIndexProperty);
+        }
+
+        #endregion
+
+        #region Properties
+
+        public readonly static DependencyProperty<Delight.NavigationType> NavigationTypeProperty = new DependencyProperty<Delight.NavigationType>("NavigationType");
+        public Delight.NavigationType NavigationType
+        {
+            get { return NavigationTypeProperty.GetValue(this); }
+            set { NavigationTypeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Int32> PageIndexProperty = new DependencyProperty<System.Int32>("PageIndex");
+        public System.Int32 PageIndex
+        {
+            get { return PageIndexProperty.GetValue(this); }
+            set { PageIndexProperty.SetValue(this, value); }
+        }
+
+        #endregion
+    }
+
+    #region Data Templates
+
+    public static class NavigationButtonTemplates
+    {
+        #region Properties
+
+        public static Template Default
+        {
+            get
+            {
+                return NavigationButton;
+            }
+        }
+
+        private static Template _navigationButton;
+        public static Template NavigationButton
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_navigationButton == null || _navigationButton.CurrentVersion != Template.Version)
+#else
+                if (_navigationButton == null)
+#endif
+                {
+                    _navigationButton = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _navigationButton.Name = "NavigationButton";
+#endif
+                    Delight.NavigationButton.NavigationTypeProperty.SetDefault(_navigationButton, Delight.NavigationType.Both);
+                    Delight.NavigationButton.LabelTemplateProperty.SetDefault(_navigationButton, NavigationButtonLabel);
+                }
+                return _navigationButton;
+            }
+        }
+
+        private static Template _navigationButtonLabel;
+        public static Template NavigationButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_navigationButtonLabel == null || _navigationButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_navigationButtonLabel == null)
+#endif
+                {
+                    _navigationButtonLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _navigationButtonLabel.Name = "NavigationButtonLabel";
+#endif
+                }
+                return _navigationButtonLabel;
+            }
+        }
+
+        #endregion
+    }
+
+    #endregion
+}

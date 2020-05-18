@@ -47,6 +47,15 @@ namespace Delight
                 listItem1.SetContentTemplateData(tiLevel);
                 return listItem1;
             }, typeof(ListItem), "ListItem1"));
+
+            // templates for List1
+            List1.ContentTemplates.Add(new ContentTemplate(tiLevel => 
+            {
+                var navigationButton1 = new NavigationButton(this, List1.Content, "NavigationButton1", NavigationButton1Template);
+                navigationButton1.IsDynamic = true;
+                navigationButton1.SetContentTemplateData(tiLevel);
+                return navigationButton1;
+            }, typeof(NavigationButton), "NavigationButton1"));
             this.AfterInitializeInternal();
         }
 
@@ -71,6 +80,8 @@ namespace Delight
             dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(Image2Property);
             dependencyProperties.Add(Image2TemplateProperty);
+            dependencyProperties.Add(NavigationButton1Property);
+            dependencyProperties.Add(NavigationButton1TemplateProperty);
         }
 
         #endregion
@@ -161,6 +172,20 @@ namespace Delight
             set { Image2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<NavigationButton> NavigationButton1Property = new DependencyProperty<NavigationButton>("NavigationButton1");
+        public NavigationButton NavigationButton1
+        {
+            get { return NavigationButton1Property.GetValue(this); }
+            set { NavigationButton1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> NavigationButton1TemplateProperty = new DependencyProperty<Template>("NavigationButton1Template");
+        public Template NavigationButton1Template
+        {
+            get { return NavigationButton1TemplateProperty.GetValue(this); }
+            set { NavigationButton1TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -201,6 +226,7 @@ namespace Delight
                     Delight.LevelSelectExample.ListItem1TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleListItem1);
                     Delight.LevelSelectExample.Label2TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleLabel2);
                     Delight.LevelSelectExample.Image2TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleImage2);
+                    Delight.LevelSelectExample.NavigationButton1TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleNavigationButton1);
                 }
                 return _levelSelectExample;
             }
@@ -272,9 +298,10 @@ namespace Delight
 #endif
                     Delight.List.OverflowProperty.SetDefault(_levelSelectExampleList1, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_levelSelectExampleList1, Delight.ElementOrientation.Horizontal);
-                    Delight.List.WidthProperty.SetDefault(_levelSelectExampleList1, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.WidthProperty.SetDefault(_levelSelectExampleList1, new ElementSize(470f, ElementSizeUnit.Pixels));
+                    Delight.List.HeightProperty.SetDefault(_levelSelectExampleList1, new ElementSize(310f, ElementSizeUnit.Pixels));
                     Delight.List.SpacingProperty.SetDefault(_levelSelectExampleList1, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.List.OffsetProperty.SetDefault(_levelSelectExampleList1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(180f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.OffsetProperty.SetDefault(_levelSelectExampleList1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(180f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.DeselectAfterSelectProperty.SetDefault(_levelSelectExampleList1, true);
                     Delight.List.AlignmentProperty.SetDefault(_levelSelectExampleList1, Delight.ElementAlignment.Top);
                     Delight.List.IsPagedProperty.SetDefault(_levelSelectExampleList1, true);
@@ -524,6 +551,54 @@ namespace Delight
                     Delight.Image.SpriteProperty.SetHasBinding(_levelSelectExampleImage2);
                 }
                 return _levelSelectExampleImage2;
+            }
+        }
+
+        private static Template _levelSelectExampleNavigationButton1;
+        public static Template LevelSelectExampleNavigationButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_levelSelectExampleNavigationButton1 == null || _levelSelectExampleNavigationButton1.CurrentVersion != Template.Version)
+#else
+                if (_levelSelectExampleNavigationButton1 == null)
+#endif
+                {
+                    _levelSelectExampleNavigationButton1 = new Template(NavigationButtonTemplates.NavigationButton);
+#if UNITY_EDITOR
+                    _levelSelectExampleNavigationButton1.Name = "LevelSelectExampleNavigationButton1";
+#endif
+                    Delight.NavigationButton.BackgroundSpriteProperty.SetDefault(_levelSelectExampleNavigationButton1, Assets.Sprites["LevelSelectRightArrow"]);
+                    Delight.NavigationButton.BackgroundColorProperty.SetDefault(_levelSelectExampleNavigationButton1, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
+                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Highlighted", _levelSelectExampleNavigationButton1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Pressed", _levelSelectExampleNavigationButton1, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
+                    Delight.NavigationButton.WidthProperty.SetDefault(_levelSelectExampleNavigationButton1, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.NavigationButton.HeightProperty.SetDefault(_levelSelectExampleNavigationButton1, new ElementSize(77f, ElementSizeUnit.Pixels));
+                    Delight.NavigationButton.OffsetProperty.SetDefault(_levelSelectExampleNavigationButton1, new ElementMargin(new ElementSize(110f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels)));
+                    Delight.NavigationButton.LabelTemplateProperty.SetDefault(_levelSelectExampleNavigationButton1, LevelSelectExampleNavigationButton1Label);
+                }
+                return _levelSelectExampleNavigationButton1;
+            }
+        }
+
+        private static Template _levelSelectExampleNavigationButton1Label;
+        public static Template LevelSelectExampleNavigationButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_levelSelectExampleNavigationButton1Label == null || _levelSelectExampleNavigationButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_levelSelectExampleNavigationButton1Label == null)
+#endif
+                {
+                    _levelSelectExampleNavigationButton1Label = new Template(NavigationButtonTemplates.NavigationButtonLabel);
+#if UNITY_EDITOR
+                    _levelSelectExampleNavigationButton1Label.Name = "LevelSelectExampleNavigationButton1Label";
+#endif
+                }
+                return _levelSelectExampleNavigationButton1Label;
             }
         }
 

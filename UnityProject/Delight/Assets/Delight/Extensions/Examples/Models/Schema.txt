@@ -24,11 +24,21 @@ Player12: "Opwiz"
 Player13: "afauxicy"
 
 + Level (Name, Score, IsLocked) 
-Level1_1: "Level 1-1", 3, false
-Level1_2: "Level 1-2", 3, false
-Level1_3: "Level 1-3", 2, false
-Level2_1: "Level 2-1", 1, false
-Level2_2: "Level 2-2", 1, false
-Level2_3: "Level 2-3", 0, true
-Level3_1: "Level 3-1", 0, true
-Level3_2: "Level 3-2", 0, true
+Level1: "Level 1", 3, false
+Level2: "Level 2", 3, false
+Level3: "Level 3", 3, false
+Level4: "Level 4", 2, false
+Level5: "Level 5", 1, false
+Level6: "Level 6", 2, false
+Level7: "Level 7", 2, false
+Level8: "Level 8", 1, false
+Level9: "Level 9", 2, false
+Level10: "Level 10", 2, false
+Level11: "Level 11", 3, false
+Level12: "Level 11", 0, false
+Level13: "Level 13", 2, false
+Level14: "Level 14", 2, false
+Level15: "Level 15", 0, false
+Level16: "Level 16", 0, true
+Level17: "Level 17", 0, true
+Level18: "Level 18", 0, true

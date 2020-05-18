@@ -29,6 +29,10 @@ namespace Delight
         private Dictionary<ContentTemplate, List<ListItem>> _realizedItemPool;
         private List<VirtualItem> _virtualItems;
 
+        // for paged lists
+        private NavigationButton _nextButton;
+        private NavigationButton _previousButton;
+
         #endregion
 
         #region Methods
@@ -59,6 +63,21 @@ namespace Delight
                 case nameof(Items):
                     ItemsChanged();
                     break;
+
+                case nameof(PageIndex):
+                    PageIndexChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when the page index has been changed.
+        /// </summary>
+        private void PageIndexChanged()
+        {
+            if (IsPaged)
+            {
+                UpdateLayout(false);
             }
         }
 
@@ -98,6 +117,93 @@ namespace Delight
 
                 ScrollableRegion.ContentScrolled.RegisterHandler(this, "ContentScrolled");
             }
+
+            if (IsPaged)
+            {
+                if (!IsScrollable)
+                {
+                    // paged views are made scrollable so the items are put inside scrollable content and the buttons can reside outside
+                    // not interfering with list logic
+                    ScrollableRegion.ScrollBounds = ScrollBounds.Clamped;
+                    ScrollableRegion.HorizontalScrollbarVisibility = ScrollbarVisibilityMode.Remove;
+                    ScrollableRegion.VerticalScrollbarVisibility = ScrollbarVisibilityMode.Remove;
+                    IsScrollable = true;
+                }                
+            }
+        }
+
+        /// <summary>
+        /// Creates navigation buttons
+        /// </summary>
+        protected void CreateNavigationButtons()
+        {
+            if (ContentTemplates == null)
+                return;
+
+            foreach (var contentTemplate in ContentTemplates)
+            {
+                if (!typeof(NavigationButton).IsAssignableFrom(contentTemplate.TemplateType))
+                    continue;
+
+                var templateData = new ContentTemplateData();
+                var button = contentTemplate.Activator(templateData) as NavigationButton;
+                switch (button.NavigationType)
+                {
+                    case NavigationType.Both:
+                        if (_nextButton != null)
+                        {
+                            _nextButton.Destroy();
+                        }
+                        if (_previousButton != null)
+                        {
+                            _previousButton.Destroy();
+                        }
+                        _nextButton = button;
+                        _previousButton = contentTemplate.Activator(templateData) as NavigationButton;
+
+                        // mirror previous navigation button
+                        _previousButton.Scale = new Vector3(-1, 1, 1);
+                        if (_previousButton.Offset != null)
+                        {
+                            _previousButton.Offset = _previousButton.Offset != null ? new ElementMargin(_previousButton.Offset.Right, _previousButton.Offset.Top, _previousButton.Offset.Left, _previousButton.Offset.Bottom) : null;
+                        }
+                        break;
+
+                    case NavigationType.Next:
+                        if (_nextButton != null)
+                        {
+                            _nextButton.Destroy();
+                        }
+                        _nextButton = button;
+                        break;
+
+                    case NavigationType.Previous:
+                        if (_previousButton != null)
+                        {
+                            _previousButton.Destroy();
+                        }
+                        _previousButton = button;
+                        break;
+
+                    case NavigationType.Page:
+                        break;
+                }
+            }
+
+            // if no buttons are defined, generate generic buttons
+            _nextButton = _nextButton ?? new NavigationButton(this, Content);
+            _nextButton.Alignment = ElementAlignment.Right;
+            _nextButton.NavigationType = NavigationType.Next;
+            _nextButton.ParentList = this;
+            _nextButton.MoveTo(this);
+            _nextButton.Load();
+
+            _previousButton = _previousButton ?? new NavigationButton(this, Content);
+            _previousButton.Alignment = ElementAlignment.Left;
+            _previousButton.NavigationType = NavigationType.Previous;
+            _previousButton.ParentList = this;
+            _previousButton.MoveTo(this);
+            _previousButton.Load();
         }
 
         /// <summary>
@@ -119,6 +225,11 @@ namespace Delight
             {
                 // if items property isn't defined (no value or binding) assume list is meant to be static
                 IsStatic = true;
+            }
+
+            if (IsPaged)
+            {
+                CreateNavigationButtons();
             }
 
             if (IsStatic)
@@ -490,11 +601,14 @@ namespace Delight
             }
 
             // unload and clear existing children
-            foreach (var child in Content.LayoutChildren.ToList())
+            for (int i = Content.LayoutChildren.Count - 1; i >= 0; --i)
             {
+                var child = Content.LayoutChildren[i];
+                if (IsPaged && child is NavigationButton)
+                    continue;
+
                 child.Unload();
             }
-            Content.LayoutChildren.Clear();
             _presentedItems.Clear();
         }
 
@@ -521,6 +635,9 @@ namespace Delight
                 _contentTemplateVirtualItem = new Dictionary<ContentTemplate, VirtualItem>();
                 foreach (var contentTemplate in ContentTemplates)
                 {
+                    if (!typeof(ListItem).IsAssignableFrom(contentTemplate.TemplateType))
+                        continue;
+
                     var itemView = contentTemplate.Activator(new ContentTemplateData { Item = null }) as ListItem;
                     if (itemView.Width == null && itemView.Height == null)
                     {
@@ -650,6 +767,13 @@ namespace Delight
             if (IsVirtualized)
             {
                 UpdateRealizedItems();
+            }
+
+            if (IsPaged && _nextButton != null && _previousButton != null)
+            {
+                int maxPageIndex = GetMaxPageIndex();
+                _nextButton.IsActive = PageIndex < maxPageIndex;
+                _previousButton.IsActive = PageIndex > 0;
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;
@@ -1768,6 +1892,75 @@ namespace Delight
             // TODO implement
             // moves the page down
             // find all items visible in viewport and select first one
+        }
+
+        /// <summary>
+        /// Gets max page index of paged lists.
+        /// </summary>
+        public int GetMaxPageIndex()
+        {
+            if (Items == null)
+                return 0;
+
+            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+            int maxPageIndex = Mathf.FloorToInt((Items.Count - 1) / itemsPerPage);
+            return maxPageIndex;
+        }
+
+        /// <summary>
+        /// Navigates to next page in paged lists.
+        /// </summary>
+        public void NextPage()
+        {
+            if (!IsPaged || Items == null)
+                return;
+
+            int childCount = Items.Count;
+            if (childCount == 0)
+                return;
+
+            int maxPageIndex = GetMaxPageIndex();
+            if (PageIndex >= maxPageIndex)
+                return;
+
+            ++PageIndex;
+        }
+
+        /// <summary>
+        /// Navigates to previous page in paged lists.
+        /// </summary>
+        public void PreviousPage()
+        {
+            if (!IsPaged || Items == null)
+                return;
+
+            int childCount = Items.Count;
+            if (childCount == 0)
+                return;
+
+            if (PageIndex <= 0)
+                return;
+
+            --PageIndex;
+        }
+
+        /// <summary>
+        /// Jumps to the specified page in paged lists.
+        /// </summary>
+        public void JumpToPage(int pageIndex)
+        {
+            if (!IsPaged || Items == null)
+                return;
+
+            int childCount = Items.Count;
+            if (childCount == 0)
+                return;
+
+            int maxPageIndex = GetMaxPageIndex();
+            if (pageIndex > maxPageIndex || pageIndex < 0)
+                return;
+
+            PageIndex = pageIndex;
         }
 
         #endregion
