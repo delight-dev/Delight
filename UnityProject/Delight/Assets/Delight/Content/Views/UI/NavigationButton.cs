@@ -35,15 +35,15 @@ namespace Delight
 
             switch (NavigationType)
             {
-                case NavigationType.Both:
+                case NavigationButtonType.NextAndPrevious:
                     break;
-                case NavigationType.Next:
+                case NavigationButtonType.Next:
                     ParentList.NextPage();
                     break;
-                case NavigationType.Previous:
+                case NavigationButtonType.Previous:
                     ParentList.PreviousPage();
                     break;
-                case NavigationType.Page:
+                case NavigationButtonType.Page:
                     ParentList.JumpToPage(PageIndex);
                     break;
             }

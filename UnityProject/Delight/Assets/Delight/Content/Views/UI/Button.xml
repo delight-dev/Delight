@@ -10,7 +10,8 @@
         TextOffset="t:ElementMargin = 0"
         IsCloseButton="t:bool"
         IsBackButton="t:bool"
-        EnableScriptEvents="True">
-  <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" Offset="{TextOffset}" /> 
+        EnableScriptEvents="True"
+        DisplayLabel="t:bool = True">
+  <Label Id="Label" TextAlignment="Center" Width="100%" Height="100%" Offset="{TextOffset}" IsActive="{DisplayLabel}" /> 
 </Button>
 

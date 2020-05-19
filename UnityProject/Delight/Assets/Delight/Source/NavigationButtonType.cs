@@ -7,12 +7,12 @@ namespace Delight
     /// <summary>
     /// Enum indicating navigation button type.
     /// </summary>
-    public enum NavigationType
+    public enum NavigationButtonType
     {
         /// <summary>
-        /// Next/Previous navigation.
+        /// Next and previous navigation.
         /// </summary>
-        Both = 0,
+        NextAndPrevious = 0,
 
         /// <summary>
         /// Next navigation.

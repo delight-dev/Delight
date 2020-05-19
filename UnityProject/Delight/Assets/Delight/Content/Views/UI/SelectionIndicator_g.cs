@@ -146,6 +146,13 @@ namespace Delight
             set { SelectionTab.IsBackButton = value; }
         }
 
+        public readonly static DependencyProperty SelectionTabDisplayLabelProperty = Button.DisplayLabelProperty;
+        public System.Boolean SelectionTabDisplayLabel
+        {
+            get { return SelectionTab.DisplayLabel; }
+            set { SelectionTab.DisplayLabel = value; }
+        }
+
         public readonly static DependencyProperty SelectionTabMaxWidthProperty = Button.MaxWidthProperty;
         public Delight.ElementSize SelectionTabMaxWidth
         {

@@ -24,6 +24,9 @@ namespace Delight
 
             // binding <Label Offset="{TextOffset}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextOffset" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "Offset" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.Offset = TextOffset, () => { }, false));
+
+            // binding <Label IsActive="{DisplayLabel}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayLabel" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "IsActive" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.IsActive = DisplayLabel, () => { }, false));
             Click.RegisterHandler(this, "ButtonMouseClick");
             MouseEnter.RegisterHandler(this, "ButtonMouseEnter");
             MouseExit.RegisterHandler(this, "ButtonMouseExit");
@@ -55,6 +58,7 @@ namespace Delight
             dependencyProperties.Add(TextOffsetProperty);
             dependencyProperties.Add(IsCloseButtonProperty);
             dependencyProperties.Add(IsBackButtonProperty);
+            dependencyProperties.Add(DisplayLabelProperty);
             dependencyProperties.Add(LabelProperty);
             dependencyProperties.Add(LabelTemplateProperty);
         }
@@ -173,6 +177,13 @@ namespace Delight
         {
             get { return IsBackButtonProperty.GetValue(this); }
             set { IsBackButtonProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> DisplayLabelProperty = new DependencyProperty<System.Boolean>("DisplayLabel");
+        public System.Boolean DisplayLabel
+        {
+            get { return DisplayLabelProperty.GetValue(this); }
+            set { DisplayLabelProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Label> LabelProperty = new DependencyProperty<Label>("Label");
@@ -894,6 +905,7 @@ namespace Delight
                     Delight.Button.CanToggleOffProperty.SetDefault(_button, true);
                     Delight.Button.TextOffsetProperty.SetDefault(_button, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Button.EnableScriptEventsProperty.SetDefault(_button, true);
+                    Delight.Button.DisplayLabelProperty.SetDefault(_button, true);
                     Delight.Button.BackgroundColorProperty.SetDefault(_button, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _button, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
                     Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _button, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
@@ -931,6 +943,7 @@ namespace Delight
                     Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _buttonLabel, TMPro.FontStyles.Italic);
                     Delight.Label.FontColorProperty.SetStateDefault("Disabled", _buttonLabel, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
                     Delight.Label.OffsetProperty.SetHasBinding(_buttonLabel);
+                    Delight.Label.IsActiveProperty.SetHasBinding(_buttonLabel);
                 }
                 return _buttonLabel;
             }

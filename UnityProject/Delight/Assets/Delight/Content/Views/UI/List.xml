@@ -18,7 +18,12 @@
       DisableItemArrangement="t:bool"
       IsPaged="t:bool"
       ItemsPerPage="t:int = 20"
-      PageIndex="t:int">
+      PageIndex="t:int"
+      PageNavigationGroupOffset="t:ElementMargin = 0,0,0,0"
+      PageNavigationGroupAlignment="t:ElementAlignment = Bottom"
+      PageNavigationGroupOrientation="t:ElementOrientation = Horizontal"
+      PageNavigationGroupSpacing="t:ElementSize = 2"
+      ShowNavigationButtons="t:NavigationButtonsVisibility = True"> 
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"
                     AutoSizeContentRegion="False">
   </ScrollableRegion> 

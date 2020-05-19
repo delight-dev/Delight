@@ -40,8 +40,8 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Delight.NavigationType> NavigationTypeProperty = new DependencyProperty<Delight.NavigationType>("NavigationType");
-        public Delight.NavigationType NavigationType
+        public readonly static DependencyProperty<Delight.NavigationButtonType> NavigationTypeProperty = new DependencyProperty<Delight.NavigationButtonType>("NavigationType");
+        public Delight.NavigationButtonType NavigationType
         {
             get { return NavigationTypeProperty.GetValue(this); }
             set { NavigationTypeProperty.SetValue(this, value); }
@@ -86,7 +86,13 @@ namespace Delight
 #if UNITY_EDITOR
                     _navigationButton.Name = "NavigationButton";
 #endif
-                    Delight.NavigationButton.NavigationTypeProperty.SetDefault(_navigationButton, Delight.NavigationType.Both);
+                    Delight.NavigationButton.NavigationTypeProperty.SetDefault(_navigationButton, Delight.NavigationButtonType.NextAndPrevious);
+                    Delight.NavigationButton.AutoSizeProperty.SetDefault(_navigationButton, Delight.AutoSize.False);
+                    Delight.NavigationButton.WidthProperty.SetDefault(_navigationButton, new ElementSize(30f, ElementSizeUnit.Pixels));
+                    Delight.NavigationButton.HeightProperty.SetDefault(_navigationButton, new ElementSize(40f, ElementSizeUnit.Pixels));
+                    Delight.NavigationButton.BackgroundColorProperty.SetDefault(_navigationButton, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
+                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Highlighted", _navigationButton, new UnityEngine.Color(0.8666667f, 0.8666667f, 0.8666667f, 1f));
+                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Pressed", _navigationButton, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.NavigationButton.LabelTemplateProperty.SetDefault(_navigationButton, NavigationButtonLabel);
                 }
                 return _navigationButton;
@@ -108,6 +114,7 @@ namespace Delight
 #if UNITY_EDITOR
                     _navigationButtonLabel.Name = "NavigationButtonLabel";
 #endif
+                    Delight.Label.TextAlignmentProperty.SetDefault(_navigationButtonLabel, TMPro.TextAlignmentOptions.Center);
                 }
                 return _navigationButtonLabel;
             }

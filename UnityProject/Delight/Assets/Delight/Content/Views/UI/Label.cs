@@ -15,13 +15,13 @@ namespace Delight
     /// </summary>
     public partial class Label
     {
-        #region Fields
+#region Fields
 
         private ContentSizeFitter _contentSizeFitter;
 
-        #endregion
+#endregion
 
-        #region Methods
+#region Methods
 
         /// <summary>
         /// Called when a property has been changed. 
@@ -121,6 +121,9 @@ namespace Delight
         /// </summary>
         public virtual void FontChanged()
         {
+            if (!IsActive)
+                return;
+
             if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
                 if (Font != null && Font.IsLoaded)
@@ -142,9 +145,17 @@ namespace Delight
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Sets text alignment.
+        /// </summary>
+        public void SetTextAlignment(ElementAlignment textAlignment)
+        {
+            TextAlignment = textAlignment;
+        }
 
-        #region Properties
+#endregion
+
+#region Properties
 
         public ContentSizeFitter ContentSizeFitter { get; set; }
 
@@ -187,7 +198,7 @@ namespace Delight
             }
         }
 
-        #endregion
+#endregion
     }
 }
 

@@ -221,6 +221,8 @@ namespace Delight
         public readonly SpriteAsset Stars2;
         public readonly SpriteAsset Stars3;
         public readonly SpriteAsset LevelSelectRightArrow;
+        public readonly SpriteAsset LevelSelectPageButton;
+        public readonly SpriteAsset LevelSelectPageButtonPressed;
 
         #endregion
 
@@ -261,6 +263,8 @@ namespace Delight
             Stars2 = new SpriteAsset { Id = "Stars2", IsResource = true, RelativePath = "" };
             Stars3 = new SpriteAsset { Id = "Stars3", IsResource = true, RelativePath = "" };
             LevelSelectRightArrow = new SpriteAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
+            LevelSelectPageButton = new SpriteAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
+            LevelSelectPageButtonPressed = new SpriteAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
@@ -295,6 +299,8 @@ namespace Delight
             Add(Stars2);
             Add(Stars3);
             Add(LevelSelectRightArrow);
+            Add(LevelSelectPageButton);
+            Add(LevelSelectPageButtonPressed);
         }
 
         #endregion
@@ -466,6 +472,8 @@ namespace Delight
         public readonly Texture2DAsset Stars1;
         public readonly Texture2DAsset Stars0;
         public readonly Texture2DAsset LevelSelectRightArrow;
+        public readonly Texture2DAsset LevelSelectPageButtonPressed;
+        public readonly Texture2DAsset LevelSelectPageButton;
 
         #endregion
 
@@ -484,6 +492,8 @@ namespace Delight
             Stars1 = new Texture2DAsset { Id = "Stars1", IsResource = true, RelativePath = "" };
             Stars0 = new Texture2DAsset { Id = "Stars0", IsResource = true, RelativePath = "" };
             LevelSelectRightArrow = new Texture2DAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
+            LevelSelectPageButtonPressed = new Texture2DAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
+            LevelSelectPageButton = new Texture2DAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
 
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
@@ -496,6 +506,8 @@ namespace Delight
             Add(Stars1);
             Add(Stars0);
             Add(LevelSelectRightArrow);
+            Add(LevelSelectPageButtonPressed);
+            Add(LevelSelectPageButton);
         }
 
         #endregion

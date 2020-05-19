@@ -66,6 +66,7 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="DisplayLabel" type="xs:string" />
     <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
@@ -680,6 +681,11 @@
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
     <xs:attribute name="PageIndex" type="xs:string" />
+    <xs:attribute name="PageNavigationGroupOffset" type="xs:string" />
+    <xs:attribute name="PageNavigationGroupAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="PageNavigationGroupOrientation" type="Enum_ElementOrientation" />
+    <xs:attribute name="PageNavigationGroupSpacing" type="xs:string" />
+    <xs:attribute name="ShowNavigationButtons" type="Enum_NavigationButtonsVisibility" />
     <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -1068,6 +1074,7 @@
     <xs:attribute name="ButtonTextOffset" type="xs:string" />
     <xs:attribute name="ButtonIsCloseButton" type="xs:string" />
     <xs:attribute name="ButtonIsBackButton" type="xs:string" />
+    <xs:attribute name="ButtonDisplayLabel" type="xs:string" />
     <xs:attribute name="ButtonMaxWidth" type="xs:string" />
     <xs:attribute name="ButtonLabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="ButtonAutoSizeTextContainer" type="xs:string" />
@@ -2391,6 +2398,11 @@
     <xs:attribute name="IsPaged" type="xs:string" />
     <xs:attribute name="ItemsPerPage" type="xs:string" />
     <xs:attribute name="PageIndex" type="xs:string" />
+    <xs:attribute name="PageNavigationGroupOffset" type="xs:string" />
+    <xs:attribute name="PageNavigationGroupAlignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="PageNavigationGroupOrientation" type="Enum_ElementOrientation" />
+    <xs:attribute name="PageNavigationGroupSpacing" type="xs:string" />
+    <xs:attribute name="ShowNavigationButtons" type="Enum_NavigationButtonsVisibility" />
     <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -3012,7 +3024,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="NavigationType" type="Enum_NavigationType" />
+    <xs:attribute name="NavigationType" type="Enum_NavigationButtonType" />
     <xs:attribute name="PageIndex" type="xs:string" />
     <xs:attribute name="TogglePressed" type="xs:string" />
     <xs:attribute name="DefaultWidth" type="xs:string" />
@@ -3029,6 +3041,7 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="DisplayLabel" type="xs:string" />
     <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
@@ -4670,6 +4683,7 @@
     <xs:attribute name="SelectionTabTextOffset" type="xs:string" />
     <xs:attribute name="SelectionTabIsCloseButton" type="xs:string" />
     <xs:attribute name="SelectionTabIsBackButton" type="xs:string" />
+    <xs:attribute name="SelectionTabDisplayLabel" type="xs:string" />
     <xs:attribute name="SelectionTabMaxWidth" type="xs:string" />
     <xs:attribute name="SelectionTabLabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="SelectionTabAutoSizeTextContainer" type="xs:string" />
@@ -5217,6 +5231,7 @@
     <xs:attribute name="TextOffset" type="xs:string" />
     <xs:attribute name="IsCloseButton" type="xs:string" />
     <xs:attribute name="IsBackButton" type="xs:string" />
+    <xs:attribute name="DisplayLabel" type="xs:string" />
     <xs:attribute name="MaxWidth" type="xs:string" />
     <xs:attribute name="LabelAutoSize" type="Enum_AutoSize" />
     <xs:attribute name="AutoSizeTextContainer" type="xs:string" />
@@ -7637,6 +7652,17 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="Enum_NavigationButtonsVisibility">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="None" />
+      <xs:enumeration value="False" />
+      <xs:enumeration value="All" />
+      <xs:enumeration value="True" />
+      <xs:enumeration value="NextPrevious" />
+      <xs:enumeration value="Page" />
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="Enum_ScrollBounds">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Clamped" />
@@ -7727,9 +7753,9 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:simpleType name="Enum_NavigationType">
+  <xs:simpleType name="Enum_NavigationButtonType">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="Both" />
+      <xs:enumeration value="NextAndPrevious" />
       <xs:enumeration value="Next" />
       <xs:enumeration value="Previous" />
       <xs:enumeration value="Page" />
@@ -7857,6 +7883,8 @@
       <xs:enumeration value="Stars2" />
       <xs:enumeration value="Stars3" />
       <xs:enumeration value="LevelSelectRightArrow" />
+      <xs:enumeration value="LevelSelectPageButton" />
+      <xs:enumeration value="LevelSelectPageButtonPressed" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -7888,6 +7916,8 @@
       <xs:enumeration value="Stars1" />
       <xs:enumeration value="Stars0" />
       <xs:enumeration value="LevelSelectRightArrow" />
+      <xs:enumeration value="LevelSelectPageButtonPressed" />
+      <xs:enumeration value="LevelSelectPageButton" />
     </xs:restriction>
   </xs:simpleType>
 

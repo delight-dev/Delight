@@ -61,6 +61,11 @@ namespace Delight
             dependencyProperties.Add(IsPagedProperty);
             dependencyProperties.Add(ItemsPerPageProperty);
             dependencyProperties.Add(PageIndexProperty);
+            dependencyProperties.Add(PageNavigationGroupOffsetProperty);
+            dependencyProperties.Add(PageNavigationGroupAlignmentProperty);
+            dependencyProperties.Add(PageNavigationGroupOrientationProperty);
+            dependencyProperties.Add(PageNavigationGroupSpacingProperty);
+            dependencyProperties.Add(ShowNavigationButtonsProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
@@ -280,6 +285,41 @@ namespace Delight
         {
             get { return PageIndexProperty.GetValue(this); }
             set { PageIndexProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementMargin> PageNavigationGroupOffsetProperty = new DependencyProperty<Delight.ElementMargin>("PageNavigationGroupOffset");
+        public Delight.ElementMargin PageNavigationGroupOffset
+        {
+            get { return PageNavigationGroupOffsetProperty.GetValue(this); }
+            set { PageNavigationGroupOffsetProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementAlignment> PageNavigationGroupAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("PageNavigationGroupAlignment");
+        public Delight.ElementAlignment PageNavigationGroupAlignment
+        {
+            get { return PageNavigationGroupAlignmentProperty.GetValue(this); }
+            set { PageNavigationGroupAlignmentProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementOrientation> PageNavigationGroupOrientationProperty = new DependencyProperty<Delight.ElementOrientation>("PageNavigationGroupOrientation");
+        public Delight.ElementOrientation PageNavigationGroupOrientation
+        {
+            get { return PageNavigationGroupOrientationProperty.GetValue(this); }
+            set { PageNavigationGroupOrientationProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.ElementSize> PageNavigationGroupSpacingProperty = new DependencyProperty<Delight.ElementSize>("PageNavigationGroupSpacing");
+        public Delight.ElementSize PageNavigationGroupSpacing
+        {
+            get { return PageNavigationGroupSpacingProperty.GetValue(this); }
+            set { PageNavigationGroupSpacingProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.NavigationButtonsVisibility> ShowNavigationButtonsProperty = new DependencyProperty<Delight.NavigationButtonsVisibility>("ShowNavigationButtons");
+        public Delight.NavigationButtonsVisibility ShowNavigationButtons
+        {
+            get { return ShowNavigationButtonsProperty.GetValue(this); }
+            set { ShowNavigationButtonsProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
@@ -2696,6 +2736,11 @@ namespace Delight
 #endif
                     Delight.List.CanSelectProperty.SetDefault(_list, true);
                     Delight.List.ItemsPerPageProperty.SetDefault(_list, 20);
+                    Delight.List.PageNavigationGroupOffsetProperty.SetDefault(_list, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.PageNavigationGroupAlignmentProperty.SetDefault(_list, Delight.ElementAlignment.Bottom);
+                    Delight.List.PageNavigationGroupOrientationProperty.SetDefault(_list, Delight.ElementOrientation.Horizontal);
+                    Delight.List.PageNavigationGroupSpacingProperty.SetDefault(_list, new ElementSize(2f, ElementSizeUnit.Pixels));
+                    Delight.List.ShowNavigationButtonsProperty.SetDefault(_list, Delight.NavigationButtonsVisibility.NextPrevious);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;

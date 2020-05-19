@@ -289,6 +289,41 @@ namespace Delight
             set { ComboBoxList.PageIndex = value; }
         }
 
+        public readonly static DependencyProperty PageNavigationGroupOffsetProperty = List.PageNavigationGroupOffsetProperty;
+        public Delight.ElementMargin PageNavigationGroupOffset
+        {
+            get { return ComboBoxList.PageNavigationGroupOffset; }
+            set { ComboBoxList.PageNavigationGroupOffset = value; }
+        }
+
+        public readonly static DependencyProperty PageNavigationGroupAlignmentProperty = List.PageNavigationGroupAlignmentProperty;
+        public Delight.ElementAlignment PageNavigationGroupAlignment
+        {
+            get { return ComboBoxList.PageNavigationGroupAlignment; }
+            set { ComboBoxList.PageNavigationGroupAlignment = value; }
+        }
+
+        public readonly static DependencyProperty PageNavigationGroupOrientationProperty = List.PageNavigationGroupOrientationProperty;
+        public Delight.ElementOrientation PageNavigationGroupOrientation
+        {
+            get { return ComboBoxList.PageNavigationGroupOrientation; }
+            set { ComboBoxList.PageNavigationGroupOrientation = value; }
+        }
+
+        public readonly static DependencyProperty PageNavigationGroupSpacingProperty = List.PageNavigationGroupSpacingProperty;
+        public Delight.ElementSize PageNavigationGroupSpacing
+        {
+            get { return ComboBoxList.PageNavigationGroupSpacing; }
+            set { ComboBoxList.PageNavigationGroupSpacing = value; }
+        }
+
+        public readonly static DependencyProperty ShowNavigationButtonsProperty = List.ShowNavigationButtonsProperty;
+        public Delight.NavigationButtonsVisibility ShowNavigationButtons
+        {
+            get { return ComboBoxList.ShowNavigationButtons; }
+            set { ComboBoxList.ShowNavigationButtons = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionMaskContentProperty = List.ScrollableRegionMaskContentProperty;
         public System.Boolean ScrollableRegionMaskContent
         {
@@ -3059,6 +3094,13 @@ namespace Delight
         {
             get { return ComboBoxButton.IsBackButton; }
             set { ComboBoxButton.IsBackButton = value; }
+        }
+
+        public readonly static DependencyProperty ButtonDisplayLabelProperty = Button.DisplayLabelProperty;
+        public System.Boolean ButtonDisplayLabel
+        {
+            get { return ComboBoxButton.DisplayLabel; }
+            set { ComboBoxButton.DisplayLabel = value; }
         }
 
         public readonly static DependencyProperty ButtonMaxWidthProperty = Button.MaxWidthProperty;

@@ -32,6 +32,8 @@ namespace Delight
         // for paged lists
         private NavigationButton _nextButton;
         private NavigationButton _previousButton;
+        private Group _pageButtonGroup;
+        private ContentTemplate _pageButtonTemplate;
 
         #endregion
 
@@ -140,6 +142,12 @@ namespace Delight
             if (ContentTemplates == null)
                 return;
 
+            if (ShowNavigationButtons == NavigationButtonsVisibility.None)
+                return;
+
+            bool showNextPrevious = ShowNavigationButtons == NavigationButtonsVisibility.All || ShowNavigationButtons == NavigationButtonsVisibility.NextPrevious;
+            bool showPage = ShowNavigationButtons == NavigationButtonsVisibility.All || ShowNavigationButtons == NavigationButtonsVisibility.Page;
+
             foreach (var contentTemplate in ContentTemplates)
             {
                 if (!typeof(NavigationButton).IsAssignableFrom(contentTemplate.TemplateType))
@@ -149,7 +157,13 @@ namespace Delight
                 var button = contentTemplate.Activator(templateData) as NavigationButton;
                 switch (button.NavigationType)
                 {
-                    case NavigationType.Both:
+                    case NavigationButtonType.NextAndPrevious:
+                        if (!showNextPrevious)
+                        {
+                            button.Destroy();
+                            break;
+                        }
+
                         if (_nextButton != null)
                         {
                             _nextButton.Destroy();
@@ -169,7 +183,13 @@ namespace Delight
                         }
                         break;
 
-                    case NavigationType.Next:
+                    case NavigationButtonType.Next:
+                        if (!showNextPrevious)
+                        {
+                            button.Destroy();
+                            break;
+                        }
+
                         if (_nextButton != null)
                         {
                             _nextButton.Destroy();
@@ -177,7 +197,13 @@ namespace Delight
                         _nextButton = button;
                         break;
 
-                    case NavigationType.Previous:
+                    case NavigationButtonType.Previous:
+                        if (!showNextPrevious)
+                        {
+                            button.Destroy();
+                            break;
+                        }
+
                         if (_previousButton != null)
                         {
                             _previousButton.Destroy();
@@ -185,25 +211,77 @@ namespace Delight
                         _previousButton = button;
                         break;
 
-                    case NavigationType.Page:
+                    case NavigationButtonType.Page:
+                        if (!showPage)
+                        {
+                            button.Destroy();
+                            break;
+                        }
+
+                        _pageButtonTemplate = contentTemplate;
+                        button.Destroy();
                         break;
                 }
             }
 
-            // if no buttons are defined, generate generic buttons
-            _nextButton = _nextButton ?? new NavigationButton(this, Content);
-            _nextButton.Alignment = ElementAlignment.Right;
-            _nextButton.NavigationType = NavigationType.Next;
-            _nextButton.ParentList = this;
-            _nextButton.MoveTo(this);
-            _nextButton.Load();
+            if (showNextPrevious)
+            {
+                bool defaultText = false;
+                if (_nextButton == null)
+                {
+                    _nextButton = new NavigationButton(this, Content);
+                    _nextButton.Offset = new ElementMargin(40, 0, 0, 0);
+                    _nextButton.Text = ">";
+                    _nextButton.DisplayLabel = true;
+                    defaultText = true;
+                }
 
-            _previousButton = _previousButton ?? new NavigationButton(this, Content);
-            _previousButton.Alignment = ElementAlignment.Left;
-            _previousButton.NavigationType = NavigationType.Previous;
-            _previousButton.ParentList = this;
-            _previousButton.MoveTo(this);
-            _previousButton.Load();
+                _nextButton.Alignment = ElementAlignment.Right;
+                _nextButton.NavigationType = NavigationButtonType.Next;
+                _nextButton.ParentList = this;
+                _nextButton.IsDynamic = true;
+                _nextButton.MoveTo(this);
+                _nextButton.Load();
+
+                if (defaultText)
+                {
+                    _nextButton.Text = ">";
+                }
+
+                defaultText = false;
+                if (_previousButton == null)
+                {
+                    _previousButton = new NavigationButton(this, Content);
+                    _previousButton.Offset = new ElementMargin(0, 0, 40, 0);
+                    _previousButton.DisplayLabel = true;
+                    _previousButton.Scale = new Vector3(-1, 1, 1);
+                    defaultText = true;
+                }
+
+                _previousButton.Alignment = ElementAlignment.Left;
+                _previousButton.NavigationType = NavigationButtonType.Previous;
+                _previousButton.ParentList = this;
+                _previousButton.IsDynamic = true;
+                _previousButton.MoveTo(this);
+                _previousButton.Load();
+
+                if (defaultText)
+                {
+                    _previousButton.Text = ">";
+                }
+            }
+
+            if (showPage)
+            {
+                // create page buttons group
+                _pageButtonGroup = new Group(this, this, "PageButtonsGroup");
+                _pageButtonGroup.Alignment = PageNavigationGroupAlignment;
+                _pageButtonGroup.Orientation = PageNavigationGroupOrientation;
+                _pageButtonGroup.Offset = PageNavigationGroupOffset;
+                _pageButtonGroup.Spacing = PageNavigationGroupSpacing;
+                _pageButtonGroup.IsDynamic = true;
+                _pageButtonGroup.Load();
+            }
         }
 
         /// <summary>
@@ -754,6 +832,7 @@ namespace Delight
             bool defaultDisableLayoutUpdate = DisableLayoutUpdate;
             DisableLayoutUpdate = true;
 
+            // update overflowing or wrapped layout
             bool hasNewSize = false;
             if (Overflow == OverflowMode.Overflow)
             {
@@ -764,16 +843,67 @@ namespace Delight
                 hasNewSize = UpdateLayoutWrapped();
             }
 
+            // update realized items for virtualized lists
             if (IsVirtualized)
             {
                 UpdateRealizedItems();
             }
 
-            if (IsPaged && _nextButton != null && _previousButton != null)
+            // update next/previous navigation buttons
+            if (IsPaged)
             {
                 int maxPageIndex = GetMaxPageIndex();
-                _nextButton.IsActive = PageIndex < maxPageIndex;
-                _previousButton.IsActive = PageIndex > 0;
+                if (_nextButton != null && _previousButton != null)
+                {                    
+                    _nextButton.IsActive = PageIndex < maxPageIndex;
+                    _previousButton.IsActive = PageIndex > 0;
+                }
+                
+                if (_pageButtonGroup != null)
+                {
+                    // make sure we have enough page navigation buttons for the list
+                    int newPageButtonCount = (maxPageIndex + 1) - _pageButtonGroup.LayoutChildren.Count;
+                    for (int i = 0; i < newPageButtonCount; ++i)
+                    {
+                        NavigationButton newPageButton = null;
+                        if (_pageButtonTemplate != null)
+                        {
+                            var templateData = new ContentTemplateData();
+                            newPageButton = _pageButtonTemplate.Activator(templateData) as NavigationButton;
+                        }
+                        else
+                        {
+                            newPageButton = new NavigationButton(this, Content);
+                            newPageButton.NavigationType = NavigationButtonType.Page;
+                        }
+
+                        newPageButton.IsToggleButton = true;
+                        newPageButton.CanToggleOff = false;
+                        newPageButton.ParentList = this;
+                        newPageButton.Label.Width = ElementSize.FromPercents(1); // TODO workaround for bug #18 with derived views not applying parent template correctly
+                        newPageButton.Label.Height = ElementSize.FromPercents(1); 
+                        newPageButton.MoveTo(_pageButtonGroup);
+                        newPageButton.Load();
+                    }
+
+                    for (int i = 0; i < _pageButtonGroup.LayoutChildren.Count; ++i)
+                    {
+                        var navigationButton = _pageButtonGroup.LayoutChildren[i] as NavigationButton;
+                        if (i > maxPageIndex)
+                        {
+                            navigationButton.IsActive = false;
+                            continue;
+                        }
+
+                        navigationButton.IsActive = true;
+                        if (navigationButton.DisplayLabel)
+                        {
+                            navigationButton.Text = (i + 1).ToString();
+                        }
+                        navigationButton.PageIndex = i;
+                        navigationButton.ToggleValue = i == PageIndex;
+                    }
+                }
             }
 
             DisableLayoutUpdate = defaultDisableLayoutUpdate;

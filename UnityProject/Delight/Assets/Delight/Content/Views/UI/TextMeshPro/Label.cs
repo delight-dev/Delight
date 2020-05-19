@@ -81,6 +81,9 @@ namespace Delight
         /// </summary>
         public virtual void FontChanged()
         {
+            if (!IsActive)
+                return;
+
             if (LoadMode.HasFlag(LoadMode.HiddenWhileLoading))
             {
                 if (Font != null && Font.IsLoaded)
@@ -147,6 +150,43 @@ namespace Delight
             catch
             {
                 // bugfix of older version of TextMeshPro bug where PreferredWidth / PreferredHeight throws exceptions
+            }
+        }
+
+        /// <summary>
+        /// Sets text alignment.
+        /// </summary>
+        public void SetTextAlignment(ElementAlignment textAlignment)
+        {
+            switch (textAlignment)
+            {
+                case ElementAlignment.Center:
+                    TextAlignment = TMPro.TextAlignmentOptions.Center;
+                    break;
+                case ElementAlignment.Left:
+                    TextAlignment = TMPro.TextAlignmentOptions.Left;
+                    break;
+                case ElementAlignment.Top:
+                    TextAlignment = TMPro.TextAlignmentOptions.Top;
+                    break;
+                case ElementAlignment.Right:
+                    TextAlignment = TMPro.TextAlignmentOptions.Right;
+                    break;
+                case ElementAlignment.Bottom:
+                    TextAlignment = TMPro.TextAlignmentOptions.Left;
+                    break;
+                case ElementAlignment.TopLeft:
+                    TextAlignment = TMPro.TextAlignmentOptions.TopLeft;
+                    break;
+                case ElementAlignment.TopRight:
+                    TextAlignment = TMPro.TextAlignmentOptions.TopRight;
+                    break;
+                case ElementAlignment.BottomLeft:
+                    TextAlignment = TMPro.TextAlignmentOptions.BottomLeft;
+                    break;
+                case ElementAlignment.BottomRight:
+                    TextAlignment = TMPro.TextAlignmentOptions.BottomRight;
+                    break;
             }
         }
 
