@@ -3,7 +3,8 @@
 - Added Expander view for expanding/collapsing content
 - New content type "API Doc" files for adding XML comments to generated dependency properties
 - Run-time parsing and instantiation of views (currently limited to editor)
-- List paging through IsPaged, ItemsPerPage and PageIndex properties on List view 
+- List paging through IsPaged, PageSize and PageIndex properties on List view 
+- Customizable list page navigation buttons through NavigationButton view
 - Attached property "ListItem.SetListItemState" for propagating list item state to child views
 - AltarnateItems property for lists for alternating item styles
 - Index binding for list items through syntax, e.g. <Label Text="{item.Index}." /> or <Label Text="{item.ZeroIndex}." />
