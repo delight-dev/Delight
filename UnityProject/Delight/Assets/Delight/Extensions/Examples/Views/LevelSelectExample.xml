@@ -2,7 +2,7 @@
   <Image Sprite="LevelSelectBg" PreserveAspect="True" Width="600" />
   <Label Text="Level Select" AutoSize="True" FontSize="50" Offset="0,0,0,225" FontColor="White" Font="AveriaSansLibre-Bold SDF" />
   <List Items="{level in @Levels}" Overflow="Wrap" Orientation="Horizontal" Width="470" Height="310" Spacing="10"
-        Offset="0,170,0,0" DeselectAfterSelect="True" Alignment="Top" IsPaged="True" ItemsPerPage="6"
+        Offset="0,170,0,0" DeselectAfterSelect="True" Alignment="Top" IsPaged="True" PageSize="6"
         ShowNavigationButtons="All"
         PageNavigationGroupOffset="0,50,0,0"
         PageNavigationGroupSpacing="5">

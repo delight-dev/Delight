@@ -275,11 +275,11 @@ namespace Delight
             set { ComboBoxList.IsPaged = value; }
         }
 
-        public readonly static DependencyProperty ItemsPerPageProperty = List.ItemsPerPageProperty;
-        public System.Int32 ItemsPerPage
+        public readonly static DependencyProperty PageSizeProperty = List.PageSizeProperty;
+        public System.Int32 PageSize
         {
-            get { return ComboBoxList.ItemsPerPage; }
-            set { ComboBoxList.ItemsPerPage = value; }
+            get { return ComboBoxList.PageSize; }
+            set { ComboBoxList.PageSize = value; }
         }
 
         public readonly static DependencyProperty PageIndexProperty = List.PageIndexProperty;

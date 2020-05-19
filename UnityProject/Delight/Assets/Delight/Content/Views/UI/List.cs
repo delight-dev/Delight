@@ -1023,7 +1023,7 @@ namespace Delight
         {
             if (IsPaged)
             {
-                int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+                int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
                 int pageIndex = Mathf.FloorToInt(virtualItem.Index / itemsPerPage);
                 if (pageIndex != PageIndex)
                 {
@@ -1077,7 +1077,7 @@ namespace Delight
             bool percentageWidth = false;
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
-            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
 
             List<UIView> children = null;
             if (!IsVirtualized)
@@ -1313,7 +1313,7 @@ namespace Delight
             float maxHeight = 0f;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
             List<UIView> children = null;
-            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
             if (!IsVirtualized)
             {
                 children = new List<UIView>();
@@ -2032,7 +2032,7 @@ namespace Delight
             if (Items == null)
                 return 0;
 
-            int itemsPerPage = ItemsPerPage > 0 ? ItemsPerPage : int.MaxValue;
+            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
             int maxPageIndex = Mathf.FloorToInt((Items.Count - 1) / itemsPerPage);
             return maxPageIndex;
         }

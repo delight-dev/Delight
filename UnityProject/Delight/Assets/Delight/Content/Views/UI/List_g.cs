@@ -59,7 +59,7 @@ namespace Delight
             dependencyProperties.Add(RealizationMarginProperty);
             dependencyProperties.Add(DisableItemArrangementProperty);
             dependencyProperties.Add(IsPagedProperty);
-            dependencyProperties.Add(ItemsPerPageProperty);
+            dependencyProperties.Add(PageSizeProperty);
             dependencyProperties.Add(PageIndexProperty);
             dependencyProperties.Add(PageNavigationGroupOffsetProperty);
             dependencyProperties.Add(PageNavigationGroupAlignmentProperty);
@@ -273,11 +273,11 @@ namespace Delight
             set { IsPagedProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<System.Int32> ItemsPerPageProperty = new DependencyProperty<System.Int32>("ItemsPerPage");
-        public System.Int32 ItemsPerPage
+        public readonly static DependencyProperty<System.Int32> PageSizeProperty = new DependencyProperty<System.Int32>("PageSize");
+        public System.Int32 PageSize
         {
-            get { return ItemsPerPageProperty.GetValue(this); }
-            set { ItemsPerPageProperty.SetValue(this, value); }
+            get { return PageSizeProperty.GetValue(this); }
+            set { PageSizeProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Int32> PageIndexProperty = new DependencyProperty<System.Int32>("PageIndex");
@@ -2735,8 +2735,8 @@ namespace Delight
                     _list.Name = "List";
 #endif
                     Delight.List.CanSelectProperty.SetDefault(_list, true);
-                    Delight.List.ItemsPerPageProperty.SetDefault(_list, 20);
-                    Delight.List.PageNavigationGroupOffsetProperty.SetDefault(_list, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.List.PageSizeProperty.SetDefault(_list, 20);
+                    Delight.List.PageNavigationGroupOffsetProperty.SetDefault(_list, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(50f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.List.PageNavigationGroupAlignmentProperty.SetDefault(_list, Delight.ElementAlignment.Bottom);
                     Delight.List.PageNavigationGroupOrientationProperty.SetDefault(_list, Delight.ElementOrientation.Horizontal);
                     Delight.List.PageNavigationGroupSpacingProperty.SetDefault(_list, new ElementSize(2f, ElementSizeUnit.Pixels));
