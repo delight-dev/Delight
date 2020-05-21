@@ -650,7 +650,7 @@ namespace Delight
                     Delight.NavigationButton.BackgroundSpriteProperty.SetStateDefault("Pressed", _levelSelectExampleNavigationButton2, Assets.Sprites["LevelSelectPageButtonPressed"]);
                     Delight.NavigationButton.BackgroundColorProperty.SetDefault(_levelSelectExampleNavigationButton2, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
                     Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Highlighted", _levelSelectExampleNavigationButton2, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Pressed", _levelSelectExampleNavigationButton2, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
+                    Delight.NavigationButton.BackgroundColorProperty.SetStateDefault("Pressed", _levelSelectExampleNavigationButton2, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.NavigationButton.NavigationTypeProperty.SetDefault(_levelSelectExampleNavigationButton2, Delight.NavigationButtonType.Page);
                     Delight.NavigationButton.WidthProperty.SetDefault(_levelSelectExampleNavigationButton2, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.NavigationButton.HeightProperty.SetDefault(_levelSelectExampleNavigationButton2, new ElementSize(50f, ElementSizeUnit.Pixels));

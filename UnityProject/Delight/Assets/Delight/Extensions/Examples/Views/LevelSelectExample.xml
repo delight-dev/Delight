@@ -15,7 +15,7 @@
                       Pressed-BackgroundColor="#bbbbbb"
                       Width="50" Height="77" Offset="110,0,0,10" />
     <NavigationButton BackgroundSprite="LevelSelectPageButton" Pressed-BackgroundSprite="LevelSelectPageButtonPressed" BackgroundColor="#bbbbbb" Highlighted-BackgroundColor="White"
-                      Pressed-BackgroundColor="#bbbbbb" NavigationType="Page"
+                      Pressed-BackgroundColor="#ffffff" NavigationType="Page"
                       Width="50" Height="50" DisplayLabel="False" />
   </List>
 </LevelSelectExample>
