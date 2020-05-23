@@ -1,5 +1,6 @@
 ﻿2020.1.0
 - Delight Designer for LIVE editing of XML
+- State animations
 - Added Expander view for expanding/collapsing content
 - New content type "API Doc" files for adding XML comments to generated dependency properties
 - Run-time parsing and instantiation of views (currently limited to editor)
