@@ -9,14 +9,11 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class ComboBoxExample
+    public partial class ButtonsExample
     {
-        public void Add()
+        public void ButtonClick()
         {
-        }
-
-        public void Remove()
-        {
+            ++ClickCount;
         }
 
         public void ItemSelected()

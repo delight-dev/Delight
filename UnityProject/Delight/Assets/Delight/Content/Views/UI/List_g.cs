@@ -679,13 +679,6 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarPivot = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarBarLayoutRootProperty = ScrollableRegion.HorizontalScrollbarBarLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarBarLayoutRoot
-        {
-            get { return ScrollableRegion.HorizontalScrollbarBarLayoutRoot; }
-            set { ScrollableRegion.HorizontalScrollbarBarLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty HorizontalScrollbarBarDisableLayoutUpdateProperty = ScrollableRegion.HorizontalScrollbarBarDisableLayoutUpdateProperty;
         public System.Boolean HorizontalScrollbarBarDisableLayoutUpdate
         {
@@ -978,13 +971,6 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarHandlePivot; }
             set { ScrollableRegion.HorizontalScrollbarHandlePivot = value; }
-        }
-
-        public readonly static DependencyProperty HorizontalScrollbarHandleLayoutRootProperty = ScrollableRegion.HorizontalScrollbarHandleLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarHandleLayoutRoot
-        {
-            get { return ScrollableRegion.HorizontalScrollbarHandleLayoutRoot; }
-            set { ScrollableRegion.HorizontalScrollbarHandleLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleDisableLayoutUpdateProperty = ScrollableRegion.HorizontalScrollbarHandleDisableLayoutUpdateProperty;
@@ -1286,13 +1272,6 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarPivot; }
             set { ScrollableRegion.HorizontalScrollbarPivot = value; }
-        }
-
-        public readonly static DependencyProperty HorizontalScrollbarLayoutRootProperty = ScrollableRegion.HorizontalScrollbarLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarLayoutRoot
-        {
-            get { return ScrollableRegion.HorizontalScrollbarLayoutRoot; }
-            set { ScrollableRegion.HorizontalScrollbarLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarDisableLayoutUpdateProperty = ScrollableRegion.HorizontalScrollbarDisableLayoutUpdateProperty;
@@ -1624,13 +1603,6 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarPivot = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarBarLayoutRootProperty = ScrollableRegion.VerticalScrollbarBarLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarBarLayoutRoot
-        {
-            get { return ScrollableRegion.VerticalScrollbarBarLayoutRoot; }
-            set { ScrollableRegion.VerticalScrollbarBarLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty VerticalScrollbarBarDisableLayoutUpdateProperty = ScrollableRegion.VerticalScrollbarBarDisableLayoutUpdateProperty;
         public System.Boolean VerticalScrollbarBarDisableLayoutUpdate
         {
@@ -1923,13 +1895,6 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarHandlePivot; }
             set { ScrollableRegion.VerticalScrollbarHandlePivot = value; }
-        }
-
-        public readonly static DependencyProperty VerticalScrollbarHandleLayoutRootProperty = ScrollableRegion.VerticalScrollbarHandleLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarHandleLayoutRoot
-        {
-            get { return ScrollableRegion.VerticalScrollbarHandleLayoutRoot; }
-            set { ScrollableRegion.VerticalScrollbarHandleLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleDisableLayoutUpdateProperty = ScrollableRegion.VerticalScrollbarHandleDisableLayoutUpdateProperty;
@@ -2231,13 +2196,6 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarPivot; }
             set { ScrollableRegion.VerticalScrollbarPivot = value; }
-        }
-
-        public readonly static DependencyProperty VerticalScrollbarLayoutRootProperty = ScrollableRegion.VerticalScrollbarLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarLayoutRoot
-        {
-            get { return ScrollableRegion.VerticalScrollbarLayoutRoot; }
-            set { ScrollableRegion.VerticalScrollbarLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarDisableLayoutUpdateProperty = ScrollableRegion.VerticalScrollbarDisableLayoutUpdateProperty;
@@ -2595,13 +2553,6 @@ namespace Delight
         {
             get { return ScrollableRegion.Pivot; }
             set { ScrollableRegion.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty ScrollableRegionLayoutRootProperty = ScrollableRegion.LayoutRootProperty;
-        public Delight.LayoutRoot ScrollableRegionLayoutRoot
-        {
-            get { return ScrollableRegion.LayoutRoot; }
-            set { ScrollableRegion.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionDisableLayoutUpdateProperty = ScrollableRegion.DisableLayoutUpdateProperty;

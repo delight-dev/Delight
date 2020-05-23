@@ -1,6 +1,7 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -60,6 +61,22 @@ namespace Delight
             }
 
             return String.Format("{0}{1}{2}", exception.Message, Environment.NewLine, exception.StackTrace);
+        }
+
+        /// <summary>
+        /// Converts float to string arguments that can be printed as argument.
+        /// </summary>
+        public static string ToArg(this float value)
+        {
+            return value.ToString(CultureInfo.InvariantCulture) + "f";
+        }
+
+        /// <summary>
+        /// Converts float to string arguments that can be printed as argument.
+        /// </summary>
+        public static string ToArg(this bool value)
+        {
+            return value ? "true" : "false";
         }
 
         /// <summary>
@@ -928,6 +945,118 @@ namespace Delight
         public static int IndexOf<T>(this IEnumerable<T> items, T item)
         {
             return items.IndexOf(i => EqualityComparer<T>.Default.Equals(item, i));
+        }
+
+        /// <summary>
+        /// Converts HSV to RGB color.
+        /// </summary>
+        public static Color ToRgb(this ColorHsv hsv)
+        {
+            float hh, p, q, t, ff;
+            long i;
+            Color rgb = new Color();
+
+            if (hsv.Saturation <= 0.0f)
+            {
+                rgb.r = hsv.Value;
+                rgb.g = hsv.Value;
+                rgb.b = hsv.Value;
+                return rgb;
+            }
+            hh = hsv.Hue;
+            if (hh >= 360.0f) hh = 0.0f;
+            hh /= 60.0f;
+            i = (long)hh;
+            ff = hh - i;
+            p = hsv.Value * (1.0f - hsv.Saturation);
+            q = hsv.Value * (1.0f - (hsv.Saturation * ff));
+            t = hsv.Value * (1.0f - (hsv.Saturation * (1.0f - ff)));
+
+            switch (i)
+            {
+                case 0:
+                    rgb.r = hsv.Value;
+                    rgb.g = t;
+                    rgb.b = p;
+                    break;
+                case 1:
+                    rgb.r = q;
+                    rgb.g = hsv.Value;
+                    rgb.b = p;
+                    break;
+                case 2:
+                    rgb.r = p;
+                    rgb.g = hsv.Value;
+                    rgb.b = t;
+                    break;
+
+                case 3:
+                    rgb.r = p;
+                    rgb.g = q;
+                    rgb.b = hsv.Value;
+                    break;
+                case 4:
+                    rgb.r = t;
+                    rgb.g = p;
+                    rgb.b = hsv.Value;
+                    break;
+                case 5:
+                default:
+                    rgb.r = hsv.Value;
+                    rgb.g = p;
+                    rgb.b = q;
+                    break;
+            }
+            return rgb;
+        }
+
+        /// <summary>
+        /// Converts RGB to HSV color.
+        /// </summary>
+        public static ColorHsv ToHsv(this Color rgb)
+        {
+            ColorHsv hsv = new ColorHsv();
+            float min, max, delta;
+
+            min = rgb.r < rgb.g ? rgb.r : rgb.g;
+            min = min < rgb.b ? min : rgb.b;
+
+            max = rgb.r > rgb.g ? rgb.r : rgb.g;
+            max = max > rgb.b ? max : rgb.b;
+
+            hsv.Value = max; // v
+            delta = max - min;
+            if (delta < 0.00001f)
+            {
+                hsv.Saturation = 0;
+                hsv.Hue = 0; // undefined, maybe nan?
+                return hsv;
+            }
+            if (max > 0.0)
+            { // NOTE: if Max is == 0, this divide would cause a crash
+                hsv.Saturation = (delta / max); // s
+            }
+            else
+            {
+                // if max is 0, then r = g = b = 0              
+                // s = 0, h is undefined
+                hsv.Saturation = 0.0f;
+                hsv.Hue = float.NaN; // its now undefined
+                return hsv;
+            }
+            if (rgb.r >= max)                           // > is bogus, just keeps compilor happy
+                hsv.Hue = (rgb.g - rgb.b) / delta;        // between yellow & magenta
+            else if (rgb.g >= max)
+                hsv.Hue = 2.0f + (rgb.b - rgb.r) / delta;  // between cyan & yellow
+            else
+                hsv.Hue = 4.0f + (rgb.r - rgb.g) / delta;  // between magenta & cyan
+
+            hsv.Hue *= 60.0f;                              // degrees
+
+            if (hsv.Hue < 0.0f)
+                hsv.Hue += 360.0f;
+
+            return hsv;
         }
 
         #endregion

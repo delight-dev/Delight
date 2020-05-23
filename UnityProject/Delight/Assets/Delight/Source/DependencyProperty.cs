@@ -40,6 +40,9 @@ namespace Delight
             if (key == null)
                 return default(T);
 
+            if (State != null)
+                return GetStateDefault(key, State);
+
             T currentValue;
             if (Values.TryGetValue(key, out currentValue))
             {
@@ -315,21 +318,21 @@ namespace Delight
         /// <summary>
         /// Gets default value from type.
         /// </summary>
-        public virtual T GetDefault(DependencyObject key)
+        public virtual T GetDefault(DependencyObject key, bool getStateDefault = true)
         {
             T defaultValue;
-            TryGetDefault(key, out defaultValue);
+            TryGetDefault(key, out defaultValue, getStateDefault);
             return defaultValue;
         }
 
         /// <summary>
         /// Gets default value if it exist.
         /// </summary>
-        public bool TryGetDefault(DependencyObject key, out T defaultValue)
+        public bool TryGetDefault(DependencyObject key, out T defaultValue, bool getStateDefault = true)
         {
             // try get state default value
             defaultValue = default(T);
-            if (TryGetStateDefault(key, out defaultValue))
+            if (getStateDefault && TryGetStateDefault(key, out defaultValue))
             {
                 return true;
             }
@@ -352,6 +355,32 @@ namespace Delight
                     return false;
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets default state value.
+        /// </summary>
+        public T GetStateDefault(DependencyObject key)
+        {
+            return GetStateDefault(key, key.State);
+        }
+
+        /// <summary>
+        /// Gets default state value.
+        /// </summary>
+        public new T GetStateDefault(DependencyObject key, string state)
+        {
+            if (String.IsNullOrEmpty(state) || state == DependencyObject.DefaultStateName)
+            {
+                return GetDefault(key, false);
+            }
+            else if (state == DependencyObject.AnyStateName)
+            {
+                return GetStateDefault(key);
+            }
+
+            TryGetStateDefault(key.Template, state, out var defaultValue);
+            return defaultValue;
         }
 
         /// <summary>
@@ -512,6 +541,22 @@ namespace Delight
             BindingSet[template] = hasBinding;
         }
 
+        /// <summary>
+        /// Sets dependency property value for specified instance.
+        /// </summary>
+        public override void SetValueGeneric(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
+        {
+            SetValue(key, (T)value, notifyPropertyChangedListeners);
+        }
+
+        /// <summary>
+        /// Gets default state value.
+        /// </summary>
+        public override object GetStateDefaultGeneric(DependencyObject key, string state)
+        {
+            return GetStateDefault(key, state);
+        }
+
         #endregion
 
         #region Constructor
@@ -552,6 +597,8 @@ namespace Delight
         #region Fields
 
         public string PropertyName; // TODO by using [CallerMemberName] instead we might not have to store PropertyName
+        public bool DisableNotifyPropertyChanged;
+        public string State;
 
         #endregion
 
@@ -619,6 +666,21 @@ namespace Delight
         }
 
         /// <summary>
+        /// Sets dependency property value for specified instance.
+        /// </summary>
+        public void SetValue(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
+        {
+            SetValueGeneric(key, value, notifyPropertyChangedListeners);
+        }
+
+        /// <summary>
+        /// Sets dependency property value for specified instance.
+        /// </summary>
+        public virtual void SetValueGeneric(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
+        {
+        }
+
+        /// <summary>
         /// Sets default value for type.
         /// </summary>
         public virtual void SetDefaultGeneric(Template template, object defaultValue)
@@ -630,6 +692,33 @@ namespace Delight
         /// </summary>
         public virtual void SetStateDefaultGeneric(string state, Template template, object defaultValue)
         {
+        }
+
+        /// <summary>
+        /// Gets default state value.
+        /// </summary>
+        public object GetStateDefault(DependencyObject key, string state)
+        {
+            return GetStateDefaultGeneric(key, state);
+        }
+
+        /// <summary>
+        /// Gets default state value.
+        /// </summary>
+        public virtual object GetStateDefaultGeneric(DependencyObject key, string state)
+        {
+            return null;
+        }
+
+        /// <summary>
+        /// Notifies the property has changed.
+        /// </summary>
+        public virtual void NotifyPropertyChanged(DependencyObject key)
+        {
+            if (DisableNotifyPropertyChanged)
+                return;
+
+            key.OnPropertyChanged(PropertyName);
         }
 
         #endregion

@@ -313,13 +313,6 @@ namespace Delight
             set { Bar.Pivot = value; }
         }
 
-        public readonly static DependencyProperty BarLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot BarLayoutRoot
-        {
-            get { return Bar.LayoutRoot; }
-            set { Bar.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty BarDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;
         public System.Boolean BarDisableLayoutUpdate
         {
@@ -612,13 +605,6 @@ namespace Delight
         {
             get { return Handle.Pivot; }
             set { Handle.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty HandleLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot HandleLayoutRoot
-        {
-            get { return Handle.LayoutRoot; }
-            set { Handle.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty HandleDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;

@@ -667,13 +667,6 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarPivot = value; }
         }
 
-        public readonly static DependencyProperty HorizontalScrollbarBarLayoutRootProperty = List.HorizontalScrollbarBarLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarBarLayoutRoot
-        {
-            get { return ComboBoxList.HorizontalScrollbarBarLayoutRoot; }
-            set { ComboBoxList.HorizontalScrollbarBarLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty HorizontalScrollbarBarDisableLayoutUpdateProperty = List.HorizontalScrollbarBarDisableLayoutUpdateProperty;
         public System.Boolean HorizontalScrollbarBarDisableLayoutUpdate
         {
@@ -966,13 +959,6 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarHandlePivot; }
             set { ComboBoxList.HorizontalScrollbarHandlePivot = value; }
-        }
-
-        public readonly static DependencyProperty HorizontalScrollbarHandleLayoutRootProperty = List.HorizontalScrollbarHandleLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarHandleLayoutRoot
-        {
-            get { return ComboBoxList.HorizontalScrollbarHandleLayoutRoot; }
-            set { ComboBoxList.HorizontalScrollbarHandleLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleDisableLayoutUpdateProperty = List.HorizontalScrollbarHandleDisableLayoutUpdateProperty;
@@ -1274,13 +1260,6 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarPivot; }
             set { ComboBoxList.HorizontalScrollbarPivot = value; }
-        }
-
-        public readonly static DependencyProperty HorizontalScrollbarLayoutRootProperty = List.HorizontalScrollbarLayoutRootProperty;
-        public Delight.LayoutRoot HorizontalScrollbarLayoutRoot
-        {
-            get { return ComboBoxList.HorizontalScrollbarLayoutRoot; }
-            set { ComboBoxList.HorizontalScrollbarLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarDisableLayoutUpdateProperty = List.HorizontalScrollbarDisableLayoutUpdateProperty;
@@ -1612,13 +1591,6 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarPivot = value; }
         }
 
-        public readonly static DependencyProperty VerticalScrollbarBarLayoutRootProperty = List.VerticalScrollbarBarLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarBarLayoutRoot
-        {
-            get { return ComboBoxList.VerticalScrollbarBarLayoutRoot; }
-            set { ComboBoxList.VerticalScrollbarBarLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty VerticalScrollbarBarDisableLayoutUpdateProperty = List.VerticalScrollbarBarDisableLayoutUpdateProperty;
         public System.Boolean VerticalScrollbarBarDisableLayoutUpdate
         {
@@ -1911,13 +1883,6 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarHandlePivot; }
             set { ComboBoxList.VerticalScrollbarHandlePivot = value; }
-        }
-
-        public readonly static DependencyProperty VerticalScrollbarHandleLayoutRootProperty = List.VerticalScrollbarHandleLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarHandleLayoutRoot
-        {
-            get { return ComboBoxList.VerticalScrollbarHandleLayoutRoot; }
-            set { ComboBoxList.VerticalScrollbarHandleLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleDisableLayoutUpdateProperty = List.VerticalScrollbarHandleDisableLayoutUpdateProperty;
@@ -2219,13 +2184,6 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarPivot; }
             set { ComboBoxList.VerticalScrollbarPivot = value; }
-        }
-
-        public readonly static DependencyProperty VerticalScrollbarLayoutRootProperty = List.VerticalScrollbarLayoutRootProperty;
-        public Delight.LayoutRoot VerticalScrollbarLayoutRoot
-        {
-            get { return ComboBoxList.VerticalScrollbarLayoutRoot; }
-            set { ComboBoxList.VerticalScrollbarLayoutRoot = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarDisableLayoutUpdateProperty = List.VerticalScrollbarDisableLayoutUpdateProperty;
@@ -2585,13 +2543,6 @@ namespace Delight
             set { ComboBoxList.ScrollableRegionPivot = value; }
         }
 
-        public readonly static DependencyProperty ScrollableRegionLayoutRootProperty = List.ScrollableRegionLayoutRootProperty;
-        public Delight.LayoutRoot ScrollableRegionLayoutRoot
-        {
-            get { return ComboBoxList.ScrollableRegionLayoutRoot; }
-            set { ComboBoxList.ScrollableRegionLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty ScrollableRegionDisableLayoutUpdateProperty = List.ScrollableRegionDisableLayoutUpdateProperty;
         public System.Boolean ScrollableRegionDisableLayoutUpdate
         {
@@ -2898,13 +2849,6 @@ namespace Delight
         {
             get { return ComboBoxList.Pivot; }
             set { ComboBoxList.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty ComboBoxListLayoutRootProperty = List.LayoutRootProperty;
-        public Delight.LayoutRoot ComboBoxListLayoutRoot
-        {
-            get { return ComboBoxList.LayoutRoot; }
-            set { ComboBoxList.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty ComboBoxListDisableLayoutUpdateProperty = List.DisableLayoutUpdateProperty;
@@ -3663,13 +3607,6 @@ namespace Delight
             set { ComboBoxButton.LabelPivot = value; }
         }
 
-        public readonly static DependencyProperty ButtonLabelLayoutRootProperty = Button.LabelLayoutRootProperty;
-        public Delight.LayoutRoot ButtonLabelLayoutRoot
-        {
-            get { return ComboBoxButton.LabelLayoutRoot; }
-            set { ComboBoxButton.LabelLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty ButtonLabelDisableLayoutUpdateProperty = Button.LabelDisableLayoutUpdateProperty;
         public System.Boolean ButtonLabelDisableLayoutUpdate
         {
@@ -3969,13 +3906,6 @@ namespace Delight
         {
             get { return ComboBoxButton.Pivot; }
             set { ComboBoxButton.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty ButtonLayoutRootProperty = Button.LayoutRootProperty;
-        public Delight.LayoutRoot ButtonLayoutRoot
-        {
-            get { return ComboBoxButton.LayoutRoot; }
-            set { ComboBoxButton.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty ButtonDisableLayoutUpdateProperty = Button.DisableLayoutUpdateProperty;

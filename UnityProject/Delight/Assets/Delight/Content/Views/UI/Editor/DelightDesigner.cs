@@ -44,6 +44,8 @@ namespace Delight
         /// </summary>
         public override void Update()
         {
+            base.Update();
+
             bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 

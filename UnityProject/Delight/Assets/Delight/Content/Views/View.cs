@@ -28,6 +28,8 @@ namespace Delight
         protected List<Binding> _bindings;
         protected bool _isLoaded;
         protected bool _isDynamic;
+        protected List<StateAnimation> _stateAnimations;
+        protected LayoutRoot _layoutRoot;
 
         #endregion
 
@@ -39,7 +41,6 @@ namespace Delight
         public View(View parent, View layoutParent, string id, Template template, bool deferInitialization) : base(id, template ?? ViewTemplates.Default)
         {
             _parent = parent;
-            _bindings = new List<Binding>();
             _layoutChildren = new List<View>();
             _layoutParent = layoutParent ?? parent;
             if (_layoutParent != null)
@@ -114,9 +115,24 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets list of bindings.
+        /// Gets or sets list of bindings.
         /// </summary>
-        public List<Binding> Bindings => _bindings;
+        public List<Binding> Bindings
+        {
+            get
+            {
+                if (_bindings == null)
+                {
+                    _bindings = new List<Binding>();
+                }
+
+                return _bindings;
+            }
+            set
+            {
+                _bindings = value;
+            }
+        }
 
         /// <summary>
         /// Boolean indicating if view is dynamic and should be removed completely when unloaded.
@@ -125,6 +141,35 @@ namespace Delight
         {
             get { return _isDynamic; }
             set { _isDynamic = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets list of state transition animations.
+        /// </summary>
+        public List<StateAnimation> StateAnimations
+        {
+            get
+            {
+                if (_stateAnimations == null)
+                {
+                    _stateAnimations = new List<StateAnimation>();
+                }
+
+                return _stateAnimations;
+            }
+            set
+            {
+                _stateAnimations = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the layout root of the view.
+        /// </summary>
+        public LayoutRoot LayoutRoot
+        {
+            get { return _layoutRoot; }
+            set { _layoutRoot = value; }
         }
 
         /// <summary>
@@ -425,6 +470,9 @@ namespace Delight
         public void UpdateBindings()
         {
             // update all bindings
+            if (_bindings == null)
+                return;
+
             foreach (var binding in _bindings)
             {
                 binding.UpdateBinding();
@@ -436,6 +484,9 @@ namespace Delight
         /// </summary>
         public void UpdateBindings(DependencyObject targetObject)
         {
+            if (_bindings == null)
+                return;
+
             // update bindings to target object
             foreach (var binding in _bindings)
             {
@@ -643,12 +694,49 @@ namespace Delight
             if (newState.IEquals(_previousState))
                 return;
 
+            // handle state animations
+            List<DependencyProperty> animatedProperties = null;
+            if (_stateAnimations != null)
+            {
+                // complete any previous state animators if active 
+                foreach (var stateAnimator in _stateAnimations)
+                {
+                    stateAnimator.StopAnimation();
+                    stateAnimator.IsCompleted = true;
+                }
+
+                // start any state animators applicable to current state transition
+                foreach (var stateAnimator in _stateAnimations)
+                {
+                    if ((stateAnimator.FromAny || stateAnimator.FromState == _previousState) &&
+                        (stateAnimator.ToAny || stateAnimator.ToState == newState))
+                    {
+                        foreach (var animator in stateAnimator)
+                        {
+                            animator.StartAnimation();
+                            LayoutRoot.RegisterAnimator(animator);
+
+                            if (animatedProperties == null)
+                            {
+                                animatedProperties = new List<DependencyProperty>();                                
+                            }
+                            animatedProperties.Add(animator.Property);
+                        }
+                    }
+                }
+            }
+
+            // load/unload state changing properties that aren't animated
             var stateChangingProperties = GetStateChangingProperties(newState);
             if (stateChangingProperties != null)
             {
                 // unload all state changing dependency properties
                 for (int i = 0; i < stateChangingProperties.Count; ++i)
                 {
+                    var stateChangingProperty = stateChangingProperties[i];
+                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty))
+                        continue;
+
                     stateChangingProperties[i].Unload(this);
                 }
 
@@ -659,6 +747,10 @@ namespace Delight
                 // load all state changing dependency properties
                 for (int i = 0; i < stateChangingProperties.Count; ++i)
                 {
+                    var stateChangingProperty = stateChangingProperties[i];
+                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty))
+                        continue;
+
                     stateChangingProperties[i].Load(this);
                 }
             }

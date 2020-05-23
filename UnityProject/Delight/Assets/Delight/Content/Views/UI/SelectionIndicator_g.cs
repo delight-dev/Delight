@@ -713,13 +713,6 @@ namespace Delight
             set { SelectionTab.LabelPivot = value; }
         }
 
-        public readonly static DependencyProperty SelectionTabLabelLayoutRootProperty = Button.LabelLayoutRootProperty;
-        public Delight.LayoutRoot SelectionTabLabelLayoutRoot
-        {
-            get { return SelectionTab.LabelLayoutRoot; }
-            set { SelectionTab.LabelLayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty SelectionTabLabelDisableLayoutUpdateProperty = Button.LabelDisableLayoutUpdateProperty;
         public System.Boolean SelectionTabLabelDisableLayoutUpdate
         {
@@ -1019,13 +1012,6 @@ namespace Delight
         {
             get { return SelectionTab.Pivot; }
             set { SelectionTab.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty SelectionTabLayoutRootProperty = Button.LayoutRootProperty;
-        public Delight.LayoutRoot SelectionTabLayoutRoot
-        {
-            get { return SelectionTab.LayoutRoot; }
-            set { SelectionTab.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty SelectionTabDisableLayoutUpdateProperty = Button.DisableLayoutUpdateProperty;

@@ -325,13 +325,6 @@ namespace Delight
             set { RadioButtonImageView.Pivot = value; }
         }
 
-        public readonly static DependencyProperty RadioButtonLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot RadioButtonLayoutRoot
-        {
-            get { return RadioButtonImageView.LayoutRoot; }
-            set { RadioButtonImageView.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty RadioButtonDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;
         public System.Boolean RadioButtonDisableLayoutUpdate
         {
@@ -989,13 +982,6 @@ namespace Delight
         {
             get { return RadioButtonLabel.Pivot; }
             set { RadioButtonLabel.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty RadioButtonLabelLayoutRootProperty = Label.LayoutRootProperty;
-        public Delight.LayoutRoot RadioButtonLabelLayoutRoot
-        {
-            get { return RadioButtonLabel.LayoutRoot; }
-            set { RadioButtonLabel.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelDisableLayoutUpdateProperty = Label.DisableLayoutUpdateProperty;

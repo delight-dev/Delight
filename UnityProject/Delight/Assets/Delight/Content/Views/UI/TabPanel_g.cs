@@ -353,13 +353,6 @@ namespace Delight
             set { TabHeaderGroup.Pivot = value; }
         }
 
-        public readonly static DependencyProperty TabListLayoutRootProperty = ToggleGroup.LayoutRootProperty;
-        public Delight.LayoutRoot TabListLayoutRoot
-        {
-            get { return TabHeaderGroup.LayoutRoot; }
-            set { TabHeaderGroup.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty TabListDisableLayoutUpdateProperty = ToggleGroup.DisableLayoutUpdateProperty;
         public System.Boolean TabListDisableLayoutUpdate
         {

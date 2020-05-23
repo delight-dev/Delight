@@ -422,13 +422,6 @@ namespace Delight
             set { SliderBackgroundImageView.Pivot = value; }
         }
 
-        public readonly static DependencyProperty SliderLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot SliderLayoutRoot
-        {
-            get { return SliderBackgroundImageView.LayoutRoot; }
-            set { SliderBackgroundImageView.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty SliderDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;
         public System.Boolean SliderDisableLayoutUpdate
         {
@@ -723,13 +716,6 @@ namespace Delight
             set { SliderFillImageView.Pivot = value; }
         }
 
-        public readonly static DependencyProperty SliderFillLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot SliderFillLayoutRoot
-        {
-            get { return SliderFillImageView.LayoutRoot; }
-            set { SliderFillImageView.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty SliderFillDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;
         public System.Boolean SliderFillDisableLayoutUpdate
         {
@@ -1022,13 +1008,6 @@ namespace Delight
         {
             get { return SliderHandleImageView.Pivot; }
             set { SliderHandleImageView.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty SliderHandleLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot SliderHandleLayoutRoot
-        {
-            get { return SliderHandleImageView.LayoutRoot; }
-            set { SliderHandleImageView.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty SliderHandleDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;

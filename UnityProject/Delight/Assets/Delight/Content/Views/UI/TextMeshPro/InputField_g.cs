@@ -1184,13 +1184,6 @@ namespace Delight
             set { InputText.Pivot = value; }
         }
 
-        public readonly static DependencyProperty InputTextLayoutRootProperty = Label.LayoutRootProperty;
-        public Delight.LayoutRoot InputTextLayoutRoot
-        {
-            get { return InputText.LayoutRoot; }
-            set { InputText.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty InputTextDisableLayoutUpdateProperty = Label.DisableLayoutUpdateProperty;
         public System.Boolean InputTextDisableLayoutUpdate
         {

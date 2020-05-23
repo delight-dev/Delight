@@ -466,6 +466,7 @@ View: Base class for views.
 - HasContentTemplates: Boolean indicating if this view can have content templates defined. 
 - BasedOn: Name of the view this view is based on.
 - LoadMode: Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.
+- StateAnimations: Id of state animators activated when transitioning between different view states.
 
 ViewSwitcher: Provides logic for switching between mutliple child views and displaying one at a time. By default the views are loaded when they are displayed, behavior can be changed through the SwitchMode property. 
 - ChildLoadMode: Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting.

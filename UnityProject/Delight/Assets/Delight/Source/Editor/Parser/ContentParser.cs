@@ -517,6 +517,12 @@ namespace Delight.Editor.Parser
                     continue;
                 }
 
+                if (attributeName.IEquals("StateAnimatinos"))
+                {
+                    viewObject.StateAnimations = attributeValue;
+                    continue;
+                }
+
                 if (attributeName.IEquals("BasedOn"))
                 {
                     // set default 
@@ -691,7 +697,7 @@ namespace Delight.Editor.Parser
                     string attributeName = attribute.Name.LocalName;
                     string attributeValue = attribute.Value;
 
-                    if (attributeName.IEquals("Style"))
+                    if (attributeName.IEquals("Style") || attributeName.IEquals("Id"))
                     {
                         styleDeclaration.StyleName = attributeValue;
                         continue;
@@ -738,6 +744,9 @@ namespace Delight.Editor.Parser
                         }
                     }
                 }
+
+                // parse child elements
+                styleDeclaration.ChildDeclarations = ParseStyleDeclarations(path, styleElement.Elements());
             }
 
             return styleDeclarations;

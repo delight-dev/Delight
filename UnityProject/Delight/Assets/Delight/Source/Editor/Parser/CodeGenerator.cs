@@ -28,7 +28,7 @@ namespace Delight.Editor.Parser
         public static string DefaultViewType = "UIView";
         public static string DefaultNamespace = "Delight";
         public static readonly char[] ActionDelimiterChars = { ' ', ',', '(', ')' };
-        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();        
+        private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
         #endregion
 
@@ -171,6 +171,7 @@ namespace Delight.Editor.Parser
             var mappedDeclarations = GetMappedPropertyDeclarations(viewObject);
             var attachedProperties = viewObject.PropertyExpressions.OfType<AttachedProperty>();
             var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
+            var stateAnimationsAssignment = propertyAssignments.Where(x => x.PropertyName.IEquals("StateAnimations")).LastOrDefault();
             var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
                             x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
 
@@ -186,6 +187,9 @@ namespace Delight.Editor.Parser
                 sb.AppendLine();
 
                 GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, viewTypeName, null, viewObject.ViewDeclarations);
+
+                // create state animations specified on the root element
+                GenerateStateAnimations(sb, viewObject.FilePath, stateAnimationsAssignment, 3, viewObject, "this", 1);
 
                 // register any action handlers specified on the root element
                 foreach (var actionAssignment in actionAssignments)
@@ -635,7 +639,7 @@ namespace Delight.Editor.Parser
 
             var attachedPropertyTypes = GetAttachedPropertyTypes(viewObjects);
             foreach (var attachedPropertyType in attachedPropertyTypes)
-            {                
+            {
                 sb.AppendLine("            AttachedPropertyActivators.Add(\"{0}\", (x, y) => new AttachedProperty<{0}>(x, y));", attachedPropertyType);
             }
 
@@ -958,7 +962,7 @@ namespace Delight.Editor.Parser
             if (nestedPropertyExpressions != null)
             {
                 // add nested assignments set by parent (that would be expressions like <Button Label.Text="Value">)
-                propertyAssignments.AddRange(nestedPropertyExpressions.OfType<PropertyAssignment>());
+                propertyAssignments.AddRange(nestedPropertyExpressions.OfType<PropertyAssignment>().Where(x => !x.IsAttribute));
                 propertyBindings.AddRange(nestedPropertyExpressions.OfType<PropertyBinding>().Where(x => !x.IsAttached)); // ignore bindings to attached properties
             }
 
@@ -978,6 +982,9 @@ namespace Delight.Editor.Parser
 
                 if (String.IsNullOrEmpty(propertyValue))
                     continue;
+
+                if (isAssignment && propertyAssignment.IsAttribute)
+                    continue; // ignore attributes
 
                 // if property name contains '.' it refers to a child view property
                 int indexOfDot = propertyName.IndexOf('.');
@@ -1443,6 +1450,10 @@ namespace Delight.Editor.Parser
 
                 var propertyBindings = childViewDeclaration.GetPropertyBindingsWithStyle(out var styleMissing);
 
+                // do we have state animations?
+                var stateAnimationsAssignment = childPropertyAssignments.Where(x => x.PropertyName.IEquals("StateAnimations")).LastOrDefault();
+                GenerateStateAnimations(sb, fileName, stateAnimationsAssignment, indent, childViewObject, childIdVar, childViewDeclaration.LineNumber);
+
                 // get templated content data
                 var childTemplateDepth = templateDepth;
                 TemplateItemInfo ti = null;
@@ -1745,6 +1756,99 @@ namespace Delight.Editor.Parser
                     // print child view declaration
                     GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Generates state animations.
+        /// </summary>
+        private static void GenerateStateAnimations(StringBuilder sb, string fileName, PropertyAssignment stateAnimationsAssignment, int indent, ViewObject childViewObject, string childIdVar, int lineNumber)
+        {
+            if (String.IsNullOrEmpty(stateAnimationsAssignment?.PropertyValue))
+                return;
+
+            var stateAnimationsId = stateAnimationsAssignment.PropertyValue;
+            var stateAnimations = _contentObjectModel.GetStateAnimations(stateAnimationsId)?.ToList();
+            sb.AppendLine(indent, "{0}.StateAnimations.Clear();", childIdVar);
+            List<PropertyDeclarationInfo> childPropertyDeclarations = null;
+            if (stateAnimations == null)
+                return;
+
+            // print animations
+            for (int i = 0; i < stateAnimations.Count; ++i)
+            {
+                var stateAnimation = stateAnimations[i];
+                string stateAnimationId = string.Format("stateAnimation{0}", i);
+
+                string fromState = string.Empty;
+                if (stateAnimation.FromState.IEquals("Any"))
+                {
+                    fromState = "AnyStateName";
+                }
+                else if (stateAnimation.FromState.IEquals("Default"))
+                {
+                    fromState = "DefaultStateName";
+                }
+                else
+                {
+                    fromState = string.Format("\"{0}\"", stateAnimation.FromState);
+                }
+
+                string toState = string.Empty;
+                if (stateAnimation.ToState.IEquals("Any"))
+                {
+                    toState = "AnyStateName";
+                }
+                else if (stateAnimation.ToState.IEquals("Default"))
+                {
+                    toState = "DefaultStateName";
+                }
+                else
+                {
+                    toState = string.Format("\"{0}\"", stateAnimation.ToState);
+                }
+
+                sb.AppendLine(indent, "var {0} = new StateAnimation({1}, {2});", stateAnimationId, fromState, toState);
+
+                for (int j = 0; j < stateAnimation.AnimateInfos.Count; ++j)
+                {
+                    var animator = stateAnimation.AnimateInfos[j];
+                    string animateId = string.Format("sa{0}Animator{1}", i, j);
+
+                    if (childPropertyDeclarations == null)
+                    {
+                        childPropertyDeclarations = GetPropertyDeclarations(childViewObject, true, true, true);
+                    }
+
+                    var property = childPropertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName == animator.Property);
+                    if (property == null)
+                    {
+                        continue; // swallow mismatched animators
+                    }
+
+                    var propertyTypeName = property.Declaration.PropertyTypeFullName;
+                    var typeValueConverter = ValueConverters.Get(propertyTypeName);
+                    if (typeValueConverter == null)
+                    {
+                        // interpolator missing 
+                        ConsoleLogger.LogParseError(fileName, lineNumber,
+                            String.Format("#Delight# Unable to create state animations for view <{0} StateAnimations=\"{1}\">. Interpolator missing for type \"{2}\". Makes sure value converter exists for type that contains an interpolator method.",
+                            childViewObject.Name, stateAnimationsId, propertyTypeName));
+                        continue;
+                    }
+
+                    var dependencyPropertyName = string.Format("{0}.{1}", childViewObject.TypeName, property.Declaration.PropertyName + "Property");
+                    var valueSetter = String.Format("x => {0}.{1} = x", childIdVar, property.Declaration.PropertyName);
+                    var interpolator = String.Format("{0}.Interpolator", typeValueConverter.GetType().FullName);
+                    var valueGetter = String.Format("() => {0}.{1}", childIdVar, property.Declaration.PropertyName);
+                    var notifyPropertyChanged = String.Format("() => {0}.NotifyPropertyChanged({1})", dependencyPropertyName, childIdVar);
+
+                    sb.AppendLine(indent, "{0}.Add(new Animator<{1}>({2}, {3}, {4}, {5}, {6}, {7}, {8}, EasingFunctions.Get(\"{9}\"), {10}, {11}, {12}, {13}, {14}, {15}, {16}));", stateAnimationId, propertyTypeName, childIdVar,
+                        animator.Duration.ToArg(), animator.StartOffset.ToArg(), animator.AutoReset.ToArg(), animator.AutoReverse.ToArg(), animator.ReverseSpeed.ToArg(), animator.NotifyPropertyChangedWhileAnimating.ToArg(),
+                        animator.EasingFunction, interpolator, valueSetter, valueGetter, notifyPropertyChanged, dependencyPropertyName, fromState, toState);
+                }
+
+                sb.AppendLine(indent, "{0}.StateAnimations.Add({1});", childIdVar, stateAnimationId);
             }
         }
 

@@ -42,7 +42,6 @@ namespace Delight
             dependencyProperties.Add(OffsetProperty);
             dependencyProperties.Add(OffsetFromParentProperty);
             dependencyProperties.Add(PivotProperty);
-            dependencyProperties.Add(LayoutRootProperty);
             dependencyProperties.Add(DisableLayoutUpdateProperty);
             dependencyProperties.Add(AlphaProperty);
             dependencyProperties.Add(IsVisibleProperty);
@@ -145,14 +144,6 @@ namespace Delight
         {
             get { return PivotProperty.GetValue(this); }
             set { PivotProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Delight.LayoutRoot> LayoutRootProperty = new DependencyProperty<Delight.LayoutRoot>("LayoutRoot");
-        /// <summary>Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root.</summary>
-        public Delight.LayoutRoot LayoutRoot
-        {
-            get { return LayoutRootProperty.GetValue(this); }
-            set { LayoutRootProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> DisableLayoutUpdateProperty = new DependencyProperty<System.Boolean>("DisableLayoutUpdate");

@@ -55,7 +55,7 @@ namespace Delight
             ViewActivators.Add("ViewSwitcher", (x, y, z, w, a) => new ViewSwitcher(x, y, z, w, a));
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
-            ViewActivators.Add("ComboBoxExample", (x, y, z, w, a) => new ComboBoxExample(x, y, z, w, a));
+            ViewActivators.Add("ButtonsExample", (x, y, z, w, a) => new ButtonsExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
             ViewActivators.Add("GroupExamples", (x, y, z, w, a) => new GroupExamples(x, y, z, w, a));
             ViewActivators.Add("InputFieldExample", (x, y, z, w, a) => new InputFieldExample(x, y, z, w, a));
@@ -106,7 +106,7 @@ namespace Delight
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("InputField", typeof(InputField));
-            ViewTypes.Add("ComboBoxExample", typeof(ComboBoxExample));
+            ViewTypes.Add("ButtonsExample", typeof(ButtonsExample));
             ViewTypes.Add("GridExample", typeof(GridExample));
             ViewTypes.Add("GroupExamples", typeof(GroupExamples));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));

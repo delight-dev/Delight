@@ -1,14 +1,16 @@
-<DefaultTheme>
+<StandardStyle>
   <Button BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal"
           Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
           Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="30" FontSize="16"
-          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d" /> 
+          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d"
+          StateAnimations="FadeInOutHighlighted" />
   <Button Style="ComboBoxButton" />
   <Label FontSize="16" />
-  <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a" 
-            Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a" 
-            Alternate-BackgroundColor="Gray95" />  
-  <InputField BackgroundColor="White" FontSize="16" FontColor="#000000"  
+  <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a"
+            Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a"
+            Alternate-BackgroundColor="Gray95"
+            StateAnimations="FadeInOutHighlightedFast" />
+  <InputField BackgroundColor="White" FontSize="16" FontColor="#000000"
               Width="400" Height="30" SelectionColor="#ef706a" TextMargin="5,7,5,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22" />
 
@@ -19,7 +21,7 @@
             BackgroundColor="#ffffff" />
   <ComboBoxItem Breadth="30" BackgroundColor="White" Selected-BackgroundColor="#ef706a" Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a" />
 
-  <CheckBox CheckBoxSprite="CheckBox" Checked-CheckBoxSprite="CheckBoxPressed" Height="20" CheckBoxWidth="20" CheckBoxHeight="20" 
+  <CheckBox CheckBoxSprite="CheckBox" Checked-CheckBoxSprite="CheckBoxPressed" Height="20" CheckBoxWidth="20" CheckBoxHeight="20"
             CheckBoxColor="#ffffff" FontSize="16" FontStyle="Normal" FontColor="#ffffff" Spacing="10"
             Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
   <RadioButton RadioButtonSprite="RadioButton" Checked-RadioButtonSprite="RadioButtonPressed" RadioButtonWidth="17" RadioButtonHeight="17" Height="20"
@@ -30,6 +32,31 @@
                       SelectionTabFontColor="#7a6e6e" Highlighted-SelectionTabFontColor="#7a6e6e" Pressed-SelectionTabFontColor="#7a6e6e"
                       SelectionTabBackgroundColor="#f4f4f4" Highlighted-SelectionTabBackgroundColor="#f4f4f4" Pressed-SelectionTabBackgroundColor="#f4f4f4" />
   <NavigationButton Width="30" Height="40" BackgroundColor="#bbbbbb" Highlighted-BackgroundColor="#dddddd" Pressed-BackgroundColor="#ffffff"/>
-  
+
   <Expander Sprite="ExpanderArrowRight" Expanded-Sprite="ExpanderArrowDown" />
-</DefaultTheme> 
+
+  <StateAnimations Id="FadeInOutHighlighted">
+    <StateAnimation From="Any" To="Highlighted">
+      <Animate Property="BackgroundColor" Duration="0.05" />
+      <Animate Property="FontColor" Duration="0.05" />
+    </StateAnimation>
+
+    <StateAnimation From="Highlighted" To="Default">
+      <Animate Property="BackgroundColor" Duration="0.5" />
+      <Animate Property="FontColor" Duration="0.5" />
+    </StateAnimation>
+  </StateAnimations>
+
+  <StateAnimations Id="FadeInOutHighlightedFast">
+    <StateAnimation From="Any" To="Highlighted">
+      <Animate Property="BackgroundColor" Duration="0.05" />
+      <Animate Property="FontColor" Duration="0.05" />
+    </StateAnimation>
+
+    <StateAnimation From="Highlighted" To="Default">
+      <Animate Property="BackgroundColor" Duration="0.2" />
+      <Animate Property="FontColor" Duration="0.2" />
+    </StateAnimation>
+  </StateAnimations>
+
+</StandardStyle> 

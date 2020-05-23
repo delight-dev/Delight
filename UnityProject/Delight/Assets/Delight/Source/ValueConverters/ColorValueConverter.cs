@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 #endregion
 
@@ -16,6 +17,7 @@ namespace Delight
         #region Fields               
 
         public static Dictionary<string, Color> ColorCodes;
+        public static bool UseHsvInterpolator = true;
 
         #endregion
 
@@ -27,7 +29,7 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var convertedValue = Convert(stringValue);
-            return String.Format(CultureInfo.InvariantCulture, "new UnityEngine.Color({0}f, {1}f, {2}f, {3}f)", convertedValue.r, convertedValue.g, convertedValue.b, convertedValue.a);            
+            return String.Format(CultureInfo.InvariantCulture, "new UnityEngine.Color({0}f, {1}f, {2}f, {3}f)", convertedValue.r, convertedValue.g, convertedValue.b, convertedValue.a);
         }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Delight
             }
 
             throw new Exception("Improperly formatted color string. Supported formats: #aarrggbb | #rrggbb | ColorName | r,g,b,a");
-        } 
+        }
 
         /// <summary>
         /// Converts value from object.
@@ -137,6 +139,62 @@ namespace Delight
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override Color Interpolate(Color from, Color to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static Color Interpolator(Color from, Color to, float weight)
+        {
+            if (UseHsvInterpolator)
+            {
+                return HsvInterpolator(from, to, weight);
+            }
+
+            Color aRgb = from != null ? from : Color.black;
+            Color bRgb = to != null ? to : Color.black;
+
+            // simple aRGB interpolation 
+            Color result = new Color(
+                Lerp(aRgb.r, bRgb.r, weight),
+                Lerp(aRgb.g, bRgb.g, weight),
+                Lerp(aRgb.b, bRgb.b, weight),
+                Lerp(aRgb.a, bRgb.a, weight)
+                );
+
+            return result;
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static Color HsvInterpolator(Color from, Color to, float weight)
+        {
+            Color aRgb = from != null ? from : Color.black;
+            Color bRgb = to != null ? to : Color.black;
+
+            // convert colors to HSV
+            ColorHsv a = aRgb.ToHsv();
+            ColorHsv b = bRgb.ToHsv();
+
+            // interpolate values
+            ColorHsv resultHsv = new ColorHsv();
+            resultHsv.Hue = Lerp(a.Hue, b.Hue, weight);
+            resultHsv.Saturation = Lerp(a.Saturation, b.Saturation, weight);
+            resultHsv.Value = Lerp(a.Value, b.Value, weight);
+
+            // convert back to RGB
+            Color result = resultHsv.ToRgb();
+            result.a = Lerp(aRgb.a, bRgb.a, weight);
+            return result;
         }
 
         #endregion

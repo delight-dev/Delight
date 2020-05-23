@@ -14,6 +14,7 @@ using UnityEngine;
 using System.Xml.Serialization;
 using ProtoBuf;
 using NUnit.Framework;
+using System.Globalization;
 #endregion
 
 namespace Delight.Editor.Parser
@@ -58,6 +59,7 @@ namespace Delight.Editor.Parser
         private Dictionary<string, StyleObject> _styleObjects;
         private Dictionary<string, AssetType> _assetTypes;
         private Dictionary<string, SceneObject> _sceneObjects;
+        private Dictionary<string, List<StateAnimationInfo>> _stateAnimations;
         private static ContentObjectModel _contentObjectModel;
 
         #endregion
@@ -320,6 +322,7 @@ namespace Delight.Editor.Parser
             _viewObjects = null;
             _styleObjects = null;
             _sceneObjects = null;
+            _stateAnimations = null;
         }
 
         /// <summary>
@@ -532,11 +535,170 @@ namespace Delight.Editor.Parser
             return propertyBindings;
         }
 
+        /// <summary>
+        /// Gets state animations with the specified id.
+        /// </summary>
+        public List<StateAnimationInfo> GetStateAnimations(string stateAnimationsId)
+        {
+            // initialize state animations dictionary if necessary
+            if (_stateAnimations == null)
+            {
+                _stateAnimations = new Dictionary<string, List<StateAnimationInfo>>();
+
+                // get all state animation declarations with the specified id
+                var stateAnimationsDeclarations = StyleObjects.SelectMany(x =>
+                    x.StyleDeclarations.Where(y => y.ViewName.IEquals("StateAnimations")));
+
+                // parse <StateAnimations> elements
+                foreach (var stateAnimationsDeclaration in stateAnimationsDeclarations)
+                {
+                    var stateAnimationInfos = new List<StateAnimationInfo>();
+
+                    // parse <StateAnimation> elements
+                    foreach (var stateAnimationDeclaration in stateAnimationsDeclaration.ChildDeclarations)
+                    {
+                        if (!stateAnimationDeclaration.ViewName.IEquals("StateAnimation"))
+                        {
+                            ConsoleLogger.LogParseError(stateAnimationDeclaration.StylePath, stateAnimationDeclaration.LineNumber, String.Format("#Delight# Invalid state animation declaration <{0}>. Element should be of type StateAnimation.", stateAnimationDeclaration.ViewName));
+                            continue;
+                        }
+
+                        var stateAnimationInfo = new StateAnimationInfo();
+                        stateAnimationInfos.Add(stateAnimationInfo);
+
+                        // set properties of <StateAnimation> elements
+                        foreach (var propertyAssignment in stateAnimationDeclaration.PropertyAssignments)
+                        {
+                            var propertyName = propertyAssignment.PropertyName;
+                            var propertyValue = propertyAssignment.PropertyValue;
+                            if (propertyName.IEquals("From"))
+                            {
+                                stateAnimationInfo.FromState = propertyValue;
+                                continue;
+                            }
+                            else if (propertyName.IEquals("To"))
+                            {
+                                stateAnimationInfo.ToState = propertyValue;
+                                continue;
+                            }
+                            else
+                            {
+                                ConsoleLogger.LogParseError(stateAnimationDeclaration.StylePath, propertyAssignment.LineNumber, String.Format("#Delight# Invalid state animation declaration <{0} {1}=\"{2}\">. Unrecognized property.", stateAnimationDeclaration.ViewName, propertyName, propertyValue));
+                                continue;
+                            }
+                        }
+
+                        // parse <Animate> elements
+                        foreach (var animateDeclaration in stateAnimationDeclaration.ChildDeclarations)
+                        {
+                            if (!animateDeclaration.ViewName.IEquals("Animate"))
+                            {
+                                ConsoleLogger.LogParseError(stateAnimationDeclaration.StylePath, stateAnimationDeclaration.LineNumber, String.Format("#Delight# Invalid state animation declaration <{0}>. Element should be of type Animate.", stateAnimationDeclaration.ViewName));
+                                continue;
+                            }
+
+                            var animateInfo = new AnimateInfo();
+                            stateAnimationInfo.AnimateInfos.Add(animateInfo);
+
+                            // set properties of <Animate> elements
+                            foreach (var propertyAssignment in animateDeclaration.PropertyAssignments)
+                            {
+                                var propertyName = propertyAssignment.PropertyName;
+                                var propertyValue = propertyAssignment.PropertyValue;
+                                if (propertyName.IEquals("From"))
+                                {
+                                    animateInfo.From = propertyValue;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("To"))
+                                {
+                                    animateInfo.To = propertyValue;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("Property"))
+                                {
+                                    animateInfo.Property = propertyValue;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("NotifyPropertyChangedWhileAnimating"))
+                                {
+                                    bool.TryParse(propertyValue, out animateInfo.NotifyPropertyChangedWhileAnimating);
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("AutoReset"))
+                                {
+                                    bool.TryParse(propertyValue, out animateInfo.AutoReset);
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("AutoReverse"))
+                                {
+                                    bool.TryParse(propertyValue, out animateInfo.AutoReverse);
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("ReverseSpeed"))
+                                {
+                                    float reverseSpeed = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
+                                    animateInfo.ReverseSpeed = reverseSpeed;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("Duration"))
+                                {
+                                    float duration = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
+                                    animateInfo.Duration = duration;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("StartOffset"))
+                                {
+                                    float startOffset = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
+                                    animateInfo.StartOffset = startOffset;
+                                    continue;
+                                }
+                                else if (propertyName.IEquals("EasingFunction"))
+                                {
+                                    animateInfo.EasingFunction = propertyValue;
+                                    continue;
+                                }
+                                else
+                                {
+                                    ConsoleLogger.LogParseError(stateAnimationDeclaration.StylePath, propertyAssignment.LineNumber, String.Format("#Delight# Invalid state animation declaration <{0} {1}=\"{2}\">. Unrecognized property.", animateDeclaration.ViewName, propertyName, propertyValue));
+                                    continue;
+                                }
+                            } // end of foreach <Animate> property
+                        } // end foreach <Animate>
+                    } // end foreach <StateAnimation>
+
+                    // update dictionary
+                    if (!_stateAnimations.ContainsKey(stateAnimationsDeclaration.StyleName))
+                    {
+                        _stateAnimations.Add(stateAnimationsDeclaration.StyleName, stateAnimationInfos);
+                    }
+                    else
+                    {
+                        _stateAnimations[stateAnimationsDeclaration.StyleName].AddRange(stateAnimationInfos);
+                    }
+                } // end foreach <StateAnimations>
+            } // end if 
+
+            // get state animations from dictionary
+            List<StateAnimationInfo> stateAnimations;
+            if (_stateAnimations.TryGetValue(stateAnimationsId, out stateAnimations))
+            {
+                return stateAnimations;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
     }
 
     #region View Object
 
+    /// <summary>
+    /// Contains information about a view object as defined by a view XML.
+    /// </summary>
     [ProtoContract]
     public class ViewObject
     {
@@ -595,6 +757,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(20)]
         public bool IsLocked;
+
+        [ProtoMember(21)]
+        public string StateAnimations;
 
         public List<MappedPropertyDeclaration> MappedPropertyDeclarations;
         public bool HasUpdatedItsMappedProperties;
@@ -663,6 +828,7 @@ namespace Delight.Editor.Parser
             HasNonDefaultTypeName = false;
             IsEditorView = false;
             IsLocked = false;
+            StateAnimations = null;
         }
 
         public List<ViewDeclarationInfo> GetViewDeclarations(bool includeInheritedDeclarations)
@@ -719,6 +885,9 @@ namespace Delight.Editor.Parser
         #endregion
     }
 
+    /// <summary>
+    /// Wraps and adds additional information to a property declaration.
+    /// </summary>
     public class PropertyDeclarationInfo
     {
         public PropertyDeclaration Declaration;
@@ -739,10 +908,41 @@ namespace Delight.Editor.Parser
         }
     }
 
+    /// <summary>
+    /// Wraps and adds additional information to a view declaration.
+    /// </summary>
     public class ViewDeclarationInfo
     {
         public ViewDeclaration Declaration;
         public bool IsInherited;
+    }
+
+    /// <summary>
+    /// State animation information as parsed from a style declaration.
+    /// </summary>
+    public class StateAnimationInfo
+    {
+        public StyleDeclaration StyleDeclaration;
+        public List<AnimateInfo> AnimateInfos = new List<AnimateInfo>();
+        public string FromState;
+        public string ToState;
+    }
+
+    /// <summary>
+    /// Animate information. 
+    /// </summary>
+    public class AnimateInfo
+    {
+        public bool NotifyPropertyChangedWhileAnimating;
+        public bool AutoReset;
+        public bool AutoReverse;
+        public float ReverseSpeed;
+        public float Duration;
+        public float StartOffset;
+        public string From;
+        public string To;
+        public string Property;
+        public string EasingFunction = "Linear";
     }
 
     /// <summary>
@@ -907,6 +1107,17 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(5, AsReference = true)]
         public StyleDeclaration StyleDeclaration;
+
+        /// <summary>
+        /// Indicates if property assignment is for a view object attribute rather than property. 
+        /// </summary>
+        public bool IsAttribute
+        {
+            get
+            {
+                return PropertyName.IEquals("StateAnimations");
+            }
+        }
 
         public PropertyDeclarationInfo PropertyDeclarationInfo;
     }
@@ -1331,6 +1542,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(8)]
         public string BasedOnName;
 
+        [ProtoMember(9, AsReference = true)]
+        public List<StyleDeclaration> ChildDeclarations;
+
         public StyleDeclaration BasedOn;
 
         #endregion
@@ -1341,6 +1555,7 @@ namespace Delight.Editor.Parser
         {
             PropertyAssignments = new List<PropertyAssignment>();
             PropertyBindings = new List<PropertyBinding>();
+            ChildDeclarations = new List<StyleDeclaration>();
         }
 
         #endregion

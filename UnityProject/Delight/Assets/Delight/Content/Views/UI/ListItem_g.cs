@@ -19,6 +19,13 @@ namespace Delight
             if (deferInitialization)
                 return;
 
+            this.StateAnimations.Clear();
+            var stateAnimation0 = new StateAnimation(AnyStateName, "Highlighted");
+            stateAnimation0.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => ListItem.BackgroundColorProperty.NotifyPropertyChanged(this), ListItem.BackgroundColorProperty, AnyStateName, "Highlighted"));
+            this.StateAnimations.Add(stateAnimation0);
+            var stateAnimation1 = new StateAnimation("Highlighted", DefaultStateName);
+            stateAnimation1.Add(new Animator<UnityEngine.Color>(this, 0.2f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => ListItem.BackgroundColorProperty.NotifyPropertyChanged(this), ListItem.BackgroundColorProperty, "Highlighted", DefaultStateName));
+            this.StateAnimations.Add(stateAnimation1);
             Click.RegisterHandler(this, "ListItemMouseClick");
             MouseEnter.RegisterHandler(this, "ListItemMouseEnter");
             MouseExit.RegisterHandler(this, "ListItemMouseExit");

@@ -53,6 +53,14 @@ namespace Delight
             return objectValue;
         }
 
+        /// <summary>
+        /// Interpolates values for type. 
+        /// </summary>
+        public virtual object InterpolateGeneric(object from, object to, float weight)
+        {
+            return weight < 1f ? from : to;
+        }
+
         #endregion
     }
 
@@ -99,6 +107,30 @@ namespace Delight
         public override object ConvertGeneric(object objectValue)
         {
             return Convert(objectValue);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public virtual T Interpolate(T from, T to, float weight)
+        {
+            return weight < 1f ? from : to;
+        }
+
+        /// <summary>
+        /// Interpolates values for type. 
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((T)from, (T)to, weight);
+        }
+
+        /// <summary>
+        /// Linear interpolation between two float values.
+        /// </summary>
+        public static float Lerp(float from, float to, float weight)
+        {
+            return (1f - weight) * from + weight * to;
         }
 
         #endregion

@@ -325,13 +325,6 @@ namespace Delight
             set { CheckBoxImageView.Pivot = value; }
         }
 
-        public readonly static DependencyProperty CheckBoxLayoutRootProperty = Image.LayoutRootProperty;
-        public Delight.LayoutRoot CheckBoxLayoutRoot
-        {
-            get { return CheckBoxImageView.LayoutRoot; }
-            set { CheckBoxImageView.LayoutRoot = value; }
-        }
-
         public readonly static DependencyProperty CheckBoxDisableLayoutUpdateProperty = Image.DisableLayoutUpdateProperty;
         public System.Boolean CheckBoxDisableLayoutUpdate
         {
@@ -989,13 +982,6 @@ namespace Delight
         {
             get { return CheckBoxLabel.Pivot; }
             set { CheckBoxLabel.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty CheckBoxLabelLayoutRootProperty = Label.LayoutRootProperty;
-        public Delight.LayoutRoot CheckBoxLabelLayoutRoot
-        {
-            get { return CheckBoxLabel.LayoutRoot; }
-            set { CheckBoxLabel.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelDisableLayoutUpdateProperty = Label.DisableLayoutUpdateProperty;
