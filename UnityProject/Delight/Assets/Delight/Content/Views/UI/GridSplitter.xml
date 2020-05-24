@@ -2,7 +2,6 @@
               Thickness="t:ElementSize = 10"
               InteractionThickness="t:ElementSize"
               SetSizeOnDragEnded="t:bool"
-              IsEnabled="t:bool = True"
               HasContentTemplates="True"
               SplitMode="t:SplitMode = RowsAndColumns"
               SplitterColor="t:Color = Clear"

@@ -9,6 +9,9 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
+    /// <summary>
+    /// Defines the header of an expander.
+    /// </summary>
     public partial class ExpanderHeader
     {
         #region Fields

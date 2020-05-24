@@ -9,8 +9,10 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
+    /// <summary>
+    /// Defines the content of an expander.
+    /// </summary>
     public partial class ExpanderContent
     {
-
     }
 }

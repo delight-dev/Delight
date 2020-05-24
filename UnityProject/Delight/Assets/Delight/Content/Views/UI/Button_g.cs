@@ -189,6 +189,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> DisplayLabelProperty = new DependencyProperty<System.Boolean>("DisplayLabel");
+        /// <summary>Boolean indicating if the button label should be displayed.</summary>
         public System.Boolean DisplayLabel
         {
             get { return DisplayLabelProperty.GetValue(this); }

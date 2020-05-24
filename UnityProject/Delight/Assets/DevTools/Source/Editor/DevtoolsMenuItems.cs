@@ -346,13 +346,16 @@ namespace Delight.Editor
                 foreach (var propertyDeclaration in propertyDeclarations)
                 {
                     if (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.Template ||
-                        propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View || 
-                        propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.UnityComponent)
+                        propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.UnityComponent ||
+                        (propertyDeclaration.Declaration.DeclarationType == PropertyDeclarationType.View && !propertyDeclaration.IsMapped))
                         continue; // ignore component, template and view properties as we'll generate default docs for those
 
                     var docProperty = docObject?.Properties.FirstOrDefault(x => x.Name == propertyDeclaration.Declaration.PropertyName);
-                    string comment = docProperty?.Comment ?? string.Empty;
-
+                    if (!String.IsNullOrEmpty(docProperty?.Comment))
+                        continue; // ignore properties that already have comments
+                    
+                    // add empty entries for properties that aren't commented
+                    string comment = string.Empty;
                     sb.AppendLine("- {0}: {1}", propertyDeclaration.Declaration.PropertyName, comment);
                 }
 

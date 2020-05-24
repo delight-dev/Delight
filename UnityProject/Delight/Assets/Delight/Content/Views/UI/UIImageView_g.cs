@@ -66,6 +66,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> MaskContentProperty = new DependencyProperty<System.Boolean>("MaskContent");
+        /// <summary>Boolean indicating if content of the view should be masked.</summary>
         public System.Boolean MaskContent
         {
             get { return MaskContentProperty.GetValue(this); }

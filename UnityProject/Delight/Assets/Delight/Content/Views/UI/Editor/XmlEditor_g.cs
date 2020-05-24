@@ -193,6 +193,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsReadOnlyProperty = new DependencyProperty<System.Boolean>("IsReadOnly");
+        /// <summary>Boolean indicating if the editor is in read-only mode.</summary>
         public System.Boolean IsReadOnly
         {
             get { return IsReadOnlyProperty.GetValue(this); }

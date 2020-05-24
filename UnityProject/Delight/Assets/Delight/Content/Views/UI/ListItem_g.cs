@@ -142,6 +142,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        /// <summary>Action called when item is selected.</summary>
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }

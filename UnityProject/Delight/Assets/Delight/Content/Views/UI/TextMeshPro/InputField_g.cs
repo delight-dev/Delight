@@ -300,6 +300,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, TMPro.TMP_InputField, InputField> SelectionColorProperty = new MappedDependencyProperty<UnityEngine.Color, TMPro.TMP_InputField, InputField>("SelectionColor", x => x.TMP_InputFieldComponent, x => x.selectionColor, (x, y) => x.selectionColor = y);
+        /// <summary>Color of the selection.</summary>
         public UnityEngine.Color SelectionColor
         {
             get { return SelectionColorProperty.GetValue(this); }
@@ -531,6 +532,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> SelectionFocusPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("SelectionFocusPosition", x => x.TMP_InputFieldComponent, x => x.selectionFocusPosition, (x, y) => x.selectionFocusPosition = y);
+        /// <summary>Selection focus position.</summary>
         public System.Int32 SelectionFocusPosition
         {
             get { return SelectionFocusPositionProperty.GetValue(this); }
@@ -546,6 +548,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField> SelectionStringAnchorPositionProperty = new MappedDependencyProperty<System.Int32, TMPro.TMP_InputField, InputField>("SelectionStringAnchorPosition", x => x.TMP_InputFieldComponent, x => x.selectionStringAnchorPosition, (x, y) => x.selectionStringAnchorPosition = y);
+        /// <summary>Selection string anchor position.</summary>
         public System.Int32 SelectionStringAnchorPosition
         {
             get { return SelectionStringAnchorPositionProperty.GetValue(this); }

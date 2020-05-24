@@ -1933,7 +1933,6 @@
     <xs:attribute name="Thickness" type="xs:string" />
     <xs:attribute name="InteractionThickness" type="xs:string" />
     <xs:attribute name="SetSizeOnDragEnded" type="xs:string" />
-    <xs:attribute name="IsEnabled" type="xs:string" />
     <xs:attribute name="SplitMode" type="Enum_SplitMode" />
     <xs:attribute name="SplitterColor" type="xs:string" />
     <xs:attribute name="SplitterSprite" type="Asset_SpriteAsset" />

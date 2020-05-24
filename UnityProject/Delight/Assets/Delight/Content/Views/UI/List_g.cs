@@ -267,6 +267,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsPagedProperty = new DependencyProperty<System.Boolean>("IsPaged");
+        /// <summary>Boolean indicating if the list is paged. Customize paging through, e.g. PageSize and ShowNavigationButtons properties.</summary>
         public System.Boolean IsPaged
         {
             get { return IsPagedProperty.GetValue(this); }
@@ -274,6 +275,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Int32> PageSizeProperty = new DependencyProperty<System.Int32>("PageSize");
+        /// <summary>Number of items to be shown per page when IsPaged is set to true.</summary>
         public System.Int32 PageSize
         {
             get { return PageSizeProperty.GetValue(this); }
@@ -281,6 +283,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Int32> PageIndexProperty = new DependencyProperty<System.Int32>("PageIndex");
+        /// <summary>Zero-based index of the current page being displayed if IsPaged is set to true.</summary>
         public System.Int32 PageIndex
         {
             get { return PageIndexProperty.GetValue(this); }
@@ -288,6 +291,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> PageNavigationGroupOffsetProperty = new DependencyProperty<Delight.ElementMargin>("PageNavigationGroupOffset");
+        /// <summary>Default offset of page navigation button group.</summary>
         public Delight.ElementMargin PageNavigationGroupOffset
         {
             get { return PageNavigationGroupOffsetProperty.GetValue(this); }
@@ -295,6 +299,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> PageNavigationGroupAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("PageNavigationGroupAlignment");
+        /// <summary>Default alignment of page navigation button group.</summary>
         public Delight.ElementAlignment PageNavigationGroupAlignment
         {
             get { return PageNavigationGroupAlignmentProperty.GetValue(this); }
@@ -302,6 +307,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementOrientation> PageNavigationGroupOrientationProperty = new DependencyProperty<Delight.ElementOrientation>("PageNavigationGroupOrientation");
+        /// <summary>Default orientation of page navigation button group.</summary>
         public Delight.ElementOrientation PageNavigationGroupOrientation
         {
             get { return PageNavigationGroupOrientationProperty.GetValue(this); }
@@ -309,6 +315,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> PageNavigationGroupSpacingProperty = new DependencyProperty<Delight.ElementSize>("PageNavigationGroupSpacing");
+        /// <summary>Default spacing of page navigation button group.</summary>
         public Delight.ElementSize PageNavigationGroupSpacing
         {
             get { return PageNavigationGroupSpacingProperty.GetValue(this); }
@@ -316,6 +323,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.NavigationButtonsVisibility> ShowNavigationButtonsProperty = new DependencyProperty<Delight.NavigationButtonsVisibility>("ShowNavigationButtons");
+        /// <summary>Enum indicating which navigation buttons should be shown when list is paged.</summary>
         public Delight.NavigationButtonsVisibility ShowNavigationButtons
         {
             get { return ShowNavigationButtonsProperty.GetValue(this); }

@@ -34,7 +34,6 @@ namespace Delight
             dependencyProperties.Add(ThicknessProperty);
             dependencyProperties.Add(InteractionThicknessProperty);
             dependencyProperties.Add(SetSizeOnDragEndedProperty);
-            dependencyProperties.Add(IsEnabledProperty);
             dependencyProperties.Add(SplitModeProperty);
             dependencyProperties.Add(SplitterColorProperty);
             dependencyProperties.Add(SplitterSpriteProperty);
@@ -68,13 +67,6 @@ namespace Delight
         {
             get { return SetSizeOnDragEndedProperty.GetValue(this); }
             set { SetSizeOnDragEndedProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.Boolean> IsEnabledProperty = new DependencyProperty<System.Boolean>("IsEnabled");
-        public System.Boolean IsEnabled
-        {
-            get { return IsEnabledProperty.GetValue(this); }
-            set { IsEnabledProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.SplitMode> SplitModeProperty = new DependencyProperty<Delight.SplitMode>("SplitMode");
@@ -150,7 +142,6 @@ namespace Delight
                     _gridSplitter.Name = "GridSplitter";
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_gridSplitter, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.GridSplitter.IsEnabledProperty.SetDefault(_gridSplitter, true);
                     Delight.GridSplitter.SplitModeProperty.SetDefault(_gridSplitter, Delight.SplitMode.RowsAndColumns);
                     Delight.GridSplitter.SplitterColorProperty.SetDefault(_gridSplitter, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.GridSplitter.OverrideProportionalSizeProperty.SetDefault(_gridSplitter, true);

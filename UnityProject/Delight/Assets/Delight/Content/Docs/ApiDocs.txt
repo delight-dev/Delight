@@ -14,6 +14,7 @@
 - TextPadding: Padding applied when the button autosizes to its content.
 - ToggleClick: Action called when the button is toggled.
 - ToggleValue: Toggle value of the button.
+- DisplayLabel: Boolean indicating if the button label should be displayed.
 
 CanvasRenderer: Renders a graphical UI object contained within a Canvas.
 - Cull: Indicates whether geometry emitted by the renderer is ignored.
@@ -44,6 +45,24 @@ DelightDesigner: Designer for editing view XML and data models during runtime.
 - AutoParse: Boolean indicating if the designer should automatically parse XML of views as they changes.
 - ChangedDesignerViews: List of views that has been changed by the designer.
 - DesignerViews: List of views that can be edited by the designer.
+
+Expander: Expandable view with a header and content. When header is clicked the view expands to show content or collapses to hide it.
+- ContentMargin: Margin of the expanded content.
+- HeaderAlignment: Alignment of the expander header.
+- HeaderHeight: Height of the expander header.
+- IsDisabled: Boolean indicating if the expander button is deisabled.
+- IsExpanded: Boolean indicating if content is expanded.
+- IsInteractable: Boolean indicating if expander responds to user interaction.
+- Sprite: Expander header icon sprite.
+- Text: Expander header text.
+- ToggleMode: Enum indicating how the content should be toggled, e.g. if content should be loaded on-demand or be pre-loaded.
+
+ExpanderContent: Defines the content of an expander.
+- ContentTemplateData: Holds the content template data.
+
+ExpanderHeader: Defines the header of an expander.
+- Sprite: Expander header icon sprite.
+- Text: Expander header text.
 
 Frame: View that resizes itself to its content by default.
 - AutoSizeToContent: Boolean indicating if the view should resize itself to its content.
@@ -136,9 +155,9 @@ InputField: Interactable input field enabling user to type single or multi-line 
 - RichText: Boolean indicating if input is rich text.
 - ScrollSensitivity: Indicates the sensitivity of scrolling the input field text.
 - SelectionAnchorPosition: Determines the anchor position of selection.
-- SelectionColor: 
-- SelectionFocusPosition: 
-- SelectionStringAnchorPosition: 
+- SelectionColor: Color of the selection.
+- SelectionFocusPosition: Selection focus position.
+- SelectionStringAnchorPosition: Selection string anchor position.
 - SelectionStringFocusPosition: Determines the focus position of the selection string.
 - SetValueOnEndEdit: Boolean indicating if the value of the input field text should be set after the user is done editing.
 - ShouldHideMobileInput: Boolean indicating if mobile input should be hidden.
@@ -238,6 +257,7 @@ List: The list presents a static or dynamic list of items. Can be set to be scro
 - DeselectAfterSelect: Boolean indicating if the item should immediatelly be deselected after being selected.
 - DisableItemArrangement: Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere.
 - HorizontalSpacing: Horizontal spacing between the list items.
+- IsPaged: Boolean indicating if the list is paged. Customize paging through, e.g. PageSize and ShowNavigationButtons properties.
 - IsScrollable: Boolean indicating if the list can be scrolled.
 - IsStatic: Boolean indicating if the list is static.
 - IsVirtualized: Boolean indicating if the list is virtualized. Virtualized lists have far better performance when dealing with large number of items as only items visible in the viewport are generated.
@@ -246,9 +266,16 @@ List: The list presents a static or dynamic list of items. Can be set to be scro
 - Orientation: Orientation of the list.
 - Overflow: Enum indicating if items should overflow or wrap as they reach the boundaries of the list. Used to create flowing lists.
 - Padding: Adds padding to the list.
+- PageIndex: Zero-based index of the current page being displayed if IsPaged is set to true. 
+- PageNavigationGroupAlignment: Default alignment of page navigation button group.
+- PageNavigationGroupOffset: Default offset of page navigation button group.
+- PageNavigationGroupOrientation: Default orientation of page navigation button group.
+- PageNavigationGroupSpacing: Default spacing of page navigation button group.
+- PageSize: Number of items to be shown per page when IsPaged is set to true.
 - RealizationMargin: Used when IsVirtualized is set to true and determines how close the list item needs to be to the visible viewport in order to be realized.
 - SelectedItem: References the data collection item that corresponds to the currently selected list item.
 - SelectOnMouseUp: Boolean indicating if list items should be selected on mouse up.
+- ShowNavigationButtons: Enum indicating which navigation buttons should be shown when list is paged. 
 - SortDirection: Determines the sort direction of the list items.
 - Spacing: Horizontal and vertical spacing between the list items.
 - VerticalSpacing: Vertical spacing between the list items.
@@ -264,10 +291,15 @@ ListItem: Base view for items displayed within the List view.
 - IsPressed: Boolean indicating if the list item is pressed.
 - IsSelected: Boolean indicating if the list item is selected.
 - Item: References the data collection item bound to this list item (set when the list item resides in a dynamic list).
+- ItemSelected: Action called when item is selected.
 - Length: The length of the list item that corresponds to Height if list is horizontal and Width if vertical.
 
 Mask: A view that masks any content using the background sprite and color as mask.
 - ShowMaskGraphic: Show the graphic that is associated with the Mask render area.
+
+NavigationButton: Used to customize the navigation buttons of e.g. paged lists.
+- NavigationType: Type of navigation button this button represents.
+- PageIndex: Set programmatically to keep track of which page this button navigates to. 
 
 RadioButton: Presents a one-of-many selection option. If multiple radio buttons shares the same parent only one is selected at a time.
 - Text: Radio button text. 
@@ -419,6 +451,7 @@ UIImageView: Base class for views that has a background sprite and color.
 - BackgroundSprite: The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".
 - BackgroundType: Enum indicating what type of sprite the background is.
 - BackgroundUseSpriteMesh: Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.
+- MaskContent: Boolean indicating if content of the view should be masked.
 
 UIView: Base class for UI views. Has properties for doing layout: Width, Height, Margin, Alignment and Offset.
 - Alignment: Used to align the view relative to the layout parent region it resides in.
@@ -479,6 +512,7 @@ XmlEditor: Editor for changing view XML during runtime, part of the designer.
 - DesignerViews: Contains the list of all views.
 - Edit: Action called when the user edits the view.
 - IsFocused: Boolean indicating if the editor is focused.
+- IsReadOnly: Boolean indicating if the editor is in read-only mode.
 - SelectedAutoCompleteOption: The currently selected auto-complete option.
 - XmlText: Used to set the XML text in the editor.
 

@@ -42,6 +42,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.String> TextProperty = new DependencyProperty<System.String>("Text");
+        /// <summary>Expander header text.</summary>
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
@@ -49,6 +50,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<SpriteAsset> SpriteProperty = new DependencyProperty<SpriteAsset>("Sprite");
+        /// <summary>Expander header icon sprite.</summary>
         public SpriteAsset Sprite
         {
             get { return SpriteProperty.GetValue(this); }

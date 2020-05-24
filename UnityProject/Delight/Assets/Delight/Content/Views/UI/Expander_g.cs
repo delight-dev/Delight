@@ -47,6 +47,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<System.Boolean> IsExpandedProperty = new DependencyProperty<System.Boolean>("IsExpanded");
+        /// <summary>Boolean indicating if content is expanded.</summary>
         public System.Boolean IsExpanded
         {
             get { return IsExpandedProperty.GetValue(this); }
@@ -54,6 +55,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsDisabledProperty = new DependencyProperty<System.Boolean>("IsDisabled");
+        /// <summary>Boolean indicating if the expander button is deisabled.</summary>
         public System.Boolean IsDisabled
         {
             get { return IsDisabledProperty.GetValue(this); }
@@ -61,6 +63,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
+        /// <summary>Boolean indicating if expander responds to user interaction.</summary>
         public System.Boolean IsInteractable
         {
             get { return IsInteractableProperty.GetValue(this); }
@@ -68,6 +71,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> HeaderHeightProperty = new DependencyProperty<Delight.ElementSize>("HeaderHeight");
+        /// <summary>Height of the expander header.</summary>
         public Delight.ElementSize HeaderHeight
         {
             get { return HeaderHeightProperty.GetValue(this); }
@@ -75,6 +79,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> ContentMarginProperty = new DependencyProperty<Delight.ElementMargin>("ContentMargin");
+        /// <summary>Margin of the expanded content.</summary>
         public Delight.ElementMargin ContentMargin
         {
             get { return ContentMarginProperty.GetValue(this); }
@@ -82,6 +87,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> HeaderAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("HeaderAlignment");
+        /// <summary>Alignment of the expander header.</summary>
         public Delight.ElementAlignment HeaderAlignment
         {
             get { return HeaderAlignmentProperty.GetValue(this); }
@@ -89,6 +95,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.String> TextProperty = new DependencyProperty<System.String>("Text");
+        /// <summary>Expander header text.</summary>
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
@@ -96,6 +103,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<SpriteAsset> SpriteProperty = new DependencyProperty<SpriteAsset>("Sprite");
+        /// <summary>Expander header icon sprite.</summary>
         public SpriteAsset Sprite
         {
             get { return SpriteProperty.GetValue(this); }
@@ -103,6 +111,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.SwitchMode> ToggleModeProperty = new DependencyProperty<Delight.SwitchMode>("ToggleMode");
+        /// <summary>Enum indicating how the content should be toggled, e.g. if content should be loaded on-demand or be pre-loaded.</summary>
         public Delight.SwitchMode ToggleMode
         {
             get { return ToggleModeProperty.GetValue(this); }

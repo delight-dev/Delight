@@ -41,6 +41,7 @@ namespace Delight
         #region Properties
 
         public readonly static DependencyProperty<Delight.NavigationButtonType> NavigationTypeProperty = new DependencyProperty<Delight.NavigationButtonType>("NavigationType");
+        /// <summary>Type of navigation button this button represents.</summary>
         public Delight.NavigationButtonType NavigationType
         {
             get { return NavigationTypeProperty.GetValue(this); }
@@ -48,6 +49,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Int32> PageIndexProperty = new DependencyProperty<System.Int32>("PageIndex");
+        /// <summary>Set programmatically to keep track of which page this button navigates to.</summary>
         public System.Int32 PageIndex
         {
             get { return PageIndexProperty.GetValue(this); }
