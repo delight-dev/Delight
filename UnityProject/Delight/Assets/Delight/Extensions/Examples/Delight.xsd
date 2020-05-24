@@ -247,6 +247,7 @@
   <xs:simpleType name="Style_Button">
     <xs:restriction base="xs:string">
       <xs:enumeration value="ComboBoxButton" />
+      <xs:enumeration value="MainMenuDemoButton" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -7518,8 +7519,8 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:element name="ExamplesTheme" type="ExamplesTheme" />
-  <xs:complexType name="ExamplesTheme">
+  <xs:element name="ExamplesStyles" type="ExamplesStyles" />
+  <xs:complexType name="ExamplesStyles">
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
@@ -7947,6 +7948,8 @@
       <xs:enumeration value="LevelSelectRightArrow" />
       <xs:enumeration value="LevelSelectPageButton" />
       <xs:enumeration value="LevelSelectPageButtonPressed" />
+      <xs:enumeration value="MainMenuDemoButton" />
+      <xs:enumeration value="MainMenuDemoButtonPressed" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -7980,6 +7983,8 @@
       <xs:enumeration value="LevelSelectRightArrow" />
       <xs:enumeration value="LevelSelectPageButtonPressed" />
       <xs:enumeration value="LevelSelectPageButton" />
+      <xs:enumeration value="MainMenuDemoButtonPressed" />
+      <xs:enumeration value="MainMenuDemoButton" />
     </xs:restriction>
   </xs:simpleType>
 

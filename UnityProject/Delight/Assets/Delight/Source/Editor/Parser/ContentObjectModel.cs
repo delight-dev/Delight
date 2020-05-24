@@ -691,6 +691,27 @@ namespace Delight.Editor.Parser
             }
         }
 
+        /// <summary>
+        /// Gets the names of all styles that are defined for the specified view.
+        /// </summary>
+        public List<string> GetStyleNames(string viewName)
+        {
+            var styleDeclarations = StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => !String.IsNullOrEmpty(y.StyleName) && y.ViewName.IEquals(viewName)).Select(z => z.StyleName));
+            return styleDeclarations.Distinct().OrderBy(x => x).ToList();
+        }
+
+        /// <summary>
+        /// Gets the names of all state animations that are defined for the specified view.
+        /// </summary>
+        public List<string> GetStateAnimationsNames(string viewName)
+        {
+            // TODO currently state animations can't be restricted to specific views, we might want to add the option if auto-complete suggests too many irrelevant options
+            var styleDeclarations = StyleObjects.SelectMany(x =>
+                x.StyleDeclarations.Where(y => !String.IsNullOrEmpty(y.StyleName) && y.ViewName.IEquals("StateAnimations")).Select(z => z.StyleName));
+            return styleDeclarations.Distinct().OrderBy(x => x).ToList();
+        }
+
         #endregion
     }
 

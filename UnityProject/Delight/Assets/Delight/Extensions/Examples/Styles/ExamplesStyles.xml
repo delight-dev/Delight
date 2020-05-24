@@ -1,0 +1,10 @@
+<ExamplesStyles>
+  <ScrollableRegion HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
+                    HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"
+                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf"
+                    HorizontalScrollbarBarMargin="3,5,3,5" VerticalScrollbarBarMargin="5,3,5,3" />
+  <Button Style="MainMenuDemoButton" BackgroundSprite="MainMenuDemoButton" Pressed-BackgroundSprite="MainMenuDemoButtonPressed" 
+          BackgroundColor="White" Highlighted-BackgroundColor="White" Pressed-BackgroundColor="White" Width="218" Height="117"
+          FontSize="40" Font="AveriaSansLibre-Bold SDF" TextOffset="0,0,0,6" StateAnimations="" 
+          FontColor="White" Highlighted-FontColor="White" Pressed-FontColor="White" />
+</ExamplesStyles> 
