@@ -28,7 +28,7 @@ namespace Delight
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
-            Button1.Click.RegisterHandler(this, "Play");
+            Button1.Click.RegisterHandler(this, "PlayClick");
             Button2 = new Button(this, Group1.Content, "Button2", Button2Template);
             Button2.Click.RegisterHandler(this, "ShowOptions");
             Button3 = new Button(this, Group1.Content, "Button3", Button3Template);
@@ -45,6 +45,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(MainMenuExampleTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(PlayProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Label1Property);
@@ -62,6 +63,13 @@ namespace Delight
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<ViewAction> PlayProperty = new DependencyProperty<ViewAction>("Play", () => new ViewAction());
+        public ViewAction Play
+        {
+            get { return PlayProperty.GetValue(this); }
+            set { PlayProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
         public Image Image1

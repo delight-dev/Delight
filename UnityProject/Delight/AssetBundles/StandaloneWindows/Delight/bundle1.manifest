@@ -1,5 +1,5 @@
 ManifestFileVersion: 0
-CRC: 452600910
+CRC: 2745449357
 Hashes:
   AssetFileHash:
     serializedVersion: 2
@@ -14,6 +14,6 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
-- Assets/Delight/Extensions/Examples/Assets/Bundle1/Sprites/Frame2.psd
-- Assets/Delight/Extensions/Examples/Assets/Bundle1/Sprites/Frame1.psd
+- Assets/Delight/Extensions/Examples/Assets/Bundle1/Frame2.psd
+- Assets/Delight/Extensions/Examples/Assets/Bundle1/Frame1.psd
 Dependencies: []

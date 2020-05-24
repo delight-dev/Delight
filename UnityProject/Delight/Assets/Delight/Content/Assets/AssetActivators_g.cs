@@ -64,6 +64,7 @@ namespace Delight
             ViewActivators.Add("ScrollExample", (x, y, z, w, a) => new ScrollExample(x, y, z, w, a));
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
+            ViewActivators.Add("MainMenuDemoScene", (x, y, z, w, a) => new MainMenuDemoScene(x, y, z, w, a));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
@@ -115,6 +116,7 @@ namespace Delight
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
+            ViewTypes.Add("MainMenuDemoScene", typeof(MainMenuDemoScene));
 
             AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));

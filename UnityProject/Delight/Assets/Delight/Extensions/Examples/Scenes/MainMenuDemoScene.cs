@@ -9,20 +9,17 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
-    public partial class MainMenuExample
+    public partial class MainMenuDemoScene
     {
-        public void PlayClick()
+        public void MainMenuPlay()
         {
-            Play?.Invoke(this, null);
+            SubmenuSwitcher.SwitchTo(LevelSelectWindow);
         }
 
-        public void ShowOptions()
+        public void LevelSelectNavigateBack()
         {
+            SubmenuSwitcher.SwitchTo(MainMenuWindow);
         }
 
-        public void Quit()
-        {
-            Application.Quit();
-        }
     }
 }

@@ -11,5 +11,9 @@ namespace Delight
 {
     public partial class LevelSelectExample
     {
+        public void BackButtonClick()
+        {
+            NavigateBack?.Invoke(this, null);
+        }
     }
 }

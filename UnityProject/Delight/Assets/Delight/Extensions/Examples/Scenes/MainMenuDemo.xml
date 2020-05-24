@@ -1,0 +1,13 @@
+<MainMenuDemoScene xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../../../../../../../../../Delight.xsd">
+
+  <ViewSwitcher Id="SubmenuSwitcher">
+    
+    <!-- first view, main menu buttons, are shown by default -->
+    <MainMenuExample Id="MainMenuWindow" Play="MainMenuPlay" />
+    
+    <!-- second view, level select, is shown when play button is clicked -->
+    <LevelSelectExample Id="LevelSelectWindow" NavigateBack="LevelSelectNavigateBack" />
+    
+  </ViewSwitcher>
+
+</MainMenuDemoScene>

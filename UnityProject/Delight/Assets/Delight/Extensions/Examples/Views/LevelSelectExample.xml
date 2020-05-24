@@ -1,4 +1,5 @@
-<LevelSelectExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Width="750" Height="600">
+<LevelSelectExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" Width="750" Height="600"
+                    NavigateBack="t:Action">
   <Image Sprite="LevelSelectBg" PreserveAspect="True" Width="600" />
   <Label Text="Level Select" AutoSize="True" FontSize="50" Offset="0,0,0,225" FontColor="White" Font="AveriaSansLibre-Bold SDF" />
   <List Items="{level in @Levels}" Overflow="Wrap" Orientation="Horizontal" Width="470" Height="310" Spacing="10"
@@ -18,4 +19,5 @@
                       Pressed-BackgroundColor="#ffffff" NavigationType="Page"
                       Width="50" Height="50" DisplayLabel="False" />
   </List>
+  <Button Style="MainMenuDemoBackButton" Alignment="Bottom" Offset="0,40,0,0" Click="BackButtonClick" />
 </LevelSelectExample>

@@ -6,7 +6,7 @@ Check out https://delight-dev.github.io/ for latest API docs, tutorials, extras 
 Introduction
 ------------
 
-Delight is an open source component-oriented framework for Unity, mainly centered around creating user-interface components that can easily be extended, combined and shared using a text based declarative design language (similar to HTML).
+Delight is an open source component-oriented framework for Unity, mainly centered around creating user-interface components that can easily be extended, combined and shared using a text based declarative design language (similar to HTML). Below shows a quick start guide, be sure to check out GettingStarted.pdf for a guide to get started.
 
 Quick Start
 -----------

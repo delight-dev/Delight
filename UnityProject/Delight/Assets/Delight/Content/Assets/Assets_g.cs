@@ -219,6 +219,8 @@ namespace Delight
         public readonly SpriteAsset LevelSelectPageButton;
         public readonly SpriteAsset LevelSelectPageButtonPressed;
         public readonly SpriteAsset LevelSelectRightArrow;
+        public readonly SpriteAsset MainMenuDemoBackButton;
+        public readonly SpriteAsset MainMenuDemoBackButtonPressed;
         public readonly SpriteAsset MainMenuDemoBg;
         public readonly SpriteAsset MainMenuDemoButton;
         public readonly SpriteAsset MainMenuDemoButtonPressed;
@@ -254,8 +256,8 @@ namespace Delight
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
-            Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
-            Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
+            Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
+            Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -264,6 +266,8 @@ namespace Delight
             LevelSelectPageButton = new SpriteAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
             LevelSelectPageButtonPressed = new SpriteAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
             LevelSelectRightArrow = new SpriteAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
+            MainMenuDemoBackButton = new SpriteAsset { Id = "MainMenuDemoBackButton", IsResource = true, RelativePath = "" };
+            MainMenuDemoBackButtonPressed = new SpriteAsset { Id = "MainMenuDemoBackButtonPressed", IsResource = true, RelativePath = "" };
             MainMenuDemoBg = new SpriteAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
             MainMenuDemoButton = new SpriteAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
             MainMenuDemoButtonPressed = new SpriteAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
@@ -303,6 +307,8 @@ namespace Delight
             Add(LevelSelectPageButton);
             Add(LevelSelectPageButtonPressed);
             Add(LevelSelectRightArrow);
+            Add(MainMenuDemoBackButton);
+            Add(MainMenuDemoBackButtonPressed);
             Add(MainMenuDemoBg);
             Add(MainMenuDemoButton);
             Add(MainMenuDemoButtonPressed);
@@ -435,60 +441,6 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
-    }
-
-    #endregion
-
-    #region Texture2Ds
-
-    /// <summary>
-    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
-    /// </summary>
-    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
-    {
-        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
-        {
-            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
-        }
-
-        public static implicit operator Texture2DAsset(string assetId)
-        {
-            if (String.IsNullOrEmpty(assetId))
-                return null;
-
-            if (assetId.StartsWith("?"))
-                assetId = assetId.Substring(1);
-
-            return Assets.Texture2Ds[assetId];
-        }
-    }
-
-    /// <summary>
-    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
-    /// </summary>
-    public partial class Texture2DAssetData : DataProvider<Texture2DAsset>
-    {
-        #region Fields
-
-        public readonly Texture2DAsset Bluefloral01;
-
-        #endregion
-
-        #region Constructor
-
-        public Texture2DAssetData()
-        {
-            Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
-
-            Add(Bluefloral01);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
     }
 
     #endregion

@@ -65,6 +65,10 @@ namespace Delight
                 navigationButton2.SetContentTemplateData(tiLevel);
                 return navigationButton2;
             }, typeof(NavigationButton), "NavigationButton2"));
+
+            // constructing Button (Button1)
+            Button1 = new Button(this, this, "Button1", Button1Template);
+            Button1.Click.RegisterHandler(this, "BackButtonClick");
             this.AfterInitializeInternal();
         }
 
@@ -77,6 +81,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(LevelSelectExampleTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(NavigateBackProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Label1Property);
@@ -93,11 +98,20 @@ namespace Delight
             dependencyProperties.Add(NavigationButton1TemplateProperty);
             dependencyProperties.Add(NavigationButton2Property);
             dependencyProperties.Add(NavigationButton2TemplateProperty);
+            dependencyProperties.Add(Button1Property);
+            dependencyProperties.Add(Button1TemplateProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<ViewAction> NavigateBackProperty = new DependencyProperty<ViewAction>("NavigateBack", () => new ViewAction());
+        public ViewAction NavigateBack
+        {
+            get { return NavigateBackProperty.GetValue(this); }
+            set { NavigateBackProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
         public Image Image1
@@ -211,6 +225,20 @@ namespace Delight
             set { NavigationButton2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
+        public Button Button1
+        {
+            get { return Button1Property.GetValue(this); }
+            set { Button1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button1TemplateProperty = new DependencyProperty<Template>("Button1Template");
+        public Template Button1Template
+        {
+            get { return Button1TemplateProperty.GetValue(this); }
+            set { Button1TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -253,6 +281,7 @@ namespace Delight
                     Delight.LevelSelectExample.Image2TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleImage2);
                     Delight.LevelSelectExample.NavigationButton1TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleNavigationButton1);
                     Delight.LevelSelectExample.NavigationButton2TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleNavigationButton2);
+                    Delight.LevelSelectExample.Button1TemplateProperty.SetDefault(_levelSelectExample, LevelSelectExampleButton1);
                 }
                 return _levelSelectExample;
             }
@@ -678,6 +707,56 @@ namespace Delight
 #endif
                 }
                 return _levelSelectExampleNavigationButton2Label;
+            }
+        }
+
+        private static Template _levelSelectExampleButton1;
+        public static Template LevelSelectExampleButton1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_levelSelectExampleButton1 == null || _levelSelectExampleButton1.CurrentVersion != Template.Version)
+#else
+                if (_levelSelectExampleButton1 == null)
+#endif
+                {
+                    _levelSelectExampleButton1 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _levelSelectExampleButton1.Name = "LevelSelectExampleButton1";
+#endif
+                    Delight.Button.BackgroundSpriteProperty.SetDefault(_levelSelectExampleButton1, Assets.Sprites["MainMenuDemoBackButton"]);
+                    Delight.Button.BackgroundSpriteProperty.SetStateDefault("Pressed", _levelSelectExampleButton1, Assets.Sprites["MainMenuDemoBackButtonPressed"]);
+                    Delight.Button.BackgroundColorProperty.SetDefault(_levelSelectExampleButton1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _levelSelectExampleButton1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _levelSelectExampleButton1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Button.WidthProperty.SetDefault(_levelSelectExampleButton1, new ElementSize(100f, ElementSizeUnit.Pixels));
+                    Delight.Button.HeightProperty.SetDefault(_levelSelectExampleButton1, new ElementSize(102f, ElementSizeUnit.Pixels));
+                    Delight.Button.AlignmentProperty.SetDefault(_levelSelectExampleButton1, Delight.ElementAlignment.Bottom);
+                    Delight.Button.OffsetProperty.SetDefault(_levelSelectExampleButton1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(40f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_levelSelectExampleButton1, LevelSelectExampleButton1Label);
+                }
+                return _levelSelectExampleButton1;
+            }
+        }
+
+        private static Template _levelSelectExampleButton1Label;
+        public static Template LevelSelectExampleButton1Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_levelSelectExampleButton1Label == null || _levelSelectExampleButton1Label.CurrentVersion != Template.Version)
+#else
+                if (_levelSelectExampleButton1Label == null)
+#endif
+                {
+                    _levelSelectExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _levelSelectExampleButton1Label.Name = "LevelSelectExampleButton1Label";
+#endif
+                }
+                return _levelSelectExampleButton1Label;
             }
         }
 

@@ -1378,6 +1378,7 @@ namespace Delight.Editor.Parser
                             actionHandlerName = actionParameters[0];
                             if (actionParameters.Length > 1)
                             {
+                                bool validated = true;
                                 var formattedActionParameters = new List<string>();
                                 foreach (var actionParameter in actionParameters.Skip(1))
                                 {
@@ -1394,7 +1395,8 @@ namespace Delight.Editor.Parser
                                         if (templateItemInfo.ItemTypeName == null)
                                         {
                                             formattedActionParameters.Add(actionParameter);
-                                            continue; // item type was not inferred so ignore parameter
+                                            validated = false;
+                                            break; // item type was not inferred so ignore parameter
                                         }
 
                                         actionParameterPath[0] = String.Format("({0}.Item as {1})", templateItemInfo.VariableName, templateItemInfo.ItemTypeName);
@@ -1403,8 +1405,11 @@ namespace Delight.Editor.Parser
                                     formattedActionParameters.Add("() => " + String.Join("?.", actionParameterPath));
                                 }
 
-                                // generate action assignment with parameters
-                                sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionHandlerName, String.Join(", ", formattedActionParameters));
+                                if (validated)
+                                {
+                                    // generate action assignment with parameters
+                                    sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\", {3});", childIdVar, actionAssignment.PropertyName, actionHandlerName, String.Join(", ", formattedActionParameters));
+                                }
                                 continue;
                             }
                         }
@@ -1486,8 +1491,13 @@ namespace Delight.Editor.Parser
                     {
                         // handle special case when binding to SelectedItem in lists <List Item="{player in Players}" SelectedItem="{SelectedPlayer}" />
                         bool castToItemType = false;
-                        if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null && !String.IsNullOrEmpty(ti.ItemTypeName))
+                        if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null)
                         {
+                            if  (String.IsNullOrEmpty(ti.ItemTypeName))
+                            {
+                                // item type could not be inferred so skip binding
+                                continue;
+                            }
                             castToItemType = true;
                         }
 
