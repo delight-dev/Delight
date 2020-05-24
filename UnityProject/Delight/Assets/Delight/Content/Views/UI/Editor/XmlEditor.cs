@@ -1862,11 +1862,16 @@ namespace Delight
                             {
                                 if (property.Declaration.DeclarationType == PropertyDeclarationType.Template ||
                                     property.Declaration.DeclarationType == PropertyDeclarationType.UnityComponent ||
-                                    property.Declaration.DeclarationType == PropertyDeclarationType.View)
+                                    (property.Declaration.DeclarationType == PropertyDeclarationType.View && !property.IsMapped))
                                     continue; // ignore properties not set from XML
 
                                 _autoCompleteOptions.Add(new AutoCompleteOption { Text = property.Declaration.PropertyName });
                             }
+
+                            // add attribute properties
+                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = "Id" });
+                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = "Style" });
+                            _autoCompleteOptions.Add(new AutoCompleteOption { Text = "StateAnimations" });
                         }
                         break;
 
@@ -1879,6 +1884,30 @@ namespace Delight
                                 break;
 
                             var propertyNameAtCaret = GetPropertyAtCaret();
+                            if (propertyNameAtCaret == "Style")
+                            {
+                                // populate with styles that can be applied to current view
+                                var contentObjectModel = ContentObjectModel.GetInstance();
+                                var styleNames = contentObjectModel.GetStyleNames(viewNameAtCaret);
+                                foreach (var style in styleNames)
+                                {
+                                    _autoCompleteOptions.Add(new AutoCompleteOption { Text = style });
+                                }
+                                break;
+                            }
+                            
+                            if (propertyNameAtCaret == "StateAnimations")
+                            {
+                                // populate with state animations
+                                var contentObjectModel = ContentObjectModel.GetInstance();
+                                var stateAnimationsNames = contentObjectModel.GetStateAnimationsNames(viewNameAtCaret);
+                                foreach (var stateAnimationsName in stateAnimationsNames)
+                                {
+                                    _autoCompleteOptions.Add(new AutoCompleteOption { Text = stateAnimationsName });
+                                }
+                                break;
+                            }
+
                             var property = CodeGenerator.GetPropertyDeclarations(viewAtCaret.ViewObject, true, true, true).FirstOrDefault(x => x.Declaration.PropertyName == propertyNameAtCaret);
                             if (property == null)
                                 break;
