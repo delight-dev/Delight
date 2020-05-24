@@ -11,5 +11,16 @@ namespace Delight
 {
     public partial class MainMenuExample
     {
+        public void Play()
+        {
+        }
+
+        public void ShowOptions()
+        {
+        }
+
+        public void Quit()
+        {
+        }
     }
 }

@@ -15,9 +15,12 @@ namespace Delight
     {
         #region Constructors
 
-        public Label(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? LabelTemplates.Default, constructChildren)
+        public Label(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? LabelTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             this.AfterInitializeInternal();
         }
 
@@ -51,6 +54,7 @@ namespace Delight
             dependencyProperties.Add(FontStyleProperty);
             dependencyProperties.Add(OnCullStateChangedProperty);
             dependencyProperties.Add(MaskableProperty);
+            dependencyProperties.Add(IsMaskingGraphicProperty);
             dependencyProperties.Add(FontColorProperty);
             dependencyProperties.Add(RaycastTargetProperty);
             dependencyProperties.Add(MaterialProperty);
@@ -68,6 +72,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementAlignment> TextAlignmentProperty = new DependencyProperty<Delight.ElementAlignment>("TextAlignment");
+        /// <summary>Determines the alignment of the text.</summary>
         public Delight.ElementAlignment TextAlignment
         {
             get { return TextAlignmentProperty.GetValue(this); }
@@ -75,6 +80,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> EnableWordWrappingProperty = new DependencyProperty<System.Boolean>("EnableWordWrapping");
+        /// <summary>Controls whether or not word wrapping is applied. When disabled, the text will be displayed on a single line.</summary>
         public System.Boolean EnableWordWrapping
         {
             get { return EnableWordWrappingProperty.GetValue(this); }
@@ -82,6 +88,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.AutoSize> AutoSizeProperty = new DependencyProperty<Delight.AutoSize>("AutoSize");
+        /// <summary>Enum indicating if and how the label should automatically resize itself to the size of the text.</summary>
         public Delight.AutoSize AutoSize
         {
             get { return AutoSizeProperty.GetValue(this); }
@@ -89,6 +96,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.String> OverflowModeProperty = new DependencyProperty<System.String>("OverflowMode");
+        /// <summary>Controls the text overflow mode.</summary>
         public System.String OverflowMode
         {
             get { return OverflowModeProperty.GetValue(this); }
@@ -96,6 +104,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> ExtraPaddingProperty = new DependencyProperty<System.Boolean>("ExtraPadding");
+        /// <summary>Adds extra padding around each character. This may be necessary when the displayed text is very small to prevent clipping.</summary>
         public System.Boolean ExtraPadding
         {
             get { return ExtraPaddingProperty.GetValue(this); }
@@ -103,6 +112,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<FontAsset, UnityEngine.UI.Text, Label> FontProperty = new MappedAssetDependencyProperty<FontAsset, UnityEngine.UI.Text, Label>("Font", x => x.TextComponent, (x, y) => x.font = y?.UnityObject);
+        /// <summary>The font of the label. The value is the name of the font asset file without extension, e.g. "myfont".</summary>
         public FontAsset Font
         {
             get { return FontProperty.GetValue(this); }
@@ -110,6 +120,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.String, UnityEngine.UI.Text, Label> TextProperty = new MappedDependencyProperty<System.String, UnityEngine.UI.Text, Label>("Text", x => x.TextComponent, x => x.text, (x, y) => x.text = y);
+        /// <summary>A string containing the text to be displayed.</summary>
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
@@ -159,6 +170,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.Text, Label> FontSizeProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.Text, Label>("FontSize", x => x.TextComponent, x => x.fontSize, (x, y) => x.fontSize = y);
+        /// <summary>The point size of the font.</summary>
         public System.Int32 FontSize
         {
             get { return FontSizeProperty.GetValue(this); }
@@ -180,6 +192,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.Text, Label> LineSpacingProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.Text, Label>("LineSpacing", x => x.TextComponent, x => x.lineSpacing, (x, y) => x.lineSpacing = y);
+        /// <summary>The amount of additional spacing to add between each lines of text.</summary>
         public System.Single LineSpacing
         {
             get { return LineSpacingProperty.GetValue(this); }
@@ -187,6 +200,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.FontStyle, UnityEngine.UI.Text, Label> FontStyleProperty = new MappedDependencyProperty<UnityEngine.FontStyle, UnityEngine.UI.Text, Label>("FontStyle", x => x.TextComponent, x => x.fontStyle, (x, y) => x.fontStyle = y);
+        /// <summary>Font style.</summary>
         public UnityEngine.FontStyle FontStyle
         {
             get { return FontStyleProperty.GetValue(this); }
@@ -194,6 +208,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Text, Label> OnCullStateChangedProperty = new MappedDependencyProperty<UnityEngine.UI.MaskableGraphic.CullStateChangedEvent, UnityEngine.UI.Text, Label>("OnCullStateChanged", x => x.TextComponent, x => x.onCullStateChanged, (x, y) => x.onCullStateChanged = y);
+        /// <summary>Called when cull state changes.</summary>
         public UnityEngine.UI.MaskableGraphic.CullStateChangedEvent OnCullStateChanged
         {
             get { return OnCullStateChangedProperty.GetValue(this); }
@@ -201,13 +216,23 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label> MaskableProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label>("Maskable", x => x.TextComponent, x => x.maskable, (x, y) => x.maskable = y);
+        /// <summary>Boolean indicating if graphic is maskable.</summary>
         public System.Boolean Maskable
         {
             get { return MaskableProperty.GetValue(this); }
             set { MaskableProperty.SetValue(this, value); }
         }
 
+        public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label> IsMaskingGraphicProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label>("IsMaskingGraphic", x => x.TextComponent, x => x.isMaskingGraphic, (x, y) => x.isMaskingGraphic = y);
+        /// <summary>Boolean indicating if this is a masking graphic.</summary>
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return IsMaskingGraphicProperty.GetValue(this); }
+            set { IsMaskingGraphicProperty.SetValue(this, value); }
+        }
+
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Text, Label> FontColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.Text, Label>("FontColor", x => x.TextComponent, x => x.color, (x, y) => x.color = y);
+        /// <summary>Color of the font.</summary>
         public UnityEngine.Color FontColor
         {
             get { return FontColorProperty.GetValue(this); }
@@ -215,6 +240,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label> RaycastTargetProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.Text, Label>("RaycastTarget", x => x.TextComponent, x => x.raycastTarget, (x, y) => x.raycastTarget = y);
+        /// <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         public System.Boolean RaycastTarget
         {
             get { return RaycastTargetProperty.GetValue(this); }
@@ -222,6 +248,7 @@ namespace Delight
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Text, Label> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.Text, Label>("Material", x => x.TextComponent, (x, y) => x.material = y?.UnityObject);
+        /// <summary>Material used by graphic.</summary>
         public MaterialAsset Material
         {
             get { return MaterialProperty.GetValue(this); }
@@ -266,6 +293,7 @@ namespace Delight
                     Delight.Label.FontColorProperty.SetDefault(_label, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_label, 24);
                     Delight.Label.VerticalOverflowProperty.SetDefault(_label, UnityEngine.VerticalWrapMode.Overflow);
+                    Delight.Label.FontSizeProperty.SetDefault(_label, 16);
                 }
                 return _label;
             }

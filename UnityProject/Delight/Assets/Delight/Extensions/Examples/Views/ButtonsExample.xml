@@ -1,5 +1,5 @@
 <ButtonsExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
-                 ClickCount="t:int">
+                ClickCount="t:int">
   <Group Orientation="Vertical" Spacing="10px" ContentAlignment="Left"> 
 
     <Group Orientation="Horizontal" Spacing="50">

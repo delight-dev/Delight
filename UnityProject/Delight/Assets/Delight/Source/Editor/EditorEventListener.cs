@@ -90,6 +90,7 @@ namespace Delight.Editor
 
                 case PlayModeStateChange.ExitingPlayMode:
                     bool exitInterrupted = false;
+#if DELIGHT_MODULE_TEXTMESHPRO
                     if (IsInDelightDesigner)
                     {
                         //var activeScene = EditorSceneManager.GetActiveScene(); // TODO cleanup
@@ -109,6 +110,7 @@ namespace Delight.Editor
                             exitInterrupted = true;
                         }
                     }
+#endif
 
                     if (!exitInterrupted && QueuedAssetsToBeProcessed)
                     {
@@ -128,8 +130,6 @@ namespace Delight.Editor
                     break;
             }
         }
-
-        public static int i = 0;
 
         public static void AddPostProcessBatch(string[] importedAssets, string[] deletedAssets, string[] movedAssets, string[] movedFromAssets)
         {

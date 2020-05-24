@@ -2,6 +2,7 @@
 ##    ServerUri - URI that points to where remote asset bundles are stored
 ##    BuildTargets - controls which model data is included in build
 ##    ContentFolders - specifies where Delight content (views, models, etc) resides (besides the default folders)
+##    DefaultContentFolder - specifies default content folder where new content is placed when created by the Delight Designer
 ##    StreamedBundles - specifies which bundles (by name) should be streamed locally rather than from remote URI
 ##    ServerUriLocator - name of class that locates server URI based on bundle name
 ##    UseSimulatedUriInEditor - set to true/false indicating if a simulated server URI should be used in the editor

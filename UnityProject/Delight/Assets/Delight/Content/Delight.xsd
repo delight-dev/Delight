@@ -1569,7 +1569,6 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="ContentTemplateData" type="xs:string" />
-    <xs:attribute name="Text" type="xs:string" />
     <xs:attribute name="AutoSizeToContent" type="xs:string" />
     <xs:attribute name="Mask" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
@@ -6737,77 +6736,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:element name="GroupExamples" type="GroupExamples" />
-  <xs:complexType name="GroupExamples">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="ActualWidth" type="xs:string" />
-    <xs:attribute name="ActualHeight" type="xs:string" />
-    <xs:attribute name="IsFullScreen" type="xs:string" />
-    <xs:attribute name="RectTransform" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
-    <xs:attribute name="CanvasGroup" type="xs:string" />
-    <xs:attribute name="UseFastShader" type="xs:string" />
-    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
-    <xs:attribute name="IgnoreFlip" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="UnityScript" type="xs:string" />
-    <xs:attribute name="Name" type="xs:string" />
-    <xs:attribute name="GameObject" type="xs:string" />
-    <xs:attribute name="EnableScriptEvents" type="xs:string" />
-    <xs:attribute name="IgnoreObject" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="Cancel" type="xs:string" />
-    <xs:attribute name="Click" type="xs:string" />
-    <xs:attribute name="Deselect" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
-    <xs:attribute name="Drop" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
-    <xs:attribute name="Move" type="xs:string" />
-    <xs:attribute name="MouseDown" type="xs:string" />
-    <xs:attribute name="MouseEnter" type="xs:string" />
-    <xs:attribute name="MouseExit" type="xs:string" />
-    <xs:attribute name="MouseUp" type="xs:string" />
-    <xs:attribute name="Scroll" type="xs:string" />
-    <xs:attribute name="Select" type="xs:string" />
-    <xs:attribute name="Submit" type="xs:string" />
-    <xs:attribute name="UpdateSelected" type="xs:string" />
-    <xs:attribute name="LayoutChildren" type="xs:string" />
-    <xs:attribute name="IsLoaded" type="xs:string" />
-    <xs:attribute name="Bindings" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="StateAnimations" type="xs:string" />
-    <xs:attribute name="ContentTemplates" type="xs:string" />
-    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="Style_GroupExamples" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
-
-  <xs:simpleType name="Style_GroupExamples">
-    <xs:restriction base="xs:string">
-    </xs:restriction>
-  </xs:simpleType>
-
   <xs:element name="InputFieldExample" type="InputFieldExample" />
   <xs:complexType name="InputFieldExample">
     <xs:sequence>
@@ -6946,6 +6874,77 @@
   </xs:complexType>
 
   <xs:simpleType name="Style_LevelSelectExample">
+    <xs:restriction base="xs:string">
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:element name="MainMenuExample" type="MainMenuExample" />
+  <xs:complexType name="MainMenuExample">
+    <xs:sequence>
+      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
+    <xs:attribute name="ActualWidth" type="xs:string" />
+    <xs:attribute name="ActualHeight" type="xs:string" />
+    <xs:attribute name="IsFullScreen" type="xs:string" />
+    <xs:attribute name="RectTransform" type="xs:string" />
+    <xs:attribute name="Width" type="xs:string" />
+    <xs:attribute name="Height" type="xs:string" />
+    <xs:attribute name="OverrideWidth" type="xs:string" />
+    <xs:attribute name="OverrideHeight" type="xs:string" />
+    <xs:attribute name="Scale" type="xs:string" />
+    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
+    <xs:attribute name="Margin" type="xs:string" />
+    <xs:attribute name="Offset" type="xs:string" />
+    <xs:attribute name="OffsetFromParent" type="xs:string" />
+    <xs:attribute name="Pivot" type="xs:string" />
+    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
+    <xs:attribute name="Alpha" type="xs:string" />
+    <xs:attribute name="IsVisible" type="xs:string" />
+    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="CanvasGroup" type="xs:string" />
+    <xs:attribute name="UseFastShader" type="xs:string" />
+    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
+    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
+    <xs:attribute name="IgnoreFlip" type="xs:string" />
+    <xs:attribute name="Rotation" type="xs:string" />
+    <xs:attribute name="Position" type="xs:string" />
+    <xs:attribute name="UnityScript" type="xs:string" />
+    <xs:attribute name="Name" type="xs:string" />
+    <xs:attribute name="GameObject" type="xs:string" />
+    <xs:attribute name="EnableScriptEvents" type="xs:string" />
+    <xs:attribute name="IgnoreObject" type="xs:string" />
+    <xs:attribute name="IsActive" type="xs:string" />
+    <xs:attribute name="BeginDrag" type="xs:string" />
+    <xs:attribute name="Cancel" type="xs:string" />
+    <xs:attribute name="Click" type="xs:string" />
+    <xs:attribute name="Deselect" type="xs:string" />
+    <xs:attribute name="Drag" type="xs:string" />
+    <xs:attribute name="Drop" type="xs:string" />
+    <xs:attribute name="EndDrag" type="xs:string" />
+    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
+    <xs:attribute name="Move" type="xs:string" />
+    <xs:attribute name="MouseDown" type="xs:string" />
+    <xs:attribute name="MouseEnter" type="xs:string" />
+    <xs:attribute name="MouseExit" type="xs:string" />
+    <xs:attribute name="MouseUp" type="xs:string" />
+    <xs:attribute name="Scroll" type="xs:string" />
+    <xs:attribute name="Select" type="xs:string" />
+    <xs:attribute name="Submit" type="xs:string" />
+    <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="LayoutChildren" type="xs:string" />
+    <xs:attribute name="IsLoaded" type="xs:string" />
+    <xs:attribute name="Bindings" type="xs:string" />
+    <xs:attribute name="IsDynamic" type="xs:string" />
+    <xs:attribute name="StateAnimations" type="xs:string" />
+    <xs:attribute name="ContentTemplates" type="xs:string" />
+    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="State" type="xs:string" />
+    <xs:attribute name="Id" type="xs:string" />
+    <xs:attribute name="Style" type="Style_MainMenuExample" />
+    <xs:anyAttribute processContents="skip" />
+  </xs:complexType>
+
+  <xs:simpleType name="Style_MainMenuExample">
     <xs:restriction base="xs:string">
     </xs:restriction>
   </xs:simpleType>
@@ -7504,71 +7503,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:element name="MainMenuExample" type="MainMenuExample" />
-  <xs:complexType name="MainMenuExample">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="ActualWidth" type="xs:string" />
-    <xs:attribute name="ActualHeight" type="xs:string" />
-    <xs:attribute name="IsFullScreen" type="xs:string" />
-    <xs:attribute name="RectTransform" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
-    <xs:attribute name="CanvasGroup" type="xs:string" />
-    <xs:attribute name="UseFastShader" type="xs:string" />
-    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
-    <xs:attribute name="IgnoreFlip" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="UnityScript" type="xs:string" />
-    <xs:attribute name="Name" type="xs:string" />
-    <xs:attribute name="GameObject" type="xs:string" />
-    <xs:attribute name="EnableScriptEvents" type="xs:string" />
-    <xs:attribute name="IgnoreObject" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="Cancel" type="xs:string" />
-    <xs:attribute name="Click" type="xs:string" />
-    <xs:attribute name="Deselect" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
-    <xs:attribute name="Drop" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
-    <xs:attribute name="Move" type="xs:string" />
-    <xs:attribute name="MouseDown" type="xs:string" />
-    <xs:attribute name="MouseEnter" type="xs:string" />
-    <xs:attribute name="MouseExit" type="xs:string" />
-    <xs:attribute name="MouseUp" type="xs:string" />
-    <xs:attribute name="Scroll" type="xs:string" />
-    <xs:attribute name="Select" type="xs:string" />
-    <xs:attribute name="Submit" type="xs:string" />
-    <xs:attribute name="UpdateSelected" type="xs:string" />
-    <xs:attribute name="LayoutChildren" type="xs:string" />
-    <xs:attribute name="IsLoaded" type="xs:string" />
-    <xs:attribute name="Bindings" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="StateAnimations" type="xs:string" />
-    <xs:attribute name="ContentTemplates" type="xs:string" />
-    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="Style_UIView" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
 
   <xs:element name="Styles" type="Styles" />
   <xs:complexType name="Styles">
@@ -7983,12 +7917,15 @@
       <xs:enumeration value="CloseButton" />
       <xs:enumeration value="ComboBoxButton" />
       <xs:enumeration value="ComboBoxButtonPressed" />
+      <xs:enumeration value="ContextMenuBg" />
       <xs:enumeration value="delight-icon" />
       <xs:enumeration value="DesignerGrid" />
       <xs:enumeration value="DesignerGrid2" />
       <xs:enumeration value="EditorGrid" />
       <xs:enumeration value="ExpanderArrowDown" />
       <xs:enumeration value="ExpanderArrowRight" />
+      <xs:enumeration value="HamburgerMenuIcon" />
+      <xs:enumeration value="HamburgerMenuIconPressed" />
       <xs:enumeration value="ListSelection" />
       <xs:enumeration value="Lock" />
       <xs:enumeration value="RadioButton" />
@@ -7996,9 +7933,6 @@
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
-      <xs:enumeration value="HamburgerMenuIcon" />
-      <xs:enumeration value="HamburgerMenuIconPressed" />
-      <xs:enumeration value="ContextMenuBg" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -8006,16 +7940,16 @@
       <xs:enumeration value="Frame4" />
       <xs:enumeration value="LevelSelectBg" />
       <xs:enumeration value="LevelSelectItemBg" />
+      <xs:enumeration value="LevelSelectPageButton" />
+      <xs:enumeration value="LevelSelectPageButtonPressed" />
+      <xs:enumeration value="LevelSelectRightArrow" />
+      <xs:enumeration value="MainMenuDemoBg" />
+      <xs:enumeration value="MainMenuDemoButton" />
+      <xs:enumeration value="MainMenuDemoButtonPressed" />
       <xs:enumeration value="Stars0" />
       <xs:enumeration value="Stars1" />
       <xs:enumeration value="Stars2" />
       <xs:enumeration value="Stars3" />
-      <xs:enumeration value="LevelSelectRightArrow" />
-      <xs:enumeration value="LevelSelectPageButton" />
-      <xs:enumeration value="LevelSelectPageButtonPressed" />
-      <xs:enumeration value="MainMenuDemoButton" />
-      <xs:enumeration value="MainMenuDemoButtonPressed" />
-      <xs:enumeration value="MainMenuDemoBg" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -8036,22 +7970,7 @@
 
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
-      <xs:enumeration value="HamburgerMenuIcon" />
-      <xs:enumeration value="HamburgerMenuIconPressed" />
-      <xs:enumeration value="ContextMenuBg" />
       <xs:enumeration value="bluefloral01" />
-      <xs:enumeration value="LevelSelectBg" />
-      <xs:enumeration value="LevelSelectItemBg" />
-      <xs:enumeration value="Stars3" />
-      <xs:enumeration value="Stars2" />
-      <xs:enumeration value="Stars1" />
-      <xs:enumeration value="Stars0" />
-      <xs:enumeration value="LevelSelectRightArrow" />
-      <xs:enumeration value="LevelSelectPageButtonPressed" />
-      <xs:enumeration value="LevelSelectPageButton" />
-      <xs:enumeration value="MainMenuDemoButtonPressed" />
-      <xs:enumeration value="MainMenuDemoButton" />
-      <xs:enumeration value="MainMenuDemoBg" />
     </xs:restriction>
   </xs:simpleType>
 

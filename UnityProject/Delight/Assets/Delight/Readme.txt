@@ -1,4 +1,4 @@
-Delight 2019.1.1
+Delight 2020.1.0
 ----------------
 
 Check out https://delight-dev.github.io/ for latest API docs, tutorials, extras and news.
@@ -34,7 +34,7 @@ Check out the Tutorials at https://delight-dev.github.io/ and get started creati
 Upgrading from earlier versions
 -------------------------------
 
-Remove the Delight folder and import the new package. Make sure everything compiles and reload the content by pressing "Reload All" in the Delight window:
+Remove everything under the Delight folder except the Extensions folder if you have downloaded additional extensions you want to keep. After the files are removed, import the new package. Make sure everything compiles and reload the content by pressing "Reload All" in the Delight window:
 
 Window -> Delight
 
@@ -46,4 +46,4 @@ Delight\* ..................... Framework source and content
 
 (recommended)
 Content\* ..................... Your project's content processed by Delight
-Delight\Examples\ ............. Optional examples
+Delight\Extensions\ ........... Optional extensions and examples

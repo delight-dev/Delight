@@ -15,9 +15,12 @@ namespace Delight
     {
         #region Constructors
 
-        public InputField(View parent, View layoutParent = null, string id = null, Template template = null, Action<View> initializer = null) :
-            base(parent, layoutParent, id, template ?? InputFieldTemplates.Default, constructChildren)
+        public InputField(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? InputFieldTemplates.Default, deferInitialization)
         {
+            if (deferInitialization)
+                return;
+
             // constructing Region (InputFieldPlaceholder)
             InputFieldPlaceholder = new Region(this, this, "InputFieldPlaceholder", InputFieldPlaceholderTemplate);
 
@@ -97,6 +100,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> SetValueOnEndEditProperty = new DependencyProperty<System.Boolean>("SetValueOnEndEdit");
+        /// <summary>Boolean indicating if the value of the input field text should be set after the user is done editing.</summary>
         public System.Boolean SetValueOnEndEdit
         {
             get { return SetValueOnEndEditProperty.GetValue(this); }
@@ -104,6 +108,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<System.Boolean> OnlyTriggerValueChangedFromUIProperty = new DependencyProperty<System.Boolean>("OnlyTriggerValueChangedFromUI");
+        /// <summary>Boolean indicating if the ValueChanged action only should be called when the user changes the input text and not when it's programmatically changed.</summary>
         public System.Boolean OnlyTriggerValueChangedFromUI
         {
             get { return OnlyTriggerValueChangedFromUIProperty.GetValue(this); }
@@ -111,6 +116,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit", () => new ViewAction());
+        /// <summary>Action called when the user stops editing the input field text.</summary>
         public ViewAction EndEdit
         {
             get { return EndEditProperty.GetValue(this); }
@@ -118,6 +124,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
+        /// <summary>Action called when the input text changes.</summary>
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }
@@ -125,6 +132,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> TextMarginProperty = new DependencyProperty<Delight.ElementMargin>("TextMargin");
+        /// <summary>Margin of the input text.</summary>
         public Delight.ElementMargin TextMargin
         {
             get { return TextMarginProperty.GetValue(this); }
@@ -174,6 +182,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField> ShouldHideMobileInputProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField>("ShouldHideMobileInput", x => x.InputFieldComponent, x => x.shouldHideMobileInput, (x, y) => x.shouldHideMobileInput = y);
+        /// <summary>Boolean indicating if mobile input should be hidden.</summary>
         public System.Boolean ShouldHideMobileInput
         {
             get { return ShouldHideMobileInputProperty.GetValue(this); }
@@ -181,6 +190,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.String, UnityEngine.UI.InputField, InputField> TextProperty = new MappedDependencyProperty<System.String, UnityEngine.UI.InputField, InputField>("Text", x => x.InputFieldComponent, x => x.text, (x, y) => x.text = y);
+        /// <summary>Text of the input field.</summary>
         public System.String Text
         {
             get { return TextProperty.GetValue(this); }
@@ -188,6 +198,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Single, UnityEngine.UI.InputField, InputField> CaretBlinkRateProperty = new MappedDependencyProperty<System.Single, UnityEngine.UI.InputField, InputField>("CaretBlinkRate", x => x.InputFieldComponent, x => x.caretBlinkRate, (x, y) => x.caretBlinkRate = y);
+        /// <summary>The blinking rate of the input caret in cycles per second.</summary>
         public System.Single CaretBlinkRate
         {
             get { return CaretBlinkRateProperty.GetValue(this); }
@@ -195,6 +206,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField> CaretWidthProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField>("CaretWidth", x => x.InputFieldComponent, x => x.caretWidth, (x, y) => x.caretWidth = y);
+        /// <summary>Width of the caret.</summary>
         public System.Int32 CaretWidth
         {
             get { return CaretWidthProperty.GetValue(this); }
@@ -202,6 +214,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Text, UnityEngine.UI.InputField, InputField> TextComponentProperty = new MappedDependencyProperty<UnityEngine.UI.Text, UnityEngine.UI.InputField, InputField>("TextComponent", x => x.InputFieldComponent, x => x.textComponent, (x, y) => x.textComponent = y);
+        /// <summary>Reference to the text component.</summary>
         public UnityEngine.UI.Text TextComponent
         {
             get { return TextComponentProperty.GetValue(this); }
@@ -209,6 +222,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Graphic, UnityEngine.UI.InputField, InputField> PlaceholderProperty = new MappedDependencyProperty<UnityEngine.UI.Graphic, UnityEngine.UI.InputField, InputField>("Placeholder", x => x.InputFieldComponent, x => x.placeholder, (x, y) => x.placeholder = y);
+        /// <summary>Placeholder graphics used by the input field.</summary>
         public UnityEngine.UI.Graphic Placeholder
         {
             get { return PlaceholderProperty.GetValue(this); }
@@ -216,6 +230,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.InputField, InputField> CaretColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.InputField, InputField>("CaretColor", x => x.InputFieldComponent, x => x.caretColor, (x, y) => x.caretColor = y);
+        /// <summary>Color of the caret if CustomCaretColor is set.</summary>
         public UnityEngine.Color CaretColor
         {
             get { return CaretColorProperty.GetValue(this); }
@@ -223,6 +238,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField> CustomCaretColorProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField>("CustomCaretColor", x => x.InputFieldComponent, x => x.customCaretColor, (x, y) => x.customCaretColor = y);
+        /// <summary>Boolean indicating if caret color is customized by CaretColor.</summary>
         public System.Boolean CustomCaretColor
         {
             get { return CustomCaretColorProperty.GetValue(this); }
@@ -230,6 +246,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.InputField, InputField> SelectionColorProperty = new MappedDependencyProperty<UnityEngine.Color, UnityEngine.UI.InputField, InputField>("SelectionColor", x => x.InputFieldComponent, x => x.selectionColor, (x, y) => x.selectionColor = y);
+        /// <summary>Color of the selection.</summary>
         public UnityEngine.Color SelectionColor
         {
             get { return SelectionColorProperty.GetValue(this); }
@@ -237,6 +254,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.SubmitEvent, UnityEngine.UI.InputField, InputField> OnEndEditProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.SubmitEvent, UnityEngine.UI.InputField, InputField>("OnEndEdit", x => x.InputFieldComponent, x => x.onEndEdit, (x, y) => x.onEndEdit = y);
+        /// <summary>Called when the user stops editing the input field.</summary>
         public UnityEngine.UI.InputField.SubmitEvent OnEndEdit
         {
             get { return OnEndEditProperty.GetValue(this); }
@@ -244,6 +262,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.OnChangeEvent, UnityEngine.UI.InputField, InputField> OnValueChangedProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.OnChangeEvent, UnityEngine.UI.InputField, InputField>("OnValueChanged", x => x.InputFieldComponent, x => x.onValueChanged, (x, y) => x.onValueChanged = y);
+        /// <summary>Called when value is changed.</summary>
         public UnityEngine.UI.InputField.OnChangeEvent OnValueChanged
         {
             get { return OnValueChangedProperty.GetValue(this); }
@@ -251,6 +270,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.OnValidateInput, UnityEngine.UI.InputField, InputField> OnValidateInputProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.OnValidateInput, UnityEngine.UI.InputField, InputField>("OnValidateInput", x => x.InputFieldComponent, x => x.onValidateInput, (x, y) => x.onValidateInput = y);
+        /// <summary>Called when input is validated.</summary>
         public UnityEngine.UI.InputField.OnValidateInput OnValidateInput
         {
             get { return OnValidateInputProperty.GetValue(this); }
@@ -258,6 +278,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField> CharacterLimitProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField>("CharacterLimit", x => x.InputFieldComponent, x => x.characterLimit, (x, y) => x.characterLimit = y);
+        /// <summary>How many characters the input field is limited to (0 = infinite).</summary>
         public System.Int32 CharacterLimit
         {
             get { return CharacterLimitProperty.GetValue(this); }
@@ -265,6 +286,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.ContentType, UnityEngine.UI.InputField, InputField> ContentTypeProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.ContentType, UnityEngine.UI.InputField, InputField>("ContentType", x => x.InputFieldComponent, x => x.contentType, (x, y) => x.contentType = y);
+        /// <summary>The type of input expected.</summary>
         public UnityEngine.UI.InputField.ContentType ContentType
         {
             get { return ContentTypeProperty.GetValue(this); }
@@ -272,6 +294,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.LineType, UnityEngine.UI.InputField, InputField> LineTypeProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.LineType, UnityEngine.UI.InputField, InputField>("LineType", x => x.InputFieldComponent, x => x.lineType, (x, y) => x.lineType = y);
+        /// <summary>Line type used by the input field.</summary>
         public UnityEngine.UI.InputField.LineType LineType
         {
             get { return LineTypeProperty.GetValue(this); }
@@ -279,6 +302,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.InputType, UnityEngine.UI.InputField, InputField> InputTypeProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.InputType, UnityEngine.UI.InputField, InputField>("InputType", x => x.InputFieldComponent, x => x.inputType, (x, y) => x.inputType = y);
+        /// <summary>Type of input expected.</summary>
         public UnityEngine.UI.InputField.InputType InputType
         {
             get { return InputTypeProperty.GetValue(this); }
@@ -286,6 +310,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.TouchScreenKeyboardType, UnityEngine.UI.InputField, InputField> KeyboardTypeProperty = new MappedDependencyProperty<UnityEngine.TouchScreenKeyboardType, UnityEngine.UI.InputField, InputField>("KeyboardType", x => x.InputFieldComponent, x => x.keyboardType, (x, y) => x.keyboardType = y);
+        /// <summary>Enum indicating touch screen keyboard type.</summary>
         public UnityEngine.TouchScreenKeyboardType KeyboardType
         {
             get { return KeyboardTypeProperty.GetValue(this); }
@@ -293,6 +318,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.InputField.CharacterValidation, UnityEngine.UI.InputField, InputField> CharacterValidationProperty = new MappedDependencyProperty<UnityEngine.UI.InputField.CharacterValidation, UnityEngine.UI.InputField, InputField>("CharacterValidation", x => x.InputFieldComponent, x => x.characterValidation, (x, y) => x.characterValidation = y);
+        /// <summary>The type of validation to perform on a character.</summary>
         public UnityEngine.UI.InputField.CharacterValidation CharacterValidation
         {
             get { return CharacterValidationProperty.GetValue(this); }
@@ -300,6 +326,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField> ReadOnlyProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField>("ReadOnly", x => x.InputFieldComponent, x => x.readOnly, (x, y) => x.readOnly = y);
+        /// <summary>Boolean indicating if the input field is read only.</summary>
         public System.Boolean ReadOnly
         {
             get { return ReadOnlyProperty.GetValue(this); }
@@ -307,6 +334,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Char, UnityEngine.UI.InputField, InputField> AsteriskCharProperty = new MappedDependencyProperty<System.Char, UnityEngine.UI.InputField, InputField>("AsteriskChar", x => x.InputFieldComponent, x => x.asteriskChar, (x, y) => x.asteriskChar = y);
+        /// <summary>Character used for password fields.</summary>
         public System.Char AsteriskChar
         {
             get { return AsteriskCharProperty.GetValue(this); }
@@ -314,6 +342,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField> CaretPositionProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField>("CaretPosition", x => x.InputFieldComponent, x => x.caretPosition, (x, y) => x.caretPosition = y);
+        /// <summary>Current InputField caret position (also selection tail).</summary>
         public System.Int32 CaretPosition
         {
             get { return CaretPositionProperty.GetValue(this); }
@@ -321,6 +350,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField> SelectionAnchorPositionProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField>("SelectionAnchorPosition", x => x.InputFieldComponent, x => x.selectionAnchorPosition, (x, y) => x.selectionAnchorPosition = y);
+        /// <summary>Determines the anchor position of selection.</summary>
         public System.Int32 SelectionAnchorPosition
         {
             get { return SelectionAnchorPositionProperty.GetValue(this); }
@@ -328,6 +358,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField> SelectionFocusPositionProperty = new MappedDependencyProperty<System.Int32, UnityEngine.UI.InputField, InputField>("SelectionFocusPosition", x => x.InputFieldComponent, x => x.selectionFocusPosition, (x, y) => x.selectionFocusPosition = y);
+        /// <summary>Selection focus position.</summary>
         public System.Int32 SelectionFocusPosition
         {
             get { return SelectionFocusPositionProperty.GetValue(this); }
@@ -335,6 +366,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Navigation, UnityEngine.UI.InputField, InputField> NavigationProperty = new MappedDependencyProperty<UnityEngine.UI.Navigation, UnityEngine.UI.InputField, InputField>("Navigation", x => x.InputFieldComponent, x => x.navigation, (x, y) => x.navigation = y);
+        /// <summary>Navigation settings.</summary>
         public UnityEngine.UI.Navigation Navigation
         {
             get { return NavigationProperty.GetValue(this); }
@@ -342,6 +374,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Selectable.Transition, UnityEngine.UI.InputField, InputField> TransitionProperty = new MappedDependencyProperty<UnityEngine.UI.Selectable.Transition, UnityEngine.UI.InputField, InputField>("Transition", x => x.InputFieldComponent, x => x.transition, (x, y) => x.transition = y);
+        /// <summary>The type of transition that will be applied to the targetGraphic when the state changes.</summary>
         public UnityEngine.UI.Selectable.Transition Transition
         {
             get { return TransitionProperty.GetValue(this); }
@@ -349,6 +382,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.ColorBlock, UnityEngine.UI.InputField, InputField> ColorsProperty = new MappedDependencyProperty<UnityEngine.UI.ColorBlock, UnityEngine.UI.InputField, InputField>("Colors", x => x.InputFieldComponent, x => x.colors, (x, y) => x.colors = y);
+        /// <summary>The ColorBlock for this selectable object.</summary>
         public UnityEngine.UI.ColorBlock Colors
         {
             get { return ColorsProperty.GetValue(this); }
@@ -356,6 +390,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.SpriteState, UnityEngine.UI.InputField, InputField> SpriteStateProperty = new MappedDependencyProperty<UnityEngine.UI.SpriteState, UnityEngine.UI.InputField, InputField>("SpriteState", x => x.InputFieldComponent, x => x.spriteState, (x, y) => x.spriteState = y);
+        /// <summary>The sprite state of this selectable object.</summary>
         public UnityEngine.UI.SpriteState SpriteState
         {
             get { return SpriteStateProperty.GetValue(this); }
@@ -363,6 +398,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.AnimationTriggers, UnityEngine.UI.InputField, InputField> AnimationTriggersProperty = new MappedDependencyProperty<UnityEngine.UI.AnimationTriggers, UnityEngine.UI.InputField, InputField>("AnimationTriggers", x => x.InputFieldComponent, x => x.animationTriggers, (x, y) => x.animationTriggers = y);
+        /// <summary>The animation triggers for this selectable object.</summary>
         public UnityEngine.UI.AnimationTriggers AnimationTriggers
         {
             get { return AnimationTriggersProperty.GetValue(this); }
@@ -370,6 +406,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Graphic, UnityEngine.UI.InputField, InputField> TargetGraphicProperty = new MappedDependencyProperty<UnityEngine.UI.Graphic, UnityEngine.UI.InputField, InputField>("TargetGraphic", x => x.InputFieldComponent, x => x.targetGraphic, (x, y) => x.targetGraphic = y);
+        /// <summary>Graphic that will be transitioned upon.</summary>
         public UnityEngine.UI.Graphic TargetGraphic
         {
             get { return TargetGraphicProperty.GetValue(this); }
@@ -377,6 +414,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField> InteractableProperty = new MappedDependencyProperty<System.Boolean, UnityEngine.UI.InputField, InputField>("Interactable", x => x.InputFieldComponent, x => x.interactable, (x, y) => x.interactable = y);
+        /// <summary>Boolean indicating if input field is interactable.</summary>
         public System.Boolean Interactable
         {
             get { return InteractableProperty.GetValue(this); }
@@ -384,6 +422,7 @@ namespace Delight
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.UI.Image, UnityEngine.UI.InputField, InputField> ImageProperty = new MappedDependencyProperty<UnityEngine.UI.Image, UnityEngine.UI.InputField, InputField>("Image", x => x.InputFieldComponent, x => x.image, (x, y) => x.image = y);
+        /// <summary>Convenience function that converts the referenced Graphic to a Image, if possible.</summary>
         public UnityEngine.UI.Image Image
         {
             get { return ImageProperty.GetValue(this); }
@@ -530,6 +569,13 @@ namespace Delight
             set { InputText.Maskable = value; }
         }
 
+        public readonly static DependencyProperty IsMaskingGraphicProperty = Label.IsMaskingGraphicProperty;
+        public System.Boolean IsMaskingGraphic
+        {
+            get { return InputText.IsMaskingGraphic; }
+            set { InputText.IsMaskingGraphic = value; }
+        }
+
         public readonly static DependencyProperty FontColorProperty = Label.FontColorProperty;
         public UnityEngine.Color FontColor
         {
@@ -619,13 +665,6 @@ namespace Delight
         {
             get { return InputText.Pivot; }
             set { InputText.Pivot = value; }
-        }
-
-        public readonly static DependencyProperty InputTextLayoutRootProperty = Label.LayoutRootProperty;
-        public Delight.LayoutRoot InputTextLayoutRoot
-        {
-            get { return InputText.LayoutRoot; }
-            set { InputText.LayoutRoot = value; }
         }
 
         public readonly static DependencyProperty InputTextDisableLayoutUpdateProperty = Label.DisableLayoutUpdateProperty;
@@ -763,9 +802,9 @@ namespace Delight
                     Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(9f, ElementSizeUnit.Pixels)));
                     Delight.InputField.BackgroundColorProperty.SetDefault(_inputField, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.InputField.WidthProperty.SetDefault(_inputField, new ElementSize(400f, ElementSizeUnit.Pixels));
-                    Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(30f, ElementSizeUnit.Pixels));
                     Delight.InputField.SelectionColorProperty.SetDefault(_inputField, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
-                    Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(12f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.InputField.TextMarginProperty.SetDefault(_inputField, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(7f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputField, InputFieldInputFieldPlaceholder);
                     Delight.InputField.TextAreaTemplateProperty.SetDefault(_inputField, InputFieldTextArea);
                     Delight.InputField.InputTextTemplateProperty.SetDefault(_inputField, InputFieldInputText);
@@ -833,7 +872,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.TextAlignmentProperty.SetDefault(_inputFieldInputText, Delight.ElementAlignment.TopLeft);
-                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldInputText, 18);
+                    Delight.Label.FontSizeProperty.SetDefault(_inputFieldInputText, 16);
                     Delight.Label.FontColorProperty.SetDefault(_inputFieldInputText, new UnityEngine.Color(0f, 0f, 0f, 1f));
                 }
                 return _inputFieldInputText;

@@ -193,12 +193,15 @@ namespace Delight
         public readonly SpriteAsset CloseButton;
         public readonly SpriteAsset ComboBoxButton;
         public readonly SpriteAsset ComboBoxButtonPressed;
+        public readonly SpriteAsset ContextMenuBg;
         public readonly SpriteAsset Delighticon;
         public readonly SpriteAsset DesignerGrid;
         public readonly SpriteAsset DesignerGrid2;
         public readonly SpriteAsset EditorGrid;
         public readonly SpriteAsset ExpanderArrowDown;
         public readonly SpriteAsset ExpanderArrowRight;
+        public readonly SpriteAsset HamburgerMenuIcon;
+        public readonly SpriteAsset HamburgerMenuIconPressed;
         public readonly SpriteAsset ListSelection;
         public readonly SpriteAsset Lock;
         public readonly SpriteAsset RadioButton;
@@ -206,9 +209,6 @@ namespace Delight
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
-        public readonly SpriteAsset HamburgerMenuIcon;
-        public readonly SpriteAsset HamburgerMenuIconPressed;
-        public readonly SpriteAsset ContextMenuBg;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -216,16 +216,16 @@ namespace Delight
         public readonly SpriteAsset Frame4;
         public readonly SpriteAsset LevelSelectBg;
         public readonly SpriteAsset LevelSelectItemBg;
+        public readonly SpriteAsset LevelSelectPageButton;
+        public readonly SpriteAsset LevelSelectPageButtonPressed;
+        public readonly SpriteAsset LevelSelectRightArrow;
+        public readonly SpriteAsset MainMenuDemoBg;
+        public readonly SpriteAsset MainMenuDemoButton;
+        public readonly SpriteAsset MainMenuDemoButtonPressed;
         public readonly SpriteAsset Stars0;
         public readonly SpriteAsset Stars1;
         public readonly SpriteAsset Stars2;
         public readonly SpriteAsset Stars3;
-        public readonly SpriteAsset LevelSelectRightArrow;
-        public readonly SpriteAsset LevelSelectPageButton;
-        public readonly SpriteAsset LevelSelectPageButtonPressed;
-        public readonly SpriteAsset MainMenuDemoButton;
-        public readonly SpriteAsset MainMenuDemoButtonPressed;
-        public readonly SpriteAsset MainMenuDemoBg;
 
         #endregion
 
@@ -238,12 +238,15 @@ namespace Delight
             CloseButton = new SpriteAsset { Id = "CloseButton", IsResource = true, RelativePath = "Sprites/" };
             ComboBoxButton = new SpriteAsset { Id = "ComboBoxButton", IsResource = true, RelativePath = "Sprites/" };
             ComboBoxButtonPressed = new SpriteAsset { Id = "ComboBoxButtonPressed", IsResource = true, RelativePath = "Sprites/" };
+            ContextMenuBg = new SpriteAsset { Id = "ContextMenuBg", IsResource = true, RelativePath = "Sprites/" };
             Delighticon = new SpriteAsset { Id = "delight-icon", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid = new SpriteAsset { Id = "DesignerGrid", IsResource = true, RelativePath = "Sprites/" };
             DesignerGrid2 = new SpriteAsset { Id = "DesignerGrid2", IsResource = true, RelativePath = "Sprites/" };
             EditorGrid = new SpriteAsset { Id = "EditorGrid", IsResource = true, RelativePath = "Sprites/" };
             ExpanderArrowDown = new SpriteAsset { Id = "ExpanderArrowDown", IsResource = true, RelativePath = "Sprites/" };
             ExpanderArrowRight = new SpriteAsset { Id = "ExpanderArrowRight", IsResource = true, RelativePath = "Sprites/" };
+            HamburgerMenuIcon = new SpriteAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
+            HamburgerMenuIconPressed = new SpriteAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
             ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
             Lock = new SpriteAsset { Id = "Lock", IsResource = true, RelativePath = "Sprites/" };
             RadioButton = new SpriteAsset { Id = "RadioButton", IsResource = true, RelativePath = "Sprites/" };
@@ -251,9 +254,6 @@ namespace Delight
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
-            HamburgerMenuIcon = new SpriteAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
-            HamburgerMenuIconPressed = new SpriteAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
-            ContextMenuBg = new SpriteAsset { Id = "ContextMenuBg", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "Sprites/" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -261,28 +261,31 @@ namespace Delight
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
             LevelSelectBg = new SpriteAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "" };
             LevelSelectItemBg = new SpriteAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "" };
+            LevelSelectPageButton = new SpriteAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
+            LevelSelectPageButtonPressed = new SpriteAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
+            LevelSelectRightArrow = new SpriteAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
+            MainMenuDemoBg = new SpriteAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
+            MainMenuDemoButton = new SpriteAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
+            MainMenuDemoButtonPressed = new SpriteAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
             Stars0 = new SpriteAsset { Id = "Stars0", IsResource = true, RelativePath = "" };
             Stars1 = new SpriteAsset { Id = "Stars1", IsResource = true, RelativePath = "" };
             Stars2 = new SpriteAsset { Id = "Stars2", IsResource = true, RelativePath = "" };
             Stars3 = new SpriteAsset { Id = "Stars3", IsResource = true, RelativePath = "" };
-            LevelSelectRightArrow = new SpriteAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
-            LevelSelectPageButton = new SpriteAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
-            LevelSelectPageButtonPressed = new SpriteAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
-            MainMenuDemoButton = new SpriteAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
-            MainMenuDemoButtonPressed = new SpriteAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
-            MainMenuDemoBg = new SpriteAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
             Add(CloseButton);
             Add(ComboBoxButton);
             Add(ComboBoxButtonPressed);
+            Add(ContextMenuBg);
             Add(Delighticon);
             Add(DesignerGrid);
             Add(DesignerGrid2);
             Add(EditorGrid);
             Add(ExpanderArrowDown);
             Add(ExpanderArrowRight);
+            Add(HamburgerMenuIcon);
+            Add(HamburgerMenuIconPressed);
             Add(ListSelection);
             Add(Lock);
             Add(RadioButton);
@@ -290,9 +293,6 @@ namespace Delight
             Add(RainbowSquare);
             Add(Selection);
             Add(TooltipArrow);
-            Add(HamburgerMenuIcon);
-            Add(HamburgerMenuIconPressed);
-            Add(ContextMenuBg);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -300,16 +300,16 @@ namespace Delight
             Add(Frame4);
             Add(LevelSelectBg);
             Add(LevelSelectItemBg);
+            Add(LevelSelectPageButton);
+            Add(LevelSelectPageButtonPressed);
+            Add(LevelSelectRightArrow);
+            Add(MainMenuDemoBg);
+            Add(MainMenuDemoButton);
+            Add(MainMenuDemoButtonPressed);
             Add(Stars0);
             Add(Stars1);
             Add(Stars2);
             Add(Stars3);
-            Add(LevelSelectRightArrow);
-            Add(LevelSelectPageButton);
-            Add(LevelSelectPageButtonPressed);
-            Add(MainMenuDemoButton);
-            Add(MainMenuDemoButtonPressed);
-            Add(MainMenuDemoBg);
         }
 
         #endregion
@@ -470,22 +470,7 @@ namespace Delight
     {
         #region Fields
 
-        public readonly Texture2DAsset HamburgerMenuIcon;
-        public readonly Texture2DAsset HamburgerMenuIconPressed;
-        public readonly Texture2DAsset ContextMenuBg;
         public readonly Texture2DAsset Bluefloral01;
-        public readonly Texture2DAsset LevelSelectBg;
-        public readonly Texture2DAsset LevelSelectItemBg;
-        public readonly Texture2DAsset Stars3;
-        public readonly Texture2DAsset Stars2;
-        public readonly Texture2DAsset Stars1;
-        public readonly Texture2DAsset Stars0;
-        public readonly Texture2DAsset LevelSelectRightArrow;
-        public readonly Texture2DAsset LevelSelectPageButtonPressed;
-        public readonly Texture2DAsset LevelSelectPageButton;
-        public readonly Texture2DAsset MainMenuDemoButtonPressed;
-        public readonly Texture2DAsset MainMenuDemoButton;
-        public readonly Texture2DAsset MainMenuDemoBg;
 
         #endregion
 
@@ -493,39 +478,9 @@ namespace Delight
 
         public Texture2DAssetData()
         {
-            HamburgerMenuIcon = new Texture2DAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
-            HamburgerMenuIconPressed = new Texture2DAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
-            ContextMenuBg = new Texture2DAsset { Id = "ContextMenuBg", IsResource = true, RelativePath = "Sprites/" };
             Bluefloral01 = new Texture2DAsset { Id = "bluefloral01", AssetBundleId = "Bundle2", RelativePath = "" };
-            LevelSelectBg = new Texture2DAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "" };
-            LevelSelectItemBg = new Texture2DAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "" };
-            Stars3 = new Texture2DAsset { Id = "Stars3", IsResource = true, RelativePath = "" };
-            Stars2 = new Texture2DAsset { Id = "Stars2", IsResource = true, RelativePath = "" };
-            Stars1 = new Texture2DAsset { Id = "Stars1", IsResource = true, RelativePath = "" };
-            Stars0 = new Texture2DAsset { Id = "Stars0", IsResource = true, RelativePath = "" };
-            LevelSelectRightArrow = new Texture2DAsset { Id = "LevelSelectRightArrow", IsResource = true, RelativePath = "" };
-            LevelSelectPageButtonPressed = new Texture2DAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
-            LevelSelectPageButton = new Texture2DAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
-            MainMenuDemoButtonPressed = new Texture2DAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
-            MainMenuDemoButton = new Texture2DAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
-            MainMenuDemoBg = new Texture2DAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
 
-            Add(HamburgerMenuIcon);
-            Add(HamburgerMenuIconPressed);
-            Add(ContextMenuBg);
             Add(Bluefloral01);
-            Add(LevelSelectBg);
-            Add(LevelSelectItemBg);
-            Add(Stars3);
-            Add(Stars2);
-            Add(Stars1);
-            Add(Stars0);
-            Add(LevelSelectRightArrow);
-            Add(LevelSelectPageButtonPressed);
-            Add(LevelSelectPageButton);
-            Add(MainMenuDemoButtonPressed);
-            Add(MainMenuDemoButton);
-            Add(MainMenuDemoBg);
         }
 
         #endregion
