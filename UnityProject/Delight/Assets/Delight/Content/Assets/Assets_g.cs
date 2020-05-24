@@ -225,6 +225,7 @@ namespace Delight
         public readonly SpriteAsset LevelSelectPageButtonPressed;
         public readonly SpriteAsset MainMenuDemoButton;
         public readonly SpriteAsset MainMenuDemoButtonPressed;
+        public readonly SpriteAsset MainMenuDemoBg;
 
         #endregion
 
@@ -269,6 +270,7 @@ namespace Delight
             LevelSelectPageButtonPressed = new SpriteAsset { Id = "LevelSelectPageButtonPressed", IsResource = true, RelativePath = "" };
             MainMenuDemoButton = new SpriteAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
             MainMenuDemoButtonPressed = new SpriteAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
+            MainMenuDemoBg = new SpriteAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
@@ -307,6 +309,7 @@ namespace Delight
             Add(LevelSelectPageButtonPressed);
             Add(MainMenuDemoButton);
             Add(MainMenuDemoButtonPressed);
+            Add(MainMenuDemoBg);
         }
 
         #endregion
@@ -482,6 +485,7 @@ namespace Delight
         public readonly Texture2DAsset LevelSelectPageButton;
         public readonly Texture2DAsset MainMenuDemoButtonPressed;
         public readonly Texture2DAsset MainMenuDemoButton;
+        public readonly Texture2DAsset MainMenuDemoBg;
 
         #endregion
 
@@ -504,6 +508,7 @@ namespace Delight
             LevelSelectPageButton = new Texture2DAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "" };
             MainMenuDemoButtonPressed = new Texture2DAsset { Id = "MainMenuDemoButtonPressed", IsResource = true, RelativePath = "" };
             MainMenuDemoButton = new Texture2DAsset { Id = "MainMenuDemoButton", IsResource = true, RelativePath = "" };
+            MainMenuDemoBg = new Texture2DAsset { Id = "MainMenuDemoBg", IsResource = true, RelativePath = "" };
 
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
@@ -520,6 +525,7 @@ namespace Delight
             Add(LevelSelectPageButton);
             Add(MainMenuDemoButtonPressed);
             Add(MainMenuDemoButton);
+            Add(MainMenuDemoBg);
         }
 
         #endregion

@@ -8,8 +8,7 @@
   <Label FontSize="16" />
   <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a"
             Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a"
-            Alternate-BackgroundColor="Gray95"
-            StateAnimations="FadeInOutHighlightedFast" />
+            Alternate-BackgroundColor="Gray95" />
   <InputField BackgroundColor="White" FontSize="16" FontColor="#000000"
               Width="400" Height="30" SelectionColor="#ef706a" TextMargin="5,7,5,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22" />
@@ -44,18 +43,6 @@
     <StateAnimation From="Highlighted" To="Default">
       <Animate Property="BackgroundColor" Duration="0.5" />
       <Animate Property="FontColor" Duration="0.5" />
-    </StateAnimation>
-  </StateAnimations>
-
-  <StateAnimations Id="FadeInOutHighlightedFast">
-    <StateAnimation From="Any" To="Highlighted">
-      <Animate Property="BackgroundColor" Duration="0.05" />
-      <Animate Property="FontColor" Duration="0.05" />
-    </StateAnimation>
-
-    <StateAnimation From="Highlighted" To="Default">
-      <Animate Property="BackgroundColor" Duration="0.2" />
-      <Animate Property="FontColor" Duration="0.2" />
     </StateAnimation>
   </StateAnimations>
 

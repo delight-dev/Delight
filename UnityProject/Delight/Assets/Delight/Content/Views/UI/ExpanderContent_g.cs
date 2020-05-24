@@ -32,7 +32,6 @@ namespace Delight
             DependencyProperties.Add(ExpanderContentTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(ContentTemplateDataProperty);
-            dependencyProperties.Add(TextProperty);
         }
 
         #endregion
@@ -45,13 +44,6 @@ namespace Delight
         {
             get { return ContentTemplateDataProperty.GetValue(this); }
             set { ContentTemplateDataProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.String> TextProperty = new DependencyProperty<System.String>("Text");
-        public System.String Text
-        {
-            get { return TextProperty.GetValue(this); }
-            set { TextProperty.SetValue(this, value); }
         }
 
         #endregion

@@ -1,0 +1,9 @@
+<MainMenuExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+  <Image Sprite="MainMenuDemoBg" Height="480" PreserveAspect="True" />
+  <Label Style="MainMenuDemoTitle" Text="Main Menu" Offset="0,0,0,210" />
+  <Group Spacing="10" Offset="0,25,0,0">
+    <Button Style="MainMenuDemoButton" Text="Play" Click="Play" />
+    <Button Style="MainMenuDemoButton" Text="Options" Click="ShowOptions" />
+    <Button Style="MainMenuDemoButton" Text="Quit" Click="Quit" />
+  </Group>
+</MainMenuExample>
