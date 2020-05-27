@@ -58,6 +58,39 @@ namespace Delight
                 comboBoxContent.SetContentTemplateData(tiPlayer);
                 return comboBoxContent;
             }, typeof(ComboBoxListItem), "ComboBoxContent"));
+            ComboBox1 = new ComboBox(this, Group1.Content, "ComboBox1", ComboBox1Template);
+            ComboBox1.ItemSelected.RegisterHandler(this, "ItemSelected");
+
+            // templates for ComboBox1
+            ComboBox1.ContentTemplates.Add(new ContentTemplate(x0 => 
+            {
+                var comboBoxListItem1 = new ComboBoxListItem(this, ComboBox1.Content, "ComboBoxListItem1", ComboBoxListItem1Template);
+                var label4 = new Label(this, comboBoxListItem1.Content, "Label4", Label4Template);
+                comboBoxListItem1.IsDynamic = true;
+                comboBoxListItem1.SetContentTemplateData(x0);
+                return comboBoxListItem1;
+            }, typeof(ComboBoxListItem), "ComboBoxListItem1"));
+
+            // templates for ComboBox1
+            ComboBox1.ContentTemplates.Add(new ContentTemplate(x0 => 
+            {
+                var comboBoxListItem2 = new ComboBoxListItem(this, ComboBox1.Content, "ComboBoxListItem2", ComboBoxListItem2Template);
+                var label5 = new Label(this, comboBoxListItem2.Content, "Label5", Label5Template);
+                comboBoxListItem2.IsDynamic = true;
+                comboBoxListItem2.SetContentTemplateData(x0);
+                return comboBoxListItem2;
+            }, typeof(ComboBoxListItem), "ComboBoxListItem2"));
+
+            // templates for ComboBox1
+            ComboBox1.ContentTemplates.Add(new ContentTemplate(x0 => 
+            {
+                var comboBoxListItem3 = new ComboBoxListItem(this, ComboBox1.Content, "ComboBoxListItem3", ComboBoxListItem3Template);
+                var image2 = new Image(this, comboBoxListItem3.Content, "Image2", Image2Template);
+                var label6 = new Label(this, comboBoxListItem3.Content, "Label6", Label6Template);
+                comboBoxListItem3.IsDynamic = true;
+                comboBoxListItem3.SetContentTemplateData(x0);
+                return comboBoxListItem3;
+            }, typeof(ComboBoxListItem), "ComboBoxListItem3"));
             this.AfterInitializeInternal();
         }
 
@@ -107,6 +140,22 @@ namespace Delight
             dependencyProperties.Add(ComboBoxTemplateProperty);
             dependencyProperties.Add(Label3Property);
             dependencyProperties.Add(Label3TemplateProperty);
+            dependencyProperties.Add(ComboBox1Property);
+            dependencyProperties.Add(ComboBox1TemplateProperty);
+            dependencyProperties.Add(ComboBoxListItem1Property);
+            dependencyProperties.Add(ComboBoxListItem1TemplateProperty);
+            dependencyProperties.Add(Label4Property);
+            dependencyProperties.Add(Label4TemplateProperty);
+            dependencyProperties.Add(ComboBoxListItem2Property);
+            dependencyProperties.Add(ComboBoxListItem2TemplateProperty);
+            dependencyProperties.Add(Label5Property);
+            dependencyProperties.Add(Label5TemplateProperty);
+            dependencyProperties.Add(ComboBoxListItem3Property);
+            dependencyProperties.Add(ComboBoxListItem3TemplateProperty);
+            dependencyProperties.Add(Image2Property);
+            dependencyProperties.Add(Image2TemplateProperty);
+            dependencyProperties.Add(Label6Property);
+            dependencyProperties.Add(Label6TemplateProperty);
             dependencyProperties.Add(ComboBoxContentProperty);
             dependencyProperties.Add(ComboBoxContentTemplateProperty);
         }
@@ -374,6 +423,118 @@ namespace Delight
             set { Label3TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<ComboBox> ComboBox1Property = new DependencyProperty<ComboBox>("ComboBox1");
+        public ComboBox ComboBox1
+        {
+            get { return ComboBox1Property.GetValue(this); }
+            set { ComboBox1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ComboBox1TemplateProperty = new DependencyProperty<Template>("ComboBox1Template");
+        public Template ComboBox1Template
+        {
+            get { return ComboBox1TemplateProperty.GetValue(this); }
+            set { ComboBox1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ComboBoxListItem> ComboBoxListItem1Property = new DependencyProperty<ComboBoxListItem>("ComboBoxListItem1");
+        public ComboBoxListItem ComboBoxListItem1
+        {
+            get { return ComboBoxListItem1Property.GetValue(this); }
+            set { ComboBoxListItem1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ComboBoxListItem1TemplateProperty = new DependencyProperty<Template>("ComboBoxListItem1Template");
+        public Template ComboBoxListItem1Template
+        {
+            get { return ComboBoxListItem1TemplateProperty.GetValue(this); }
+            set { ComboBoxListItem1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
+        public Label Label4
+        {
+            get { return Label4Property.GetValue(this); }
+            set { Label4Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
+        public Template Label4Template
+        {
+            get { return Label4TemplateProperty.GetValue(this); }
+            set { Label4TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ComboBoxListItem> ComboBoxListItem2Property = new DependencyProperty<ComboBoxListItem>("ComboBoxListItem2");
+        public ComboBoxListItem ComboBoxListItem2
+        {
+            get { return ComboBoxListItem2Property.GetValue(this); }
+            set { ComboBoxListItem2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ComboBoxListItem2TemplateProperty = new DependencyProperty<Template>("ComboBoxListItem2Template");
+        public Template ComboBoxListItem2Template
+        {
+            get { return ComboBoxListItem2TemplateProperty.GetValue(this); }
+            set { ComboBoxListItem2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label5Property = new DependencyProperty<Label>("Label5");
+        public Label Label5
+        {
+            get { return Label5Property.GetValue(this); }
+            set { Label5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label5TemplateProperty = new DependencyProperty<Template>("Label5Template");
+        public Template Label5Template
+        {
+            get { return Label5TemplateProperty.GetValue(this); }
+            set { Label5TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ComboBoxListItem> ComboBoxListItem3Property = new DependencyProperty<ComboBoxListItem>("ComboBoxListItem3");
+        public ComboBoxListItem ComboBoxListItem3
+        {
+            get { return ComboBoxListItem3Property.GetValue(this); }
+            set { ComboBoxListItem3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> ComboBoxListItem3TemplateProperty = new DependencyProperty<Template>("ComboBoxListItem3Template");
+        public Template ComboBoxListItem3Template
+        {
+            get { return ComboBoxListItem3TemplateProperty.GetValue(this); }
+            set { ComboBoxListItem3TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Image> Image2Property = new DependencyProperty<Image>("Image2");
+        public Image Image2
+        {
+            get { return Image2Property.GetValue(this); }
+            set { Image2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Image2TemplateProperty = new DependencyProperty<Template>("Image2Template");
+        public Template Image2Template
+        {
+            get { return Image2TemplateProperty.GetValue(this); }
+            set { Image2TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label6Property = new DependencyProperty<Label>("Label6");
+        public Label Label6
+        {
+            get { return Label6Property.GetValue(this); }
+            set { Label6Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label6TemplateProperty = new DependencyProperty<Template>("Label6Template");
+        public Template Label6Template
+        {
+            get { return Label6TemplateProperty.GetValue(this); }
+            set { Label6TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<ComboBoxListItem> ComboBoxContentProperty = new DependencyProperty<ComboBoxListItem>("ComboBoxContent");
         public ComboBoxListItem ComboBoxContent
         {
@@ -439,6 +600,14 @@ namespace Delight
                     Delight.ButtonsExample.ComboBoxTemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBox);
                     Delight.ButtonsExample.ComboBoxContentTemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBoxContent);
                     Delight.ButtonsExample.Label3TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleLabel3);
+                    Delight.ButtonsExample.ComboBox1TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBox1);
+                    Delight.ButtonsExample.ComboBoxListItem1TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBoxListItem1);
+                    Delight.ButtonsExample.Label4TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleLabel4);
+                    Delight.ButtonsExample.ComboBoxListItem2TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBoxListItem2);
+                    Delight.ButtonsExample.Label5TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleLabel5);
+                    Delight.ButtonsExample.ComboBoxListItem3TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleComboBoxListItem3);
+                    Delight.ButtonsExample.Image2TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleImage2);
+                    Delight.ButtonsExample.Label6TemplateProperty.SetDefault(_buttonsExample, ButtonsExampleLabel6);
                 }
                 return _buttonsExample;
             }
@@ -1528,6 +1697,431 @@ namespace Delight
                     Delight.Label.TextProperty.SetHasBinding(_buttonsExampleLabel3);
                 }
                 return _buttonsExampleLabel3;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1;
+        public static Template ButtonsExampleComboBox1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1 == null || _buttonsExampleComboBox1.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1 == null)
+#endif
+                {
+                    _buttonsExampleComboBox1 = new Template(ComboBoxTemplates.ComboBox);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1.Name = "ButtonsExampleComboBox1";
+#endif
+                    Delight.ComboBox.IsDropUpProperty.SetDefault(_buttonsExampleComboBox1, false);
+                    Delight.ComboBox.ComboBoxButtonTemplateProperty.SetDefault(_buttonsExampleComboBox1, ButtonsExampleComboBox1ComboBoxButton);
+                    Delight.ComboBox.ComboBoxListCanvasTemplateProperty.SetDefault(_buttonsExampleComboBox1, ButtonsExampleComboBox1ComboBoxListCanvas);
+                    Delight.ComboBox.ComboBoxListTemplateProperty.SetDefault(_buttonsExampleComboBox1, ButtonsExampleComboBox1ComboBoxList);
+                }
+                return _buttonsExampleComboBox1;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxButton;
+        public static Template ButtonsExampleComboBox1ComboBoxButton
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxButton == null || _buttonsExampleComboBox1ComboBoxButton.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxButton == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxButton = new Template(ComboBoxTemplates.ComboBoxComboBoxButton);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxButton.Name = "ButtonsExampleComboBox1ComboBoxButton";
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxButton, ButtonsExampleComboBox1ComboBoxButtonLabel);
+                }
+                return _buttonsExampleComboBox1ComboBoxButton;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxButtonLabel;
+        public static Template ButtonsExampleComboBox1ComboBoxButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxButtonLabel == null || _buttonsExampleComboBox1ComboBoxButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxButtonLabel == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxButtonLabel = new Template(ComboBoxTemplates.ComboBoxComboBoxButtonLabel);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxButtonLabel.Name = "ButtonsExampleComboBox1ComboBoxButtonLabel";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxButtonLabel;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListCanvas;
+        public static Template ButtonsExampleComboBox1ComboBoxListCanvas
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListCanvas == null || _buttonsExampleComboBox1ComboBoxListCanvas.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListCanvas == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListCanvas = new Template(ComboBoxTemplates.ComboBoxComboBoxListCanvas);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListCanvas.Name = "ButtonsExampleComboBox1ComboBoxListCanvas";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListCanvas;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxList;
+        public static Template ButtonsExampleComboBox1ComboBoxList
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxList == null || _buttonsExampleComboBox1ComboBoxList.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxList == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxList = new Template(ComboBoxTemplates.ComboBoxComboBoxList);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxList.Name = "ButtonsExampleComboBox1ComboBoxList";
+#endif
+                    Delight.List.ScrollableRegionTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxList, ButtonsExampleComboBox1ComboBoxListScrollableRegion);
+                }
+                return _buttonsExampleComboBox1ComboBoxList;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegion;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegion == null || _buttonsExampleComboBox1ComboBoxListScrollableRegion.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegion == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegion";
+#endif
+                    Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion);
+                    Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar);
+                    Delight.ScrollableRegion.VerticalScrollbarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar);
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegion;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionContentRegion);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle);
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbar);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar";
+#endif
+                    Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar);
+                    Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle);
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar;
+            }
+        }
+
+        private static Template _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle;
+        public static Template ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle == null || _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle == null)
+#endif
+                {
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle";
+#endif
+                }
+                return _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle;
+            }
+        }
+
+        private static Template _buttonsExampleComboBoxListItem1;
+        public static Template ButtonsExampleComboBoxListItem1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBoxListItem1 == null || _buttonsExampleComboBoxListItem1.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBoxListItem1 == null)
+#endif
+                {
+                    _buttonsExampleComboBoxListItem1 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBoxListItem1.Name = "ButtonsExampleComboBoxListItem1";
+#endif
+                }
+                return _buttonsExampleComboBoxListItem1;
+            }
+        }
+
+        private static Template _buttonsExampleLabel4;
+        public static Template ButtonsExampleLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleLabel4 == null || _buttonsExampleLabel4.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleLabel4 == null)
+#endif
+                {
+                    _buttonsExampleLabel4 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _buttonsExampleLabel4.Name = "ButtonsExampleLabel4";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_buttonsExampleLabel4, "Option 1");
+                    Delight.Label.WidthProperty.SetDefault(_buttonsExampleLabel4, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.MarginProperty.SetDefault(_buttonsExampleLabel4, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _buttonsExampleLabel4;
+            }
+        }
+
+        private static Template _buttonsExampleComboBoxListItem2;
+        public static Template ButtonsExampleComboBoxListItem2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBoxListItem2 == null || _buttonsExampleComboBoxListItem2.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBoxListItem2 == null)
+#endif
+                {
+                    _buttonsExampleComboBoxListItem2 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBoxListItem2.Name = "ButtonsExampleComboBoxListItem2";
+#endif
+                }
+                return _buttonsExampleComboBoxListItem2;
+            }
+        }
+
+        private static Template _buttonsExampleLabel5;
+        public static Template ButtonsExampleLabel5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleLabel5 == null || _buttonsExampleLabel5.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleLabel5 == null)
+#endif
+                {
+                    _buttonsExampleLabel5 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _buttonsExampleLabel5.Name = "ButtonsExampleLabel5";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_buttonsExampleLabel5, "Option 2");
+                    Delight.Label.WidthProperty.SetDefault(_buttonsExampleLabel5, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.MarginProperty.SetDefault(_buttonsExampleLabel5, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _buttonsExampleLabel5;
+            }
+        }
+
+        private static Template _buttonsExampleComboBoxListItem3;
+        public static Template ButtonsExampleComboBoxListItem3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleComboBoxListItem3 == null || _buttonsExampleComboBoxListItem3.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleComboBoxListItem3 == null)
+#endif
+                {
+                    _buttonsExampleComboBoxListItem3 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
+#if UNITY_EDITOR
+                    _buttonsExampleComboBoxListItem3.Name = "ButtonsExampleComboBoxListItem3";
+#endif
+                }
+                return _buttonsExampleComboBoxListItem3;
+            }
+        }
+
+        private static Template _buttonsExampleImage2;
+        public static Template ButtonsExampleImage2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleImage2 == null || _buttonsExampleImage2.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleImage2 == null)
+#endif
+                {
+                    _buttonsExampleImage2 = new Template(ImageTemplates.Image);
+#if UNITY_EDITOR
+                    _buttonsExampleImage2.Name = "ButtonsExampleImage2";
+#endif
+                    Delight.Image.SpriteProperty.SetDefault(_buttonsExampleImage2, Assets.Sprites["RainbowSquare"]);
+                    Delight.Image.AlignmentProperty.SetDefault(_buttonsExampleImage2, Delight.ElementAlignment.Left);
+                    Delight.Image.OffsetProperty.SetDefault(_buttonsExampleImage2, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _buttonsExampleImage2;
+            }
+        }
+
+        private static Template _buttonsExampleLabel6;
+        public static Template ButtonsExampleLabel6
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_buttonsExampleLabel6 == null || _buttonsExampleLabel6.CurrentVersion != Template.Version)
+#else
+                if (_buttonsExampleLabel6 == null)
+#endif
+                {
+                    _buttonsExampleLabel6 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _buttonsExampleLabel6.Name = "ButtonsExampleLabel6";
+#endif
+                    Delight.Label.TextProperty.SetDefault(_buttonsExampleLabel6, "Option 3");
+                    Delight.Label.WidthProperty.SetDefault(_buttonsExampleLabel6, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.MarginProperty.SetDefault(_buttonsExampleLabel6, new ElementMargin(new ElementSize(30f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                }
+                return _buttonsExampleLabel6;
             }
         }
 

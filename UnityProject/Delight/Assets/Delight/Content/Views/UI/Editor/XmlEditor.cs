@@ -1487,7 +1487,7 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
+            //XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
             _caretCanvasRenderer = Caret.GameObject.GetComponent<CanvasRenderer>();
 
             ClearEditor();

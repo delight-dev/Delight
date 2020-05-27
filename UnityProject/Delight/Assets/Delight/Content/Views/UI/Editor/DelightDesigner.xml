@@ -10,7 +10,7 @@
 
       <!-- Left navigation bar #494b52 -->
       <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1">
-        <Image Sprite="delight-icon" Alignment="Top" Offset="0,5,0,0" /> 
+        <Image Sprite="delight-icon" Alignment="Top" Offset="0,5,0,0" />
       </Region>
 
       <!-- Designer Content Region -->
@@ -25,26 +25,26 @@
       <!-- Left Panel - Content Explorer #686a72 -->
       <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#d0d0d3">
         <Region Margin="0,8,0,0">
-          
+
           <ScrollableRegion Id="ContentExplorerScrollableRegion" Width="100%" Height="100%" ContentAlignment="Top" DisableInteractionScrollDelta="1" HasInertia="False"
                 VerticalScrollbarVisibility="MouseOver" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0" CanScrollHorizontally="False">
- 
-            <Expander Text="Views" Width="100%" Margin="4,0,0,0">  
+
+            <Expander Text="Views" Width="100%" Margin="4,0,0,0">
               <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="4,2,2,2" BackgroundColor="clear" Width="100%"
                     CanReselect="True" ItemSelected="ViewSelected">
                 <ListItem Margin="4,0,8,0" Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
                   <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="12,0,0,0" EnableWordWrapping="False"
-                         OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
+                          OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
                 </ListItem>
               </List>
             </Expander>
 
           </ScrollableRegion>
-          
+
         </Region>
 
-        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,4,10,0" ItemSelected="ViewMenuItemSelected" 
+        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,4,10,0" ItemSelected="ViewMenuItemSelected"
                   ButtonBackgroundSprite="HamburgerMenuIcon" Pressed-ButtonBackgroundSprite="HamburgerMenuIconPressed"
                   ComboBoxListWidth="180" ShowSelectedItem="False" ComboBoxListOffset="70,2,0,0" DeselectAfterSelect="True"
                   BackgroundColor="#F6F6F6" BackgroundSprite="ContextMenuBg" MaskContent="True">
@@ -72,7 +72,7 @@
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,2" />
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
     </Grid>
-    
+
     <Region Id="SaveChangesPopup" IsActive="False" Width="450" Height="300" BackgroundColor="#dbdbdb">
       <Label Text="Do you want to save changes to the following items?" FontSize="16" Font="Segoe UI SDF" Width="100%" Alignment="TopLeft" Margin="10,0,0,0" />
 

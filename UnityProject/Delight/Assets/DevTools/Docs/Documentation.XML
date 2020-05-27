@@ -70,26 +70,6 @@
             ShaderAsset data provider. Contains references to all shaders in the project.
             </summary>
         </member>
-        <member name="T:Delight.TextAsset">
-            <summary>
-            Manages a UnityEngine.TextAsset object. Loads/unloads the asset on-demand as it's requested by views.
-            </summary>
-        </member>
-        <member name="T:Delight.TextAssetData">
-            <summary>
-            TextAsset data provider. Contains references to all textassets in the project.
-            </summary>
-        </member>
-        <member name="T:Delight.Texture2DAsset">
-            <summary>
-            Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
-            </summary>
-        </member>
-        <member name="T:Delight.Texture2DAssetData">
-            <summary>
-            Texture2DAsset data provider. Contains references to all texture2ds in the project.
-            </summary>
-        </member>
         <member name="T:Delight.TMP_ColorGradientAsset">
             <summary>
             Manages a TMPro.TMP_ColorGradient object. Loads/unloads the asset on-demand as it's requested by views.
@@ -108,6 +88,16 @@
         <member name="T:Delight.TMP_SpriteAssetData">
             <summary>
             TMP_SpriteAsset data provider. Contains references to all tmp_spriteassets in the project.
+            </summary>
+        </member>
+        <member name="T:Delight.TextureAsset">
+            <summary>
+            Manages a UnityEngine.Texture object. Loads/unloads the asset on-demand as it's requested by views.
+            </summary>
+        </member>
+        <member name="T:Delight.TextureAssetData">
+            <summary>
+            TextureAsset data provider. Contains references to all textures in the project.
             </summary>
         </member>
         <member name="T:Delight.TMP_InputValidatorAsset">
@@ -465,10 +455,31 @@
         <member name="P:Delight.Button.IsBackButton">
             <summary>Boolean indicating if this is a back button.</summary>
         </member>
+        <member name="P:Delight.Button.DisplayLabel">
+            <summary>Boolean indicating if the button label should be displayed.</summary>
+        </member>
+        <member name="P:Delight.Button.Text">
+            <summary>Button text.</summary>
+        </member>
         <member name="M:Delight.CanvasRendererView.BeforeLoad">
             <summary>
             Called before the view is loaded.
             </summary>
+        </member>
+        <member name="P:Delight.CanvasRendererView.HasPopInstruction">
+            <summary>Enable 'render stack' pop draw call.</summary>
+        </member>
+        <member name="P:Delight.CanvasRendererView.MaterialCount">
+            <summary>The number of materials usable by this renderer.</summary>
+        </member>
+        <member name="P:Delight.CanvasRendererView.PopMaterialCount">
+            <summary>The number of materials usable by this renderer. Used internally for masking.</summary>
+        </member>
+        <member name="P:Delight.CanvasRendererView.CullTransparentMesh">
+            <summary>Indicates whether geometry emitted by the renderer can be ignored when the vertex color alpha is close to zero for every vertex of the mesh.</summary>
+        </member>
+        <member name="P:Delight.CanvasRendererView.Cull">
+            <summary>Indicates whether geometry emitted by the renderer is ignored.</summary>
         </member>
         <member name="T:Delight.CheckBox">
             <summary>
@@ -536,6 +547,9 @@
         </member>
         <member name="P:Delight.CheckBox.Spacing">
             <summary>Spacing between the check box sprite and the text label.</summary>
+        </member>
+        <member name="P:Delight.CheckBox.Text">
+            <summary>Check box text.</summary>
         </member>
         <member name="T:Delight.Collection">
             <summary>
@@ -611,8 +625,137 @@
         <member name="P:Delight.ComboBox.IsDropUp">
             <summary>Boolean indicating if the combo box list should open above instead of below the button.</summary>
         </member>
+        <member name="P:Delight.ComboBox.ShowSelectedItem">
+            <summary>Boolean indicating if the selected item should be shown in the button.</summary>
+        </member>
         <member name="P:Delight.ComboBox.ItemSelected">
             <summary>Action called when an item is selected.</summary>
+        </member>
+        <member name="T:Delight.ComboBoxListItem">
+            <summary>
+            Base view for items displayed within the ComboBox view. Has the extra states: Disabled, Highlighted, Pressed and Selected. 
+            </summary>
+        </member>
+        <member name="M:Delight.DefaultExpanderHeader.UpdateLayout(System.Boolean)">
+            <summary>
+            Updates layout.
+            </summary>
+        </member>
+        <member name="T:Delight.Expander">
+            <summary>
+            Expandable view with a header and content. When header is clicked the view expands to show content or collapses to hide it.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.OnChanged(System.String)">
+            <summary>
+            Called when a property has been changed. 
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.BeforeLoad">
+            <summary>
+            Called before the view and its children has been loaded.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.AfterLoad">
+            <summary>
+            Called after the view is loaded.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.ChildLayoutChanged">
+            <summary>
+            Called when a child changes its layout.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.OnExpanderChildLayoutChanged">
+            <summary>
+            Called when the layout of a child has been changed. 
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.IsExpandedChanged">
+            <summary>
+            Called when the field IsExpanded is changed.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.UpdateLayout(System.Boolean)">
+            <summary>
+            Updates based on expanded content size.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.IsDisabledChanged">
+            <summary>
+            Called when IsDisabled field changes.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.SetState(System.String)">
+            <summary>
+            Sets the state of the view.
+            </summary>
+        </member>
+        <member name="M:Delight.Expander.PrepareForDesigner">
+            <summary>
+            Called by designer to make the view presentable in the designer.
+            </summary>
+        </member>
+        <member name="P:Delight.Expander.IsExpanded">
+            <summary>Boolean indicating if content is expanded.</summary>
+        </member>
+        <member name="P:Delight.Expander.IsDisabled">
+            <summary>Boolean indicating if the expander button is deisabled.</summary>
+        </member>
+        <member name="P:Delight.Expander.IsInteractable">
+            <summary>Boolean indicating if expander responds to user interaction.</summary>
+        </member>
+        <member name="P:Delight.Expander.HeaderHeight">
+            <summary>Height of the expander header.</summary>
+        </member>
+        <member name="P:Delight.Expander.ContentMargin">
+            <summary>Margin of the expanded content.</summary>
+        </member>
+        <member name="P:Delight.Expander.HeaderAlignment">
+            <summary>Alignment of the expander header.</summary>
+        </member>
+        <member name="P:Delight.Expander.Text">
+            <summary>Expander header text.</summary>
+        </member>
+        <member name="P:Delight.Expander.Sprite">
+            <summary>Expander header icon sprite.</summary>
+        </member>
+        <member name="P:Delight.Expander.ToggleMode">
+            <summary>Enum indicating how the content should be toggled, e.g. if content should be loaded on-demand or be pre-loaded.</summary>
+        </member>
+        <member name="T:Delight.ExpanderContent">
+            <summary>
+            Defines the content of an expander.
+            </summary>
+        </member>
+        <member name="P:Delight.ExpanderContent.ContentTemplateData">
+            <summary>Holds the content template data.</summary>
+        </member>
+        <member name="T:Delight.ExpanderHeader">
+            <summary>
+            Defines the header of an expander.
+            </summary>
+        </member>
+        <member name="P:Delight.ExpanderHeader.ParentExpander">
+            <summary>
+            Parent expander the expander header resides in.
+            </summary>
+        </member>
+        <member name="M:Delight.ExpanderHeader.SetState(System.String)">
+            <summary>
+            Sets the state of the view.
+            </summary>
+        </member>
+        <member name="M:Delight.ExpanderHeader.ExpanderHeaderClick">
+            <summary>
+            Called when the expander header is clicked. 
+            </summary>
+        </member>
+        <member name="P:Delight.ExpanderHeader.Text">
+            <summary>Expander header text.</summary>
+        </member>
+        <member name="P:Delight.ExpanderHeader.Sprite">
+            <summary>Expander header icon sprite.</summary>
         </member>
         <member name="T:Delight.Frame">
             <summary>
@@ -637,11 +780,6 @@
         <member name="M:Delight.Frame.UpdateLayout(System.Boolean)">
             <summary>
             Updates layout.
-            </summary>
-        </member>
-        <member name="M:Delight.Frame.AdjustSizeToContent">
-            <summary>
-            Adjusts the size of the list item to its content. 
             </summary>
         </member>
         <member name="P:Delight.Frame.AutoSizeToContent">
@@ -883,6 +1021,16 @@
             Called when a property has been changed. 
             </summary>
         </member>
+        <member name="M:Delight.Image.BeforeLoad">
+            <summary>
+            Called before the view has been loaded.
+            </summary>
+        </member>
+        <member name="M:Delight.Image.AfterLoad">
+            <summary>
+            Called after the view has been loaded.
+            </summary>
+        </member>
         <member name="M:Delight.Image.SpriteChanged">
             <summary>
             Called when the sprite is changed. 
@@ -925,6 +1073,9 @@
         <member name="P:Delight.Image.FillOrigin">
             <summary>Point of origin of the Fill process. Value means different things with each fill method.</summary>
         </member>
+        <member name="P:Delight.Image.AlphaHitTestMinimumThreshold">
+            <summary>Alpha values less than the threshold will cause raycast events to pass through the view.</summary>
+        </member>
         <member name="P:Delight.Image.UseSpriteMesh">
             <summary>Boolean indicating if the view should use mesh generated by TextureImporter or a simple quad mesh.</summary>
         </member>
@@ -943,12 +1094,20 @@
         <member name="P:Delight.Image.IsMaskingGraphic">
             <summary>Boolean indicating if image is a masking graphic.</summary>
         </member>
+        <member name="P:Delight.Image.Color">
+            <summary>Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").</summary>
+        </member>
         <member name="P:Delight.Image.RaycastTarget">
             <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
         </member>
         <member name="T:Delight.LayoutRoot">
             <summary>
             Represents a layout root canvas under which all UI views must reside.
+            </summary>
+        </member>
+        <member name="M:Delight.LayoutRoot.Update">
+            <summary>
+            Updates the view. Called once each frame.
             </summary>
         </member>
         <member name="M:Delight.LayoutRoot.LateUpdate">
@@ -961,6 +1120,16 @@
             Registers a change handler to be triggered on next late update.
             </summary>
         </member>
+        <member name="M:Delight.LayoutRoot.RegisterAnimator(Delight.Animator)">
+            <summary>
+            Registers an animator to be updated each frame.
+            </summary>
+        </member>
+        <member name="M:Delight.LayoutRoot.UnregisterAnimator(Delight.Animator)">
+            <summary>
+            Unregisters an animator to be updated each frame.
+            </summary>
+        </member>
         <member name="T:Delight.List">
             <summary>
             The list presents a static or dynamic list of items. The list can be set to be scrollable through the IsScrollable property. items can be made selectable. Items can be arranged vertically or horizontally. The items can overflow or be wrapped to create flowing lists.
@@ -971,6 +1140,11 @@
             Called when a property has been changed. 
             </summary>
         </member>
+        <member name="M:Delight.List.PageIndexChanged">
+            <summary>
+            Called when the page index has been changed.
+            </summary>
+        </member>
         <member name="M:Delight.List.CreateItems">
             <summary>
             Generates views from data in collection. 
@@ -979,6 +1153,11 @@
         <member name="M:Delight.List.AfterInitialize">
             <summary>
             Called during initialization. 
+            </summary>
+        </member>
+        <member name="M:Delight.List.CreateNavigationButtons">
+            <summary>
+            Creates navigation buttons
             </summary>
         </member>
         <member name="M:Delight.List.ContentScrolled">
@@ -1176,6 +1355,51 @@
             Gets bool inidcating if the number is odd.
             </summary>
         </member>
+        <member name="M:Delight.List.GetSelectedItemIndex">
+            <summary>
+            Gets the index of the currently selected item.
+            </summary>
+        </member>
+        <member name="M:Delight.List.SelectNext(System.Boolean,System.Nullable{Delight.ElementAlignment},Delight.ElementMargin)">
+            <summary>
+            Selects next item in list. 
+            </summary>
+        </member>
+        <member name="M:Delight.List.SelectPrevious(System.Boolean,System.Nullable{Delight.ElementAlignment},Delight.ElementMargin)">
+            <summary>
+            Selects previous item in list. 
+            </summary>
+        </member>
+        <member name="M:Delight.List.ScrollPageDown(System.Boolean)">
+            <summary>
+            Scrolls the list down a page.
+            </summary>
+        </member>
+        <member name="M:Delight.List.ScrollPageUp(System.Boolean)">
+            <summary>
+            Scrolls the list up a page.
+            </summary>
+        </member>
+        <member name="M:Delight.List.GetMaxPageIndex">
+            <summary>
+            Gets max page index of paged lists.
+            </summary>
+        </member>
+        <member name="M:Delight.List.NextPage">
+            <summary>
+            Navigates to next page in paged lists.
+            </summary>
+        </member>
+        <member name="M:Delight.List.PreviousPage">
+            <summary>
+            Navigates to previous page in paged lists.
+            </summary>
+        </member>
+        <member name="M:Delight.List.JumpToPage(System.Int32)">
+            <summary>
+            Jumps to the specified page in paged lists.
+            </summary>
+        </member>
         <member name="P:Delight.List.ScrollsHorizontally">
             <summary>
             Returns boolean indicating if list scrolls horizontally. 
@@ -1252,6 +1476,30 @@
         </member>
         <member name="P:Delight.List.DisableItemArrangement">
             <summary>Boolean indicating if the list shouldn't arrange its items. Used if items are arranged elsewhere.</summary>
+        </member>
+        <member name="P:Delight.List.IsPaged">
+            <summary>Boolean indicating if the list is paged. Customize paging through, e.g. PageSize and ShowNavigationButtons properties.</summary>
+        </member>
+        <member name="P:Delight.List.PageSize">
+            <summary>Number of items to be shown per page when IsPaged is set to true.</summary>
+        </member>
+        <member name="P:Delight.List.PageIndex">
+            <summary>Zero-based index of the current page being displayed if IsPaged is set to true.</summary>
+        </member>
+        <member name="P:Delight.List.PageNavigationGroupOffset">
+            <summary>Default offset of page navigation button group.</summary>
+        </member>
+        <member name="P:Delight.List.PageNavigationGroupAlignment">
+            <summary>Default alignment of page navigation button group.</summary>
+        </member>
+        <member name="P:Delight.List.PageNavigationGroupOrientation">
+            <summary>Default orientation of page navigation button group.</summary>
+        </member>
+        <member name="P:Delight.List.PageNavigationGroupSpacing">
+            <summary>Default spacing of page navigation button group.</summary>
+        </member>
+        <member name="P:Delight.List.ShowNavigationButtons">
+            <summary>Enum indicating which navigation buttons should be shown when list is paged.</summary>
         </member>
         <member name="T:Delight.ListItem">
             <summary>
@@ -1378,6 +1626,9 @@
         <member name="P:Delight.ListItem.ContentTemplateData">
             <summary>Holds the content template data.</summary>
         </member>
+        <member name="P:Delight.ListItem.ItemSelected">
+            <summary>Action called when item is selected.</summary>
+        </member>
         <member name="T:Delight.Mask">
             <summary>
             A view that masks any content using the background sprite and color as mask.
@@ -1387,6 +1638,30 @@
             <summary>
             Called just before the view and its children are loaded.
             </summary>
+        </member>
+        <member name="P:Delight.Mask.ShowMaskGraphic">
+            <summary>Show the graphic that is associated with the Mask render area.</summary>
+        </member>
+        <member name="T:Delight.NavigationButton">
+            <summary>
+            Defines a navigation button that is used by List views to navigate between pages.
+            </summary>
+        </member>
+        <member name="P:Delight.NavigationButton.ParentList">
+            <summary>
+            Parent list the navigation button resides in.
+            </summary>
+        </member>
+        <member name="M:Delight.NavigationButton.NavigationButtonClick">
+            <summary>
+            Called when the navigation button is clicked.
+            </summary>
+        </member>
+        <member name="P:Delight.NavigationButton.NavigationType">
+            <summary>Type of navigation button this button represents.</summary>
+        </member>
+        <member name="P:Delight.NavigationButton.PageIndex">
+            <summary>Set programmatically to keep track of which page this button navigates to.</summary>
         </member>
         <member name="T:Delight.RadioButton">
             <summary>
@@ -1454,6 +1729,68 @@
         </member>
         <member name="P:Delight.RadioButton.Spacing">
             <summary>The spacing between the radio button image and the label.</summary>
+        </member>
+        <member name="P:Delight.RadioButton.Text">
+            <summary>Radio button text.</summary>
+        </member>
+        <member name="T:Delight.RawImage">
+            <summary>
+            Similar to the Image view but displays a Texture2D asset.
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.OnChanged(System.String)">
+            <summary>
+            Called when a property has been changed. 
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.BeforeLoad">
+            <summary>
+            Called before the view has been loaded.
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.AfterLoad">
+            <summary>
+            Called after the view has been loaded.
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.TextureChanged">
+            <summary>
+            Called when the texture is changed. 
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.ImageChanged">
+            <summary>
+            Called whenever properties affecting the image are changed. 
+            </summary>
+        </member>
+        <member name="M:Delight.RawImage.FastMaterialChanged">
+            <summary>
+            Called whenever the UI fast default material has been loaded/changed.
+            </summary>
+        </member>
+        <member name="P:Delight.RawImage.Texture">
+            <summary>The texture of the view. The value is the name of the texture asset file without extension, e.g. "mytexture".</summary>
+        </member>
+        <member name="P:Delight.RawImage.UvRect">
+            <summary>The texture coordinates.</summary>
+        </member>
+        <member name="P:Delight.RawImage.OnCullStateChanged">
+            <summary>Callback called when the culling state of this graphic either becomes culled or visible.</summary>
+        </member>
+        <member name="P:Delight.RawImage.Maskable">
+            <summary>Boolean indicating if the graphic allows masking.</summary>
+        </member>
+        <member name="P:Delight.RawImage.IsMaskingGraphic">
+            <summary>Boolean indicating if image is a masking graphic.</summary>
+        </member>
+        <member name="P:Delight.RawImage.Color">
+            <summary>Color of the image. Color values can be specified by name (Red, Blue, Coral, etc), hexcode (#aarrggbb or #rrggbb) or rgb/rgba value ("1.0,0.0,0.5" or "1,1,1,0.5").</summary>
+        </member>
+        <member name="P:Delight.RawImage.RaycastTarget">
+            <summary>Boolean indicating if the graphic should be considered a target for raycasting.</summary>
+        </member>
+        <member name="P:Delight.RawImage.Material">
+            <summary>Material used by the image.</summary>
         </member>
         <member name="T:Delight.RectMask2D">
             <summary>
@@ -1826,7 +2163,7 @@
         </member>
         <member name="T:Delight.Tab">
             <summary>
-            Base views for tab content displayed within the TabPanel.
+            Base view for tab content displayed within the TabPanel.
             </summary>
         </member>
         <member name="M:Delight.Tab.SetContentTemplateData(Delight.ContentTemplateData)">
@@ -2058,6 +2395,9 @@
         <member name="P:Delight.InputField.CustomCaretColor">
             <summary>Boolean indicating if caret color is customized by CaretColor.</summary>
         </member>
+        <member name="P:Delight.InputField.SelectionColor">
+            <summary>Color of the selection.</summary>
+        </member>
         <member name="P:Delight.InputField.OnEndEdit">
             <summary>Called when the user stops editing the input field.</summary>
         </member>
@@ -2109,6 +2449,9 @@
         <member name="P:Delight.InputField.ContentType">
             <summary>The type of input expected.</summary>
         </member>
+        <member name="P:Delight.InputField.LineType">
+            <summary>Line type used by the input field.</summary>
+        </member>
         <member name="P:Delight.InputField.LineLimit">
             <summary>How many lines the input field is limited to (0 = infinite).</summary>
         </member>
@@ -2139,8 +2482,14 @@
         <member name="P:Delight.InputField.SelectionAnchorPosition">
             <summary>Determines the anchor position of selection.</summary>
         </member>
+        <member name="P:Delight.InputField.SelectionFocusPosition">
+            <summary>Selection focus position.</summary>
+        </member>
         <member name="P:Delight.InputField.StringPosition">
             <summary>Position of the string.</summary>
+        </member>
+        <member name="P:Delight.InputField.SelectionStringAnchorPosition">
+            <summary>Selection string anchor position.</summary>
         </member>
         <member name="P:Delight.InputField.SelectionStringFocusPosition">
             <summary>Determines the focus position of the selection string.</summary>
@@ -2151,14 +2500,23 @@
         <member name="P:Delight.InputField.Transition">
             <summary>The type of transition that will be applied to the targetGraphic when the state changes.</summary>
         </member>
+        <member name="P:Delight.InputField.Colors">
+            <summary>The ColorBlock for this selectable object.</summary>
+        </member>
         <member name="P:Delight.InputField.SpriteState">
             <summary>The sprite state of this selectable object.</summary>
+        </member>
+        <member name="P:Delight.InputField.AnimationTriggers">
+            <summary>The animation triggers for this selectable object.</summary>
         </member>
         <member name="P:Delight.InputField.TargetGraphic">
             <summary>Graphic that will be transitioned upon.</summary>
         </member>
         <member name="P:Delight.InputField.Interactable">
             <summary>Boolean indicating if input field is interactable.</summary>
+        </member>
+        <member name="P:Delight.InputField.Image">
+            <summary>Convenience function that converts the referenced Graphic to a Image, if possible.</summary>
         </member>
         <member name="T:Delight.Label">
             <summary>
@@ -2190,6 +2548,11 @@
             Called when label text changes.
             </summary>
         </member>
+        <member name="M:Delight.Label.SetTextAlignment(Delight.ElementAlignment)">
+            <summary>
+            Sets text alignment.
+            </summary>
+        </member>
         <member name="P:Delight.Label.PreferredWidth">
             <summary>
             Preferred width of text.
@@ -2199,6 +2562,9 @@
             <summary>
             Preferred height of text.
             </summary>
+        </member>
+        <member name="P:Delight.Label.MaxWidth">
+            <summary>Used when AutoSize is true and extends the label to the maxsize then expands vertically.</summary>
         </member>
         <member name="P:Delight.Label.AutoSize">
             <summary>Enum indicating if and how the label should automatically resize itself to the size of the text.</summary>
@@ -2533,6 +2899,9 @@
             Called whenever the UI fast default material has been loaded/changed.
             </summary>
         </member>
+        <member name="P:Delight.UIImageView.MaskContent">
+            <summary>Boolean indicating if content of the view should be masked.</summary>
+        </member>
         <member name="P:Delight.UIImageView.BackgroundSprite">
             <summary>The background sprite of the view. The value is the name of the sprite asset file without extension, e.g. "mysprite".</summary>
         </member>
@@ -2688,6 +3057,26 @@
             Called when IsActive property has been changed.
             </summary>
         </member>
+        <member name="M:Delight.UIView.AdjustSizeToContent">
+            <summary>
+            Adjusts the size of the view to its content. 
+            </summary>
+        </member>
+        <member name="M:Delight.UIView.AdjustSizeToView(Delight.UIView)">
+            <summary>
+            Adjusts the size of the view to the size of another view. 
+            </summary>
+        </member>
+        <member name="M:Delight.UIView.GetPixelWidth(Delight.UIView)">
+            <summary>
+            Helper method for getting pixel width of a view.
+            </summary>
+        </member>
+        <member name="M:Delight.UIView.GetPixelHeight(Delight.UIView)">
+            <summary>
+            Helper method for getting pixel width of a view.
+            </summary>
+        </member>
         <member name="P:Delight.UIView.ActualWidth">
             <summary>
             Gets actual width of view in pixels. Useful when Width may be specified as percentage and you want actual pixel width.
@@ -2732,9 +3121,6 @@
         </member>
         <member name="P:Delight.UIView.Pivot">
             <summary>The pivot point of the view.</summary>
-        </member>
-        <member name="P:Delight.UIView.LayoutRoot">
-            <summary>Reference to the layout root view that is the main UICanvas that manages layout updates. All UI views resides under a layout root.</summary>
         </member>
         <member name="P:Delight.UIView.DisableLayoutUpdate">
             <summary>Boolean indicating if automatic layout updates for this view should be disabled. When disabled the view doesn't call UpdateLayout() when properties such as Width, Height, etc. changes.</summary>
@@ -2813,95 +3199,6 @@
         <member name="P:Delight.ViewSwitcher.ChildLoadMode">
             <summary>Sets the default LoadMode flag on children. Some flags may be overriden depending on the SwitchMode setting.</summary>
         </member>
-        <member name="M:Delight.XmlEditor.OnChanged(System.String)">
-            <summary>
-            Called when a property has been changed.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.Update">
-            <summary>
-            Called every frame and handles keyboard and mouse input.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.GetXmlText">
-            <summary>
-            Gets XML text from editor.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.SelectWordAtCaret">
-            <summary>
-            Selects the word at the current caret position.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.GetMouseCaretPosition(System.Int32@,System.Int32@)">
-            <summary>
-            Gets mouse caret position. 
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.HandleKeyInput">
-            <summary>
-            Handles keyboard input. 
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.GetSelection">
-            <summary>
-            Gets the selected text.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.DeleteSelection">
-            <summary>
-            Removes the selected text.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.GetIndentLevelOfNextLine(System.String@)">
-            <summary>
-            Gets indendation level and viewname of the next line.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.HandleControlInput">
-            <summary>
-            Handles input when CTRL key is pressed.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.AfterLoad">
-            <summary>
-            Called after the view has been loaded.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.ClearEditor">
-            <summary>
-            Clears all input and resets editor to default state.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.OnEditorChanged">
-            <summary>
-            Called when the XML text, selection or caret has changed. 
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.UpdateTextAndCaret(System.Boolean)">
-            <summary>
-            Updates text, syntax highlighting, selection and caret.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.GenerateCaretAndSelectionMeshes">
-            <summary>
-            Generates caret and selection meshes.
-            </summary>
-        </member>
-        <member name="M:Delight.XmlEditor.ActivateCaret">
-            <summary>
-            Makes caret visible and resets caret repeat delay. Used when caret is moved to make sure it's visible.
-            </summary>
-        </member>
-        <member name="P:Delight.XmlEditor.XmlText">
-            <summary>Used to set the XML text in the editor.</summary>
-        </member>
-        <member name="P:Delight.XmlEditor.IsFocused">
-            <summary>Boolean indicating if the editor is focused.</summary>
-        </member>
-        <member name="P:Delight.XmlEditor.Edit">
-            <summary>Action called when the user edits the view.</summary>
-        </member>
         <member name="T:Delight.View">
             <summary>
             Base class for views.
@@ -2944,12 +3241,22 @@
         </member>
         <member name="P:Delight.View.Bindings">
             <summary>
-            Gets list of bindings.
+            Gets or sets list of bindings.
             </summary>
         </member>
         <member name="P:Delight.View.IsDynamic">
             <summary>
             Boolean indicating if view is dynamic and should be removed completely when unloaded.
+            </summary>
+        </member>
+        <member name="P:Delight.View.StateAnimations">
+            <summary>
+            Gets or sets list of state transition animations.
+            </summary>
+        </member>
+        <member name="P:Delight.View.LayoutRoot">
+            <summary>
+            Gets or sets the layout root of the view.
             </summary>
         </member>
         <member name="P:Delight.View.ContentTemplates">
@@ -3120,6 +3427,11 @@
         <member name="P:Delight.View.LoadMode">
             <summary>Enum flags indicating when and how the view should be loaded by the framework. Can be changed when e.g. the view is to be loaded on-demand.</summary>
         </member>
+        <member name="M:Delight.OnDemandLoadingExample.Update">
+            <summary>
+            Called once per frame if EnableScriptEvents is true.
+            </summary>
+        </member>
         <member name="T:Delight.ActionData">
             <summary>
             Base class for data passed by view actions to handlers.
@@ -3128,6 +3440,191 @@
         <member name="T:Delight.Aliases">
             <summary>
             Aliases used when parsing views.
+            </summary>
+        </member>
+        <member name="T:Delight.Animation">
+            <summary>
+            Controls a collection of animators.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.StartAnimation">
+            <summary>
+            Starts the animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.StopAnimation">
+            <summary>
+            Stops the animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.ResetAndStopAnimation">
+            <summary>
+            Resets and stops animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.ReverseAnimation">
+            <summary>
+            Reverses the animation. Resumes the animation if paused.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.PauseAnimation">
+            <summary>
+            Pauses animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.ResumeAnimation">
+            <summary>
+            Resumes paused animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animation.ResetAnimation">
+            <summary>
+            Resets the animation to its initial state (doesn't stop it).
+            </summary>
+        </member>
+        <member name="P:Delight.Animation.IsRunning">
+            <summary>
+            Gets a boolean indicating whether this animation is active.
+            </summary>
+        </member>
+        <member name="P:Delight.Animation.IsReversing">
+            <summary>
+            Gets a boolean indicating whether this animation is reversing.
+            </summary>
+        </member>
+        <member name="P:Delight.Animation.IsCompleted">
+            <summary>
+            Gets a boolean indicating whether this animation is completed.
+            </summary>
+        </member>
+        <member name="P:Delight.Animation.IsPaused">
+            <summary>
+            Gets a boolean indicating whether this animation is paused.
+            </summary>
+        </member>
+        <member name="T:Delight.Animator`1">
+            <summary>
+            Animates the values of a specific property. 
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.#ctor(Delight.View)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.#ctor(Delight.View,System.Single,System.Single,System.Boolean,System.Boolean,System.Single,System.Boolean,Delight.Animator.EasingFunctionDelegate,System.Func{`0,`0,System.Single,`0},System.Action{`0},System.Func{`0},System.Func{`0},System.Action,Delight.DependencyProperty)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.#ctor(Delight.View,System.Single,System.Single,System.Boolean,System.Boolean,System.Single,System.Boolean,Delight.Animator.EasingFunctionDelegate,System.Func{`0,`0,System.Single,`0},System.Action{`0},System.Func{`0},System.Action,Delight.DependencyProperty,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.Update(System.Single)">
+            <summary>
+            Updates the animation each frame. 
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.ResetValue">
+            <summary>
+            Resets the value. 
+            </summary>
+        </member>
+        <member name="M:Delight.Animator`1.StartAnimation">
+            <summary>
+            Starts animation.
+            </summary>
+        </member>
+        <member name="T:Delight.Animator">
+            <summary>
+            Base class for animators.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.#ctor">
+            <summary>
+            Initializes a new instance of the class.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.Update(System.Single)">
+            <summary>
+            Updates the animator. Called once per frame.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.StartAnimation">
+            <summary>
+            Starts the animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.CompleteAnimation">
+            <summary>
+            Called when the animation is completed.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.StopAnimation">
+            <summary>
+            Stops the animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.ResetAndStopAnimation">
+            <summary>
+            Resets and stops animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.ReverseAnimation">
+            <summary>
+            Reverses the animation. Resumes the animation if paused.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.PauseAnimation">
+            <summary>
+            Pauses animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.ResumeAnimation">
+            <summary>
+            Resumes paused animation.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.ResetAnimation">
+            <summary>
+            Resets the animation to its initial state (doesn't stop it).
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.ResetValue">
+            <summary>
+            Resets the value. 
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnStarted">
+            <summary>
+            Invokes Started event.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnCompleted">
+            <summary>
+            Invokes Completed event.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnPaused">
+            <summary>
+            Invokes Paused event.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnReversed">
+            <summary>
+            Invokes Reversed event.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnStopped">
+            <summary>
+            Invokes Stopped event.
+            </summary>
+        </member>
+        <member name="M:Delight.Animator.OnResumed">
+            <summary>
+            Invokes Resumed event.
             </summary>
         </member>
         <member name="T:Delight.AssetBundle">
@@ -3322,7 +3819,7 @@
         </member>
         <member name="T:Delight.BindableCollectionSubset`1">
             <summary>
-            Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered collections. 
+            Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered and sorted collections. 
             </summary>
         </member>
         <member name="M:Delight.BindableCollectionSubset`1.ParentCollectionChanged(System.Object,Delight.CollectionChangedEventArgs)">
@@ -3590,14 +4087,24 @@
             Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
             </summary>
         </member>
-        <member name="M:Delight.DependencyProperty`1.GetDefault(Delight.DependencyObject)">
+        <member name="M:Delight.DependencyProperty`1.GetDefault(Delight.DependencyObject,System.Boolean)">
             <summary>
             Gets default value from type.
             </summary>
         </member>
-        <member name="M:Delight.DependencyProperty`1.TryGetDefault(Delight.DependencyObject,`0@)">
+        <member name="M:Delight.DependencyProperty`1.TryGetDefault(Delight.DependencyObject,`0@,System.Boolean)">
             <summary>
             Gets default value if it exist.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty`1.GetStateDefault(Delight.DependencyObject)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty`1.GetStateDefault(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
             </summary>
         </member>
         <member name="M:Delight.DependencyProperty`1.TryGetStateDefault(Delight.DependencyObject,`0@)">
@@ -3650,6 +4157,16 @@
             Sets boolean indicating if property is bound.
             </summary>
         </member>
+        <member name="M:Delight.DependencyProperty`1.SetValueGeneric(Delight.DependencyObject,System.Object,System.Boolean)">
+            <summary>
+            Sets dependency property value for specified instance.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty`1.GetStateDefaultGeneric(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
         <member name="M:Delight.DependencyProperty`1.#ctor(System.String,System.Func{`0})">
             <summary>
             Initializes a new instance of the class.
@@ -3700,6 +4217,16 @@
             Sets boolean indicating if property has binding.
             </summary>
         </member>
+        <member name="M:Delight.DependencyProperty.SetValue(Delight.DependencyObject,System.Object,System.Boolean)">
+            <summary>
+            Sets dependency property value for specified instance.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty.SetValueGeneric(Delight.DependencyObject,System.Object,System.Boolean)">
+            <summary>
+            Sets dependency property value for specified instance.
+            </summary>
+        </member>
         <member name="M:Delight.DependencyProperty.SetDefaultGeneric(Delight.Template,System.Object)">
             <summary>
             Sets default value for type.
@@ -3708,6 +4235,367 @@
         <member name="M:Delight.DependencyProperty.SetStateDefaultGeneric(System.String,Delight.Template,System.Object)">
             <summary>
             Sets default state value for type.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty.GetStateDefault(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty.GetStateDefaultGeneric(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
+        <member name="M:Delight.DependencyProperty.NotifyPropertyChanged(Delight.DependencyObject)">
+            <summary>
+            Notifies the property has changed.
+            </summary>
+        </member>
+        <member name="T:Delight.EasingFunctionType">
+            <summary>
+            Specifies what kind of easing function should be used when values are interpolated.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.Linear">
+            <summary>
+            Linear easing function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuadraticEaseIn">
+            <summary>
+            Quadratic ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuadraticEaseOut">
+            <summary>
+            Quadratic ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuadraticEaseInOut">
+            <summary>
+            Quadratic ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CubicEaseIn">
+            <summary>
+            Cubic ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CubicEaseOut">
+            <summary>
+            Cubic ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CubicEaseInOut">
+            <summary>
+            Cubic ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuarticEaseIn">
+            <summary>
+            Quartic ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuarticEaseOut">
+            <summary>
+            Quartic ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuarticEaseInOut">
+            <summary>
+            Quartic ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuinticEaseIn">
+            <summary>
+            Quintic ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuinticEaseOut">
+            <summary>
+            Quintic ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.QuinticEaseInOut">
+            <summary>
+            Quintic ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.SineEaseIn">
+            <summary>
+            Sine ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.SineEaseOut">
+            <summary>
+            Sine ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.SineEaseInOut">
+            <summary>
+            Sine ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CircularEaseIn">
+            <summary>
+            Circular ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CircularEaseOut">
+            <summary>
+            Circular ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.CircularEaseInOut">
+            <summary>
+            Circular ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ExponentialEaseIn">
+            <summary>
+            Expontential ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ExponentialEaseOut">
+            <summary>
+            Exponential ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ExponentialEaseInOut">
+            <summary>
+            Exponential ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ElasticEaseIn">
+            <summary>
+            Elastic ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ElasticEaseOut">
+            <summary>
+            Elastic ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.ElasticEaseInOut">
+            <summary>
+            Elastic ease in and out function.
+            </summary>         
+        </member>
+        <member name="F:Delight.EasingFunctionType.BounceEaseIn">
+            <summary>
+            Bounce ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.BounceEaseOut">
+            <summary>
+            Bounce ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.BounceEaseInOut">
+            <summary>
+            Bounce ease in and out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.BackEaseIn">
+            <summary>
+            Back ease in function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.BackEaseOut">
+            <summary>
+            Back ease out function.
+            </summary>
+        </member>
+        <member name="F:Delight.EasingFunctionType.BackEaseInOut">
+            <summary>
+            Back ease in and out function.
+            </summary>
+        </member>
+        <member name="T:Delight.EasingFunctions">
+            <summary>
+            Easing functions derived from AHEasing, a library of easing functions. Credit goes to warrenm author of AHEasing.
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.Get(Delight.EasingFunctionType)">
+            <summary>
+            Gets easing function.
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.Get(System.String)">
+            <summary>
+            Gets easing function.
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.Linear(System.Single)">
+            <summary>
+            Easing modeled after the line y = x
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuadraticEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the parabola y = x^2
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuadraticEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the parabola y = -x^2 + 2x
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuadraticEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise quadratic
+            y = (1/2)((2x)^2)             ; [0, 0.5)
+            y = -(1/2)((2x-1)*(2x-3) - 1) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CubicEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the cubic y = x^3
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CubicEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the cubic y = (x - 1)^3 + 1
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CubicEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise cubic
+            y = (1/2)((2x)^3)       ; [0, 0.5)
+            y = (1/2)((2x-2)^3 + 2) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuarticEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the quartic x^4
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuarticEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the quartic y = 1 - (x - 1)^4
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuarticEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise quartic
+            y = (1/2)((2x)^4)        ; [0, 0.5)
+            y = -(1/2)((2x-2)^4 - 2) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuinticEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the quintic y = x^5
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuinticEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the quintic y = (x - 1)^5 + 1
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.QuinticEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise quintic
+            y = (1/2)((2x)^5)       ; [0, 0.5)
+            y = (1/2)((2x-2)^5 + 2) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.SineEaseIn(System.Single)">
+            <summary>
+            Easing modeled after quarter-cycle of sine wave
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.SineEaseOut(System.Single)">
+            <summary>
+            Easing modeled after quarter-cycle of sine wave (different phase)
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.SineEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after half sine wave
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CircularEaseIn(System.Single)">
+            <summary>
+            Easing modeled after shifted quadrant IV of unit circle
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CircularEaseOut(System.Single)">
+            <summary>
+            Easing modeled after shifted quadrant II of unit circle
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.CircularEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise circular function
+            y = (1/2)(1 - Mathf.Sqrt(1 - 4x^2))           ; [0, 0.5)
+            y = (1/2)(Mathf.Sqrt(-(2x - 3)*(2x - 1)) + 1) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ExponentialEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the exponential function y = 2^(10(x - 1))
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ExponentialEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the exponential function y = -2^(-10x) + 1
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ExponentialEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise exponential
+            y = (1/2)2^(10(2x - 1))         ; [0,0.5)
+            y = -(1/2)*2^(-10(2x - 1))) + 1 ; [0.5,1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ElasticEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the damped sine wave y = Mathf.Sin(13pi/2*x)*Mathf.Pow(2, 10 * (x - 1))
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ElasticEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the damped sine wave y = Mathf.Sin(-13pi/2*(x + 1))*Mathf.Pow(2, -10x) + 1
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.ElasticEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise exponentially-damped sine wave:
+            y = (1/2)*Mathf.Sin(13pi/2*(2*x))*Mathf.Pow(2, 10 * ((2*x) - 1))      ; [0,0.5)
+            y = (1/2)*(Mathf.Sin(-13pi/2*((2x-1)+1))*Mathf.Pow(2,-10(2*x-1)) + 2) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BackEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the overshooting cubic y = x^3-x*Mathf.Sin(x*pi)
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BackEaseOut(System.Single)">
+            <summary>
+            Easing modeled after overshooting cubic y = 1-((1-x)^3-(1-x)*Mathf.Sin((1-x)*pi))
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BackEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise overshooting cubic function:
+            y = (1/2)*((2x)^3-(2x)*Mathf.Sin(2*x*pi))           ; [0, 0.5)
+            y = (1/2)*(1-((1-x)^3-(1-x)*Mathf.Sin((1-x)*pi))+1) ; [0.5, 1]
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BounceEaseIn(System.Single)">
+            <summary>
+            Easing modeled after the piecewise overshooting cubic function.
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BounceEaseOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise overshooting cubic function.
+            </summary>
+        </member>
+        <member name="M:Delight.EasingFunctions.BounceEaseInOut(System.Single)">
+            <summary>
+            Easing modeled after the piecewise overshooting cubic function.
             </summary>
         </member>
         <member name="T:Delight.ElementAlignment">
@@ -3987,6 +4875,16 @@
             Gets readable string from exception.
             </summary>
         </member>
+        <member name="M:Delight.ExtensionMethods.ToArg(System.Single)">
+            <summary>
+            Converts float to string arguments that can be printed as argument.
+            </summary>
+        </member>
+        <member name="M:Delight.ExtensionMethods.ToArg(System.Boolean)">
+            <summary>
+            Converts float to string arguments that can be printed as argument.
+            </summary>
+        </member>
         <member name="M:Delight.ExtensionMethods.AttributeValue(System.Xml.Linq.XElement,System.Xml.Linq.XName)">
             <summary>
             Gets attribute value from XML element.
@@ -4232,6 +5130,16 @@
             Finds the index of the first occurrence of an item in an enumerable.
             </summary>
         </member>
+        <member name="M:Delight.ExtensionMethods.ToRgb(Delight.ColorHsv)">
+            <summary>
+            Converts HSV to RGB color.
+            </summary>
+        </member>
+        <member name="M:Delight.ExtensionMethods.ToHsv(UnityEngine.Color)">
+            <summary>
+            Converts RGB to HSV color.
+            </summary>
+        </member>
         <member name="T:Delight.IInitialize">
             <summary>
             Interface for ensuring initialize method is called once on object construction. 
@@ -4362,7 +5270,7 @@
             Gets mapped dependency property value for specified instance.
             </summary>
         </member>
-        <member name="M:Delight.MappedDependencyProperty`3.SetValue(Delight.DependencyObject,`0)">
+        <member name="M:Delight.MappedDependencyProperty`3.SetValue(Delight.DependencyObject,`0,System.Boolean)">
             <summary>
             Sets dependency property value for specified instance.
             </summary>
@@ -4372,14 +5280,24 @@
             Checks if dependency property value is undefined (no run-time or default value set). Mainly used check if values of non-nullable types has been set.
             </summary>
         </member>
-        <member name="M:Delight.MappedDependencyProperty`3.GetDefault(Delight.DependencyObject)">
+        <member name="M:Delight.MappedDependencyProperty`3.GetDefault(Delight.DependencyObject,System.Boolean)">
             <summary>
             Gets default value from type.
             </summary>
         </member>
-        <member name="M:Delight.MappedDependencyProperty`3.TryGetDefault(Delight.DependencyObject,`0@)">
+        <member name="M:Delight.MappedDependencyProperty`3.TryGetDefault(Delight.DependencyObject,`0@,System.Boolean)">
             <summary>
             Gets default value if it exist.
+            </summary>
+        </member>
+        <member name="M:Delight.MappedDependencyProperty`3.GetStateDefault(Delight.DependencyObject)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
+        <member name="M:Delight.MappedDependencyProperty`3.GetStateDefault(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
             </summary>
         </member>
         <member name="M:Delight.MappedDependencyProperty`3.TryGetStateDefault(Delight.DependencyObject,`0@)">
@@ -4452,6 +5370,16 @@
             Sets boolean indicating that value has been set. Used if value is modified directly and not through the dependency property.
             </summary>
         </member>
+        <member name="M:Delight.MappedDependencyProperty`3.SetValueGeneric(Delight.DependencyObject,System.Object,System.Boolean)">
+            <summary>
+            Sets dependency property value for specified instance.
+            </summary>
+        </member>
+        <member name="M:Delight.MappedDependencyProperty`3.GetStateDefaultGeneric(Delight.DependencyObject,System.String)">
+            <summary>
+            Gets default state value.
+            </summary>
+        </member>
         <member name="M:Delight.MappedDependencyProperty`3.#ctor(System.String,System.Func{`2,`1},System.Func{`1,`0},System.Action{`1,`0})">
             <summary>
             Initializes a new instance of the class.
@@ -4470,6 +5398,66 @@
         <member name="T:Delight.ModelObject">
             <summary>
             Base class for model objects.
+            </summary>
+        </member>
+        <member name="T:Delight.NavigationButtonType">
+            <summary>
+            Enum indicating navigation button type.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonType.NextAndPrevious">
+            <summary>
+            Next and previous navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonType.Next">
+            <summary>
+            Next navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonType.Previous">
+            <summary>
+            Previous navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonType.Page">
+            <summary>
+            Page navigation.
+            </summary>
+        </member>
+        <member name="T:Delight.NavigationButtonsVisibility">
+            <summary>
+            Enum indicating the visibility of navigation buttons.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.None">
+            <summary>
+            No navigation buttons.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.False">
+            <summary>
+            No navigation buttons.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.True">
+            <summary>
+            Next/Previous navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.All">
+            <summary>
+            Both next/previous and page navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.NextPrevious">
+            <summary>
+            Next/Previous navigation.
+            </summary>
+        </member>
+        <member name="F:Delight.NavigationButtonsVisibility.Page">
+            <summary>
+            Page navigation.
             </summary>
         </member>
         <member name="T:Delight.RaycastTargetGraphic">
@@ -4595,6 +5583,16 @@
         <member name="F:Delight.SplitMode.RowsAndColumns">
             <summary>
             Split both rows and columns so they can be resized.
+            </summary>
+        </member>
+        <member name="T:Delight.StateAnimation">
+            <summary>
+            Controls a collection of animators activated when transitioning between the specified states.
+            </summary>
+        </member>
+        <member name="M:Delight.StateAnimation.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the class.
             </summary>
         </member>
         <member name="T:Delight.StorageMode">
@@ -4723,6 +5721,11 @@
             Converts value from target type. 
             </summary>
         </member>
+        <member name="M:Delight.ValueConverter.InterpolateGeneric(System.Object,System.Object,System.Single)">
+            <summary>
+            Interpolates values for type. 
+            </summary>
+        </member>
         <member name="T:Delight.ValueConverter`1">
             <summary>
             Generic base class for value converters.
@@ -4746,6 +5749,21 @@
         <member name="M:Delight.ValueConverter`1.ConvertGeneric(System.Object)">
             <summary>
             Converts value from object.
+            </summary>
+        </member>
+        <member name="M:Delight.ValueConverter`1.Interpolate(`0,`0,System.Single)">
+            <summary>
+            Interpolates value for type.
+            </summary>
+        </member>
+        <member name="M:Delight.ValueConverter`1.InterpolateGeneric(System.Object,System.Object,System.Single)">
+            <summary>
+            Interpolates values for type. 
+            </summary>
+        </member>
+        <member name="M:Delight.ValueConverter`1.Lerp(System.Single,System.Single,System.Single)">
+            <summary>
+            Linear interpolation between two float values.
             </summary>
         </member>
         <member name="T:Delight.ValueConverters">
@@ -4828,6 +5846,11 @@
             Converts value from object.
             </summary>
         </member>
+        <member name="T:Delight.ColorHsv">
+            <summary>
+            Color defined in HSV format.
+            </summary>
+        </member>
         <member name="T:Delight.ColorValueConverter">
             <summary>
             Color value converter.
@@ -4856,6 +5879,21 @@
         <member name="M:Delight.ColorValueConverter.RgbaToColor(System.String)">
             <summary>
             Gets color from float RGBA values (0-1)
+            </summary>
+        </member>
+        <member name="M:Delight.ColorValueConverter.Interpolate(UnityEngine.Color,UnityEngine.Color,System.Single)">
+            <summary>
+            Interpolates value for type.
+            </summary>
+        </member>
+        <member name="M:Delight.ColorValueConverter.Interpolator(UnityEngine.Color,UnityEngine.Color,System.Single)">
+            <summary>
+            Interpolates value for type.
+            </summary>
+        </member>
+        <member name="M:Delight.ColorValueConverter.HsvInterpolator(UnityEngine.Color,UnityEngine.Color,System.Single)">
+            <summary>
+            Interpolates value for type.
             </summary>
         </member>
         <member name="M:Delight.ColorValueConverter.#cctor">
@@ -5183,6 +6221,11 @@
             Represents a virtual item. Contains information about its size, offset and alignment. Used by virtualized lists to keep track of list items that are yet to be realized.
             </summary>
         </member>
+        <member name="P:Delight.VirtualItem.Index">
+            <summary>
+            Zero-based index of the item.
+            </summary>
+        </member>
         <member name="M:Delight.VirtualItem.#ctor">
             <summary>
             Initializes a new instance of the class.
@@ -5231,36 +6274,6 @@
         <member name="T:Delight.XmlEditorComponent">
             <summary>
             XML editor component used by the delight designer. Based on the TextMeshPro input field.
-            </summary>
-        </member>
-        <member name="M:Delight.AssetManagementTest.Update">
-            <summary>
-            Called once per frame if EnableScriptEvents is true.
-            </summary>
-        </member>
-        <member name="T:Delight.BindingTest">
-            <summary>
-            Binding test view.
-            </summary>
-        </member>
-        <member name="M:Delight.ModelBindingTest.AfterInitialize">
-            <summary>
-            Called once in the object's lifetime after construction of children and before load.
-            </summary>
-        </member>
-        <member name="T:Delight.PerformanceTest">
-            <summary>
-            PerformanceTest view.
-            </summary>
-        </member>
-        <member name="T:Delight.TestScene">
-            <summary>
-            TestScene view.
-            </summary>
-        </member>
-        <member name="M:Delight.Inventory.AddItem(Delight.Item)">
-            <summary>
-            Adds item to inventory.
             </summary>
         </member>
         <member name="T:Awaiters">
