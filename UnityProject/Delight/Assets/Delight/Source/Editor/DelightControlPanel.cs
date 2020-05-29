@@ -82,11 +82,12 @@ namespace Delight.Editor
             }
 
             // open designer
-            //GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
-            //if (GUILayout.Button(openDesigner))
-            //{
-            //    EditorSceneManager.OpenScene("Assets/Delight/Scenes/DelightDesigner.unity");
-            //}
+            GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
+            if (GUILayout.Button(openDesigner))
+            {
+                EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
+                EditorApplication.isPlaying = true;
+            }
 
             // TODO cleanup
             //GUIContent test = new GUIContent("Test", "");
