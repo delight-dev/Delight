@@ -67,6 +67,25 @@ namespace Delight
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to Vector3.", objectType.Name));
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override Vector3 Interpolate(Vector3 from, Vector3 to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static Vector3 Interpolator(Vector3 from, Vector3 to, float weight)
+        {
+            return new Vector3(
+                Lerp(from.x, to.x, weight),
+                Lerp(from.y, to.y, weight),
+                Lerp(from.z, to.z, weight));
+        }
+
         #endregion
     }
 }

@@ -51,6 +51,22 @@ namespace Delight
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to {1}", objectType.Name, nameof(SpriteAsset)));
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override SpriteAsset Interpolate(SpriteAsset from, SpriteAsset to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static SpriteAsset Interpolator(SpriteAsset from, SpriteAsset to, float weight)
+        {
+            return weight < 1f ? from : to;
+        }
+
         #endregion
     }
 }

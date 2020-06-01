@@ -77,6 +77,25 @@ namespace Delight
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to {1}", objectType.Name, nameof(CellIndex)));
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override CellIndex Interpolate(CellIndex from, CellIndex to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static CellIndex Interpolator(CellIndex from, CellIndex to, float weight)
+        {
+            if (from == null || to == null)
+                return weight < 1f ? from : to;
+
+            return new CellIndex((int)Math.Round(Lerp(from.Row, to.Row, weight)), (int)Math.Round(Lerp(from.Column, to.Column, weight)));
+        }
+
         #endregion
     }
 }

@@ -45,6 +45,22 @@ namespace Delight
             return System.Convert.ToSingle(objectValue, CultureInfo.InvariantCulture);            
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override float Interpolate(float from, float to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static float Interpolator(float from, float to, float weight)
+        {
+            return Lerp(from, to, weight);
+        }
+
         #endregion
 
         #region Constructor

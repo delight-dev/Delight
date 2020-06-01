@@ -112,6 +112,29 @@ namespace Delight
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to ElementMargin.", objectType.Name));
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override ElementMargin Interpolate(ElementMargin from, ElementMargin to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static ElementMargin Interpolator(ElementMargin from, ElementMargin to, float weight)
+        {           
+            if (from == null || to == null)
+                return weight < 1f ? from : to;
+
+            return new ElementMargin(
+                ElementSizeValueConverter.Interpolator(from.Left, to.Left, weight),
+                ElementSizeValueConverter.Interpolator(from.Top, to.Top, weight),
+                ElementSizeValueConverter.Interpolator(from.Right, to.Right, weight),
+                ElementSizeValueConverter.Interpolator(from.Bottom, to.Bottom, weight));
+        }
+
         #endregion
     }
 }

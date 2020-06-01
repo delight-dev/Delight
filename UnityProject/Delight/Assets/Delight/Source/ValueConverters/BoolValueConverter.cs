@@ -42,6 +42,22 @@ namespace Delight
             return System.Convert.ToBoolean(objectValue);
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override bool Interpolate(bool from, bool to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static bool Interpolator(bool from, bool to, float weight)
+        {
+            return weight < 1f ? from : to;
+        }
+
         #endregion
     }
 }

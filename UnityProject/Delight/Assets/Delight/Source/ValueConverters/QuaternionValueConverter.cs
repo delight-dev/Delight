@@ -70,7 +70,23 @@ namespace Delight
 
             throw new Exception(String.Format("Can't convert object of type \"{0}\" to Quaternion.", objectType.Name));
         }
-         
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override Quaternion Interpolate(Quaternion from, Quaternion to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static Quaternion Interpolator(Quaternion from, Quaternion to, float weight)
+        {
+            return Quaternion.Lerp(from, to, weight);
+        }
+
         #endregion
     }
 }
