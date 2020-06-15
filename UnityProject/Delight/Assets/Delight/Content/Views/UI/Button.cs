@@ -185,6 +185,11 @@ namespace Delight
                 ToggleValueChanged();
             }
 
+            if (IsDisabled)
+            {
+                IsDisabledChanged();
+            }
+
             if (ImageComponent == null && BackgroundSpriteProperty.IsUndefined(this))
             {
                 // provide raycast target so transparent clicks are tracked
