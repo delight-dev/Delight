@@ -17,7 +17,7 @@ namespace Delight
         #region Fields               
 
         public static Dictionary<string, Color> ColorCodes;
-        public static bool UseHsvInterpolator = true;
+        public static bool UseHsvInterpolator = false;
 
         #endregion
 
