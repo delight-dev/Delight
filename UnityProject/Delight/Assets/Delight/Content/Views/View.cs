@@ -450,6 +450,13 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called by certain views as a way to pass along data to child views.
+        /// </summary>
+        public virtual void Setup(object data)
+        {
+        }
+
+        /// <summary>
         /// Called after the top-most view who initiated the load, has been loaded. Used to update parents.
         /// </summary>
         protected virtual void AfterInitiatedLoad()
