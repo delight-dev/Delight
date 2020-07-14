@@ -1178,6 +1178,8 @@ namespace Delight
 
                     if (startIndex > 0)
                     {
+                        // TODO bug: if it's a scene we need to check ScenesFolder instead
+
                         var path = changedView.FilePath;
                         int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
                         string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
