@@ -372,6 +372,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel1, "Single Line");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel1, Delight.AutoSize.Width);
+                    Delight.Label.FontColorProperty.SetDefault(_inputFieldExampleLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                 }
                 return _inputFieldExampleLabel1;
             }
@@ -394,6 +395,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel2, "Normal");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel2, Delight.AutoSize.Width);
+                    Delight.Label.FontColorProperty.SetDefault(_inputFieldExampleLabel2, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel2, 12f);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel2, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
@@ -502,6 +504,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel3, "Password");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel3, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_inputFieldExampleLabel3, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel3, 12f);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel3, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
@@ -611,6 +614,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel4, "With placeholder content");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel4, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_inputFieldExampleLabel4, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_inputFieldExampleLabel4, 12f);
                     Delight.Label.HeightProperty.SetDefault(_inputFieldExampleLabel4, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
@@ -764,6 +768,7 @@ namespace Delight
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel5, "Multi Line");
                     Delight.Label.AlignmentProperty.SetDefault(_inputFieldExampleLabel5, Delight.ElementAlignment.Top);
+                    Delight.Label.FontColorProperty.SetDefault(_inputFieldExampleLabel5, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel5, Delight.AutoSize.Width);
                 }
                 return _inputFieldExampleLabel5;

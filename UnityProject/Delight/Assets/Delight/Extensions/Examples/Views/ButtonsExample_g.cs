@@ -630,7 +630,6 @@ namespace Delight
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_buttonsExampleGroup1, Delight.ElementOrientation.Vertical);
                     Delight.Group.SpacingProperty.SetDefault(_buttonsExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
-                    Delight.Group.ContentAlignmentProperty.SetDefault(_buttonsExampleGroup1, Delight.ElementAlignment.Left);
                 }
                 return _buttonsExampleGroup1;
             }

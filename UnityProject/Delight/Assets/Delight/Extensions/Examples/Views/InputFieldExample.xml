@@ -1,19 +1,19 @@
-<InputFieldExample xmlns="Delight">
+<InputFieldExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
   <Group Orientation="Horizontal" Spacing="30px" ContentAlignment="Top">
     <Group Orientation="Vertical" Spacing="6px">
-      <Label Text="Single Line" AutoSize="Width" />
-      <Label Text="Normal" AutoSize="Width" FontSize="12" Height="20" />
+      <Label Text="Single Line" AutoSize="Width" FontColor="White" />
+      <Label Text="Normal" AutoSize="Width" FontColor="White" FontSize="12" Height="20" />
       <InputField Width="200px" />
-      <Label Text="Password" AutoSize="True" FontSize="12" Height="20" />
+      <Label Text="Password" AutoSize="True" FontColor="White" FontSize="12" Height="20" />
       <InputField Width="200px" ContentType="Password" />
-      <Label Text="With placeholder content" AutoSize="True" FontSize="12" Height="20" />
+      <Label Text="With placeholder content" AutoSize="True" FontColor="White" FontSize="12" Height="20" />
       <InputField Width="200px" ValueChanged="OnValueChanged">
         <Image Sprite="RainbowSquare" Alignment="Left" Offset="10,0,0,0" />
       </InputField>
     </Group>
 
     <Group Orientation="Vertical" Spacing="15"> 
-      <Label Text="Multi Line" Alignment="Top" AutoSize="Width" />
+      <Label Text="Multi Line" Alignment="Top" FontColor="White" AutoSize="Width" />
       <InputField Width="200px" Height="200px" LineType="MultiLineNewline" />
     </Group> 
   </Group>

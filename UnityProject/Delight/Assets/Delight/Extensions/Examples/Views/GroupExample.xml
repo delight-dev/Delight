@@ -1,0 +1,25 @@
+<GroupExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd">
+
+  <!-- 3 horizontal groups containing three items each -->
+  <Label Text="Group 1:" AutoSize="True" FontColor="White" Offset="0,0,250,100" />
+  <Group Orientation="Horizontal" Spacing="4" Offset="0,0,0,100">
+    <Button Text="Button 1" Size="75,40" />
+    <Button Text="Large Button 2" Size="175,70" />
+    <Button Text="Button 3" Size="75,40" />
+  </Group>
+      
+  <Label Text="Group 2:" AutoSize="True" FontColor="White" Offset="0,0,250,0" />
+  <Group Orientation="Horizontal" Spacing="4" ContentAlignment="Top">
+    <Button Text="Button 1" Size="75,40" />
+    <Button Text="Large Button 2" Size="175,70" />
+    <Button Text="Button 3" Size="75,40" />
+  </Group>
+      
+  <Label Text="Group 3:" AutoSize="True" FontColor="White" Offset="0,100,250,0" />
+  <Group Orientation="Horizontal" Spacing="4" ContentAlignment="Bottom" Offset="0,100,0,0">
+    <Button Text="Button 1" Size="75,40" />
+    <Button Text="Large Button 2" Size="175,70" />
+    <Button Text="Button 3" Size="75,40" />
+  </Group>
+
+</GroupExample>

@@ -1,10 +1,10 @@
 <ButtonsExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
                 ClickCount="t:int">
-  <Group Orientation="Vertical" Spacing="10px" ContentAlignment="Left"> 
+  <Group Orientation="Vertical" Spacing="10px"> 
 
     <Group Orientation="Horizontal" Spacing="50">
       <Group Spacing="10px" ContentAlignment="Left"> 
-        <CheckBox Text="Option 1" />
+        <CheckBox Text="Option 1" /> 
         <CheckBox Text="Option 2" />
         <CheckBox Text="Option 3" /> 
       </Group>  
@@ -13,9 +13,9 @@
         <RadioButton Text="Option 1" />   
         <RadioButton Text="Option 2" /> 
         <RadioButton Text="Option 3" />   
-      </Group> 
+      </Group>
     </Group>     
-     
+
     <Group Orientation="Horizontal" Spacing="15px">
       <Button Text="Click Me" Click="ButtonClick" />
       <Button IsToggleButton="True" Width="100">
@@ -42,5 +42,6 @@
         <Label Text="Option 3" Width="100%" Margin="30,0,0,0" />
       </ComboBoxListItem>
     </ComboBox>
+
   </Group>
 </ButtonsExample>
