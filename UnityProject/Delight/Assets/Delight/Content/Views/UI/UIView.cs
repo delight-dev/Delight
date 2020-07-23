@@ -477,7 +477,6 @@ namespace Delight
         {
             bool hasNewSize = false;
 
-            // the default behavior of the list-item is to adjust its height and width to its content
             float maxWidth = -1f;
             float maxHeight = -1f;
             int childCount = LayoutChildren.Count;
