@@ -52,7 +52,7 @@ namespace Delight
         {
             // used for runtime conversions of strings to assets
             var collection = Assets.RuntimeAssetObject.GetPropertyValue(_assetTypeName.Pluralize()) as BindableCollection;
-            return collection != null ? collection.Get(stringValue) : null;
+            return collection != null ? collection.GetGeneric(stringValue) : null;
         }
 
         /// <summary>

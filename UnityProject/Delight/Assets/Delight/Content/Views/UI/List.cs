@@ -91,6 +91,8 @@ namespace Delight
             if (Items == null)
                 return;
 
+            // call to initialize dynamic lists if necessary
+            Items.LoadData();
             foreach (var item in Items)
             {
                 CreateListItem(item);
@@ -130,7 +132,7 @@ namespace Delight
                     ScrollableRegion.HorizontalScrollbarVisibility = ScrollbarVisibilityMode.Remove;
                     ScrollableRegion.VerticalScrollbarVisibility = ScrollbarVisibilityMode.Remove;
                     IsScrollable = true;
-                }                
+                }
             }
         }
 
@@ -442,7 +444,7 @@ namespace Delight
         /// </summary>
         public void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            var item = Items.Get(index);
+            var item = Items.GetGeneric(index);
             ScrollTo(item, alignment, offset);
         }
 
@@ -559,7 +561,7 @@ namespace Delight
         private void ReplaceItems()
         {
             // deselect all items
-            // TODO retain previous selection
+            int selectedIndex = GetSelectedItemIndex();
             DeselectAll();
 
             if (IsVirtualized)
@@ -585,7 +587,7 @@ namespace Delight
             {
                 // replace items
                 var listItem = Content.LayoutChildren[i] as ListItem;
-                var newItem = Items.Get(i);
+                var newItem = Items.GetGeneric(i);
                 listItem.Item = newItem;
                 if (listItem.ContentTemplateData != null)
                 {
@@ -599,7 +601,7 @@ namespace Delight
                 // old list smaller than new - add items
                 for (int i = childCount; i < newItemsCount; ++i)
                 {
-                    CreateListItem(Items.Get(i));
+                    CreateListItem(Items.GetGeneric(i));
                 }
             }
             else if (newItemsCount < childCount)
@@ -610,6 +612,12 @@ namespace Delight
                     var listItem = Content.LayoutChildren[i];
                     listItem.Unload();
                 }
+            }
+
+            // reselect item
+            if (selectedIndex >= 0 && selectedIndex < newItemsCount)
+            {
+                SelectItem(selectedIndex);
             }
         }
 
@@ -625,11 +633,20 @@ namespace Delight
                 return;
             }
 
-            if (_presentedItems.TryGetValue(item, out var listItem))
+            if (!_presentedItems.TryGetValue(item, out var listItem))
+                return;
+
+            var index = Content.LayoutChildren.IndexOf(listItem);
+            listItem.Unload();
+            Content.LayoutChildren.Remove(listItem);
+            _presentedItems.Remove(item);
+
+            // update index and IsAlternate on subsequent list items
+            for (int i = index; i < Content.LayoutChildren.Count; ++i)
             {
-                listItem.Unload();
-                Content.LayoutChildren.Remove(listItem);
-                _presentedItems.Remove(item);
+                var subsequentListItem = Content.LayoutChildren[i] as ListItem;
+                subsequentListItem.IsAlternate = IsOdd(i);
+                subsequentListItem.ContentTemplateData.ZeroIndex = i;
             }
         }
 
@@ -854,11 +871,11 @@ namespace Delight
             {
                 int maxPageIndex = GetMaxPageIndex();
                 if (_nextButton != null && _previousButton != null)
-                {                    
+                {
                     _nextButton.IsActive = PageIndex < maxPageIndex;
                     _previousButton.IsActive = PageIndex > 0;
                 }
-                
+
                 if (_pageButtonGroup != null)
                 {
                     // make sure we have enough page navigation buttons for the list
@@ -881,7 +898,7 @@ namespace Delight
                         newPageButton.CanToggleOff = false;
                         newPageButton.ParentList = this;
                         newPageButton.Label.Width = ElementSize.FromPercents(1); // TODO workaround for bug #18 with derived views not applying parent template correctly
-                        newPageButton.Label.Height = ElementSize.FromPercents(1); 
+                        newPageButton.Label.Height = ElementSize.FromPercents(1);
                         newPageButton.MoveTo(_pageButtonGroup);
                         newPageButton.Load();
                     }
@@ -1585,7 +1602,7 @@ namespace Delight
             }
             else
             {
-                SelectItem(Items.Get(index), triggeredByClick);
+                SelectItem(Items.GetGeneric(index), triggeredByClick);
             }
         }
 
@@ -1952,7 +1969,7 @@ namespace Delight
             if (index == -1)
                 return;
 
-            var nextItem = Items.Get(index + 1);
+            var nextItem = Items.GetGeneric(index + 1);
             if (nextItem == null)
                 return;
 
@@ -1978,7 +1995,7 @@ namespace Delight
             if (index == -1)
                 return;
 
-            var nextItem = Items.Get(index - 1);
+            var nextItem = Items.GetGeneric(index - 1);
             if (nextItem == null)
                 return;
 

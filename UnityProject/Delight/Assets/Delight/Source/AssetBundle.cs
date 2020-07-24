@@ -140,7 +140,7 @@ namespace Delight
     /// <summary>
     /// Asset bundle data provider. Contains all the asset bundles used by the framework.
     /// </summary>
-    public partial class AssetBundleData : DataProvider<AssetBundle>
+    public partial class AssetBundleData : BindableCollection<AssetBundle>
     {
         #region Methods
 

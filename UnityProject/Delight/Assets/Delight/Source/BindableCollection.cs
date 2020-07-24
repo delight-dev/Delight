@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -92,12 +93,12 @@ namespace Delight
 
         #region Methods
 
-        public override BindableObject Get(string id)
+        public override BindableObject GetGeneric(string id)
         {
             return this[id];
         }
 
-        public override BindableObject Get(int index)
+        public override BindableObject GetGeneric(int index)
         {
             return this[index];
         }
@@ -127,7 +128,7 @@ namespace Delight
                 }
                 else if (Data.ContainsKey(item.Id))
                 {
-                    return;
+                    continue;
                 }
 
                 Data.Add(item.Id, item);
@@ -199,7 +200,7 @@ namespace Delight
             });
         }
 
-        private void Notify(CollectionChangedEventArgs eventArgs)
+        protected void Notify(CollectionChangedEventArgs eventArgs)
         {
             if (_suppressNotifications)
                 return;
@@ -503,11 +504,16 @@ namespace Delight
 
         #region Methods
 
-        public abstract BindableObject Get(string id);
-        public abstract BindableObject Get(int index);
+        public abstract BindableObject GetGeneric(string id);
+        public abstract BindableObject GetGeneric(int index);
         protected virtual void UpdateData()
         {
         }
+        public virtual async Task LoadData()
+        {
+            await Task.FromResult(0); // to prevent compiler warning
+        }
+
 
         /// <summary>
         /// Notifies listeners that collection has been changed.
@@ -527,7 +533,7 @@ namespace Delight
             UpdateData();
             for (int i = 0; i < Count; ++i)
             {
-                yield return Get(i);
+                yield return GetGeneric(i);
             }
         }
 

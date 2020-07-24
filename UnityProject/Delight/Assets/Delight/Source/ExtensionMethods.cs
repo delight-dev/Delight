@@ -403,7 +403,7 @@ namespace Delight
                     {
                         // check if currentObject is a collection and lookup item
                         var collection = currentObject as BindableCollection;
-                        nextObject = collection?.Get(propertyName);
+                        nextObject = collection?.GetGeneric(propertyName);
                     }
                 }
 

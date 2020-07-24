@@ -2433,7 +2433,7 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("    /// <summary>");
                 sb.AppendLine("    /// AssetBundle data provider. Contains references to all asset bundles in the project.");
                 sb.AppendLine("    /// </summary>");
-                sb.AppendLine("    public partial class AssetBundleData : DataProvider<AssetBundle>");
+                sb.AppendLine("    public partial class AssetBundleData : BindableCollection<AssetBundle>");
                 sb.AppendLine("    {");
                 sb.AppendLine("        #region Fields");
                 sb.AppendLine();
@@ -2511,7 +2511,7 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("    /// <summary>");
                 sb.AppendLine("    /// {0} data provider. Contains references to all {1} in the project.", assetTypeName, assetTypeNamePlural.ToLower());
                 sb.AppendLine("    /// </summary>");
-                sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", assetTypeName);
+                sb.AppendLine("    public partial class {0}Data : BindableCollection<{0}>", assetTypeName);
                 sb.AppendLine("    {");
 
                 if (assetObjectsOfType.Count > 0)

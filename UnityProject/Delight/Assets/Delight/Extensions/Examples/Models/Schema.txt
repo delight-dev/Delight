@@ -1,6 +1,11 @@
 ﻿// Models
 
+= World
+string Name
+Levels
+
 = Level
+World
 string Name
 int Score
 bool IsLocked

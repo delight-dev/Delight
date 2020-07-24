@@ -83,7 +83,7 @@ namespace Delight
             }
         }
 
-        public override BindableObject Get(string id)
+        public override BindableObject GetGeneric(string id)
         {
             return this[id];
         }

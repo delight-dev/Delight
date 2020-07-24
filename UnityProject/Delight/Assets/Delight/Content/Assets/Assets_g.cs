@@ -15,7 +15,7 @@ namespace Delight
     /// <summary>
     /// AssetBundle data provider. Contains references to all asset bundles in the project.
     /// </summary>
-    public partial class AssetBundleData : DataProvider<AssetBundle>
+    public partial class AssetBundleData : BindableCollection<AssetBundle>
     {
         #region Fields
 
@@ -67,7 +67,7 @@ namespace Delight
     /// <summary>
     /// MaterialAsset data provider. Contains references to all materials in the project.
     /// </summary>
-    public partial class MaterialAssetData : DataProvider<MaterialAsset>
+    public partial class MaterialAssetData : BindableCollection<MaterialAsset>
     {
         #region Fields
 
@@ -121,7 +121,7 @@ namespace Delight
     /// <summary>
     /// FontAsset data provider. Contains references to all fonts in the project.
     /// </summary>
-    public partial class FontAssetData : DataProvider<FontAsset>
+    public partial class FontAssetData : BindableCollection<FontAsset>
     {
         #region Fields
 
@@ -184,7 +184,7 @@ namespace Delight
     /// <summary>
     /// SpriteAsset data provider. Contains references to all sprites in the project.
     /// </summary>
-    public partial class SpriteAssetData : DataProvider<SpriteAsset>
+    public partial class SpriteAssetData : BindableCollection<SpriteAsset>
     {
         #region Fields
 
@@ -355,7 +355,7 @@ namespace Delight
     /// <summary>
     /// TMP_FontAsset data provider. Contains references to all tmp_fontassets in the project.
     /// </summary>
-    public partial class TMP_FontAssetData : DataProvider<TMP_FontAsset>
+    public partial class TMP_FontAssetData : BindableCollection<TMP_FontAsset>
     {
         #region Fields
 
@@ -418,7 +418,7 @@ namespace Delight
     /// <summary>
     /// ShaderAsset data provider. Contains references to all shaders in the project.
     /// </summary>
-    public partial class ShaderAssetData : DataProvider<ShaderAsset>
+    public partial class ShaderAssetData : BindableCollection<ShaderAsset>
     {
         #region Fields
 
@@ -472,7 +472,7 @@ namespace Delight
     /// <summary>
     /// TMP_ColorGradientAsset data provider. Contains references to all tmp_colorgradients in the project.
     /// </summary>
-    public partial class TMP_ColorGradientAssetData : DataProvider<TMP_ColorGradientAsset>
+    public partial class TMP_ColorGradientAssetData : BindableCollection<TMP_ColorGradientAsset>
     {
     }
 
@@ -510,7 +510,7 @@ namespace Delight
     /// <summary>
     /// TMP_SpriteAsset data provider. Contains references to all tmp_spriteassets in the project.
     /// </summary>
-    public partial class TMP_SpriteAssetData : DataProvider<TMP_SpriteAsset>
+    public partial class TMP_SpriteAssetData : BindableCollection<TMP_SpriteAsset>
     {
     }
 
@@ -548,7 +548,7 @@ namespace Delight
     /// <summary>
     /// TextureAsset data provider. Contains references to all textures in the project.
     /// </summary>
-    public partial class TextureAssetData : DataProvider<TextureAsset>
+    public partial class TextureAssetData : BindableCollection<TextureAsset>
     {
     }
 
@@ -586,7 +586,7 @@ namespace Delight
     /// <summary>
     /// TMP_InputValidatorAsset data provider. Contains references to all tmp_inputvalidators in the project.
     /// </summary>
-    public partial class TMP_InputValidatorAssetData : DataProvider<TMP_InputValidatorAsset>
+    public partial class TMP_InputValidatorAssetData : BindableCollection<TMP_InputValidatorAsset>
     {
     }
 

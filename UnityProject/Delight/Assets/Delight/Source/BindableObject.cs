@@ -70,7 +70,7 @@ namespace Delight
         /// <summary>
         /// Notifies listeners that a property has been changed.
         /// </summary>
-        public void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        public virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, propertyName);
         }

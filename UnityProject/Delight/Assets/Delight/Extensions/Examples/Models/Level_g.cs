@@ -14,6 +14,14 @@ namespace Delight
         #region Properties
 
         [SerializeField]
+        public string WorldId { get; set; }
+        public World World
+        {
+            get { return Models.Worlds[WorldId]; }
+            set { WorldId = value?.Id; }
+        }
+
+        [SerializeField]
         private string _name;
         public string Name
         {
@@ -107,6 +115,26 @@ namespace Delight
             Add(Level17);
             Level18 = new Level { Id = "Level18", Name = "Level 18", Score = 0, IsLocked = true };
             Add(Level18);
+        }
+
+        #endregion
+
+        #region Methods
+
+        protected Dictionary<string, BindableCollectionSubset<Level>> _worldLevels = new Dictionary<string, BindableCollectionSubset<Level>>();
+        public virtual BindableCollectionSubset<Level> Get(World world)
+        {
+            if (world == null)
+                return null;
+
+            string worldId = world.Id;
+            BindableCollectionSubset<Level> worldLevels;
+            if (_worldLevels.TryGetValue(worldId, out worldLevels))
+                return worldLevels;
+
+            worldLevels = new BindableCollectionSubset<Level>(this, x => x.WorldId == worldId, x => x.WorldId = worldId);
+            _worldLevels.Add(worldId, worldLevels);
+            return worldLevels;
         }
 
         #endregion
