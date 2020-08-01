@@ -2,30 +2,29 @@
                            ClickCount="t:int">
 
   <Group Spacing="10">
-    <Group Orientation="Horizontal" Spacing="5">
+    
+    <!--<Group Orientation="Horizontal" Spacing="5">
       <Region Size="50" BackgroundColor="Blue">
-        <!-- Region visible when ClickCount > 0 -->
         <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 0" />
         <Label Text="> 0" AutoSize="True" />
       </Region>
       <Region Size="50" BackgroundColor="Blue">
-        <!-- Region visible when ClickCount > 5 -->
         <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 5" />
         <Label Text="> 5" AutoSize="True" />
       </Region>
       <Region Size="50" BackgroundColor="Blue">
-        <!-- Region visible when ClickCount > 10 -->
         <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 10" />
         <Label Text="> 10" AutoSize="True" />
       </Region>
-    </Group>
+    </Group>-->
 
     <Group Spacing="5">
-      <Group Orientation="Horizontal" Spacing="5">
+      <Group Orientation="Horizontal" Spacing="5"> 
         <Button Text="Click Me" Click="ButtonClick" />
         <Button Text="Reset" Click="Reset" />
       </Group>
       <Label Text="Click count: {ClickCount}" AutoSize="True" FontColor="White" />
+      <Label Text="$ {ClickCount}.ToString()" AutoSize="True" FontColor="White" />
     </Group>
 
   </Group>

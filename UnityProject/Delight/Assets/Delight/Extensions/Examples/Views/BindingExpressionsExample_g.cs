@@ -22,34 +22,19 @@ namespace Delight
             // constructing Group (Group1)
             Group1 = new Group(this, this, "Group1", Group1Template);
             Group2 = new Group(this, Group1.Content, "Group2", Group2Template);
-            Region1 = new Region(this, Group2.Content, "Region1", Region1Template);
-            Region2 = new Region(this, Region1.Content, "Region2", Region2Template);
-
-            // binding <Region IsVisible="$ {ClickCount} > 0">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region2", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region2 }), () => Region2.IsVisible = ClickCount > 0, () => { }, false));
-            Label1 = new Label(this, Region1.Content, "Label1", Label1Template);
-            Region3 = new Region(this, Group2.Content, "Region3", Region3Template);
-            Region4 = new Region(this, Region3.Content, "Region4", Region4Template);
-
-            // binding <Region IsVisible="$ {ClickCount} > 5">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region4", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region4 }), () => Region4.IsVisible = ClickCount > 5, () => { }, false));
-            Label2 = new Label(this, Region3.Content, "Label2", Label2Template);
-            Region5 = new Region(this, Group2.Content, "Region5", Region5Template);
-            Region6 = new Region(this, Region5.Content, "Region6", Region6Template);
-
-            // binding <Region IsVisible="$ {ClickCount} > 10">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region6", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region6 }), () => Region6.IsVisible = ClickCount > 10, () => { }, false));
-            Label3 = new Label(this, Region5.Content, "Label3", Label3Template);
-            Group3 = new Group(this, Group1.Content, "Group3", Group3Template);
-            Group4 = new Group(this, Group3.Content, "Group4", Group4Template);
-            Button1 = new Button(this, Group4.Content, "Button1", Button1Template);
+            Group3 = new Group(this, Group2.Content, "Group3", Group3Template);
+            Button1 = new Button(this, Group3.Content, "Button1", Button1Template);
             Button1.Click.RegisterHandler(this, "ButtonClick");
-            Button2 = new Button(this, Group4.Content, "Button2", Button2Template);
+            Button2 = new Button(this, Group3.Content, "Button2", Button2Template);
             Button2.Click.RegisterHandler(this, "Reset");
-            Label4 = new Label(this, Group3.Content, "Label4", Label4Template);
+            Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
 
             // binding <Label Text="Click count: {ClickCount}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label4", "Text" }, new List<Func<BindableObject>> { () => this, () => Label4 }), () => Label4.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
+            Label2 = new Label(this, Group2.Content, "Label2", Label2Template);
+
+            // binding <Label Text="$ {ClickCount}.ToString()">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = ClickCount.ToString(), () => { }, false));
             this.AfterInitializeInternal();
         }
 
@@ -67,34 +52,16 @@ namespace Delight
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(Group2Property);
             dependencyProperties.Add(Group2TemplateProperty);
-            dependencyProperties.Add(Region1Property);
-            dependencyProperties.Add(Region1TemplateProperty);
-            dependencyProperties.Add(Region2Property);
-            dependencyProperties.Add(Region2TemplateProperty);
-            dependencyProperties.Add(Label1Property);
-            dependencyProperties.Add(Label1TemplateProperty);
-            dependencyProperties.Add(Region3Property);
-            dependencyProperties.Add(Region3TemplateProperty);
-            dependencyProperties.Add(Region4Property);
-            dependencyProperties.Add(Region4TemplateProperty);
-            dependencyProperties.Add(Label2Property);
-            dependencyProperties.Add(Label2TemplateProperty);
-            dependencyProperties.Add(Region5Property);
-            dependencyProperties.Add(Region5TemplateProperty);
-            dependencyProperties.Add(Region6Property);
-            dependencyProperties.Add(Region6TemplateProperty);
-            dependencyProperties.Add(Label3Property);
-            dependencyProperties.Add(Label3TemplateProperty);
             dependencyProperties.Add(Group3Property);
             dependencyProperties.Add(Group3TemplateProperty);
-            dependencyProperties.Add(Group4Property);
-            dependencyProperties.Add(Group4TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Button2Property);
             dependencyProperties.Add(Button2TemplateProperty);
-            dependencyProperties.Add(Label4Property);
-            dependencyProperties.Add(Label4TemplateProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
         }
 
         #endregion
@@ -136,132 +103,6 @@ namespace Delight
             set { Group2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
-        public Region Region1
-        {
-            get { return Region1Property.GetValue(this); }
-            set { Region1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
-        public Template Region1Template
-        {
-            get { return Region1TemplateProperty.GetValue(this); }
-            set { Region1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
-        public Region Region2
-        {
-            get { return Region2Property.GetValue(this); }
-            set { Region2Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
-        public Template Region2Template
-        {
-            get { return Region2TemplateProperty.GetValue(this); }
-            set { Region2TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
-        public Label Label1
-        {
-            get { return Label1Property.GetValue(this); }
-            set { Label1Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
-        public Template Label1Template
-        {
-            get { return Label1TemplateProperty.GetValue(this); }
-            set { Label1TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region3Property = new DependencyProperty<Region>("Region3");
-        public Region Region3
-        {
-            get { return Region3Property.GetValue(this); }
-            set { Region3Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region3TemplateProperty = new DependencyProperty<Template>("Region3Template");
-        public Template Region3Template
-        {
-            get { return Region3TemplateProperty.GetValue(this); }
-            set { Region3TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region4Property = new DependencyProperty<Region>("Region4");
-        public Region Region4
-        {
-            get { return Region4Property.GetValue(this); }
-            set { Region4Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region4TemplateProperty = new DependencyProperty<Template>("Region4Template");
-        public Template Region4Template
-        {
-            get { return Region4TemplateProperty.GetValue(this); }
-            set { Region4TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
-        public Label Label2
-        {
-            get { return Label2Property.GetValue(this); }
-            set { Label2Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
-        public Template Label2Template
-        {
-            get { return Label2TemplateProperty.GetValue(this); }
-            set { Label2TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region5Property = new DependencyProperty<Region>("Region5");
-        public Region Region5
-        {
-            get { return Region5Property.GetValue(this); }
-            set { Region5Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region5TemplateProperty = new DependencyProperty<Template>("Region5Template");
-        public Template Region5Template
-        {
-            get { return Region5TemplateProperty.GetValue(this); }
-            set { Region5TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Region> Region6Property = new DependencyProperty<Region>("Region6");
-        public Region Region6
-        {
-            get { return Region6Property.GetValue(this); }
-            set { Region6Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Region6TemplateProperty = new DependencyProperty<Template>("Region6Template");
-        public Template Region6Template
-        {
-            get { return Region6TemplateProperty.GetValue(this); }
-            set { Region6TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
-        public Label Label3
-        {
-            get { return Label3Property.GetValue(this); }
-            set { Label3Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
-        public Template Label3Template
-        {
-            get { return Label3TemplateProperty.GetValue(this); }
-            set { Label3TemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Group> Group3Property = new DependencyProperty<Group>("Group3");
         public Group Group3
         {
@@ -274,20 +115,6 @@ namespace Delight
         {
             get { return Group3TemplateProperty.GetValue(this); }
             set { Group3TemplateProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Group> Group4Property = new DependencyProperty<Group>("Group4");
-        public Group Group4
-        {
-            get { return Group4Property.GetValue(this); }
-            set { Group4Property.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> Group4TemplateProperty = new DependencyProperty<Template>("Group4Template");
-        public Template Group4Template
-        {
-            get { return Group4TemplateProperty.GetValue(this); }
-            set { Group4TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
@@ -318,18 +145,32 @@ namespace Delight
             set { Button2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
-        public Label Label4
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
         {
-            get { return Label4Property.GetValue(this); }
-            set { Label4Property.SetValue(this, value); }
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
-        public Template Label4Template
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
         {
-            get { return Label4TemplateProperty.GetValue(this); }
-            set { Label4TemplateProperty.SetValue(this, value); }
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -366,20 +207,11 @@ namespace Delight
 #endif
                     Delight.BindingExpressionsExample.Group1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup1);
                     Delight.BindingExpressionsExample.Group2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup2);
-                    Delight.BindingExpressionsExample.Region1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion1);
-                    Delight.BindingExpressionsExample.Region2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion2);
-                    Delight.BindingExpressionsExample.Label1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel1);
-                    Delight.BindingExpressionsExample.Region3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion3);
-                    Delight.BindingExpressionsExample.Region4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion4);
-                    Delight.BindingExpressionsExample.Label2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel2);
-                    Delight.BindingExpressionsExample.Region5TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion5);
-                    Delight.BindingExpressionsExample.Region6TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion6);
-                    Delight.BindingExpressionsExample.Label3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel3);
                     Delight.BindingExpressionsExample.Group3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup3);
-                    Delight.BindingExpressionsExample.Group4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup4);
                     Delight.BindingExpressionsExample.Button1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleButton1);
                     Delight.BindingExpressionsExample.Button2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleButton2);
-                    Delight.BindingExpressionsExample.Label4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel4);
+                    Delight.BindingExpressionsExample.Label1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel1);
+                    Delight.BindingExpressionsExample.Label2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel2);
                 }
                 return _bindingExpressionsExample;
             }
@@ -421,211 +253,9 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingExpressionsExampleGroup2.Name = "BindingExpressionsExampleGroup2";
 #endif
-                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup2, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup2, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
                 return _bindingExpressionsExampleGroup2;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion1;
-        public static Template BindingExpressionsExampleRegion1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion1 == null || _bindingExpressionsExampleRegion1.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion1 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion1 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion1.Name = "BindingExpressionsExampleRegion1";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion1, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
-                }
-                return _bindingExpressionsExampleRegion1;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion2;
-        public static Template BindingExpressionsExampleRegion2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion2 == null || _bindingExpressionsExampleRegion2.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion2 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion2 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion2.Name = "BindingExpressionsExampleRegion2";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion2, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion2);
-                }
-                return _bindingExpressionsExampleRegion2;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleLabel1;
-        public static Template BindingExpressionsExampleLabel1
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel1 == null || _bindingExpressionsExampleLabel1.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleLabel1 == null)
-#endif
-                {
-                    _bindingExpressionsExampleLabel1 = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel1.Name = "BindingExpressionsExampleLabel1";
-#endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel1, "> 0");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel1, Delight.AutoSize.Default);
-                }
-                return _bindingExpressionsExampleLabel1;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion3;
-        public static Template BindingExpressionsExampleRegion3
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion3 == null || _bindingExpressionsExampleRegion3.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion3 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion3 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion3.Name = "BindingExpressionsExampleRegion3";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion3, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
-                }
-                return _bindingExpressionsExampleRegion3;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion4;
-        public static Template BindingExpressionsExampleRegion4
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion4 == null || _bindingExpressionsExampleRegion4.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion4 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion4 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion4.Name = "BindingExpressionsExampleRegion4";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion4, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion4);
-                }
-                return _bindingExpressionsExampleRegion4;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleLabel2;
-        public static Template BindingExpressionsExampleLabel2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel2 == null || _bindingExpressionsExampleLabel2.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleLabel2 == null)
-#endif
-                {
-                    _bindingExpressionsExampleLabel2 = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel2.Name = "BindingExpressionsExampleLabel2";
-#endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel2, "> 5");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel2, Delight.AutoSize.Default);
-                }
-                return _bindingExpressionsExampleLabel2;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion5;
-        public static Template BindingExpressionsExampleRegion5
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion5 == null || _bindingExpressionsExampleRegion5.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion5 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion5 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion5.Name = "BindingExpressionsExampleRegion5";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion5, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
-                }
-                return _bindingExpressionsExampleRegion5;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleRegion6;
-        public static Template BindingExpressionsExampleRegion6
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion6 == null || _bindingExpressionsExampleRegion6.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleRegion6 == null)
-#endif
-                {
-                    _bindingExpressionsExampleRegion6 = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion6.Name = "BindingExpressionsExampleRegion6";
-#endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion6, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion6);
-                }
-                return _bindingExpressionsExampleRegion6;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleLabel3;
-        public static Template BindingExpressionsExampleLabel3
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel3 == null || _bindingExpressionsExampleLabel3.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleLabel3 == null)
-#endif
-                {
-                    _bindingExpressionsExampleLabel3 = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel3.Name = "BindingExpressionsExampleLabel3";
-#endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel3, "> 10");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel3, Delight.AutoSize.Default);
-                }
-                return _bindingExpressionsExampleLabel3;
             }
         }
 
@@ -644,31 +274,10 @@ namespace Delight
 #if UNITY_EDITOR
                     _bindingExpressionsExampleGroup3.Name = "BindingExpressionsExampleGroup3";
 #endif
+                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup3, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup3, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
                 return _bindingExpressionsExampleGroup3;
-            }
-        }
-
-        private static Template _bindingExpressionsExampleGroup4;
-        public static Template BindingExpressionsExampleGroup4
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup4 == null || _bindingExpressionsExampleGroup4.CurrentVersion != Template.Version)
-#else
-                if (_bindingExpressionsExampleGroup4 == null)
-#endif
-                {
-                    _bindingExpressionsExampleGroup4 = new Template(GroupTemplates.Group);
-#if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup4.Name = "BindingExpressionsExampleGroup4";
-#endif
-                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup4, Delight.ElementOrientation.Horizontal);
-                    Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup4, new ElementSize(5f, ElementSizeUnit.Pixels));
-                }
-                return _bindingExpressionsExampleGroup4;
             }
         }
 
@@ -756,26 +365,49 @@ namespace Delight
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel4;
-        public static Template BindingExpressionsExampleLabel4
+        private static Template _bindingExpressionsExampleLabel1;
+        public static Template BindingExpressionsExampleLabel1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel4 == null || _bindingExpressionsExampleLabel4.CurrentVersion != Template.Version)
+                if (_bindingExpressionsExampleLabel1 == null || _bindingExpressionsExampleLabel1.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel4 == null)
+                if (_bindingExpressionsExampleLabel1 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel4 = new Template(LabelTemplates.Label);
+                    _bindingExpressionsExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel4.Name = "BindingExpressionsExampleLabel4";
+                    _bindingExpressionsExampleLabel1.Name = "BindingExpressionsExampleLabel1";
 #endif
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel4, Delight.AutoSize.Default);
-                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel4, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel4);
+                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel1, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel1);
                 }
-                return _bindingExpressionsExampleLabel4;
+                return _bindingExpressionsExampleLabel1;
+            }
+        }
+
+        private static Template _bindingExpressionsExampleLabel2;
+        public static Template BindingExpressionsExampleLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_bindingExpressionsExampleLabel2 == null || _bindingExpressionsExampleLabel2.CurrentVersion != Template.Version)
+#else
+                if (_bindingExpressionsExampleLabel2 == null)
+#endif
+                {
+                    _bindingExpressionsExampleLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _bindingExpressionsExampleLabel2.Name = "BindingExpressionsExampleLabel2";
+#endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel2, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel2, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel2);
+                }
+                return _bindingExpressionsExampleLabel2;
             }
         }
 

@@ -14,10 +14,13 @@ using System.Text;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
 #endif
 #endregion
 
@@ -891,34 +894,44 @@ namespace Delight
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
                             // TODO implement run-time parsing of transform bindings in the editor 
-                            //CSharpScript.EvaluateAsync();
-                            
-
-
-                            var transformMethodName = propertyBinding.TransformExpression;
-                            MethodInfo methodInfo = null;
-                            if (transformMethodName.IndexOf(".") >= 0)
+                            transformMethod = x =>
                             {
-                                // if method name contains "." it refers to a static class
-                                var methodPath = transformMethodName.Split('.').ToList();
-                                if (methodPath.Count == 2)
+                                try
                                 {
-                                    var staticType = TypeHelper.GetType(methodPath[0], null, MasterConfig.GetInstance().Namespaces);
-                                    methodInfo = staticType?.GetType().GetMethod(transformMethodName);
-                                    if (methodInfo != null)
+                                    var expression = String.Format(propertyBinding.TransformExpression, x);
+                                    Debug.Log("Parsing expression: " + expression);
+                                    
+                                    var task = Task.Run(async () =>
                                     {
-                                        transformMethod = x => methodInfo.Invoke(null, x);
-                                    }
+                                        var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
+                                            "System",
+                                            "System.Collections.Generic",
+                                            "System.Runtime.CompilerServices",
+                                            "System.Linq",
+                                            "UnityEngine",
+                                            "UnityEngine.UI",
+                                            "Delight"
+                                            ).AddReferences(
+                                                typeof(System.Linq.Enumerable).Assembly,
+                                                typeof(UnityEngine.GameObject).Assembly,
+                                                typeof(UnityEngine.UI.Button).Assembly,
+                                                typeof(Delight.Button).Assembly
+                                            ), 
+                                            globals: parent);
+                                        return expressionResult;
+                                    });
+                                    var result = task.Result;
+                                    Debug.Log("Result: " + result);
+                                    return result;
                                 }
-                            }
-                            else
-                            {
-                                methodInfo = parent.GetType().GetMethod(transformMethodName);
-                                if (methodInfo != null)
+                                catch (Exception e)
                                 {
-                                    transformMethod = x => methodInfo.Invoke(parent, x);
+                                    ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
+                                        String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"{2}\">. Compilation error thrown: {3}",
+                                            childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString, e.InnerException.Message));
+                                    return null;
                                 }
-                            }
+                            };
                         }
 
                         // TODO try add binding to first template child and see if it fixes binding issue
