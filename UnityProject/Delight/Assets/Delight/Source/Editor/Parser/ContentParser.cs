@@ -1279,29 +1279,6 @@ namespace Delight.Editor.Parser
             propertyBinding.PropertyBindingString = propertyBindingString;
             propertyBinding.LineNumber = element.GetLineNumber();
 
-            if (trimmedBinding.StartsWith("$"))
-            {
-                // transformed multi-binding
-                string[] bindings = trimmedBinding.Split(BindingDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
-                if (bindings.Length < 1)
-                {
-                    ConsoleLogger.LogParseError(path, propertyBinding.LineNumber,
-                        String.Format("#Delight# Improperly formatted property binding {0}=\"{1}\".", propertyName, propertyBindingString));
-                    return null;
-                }
-
-                propertyBinding.BindingType = BindingType.MultiBindingTransform;
-                propertyBinding.TransformMethod = bindings[0];
-
-                foreach (var bindingSourceString in bindings.Skip(1))
-                {
-                    var bindingSource = ParseBindingSource(bindingSourceString);
-                    propertyBinding.Sources.Add(bindingSource);
-                }
-
-                return propertyBinding;
-            }
-
             // check for bindings in string
             string formatString = String.Empty;
             List<Match> matches = new List<Match>();
@@ -1318,7 +1295,7 @@ namespace Delight.Editor.Parser
                 return null;
             }
 
-            // is the binding a format string?
+            // is the binding a format string or binding expression?
             if (matches.Count > 1 || (matches[0].Value.Length != propertyBindingString.Length) || !String.IsNullOrEmpty(matches[0].Groups["format"].Value))
             {
                 // yes. 
@@ -1330,8 +1307,24 @@ namespace Delight.Editor.Parser
                     return String.Format("{{{0}{1}}}", matchCountString, x.Groups["format"]);
                 });
 
-                propertyBinding.BindingType = BindingType.MultiBindingFormatString;
-                propertyBinding.FormatString = formatString;
+                // is the binding a transform expression?
+                if (propertyBindingString.StartsWith("$"))
+                {
+                    // yes. parse transformed multi-binding with evaluated expressions, e.g. {BindingA} > {BindingB}, Math.Abs({BindingA} - {BindingB} + 10) etc. 
+                    formatString = formatString.Substring(1).Trim();
+
+                    // replace single quotes with double quotes 
+                    formatString = formatString.Replace('\'', '"');
+
+                    propertyBinding.TransformExpression = formatString;
+                    propertyBinding.BindingType = BindingType.MultiBindingTransform;
+                }
+                else
+                {
+                    // no. it's a format string binding
+                    propertyBinding.BindingType = BindingType.MultiBindingFormatString;
+                    propertyBinding.FormatString = formatString;
+                }
             }
 
             // parse view fields for binding source(s)

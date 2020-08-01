@@ -56,6 +56,7 @@ namespace Delight
 
 
                 case BindingType.MultiBindingTransform:
+                    // TODO implement runtime transform binding
                     if (TransformMethod == null)
                         return;
 

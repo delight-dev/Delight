@@ -1026,7 +1026,7 @@ namespace Delight.Editor.Parser
                     }
                     else
                     {
-                        childPropertyExpressions.Add(new PropertyBinding { PropertyName = childViewPropertyName, AttachedNeedUpdate = propertyBinding.AttachedNeedUpdate, AttachedToParentViewDeclaration = propertyBinding.AttachedToParentViewDeclaration, BindingNeedUpdate = propertyBinding.BindingNeedUpdate, BindingType = propertyBinding.BindingType, FormatString = propertyBinding.FormatString, IsAttached = propertyBinding.IsAttached, ItemId = propertyBinding.ItemId, LineNumber = propertyBinding.LineNumber, PropertyBindingString = propertyBinding.PropertyBindingString, Sources = propertyBinding.Sources.ToList(), StyleDeclaration = propertyBinding.StyleDeclaration, TransformMethod = propertyBinding.TransformMethod });
+                        childPropertyExpressions.Add(new PropertyBinding { PropertyName = childViewPropertyName, AttachedNeedUpdate = propertyBinding.AttachedNeedUpdate, AttachedToParentViewDeclaration = propertyBinding.AttachedToParentViewDeclaration, BindingNeedUpdate = propertyBinding.BindingNeedUpdate, BindingType = propertyBinding.BindingType, FormatString = propertyBinding.FormatString, IsAttached = propertyBinding.IsAttached, ItemId = propertyBinding.ItemId, LineNumber = propertyBinding.LineNumber, PropertyBindingString = propertyBinding.PropertyBindingString, Sources = propertyBinding.Sources.ToList(), StyleDeclaration = propertyBinding.StyleDeclaration, TransformExpression = propertyBinding.TransformExpression });
                     }
                     continue;
                 }
@@ -1697,7 +1697,8 @@ namespace Delight.Editor.Parser
                                 break;
 
                             case BindingType.MultiBindingTransform:
-                                sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                                object[] args = convertedSourceProperties.ToArray<object>();
+                                sourceToTargetValue = string.Format(propertyBinding.TransformExpression, args);
                                 break;
 
                             case BindingType.MultiBindingFormatString:

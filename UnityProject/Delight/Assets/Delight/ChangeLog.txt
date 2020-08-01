@@ -1,4 +1,8 @@
-﻿2020.1.0
+﻿2020.2.0a
+- Missing value interpolators added
+- Fixed issue with code referencing a TMP examples class
+
+2020.1.0
 - Delight Designer for LIVE editing of XML
 - State animations
 - Added Expander view for expanding/collapsing content

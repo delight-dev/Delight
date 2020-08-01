@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 #endif
 #endregion
 
@@ -865,7 +866,6 @@ namespace Delight
                             }
                         }
 
-
                         string targetProperty = string.Join(".", targetPath);
                         string convertedTargetProperty = targetProperty;
                         var bindingTargetPath = new RuntimeBindingPath(targetProperties, targetObjectGetters, false, null);
@@ -890,7 +890,12 @@ namespace Delight
                         Func<object[], object> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
-                            var transformMethodName = propertyBinding.TransformMethod;
+                            // TODO implement run-time parsing of transform bindings in the editor 
+                            //CSharpScript.EvaluateAsync();
+                            
+
+
+                            var transformMethodName = propertyBinding.TransformExpression;
                             MethodInfo methodInfo = null;
                             if (transformMethodName.IndexOf(".") >= 0)
                             {

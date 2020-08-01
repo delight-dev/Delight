@@ -1184,7 +1184,7 @@ namespace Delight.Editor.Parser
         public BindingType BindingType;
 
         [ProtoMember(4)]
-        public string TransformMethod;
+        public string TransformExpression;
 
         [ProtoMember(5)]
         public List<PropertyBindingSource> Sources = new List<PropertyBindingSource>();
