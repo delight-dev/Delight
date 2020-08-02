@@ -1311,11 +1311,7 @@ namespace Delight.Editor.Parser
                 if (propertyBindingString.StartsWith("$"))
                 {
                     // yes. parse transformed multi-binding with evaluated expressions, e.g. {BindingA} > {BindingB}, Math.Abs({BindingA} - {BindingB} + 10) etc. 
-                    formatString = formatString.Substring(1).Trim();
-
-                    // replace single quotes with double quotes 
-                    formatString = formatString.Replace('\'', '"');
-
+                    formatString = GetExpression(formatString);
                     propertyBinding.TransformExpression = formatString;
                     propertyBinding.BindingType = BindingType.MultiBindingTransform;
                 }
@@ -1338,6 +1334,19 @@ namespace Delight.Editor.Parser
             }
 
             return propertyBinding;
+        }
+
+        /// <summary>
+        /// Gets expression from property value.
+        /// </summary>
+        public static string GetExpression(string propertyValue)
+        {
+            // remove '$' prefix
+            var expression = propertyValue.Substring(1).Trim();
+
+            // replace single quotes with double quotes 
+            expression = expression.Replace('\'', '"');
+            return expression;
         }
 
         /// <summary>

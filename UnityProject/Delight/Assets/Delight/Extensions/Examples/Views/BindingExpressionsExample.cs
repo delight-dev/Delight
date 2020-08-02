@@ -11,14 +11,5 @@ namespace Delight
 {
     public partial class BindingExpressionsExample
     {
-        public void Reset()
-        {
-            ClickCount = 0;
-        }
-
-        public void ButtonClick()
-        {
-            ++ClickCount;
-        }
     }
 }

@@ -1368,6 +1368,13 @@ namespace Delight.Editor.Parser
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
+                        if (actionValue.StartsWith("$"))
+                        {
+                            var expression = ContentParser.GetExpression(actionValue);
+                            sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, expression);
+                            continue;
+                        }
+
                         var actionHandlerName = actionValue;
 
                         // does the action have parameters?

@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
+using Delight;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
@@ -616,6 +617,30 @@ namespace Delight
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
+                        var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+
+                        if (actionValue.StartsWith("$"))
+                        {
+                            var expression = ContentParser.GetExpression(actionValue);
+                            Action runtimeAction = () =>
+                            {
+                                try
+                                {
+                                    EvaluateCSharpExpression(parent, expression);
+                                }
+                                catch (Exception e)
+                                {
+                                    ConsoleLogger.LogParseError(fileName, actionAssignment.LineNumber,
+                                        String.Format("#Delight# Unable to execute view action expression <{0} {1}=\"{2}\">. Compilation error thrown: {3}",
+                                            childViewDeclaration.ViewName, actionAssignment.PropertyName, actionValue, e.InnerException.Message));
+                                }
+                            };
+
+                            // register runtime action handler
+                            action?.RegisterHandler(runtimeAction);
+                            continue;
+                        }
+
                         var actionHandlerName = actionValue;
 
                         // does the action have parameters?
@@ -658,8 +683,7 @@ namespace Delight
                             }
                         }
 
-                        // register action handler without parameters
-                        var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+                        // register action handler without parameters                        
                         action?.RegisterHandler(parent, actionHandlerName);
                     }
                 }
@@ -903,30 +927,7 @@ namespace Delight
                             {
                                 try
                                 {
-                                    // use roslyn to evaluate expression at runtime
-                                    //Debug.Log("Parsing expression: " + expression);                                    
-                                    var task = Task.Run(async () =>
-                                    {
-                                        var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
-                                            "System",
-                                            "System.Collections.Generic",
-                                            "System.Runtime.CompilerServices",
-                                            "System.Linq",
-                                            "UnityEngine",
-                                            "UnityEngine.UI",
-                                            "Delight"
-                                            ).AddReferences(
-                                                typeof(System.Linq.Enumerable).Assembly,
-                                                typeof(UnityEngine.GameObject).Assembly,
-                                                typeof(UnityEngine.UI.Button).Assembly,
-                                                typeof(Delight.Button).Assembly
-                                            ), 
-                                            globals: parent);
-                                        return expressionResult;
-                                    });
-                                    var result = task.Result;
-                                    //Debug.Log("Result: " + result);
-                                    return result;
+                                    return EvaluateCSharpExpression(parent, expression);
                                 }
                                 catch (Exception e)
                                 {
@@ -971,6 +972,37 @@ namespace Delight
             }
 
             return instantiatedChildViews;
+        }
+
+        /// <summary>
+        /// Use Roslyn to evaluate CSharp expression at runtime.
+        /// </summary>
+        private static object EvaluateCSharpExpression(View parent, string expression)
+        {
+            // use roslyn to evaluate expression at runtime
+            //Debug.Log("Parsing expression: " + expression);
+            var task = Task.Run(async () =>
+            {
+                var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
+                    "System",
+                    "System.Collections.Generic",
+                    "System.Runtime.CompilerServices",
+                    "System.Linq",
+                    "UnityEngine",
+                    "UnityEngine.UI",
+                    "Delight"
+                    ).AddReferences(
+                        typeof(System.Linq.Enumerable).Assembly,
+                        typeof(UnityEngine.GameObject).Assembly,
+                        typeof(UnityEngine.UI.Button).Assembly,
+                        typeof(Delight.Button).Assembly
+                    ),
+                    globals: parent);
+                return expressionResult;
+            });
+            var result = task.Result;
+            //Debug.Log("Result: " + result);
+            return result;
         }
 
         /// <summary>

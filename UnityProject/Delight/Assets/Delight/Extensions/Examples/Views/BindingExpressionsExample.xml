@@ -20,8 +20,8 @@
 
     <Group Spacing="5">
       <Group Orientation="Horizontal" Spacing="5"> 
-        <Button Text="Click Me" Click="ButtonClick" />
-        <Button Text="Reset" Click="Reset" />
+        <Button Text="Click Me" Click="$ ++ClickCount" />
+        <Button Text="Reset" Click="$ ClickCount = 0" />
       </Group> 
       <Label Text="Click count: {ClickCount}" AutoSize="True" FontColor="White" />
       <Group Orientation="Horizontal">

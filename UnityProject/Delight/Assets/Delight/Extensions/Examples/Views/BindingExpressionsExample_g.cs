@@ -43,9 +43,9 @@ namespace Delight
             Group3 = new Group(this, Group1.Content, "Group3", Group3Template);
             Group4 = new Group(this, Group3.Content, "Group4", Group4Template);
             Button1 = new Button(this, Group4.Content, "Button1", Button1Template);
-            Button1.Click.RegisterHandler(this, "ButtonClick");
+            Button1.Click.RegisterHandler(() => ++ClickCount);
             Button2 = new Button(this, Group4.Content, "Button2", Button2Template);
-            Button2.Click.RegisterHandler(this, "Reset");
+            Button2.Click.RegisterHandler(() => ClickCount = 0);
             Label4 = new Label(this, Group3.Content, "Label4", Label4Template);
 
             // binding <Label Text="Click count: {ClickCount}">
