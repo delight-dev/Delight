@@ -893,14 +893,18 @@ namespace Delight
                         Func<object[], object> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
-                            // TODO implement run-time parsing of transform bindings in the editor 
+                            List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
+                            CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties);
+                            
+                            // get expression to be evaluated at run-time
+                            var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
+
                             transformMethod = x =>
                             {
                                 try
                                 {
-                                    var expression = String.Format(propertyBinding.TransformExpression, x);
-                                    Debug.Log("Parsing expression: " + expression);
-                                    
+                                    // use roslyn to evaluate expression at runtime
+                                    //Debug.Log("Parsing expression: " + expression);                                    
                                     var task = Task.Run(async () =>
                                     {
                                         var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
@@ -921,7 +925,7 @@ namespace Delight
                                         return expressionResult;
                                     });
                                     var result = task.Result;
-                                    Debug.Log("Result: " + result);
+                                    //Debug.Log("Result: " + result);
                                     return result;
                                 }
                                 catch (Exception e)

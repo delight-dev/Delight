@@ -55,6 +55,7 @@ namespace Delight
             ViewActivators.Add("ViewSwitcher", (x, y, z, w, a) => new ViewSwitcher(x, y, z, w, a));
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
+            ViewActivators.Add("BindingExpressionsExample", (x, y, z, w, a) => new BindingExpressionsExample(x, y, z, w, a));
             ViewActivators.Add("ButtonsExample", (x, y, z, w, a) => new ButtonsExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
             ViewActivators.Add("GroupExample", (x, y, z, w, a) => new GroupExample(x, y, z, w, a));
@@ -66,7 +67,6 @@ namespace Delight
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuDemoScene", (x, y, z, w, a) => new MainMenuDemoScene(x, y, z, w, a));
-            ViewActivators.Add("BindingExpressionsExample", (x, y, z, w, a) => new BindingExpressionsExample(x, y, z, w, a));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
@@ -109,6 +109,7 @@ namespace Delight
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("InputField", typeof(InputField));
+            ViewTypes.Add("BindingExpressionsExample", typeof(BindingExpressionsExample));
             ViewTypes.Add("ButtonsExample", typeof(ButtonsExample));
             ViewTypes.Add("GridExample", typeof(GridExample));
             ViewTypes.Add("GroupExample", typeof(GroupExample));
@@ -120,7 +121,6 @@ namespace Delight
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
             ViewTypes.Add("MainMenuDemoScene", typeof(MainMenuDemoScene));
-            ViewTypes.Add("BindingExpressionsExample", typeof(BindingExpressionsExample));
 
             AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));

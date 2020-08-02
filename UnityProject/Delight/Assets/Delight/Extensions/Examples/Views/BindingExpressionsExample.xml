@@ -3,7 +3,7 @@
 
   <Group Spacing="10">
     
-    <!--<Group Orientation="Horizontal" Spacing="5">
+    <Group Orientation="Horizontal" Spacing="5">
       <Region Size="50" BackgroundColor="Blue">
         <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 0" />
         <Label Text="> 0" AutoSize="True" />
@@ -16,15 +16,18 @@
         <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 10" />
         <Label Text="> 10" AutoSize="True" />
       </Region>
-    </Group>-->
+    </Group>
 
     <Group Spacing="5">
       <Group Orientation="Horizontal" Spacing="5"> 
         <Button Text="Click Me" Click="ButtonClick" />
         <Button Text="Reset" Click="Reset" />
-      </Group>
+      </Group> 
       <Label Text="Click count: {ClickCount}" AutoSize="True" FontColor="White" />
-      <Label Text="$ {ClickCount}.ToString()" AutoSize="True" FontColor="White" />
+      <Group Orientation="Horizontal">
+        <Label Text="{ClickCount}^2 = " AutoSize="True" FontColor="White" /> 
+        <Label Text="$ Math.Pow({ClickCount}, 2).ToString()" AutoSize="True" FontColor="White" />
+      </Group>
     </Group>
 
   </Group>

@@ -1493,7 +1493,7 @@ namespace Delight.Editor.Parser
                         bool castToItemType = false;
                         if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null)
                         {
-                            if  (String.IsNullOrEmpty(ti.ItemTypeName))
+                            if (String.IsNullOrEmpty(ti.ItemTypeName))
                             {
                                 // item type could not be inferred so skip binding
                                 continue;
@@ -1502,132 +1502,8 @@ namespace Delight.Editor.Parser
                         }
 
                         // generate binding path to source
-                        var sourceBindingPathObjects = new List<string>();
-                        var convertedSourceProperties = new List<string>();
-                        var sourceProperties = new List<string>();
-                        foreach (var bindingSource in propertyBinding.Sources)
-                        {
-                            var sourcePath = new List<string>();
-                            sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
-
-                            bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
-                            bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
-                            string negatedString = isNegated ? "!" : string.Empty;
-                            bool isLoc = false;
-                            string locId = string.Empty;
-                            bool isIndex = false;
-
-                            // handle special case when source is localization dictionary
-                            if (isModelSource && sourcePath.Count == 3 &&
-                                (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
-                            {
-                                sourcePath[1] = "Loc";
-
-                                // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
-                                locId = sourcePath[2];
-                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
-                                sourcePath[2] = "Label";
-                                isLoc = true;
-                            }
-
-                            // get property names along path
-                            var templateItemInfo = templateItems != null
-                                ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
-                                : null;
-                            bool isTemplateItemSource = templateItemInfo != null;
-
-                            if (isTemplateItemSource)
-                            {
-                                if (templateItemInfo.ItemTypeName == null)
-                                    continue; // item type was not inferred so ignore binding
-
-                                if (sourcePath.Count == 2)
-                                {
-                                    if (sourcePath[1].IEquals("Index"))
-                                    {
-                                        isIndex = true;
-                                    }
-                                    else if (sourcePath[1].IEquals("ZeroIndex"))
-                                    {
-                                        isIndex = true;
-                                    }
-                                }
-
-                                sourcePath[0] = templateItemInfo.VariableName;
-                                if (!isIndex)
-                                {
-                                    sourcePath.Insert(1, "Item");
-                                }
-                            }
-
-                            // handle collection indexers in binding path
-                            // The call below translates e.g. Players.Player1 => Players["Player1"]
-                            sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
-
-                            var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
-                            if (isLoc)
-                            {
-                                properties.Insert(0, locId);
-                            }
-
-                            string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
-
-                            // get object getters along path
-                            List<string> sourceGetters = new List<string>();
-                            int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
-                            int sourcePathTake = isModelSource ? 2 : 1;
-                            if (!isModelSource && !isTemplateItemSource)
-                            {
-                                sourceGetters.Add("() => this");
-                            }
-
-                            if (isLoc)
-                            {
-                                sourceGetters.Add("() => Models.Loc");
-                            }
-
-                            for (int i = 0; i < sourcePathCount; ++i)
-                            {
-                                sourceGetters.Add(String.Format("() => {0}",
-                                    string.Join(".", sourcePath.Take(i + sourcePathTake))));
-                            }
-
-                            if (isTemplateItemSource)
-                            {
-                                // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
-                                if (!isIndex)
-                                {
-                                    var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
-                                    var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
-                                    sourcePath = sourcePath.Skip(2).ToList();
-                                    sourcePath.Insert(0, castItemRef);
-
-                                    for (int i = 0; i < sourceGetters.Count; ++i)
-                                    {
-                                        // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
-                                        sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
-                                    }
-                                }
-                            }
-
-                            string sourceGettersString = string.Join(", ", sourceGetters);
-                            string sourceProperty = string.Join(".", sourcePath);
-                            string convertedSourceProperty = sourceProperty;
-
-                            // add converter
-                            if (!String.IsNullOrEmpty(bindingSource.Converter))
-                            {
-                                convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
-                            }
-                            else if (isNegated)
-                            {
-                                convertedSourceProperty = "!" + convertedSourceProperty;
-                            }
-
-                            convertedSourceProperties.Add(convertedSourceProperty);
-                            sourceProperties.Add(sourceProperty);
-                            sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
-                        }
+                        List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
+                        GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties);
 
                         // generate binding path to target
                         var targetPath = new List<string>();
@@ -1767,6 +1643,136 @@ namespace Delight.Editor.Parser
                     // print child view declaration
                     GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
+            }
+        }
+
+        public static void GetBindingSourceProperties(string fileName, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties)
+        {
+            sourceBindingPathObjects = new List<string>();
+            convertedSourceProperties = new List<string>();
+            sourceProperties = new List<string>();
+            foreach (var bindingSource in propertyBinding.Sources)
+            {
+                var sourcePath = new List<string>();
+                sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+                bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
+                string negatedString = isNegated ? "!" : string.Empty;
+                bool isLoc = false;
+                string locId = string.Empty;
+                bool isIndex = false;
+
+                // handle special case when source is localization dictionary
+                if (isModelSource && sourcePath.Count == 3 &&
+                    (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
+                {
+                    sourcePath[1] = "Loc";
+
+                    // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
+                    locId = sourcePath[2];
+                    sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
+                    sourcePath[2] = "Label";
+                    isLoc = true;
+                }
+
+                // get property names along path
+                var templateItemInfo = templateItems != null
+                    ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
+                    : null;
+                bool isTemplateItemSource = templateItemInfo != null;
+
+                if (isTemplateItemSource)
+                {
+                    if (templateItemInfo.ItemTypeName == null)
+                        continue; // item type was not inferred so ignore binding
+
+                    if (sourcePath.Count == 2)
+                    {
+                        if (sourcePath[1].IEquals("Index"))
+                        {
+                            isIndex = true;
+                        }
+                        else if (sourcePath[1].IEquals("ZeroIndex"))
+                        {
+                            isIndex = true;
+                        }
+                    }
+
+                    sourcePath[0] = templateItemInfo.VariableName;
+                    if (!isIndex)
+                    {
+                        sourcePath.Insert(1, "Item");
+                    }
+                }
+
+                // handle collection indexers in binding path
+                // The call below translates e.g. Players.Player1 => Players["Player1"]
+                sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
+
+                var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
+                if (isLoc)
+                {
+                    properties.Insert(0, locId);
+                }
+
+                string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
+
+                // get object getters along path
+                List<string> sourceGetters = new List<string>();
+                int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
+                int sourcePathTake = isModelSource ? 2 : 1;
+                if (!isModelSource && !isTemplateItemSource)
+                {
+                    sourceGetters.Add("() => this");
+                }
+
+                if (isLoc)
+                {
+                    sourceGetters.Add("() => Models.Loc");
+                }
+
+                for (int i = 0; i < sourcePathCount; ++i)
+                {
+                    sourceGetters.Add(String.Format("() => {0}",
+                        string.Join(".", sourcePath.Take(i + sourcePathTake))));
+                }
+
+                if (isTemplateItemSource)
+                {
+                    // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                    if (!isIndex)
+                    {
+                        var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
+                        var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
+                        sourcePath = sourcePath.Skip(2).ToList();
+                        sourcePath.Insert(0, castItemRef);
+
+                        for (int i = 0; i < sourceGetters.Count; ++i)
+                        {
+                            // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
+                            sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                        }
+                    }
+                }
+
+                string sourceGettersString = string.Join(", ", sourceGetters);
+                string sourceProperty = string.Join(".", sourcePath);
+                string convertedSourceProperty = sourceProperty;
+
+                // add converter
+                if (!String.IsNullOrEmpty(bindingSource.Converter))
+                {
+                    convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
+                }
+                else if (isNegated)
+                {
+                    convertedSourceProperty = "!" + convertedSourceProperty;
+                }
+
+                convertedSourceProperties.Add(convertedSourceProperty);
+                sourceProperties.Add(sourceProperty);
+                sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
             }
         }
 
