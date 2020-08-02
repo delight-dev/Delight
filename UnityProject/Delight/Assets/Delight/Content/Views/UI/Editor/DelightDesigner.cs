@@ -15,13 +15,13 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 using Delight;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis;
 #endif
 #endregion
 
@@ -913,7 +913,7 @@ namespace Delight
                         //    targetToSource = "{ }";
                         //}
 
-                        // embedded C# code expression
+                        // generate code for embedded C# code expressions
                         Func<Task<object>> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
