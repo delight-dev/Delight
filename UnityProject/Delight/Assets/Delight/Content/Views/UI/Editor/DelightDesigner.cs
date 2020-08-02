@@ -38,7 +38,7 @@ namespace Delight
         private DesignerView _currentEditedView;
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
-        private bool _readOnlyOverride; 
+        private bool _readOnlyOverride;
 
         #endregion
 
@@ -622,11 +622,11 @@ namespace Delight
                         if (actionValue.StartsWith("$"))
                         {
                             var expression = ContentParser.GetExpression(actionValue);
-                            Action runtimeAction = () =>
+                            Action runtimeAction = async () =>
                             {
                                 try
                                 {
-                                    EvaluateCSharpExpression(parent, expression);
+                                    await EvaluateCSharpExpression(parent, expression);
                                 }
                                 catch (Exception e)
                                 {
@@ -913,21 +913,21 @@ namespace Delight
                         //    targetToSource = "{ }";
                         //}
 
-                        // create transform method
-                        Func<object[], object> transformMethod = null;
+                        // embedded C# code expression
+                        Func<Task<object>> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
                             List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
                             CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties);
-                            
+
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
 
-                            transformMethod = x =>
+                            transformMethod = async () =>
                             {
                                 try
                                 {
-                                    return EvaluateCSharpExpression(parent, expression);
+                                    return await EvaluateCSharpExpression(parent, expression);
                                 }
                                 catch (Exception e)
                                 {
@@ -977,32 +977,28 @@ namespace Delight
         /// <summary>
         /// Use Roslyn to evaluate CSharp expression at runtime.
         /// </summary>
-        private static object EvaluateCSharpExpression(View parent, string expression)
+        private static async Task<object> EvaluateCSharpExpression(View parent, string expression)
         {
             // use roslyn to evaluate expression at runtime
             //Debug.Log("Parsing expression: " + expression);
-            var task = Task.Run(async () =>
-            {
-                var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
-                    "System",
-                    "System.Collections.Generic",
-                    "System.Runtime.CompilerServices",
-                    "System.Linq",
-                    "UnityEngine",
-                    "UnityEngine.UI",
-                    "Delight"
-                    ).AddReferences(
-                        typeof(System.Linq.Enumerable).Assembly,
-                        typeof(UnityEngine.GameObject).Assembly,
-                        typeof(UnityEngine.UI.Button).Assembly,
-                        typeof(Delight.Button).Assembly
-                    ),
-                    globals: parent);
-                return expressionResult;
-            });
-            var result = task.Result;
+            var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
+                "System",
+                "System.Collections.Generic",
+                "System.Runtime.CompilerServices",
+                "System.Linq",
+                "UnityEngine",
+                "UnityEngine.UI",
+                "Delight"
+                ).AddReferences(
+                    typeof(System.Linq.Enumerable).Assembly,
+                    typeof(UnityEngine.GameObject).Assembly,
+                    typeof(UnityEngine.UI.Button).Assembly,
+                    typeof(Delight.Button).Assembly
+                ),
+                globals: parent);
+
             //Debug.Log("Result: " + result);
-            return result;
+            return expressionResult;
         }
 
         /// <summary>
@@ -1258,7 +1254,7 @@ namespace Delight
                     {
                         File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 
@@ -1266,7 +1262,7 @@ namespace Delight
                     {
                         File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 
@@ -1283,7 +1279,7 @@ namespace Delight
                             File.WriteAllText(csFile, csFileText);
                         }
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 

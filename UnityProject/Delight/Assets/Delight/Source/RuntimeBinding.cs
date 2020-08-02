@@ -17,7 +17,7 @@ namespace Delight
     {
         #region Fields
 
-        public Func<object[], object> TransformMethod;
+        public Func<Task<object>> TransformMethod;
         public string FormatString;
         public BindingType BindingType;
 
@@ -27,9 +27,11 @@ namespace Delight
         /// <summary>
         /// Creates a new instance of the class. Used by runtime bindings.
         /// </summary>
-        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType, Func<object[], object> transformMethod, string formatString) : base(sources, target, null, null, isTwoWay)
+        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType, Func<Task<object>> transformMethod, string formatString) : base(sources, target, null, null, isTwoWay)
         {
-            PropagateSourceToTarget = PropagateSourceToTargetMethod;
+#pragma warning disable CS4014
+            PropagateSourceToTarget = () => PropagateSourceToTargetMethod();
+#pragma warning restore CS4014
             PropagateTargetToSource = PropagateTargetToSourceMethod;
             BindingType = bindingType;
             TransformMethod = transformMethod;
@@ -43,7 +45,7 @@ namespace Delight
         /// <summary>
         /// Propagates the source value to target. Used by runtime bindings.
         /// </summary>
-        public void PropagateSourceToTargetMethod()
+        public async Task PropagateSourceToTargetMethod()
         {
             switch (BindingType)
             {
@@ -60,9 +62,7 @@ namespace Delight
                     if (TransformMethod == null)
                         return;
 
-                    var transformSourceValues = Sources.Select(x => (x as RuntimeBindingPath).GetValue()).ToArray();
-                    var transformedValue = TransformMethod(transformSourceValues);
-
+                    var transformedValue = await TransformMethod();
                     var transformTarget = Target as RuntimeBindingPath;
                     transformTarget.SetValue(transformedValue);
                     break;
