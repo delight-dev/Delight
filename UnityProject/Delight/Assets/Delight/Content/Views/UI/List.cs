@@ -92,7 +92,9 @@ namespace Delight
                 return;
 
             // call to initialize dynamic lists if necessary
+#pragma warning disable CS4014
             Items.LoadData();
+#pragma warning restore CS4014
             foreach (var item in Items)
             {
                 CreateListItem(item);

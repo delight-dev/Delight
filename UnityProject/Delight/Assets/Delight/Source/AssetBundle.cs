@@ -177,12 +177,15 @@ namespace Delight
                 case BuildTarget.StandaloneOSXIntel64:
                     return "StandaloneOSXIntel";
 #endif
+
+#if !UNITY_2019_2_OR_NEWER
                 // Add more build targets for your own.
                 // If you add more targets, don't forget to add the same platforms to the function below.
                 case BuildTarget.StandaloneLinux:
                 case BuildTarget.StandaloneLinux64:
                 case BuildTarget.StandaloneLinuxUniversal:
                     return "StandaloneLinux";
+#endif
 #if UNITY_SWITCH
                 case BuildTarget.Switch:
                     return "Switch";
@@ -194,7 +197,7 @@ namespace Delight
         }
 #endif
 
-        public static string GetPlatformForAssetBundles(RuntimePlatform platform)
+                    public static string GetPlatformForAssetBundles(RuntimePlatform platform)
         {
             switch (platform)
             {
