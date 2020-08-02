@@ -155,13 +155,13 @@ namespace Delight
         /// <summary>
         /// Called when the user edits the current view.
         /// </summary>
-        public void OnEdit()
+        public void OnEdit(bool needReparsing)
         {
             if (_currentEditedView == null)
                 return;
 
             _currentEditedView.IsDirty = true;
-            if (AutoParse)
+            if (AutoParse && needReparsing)
             {
                 ParseView();
             }

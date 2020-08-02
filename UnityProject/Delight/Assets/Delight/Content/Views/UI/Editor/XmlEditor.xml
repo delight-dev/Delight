@@ -35,12 +35,6 @@
                    Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Margin="25,0,0,0" TextAlignment="TopLeft" />
               </ListItem>
             </List>
-
-            <!-- Label for debugging -->
-            <Label Id="DebugTextLabel" Width="100%" Height="21" Alignment="TopLeft" RichText="false" OverflowMode="Ellipsis" EnableWordWrapping="False"
-                   Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="200,0,0,0" TextAlignment="TopLeft"
-                   IsVisible="False" />
-            <!-- TODO cleanup -->
           </Region>
 
           <!-- Tooltip -->
@@ -62,5 +56,11 @@
 
     </Region>
   </ScrollableRegion>
+
+  <!-- Label for debugging -->
+  <!-- TODO cleanup --> 
+  <Label Id="DebugTextLabel" AutoSize="True" Height="21" Alignment="TopRight" RichText="False"
+         Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="0,0,0,20" TextAlignment="TopLeft"
+         IsVisible="True" />
 
 </XmlEditor>

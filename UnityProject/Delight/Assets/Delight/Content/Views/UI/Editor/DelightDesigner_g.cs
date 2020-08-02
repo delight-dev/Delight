@@ -2147,13 +2147,13 @@ namespace Delight
                     Delight.XmlEditor.AssetOptionItemTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorAssetOptionItem);
                     Delight.XmlEditor.RawImage1TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorRawImage1);
                     Delight.XmlEditor.Label2TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLabel2);
-                    Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorDebugTextLabel);
                     Delight.XmlEditor.TooltipBoxTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorTooltipBox);
                     Delight.XmlEditor.TooltipLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorTooltipLabel);
                     Delight.XmlEditor.Image1TemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorImage1);
                     Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorXmlEditLeftMargin);
                     Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersLabel);
                     Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorLineNumbersRightBorder);
+                    Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_delightDesignerXmlEditor, DelightDesignerXmlEditorDebugTextLabel);
                 }
                 return _delightDesignerXmlEditor;
             }
@@ -2754,26 +2754,6 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerXmlEditorDebugTextLabel;
-        public static Template DelightDesignerXmlEditorDebugTextLabel
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerXmlEditorDebugTextLabel == null || _delightDesignerXmlEditorDebugTextLabel.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerXmlEditorDebugTextLabel == null)
-#endif
-                {
-                    _delightDesignerXmlEditorDebugTextLabel = new Template(XmlEditorTemplates.XmlEditorDebugTextLabel);
-#if UNITY_EDITOR
-                    _delightDesignerXmlEditorDebugTextLabel.Name = "DelightDesignerXmlEditorDebugTextLabel";
-#endif
-                }
-                return _delightDesignerXmlEditorDebugTextLabel;
-            }
-        }
-
         private static Template _delightDesignerXmlEditorTooltipBox;
         public static Template DelightDesignerXmlEditorTooltipBox
         {
@@ -2891,6 +2871,26 @@ namespace Delight
 #endif
                 }
                 return _delightDesignerXmlEditorLineNumbersRightBorder;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorDebugTextLabel;
+        public static Template DelightDesignerXmlEditorDebugTextLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorDebugTextLabel == null || _delightDesignerXmlEditorDebugTextLabel.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorDebugTextLabel == null)
+#endif
+                {
+                    _delightDesignerXmlEditorDebugTextLabel = new Template(XmlEditorTemplates.XmlEditorDebugTextLabel);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorDebugTextLabel.Name = "DelightDesignerXmlEditorDebugTextLabel";
+#endif
+                }
+                return _delightDesignerXmlEditorDebugTextLabel;
             }
         }
 

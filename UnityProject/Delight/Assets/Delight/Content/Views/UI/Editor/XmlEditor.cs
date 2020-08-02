@@ -470,6 +470,7 @@ namespace Delight
         {
             var inputString = Input.inputString;
             bool textChanged = false;
+            bool needReparse = false;
 
             // key has been pressed in previous frame
             if (_trackKeyDown != KeyCode.None)
@@ -587,12 +588,18 @@ namespace Delight
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                         }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, c.ToString());
                         ++_caretX;
 
                         DeactivateAutoComplete();
                         activateAutoComplete = true;
+
+                        if (IsEditingPropertyValue())
+                        {
+                            needReparse = true;
+                        }
                         break;
 
                     case KeyCode.KeypadEnter:
@@ -606,12 +613,14 @@ namespace Delight
                         if (AutoCompleteBox.IsVisible)
                         {
                             activateAutoComplete = FinishAutoComplete();
+                            needReparse = true;
                             break;
                         }
 
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                         }
 
                         string viewName = string.Empty;
@@ -630,6 +639,7 @@ namespace Delight
                                     _lines[_caretY] = trimmedLine.Substring(0, trimmedLine.Length - 1).TrimEnd() + " />";
                                     _caretX = _lines[_caretY].Length;
                                     _caretElement = XmlSyntaxElement.Undefined;
+                                    needReparse = true;
                                     break;
                                 }
                                 else if (trimmedLine.EndsWith(","))
@@ -643,8 +653,9 @@ namespace Delight
                                     hasGottenIndentLevel = true;
 
                                     var spacesStr = new string(' ', indentLevel);
-                                    _lines.InsertOrAdd(_caretY + 1, String.Format("{0}</{1}>", spacesStr, viewName));
+                                    _lines.InsertOrAdd(_caretY + 1, string.Format("{0}</{1}>", spacesStr, viewName));
                                     addIndentation = true;
+                                    needReparse = true;
                                 }
                             }
                         }
@@ -687,6 +698,7 @@ namespace Delight
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                             break; // do nothing else
                         }
 
@@ -714,6 +726,11 @@ namespace Delight
                         {
                             _lines[_caretY] = _lines[_caretY].Remove(_caretX, 1);
                         }
+
+                        if (IsEditingPropertyValue() || IsEditingViewNameThatExist())
+                        {
+                            needReparse = true;
+                        }
                         break;
 
                     case KeyCode.Tab:
@@ -724,15 +741,22 @@ namespace Delight
                         if (AutoCompleteBox.IsVisible)
                         {
                             activateAutoComplete = FinishAutoComplete();
+                            needReparse = true;
                             break;
                         }
 
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                         }
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, new string(' ', SpacesPerTab));
                         _caretX += SpacesPerTab;
+
+                        if (IsEditingPropertyValue())
+                        {
+                            needReparse = true;
+                        }
                         break;
 
                     case KeyCode.Delete:
@@ -743,6 +767,7 @@ namespace Delight
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                             break; // do nothing else
                         }
 
@@ -759,6 +784,11 @@ namespace Delight
                                 _lines[_caretY] += _lines[_caretY + 1];
                                 _lines.RemoveAt(_caretY + 1);
                             }
+                        }
+
+                        if(IsEditingPropertyValue() || IsEditingViewNameThatExist())
+                        {
+                            needReparse = true;
                         }
                         break;
 
@@ -1147,6 +1177,7 @@ namespace Delight
                         if (_hasSelection)
                         {
                             DeleteSelection();
+                            needReparse = true;
                         }
 
                         string str = c.ToString();
@@ -1171,6 +1202,12 @@ namespace Delight
 
                         _lines[_caretY] = _lines[_caretY].InsertOrAdd(_caretX, str);
                         _caretX += str.Length;
+
+                        if (IsEditingPropertyValue() || IsEditingViewNameThatExist())
+                        {
+                            needReparse = true;
+                        }
+
                         break;
                 }
 
@@ -1181,13 +1218,41 @@ namespace Delight
                 }
             }
 
-            OnTextOrCaretChanged(textChanged, activateAutoComplete);
+            OnTextOrCaretChanged(textChanged, activateAutoComplete, needReparse);
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if caret position implies user is editing a property value.
+        /// </summary>
+        private bool IsEditingPropertyValue()
+        {
+            return _caretElement == XmlSyntaxElement.PropertyValue || _caretElement == XmlSyntaxElement.EndPropertyValue;
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if caret position implies user is editing a view name.
+        /// </summary>
+        private bool IsEditingViewName()
+        {
+            return _caretElement == XmlSyntaxElement.ViewName;
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if caret position implies user is editing a view name.
+        /// </summary>
+        private bool IsEditingViewNameThatExist()
+        {
+            if (!IsEditingViewName())
+                return false;
+
+            string wordAtCaret = GetWordAtCaret();
+            return DesignerViews.Any(x => x.Name == wordAtCaret);
         }
 
         /// <summary>
         /// Called when text or caret has changed.
         /// </summary>
-        private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete)
+        private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete, bool needReparse)
         {
             DeactivateTooltip(true);
 
@@ -1246,7 +1311,7 @@ namespace Delight
             if (textChanged && !IsReadOnly)
             {
                 // trigger edit invent unless only arrow keys has been pressed
-                Edit.Invoke(this, null);
+                Edit.Invoke(this, needReparse);
             }
         }
 
@@ -1355,6 +1420,7 @@ namespace Delight
         {
             var inputString = Input.inputString;
             bool updateText = false;
+            bool needReparse = false;
 
             // key has been pressed in previous frame
             if (_trackKeyDown != KeyCode.None)
@@ -1384,6 +1450,7 @@ namespace Delight
                     {
                         DeleteSelection();
                         updateText = true;
+                        needReparse = true;
                     }
                 }
             }
@@ -1449,6 +1516,7 @@ namespace Delight
                 }
 
                 updateText = true;
+                needReparse = true;
             }
 
             // CTRL+A - select all
@@ -1477,7 +1545,7 @@ namespace Delight
             if (updateText)
             {
                 OnEditorChanged();
-                Edit.Invoke(this, null);
+                Edit.Invoke(this, needReparse);
             }
         }
 
@@ -1655,6 +1723,18 @@ namespace Delight
                     case ' ':
                         if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue || xmlSyntaxElement == XmlSyntaxElement.Comment || xmlSyntaxElement == XmlSyntaxElement.Undefined)
                             break;
+
+                        // if previous is part of a view name we don't want this to be a property name
+                        if (characterIndex - 1 >= 0)
+                        {
+                            char previousChar = xmlText[characterIndex - 1];
+                            if (previousChar == '<' || Char.IsLetterOrDigit(previousChar))
+                            {
+                                xmlSyntaxElement = XmlSyntaxElement.ViewName;
+                                break;
+                            }
+                        }
+
                         xmlSyntaxElement = XmlSyntaxElement.PropertyName;
                         break;
                     case '\n':
@@ -1664,6 +1744,19 @@ namespace Delight
                         lineChar = 0;
                         break;
                     default:
+                        if (xmlSyntaxElement == XmlSyntaxElement.ViewName)
+                        {
+                            if (characterIndex - 1 >= 0)
+                            {
+                                char previousChar = xmlText[characterIndex - 1];
+                                if (previousChar == ' ')
+                                {
+                                    xmlSyntaxElement = XmlSyntaxElement.PropertyName;
+                                    break;
+                                }
+                            }
+                        }
+
                         break;
                 }
 
@@ -1747,7 +1840,7 @@ namespace Delight
             GenerateCaretAndSelectionMeshes();
 
             // TODO for debugging purposes show which element we are in
-            //DebugTextLabel.Text = _caretElement.ToString();
+            DebugTextLabel.Text = _caretElement.ToString();
         }
 
         /// <summary>
@@ -2104,6 +2197,14 @@ namespace Delight
         /// <summary>
         /// Gets the word at the current caret position.
         /// </summary>
+        private string GetWordAtCaret()
+        {
+            return GetWordAtCaret(_caretX, _caretY, out _, out _);
+        }
+
+        /// <summary>
+        /// Gets the word at the current caret position.
+        /// </summary>
         private string GetWordAtCaret(out int originX, out int targetX)
         {
             return GetWordAtCaret(_caretX, _caretY, out originX, out targetX);
@@ -2182,7 +2283,7 @@ namespace Delight
         public void AutoCompleteOptionSelected(AutoCompleteOption option)
         {
             FinishAutoComplete();
-            OnTextOrCaretChanged(true, false);
+            OnTextOrCaretChanged(true, false, true);
         }
 
         /// <summary>
