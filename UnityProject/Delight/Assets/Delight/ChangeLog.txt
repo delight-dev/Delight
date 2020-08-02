@@ -1,4 +1,5 @@
 ﻿2020.2.0a
+- C# code can now be embedded in XML in bindings and actions through the '$' prefix, e.g. <Button IsVisible="$ {ClickCount} > 30" Click="$ GameManager.Start()" />
 - Missing value interpolators added
 - Fixed issue with code referencing a TMP examples class
 
