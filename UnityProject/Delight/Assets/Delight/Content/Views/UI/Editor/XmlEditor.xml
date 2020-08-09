@@ -58,9 +58,8 @@
   </ScrollableRegion>
 
   <!-- Label for debugging -->
-  <!-- TODO cleanup --> 
   <Label Id="DebugTextLabel" AutoSize="True" Height="21" Alignment="TopRight" RichText="False"
          Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="0,0,0,20" TextAlignment="TopLeft"
-         IsVisible="True" />
+         IsActive="False" /> 
 
 </XmlEditor>

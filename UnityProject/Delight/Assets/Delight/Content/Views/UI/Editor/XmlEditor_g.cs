@@ -1427,7 +1427,7 @@ namespace Delight
                     Delight.Label.FontColorProperty.SetDefault(_xmlEditorDebugTextLabel, new UnityEngine.Color(0.3568628f, 0.3568628f, 0.3568628f, 1f));
                     Delight.Label.OffsetProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(20f, ElementSizeUnit.Pixels)));
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorDebugTextLabel, TMPro.TextAlignmentOptions.TopLeft);
-                    Delight.Label.IsVisibleProperty.SetDefault(_xmlEditorDebugTextLabel, true);
+                    Delight.Label.IsActiveProperty.SetDefault(_xmlEditorDebugTextLabel, false);
                 }
                 return _xmlEditorDebugTextLabel;
             }

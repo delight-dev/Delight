@@ -39,6 +39,7 @@ namespace Delight
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
         private bool _readOnlyOverride;
+        private Dictionary<Type, Dictionary<string, Script<object>>> _cachedScripts = new Dictionary<Type, Dictionary<string, Script<object>>>();
 
         #endregion
 
@@ -618,11 +619,14 @@ namespace Delight
                         if (actionValue.StartsWith("$"))
                         {
                             var expression = ContentParser.GetExpression(actionValue);
+                            var script = GetCSharpScript(parent.GetType(), expression);
+
                             Action runtimeAction = async () =>
                             {
                                 try
                                 {
-                                    await EvaluateCSharpExpression(parent, expression);
+                                    // uses roslyn to evaluate script at runtime
+                                    await script.RunAsync(globals: parent);
                                 }
                                 catch (Exception e)
                                 {
@@ -918,12 +922,14 @@ namespace Delight
 
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
+                            var script = GetCSharpScript(parent.GetType(), expression);
 
                             transformMethod = async () =>
                             {
                                 try
                                 {
-                                    return await EvaluateCSharpExpression(parent, expression);
+                                    // uses roslyn to evaluate script at runtime
+                                    return (await script.RunAsync(globals: parent)).ReturnValue;
                                 }
                                 catch (Exception e)
                                 {
@@ -971,13 +977,20 @@ namespace Delight
         }
 
         /// <summary>
-        /// Use Roslyn to evaluate CSharp expression at runtime.
+        /// Gets C# script that can be evaluated at runtime, using roslyn compiler.
         /// </summary>
-        private static async Task<object> EvaluateCSharpExpression(View parent, string expression)
+        private Script<object> GetCSharpScript(Type parentType, string expression)
         {
-            // use roslyn to evaluate expression at runtime
-            //Debug.Log("Parsing expression: " + expression);
-            var expressionResult = await CSharpScript.EvaluateAsync(expression, ScriptOptions.Default.WithImports(
+            // cache scripts so they don't have to be re-compiled
+            if (!_cachedScripts.TryGetValue(parentType, out var scripts))
+            {
+                scripts = new Dictionary<string, Script<object>>();
+                _cachedScripts.Add(parentType, scripts);
+            }
+
+            if (!scripts.TryGetValue(expression, out var script))
+            {
+                script = CSharpScript.Create(expression, ScriptOptions.Default.WithImports(
                 "System",
                 "System.Collections.Generic",
                 "System.Runtime.CompilerServices",
@@ -991,10 +1004,11 @@ namespace Delight
                     typeof(UnityEngine.UI.Button).Assembly,
                     typeof(Delight.Button).Assembly
                 ),
-                globals: parent);
+                globalsType: parentType);
+                scripts.Add(expression, script);
+            }
 
-            //Debug.Log("Result: " + result);
-            return expressionResult;
+            return script;
         }
 
         /// <summary>
