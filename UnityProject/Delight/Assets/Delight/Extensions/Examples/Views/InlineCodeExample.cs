@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Delight
 {
-    public partial class BindingExpressionsExample
+    public partial class InlineCodeExample
     {
     }
 }

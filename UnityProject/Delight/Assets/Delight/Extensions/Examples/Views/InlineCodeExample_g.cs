@@ -1,4 +1,4 @@
-// Internal view logic generated from "BindingExpressionsExample.xml"
+// Internal view logic generated from "InlineCodeExample.xml"
 #region Using Statements
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class BindingExpressionsExample : LayoutRoot
+    public partial class InlineCodeExample : LayoutRoot
     {
         #region Constructors
 
-        public BindingExpressionsExample(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
-            base(parent, layoutParent, id, template ?? BindingExpressionsExampleTemplates.Default, deferInitialization)
+        public InlineCodeExample(View parent, View layoutParent = null, string id = null, Template template = null, bool deferInitialization = false) :
+            base(parent, layoutParent, id, template ?? InlineCodeExampleTemplates.Default, deferInitialization)
         {
             if (deferInitialization)
                 return;
@@ -62,14 +62,14 @@ namespace Delight
             this.AfterInitializeInternal();
         }
 
-        public BindingExpressionsExample() : this(null)
+        public InlineCodeExample() : this(null)
         {
         }
 
-        static BindingExpressionsExample()
+        static InlineCodeExample()
         {
             var dependencyProperties = new List<DependencyProperty>();
-            DependencyProperties.Add(BindingExpressionsExampleTemplates.Default, dependencyProperties);
+            DependencyProperties.Add(InlineCodeExampleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(ClickCountProperty);
             dependencyProperties.Add(Group1Property);
@@ -394,7 +394,7 @@ namespace Delight
 
     #region Data Templates
 
-    public static class BindingExpressionsExampleTemplates
+    public static class InlineCodeExampleTemplates
     {
         #region Properties
 
@@ -402,507 +402,507 @@ namespace Delight
         {
             get
             {
-                return BindingExpressionsExample;
+                return InlineCodeExample;
             }
         }
 
-        private static Template _bindingExpressionsExample;
-        public static Template BindingExpressionsExample
+        private static Template _inlineCodeExample;
+        public static Template InlineCodeExample
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExample == null || _bindingExpressionsExample.CurrentVersion != Template.Version)
+                if (_inlineCodeExample == null || _inlineCodeExample.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExample == null)
+                if (_inlineCodeExample == null)
 #endif
                 {
-                    _bindingExpressionsExample = new Template(LayoutRootTemplates.LayoutRoot);
+                    _inlineCodeExample = new Template(LayoutRootTemplates.LayoutRoot);
 #if UNITY_EDITOR
-                    _bindingExpressionsExample.Name = "BindingExpressionsExample";
+                    _inlineCodeExample.Name = "InlineCodeExample";
 #endif
-                    Delight.BindingExpressionsExample.Group1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup1);
-                    Delight.BindingExpressionsExample.Group2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup2);
-                    Delight.BindingExpressionsExample.Region1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion1);
-                    Delight.BindingExpressionsExample.Region2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion2);
-                    Delight.BindingExpressionsExample.Label1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel1);
-                    Delight.BindingExpressionsExample.Region3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion3);
-                    Delight.BindingExpressionsExample.Region4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion4);
-                    Delight.BindingExpressionsExample.Label2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel2);
-                    Delight.BindingExpressionsExample.Region5TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion5);
-                    Delight.BindingExpressionsExample.Region6TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleRegion6);
-                    Delight.BindingExpressionsExample.Label3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel3);
-                    Delight.BindingExpressionsExample.Group3TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup3);
-                    Delight.BindingExpressionsExample.Group4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup4);
-                    Delight.BindingExpressionsExample.Button1TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleButton1);
-                    Delight.BindingExpressionsExample.Button2TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleButton2);
-                    Delight.BindingExpressionsExample.Label4TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel4);
-                    Delight.BindingExpressionsExample.Group5TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleGroup5);
-                    Delight.BindingExpressionsExample.Label5TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel5);
-                    Delight.BindingExpressionsExample.Label6TemplateProperty.SetDefault(_bindingExpressionsExample, BindingExpressionsExampleLabel6);
+                    Delight.InlineCodeExample.Group1TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup1);
+                    Delight.InlineCodeExample.Group2TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup2);
+                    Delight.InlineCodeExample.Region1TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion1);
+                    Delight.InlineCodeExample.Region2TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion2);
+                    Delight.InlineCodeExample.Label1TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel1);
+                    Delight.InlineCodeExample.Region3TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion3);
+                    Delight.InlineCodeExample.Region4TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion4);
+                    Delight.InlineCodeExample.Label2TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel2);
+                    Delight.InlineCodeExample.Region5TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion5);
+                    Delight.InlineCodeExample.Region6TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleRegion6);
+                    Delight.InlineCodeExample.Label3TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel3);
+                    Delight.InlineCodeExample.Group3TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup3);
+                    Delight.InlineCodeExample.Group4TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup4);
+                    Delight.InlineCodeExample.Button1TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleButton1);
+                    Delight.InlineCodeExample.Button2TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleButton2);
+                    Delight.InlineCodeExample.Label4TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel4);
+                    Delight.InlineCodeExample.Group5TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup5);
+                    Delight.InlineCodeExample.Label5TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel5);
+                    Delight.InlineCodeExample.Label6TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleLabel6);
                 }
-                return _bindingExpressionsExample;
+                return _inlineCodeExample;
             }
         }
 
-        private static Template _bindingExpressionsExampleGroup1;
-        public static Template BindingExpressionsExampleGroup1
+        private static Template _inlineCodeExampleGroup1;
+        public static Template InlineCodeExampleGroup1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup1 == null || _bindingExpressionsExampleGroup1.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleGroup1 == null || _inlineCodeExampleGroup1.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleGroup1 == null)
+                if (_inlineCodeExampleGroup1 == null)
 #endif
                 {
-                    _bindingExpressionsExampleGroup1 = new Template(GroupTemplates.Group);
+                    _inlineCodeExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup1.Name = "BindingExpressionsExampleGroup1";
+                    _inlineCodeExampleGroup1.Name = "InlineCodeExampleGroup1";
 #endif
-                    Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleGroup1;
+                return _inlineCodeExampleGroup1;
             }
         }
 
-        private static Template _bindingExpressionsExampleGroup2;
-        public static Template BindingExpressionsExampleGroup2
+        private static Template _inlineCodeExampleGroup2;
+        public static Template InlineCodeExampleGroup2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup2 == null || _bindingExpressionsExampleGroup2.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleGroup2 == null || _inlineCodeExampleGroup2.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleGroup2 == null)
+                if (_inlineCodeExampleGroup2 == null)
 #endif
                 {
-                    _bindingExpressionsExampleGroup2 = new Template(GroupTemplates.Group);
+                    _inlineCodeExampleGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup2.Name = "BindingExpressionsExampleGroup2";
+                    _inlineCodeExampleGroup2.Name = "InlineCodeExampleGroup2";
 #endif
-                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup2, Delight.ElementOrientation.Horizontal);
-                    Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup2, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup2, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup2, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleGroup2;
+                return _inlineCodeExampleGroup2;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion1;
-        public static Template BindingExpressionsExampleRegion1
+        private static Template _inlineCodeExampleRegion1;
+        public static Template InlineCodeExampleRegion1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion1 == null || _bindingExpressionsExampleRegion1.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion1 == null || _inlineCodeExampleRegion1.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion1 == null)
+                if (_inlineCodeExampleRegion1 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion1 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion1.Name = "BindingExpressionsExampleRegion1";
+                    _inlineCodeExampleRegion1.Name = "InlineCodeExampleRegion1";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion1, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion1, new UnityEngine.Color(0f, 0f, 1f, 1f));
+                    Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_inlineCodeExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleRegion1;
+                return _inlineCodeExampleRegion1;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion2;
-        public static Template BindingExpressionsExampleRegion2
+        private static Template _inlineCodeExampleRegion2;
+        public static Template InlineCodeExampleRegion2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion2 == null || _bindingExpressionsExampleRegion2.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion2 == null || _inlineCodeExampleRegion2.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion2 == null)
+                if (_inlineCodeExampleRegion2 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion2 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion2.Name = "BindingExpressionsExampleRegion2";
+                    _inlineCodeExampleRegion2.Name = "InlineCodeExampleRegion2";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion2, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion2);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion2, new UnityEngine.Color(1f, 1f, 0f, 1f));
+                    Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion2);
                 }
-                return _bindingExpressionsExampleRegion2;
+                return _inlineCodeExampleRegion2;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel1;
-        public static Template BindingExpressionsExampleLabel1
+        private static Template _inlineCodeExampleLabel1;
+        public static Template InlineCodeExampleLabel1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel1 == null || _bindingExpressionsExampleLabel1.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel1 == null || _inlineCodeExampleLabel1.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel1 == null)
+                if (_inlineCodeExampleLabel1 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel1 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel1.Name = "BindingExpressionsExampleLabel1";
+                    _inlineCodeExampleLabel1.Name = "InlineCodeExampleLabel1";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel1, "> 0");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel1, Delight.AutoSize.Default);
+                    Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel1, "> 0");
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel1, Delight.AutoSize.Default);
                 }
-                return _bindingExpressionsExampleLabel1;
+                return _inlineCodeExampleLabel1;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion3;
-        public static Template BindingExpressionsExampleRegion3
+        private static Template _inlineCodeExampleRegion3;
+        public static Template InlineCodeExampleRegion3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion3 == null || _bindingExpressionsExampleRegion3.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion3 == null || _inlineCodeExampleRegion3.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion3 == null)
+                if (_inlineCodeExampleRegion3 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion3 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion3 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion3.Name = "BindingExpressionsExampleRegion3";
+                    _inlineCodeExampleRegion3.Name = "InlineCodeExampleRegion3";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion3, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion3, new UnityEngine.Color(0f, 0f, 1f, 1f));
+                    Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_inlineCodeExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleRegion3;
+                return _inlineCodeExampleRegion3;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion4;
-        public static Template BindingExpressionsExampleRegion4
+        private static Template _inlineCodeExampleRegion4;
+        public static Template InlineCodeExampleRegion4
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion4 == null || _bindingExpressionsExampleRegion4.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion4 == null || _inlineCodeExampleRegion4.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion4 == null)
+                if (_inlineCodeExampleRegion4 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion4 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion4 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion4.Name = "BindingExpressionsExampleRegion4";
+                    _inlineCodeExampleRegion4.Name = "InlineCodeExampleRegion4";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion4, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion4);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion4, new UnityEngine.Color(1f, 1f, 0f, 1f));
+                    Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion4);
                 }
-                return _bindingExpressionsExampleRegion4;
+                return _inlineCodeExampleRegion4;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel2;
-        public static Template BindingExpressionsExampleLabel2
+        private static Template _inlineCodeExampleLabel2;
+        public static Template InlineCodeExampleLabel2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel2 == null || _bindingExpressionsExampleLabel2.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel2 == null || _inlineCodeExampleLabel2.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel2 == null)
+                if (_inlineCodeExampleLabel2 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel2 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel2.Name = "BindingExpressionsExampleLabel2";
+                    _inlineCodeExampleLabel2.Name = "InlineCodeExampleLabel2";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel2, "> 5");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel2, Delight.AutoSize.Default);
+                    Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel2, "> 5");
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel2, Delight.AutoSize.Default);
                 }
-                return _bindingExpressionsExampleLabel2;
+                return _inlineCodeExampleLabel2;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion5;
-        public static Template BindingExpressionsExampleRegion5
+        private static Template _inlineCodeExampleRegion5;
+        public static Template InlineCodeExampleRegion5
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion5 == null || _bindingExpressionsExampleRegion5.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion5 == null || _inlineCodeExampleRegion5.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion5 == null)
+                if (_inlineCodeExampleRegion5 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion5 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion5 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion5.Name = "BindingExpressionsExampleRegion5";
+                    _inlineCodeExampleRegion5.Name = "InlineCodeExampleRegion5";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion5, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetDefault(_bindingExpressionsExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_bindingExpressionsExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion5, new UnityEngine.Color(0f, 0f, 1f, 1f));
+                    Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_inlineCodeExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleRegion5;
+                return _inlineCodeExampleRegion5;
             }
         }
 
-        private static Template _bindingExpressionsExampleRegion6;
-        public static Template BindingExpressionsExampleRegion6
+        private static Template _inlineCodeExampleRegion6;
+        public static Template InlineCodeExampleRegion6
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleRegion6 == null || _bindingExpressionsExampleRegion6.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleRegion6 == null || _inlineCodeExampleRegion6.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleRegion6 == null)
+                if (_inlineCodeExampleRegion6 == null)
 #endif
                 {
-                    _bindingExpressionsExampleRegion6 = new Template(RegionTemplates.Region);
+                    _inlineCodeExampleRegion6 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleRegion6.Name = "BindingExpressionsExampleRegion6";
+                    _inlineCodeExampleRegion6.Name = "InlineCodeExampleRegion6";
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_bindingExpressionsExampleRegion6, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.IsVisibleProperty.SetHasBinding(_bindingExpressionsExampleRegion6);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion6, new UnityEngine.Color(1f, 1f, 0f, 1f));
+                    Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion6);
                 }
-                return _bindingExpressionsExampleRegion6;
+                return _inlineCodeExampleRegion6;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel3;
-        public static Template BindingExpressionsExampleLabel3
+        private static Template _inlineCodeExampleLabel3;
+        public static Template InlineCodeExampleLabel3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel3 == null || _bindingExpressionsExampleLabel3.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel3 == null || _inlineCodeExampleLabel3.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel3 == null)
+                if (_inlineCodeExampleLabel3 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel3 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel3.Name = "BindingExpressionsExampleLabel3";
+                    _inlineCodeExampleLabel3.Name = "InlineCodeExampleLabel3";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleLabel3, "> 10");
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel3, Delight.AutoSize.Default);
+                    Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel3, "> 10");
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel3, Delight.AutoSize.Default);
                 }
-                return _bindingExpressionsExampleLabel3;
+                return _inlineCodeExampleLabel3;
             }
         }
 
-        private static Template _bindingExpressionsExampleGroup3;
-        public static Template BindingExpressionsExampleGroup3
+        private static Template _inlineCodeExampleGroup3;
+        public static Template InlineCodeExampleGroup3
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup3 == null || _bindingExpressionsExampleGroup3.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleGroup3 == null || _inlineCodeExampleGroup3.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleGroup3 == null)
+                if (_inlineCodeExampleGroup3 == null)
 #endif
                 {
-                    _bindingExpressionsExampleGroup3 = new Template(GroupTemplates.Group);
+                    _inlineCodeExampleGroup3 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup3.Name = "BindingExpressionsExampleGroup3";
+                    _inlineCodeExampleGroup3.Name = "InlineCodeExampleGroup3";
 #endif
-                    Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup3, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup3, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleGroup3;
+                return _inlineCodeExampleGroup3;
             }
         }
 
-        private static Template _bindingExpressionsExampleGroup4;
-        public static Template BindingExpressionsExampleGroup4
+        private static Template _inlineCodeExampleGroup4;
+        public static Template InlineCodeExampleGroup4
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup4 == null || _bindingExpressionsExampleGroup4.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleGroup4 == null || _inlineCodeExampleGroup4.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleGroup4 == null)
+                if (_inlineCodeExampleGroup4 == null)
 #endif
                 {
-                    _bindingExpressionsExampleGroup4 = new Template(GroupTemplates.Group);
+                    _inlineCodeExampleGroup4 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup4.Name = "BindingExpressionsExampleGroup4";
+                    _inlineCodeExampleGroup4.Name = "InlineCodeExampleGroup4";
 #endif
-                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup4, Delight.ElementOrientation.Horizontal);
-                    Delight.Group.SpacingProperty.SetDefault(_bindingExpressionsExampleGroup4, new ElementSize(5f, ElementSizeUnit.Pixels));
+                    Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup4, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup4, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
-                return _bindingExpressionsExampleGroup4;
+                return _inlineCodeExampleGroup4;
             }
         }
 
-        private static Template _bindingExpressionsExampleButton1;
-        public static Template BindingExpressionsExampleButton1
+        private static Template _inlineCodeExampleButton1;
+        public static Template InlineCodeExampleButton1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleButton1 == null || _bindingExpressionsExampleButton1.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleButton1 == null || _inlineCodeExampleButton1.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleButton1 == null)
+                if (_inlineCodeExampleButton1 == null)
 #endif
                 {
-                    _bindingExpressionsExampleButton1 = new Template(ButtonTemplates.Button);
+                    _inlineCodeExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleButton1.Name = "BindingExpressionsExampleButton1";
+                    _inlineCodeExampleButton1.Name = "InlineCodeExampleButton1";
 #endif
-                    Delight.Button.LabelTemplateProperty.SetDefault(_bindingExpressionsExampleButton1, BindingExpressionsExampleButton1Label);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_inlineCodeExampleButton1, InlineCodeExampleButton1Label);
                 }
-                return _bindingExpressionsExampleButton1;
+                return _inlineCodeExampleButton1;
             }
         }
 
-        private static Template _bindingExpressionsExampleButton1Label;
-        public static Template BindingExpressionsExampleButton1Label
+        private static Template _inlineCodeExampleButton1Label;
+        public static Template InlineCodeExampleButton1Label
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleButton1Label == null || _bindingExpressionsExampleButton1Label.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleButton1Label == null || _inlineCodeExampleButton1Label.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleButton1Label == null)
+                if (_inlineCodeExampleButton1Label == null)
 #endif
                 {
-                    _bindingExpressionsExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
+                    _inlineCodeExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleButton1Label.Name = "BindingExpressionsExampleButton1Label";
+                    _inlineCodeExampleButton1Label.Name = "InlineCodeExampleButton1Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleButton1Label, "Click Me");
+                    Delight.Label.TextProperty.SetDefault(_inlineCodeExampleButton1Label, "Click Me");
                 }
-                return _bindingExpressionsExampleButton1Label;
+                return _inlineCodeExampleButton1Label;
             }
         }
 
-        private static Template _bindingExpressionsExampleButton2;
-        public static Template BindingExpressionsExampleButton2
+        private static Template _inlineCodeExampleButton2;
+        public static Template InlineCodeExampleButton2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleButton2 == null || _bindingExpressionsExampleButton2.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleButton2 == null || _inlineCodeExampleButton2.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleButton2 == null)
+                if (_inlineCodeExampleButton2 == null)
 #endif
                 {
-                    _bindingExpressionsExampleButton2 = new Template(ButtonTemplates.Button);
+                    _inlineCodeExampleButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleButton2.Name = "BindingExpressionsExampleButton2";
+                    _inlineCodeExampleButton2.Name = "InlineCodeExampleButton2";
 #endif
-                    Delight.Button.LabelTemplateProperty.SetDefault(_bindingExpressionsExampleButton2, BindingExpressionsExampleButton2Label);
+                    Delight.Button.LabelTemplateProperty.SetDefault(_inlineCodeExampleButton2, InlineCodeExampleButton2Label);
                 }
-                return _bindingExpressionsExampleButton2;
+                return _inlineCodeExampleButton2;
             }
         }
 
-        private static Template _bindingExpressionsExampleButton2Label;
-        public static Template BindingExpressionsExampleButton2Label
+        private static Template _inlineCodeExampleButton2Label;
+        public static Template InlineCodeExampleButton2Label
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleButton2Label == null || _bindingExpressionsExampleButton2Label.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleButton2Label == null || _inlineCodeExampleButton2Label.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleButton2Label == null)
+                if (_inlineCodeExampleButton2Label == null)
 #endif
                 {
-                    _bindingExpressionsExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
+                    _inlineCodeExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleButton2Label.Name = "BindingExpressionsExampleButton2Label";
+                    _inlineCodeExampleButton2Label.Name = "InlineCodeExampleButton2Label";
 #endif
-                    Delight.Label.TextProperty.SetDefault(_bindingExpressionsExampleButton2Label, "Reset");
+                    Delight.Label.TextProperty.SetDefault(_inlineCodeExampleButton2Label, "Reset");
                 }
-                return _bindingExpressionsExampleButton2Label;
+                return _inlineCodeExampleButton2Label;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel4;
-        public static Template BindingExpressionsExampleLabel4
+        private static Template _inlineCodeExampleLabel4;
+        public static Template InlineCodeExampleLabel4
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel4 == null || _bindingExpressionsExampleLabel4.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel4 == null || _inlineCodeExampleLabel4.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel4 == null)
+                if (_inlineCodeExampleLabel4 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel4 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel4.Name = "BindingExpressionsExampleLabel4";
+                    _inlineCodeExampleLabel4.Name = "InlineCodeExampleLabel4";
 #endif
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel4, Delight.AutoSize.Default);
-                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel4, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel4);
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel4, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel4, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_inlineCodeExampleLabel4);
                 }
-                return _bindingExpressionsExampleLabel4;
+                return _inlineCodeExampleLabel4;
             }
         }
 
-        private static Template _bindingExpressionsExampleGroup5;
-        public static Template BindingExpressionsExampleGroup5
+        private static Template _inlineCodeExampleGroup5;
+        public static Template InlineCodeExampleGroup5
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleGroup5 == null || _bindingExpressionsExampleGroup5.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleGroup5 == null || _inlineCodeExampleGroup5.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleGroup5 == null)
+                if (_inlineCodeExampleGroup5 == null)
 #endif
                 {
-                    _bindingExpressionsExampleGroup5 = new Template(GroupTemplates.Group);
+                    _inlineCodeExampleGroup5 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleGroup5.Name = "BindingExpressionsExampleGroup5";
+                    _inlineCodeExampleGroup5.Name = "InlineCodeExampleGroup5";
 #endif
-                    Delight.Group.OrientationProperty.SetDefault(_bindingExpressionsExampleGroup5, Delight.ElementOrientation.Horizontal);
+                    Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup5, Delight.ElementOrientation.Horizontal);
                 }
-                return _bindingExpressionsExampleGroup5;
+                return _inlineCodeExampleGroup5;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel5;
-        public static Template BindingExpressionsExampleLabel5
+        private static Template _inlineCodeExampleLabel5;
+        public static Template InlineCodeExampleLabel5
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel5 == null || _bindingExpressionsExampleLabel5.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel5 == null || _inlineCodeExampleLabel5.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel5 == null)
+                if (_inlineCodeExampleLabel5 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel5 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel5 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel5.Name = "BindingExpressionsExampleLabel5";
+                    _inlineCodeExampleLabel5.Name = "InlineCodeExampleLabel5";
 #endif
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel5, Delight.AutoSize.Default);
-                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel5, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel5);
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel5, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel5, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_inlineCodeExampleLabel5);
                 }
-                return _bindingExpressionsExampleLabel5;
+                return _inlineCodeExampleLabel5;
             }
         }
 
-        private static Template _bindingExpressionsExampleLabel6;
-        public static Template BindingExpressionsExampleLabel6
+        private static Template _inlineCodeExampleLabel6;
+        public static Template InlineCodeExampleLabel6
         {
             get
             {
 #if UNITY_EDITOR
-                if (_bindingExpressionsExampleLabel6 == null || _bindingExpressionsExampleLabel6.CurrentVersion != Template.Version)
+                if (_inlineCodeExampleLabel6 == null || _inlineCodeExampleLabel6.CurrentVersion != Template.Version)
 #else
-                if (_bindingExpressionsExampleLabel6 == null)
+                if (_inlineCodeExampleLabel6 == null)
 #endif
                 {
-                    _bindingExpressionsExampleLabel6 = new Template(LabelTemplates.Label);
+                    _inlineCodeExampleLabel6 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _bindingExpressionsExampleLabel6.Name = "BindingExpressionsExampleLabel6";
+                    _inlineCodeExampleLabel6.Name = "InlineCodeExampleLabel6";
 #endif
-                    Delight.Label.AutoSizeProperty.SetDefault(_bindingExpressionsExampleLabel6, Delight.AutoSize.Default);
-                    Delight.Label.FontColorProperty.SetDefault(_bindingExpressionsExampleLabel6, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_bindingExpressionsExampleLabel6);
+                    Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel6, Delight.AutoSize.Default);
+                    Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel6, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_inlineCodeExampleLabel6);
                 }
-                return _bindingExpressionsExampleLabel6;
+                return _inlineCodeExampleLabel6;
             }
         }
 

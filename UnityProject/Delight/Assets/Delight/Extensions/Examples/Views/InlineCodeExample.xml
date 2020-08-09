@@ -1,5 +1,5 @@
-<BindingExpressionsExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
-                           ClickCount="t:int">
+<InlineCodeExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
+                   ClickCount="t:int">
 
   <Group Spacing="10">
     
@@ -32,4 +32,4 @@
 
   </Group>
 
-</BindingExpressionsExample>
+</InlineCodeExample>

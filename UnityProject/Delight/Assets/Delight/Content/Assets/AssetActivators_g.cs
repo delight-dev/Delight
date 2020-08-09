@@ -55,10 +55,10 @@ namespace Delight
             ViewActivators.Add("ViewSwitcher", (x, y, z, w, a) => new ViewSwitcher(x, y, z, w, a));
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
-            ViewActivators.Add("BindingExpressionsExample", (x, y, z, w, a) => new BindingExpressionsExample(x, y, z, w, a));
             ViewActivators.Add("ButtonsExample", (x, y, z, w, a) => new ButtonsExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
             ViewActivators.Add("GroupExample", (x, y, z, w, a) => new GroupExample(x, y, z, w, a));
+            ViewActivators.Add("InlineCodeExample", (x, y, z, w, a) => new InlineCodeExample(x, y, z, w, a));
             ViewActivators.Add("InputFieldExample", (x, y, z, w, a) => new InputFieldExample(x, y, z, w, a));
             ViewActivators.Add("LevelSelectExample", (x, y, z, w, a) => new LevelSelectExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuExample", (x, y, z, w, a) => new MainMenuExample(x, y, z, w, a));
@@ -109,10 +109,10 @@ namespace Delight
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("InputField", typeof(InputField));
-            ViewTypes.Add("BindingExpressionsExample", typeof(BindingExpressionsExample));
             ViewTypes.Add("ButtonsExample", typeof(ButtonsExample));
             ViewTypes.Add("GridExample", typeof(GridExample));
             ViewTypes.Add("GroupExample", typeof(GroupExample));
+            ViewTypes.Add("InlineCodeExample", typeof(InlineCodeExample));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("LevelSelectExample", typeof(LevelSelectExample));
             ViewTypes.Add("MainMenuExample", typeof(MainMenuExample));
