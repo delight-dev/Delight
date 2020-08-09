@@ -1,19 +1,19 @@
 ﻿// Models
 
-= World
+= DemoWorld
 string Name
-Levels
+DemoLevels
 
-= Level
-World
+= DemoLevel
+DemoWorld
 string Name
 int Score
 bool IsLocked
 
-= Player
+= DemoPlayer
 string Name
 
-+ Player (Name)
++ DemoPlayer (Name)
 Player1: "Wizball"
 Player2: "asdf"
 Player3: "Yesper"
@@ -28,7 +28,7 @@ Player11: "Bananaman13"
 Player12: "Opwiz"
 Player13: "afauxicy"
 
-+ Level (Name, Score, IsLocked) 
++ DemoLevel (Name, Score, IsLocked) 
 Level1: "Level 1", 3, false
 Level2: "Level 2", 3, false
 Level3: "Level 3", 3, false
