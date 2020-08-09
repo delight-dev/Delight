@@ -228,7 +228,7 @@ namespace Delight
                     var path = designerView.FilePath;
                     var xmlText = File.ReadAllText(path);
 
-                    xmlText = StripNamespaceAndSchema(xmlText, path);
+                    xmlText = StripNamespaceAndSchema(xmlText);
                     XmlEditor.XmlText = xmlText;
                 }
             }
@@ -269,15 +269,11 @@ namespace Delight
         /// <summary>
         /// Strips namespace and schema from XML root.
         /// </summary>
-        private string StripNamespaceAndSchema(string xmlText, string path)
+        private string StripNamespaceAndSchema(string xmlText)
         {
             // strip namespace and schema elements from XML root
             xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
             xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
-
-            int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-            string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-            int directoryDepth = 1 + p1.Count(x => x == '/');
             var schemaElement = " xsi:schemaLocation=\"Delight";
 
             int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
@@ -369,7 +365,7 @@ namespace Delight
                         if (foundMatch)
                         {
                             // update XML and add to list of changed views
-                            replacedXml = StripNamespaceAndSchema(replacedXml, view.FilePath);
+                            replacedXml = StripNamespaceAndSchema(replacedXml);
 
                             view.XmlText = replacedXml;
                             view.IsDirty = true;
@@ -1228,11 +1224,11 @@ namespace Delight
 
                     if (startIndex > 0)
                     {
-                        // TODO bug: if it's a scene we need to check ScenesFolder instead
-
                         var path = changedView.FilePath;
-                        int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-                        string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                        bool isScene = path.IndexOf(ContentParser.ScenesFolder) > 0;
+                        var contentFolder = isScene ? ContentParser.ScenesFolder : ContentParser.ViewsFolder;
+                        int contentDirIndex = path.LastIndexOf(contentFolder);
+                        string p1 = path.Substring(contentDirIndex + contentFolder.Length);
                         int directoryDepth = 1 + p1.Count(x => x == '/');
                         var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
                         var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
@@ -1364,7 +1360,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called when user clicks "+ New View" button. 
+        /// Called when user adds new view. 
         /// </summary>
         public void AddNewView()
         {
