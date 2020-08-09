@@ -38,6 +38,8 @@ namespace Delight
         public static Color32 CommentColor = new Color32(0, 212, 0, 255); // #00d400
         public static Color32 UndefinedColor = new Color32(255, 0, 0, 255); // #ff0000
         public static Color32 SelectionColor = new Color32(224, 224, 224, 255); // #f4f4f4
+        public static Color32 CodeColor = new Color32(148, 0, 136, 255);// #940088
+        public static Color32 BindingColor = new Color32(226, 22, 255, 255); // #e217ff
         public static float KeyRepeatDelay = 0.30f;
         public static float KeyRepeatRate = 0.05f;
         public static float DoubleClickDelay = 0.5f;
@@ -1650,6 +1652,10 @@ namespace Delight
             int caretX = _caretX;
             bool caretLastInLine = false;
             bool addLine = false;
+            bool inEmbeddedCode = false;
+            bool inBinding = false;
+            bool lastCharacterInBinding = false;
+
             if (_lines[_caretY].Length == _caretX)
             {
                 --caretX;
@@ -1666,12 +1672,14 @@ namespace Delight
                 switch (xmlText[characterIndex])
                 {
                     case '"':
+                        inEmbeddedCode = false;
                         if (xmlSyntaxElement == XmlSyntaxElement.Comment)
                             break;
                         if (characterIndex > 0 && xmlText[characterIndex - 1] == '\\')
                             break;
                         xmlSyntaxElement = xmlSyntaxElement == XmlSyntaxElement.BeginPropertyValue || xmlSyntaxElement == XmlSyntaxElement.PropertyValue ? XmlSyntaxElement.EndPropertyValue : XmlSyntaxElement.BeginPropertyValue;
                         break;
+
                     case '<':
                         if (xmlSyntaxElement == XmlSyntaxElement.Comment)
                             break;
@@ -1687,6 +1695,7 @@ namespace Delight
                             break;
                         xmlSyntaxElement = XmlSyntaxElement.BeginViewName;
                         break;
+
                     case '/':
                         if (xmlSyntaxElement == XmlSyntaxElement.Comment)
                             break;
@@ -1703,6 +1712,7 @@ namespace Delight
 
                         xmlSyntaxElement = XmlSyntaxElement.EndViewName;
                         break;
+
                     case '>':
                         if (xmlSyntaxElement == XmlSyntaxElement.Comment)
                         {
@@ -1720,6 +1730,7 @@ namespace Delight
                             break;
                         xmlSyntaxElement = XmlSyntaxElement.EndView;
                         break;
+
                     case ' ':
                         if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue || xmlSyntaxElement == XmlSyntaxElement.Comment || xmlSyntaxElement == XmlSyntaxElement.Undefined)
                             break;
@@ -1737,12 +1748,35 @@ namespace Delight
 
                         xmlSyntaxElement = XmlSyntaxElement.PropertyName;
                         break;
+
                     case '\n':
                         addLine = true;
                         break;
+
                     case '\r':
                         lineChar = 0;
                         break;
+                    
+                    case '$':
+                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
+                        {
+                            // embedded code
+                            inEmbeddedCode = true;
+                        }
+                        break;
+
+                    case '{':
+                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
+                        {
+                            inBinding = true;
+                            // TODO '{{' is not in binding, so we need to check if neither previous or next char is '{'
+                        }
+                        break;
+
+                    case '}':
+                        lastCharacterInBinding = true;
+                        break;
+
                     default:
                         if (xmlSyntaxElement == XmlSyntaxElement.ViewName)
                         {
@@ -1819,6 +1853,22 @@ namespace Delight
                     ++line;
                     lineChar = 0;
                     addLine = false;
+                }
+
+                if (inEmbeddedCode)
+                {
+                    characterColor = CodeColor;
+                }
+                
+                if (inBinding)
+                {
+                    characterColor = BindingColor;
+                }
+
+                if (lastCharacterInBinding)
+                {
+                    inBinding = false;
+                    lastCharacterInBinding = false;
                 }
 
                 if (textInfo.characterInfo[characterIndex].isVisible && syntaxHighlight)
