@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class Level : ModelObject
+    public partial class DemoLevel : ModelObject
     {   
         public SpriteAsset Stars
         {

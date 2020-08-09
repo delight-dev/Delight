@@ -28,8 +28,8 @@ namespace Delight
             // constructing List (List1)
             List1 = new List(this, this, "List1", List1Template);
 
-            // binding <List Items="{level in @Levels}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = Models.Levels, () => { }, false));
+            // binding <List Items="{level in @DemoLevels}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = Models.DemoLevels, () => { }, false));
 
             // templates for List1
             List1.ContentTemplates.Add(new ContentTemplate(tiLevel => 
@@ -42,7 +42,7 @@ namespace Delight
                 var image2 = new Image(this, listItem1.Content, "Image2", Image2Template);
 
                 // binding <Image Sprite="{level.Stars}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Stars" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.Level) }) }, new BindingPath(new List<string> { "Sprite" }, new List<Func<BindableObject>> { () => image2 }), () => image2.Sprite = (tiLevel.Item as Delight.Level).Stars, () => { }, false));
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Stars" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.DemoLevel) }) }, new BindingPath(new List<string> { "Sprite" }, new List<Func<BindableObject>> { () => image2 }), () => image2.Sprite = (tiLevel.Item as Delight.DemoLevel).Stars, () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiLevel);
                 return listItem1;

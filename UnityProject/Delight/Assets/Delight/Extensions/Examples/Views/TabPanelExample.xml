@@ -11,7 +11,7 @@
   </TabPanel>-->
 
   <!-- dynamic tab panel -->
-  <TabPanel Items="{player in @Players}">
+  <TabPanel Items="{player in @DemoPlayers}">
     <TabHeader Text="{player.Name}" />
     <Tab>
       <Label Text="{player.Name}" />

@@ -43,8 +43,8 @@ namespace Delight
             ComboBox = new ComboBox(this, Group1.Content, "ComboBox", ComboBoxTemplate);
             ComboBox.ItemSelected.RegisterHandler(this, "ItemSelected");
 
-            // binding <ComboBox Items="{player in @Players}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<BindableObject>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.Players, () => { }, false));
+            // binding <ComboBox Items="{player in @DemoPlayers}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<BindableObject>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.DemoPlayers, () => { }, false));
 
             // templates for ComboBox
             ComboBox.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
@@ -53,7 +53,7 @@ namespace Delight
                 var label3 = new Label(this, comboBoxContent.Content, "Label3", Label3Template);
 
                 // binding <Label Text="{player.Name}">
-                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.Player) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.Player).Name, () => { }, false));
+                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
                 comboBoxContent.IsDynamic = true;
                 comboBoxContent.SetContentTemplateData(tiPlayer);
                 return comboBoxContent;

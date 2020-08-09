@@ -9,7 +9,8 @@ using UnityEngine.UI;
 
 namespace Delight
 {
-    public partial class World : ModelObject
+    [Serializable]
+    public partial class DemoWorld : ModelObject
     {
         #region Properties
 
@@ -21,9 +22,9 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
-        public BindableCollection<Level> Levels
+        public BindableCollection<DemoLevel> DemoLevels
         {
-            get { return Models.Levels.Get(this); }
+            get { return Models.DemoLevels.Get(this); }
         }
 
         #endregion
@@ -31,13 +32,13 @@ namespace Delight
 
     #region Data Provider
 
-    public partial class WorldData : DataProvider<World>
+    public partial class DemoWorldData : DataProvider<DemoWorld>
     {
     }
 
     public static partial class Models
     {
-        public static WorldData Worlds = new WorldData();
+        public static DemoWorldData DemoWorlds = new DemoWorldData();
     }
 
     #endregion
