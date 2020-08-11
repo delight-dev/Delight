@@ -72,9 +72,9 @@ namespace Delight
                         var newItemInRange = item as T;
                         if (_filter(newItemInRange))
                         {
-                            addedItems.Add(newItemInRange);
-                            AddPropertyChangedListener(newItemInRange);
+                            addedItems.Add(newItemInRange);                            
                         }
+                        AddPropertyChangedListener(newItemInRange);
                     }
 
                     base.AddRange(addedItems);
@@ -85,16 +85,16 @@ namespace Delight
                     if (_filter(newItem))
                     {
                         base.Add(newItem);
-                        AddPropertyChangedListener(newItem);
                     }
+                    AddPropertyChangedListener(newItem);
                     break;
                 case CollectionChangeAction.Remove:
                     var removedItem = e.Item as T;
                     if (_filter(removedItem))
                     {
-                        RemovePropertyChangedListener(removedItem);
                         base.Remove(removedItem);
                     }
+                    RemovePropertyChangedListener(removedItem);
                     break;
                 case CollectionChangeAction.Replace:
                     foreach (var item in _data.Values)
@@ -159,7 +159,7 @@ namespace Delight
                 if (!_filter((T)source))
                 {
                     // item no longer fulfills condition - remove from list
-                    Remove((T)source);
+                    base.Remove((T)source);
                 }
 
                 return;
@@ -260,9 +260,10 @@ namespace Delight
                 if (_filter(item))
                 {
                     Data.Add(item.Id, item);
-                    DataList.Add(new KeyValuePair<string, T>(item.Id, item));
-                    AddPropertyChangedListener(item);
+                    DataList.Add(new KeyValuePair<string, T>(item.Id, item));                    
                 }
+
+                AddPropertyChangedListener(item);
             }
         }
 
