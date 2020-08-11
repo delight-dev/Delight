@@ -97,7 +97,7 @@ namespace Delight
         {
             get
             {
-                if (_staticAction == null || _ownerWeakReference == null)
+                if (_staticAction == null && _ownerWeakReference == null)
                 {
                     return false;
                 }
