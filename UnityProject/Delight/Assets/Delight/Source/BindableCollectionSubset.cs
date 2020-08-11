@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 #endregion
@@ -21,18 +22,35 @@ namespace Delight
         protected Func<T, bool> _filter;
         protected Action<T> _fkSetter;
         private bool _needUpdate = true;
+        private string[] _updateOnPropertyChanged;
 
         #endregion
 
         #region Constructor
 
-        public BindableCollectionSubset(BindableCollection<T> parentCollection, 
-            Func<T, bool> filter, Action<T> fkSetter)
+        /// <summary>
+        /// Creates a bindable collection subset that contains items that fulfills foreign key constraints defined by the filter.
+        /// Updates whenever the parent collection changes. New items added have their foreign key automatically set.
+        /// </summary>
+        public BindableCollectionSubset(BindableCollection<T> parentCollection,
+            Func<T, bool> foreignKeyConstraint, Action<T> fkSetter)
+        {
+            _parentCollection = parentCollection;
+            _parentCollection.CollectionChanged += ParentCollectionChanged;
+            _filter = foreignKeyConstraint;
+            _fkSetter = fkSetter;
+        }
+
+        /// <summary>
+        /// Creates a filtered bindable collection subset that updates whenever parent collection changes or the item no longer fulfills the filter condition.
+        /// </summary>
+        public BindableCollectionSubset(BindableCollection<T> parentCollection,
+            Func<T, bool> filter, params string[] updateOnPropertyChanged)
         {
             _parentCollection = parentCollection;
             _parentCollection.CollectionChanged += ParentCollectionChanged;
             _filter = filter;
-            _fkSetter = fkSetter;
+            _updateOnPropertyChanged = updateOnPropertyChanged;
         }
 
         #endregion
@@ -51,9 +69,11 @@ namespace Delight
                     List<T> addedItems = new List<T>();
                     foreach (var item in rangeArgs.Items)
                     {
-                        if (_filter(item as T))
+                        var newItemInRange = item as T;
+                        if (_filter(newItemInRange))
                         {
-                            addedItems.Add(item as T);
+                            addedItems.Add(newItemInRange);
+                            AddPropertyChangedListener(newItemInRange);
                         }
                     }
 
@@ -61,19 +81,29 @@ namespace Delight
                     break;
 
                 case CollectionChangeAction.Add:
-                    if (_filter(e.Item as T))
+                    var newItem = e.Item as T;
+                    if (_filter(newItem))
                     {
-                        base.Add(e.Item as T);
+                        base.Add(newItem);
+                        AddPropertyChangedListener(newItem);
                     }
                     break;
                 case CollectionChangeAction.Remove:
-                    if (_filter(e.Item as T))
+                    var removedItem = e.Item as T;
+                    if (_filter(removedItem))
                     {
-                        base.Remove(e.Item as T);
+                        RemovePropertyChangedListener(removedItem);
+                        base.Remove(removedItem);
                     }
                     break;
                 case CollectionChangeAction.Replace:
+                    foreach (var item in _data.Values)
+                    {
+                        RemovePropertyChangedListener(item);
+                    }
+
                     _data.Clear();
+                    _dataList.Clear();
                     _needUpdate = true;
                     OnCollectionChanged(e);
                     break;
@@ -95,14 +125,55 @@ namespace Delight
 
             base.Add(item);
 
+            AddPropertyChangedListener(item);
+
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Add(item);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
+        private void AddPropertyChangedListener(T item)
+        {
+            if (_updateOnPropertyChanged == null)
+                return;
+
+            item.PropertyChanged -= ItemPropertyChanged;
+            item.PropertyChanged += ItemPropertyChanged;
+        }
+
+        private void RemovePropertyChangedListener(T item)
+        {
+            if (_updateOnPropertyChanged == null)
+                return;
+
+            item.PropertyChanged -= ItemPropertyChanged;
+        }
+
+        private void ItemPropertyChanged(object source, string propertyName)
+        {
+            for (int i = 0; i < _updateOnPropertyChanged.Length; ++i)
+            {
+                if (propertyName != _updateOnPropertyChanged[i])
+                    continue;
+
+                if (!_filter((T)source))
+                {
+                    // item no longer fulfills condition - remove from list
+                    Remove((T)source);
+                }
+
+                return;
+            }
+        }
+
         public override void Clear()
         {
             base.Clear();
+
+            foreach (var item in _data.Values)
+            {
+                RemovePropertyChangedListener(item);
+            }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(Data.Values);
@@ -111,12 +182,19 @@ namespace Delight
 
         public override void Replace(IEnumerable<T> items)
         {
-            if (_fkSetter != null)
+            foreach (var item in _data.Values)
             {
-                foreach (var item in items)
+                RemovePropertyChangedListener(item);
+            }
+
+            foreach (var item in items)
+            {
+                if (_fkSetter != null)
                 {
                     _fkSetter(item);
                 }
+
+                AddPropertyChangedListener(item);
             }
 
             base.Replace(items);
@@ -134,6 +212,10 @@ namespace Delight
         public override bool Remove(T item)
         {
             var result = base.Remove(item);
+            if (result)
+            {
+                RemovePropertyChangedListener(item);
+            }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.Remove(item);
@@ -145,6 +227,10 @@ namespace Delight
         public override void RemoveRange(IEnumerable<T> items)
         {
             base.RemoveRange(items);
+            foreach (var item in items)
+            {
+                RemovePropertyChangedListener(item);
+            }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
             _parentCollection.RemoveRange(items);
@@ -161,6 +247,12 @@ namespace Delight
                 return;
 
             _needUpdate = false;
+
+            foreach (var item in _data.Values)
+            {
+                RemovePropertyChangedListener(item);
+            }
+
             Data.Clear();
             DataList.Clear();
             foreach (var item in _parentCollection)
@@ -169,6 +261,7 @@ namespace Delight
                 {
                     Data.Add(item.Id, item);
                     DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+                    AddPropertyChangedListener(item);
                 }
             }
         }
