@@ -1673,6 +1673,7 @@ namespace Delight
                 {
                     case '"':
                         inEmbeddedCode = false;
+                        inBinding = false;
                         if (xmlSyntaxElement == XmlSyntaxElement.Comment)
                             break;
                         if (characterIndex > 0 && xmlText[characterIndex - 1] == '\\')
@@ -1751,10 +1752,14 @@ namespace Delight
 
                     case '\n':
                         addLine = true;
+                        inBinding = false;
+                        inEmbeddedCode = false;
                         break;
 
                     case '\r':
                         lineChar = 0;
+                        inBinding = false;
+                        inEmbeddedCode = false;
                         break;
                     
                     case '$':
