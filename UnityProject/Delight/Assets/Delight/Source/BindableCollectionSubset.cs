@@ -161,6 +161,11 @@ namespace Delight
                     // item no longer fulfills condition - remove from list
                     base.Remove((T)source);
                 }
+                else
+                {
+                    // item fulfills condition - add it to list if it's not already in there
+                    base.Add((T)source);
+                }
 
                 return;
             }
