@@ -4,6 +4,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
+using System.Threading.Tasks;
 #endregion
 
 namespace Delight
@@ -48,6 +49,15 @@ namespace Delight
     public class PersistenceManager<T>
         where T : BindableObject
     {
+        /// <summary>
+        /// Set property optimistically
+        /// </summary>                
+        public virtual bool TrySaveProperty<TProp>(T model, ref TProp property, TProp value)
+        {
+            return true;
+            //Implementation notes: Add Async handlers for different property types
+        }
+
         /// <summary>
         /// Loads persisted objects.
         /// </summary>

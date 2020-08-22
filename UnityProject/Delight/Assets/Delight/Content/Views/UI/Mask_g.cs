@@ -85,6 +85,8 @@ namespace Delight
                     _mask = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _mask.Name = "Mask";
+                    _mask.LineNumber = 0;
+                    _mask.LinePosition = 0;
 #endif
                     Delight.Mask.ShowMaskGraphicProperty.SetDefault(_mask, true);
                 }

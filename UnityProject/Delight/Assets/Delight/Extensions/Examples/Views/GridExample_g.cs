@@ -265,6 +265,8 @@ namespace Delight
                     _gridExample = new Template(LayoutRootTemplates.LayoutRoot);
 #if UNITY_EDITOR
                     _gridExample.Name = "GridExample";
+                    _gridExample.LineNumber = 0;
+                    _gridExample.LinePosition = 0;
 #endif
                     Delight.GridExample.Grid1TemplateProperty.SetDefault(_gridExample, GridExampleGrid1);
                     Delight.GridExample.Cell00TemplateProperty.SetDefault(_gridExample, GridExampleCell00);
@@ -296,6 +298,8 @@ namespace Delight
                     _gridExampleGrid1 = new Template(LayoutGridTemplates.LayoutGrid);
 #if UNITY_EDITOR
                     _gridExampleGrid1.Name = "GridExampleGrid1";
+                    _gridExampleGrid1.LineNumber = 2;
+                    _gridExampleGrid1.LinePosition = 4;
 #endif
                     Delight.LayoutGrid.RowsProperty.SetDefault(_gridExampleGrid1, new RowDefinitions { new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new RowDefinition(new ElementSize(1f, ElementSizeUnit.Proportional), 20f), new RowDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
                     Delight.LayoutGrid.ColumnsProperty.SetDefault(_gridExampleGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional), 20f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels), 20f)});
@@ -320,6 +324,8 @@ namespace Delight
                     _gridExampleCell00 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell00.Name = "GridExampleCell00";
+                    _gridExampleCell00.LineNumber = 3;
+                    _gridExampleCell00.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell00, new UnityEngine.Color(0.3254902f, 0.5372549f, 0.8784314f, 1f));
                 }
@@ -341,6 +347,8 @@ namespace Delight
                     _gridExampleCell01 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell01.Name = "GridExampleCell01";
+                    _gridExampleCell01.LineNumber = 4;
+                    _gridExampleCell01.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell01, new UnityEngine.Color(0.8901961f, 0.4588235f, 0.9764706f, 1f));
                 }
@@ -362,6 +370,8 @@ namespace Delight
                     _gridExampleCell02 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell02.Name = "GridExampleCell02";
+                    _gridExampleCell02.LineNumber = 5;
+                    _gridExampleCell02.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell02, new UnityEngine.Color(0.454902f, 0.9764706f, 0.8352941f, 1f));
                 }
@@ -383,6 +393,8 @@ namespace Delight
                     _gridExampleCell10 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell10.Name = "GridExampleCell10";
+                    _gridExampleCell10.LineNumber = 7;
+                    _gridExampleCell10.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell10, new UnityEngine.Color(0.9764706f, 0.7764706f, 0.454902f, 1f));
                 }
@@ -404,6 +416,8 @@ namespace Delight
                     _gridExampleCell11 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell11.Name = "GridExampleCell11";
+                    _gridExampleCell11.LineNumber = 8;
+                    _gridExampleCell11.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell11, new UnityEngine.Color(0.9882353f, 0.9294118f, 0.1764706f, 1f));
                 }
@@ -425,6 +439,8 @@ namespace Delight
                     _gridExampleCell12 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell12.Name = "GridExampleCell12";
+                    _gridExampleCell12.LineNumber = 9;
+                    _gridExampleCell12.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell12, new UnityEngine.Color(0.172549f, 0.9686275f, 0.1843137f, 1f));
                 }
@@ -446,6 +462,8 @@ namespace Delight
                     _gridExampleCell20 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell20.Name = "GridExampleCell20";
+                    _gridExampleCell20.LineNumber = 11;
+                    _gridExampleCell20.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell20, new UnityEngine.Color(0.9372549f, 0.3333333f, 0.1686275f, 1f));
                 }
@@ -467,6 +485,8 @@ namespace Delight
                     _gridExampleCell21 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell21.Name = "GridExampleCell21";
+                    _gridExampleCell21.LineNumber = 12;
+                    _gridExampleCell21.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell21, new UnityEngine.Color(0f, 0.5294118f, 1f, 1f));
                 }
@@ -488,6 +508,8 @@ namespace Delight
                     _gridExampleCell22 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _gridExampleCell22.Name = "GridExampleCell22";
+                    _gridExampleCell22.LineNumber = 13;
+                    _gridExampleCell22.LinePosition = 6;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_gridExampleCell22, new UnityEngine.Color(0.5294118f, 0.1882353f, 0.6784314f, 1f));
                 }
@@ -509,6 +531,8 @@ namespace Delight
                     _gridExampleGridSplitter1 = new Template(GridSplitterTemplates.GridSplitter);
 #if UNITY_EDITOR
                     _gridExampleGridSplitter1.Name = "GridExampleGridSplitter1";
+                    _gridExampleGridSplitter1.LineNumber = 15;
+                    _gridExampleGridSplitter1.LinePosition = 6;
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.InteractionThicknessProperty.SetDefault(_gridExampleGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));

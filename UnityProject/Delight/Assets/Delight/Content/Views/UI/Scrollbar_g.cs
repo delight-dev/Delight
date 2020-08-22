@@ -736,6 +736,8 @@ namespace Delight
                     _scrollbar = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _scrollbar.Name = "Scrollbar";
+                    _scrollbar.LineNumber = 0;
+                    _scrollbar.LinePosition = 0;
 #endif
                     Delight.Scrollbar.LengthProperty.SetDefault(_scrollbar, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Scrollbar.BreadthProperty.SetDefault(_scrollbar, new ElementSize(10f, ElementSizeUnit.Pixels));
@@ -761,6 +763,8 @@ namespace Delight
                     _scrollbarBar = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _scrollbarBar.Name = "ScrollbarBar";
+                    _scrollbarBar.LineNumber = 7;
+                    _scrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarBar, new UnityEngine.Color(0.5f, 0.5f, 0.5f, 1f));
                     Delight.Image.WidthProperty.SetDefault(_scrollbarBar, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -784,6 +788,8 @@ namespace Delight
                     _scrollbarHandle = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _scrollbarHandle.Name = "ScrollbarHandle";
+                    _scrollbarHandle.LineNumber = 8;
+                    _scrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollbarHandle, new UnityEngine.Color(0.6470588f, 0.1647059f, 0.1647059f, 1f));
                     Delight.Image.WidthProperty.SetDefault(_scrollbarHandle, new ElementSize(1f, ElementSizeUnit.Percents));

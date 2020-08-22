@@ -90,6 +90,8 @@ namespace Delight
                     _expanderHeader = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _expanderHeader.Name = "ExpanderHeader";
+                    _expanderHeader.LineNumber = 0;
+                    _expanderHeader.LinePosition = 0;
 #endif
                     Delight.ExpanderHeader.AlignmentProperty.SetDefault(_expanderHeader, Delight.ElementAlignment.TopLeft);
                     Delight.ExpanderHeader.RaycastBlockModeProperty.SetDefault(_expanderHeader, Delight.RaycastBlockMode.Always);

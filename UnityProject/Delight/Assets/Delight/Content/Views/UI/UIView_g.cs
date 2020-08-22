@@ -264,6 +264,8 @@ namespace Delight
                     _uIView = new Template(SceneObjectViewTemplates.SceneObjectView);
 #if UNITY_EDITOR
                     _uIView.Name = "UIView";
+                    _uIView.LineNumber = 0;
+                    _uIView.LinePosition = 0;
 #endif
                     Delight.UIView.PivotProperty.SetDefault(_uIView, new Vector2(0.5f, 0.5f));
                     Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);

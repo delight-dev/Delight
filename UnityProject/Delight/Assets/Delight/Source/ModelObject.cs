@@ -12,5 +12,9 @@ namespace Delight
     /// </summary>
     public class ModelObject : BindableObject
     {
+        public override string ToString()
+        {
+            return Id;
+        }
     }
 }

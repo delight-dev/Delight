@@ -119,6 +119,8 @@ namespace Delight
                     _layoutGrid = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _layoutGrid.Name = "LayoutGrid";
+                    _layoutGrid.LineNumber = 0;
+                    _layoutGrid.LinePosition = 0;
 #endif
                     Delight.LayoutGrid.EnableScriptEventsProperty.SetDefault(_layoutGrid, true);
                 }

@@ -1,0 +1,12 @@
+<TestExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot">
+
+  <Group> 
+    <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
+      <ListItem>
+        <Label Text="{level.Name}" /> 
+      </ListItem>
+    </List>
+    <Button Text="Test" Click="Test" /> 
+  </Group>
+
+</TestExample>

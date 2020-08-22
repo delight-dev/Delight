@@ -883,6 +883,8 @@ namespace Delight.Editor.Parser
             // add name in editor so we can easy track which template is used where in the debugger
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("                    {0}.Name = \"{1}\";", localId, idPath);
+            sb.AppendLine("                    {0}.LineNumber = {1};", localId, viewDeclaration != null ? viewDeclaration.LineNumber : 0);
+            sb.AppendLine("                    {0}.LinePosition = {1};", localId, viewDeclaration != null ? viewDeclaration.LinePosition : 0);
             sb.AppendLine("#endif");
 
             GenerateDataTemplateValueInitializers(sb, viewObject, isParent,
@@ -2659,7 +2661,11 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
             sb.AppendLine("namespace {0}", ns);
             sb.AppendLine("{");
-            sb.AppendLine("    public partial class {0} : ModelObject", modelObject.Name);
+
+            var derivedFrom = String.IsNullOrEmpty(modelObject.DerivedFrom) ? "ModelObject" : modelObject.DerivedFrom;
+
+            sb.AppendLine("    [Serializable]");
+            sb.AppendLine("    public partial class {0} : {1}", modelObject.Name, derivedFrom);
             sb.AppendLine("    {");
 
             // generate model properties
@@ -2681,11 +2687,19 @@ namespace Delight.Editor.Parser
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public string {0}Id;", property.Name);
+#if DELIGHT_MODULE_CUPCAKE
+                    sb.AppendLine("        public {0} _{1}; //for inspector", typeName, property.Name);
+#endif
                     sb.AppendLine("        public {0} {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return Models.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
-                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+#if DELIGHT_MODULE_CUPCAKE
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); _{0} = value;}}", property.Name);
+#else
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); }}", property.Name);
+#endif
+
                     sb.AppendLine("        }");
                 }
                 else if (modelCollectionObject != null)
@@ -2693,18 +2707,18 @@ namespace Delight.Editor.Parser
                     sb.AppendLine();
                     sb.AppendLine("        public BindableCollection<{0}> {1}", modelCollectionObject.Name, property.Name);
                     sb.AppendLine("        {");
-                    sb.AppendLine("            get {{ return Models.{0}.Get(this); }}", property.Name);
+                    sb.AppendLine("            get {{ return Models.{0}.Get(this); }}", modelCollectionObject.Name.Pluralize());
                     sb.AppendLine("        }");
                 }
                 else if (isAssetReference)
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public string {0}Id;", property.Name);
                     sb.AppendLine("        public {0}Asset {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return Assets.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
-                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); }}", property.Name);
                     sb.AppendLine("        }");
                 }
                 else
@@ -2903,6 +2917,74 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+
+#if DELIGHT_MODULE_CUPCAKE
+            // generate Inspector Monobehaviour
+            sb = new StringBuilder();
+            sb.AppendLine("// Model inspector generated from \"{0}\"", schemaFilename);
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            // TODO allow configuration of namespaces to be included
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", ns);
+            sb.AppendLine("{");
+            sb.AppendLine();
+            sb.AppendLine("    #region Inspector");
+            sb.AppendLine();
+
+            sb.AppendLine("    public class {0}Inspector : MonoBehaviour", modelObject.Name);
+            sb.AppendLine("    {");
+            sb.AppendLine("        #region Fields");
+            sb.AppendLine("        public List<{0}> {1} = new List<{0}>();", modelObject.Name, modelObject.PluralName);
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("        ");
+            sb.AppendLine("        #region Unity Callbacks");
+            sb.AppendLine("        private void OnEnable()");
+            sb.AppendLine("        {");
+            sb.AppendLine("            foreach(var item in Models.{0})", modelObject.PluralName);
+            sb.AppendLine("            {");
+            sb.AppendLine("                {0}.Add(item);", modelObject.PluralName);
+            sb.AppendLine("            }");
+            sb.AppendLine("            Models.{0}.CollectionChanged += OnCollectionChanged;", modelObject.PluralName);
+            sb.AppendLine("        }");
+            sb.AppendLine("        ");
+            sb.AppendLine("        private void OnDisable()");
+            sb.AppendLine("        {");
+            sb.AppendLine("            Models.{0}.CollectionChanged -= OnCollectionChanged;", modelObject.PluralName);
+            sb.AppendLine("        }");
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("        ");
+            sb.AppendLine("        #region Delight Callbacks");
+            sb.AppendLine("        private void OnCollectionChanged(object source, CollectionChangedEventArgs eventArgs)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            switch(eventArgs.ChangeAction)");
+            sb.AppendLine("            {");
+            sb.AppendLine("                case CollectionChangeAction.Add:");
+            sb.AppendLine("                    {0}.Add(({1})eventArgs.Item);", modelObject.PluralName, modelObject.Name);
+            sb.AppendLine("                    break;");
+            sb.AppendLine("                case CollectionChangeAction.Remove:");
+            sb.AppendLine("                    {0}.Remove(({1})eventArgs.Item);", modelObject.PluralName, modelObject.Name);
+            sb.AppendLine("                    break;");
+            sb.AppendLine("            }");
+            sb.AppendLine("        }");
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("    }");
+            sb.AppendLine("    #endregion");
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(modelObject.SchemaFilePath));
+            sourceFile = String.Format("{0}/{1}Inspector.cs", dir, modelObject.Name);
+
+            //Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
+#endif
         }
 
         /// <summary>
@@ -3201,9 +3283,9 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
 
-        #region Config
+#region Config
 
         /// <summary>
         /// Generates model code.
@@ -3260,7 +3342,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
     }
 }
 

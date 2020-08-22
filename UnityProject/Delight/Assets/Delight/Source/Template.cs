@@ -21,6 +21,8 @@ namespace Delight
         public string Name;
         public static int Version = 0;
         public int CurrentVersion;
+        public int LineNumber;
+        public int LinePosition;
 #endif
 
         #endregion

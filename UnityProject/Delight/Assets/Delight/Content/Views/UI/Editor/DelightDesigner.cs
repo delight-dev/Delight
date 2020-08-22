@@ -40,6 +40,35 @@ namespace Delight
         private DesignerView _lastOpenView;
         private bool _readOnlyOverride;
         private Dictionary<Type, Dictionary<string, Script<object>>> _cachedScripts = new Dictionary<Type, Dictionary<string, Script<object>>>();
+        private List<UIView> _selectedViews = new List<UIView>();
+        private List<UIView> _raycastedViews = new List<UIView>();
+        private int _selectedRaycastedIndex = 0;
+
+        public EventSystem _eventSystem;
+        public EventSystem EventSystem
+        {
+            get
+            {
+                if (_eventSystem == null)
+                {
+                    _eventSystem = GameObject.FindObjectOfType<EventSystem>();
+                }
+
+                return _eventSystem;
+            }
+        }
+
+        public string LastOpenedViewEditorPref
+        {
+            get
+            {
+                return EditorPrefs.GetString("Delight_DesignerLastOpenedView", string.Empty);
+            }
+            set
+            {
+                EditorPrefs.SetString("Delight_DesignerLastOpenedView", value);
+            }
+        }
 
         #endregion
 
@@ -97,21 +126,148 @@ namespace Delight
             {
                 SaveChanges();
             }
+
+            // Mouse click - selection logic for selecting views in the designer
+            if (Input.GetMouseButtonDown(0) && 
+                ScrollableContentRegion.ContainsMouse(Input.mousePosition) &&
+                _currentEditedView != null)
+            {
+                var pointerEventData = new PointerEventData(EventSystem);
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.RaycastAll(pointerEventData, results);
+                bool multiSelect = ctrlDown;
+
+                // get selected object
+                var selectedObject = results.Select(x => x.gameObject).FirstOrDefault(); // TODO here we might want to handle overlapping views
+                if (selectedObject != null)
+                {
+                    // find view with the selected game object
+                    var selectedView = ViewContentRegion.Find<UIView>(x => x.GameObject == selectedObject);
+                    while (selectedView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName)
+                    {
+                        selectedView = selectedView?.LayoutParent as UIView;
+                        if (selectedView == null)
+                            break;
+                    }
+
+                    if (selectedView != null)
+                    {
+                        _raycastedViews.Clear();
+                        if (multiSelect)
+                        {
+                            // multi-select
+                            if (_selectedViews.Contains(selectedView))
+                            {
+                                // deselect already selected view
+                                _selectedViews.Remove(selectedView);
+                            }
+                            else
+                            {
+                                // select new view
+                                _selectedViews.Add(selectedView);
+                            }
+                        }
+                        else
+                        {
+                            // regular select
+                            _selectedViews.Clear();
+                            _selectedViews.Add(selectedView);
+
+                            // add all parent views in hierarhcy as raycasted views
+                            _raycastedViews.Add(selectedView);
+                            var nextView = selectedView;
+                            while (nextView != _displayedView)
+                            {
+                                nextView = nextView.LayoutParent as UIView;
+                                if (nextView == null || (nextView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
+                                    nextView.GetType().Name != _currentEditedView.ViewTypeName))
+                                    break;
+
+                                _raycastedViews.Add(nextView);
+                            }
+                        }
+
+                        UpdateSelectedViews();
+                    }
+                    else if (!multiSelect)
+                    {
+                        ClearSelectedViews();
+                    }
+                }
+                else if (!multiSelect)
+                {
+                    ClearSelectedViews();
+                }
+            }
+
+            // CTRL+scroll wheel up/down traverses raycast selection hieararchy to easy e.g. select parent to clicked view
+            if (_selectedViews.Count == 1 && Input.mouseScrollDelta.y > 0 && ctrlDown)
+            {
+                if (_selectedRaycastedIndex > 0)
+                {
+                    --_selectedRaycastedIndex;
+                    _selectedViews.Clear();
+                    _selectedViews.Add(_raycastedViews[_selectedRaycastedIndex]);
+                    UpdateSelectedViews();
+                }
+            }
+            else if (_selectedViews.Count == 1 && Input.mouseScrollDelta.y < 0 && ctrlDown)
+            {
+                if (_selectedRaycastedIndex < _raycastedViews.Count() - 1)
+                {
+                    ++_selectedRaycastedIndex;
+                    _selectedViews.Clear();
+                    _selectedViews.Add(_raycastedViews[_selectedRaycastedIndex]);
+                    UpdateSelectedViews();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates selected views.
+        /// </summary>
+        private void UpdateSelectedViews()
+        {
+            var selectedView = _selectedViews.LastOrDefault();
+            if (selectedView != null)
+            {
+                Selection.activeObject = selectedView.GameObject;
+                Selection.objects = _selectedViews.Select(x => x.GameObject).ToArray();
+                EditorGUIUtility.PingObject(selectedView.GameObject);
+
+                Debug.Log(String.Format("Selecting {0} ({1},{2})", selectedView.GetType().Name, selectedView.Template.LineNumber, selectedView.Template.LinePosition));
+            }
+
+            // highlight selected views in the XML editor
+            XmlEditor.SetSelectedViews(_selectedViews);
+        }
+
+        /// <summary>
+        /// Clears selected views.
+        /// </summary>
+        public void ClearSelectedViews()
+        {
+            _selectedRaycastedIndex = 0;
+            _raycastedViews.Clear();
+            _selectedViews.Clear();
+            XmlEditor.SetSelectedViews(_selectedViews);
         }
 
         /// <summary>
         /// Opens the specified view in the designer.
         /// </summary>
-        private void OpenView(DesignerView designerViewAtCaret)
+        private void OpenView(DesignerView designerViewName)
         {
-            if (DisplayedDesignerViews.Contains(designerViewAtCaret))
+            if (DisplayedDesignerViews.Contains(designerViewName))
             {
-                DisplayedDesignerViews.Select(designerViewAtCaret);
+                DisplayedDesignerViews.Select(designerViewName);
             }
             else
             {
                 // open unlisted designer view
-                ViewSelected(designerViewAtCaret);
+                ViewSelected(designerViewName);
             }
         }
 
@@ -171,9 +327,21 @@ namespace Delight
         /// <summary>
         /// Called after the view has been loaded.
         /// </summary>
-        protected override void AfterLoad()
+        protected override async void AfterLoad()
         {
             base.AfterLoad();
+
+            // open last opened designer view on startup
+            var lastOpenedViewEditorPref = LastOpenedViewEditorPref;
+            if (!String.IsNullOrEmpty(lastOpenedViewEditorPref))
+            {
+                var lastOpenedDesignerView = DesignerViews.FirstOrDefault(x => x.Name == lastOpenedViewEditorPref);
+                if (lastOpenedDesignerView != null)
+                {
+                    await new WaitForSeconds(0.0001f); // bugfix with syntax highlighting not being initialized
+                    OpenView(lastOpenedDesignerView);
+                }
+            }
         }
 
         /// <summary>
@@ -193,6 +361,7 @@ namespace Delight
         /// </summary>
         public async void ViewSelected(DesignerView designerView)
         {
+            ClearSelectedViews();
             UpdateCurrentEditedViewXml();
 
             // clear any existing displayed views
@@ -200,6 +369,7 @@ namespace Delight
 
             _lastOpenView = _currentEditedView;
             _currentEditedView = designerView;
+            LastOpenedViewEditorPref = designerView.Name;
 
             if (!designerView.IsRuntimeParsed)
             {
@@ -291,6 +461,7 @@ namespace Delight
         /// </summary>
         public static void LogParseErrorToDesignerConsole(string file, int line, string message)
         {
+            // TODO implement designer console, for now log to unity console
             Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
         }
 
@@ -1073,6 +1244,9 @@ namespace Delight
 #if UNITY_EDITOR
             // add name in editor so we can easy track which template is used where in the debugger
             dataTemplate.Name = idPath;
+
+            dataTemplate.LineNumber = viewDeclaration != null ? viewDeclaration.LineNumber : 0;
+            dataTemplate.LinePosition = viewDeclaration != null ? viewDeclaration.LinePosition : 0;
 #endif
             dataTemplates.Add(idPath, dataTemplate);
 
@@ -1126,6 +1300,13 @@ namespace Delight
         {
             if (_displayedView == null)
                 return;
+
+            bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            if (ctrlDown || shiftDown)
+            {
+                return;
+            }
 
             PointerEventData pointerData = eventArgs as PointerEventData;
             bool zoomIn = pointerData.scrollDelta.x > 0 || pointerData.scrollDelta.y > 0;

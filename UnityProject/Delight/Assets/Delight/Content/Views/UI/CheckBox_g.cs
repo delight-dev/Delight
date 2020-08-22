@@ -1113,6 +1113,8 @@ namespace Delight
                     _checkBox = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _checkBox.Name = "CheckBox";
+                    _checkBox.LineNumber = 0;
+                    _checkBox.LinePosition = 0;
 #endif
                     Delight.CheckBox.IsInteractableProperty.SetDefault(_checkBox, true);
                     Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));
@@ -1141,6 +1143,8 @@ namespace Delight
                     _checkBoxCheckBoxGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _checkBoxCheckBoxGroup.Name = "CheckBoxCheckBoxGroup";
+                    _checkBoxCheckBoxGroup.LineNumber = 9;
+                    _checkBoxCheckBoxGroup.LinePosition = 4;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_checkBoxCheckBoxGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetHasBinding(_checkBoxCheckBoxGroup);
@@ -1163,6 +1167,8 @@ namespace Delight
                     _checkBoxCheckBoxImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _checkBoxCheckBoxImageView.Name = "CheckBoxCheckBoxImageView";
+                    _checkBoxCheckBoxImageView.LineNumber = 10;
+                    _checkBoxCheckBoxImageView.LinePosition = 6;
 #endif
                     Delight.Image.WidthProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_checkBoxCheckBoxImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -1190,6 +1196,8 @@ namespace Delight
                     _checkBoxCheckBoxLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _checkBoxCheckBoxLabel.Name = "CheckBoxCheckBoxLabel";
+                    _checkBoxCheckBoxLabel.LineNumber = 11;
+                    _checkBoxCheckBoxLabel.LinePosition = 6;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_checkBoxCheckBoxLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_checkBoxCheckBoxLabel, new ElementSize(1f, ElementSizeUnit.Percents));

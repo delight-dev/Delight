@@ -37,7 +37,8 @@ namespace Delight
         public static Color32 ViewNameColor = new Color32(74, 80, 78, 255); // #4a504e
         public static Color32 CommentColor = new Color32(0, 212, 0, 255); // #00d400
         public static Color32 UndefinedColor = new Color32(255, 0, 0, 255); // #ff0000
-        public static Color32 SelectionColor = new Color32(224, 224, 224, 255); // #f4f4f4
+        public static Color32 TextSelectionColor = new Color32(224, 224, 224, 255); // #f4f4f4
+        public static Color32 ViewSelectionColor = new Color32(255, 250, 191, 255); // #fffabf
         public static Color32 CodeColor = new Color32(148, 0, 136, 255);// #940088
         public static Color32 BindingColor = new Color32(226, 22, 255, 255); // #e217ff
         public static float KeyRepeatDelay = 0.30f;
@@ -84,6 +85,7 @@ namespace Delight
         private CanvasRenderer _caretCanvasRenderer;
         private Vector3 _mouseDownPosition;
         private bool _clickedInsideEditor;
+        private List<UIView> _selectedViews = new List<UIView>();
 
         #endregion
 
@@ -160,7 +162,7 @@ namespace Delight
                     Caret.IsActive = false;
                     _clickedInsideEditor = false;
                     DeactivateAutoComplete();
-                    GenerateCaretAndSelectionMeshes();
+                    GenerateTextHighlightMeshes();
                 }
                 else
                 {
@@ -333,6 +335,23 @@ namespace Delight
             }
 
             _previousMousePosition = Input.mousePosition;
+        }
+
+        /// <summary>
+        /// Refreshes text editor.
+        /// </summary>
+        public void Refresh()
+        {
+            
+        }
+
+        /// <summary>
+        /// Highlight selected views in the editor.
+        /// </summary>
+        public void SetSelectedViews(List<UIView> selectedViews)
+        {
+            _selectedViews = selectedViews;
+            GenerateTextHighlightMeshes(true);
         }
 
         /// <summary>
@@ -1620,7 +1639,7 @@ namespace Delight
         /// <summary>
         /// Updates text, syntax highlighting, selection and caret.
         /// </summary>
-        private void UpdateTextAndCaret(bool syntaxHighlight = true)
+        public void UpdateTextAndCaret(bool syntaxHighlight = true)
         {
             if (Caret.OffsetFromParent == null)
                 Caret.OffsetFromParent = new ElementMargin();
@@ -1637,7 +1656,7 @@ namespace Delight
             string xmlText = XmlTextLabel.TextMeshProUGUI.text;
             if (String.IsNullOrEmpty(xmlText))
             {
-                GenerateCaretAndSelectionMeshes();
+                GenerateTextHighlightMeshes();
                 return;
             }
 
@@ -1892,7 +1911,7 @@ namespace Delight
             }
 
             // generate caret and selection meshes
-            GenerateCaretAndSelectionMeshes();
+            GenerateTextHighlightMeshes();
 
             // TODO for debugging purposes show which element we are in
             DebugTextLabel.Text = _caretElement.ToString();
@@ -1901,64 +1920,127 @@ namespace Delight
         /// <summary>
         /// Generates caret and selection meshes.
         /// </summary>
-        private void GenerateCaretAndSelectionMeshes()
+        private void GenerateTextHighlightMeshes(bool scrollToLastSelectedView = false)
         {
             _selectionMesh = new Mesh();
             using (var vertexHelper = new VertexHelper())
             {
+                if (_selectedViews.Any())
+                {
+                    foreach (var selectedView in _selectedViews)
+                    {
+                        int startLine = Math.Max(selectedView.Template.LineNumber - 1, 0);
+                        int startChar = Math.Max(selectedView.Template.LinePosition - 2, 0);
+                        if (startLine >= _lines.Count)
+                            continue;
+
+                        int endLine = startLine;
+                        int endChar = selectedView.Template.LinePosition + 20;
+
+                        for (int lineIndex = startLine; lineIndex < _lines.Count; ++lineIndex)
+                        {
+                            string line = _lines[lineIndex];
+
+                            // replace everything in the line within quotes "" so we don't match end tags within strings
+                            line = QuoteContentRegex.Replace(line, x =>
+                            {
+                                return new string('x', x.Value.Length);
+                            });
+                            endChar = line.LastIndexOf(">") + 1;
+                            if (endChar > startChar)
+                            {
+                                endLine = lineIndex;
+                                break;
+                            }
+                        }
+
+                        // scroll to last highlighted view
+                        if (selectedView == _selectedViews.Last())
+                        {
+                            // check if highlighted view is outside viewport and update scroll position
+                            float lineOffsetY = startLine * LineHeight;
+                            float viewportHeight = ScrollableRegion.ViewportHeight;
+                            var contentOffset = ScrollableRegion.GetContentOffset();
+                            contentOffset.y = Math.Abs(contentOffset.y);
+                            float scrollOffsetY = -1;
+
+                            if ((lineOffsetY + LineHeight + ScrollableRegion.HorizontalScrollbar.ActualHeight) > (contentOffset.y + viewportHeight))
+                            {
+                                scrollOffsetY = (lineOffsetY + (LineHeight * 3) + ScrollableRegion.HorizontalScrollbar.ActualHeight) - viewportHeight;
+                            }
+                            else if (lineOffsetY < contentOffset.y)
+                            {
+                                scrollOffsetY = lineOffsetY - (LineHeight * 2);
+                            }
+
+                            if (scrollOffsetY >= 0)
+                            {
+                                ScrollableRegion.SetVerticalAbsoluteScrollPosition(scrollOffsetY);
+                            }
+                        }
+
+                        GenerateTextHighlightMeshes(vertexHelper, startLine, endLine, startChar, endChar, ViewSelectionColor);
+                    }
+                }
+
                 if (_hasSelection)
                 {
-                    UIVertex vertex = UIVertex.simpleVert;
-                    vertex.uv0 = Vector2.zero;
-                    vertex.color = SelectionColor;
-
-                    var startX = -TextSelection.ActualWidth / 2;
-                    var startY = TextSelection.ActualHeight / 2;
-
                     int startLine = Math.Min(_selectionOriginY, _selectionTargetY);
                     int endLine = Math.Max(_selectionOriginY, _selectionTargetY);
                     int startChar = startLine == endLine ? Math.Min(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionTargetX : _selectionOriginX;
                     int endChar = startLine == endLine ? Math.Max(_selectionOriginX, _selectionTargetX) : _selectionOriginY > _selectionTargetY ? _selectionOriginX : _selectionTargetX;
-
-                    // draw selection quads for each line that the selection covers
-                    for (int line = startLine; line <= endLine; ++line)
-                    {
-                        int startCharCount = line == startLine ? startChar : 0;
-                        int endCharCount = (line == endLine ? endChar : _lines[line].Length + 1) - startCharCount;
-
-                        // generate vertices for selection
-                        Vector2 startPosition = new Vector2(startX + startCharCount * CharWidth, startY - line * LineHeight);
-                        Vector2 endPosition = new Vector2(startPosition.x + endCharCount * CharWidth, startPosition.y - LineHeight);
-
-                        // check if vertices are outside viewport and clamp position to viewport
-                        float viewportWidth = ScrollableRegion.ViewportWidth;
-                        float viewportHeight = ScrollableRegion.ViewportHeight;
-                        var contentOffset = ScrollableRegion.GetContentOffset();
-                        contentOffset.x = Math.Abs(contentOffset.x);
-                        contentOffset.y = Math.Abs(contentOffset.y);
-
-                        var startIndex = vertexHelper.currentVertCount;
-                        vertex.position = new Vector3(startPosition.x, endPosition.y, 0.0f);
-                        vertexHelper.AddVert(vertex);
-
-                        vertex.position = new Vector3(endPosition.x, endPosition.y, 0.0f);
-                        vertexHelper.AddVert(vertex);
-
-                        vertex.position = new Vector3(endPosition.x, startPosition.y, 0.0f);
-                        vertexHelper.AddVert(vertex);
-
-                        vertex.position = new Vector3(startPosition.x, startPosition.y, 0.0f);
-                        vertexHelper.AddVert(vertex);
-
-                        vertexHelper.AddTriangle(startIndex, startIndex + 1, startIndex + 2);
-                        vertexHelper.AddTriangle(startIndex + 2, startIndex + 3, startIndex + 0);
-                    }
+                    GenerateTextHighlightMeshes(vertexHelper, startLine, endLine, startChar, endChar, TextSelectionColor);
                 }
 
                 vertexHelper.FillMesh(_selectionMesh);
             }
 
             TextSelection.CanvasRendererComponent.SetMesh(_selectionMesh);
+        }
+
+        /// <summary>
+        /// Generates text highlight meshes.
+        /// </summary>
+        private void GenerateTextHighlightMeshes(VertexHelper vertexHelper, int startLine, int endLine, int startChar, int endChar, Color32 color)
+        {
+            UIVertex vertex = UIVertex.simpleVert;
+            vertex.uv0 = Vector2.zero;
+            vertex.color = color;
+
+            var startX = -TextSelection.ActualWidth / 2;
+            var startY = TextSelection.ActualHeight / 2;
+
+            // draw selection quads for each line that the selection covers
+            for (int line = startLine; line <= endLine; ++line)
+            {
+                int startCharCount = line == startLine ? startChar : 0;
+                int endCharCount = (line == endLine ? endChar : _lines[line].Length + 1) - startCharCount;
+
+                // generate vertices for selection
+                Vector2 startPosition = new Vector2(startX + startCharCount * CharWidth, startY - line * LineHeight);
+                Vector2 endPosition = new Vector2(startPosition.x + endCharCount * CharWidth, startPosition.y - LineHeight);
+
+                // check if vertices are outside viewport and clamp position to viewport
+                var contentOffset = ScrollableRegion.GetContentOffset();
+                contentOffset.x = Math.Abs(contentOffset.x);
+                contentOffset.y = Math.Abs(contentOffset.y);
+
+                var startIndex = vertexHelper.currentVertCount;
+                vertex.position = new Vector3(startPosition.x, endPosition.y, 0.0f);
+                vertexHelper.AddVert(vertex);
+
+                vertex.position = new Vector3(endPosition.x, endPosition.y, 0.0f);
+                vertexHelper.AddVert(vertex);
+
+                vertex.position = new Vector3(endPosition.x, startPosition.y, 0.0f);
+                vertexHelper.AddVert(vertex);
+
+                vertex.position = new Vector3(startPosition.x, startPosition.y, 0.0f);
+                vertexHelper.AddVert(vertex);
+
+                vertexHelper.AddTriangle(startIndex, startIndex + 1, startIndex + 2);
+                vertexHelper.AddTriangle(startIndex + 2, startIndex + 3, startIndex + 0);
+            }
         }
 
         /// <summary>

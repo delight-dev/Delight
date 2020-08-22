@@ -77,6 +77,8 @@ namespace Delight
                     _frame = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _frame.Name = "Frame";
+                    _frame.LineNumber = 0;
+                    _frame.LinePosition = 0;
 #endif
                     Delight.Frame.AutoSizeToContentProperty.SetDefault(_frame, true);
                 }

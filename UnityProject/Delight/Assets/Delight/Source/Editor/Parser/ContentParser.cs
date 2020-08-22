@@ -804,6 +804,7 @@ namespace Delight.Editor.Parser
                 var viewDeclaration = new ViewDeclaration();
                 viewDeclaration.ViewName = GetActualViewName(viewElement.Name.LocalName);
                 viewDeclaration.LineNumber = viewElement.GetLineNumber();
+                viewDeclaration.LinePosition = viewElement.GetLinePosition();
                 viewDeclaration.ParentDeclaration = parentViewDeclaration;
 
                 // load the view to make sure it's in our content object model
@@ -1629,9 +1630,24 @@ namespace Delight.Editor.Parser
 
                     // parse model object declaration
                     var modelName = line.Substring(1).Trim();
+
+                    // parse derived from if specified
+                    string derivedFrom = null;
+                    if (modelName.Contains(":"))
+                    {
+                        var classArr = modelName.Split(':');
+                        modelName = classArr[0].Trim();
+                        if (classArr[1]?.Trim().Length > 0)
+                        {
+                            derivedFrom = classArr[1].Trim();
+                        }
+                    }
+
                     newModelObject = _contentObjectModel.LoadModelObject(modelName);
                     newModelObject.Clear();
                     newModelObject.SchemaFilePath = path;
+                    newModelObject.DerivedFrom = derivedFrom;
+                    newModelObject.NeedUpdate = true;
                     inModelDeclaration = true;
                     continue;
                 }

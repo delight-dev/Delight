@@ -175,6 +175,8 @@ namespace Delight
                     _listItem = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _listItem.Name = "ListItem";
+                    _listItem.LineNumber = 0;
+                    _listItem.LinePosition = 0;
 #endif
                     Delight.ListItem.AutoSizeToContentProperty.SetDefault(_listItem, true);
                     Delight.ListItem.RaycastBlockModeProperty.SetDefault(_listItem, Delight.RaycastBlockMode.Always);

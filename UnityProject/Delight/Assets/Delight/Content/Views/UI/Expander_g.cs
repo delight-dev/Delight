@@ -149,6 +149,8 @@ namespace Delight
                     _expander = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _expander.Name = "Expander";
+                    _expander.LineNumber = 0;
+                    _expander.LinePosition = 0;
 #endif
                     Delight.Expander.IsExpandedProperty.SetDefault(_expander, true);
                     Delight.Expander.IsInteractableProperty.SetDefault(_expander, true);

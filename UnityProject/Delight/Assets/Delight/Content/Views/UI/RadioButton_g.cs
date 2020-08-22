@@ -1113,6 +1113,8 @@ namespace Delight
                     _radioButton = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _radioButton.Name = "RadioButton";
+                    _radioButton.LineNumber = 0;
+                    _radioButton.LinePosition = 0;
 #endif
                     Delight.RadioButton.IsInteractableProperty.SetDefault(_radioButton, true);
                     Delight.RadioButton.SpacingProperty.SetDefault(_radioButton, new ElementSize(10f, ElementSizeUnit.Pixels));
@@ -1141,6 +1143,8 @@ namespace Delight
                     _radioButtonRadioButtonGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonGroup.Name = "RadioButtonRadioButtonGroup";
+                    _radioButtonRadioButtonGroup.LineNumber = 8;
+                    _radioButtonRadioButtonGroup.LinePosition = 4;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_radioButtonRadioButtonGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetHasBinding(_radioButtonRadioButtonGroup);
@@ -1163,6 +1167,8 @@ namespace Delight
                     _radioButtonRadioButtonImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonImageView.Name = "RadioButtonRadioButtonImageView";
+                    _radioButtonRadioButtonImageView.LineNumber = 9;
+                    _radioButtonRadioButtonImageView.LinePosition = 6;
 #endif
                     Delight.Image.WidthProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -1191,6 +1197,8 @@ namespace Delight
                     _radioButtonRadioButtonLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonLabel.Name = "RadioButtonRadioButtonLabel";
+                    _radioButtonRadioButtonLabel.LineNumber = 10;
+                    _radioButtonRadioButtonLabel.LinePosition = 6;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_radioButtonRadioButtonLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_radioButtonRadioButtonLabel, new ElementSize(1f, ElementSizeUnit.Percents));

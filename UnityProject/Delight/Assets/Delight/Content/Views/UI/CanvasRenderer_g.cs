@@ -121,6 +121,8 @@ namespace Delight
                     _canvasRendererView = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _canvasRendererView.Name = "CanvasRendererView";
+                    _canvasRendererView.LineNumber = 0;
+                    _canvasRendererView.LinePosition = 0;
 #endif
                 }
                 return _canvasRendererView;

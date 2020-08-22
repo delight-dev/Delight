@@ -1262,6 +1262,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(9, AsReference = true)]
         public ViewDeclaration ParentDeclaration;
 
+        [ProtoMember(10)]
+        public int LinePosition;
+
         #endregion
 
         #region Constructor
@@ -1426,6 +1429,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(8, AsReference = true)]
         public List<ModelObjectData> Data;
+
+        [ProtoMember(9)]
+        public string DerivedFrom;
 
         public ModelObject()
         {

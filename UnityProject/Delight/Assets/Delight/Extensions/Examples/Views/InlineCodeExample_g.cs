@@ -420,6 +420,8 @@ namespace Delight
                     _inlineCodeExample = new Template(LayoutRootTemplates.LayoutRoot);
 #if UNITY_EDITOR
                     _inlineCodeExample.Name = "InlineCodeExample";
+                    _inlineCodeExample.LineNumber = 0;
+                    _inlineCodeExample.LinePosition = 0;
 #endif
                     Delight.InlineCodeExample.Group1TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup1);
                     Delight.InlineCodeExample.Group2TemplateProperty.SetDefault(_inlineCodeExample, InlineCodeExampleGroup2);
@@ -459,6 +461,8 @@ namespace Delight
                     _inlineCodeExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inlineCodeExampleGroup1.Name = "InlineCodeExampleGroup1";
+                    _inlineCodeExampleGroup1.LineNumber = 4;
+                    _inlineCodeExampleGroup1.LinePosition = 4;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                 }
@@ -480,6 +484,8 @@ namespace Delight
                     _inlineCodeExampleGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inlineCodeExampleGroup2.Name = "InlineCodeExampleGroup2";
+                    _inlineCodeExampleGroup2.LineNumber = 6;
+                    _inlineCodeExampleGroup2.LinePosition = 6;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup2, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup2, new ElementSize(5f, ElementSizeUnit.Pixels));
@@ -502,6 +508,8 @@ namespace Delight
                     _inlineCodeExampleRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion1.Name = "InlineCodeExampleRegion1";
+                    _inlineCodeExampleRegion1.LineNumber = 7;
+                    _inlineCodeExampleRegion1.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion1, new UnityEngine.Color(0f, 0f, 1f, 1f));
                     Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion1, new ElementSize(50f, ElementSizeUnit.Pixels));
@@ -525,6 +533,8 @@ namespace Delight
                     _inlineCodeExampleRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion2.Name = "InlineCodeExampleRegion2";
+                    _inlineCodeExampleRegion2.LineNumber = 8;
+                    _inlineCodeExampleRegion2.LinePosition = 10;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion2, new UnityEngine.Color(1f, 1f, 0f, 1f));
                     Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion2);
@@ -547,6 +557,8 @@ namespace Delight
                     _inlineCodeExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel1.Name = "InlineCodeExampleLabel1";
+                    _inlineCodeExampleLabel1.LineNumber = 9;
+                    _inlineCodeExampleLabel1.LinePosition = 10;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel1, "> 0");
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel1, Delight.AutoSize.Default);
@@ -569,6 +581,8 @@ namespace Delight
                     _inlineCodeExampleRegion3 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion3.Name = "InlineCodeExampleRegion3";
+                    _inlineCodeExampleRegion3.LineNumber = 11;
+                    _inlineCodeExampleRegion3.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion3, new UnityEngine.Color(0f, 0f, 1f, 1f));
                     Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion3, new ElementSize(50f, ElementSizeUnit.Pixels));
@@ -592,6 +606,8 @@ namespace Delight
                     _inlineCodeExampleRegion4 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion4.Name = "InlineCodeExampleRegion4";
+                    _inlineCodeExampleRegion4.LineNumber = 12;
+                    _inlineCodeExampleRegion4.LinePosition = 10;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion4, new UnityEngine.Color(1f, 1f, 0f, 1f));
                     Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion4);
@@ -614,6 +630,8 @@ namespace Delight
                     _inlineCodeExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel2.Name = "InlineCodeExampleLabel2";
+                    _inlineCodeExampleLabel2.LineNumber = 13;
+                    _inlineCodeExampleLabel2.LinePosition = 10;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel2, "> 5");
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel2, Delight.AutoSize.Default);
@@ -636,6 +654,8 @@ namespace Delight
                     _inlineCodeExampleRegion5 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion5.Name = "InlineCodeExampleRegion5";
+                    _inlineCodeExampleRegion5.LineNumber = 15;
+                    _inlineCodeExampleRegion5.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion5, new UnityEngine.Color(0f, 0f, 1f, 1f));
                     Delight.Region.WidthProperty.SetDefault(_inlineCodeExampleRegion5, new ElementSize(50f, ElementSizeUnit.Pixels));
@@ -659,6 +679,8 @@ namespace Delight
                     _inlineCodeExampleRegion6 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inlineCodeExampleRegion6.Name = "InlineCodeExampleRegion6";
+                    _inlineCodeExampleRegion6.LineNumber = 16;
+                    _inlineCodeExampleRegion6.LinePosition = 10;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_inlineCodeExampleRegion6, new UnityEngine.Color(1f, 1f, 0f, 1f));
                     Delight.Region.IsVisibleProperty.SetHasBinding(_inlineCodeExampleRegion6);
@@ -681,6 +703,8 @@ namespace Delight
                     _inlineCodeExampleLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel3.Name = "InlineCodeExampleLabel3";
+                    _inlineCodeExampleLabel3.LineNumber = 17;
+                    _inlineCodeExampleLabel3.LinePosition = 10;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inlineCodeExampleLabel3, "> 10");
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel3, Delight.AutoSize.Default);
@@ -703,6 +727,8 @@ namespace Delight
                     _inlineCodeExampleGroup3 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inlineCodeExampleGroup3.Name = "InlineCodeExampleGroup3";
+                    _inlineCodeExampleGroup3.LineNumber = 21;
+                    _inlineCodeExampleGroup3.LinePosition = 6;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup3, new ElementSize(5f, ElementSizeUnit.Pixels));
                 }
@@ -724,6 +750,8 @@ namespace Delight
                     _inlineCodeExampleGroup4 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inlineCodeExampleGroup4.Name = "InlineCodeExampleGroup4";
+                    _inlineCodeExampleGroup4.LineNumber = 22;
+                    _inlineCodeExampleGroup4.LinePosition = 8;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup4, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_inlineCodeExampleGroup4, new ElementSize(5f, ElementSizeUnit.Pixels));
@@ -746,6 +774,8 @@ namespace Delight
                     _inlineCodeExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _inlineCodeExampleButton1.Name = "InlineCodeExampleButton1";
+                    _inlineCodeExampleButton1.LineNumber = 23;
+                    _inlineCodeExampleButton1.LinePosition = 10;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_inlineCodeExampleButton1, InlineCodeExampleButton1Label);
                 }
@@ -767,6 +797,8 @@ namespace Delight
                     _inlineCodeExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _inlineCodeExampleButton1Label.Name = "InlineCodeExampleButton1Label";
+                    _inlineCodeExampleButton1Label.LineNumber = 0;
+                    _inlineCodeExampleButton1Label.LinePosition = 0;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inlineCodeExampleButton1Label, "Click Me");
                 }
@@ -788,6 +820,8 @@ namespace Delight
                     _inlineCodeExampleButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _inlineCodeExampleButton2.Name = "InlineCodeExampleButton2";
+                    _inlineCodeExampleButton2.LineNumber = 24;
+                    _inlineCodeExampleButton2.LinePosition = 10;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_inlineCodeExampleButton2, InlineCodeExampleButton2Label);
                 }
@@ -809,6 +843,8 @@ namespace Delight
                     _inlineCodeExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _inlineCodeExampleButton2Label.Name = "InlineCodeExampleButton2Label";
+                    _inlineCodeExampleButton2Label.LineNumber = 0;
+                    _inlineCodeExampleButton2Label.LinePosition = 0;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inlineCodeExampleButton2Label, "Reset");
                 }
@@ -830,6 +866,8 @@ namespace Delight
                     _inlineCodeExampleLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel4.Name = "InlineCodeExampleLabel4";
+                    _inlineCodeExampleLabel4.LineNumber = 26;
+                    _inlineCodeExampleLabel4.LinePosition = 8;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel4, Delight.AutoSize.Default);
                     Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel4, new UnityEngine.Color(1f, 1f, 1f, 1f));
@@ -853,6 +891,8 @@ namespace Delight
                     _inlineCodeExampleGroup5 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inlineCodeExampleGroup5.Name = "InlineCodeExampleGroup5";
+                    _inlineCodeExampleGroup5.LineNumber = 27;
+                    _inlineCodeExampleGroup5.LinePosition = 8;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inlineCodeExampleGroup5, Delight.ElementOrientation.Horizontal);
                 }
@@ -874,6 +914,8 @@ namespace Delight
                     _inlineCodeExampleLabel5 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel5.Name = "InlineCodeExampleLabel5";
+                    _inlineCodeExampleLabel5.LineNumber = 28;
+                    _inlineCodeExampleLabel5.LinePosition = 10;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel5, Delight.AutoSize.Default);
                     Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel5, new UnityEngine.Color(1f, 1f, 1f, 1f));
@@ -897,6 +939,8 @@ namespace Delight
                     _inlineCodeExampleLabel6 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inlineCodeExampleLabel6.Name = "InlineCodeExampleLabel6";
+                    _inlineCodeExampleLabel6.LineNumber = 29;
+                    _inlineCodeExampleLabel6.LinePosition = 10;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_inlineCodeExampleLabel6, Delight.AutoSize.Default);
                     Delight.Label.FontColorProperty.SetDefault(_inlineCodeExampleLabel6, new UnityEngine.Color(1f, 1f, 1f, 1f));

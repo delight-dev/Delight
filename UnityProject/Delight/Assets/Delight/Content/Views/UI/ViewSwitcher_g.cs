@@ -104,6 +104,8 @@ namespace Delight
                     _viewSwitcher = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _viewSwitcher.Name = "ViewSwitcher";
+                    _viewSwitcher.LineNumber = 0;
+                    _viewSwitcher.LinePosition = 0;
 #endif
                     Delight.ViewSwitcher.SwitchModeProperty.SetDefault(_viewSwitcher, Delight.SwitchMode.Enable);
                     Delight.ViewSwitcher.ShowFirstByDefaultProperty.SetDefault(_viewSwitcher, true);

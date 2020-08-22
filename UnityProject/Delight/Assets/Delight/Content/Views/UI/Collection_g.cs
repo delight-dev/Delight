@@ -86,6 +86,8 @@ namespace Delight
                     _collection = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _collection.Name = "Collection";
+                    _collection.LineNumber = 0;
+                    _collection.LinePosition = 0;
 #endif
                 }
                 return _collection;

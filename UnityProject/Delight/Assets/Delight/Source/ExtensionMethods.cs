@@ -97,6 +97,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// Gets line position from XElement.
+        /// </summary>
+        public static int GetLinePosition(this XElement element)
+        {
+            return (element as IXmlLineInfo).LinePosition;
+        }
+
+        /// <summary>
         /// Gets code printable name from field info.
         /// </summary>
         public static string FieldTypeName(this FieldInfo fieldInfo, bool xmlType = false)

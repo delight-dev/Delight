@@ -77,10 +77,16 @@ namespace Delight
             if (ActiveView != null)
             {
                 if (!ActiveView.IsLoaded)
+                {
                     ActiveView.Load();
+                }
 
                 if (!ActiveView.IsActive)
+                {
                     ActiveView.IsActive = true;
+                }
+
+                ActiveView.Setup(null);
             }
         }
 

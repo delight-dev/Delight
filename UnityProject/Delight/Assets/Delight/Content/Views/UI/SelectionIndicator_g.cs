@@ -1143,6 +1143,8 @@ namespace Delight
                     _selectionIndicator = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _selectionIndicator.Name = "SelectionIndicator";
+                    _selectionIndicator.LineNumber = 0;
+                    _selectionIndicator.LinePosition = 0;
 #endif
                     Delight.SelectionIndicator.WidthProperty.SetDefault(_selectionIndicator, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.SelectionIndicator.HeightProperty.SetDefault(_selectionIndicator, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -1167,6 +1169,8 @@ namespace Delight
                     _selectionIndicatorSelectionTab = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _selectionIndicatorSelectionTab.Name = "SelectionIndicatorSelectionTab";
+                    _selectionIndicatorSelectionTab.LineNumber = 3;
+                    _selectionIndicatorSelectionTab.LinePosition = 4;
 #endif
                     Delight.Button.HeightProperty.SetDefault(_selectionIndicatorSelectionTab, new ElementSize(15f, ElementSizeUnit.Pixels));
                     Delight.Button.AlignmentProperty.SetDefault(_selectionIndicatorSelectionTab, Delight.ElementAlignment.TopLeft);
@@ -1194,6 +1198,8 @@ namespace Delight
                     _selectionIndicatorSelectionTabLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _selectionIndicatorSelectionTabLabel.Name = "SelectionIndicatorSelectionTabLabel";
+                    _selectionIndicatorSelectionTabLabel.LineNumber = 0;
+                    _selectionIndicatorSelectionTabLabel.LinePosition = 0;
 #endif
                     Delight.Label.TextProperty.SetDefault(_selectionIndicatorSelectionTabLabel, "Button");
                     Delight.Label.FontSizeProperty.SetDefault(_selectionIndicatorSelectionTabLabel, 10f);

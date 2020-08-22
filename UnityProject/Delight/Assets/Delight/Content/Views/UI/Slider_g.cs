@@ -1139,6 +1139,8 @@ namespace Delight
                     _slider = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _slider.Name = "Slider";
+                    _slider.LineNumber = 0;
+                    _slider.LinePosition = 0;
 #endif
                     Delight.Slider.LengthProperty.SetDefault(_slider, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.Slider.BreadthProperty.SetDefault(_slider, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -1172,6 +1174,8 @@ namespace Delight
                     _sliderSliderRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _sliderSliderRegion.Name = "SliderSliderRegion";
+                    _sliderSliderRegion.LineNumber = 11;
+                    _sliderSliderRegion.LinePosition = 4;
 #endif
                 }
                 return _sliderSliderRegion;
@@ -1192,6 +1196,8 @@ namespace Delight
                     _sliderSliderBackgroundImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _sliderSliderBackgroundImageView.Name = "SliderSliderBackgroundImageView";
+                    _sliderSliderBackgroundImageView.LineNumber = 12;
+                    _sliderSliderBackgroundImageView.LinePosition = 6;
 #endif
                     Delight.Image.WidthProperty.SetDefault(_sliderSliderBackgroundImageView, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.HeightProperty.SetDefault(_sliderSliderBackgroundImageView, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -1214,6 +1220,8 @@ namespace Delight
                     _sliderSliderFillRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _sliderSliderFillRegion.Name = "SliderSliderFillRegion";
+                    _sliderSliderFillRegion.LineNumber = 13;
+                    _sliderSliderFillRegion.LinePosition = 6;
 #endif
                     Delight.Region.MarginProperty.SetDefault(_sliderSliderFillRegion, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
@@ -1235,6 +1243,8 @@ namespace Delight
                     _sliderSliderFillImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _sliderSliderFillImageView.Name = "SliderSliderFillImageView";
+                    _sliderSliderFillImageView.LineNumber = 14;
+                    _sliderSliderFillImageView.LinePosition = 8;
 #endif
                     Delight.Image.AlignmentProperty.SetDefault(_sliderSliderFillImageView, Delight.ElementAlignment.Left);
                     Delight.Image.WidthProperty.SetDefault(_sliderSliderFillImageView, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -1259,6 +1269,8 @@ namespace Delight
                     _sliderSliderHandleImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _sliderSliderHandleImageView.Name = "SliderSliderHandleImageView";
+                    _sliderSliderHandleImageView.LineNumber = 16;
+                    _sliderSliderHandleImageView.LinePosition = 6;
 #endif
                     Delight.Image.AlignmentProperty.SetDefault(_sliderSliderHandleImageView, Delight.ElementAlignment.Left);
                     Delight.Image.WidthProperty.SetDefault(_sliderSliderHandleImageView, new ElementSize(20f, ElementSizeUnit.Pixels));

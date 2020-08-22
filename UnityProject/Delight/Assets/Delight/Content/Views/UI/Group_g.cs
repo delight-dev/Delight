@@ -98,6 +98,8 @@ namespace Delight
                     _group = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _group.Name = "Group";
+                    _group.LineNumber = 0;
+                    _group.LinePosition = 0;
 #endif
                 }
                 return _group;

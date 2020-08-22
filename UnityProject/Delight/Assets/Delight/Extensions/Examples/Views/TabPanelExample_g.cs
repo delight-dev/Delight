@@ -162,6 +162,8 @@ namespace Delight
                     _tabPanelExample = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _tabPanelExample.Name = "TabPanelExample";
+                    _tabPanelExample.LineNumber = 0;
+                    _tabPanelExample.LinePosition = 0;
 #endif
                     Delight.TabPanelExample.TabPanel1TemplateProperty.SetDefault(_tabPanelExample, TabPanelExampleTabPanel1);
                     Delight.TabPanelExample.TabHeader1TemplateProperty.SetDefault(_tabPanelExample, TabPanelExampleTabHeader1);
@@ -186,6 +188,8 @@ namespace Delight
                     _tabPanelExampleTabPanel1 = new Template(TabPanelTemplates.TabPanel);
 #if UNITY_EDITOR
                     _tabPanelExampleTabPanel1.Name = "TabPanelExampleTabPanel1";
+                    _tabPanelExampleTabPanel1.LineNumber = 14;
+                    _tabPanelExampleTabPanel1.LinePosition = 4;
 #endif
                     Delight.TabPanel.ItemsProperty.SetHasBinding(_tabPanelExampleTabPanel1);
                     Delight.TabPanel.TabSwitcherTemplateProperty.SetDefault(_tabPanelExampleTabPanel1, TabPanelExampleTabPanel1TabSwitcher);
@@ -209,6 +213,8 @@ namespace Delight
                     _tabPanelExampleTabPanel1TabSwitcher = new Template(TabPanelTemplates.TabPanelTabSwitcher);
 #if UNITY_EDITOR
                     _tabPanelExampleTabPanel1TabSwitcher.Name = "TabPanelExampleTabPanel1TabSwitcher";
+                    _tabPanelExampleTabPanel1TabSwitcher.LineNumber = 0;
+                    _tabPanelExampleTabPanel1TabSwitcher.LinePosition = 0;
 #endif
                 }
                 return _tabPanelExampleTabPanel1TabSwitcher;
@@ -229,6 +235,8 @@ namespace Delight
                     _tabPanelExampleTabPanel1TabHeaderGroup = new Template(TabPanelTemplates.TabPanelTabHeaderGroup);
 #if UNITY_EDITOR
                     _tabPanelExampleTabPanel1TabHeaderGroup.Name = "TabPanelExampleTabPanel1TabHeaderGroup";
+                    _tabPanelExampleTabPanel1TabHeaderGroup.LineNumber = 0;
+                    _tabPanelExampleTabPanel1TabHeaderGroup.LinePosition = 0;
 #endif
                 }
                 return _tabPanelExampleTabPanel1TabHeaderGroup;
@@ -249,6 +257,8 @@ namespace Delight
                     _tabPanelExampleTabHeader1 = new Template(TabHeaderTemplates.TabHeader);
 #if UNITY_EDITOR
                     _tabPanelExampleTabHeader1.Name = "TabPanelExampleTabHeader1";
+                    _tabPanelExampleTabHeader1.LineNumber = 15;
+                    _tabPanelExampleTabHeader1.LinePosition = 6;
 #endif
                     Delight.TabHeader.LabelTemplateProperty.SetDefault(_tabPanelExampleTabHeader1, TabPanelExampleTabHeader1Label);
                 }
@@ -270,6 +280,8 @@ namespace Delight
                     _tabPanelExampleTabHeader1Label = new Template(TabHeaderTemplates.TabHeaderLabel);
 #if UNITY_EDITOR
                     _tabPanelExampleTabHeader1Label.Name = "TabPanelExampleTabHeader1Label";
+                    _tabPanelExampleTabHeader1Label.LineNumber = 0;
+                    _tabPanelExampleTabHeader1Label.LinePosition = 0;
 #endif
                     Delight.Label.TextProperty.SetHasBinding(_tabPanelExampleTabHeader1Label);
                 }
@@ -291,6 +303,8 @@ namespace Delight
                     _tabPanelExampleTab1 = new Template(TabTemplates.Tab);
 #if UNITY_EDITOR
                     _tabPanelExampleTab1.Name = "TabPanelExampleTab1";
+                    _tabPanelExampleTab1.LineNumber = 16;
+                    _tabPanelExampleTab1.LinePosition = 6;
 #endif
                 }
                 return _tabPanelExampleTab1;
@@ -311,6 +325,8 @@ namespace Delight
                     _tabPanelExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _tabPanelExampleLabel1.Name = "TabPanelExampleLabel1";
+                    _tabPanelExampleLabel1.LineNumber = 17;
+                    _tabPanelExampleLabel1.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetHasBinding(_tabPanelExampleLabel1);
                 }

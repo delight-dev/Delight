@@ -186,6 +186,8 @@ namespace Delight
                     _mainMenuExample = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _mainMenuExample.Name = "MainMenuExample";
+                    _mainMenuExample.LineNumber = 0;
+                    _mainMenuExample.LinePosition = 0;
 #endif
                     Delight.MainMenuExample.Image1TemplateProperty.SetDefault(_mainMenuExample, MainMenuExampleImage1);
                     Delight.MainMenuExample.Label1TemplateProperty.SetDefault(_mainMenuExample, MainMenuExampleLabel1);
@@ -212,6 +214,8 @@ namespace Delight
                     _mainMenuExampleImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _mainMenuExampleImage1.Name = "MainMenuExampleImage1";
+                    _mainMenuExampleImage1.LineNumber = 2;
+                    _mainMenuExampleImage1.LinePosition = 4;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_mainMenuExampleImage1, Assets.Sprites["MainMenuDemoBg"]);
                     Delight.Image.HeightProperty.SetDefault(_mainMenuExampleImage1, new ElementSize(480f, ElementSizeUnit.Pixels));
@@ -235,6 +239,8 @@ namespace Delight
                     _mainMenuExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _mainMenuExampleLabel1.Name = "MainMenuExampleLabel1";
+                    _mainMenuExampleLabel1.LineNumber = 3;
+                    _mainMenuExampleLabel1.LinePosition = 4;
 #endif
                     Delight.Label.FontColorProperty.SetDefault(_mainMenuExampleLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleLabel1, 40f);
@@ -261,6 +267,8 @@ namespace Delight
                     _mainMenuExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _mainMenuExampleGroup1.Name = "MainMenuExampleGroup1";
+                    _mainMenuExampleGroup1.LineNumber = 4;
+                    _mainMenuExampleGroup1.LinePosition = 4;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_mainMenuExampleGroup1, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.Group.OffsetProperty.SetDefault(_mainMenuExampleGroup1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(25f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -283,6 +291,8 @@ namespace Delight
                     _mainMenuExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _mainMenuExampleButton1.Name = "MainMenuExampleButton1";
+                    _mainMenuExampleButton1.LineNumber = 5;
+                    _mainMenuExampleButton1.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_mainMenuExampleButton1, Assets.Sprites["MainMenuDemoButton"]);
                     Delight.Button.BackgroundSpriteProperty.SetStateDefault("Pressed", _mainMenuExampleButton1, Assets.Sprites["MainMenuDemoButtonPressed"]);
@@ -312,6 +322,8 @@ namespace Delight
                     _mainMenuExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton1Label.Name = "MainMenuExampleButton1Label";
+                    _mainMenuExampleButton1Label.LineNumber = 0;
+                    _mainMenuExampleButton1Label.LinePosition = 0;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton1Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton1Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);
@@ -338,6 +350,8 @@ namespace Delight
                     _mainMenuExampleButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _mainMenuExampleButton2.Name = "MainMenuExampleButton2";
+                    _mainMenuExampleButton2.LineNumber = 6;
+                    _mainMenuExampleButton2.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_mainMenuExampleButton2, Assets.Sprites["MainMenuDemoButton"]);
                     Delight.Button.BackgroundSpriteProperty.SetStateDefault("Pressed", _mainMenuExampleButton2, Assets.Sprites["MainMenuDemoButtonPressed"]);
@@ -367,6 +381,8 @@ namespace Delight
                     _mainMenuExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton2Label.Name = "MainMenuExampleButton2Label";
+                    _mainMenuExampleButton2Label.LineNumber = 0;
+                    _mainMenuExampleButton2Label.LinePosition = 0;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton2Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton2Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);
@@ -393,6 +409,8 @@ namespace Delight
                     _mainMenuExampleButton3 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _mainMenuExampleButton3.Name = "MainMenuExampleButton3";
+                    _mainMenuExampleButton3.LineNumber = 7;
+                    _mainMenuExampleButton3.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_mainMenuExampleButton3, Assets.Sprites["MainMenuDemoButton"]);
                     Delight.Button.BackgroundSpriteProperty.SetStateDefault("Pressed", _mainMenuExampleButton3, Assets.Sprites["MainMenuDemoButtonPressed"]);
@@ -422,6 +440,8 @@ namespace Delight
                     _mainMenuExampleButton3Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton3Label.Name = "MainMenuExampleButton3Label";
+                    _mainMenuExampleButton3Label.LineNumber = 0;
+                    _mainMenuExampleButton3Label.LinePosition = 0;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton3Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton3Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);

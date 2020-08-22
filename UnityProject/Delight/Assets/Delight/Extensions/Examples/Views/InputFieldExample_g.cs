@@ -291,6 +291,8 @@ namespace Delight
                     _inputFieldExample = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _inputFieldExample.Name = "InputFieldExample";
+                    _inputFieldExample.LineNumber = 0;
+                    _inputFieldExample.LinePosition = 0;
 #endif
                     Delight.InputFieldExample.Group1TemplateProperty.SetDefault(_inputFieldExample, InputFieldExampleGroup1);
                     Delight.InputFieldExample.Group2TemplateProperty.SetDefault(_inputFieldExample, InputFieldExampleGroup2);
@@ -324,6 +326,8 @@ namespace Delight
                     _inputFieldExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inputFieldExampleGroup1.Name = "InputFieldExampleGroup1";
+                    _inputFieldExampleGroup1.LineNumber = 2;
+                    _inputFieldExampleGroup1.LinePosition = 4;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inputFieldExampleGroup1, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_inputFieldExampleGroup1, new ElementSize(30f, ElementSizeUnit.Pixels));
@@ -347,6 +351,8 @@ namespace Delight
                     _inputFieldExampleGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inputFieldExampleGroup2.Name = "InputFieldExampleGroup2";
+                    _inputFieldExampleGroup2.LineNumber = 3;
+                    _inputFieldExampleGroup2.LinePosition = 6;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inputFieldExampleGroup2, Delight.ElementOrientation.Vertical);
                     Delight.Group.SpacingProperty.SetDefault(_inputFieldExampleGroup2, new ElementSize(6f, ElementSizeUnit.Pixels));
@@ -369,6 +375,8 @@ namespace Delight
                     _inputFieldExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldExampleLabel1.Name = "InputFieldExampleLabel1";
+                    _inputFieldExampleLabel1.LineNumber = 4;
+                    _inputFieldExampleLabel1.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel1, "Single Line");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel1, Delight.AutoSize.Width);
@@ -392,6 +400,8 @@ namespace Delight
                     _inputFieldExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldExampleLabel2.Name = "InputFieldExampleLabel2";
+                    _inputFieldExampleLabel2.LineNumber = 5;
+                    _inputFieldExampleLabel2.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel2, "Normal");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel2, Delight.AutoSize.Width);
@@ -417,6 +427,8 @@ namespace Delight
                     _inputFieldExampleInputField1 = new Template(InputFieldTemplates.InputField);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField1.Name = "InputFieldExampleInputField1";
+                    _inputFieldExampleInputField1.LineNumber = 6;
+                    _inputFieldExampleInputField1.LinePosition = 8;
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField1, InputFieldExampleInputField1InputFieldPlaceholder);
@@ -441,6 +453,8 @@ namespace Delight
                     _inputFieldExampleInputField1InputFieldPlaceholder = new Template(InputFieldTemplates.InputFieldInputFieldPlaceholder);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField1InputFieldPlaceholder.Name = "InputFieldExampleInputField1InputFieldPlaceholder";
+                    _inputFieldExampleInputField1InputFieldPlaceholder.LineNumber = 0;
+                    _inputFieldExampleInputField1InputFieldPlaceholder.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField1InputFieldPlaceholder;
@@ -461,6 +475,8 @@ namespace Delight
                     _inputFieldExampleInputField1TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField1TextArea.Name = "InputFieldExampleInputField1TextArea";
+                    _inputFieldExampleInputField1TextArea.LineNumber = 0;
+                    _inputFieldExampleInputField1TextArea.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField1TextArea;
@@ -481,6 +497,8 @@ namespace Delight
                     _inputFieldExampleInputField1InputText = new Template(InputFieldTemplates.InputFieldInputText);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField1InputText.Name = "InputFieldExampleInputField1InputText";
+                    _inputFieldExampleInputField1InputText.LineNumber = 0;
+                    _inputFieldExampleInputField1InputText.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField1InputText;
@@ -501,6 +519,8 @@ namespace Delight
                     _inputFieldExampleLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldExampleLabel3.Name = "InputFieldExampleLabel3";
+                    _inputFieldExampleLabel3.LineNumber = 7;
+                    _inputFieldExampleLabel3.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel3, "Password");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel3, Delight.AutoSize.Default);
@@ -526,6 +546,8 @@ namespace Delight
                     _inputFieldExampleInputField2 = new Template(InputFieldTemplates.InputField);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField2.Name = "InputFieldExampleInputField2";
+                    _inputFieldExampleInputField2.LineNumber = 8;
+                    _inputFieldExampleInputField2.LinePosition = 8;
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField2, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.ContentTypeProperty.SetDefault(_inputFieldExampleInputField2, TMPro.TMP_InputField.ContentType.Password);
@@ -551,6 +573,8 @@ namespace Delight
                     _inputFieldExampleInputField2InputFieldPlaceholder = new Template(InputFieldTemplates.InputFieldInputFieldPlaceholder);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField2InputFieldPlaceholder.Name = "InputFieldExampleInputField2InputFieldPlaceholder";
+                    _inputFieldExampleInputField2InputFieldPlaceholder.LineNumber = 0;
+                    _inputFieldExampleInputField2InputFieldPlaceholder.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField2InputFieldPlaceholder;
@@ -571,6 +595,8 @@ namespace Delight
                     _inputFieldExampleInputField2TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField2TextArea.Name = "InputFieldExampleInputField2TextArea";
+                    _inputFieldExampleInputField2TextArea.LineNumber = 0;
+                    _inputFieldExampleInputField2TextArea.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField2TextArea;
@@ -591,6 +617,8 @@ namespace Delight
                     _inputFieldExampleInputField2InputText = new Template(InputFieldTemplates.InputFieldInputText);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField2InputText.Name = "InputFieldExampleInputField2InputText";
+                    _inputFieldExampleInputField2InputText.LineNumber = 0;
+                    _inputFieldExampleInputField2InputText.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField2InputText;
@@ -611,6 +639,8 @@ namespace Delight
                     _inputFieldExampleLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldExampleLabel4.Name = "InputFieldExampleLabel4";
+                    _inputFieldExampleLabel4.LineNumber = 9;
+                    _inputFieldExampleLabel4.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel4, "With placeholder content");
                     Delight.Label.AutoSizeProperty.SetDefault(_inputFieldExampleLabel4, Delight.AutoSize.Default);
@@ -636,6 +666,8 @@ namespace Delight
                     _inputFieldExampleInputField3 = new Template(InputFieldTemplates.InputField);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField3.Name = "InputFieldExampleInputField3";
+                    _inputFieldExampleInputField3.LineNumber = 10;
+                    _inputFieldExampleInputField3.LinePosition = 8;
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField3, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.InputFieldPlaceholderTemplateProperty.SetDefault(_inputFieldExampleInputField3, InputFieldExampleInputField3InputFieldPlaceholder);
@@ -660,6 +692,8 @@ namespace Delight
                     _inputFieldExampleInputField3InputFieldPlaceholder = new Template(InputFieldTemplates.InputFieldInputFieldPlaceholder);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField3InputFieldPlaceholder.Name = "InputFieldExampleInputField3InputFieldPlaceholder";
+                    _inputFieldExampleInputField3InputFieldPlaceholder.LineNumber = 0;
+                    _inputFieldExampleInputField3InputFieldPlaceholder.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField3InputFieldPlaceholder;
@@ -680,6 +714,8 @@ namespace Delight
                     _inputFieldExampleInputField3TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField3TextArea.Name = "InputFieldExampleInputField3TextArea";
+                    _inputFieldExampleInputField3TextArea.LineNumber = 0;
+                    _inputFieldExampleInputField3TextArea.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField3TextArea;
@@ -700,6 +736,8 @@ namespace Delight
                     _inputFieldExampleInputField3InputText = new Template(InputFieldTemplates.InputFieldInputText);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField3InputText.Name = "InputFieldExampleInputField3InputText";
+                    _inputFieldExampleInputField3InputText.LineNumber = 0;
+                    _inputFieldExampleInputField3InputText.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField3InputText;
@@ -720,6 +758,8 @@ namespace Delight
                     _inputFieldExampleImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _inputFieldExampleImage1.Name = "InputFieldExampleImage1";
+                    _inputFieldExampleImage1.LineNumber = 11;
+                    _inputFieldExampleImage1.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_inputFieldExampleImage1, Assets.Sprites["RainbowSquare"]);
                     Delight.Image.AlignmentProperty.SetDefault(_inputFieldExampleImage1, Delight.ElementAlignment.Left);
@@ -743,6 +783,8 @@ namespace Delight
                     _inputFieldExampleGroup3 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _inputFieldExampleGroup3.Name = "InputFieldExampleGroup3";
+                    _inputFieldExampleGroup3.LineNumber = 15;
+                    _inputFieldExampleGroup3.LinePosition = 6;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_inputFieldExampleGroup3, Delight.ElementOrientation.Vertical);
                     Delight.Group.SpacingProperty.SetDefault(_inputFieldExampleGroup3, new ElementSize(15f, ElementSizeUnit.Pixels));
@@ -765,6 +807,8 @@ namespace Delight
                     _inputFieldExampleLabel5 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldExampleLabel5.Name = "InputFieldExampleLabel5";
+                    _inputFieldExampleLabel5.LineNumber = 16;
+                    _inputFieldExampleLabel5.LinePosition = 8;
 #endif
                     Delight.Label.TextProperty.SetDefault(_inputFieldExampleLabel5, "Multi Line");
                     Delight.Label.AlignmentProperty.SetDefault(_inputFieldExampleLabel5, Delight.ElementAlignment.Top);
@@ -789,6 +833,8 @@ namespace Delight
                     _inputFieldExampleInputField4 = new Template(InputFieldTemplates.InputField);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField4.Name = "InputFieldExampleInputField4";
+                    _inputFieldExampleInputField4.LineNumber = 17;
+                    _inputFieldExampleInputField4.LinePosition = 8;
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.InputField.HeightProperty.SetDefault(_inputFieldExampleInputField4, new ElementSize(200f, ElementSizeUnit.Pixels));
@@ -815,6 +861,8 @@ namespace Delight
                     _inputFieldExampleInputField4InputFieldPlaceholder = new Template(InputFieldTemplates.InputFieldInputFieldPlaceholder);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField4InputFieldPlaceholder.Name = "InputFieldExampleInputField4InputFieldPlaceholder";
+                    _inputFieldExampleInputField4InputFieldPlaceholder.LineNumber = 0;
+                    _inputFieldExampleInputField4InputFieldPlaceholder.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField4InputFieldPlaceholder;
@@ -835,6 +883,8 @@ namespace Delight
                     _inputFieldExampleInputField4TextArea = new Template(InputFieldTemplates.InputFieldTextArea);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField4TextArea.Name = "InputFieldExampleInputField4TextArea";
+                    _inputFieldExampleInputField4TextArea.LineNumber = 0;
+                    _inputFieldExampleInputField4TextArea.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField4TextArea;
@@ -855,6 +905,8 @@ namespace Delight
                     _inputFieldExampleInputField4InputText = new Template(InputFieldTemplates.InputFieldInputText);
 #if UNITY_EDITOR
                     _inputFieldExampleInputField4InputText.Name = "InputFieldExampleInputField4InputText";
+                    _inputFieldExampleInputField4InputText.LineNumber = 0;
+                    _inputFieldExampleInputField4InputText.LinePosition = 0;
 #endif
                 }
                 return _inputFieldExampleInputField4InputText;
