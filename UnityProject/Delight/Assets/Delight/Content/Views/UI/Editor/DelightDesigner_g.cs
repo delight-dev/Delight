@@ -98,6 +98,7 @@ namespace Delight
             Grid1.Cell.SetValue(XmlEditorRegion, new CellIndex(1, 2));
             XmlEditor = new XmlEditor(this, XmlEditorRegion.Content, "XmlEditor", XmlEditorTemplate);
             XmlEditor.Edit.RegisterHandler(this, "OnEdit");
+            XmlEditor.SelectViewAtLine.RegisterHandler(this, "OnSelectViewAtLine");
 
             // binding <XmlEditor DesignerViews="{DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "XmlEditor", "DesignerViews" }, new List<Func<BindableObject>> { () => this, () => XmlEditor }), () => XmlEditor.DesignerViews = DesignerViews, () => { }, false));

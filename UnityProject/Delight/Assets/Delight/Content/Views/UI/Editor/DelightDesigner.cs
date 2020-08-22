@@ -43,6 +43,7 @@ namespace Delight
         private List<UIView> _selectedViews = new List<UIView>();
         private List<UIView> _raycastedViews = new List<UIView>();
         private int _selectedRaycastedIndex = 0;
+        private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
 
         public EventSystem _eventSystem;
         public EventSystem EventSystem
@@ -128,7 +129,7 @@ namespace Delight
             }
 
             // Mouse click - selection logic for selecting views in the designer
-            if (Input.GetMouseButtonDown(0) && 
+            if (Input.GetMouseButtonDown(0) &&
                 ScrollableContentRegion.ContainsMouse(Input.mousePosition) &&
                 _currentEditedView != null)
             {
@@ -138,6 +139,7 @@ namespace Delight
                 List<RaycastResult> results = new List<RaycastResult>();
                 EventSystem.RaycastAll(pointerEventData, results);
                 bool multiSelect = ctrlDown;
+                results.RemoveAll(x => x.gameObject.name == "SelectionIndicator"); // remove selection indicators from raycast
 
                 // get selected object
                 var selectedObject = results.Select(x => x.gameObject).FirstOrDefault(); // TODO here we might want to handle overlapping views
@@ -228,20 +230,42 @@ namespace Delight
         /// <summary>
         /// Updates selected views.
         /// </summary>
-        private void UpdateSelectedViews()
+        private void UpdateSelectedViews(bool scrollToLastSelectedView = true)
         {
-            var selectedView = _selectedViews.LastOrDefault();
-            if (selectedView != null)
+            var lastSelectedView = _selectedViews.LastOrDefault();
+            if (lastSelectedView != null)
             {
-                Selection.activeObject = selectedView.GameObject;
+                Selection.activeObject = lastSelectedView.GameObject;
                 Selection.objects = _selectedViews.Select(x => x.GameObject).ToArray();
-                EditorGUIUtility.PingObject(selectedView.GameObject);
+                EditorGUIUtility.PingObject(lastSelectedView.GameObject);
 
-                Debug.Log(String.Format("Selecting {0} ({1},{2})", selectedView.GetType().Name, selectedView.Template.LineNumber, selectedView.Template.LinePosition));
+                Debug.Log(String.Format("Selecting {0} ({1},{2})", lastSelectedView.GetType().Name, lastSelectedView.Template.LineNumber, lastSelectedView.Template.LinePosition));
             }
 
+            // destroy selection indicators not in new list
+            foreach (var selectionIndicator in _selectionIndicators.ToList())
+            {
+                if (!_selectedViews.Contains(selectionIndicator.SelectedViewInfo.View))
+                {
+                    selectionIndicator.Destroy();
+                    _selectionIndicators.Remove(selectionIndicator);
+                }
+            }
+
+            // add selection indicators for selected views
+            _selectedViews.ForEach(x =>
+            {
+                if (_selectionIndicators.Any(y => y.SelectedViewInfo.View == x))
+                    return; // indicator already exist
+
+                var selectionIndicator = new SelectionIndicator(ViewContentRegion);
+                selectionIndicator.SelectedViewInfo = new SelectedViewInfo { View = x };
+                selectionIndicator.Load();
+                _selectionIndicators.Add(selectionIndicator);
+            });
+
             // highlight selected views in the XML editor
-            XmlEditor.SetSelectedViews(_selectedViews);
+            XmlEditor.SetSelectedViews(_selectedViews, scrollToLastSelectedView);
         }
 
         /// <summary>
@@ -252,7 +276,7 @@ namespace Delight
             _selectedRaycastedIndex = 0;
             _raycastedViews.Clear();
             _selectedViews.Clear();
-            XmlEditor.SetSelectedViews(_selectedViews);
+            UpdateSelectedViews();
         }
 
         /// <summary>
@@ -321,6 +345,38 @@ namespace Delight
             if (AutoParse && needReparsing)
             {
                 ParseView();
+            }
+        }
+
+        /// <summary>
+        /// Called when the user selects a view in the XML editor. 
+        /// </summary>
+        public void OnSelectViewAtLine(int line)
+        {
+            var view = ViewContentRegion.Find<UIView>(x =>
+            {
+                if (x?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
+                    x.GetType().Name != _currentEditedView.ViewTypeName)
+                    return false;
+
+                int viewLineNumber = Math.Max(x.Template.LineNumber - 1, 0);
+                if (viewLineNumber != line)
+                    return false;
+
+                if (_selectedViews.Contains(x))
+                {
+                    _selectedViews.Remove(x);
+                }
+                else
+                {
+                    _selectedViews.Add(x);
+                }
+                return true;
+            });
+
+            if (view != null)
+            {
+                UpdateSelectedViews(false);
             }
         }
 

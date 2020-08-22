@@ -128,4 +128,11 @@ namespace Delight.Editor.Parser
     public class DesignerViewData : BindableCollection<DesignerView>
     {
     }
+
+    /// <summary>
+    /// Designer view collection.
+    /// </summary>
+    public class SelectedViewInfoData : BindableCollection<SelectedViewInfo>
+    {
+    }
 }

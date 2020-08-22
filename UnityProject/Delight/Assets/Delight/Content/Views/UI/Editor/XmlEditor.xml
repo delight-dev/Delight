@@ -1,11 +1,11 @@
 <XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
            BackgroundColor="#fbfbfb" EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True"
-           Edit="t:Action" AutoCompleteOptions="t:AutoCompleteOptionData" SelectedAutoCompleteOption="t:AutoCompleteOption"
-           DesignerViews="t:DesignerViewData" IsEditorView="True" IsReadOnly="t:bool = False">
+           Edit="t:Action" SelectViewAtLine="t:Action" AutoCompleteOptions="t:AutoCompleteOptionData" SelectedAutoCompleteOption="t:AutoCompleteOption"
+           DesignerViews="t:DesignerViewData" IsEditorView="True" IsReadOnly="t:bool = False"> 
   <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False"
                     HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
                     HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"
-                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf"
+                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf" 
                     HorizontalScrollbarBarMargin="3,5,3,5" VerticalScrollbarBarMargin="5,3,5,3"
                     UnblockDragEventsInChildren="False">
     <Region Id="XmlEditRegion" Width="500" Height="500" Alignment="TopLeft">

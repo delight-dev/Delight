@@ -2943,6 +2943,7 @@
 
   <xs:simpleType name="Style_ListItem">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="UnselectableListItem" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -4699,157 +4700,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
-    <xs:attribute name="SelectionTabDefaultWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabIsToggleButton" type="xs:string" />
-    <xs:attribute name="SelectionTabIsDisabled" type="xs:string" />
-    <xs:attribute name="SelectionTabToggleValue" type="xs:string" />
-    <xs:attribute name="SelectionTabTextPadding" type="xs:string" />
-    <xs:attribute name="SelectionTabCanToggleOn" type="xs:string" />
-    <xs:attribute name="SelectionTabCanToggleOff" type="xs:string" />
-    <xs:attribute name="SelectionTabIsMouseOver" type="xs:string" />
-    <xs:attribute name="SelectionTabIsPressed" type="xs:string" />
-    <xs:attribute name="SelectionTabAutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="SelectionTabTextOffset" type="xs:string" />
-    <xs:attribute name="SelectionTabIsCloseButton" type="xs:string" />
-    <xs:attribute name="SelectionTabIsBackButton" type="xs:string" />
-    <xs:attribute name="SelectionTabDisplayLabel" type="xs:string" />
-    <xs:attribute name="SelectionTabMaxWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelAutoSize" type="Enum_AutoSize" />
-    <xs:attribute name="SelectionTabAutoSizeTextContainer" type="xs:string" />
-    <xs:attribute name="SelectionTabMaskOffset" type="xs:string" />
-    <xs:attribute name="SelectionTabText" type="xs:string" />
-    <xs:attribute name="SelectionTabIsRightToLeftText" type="xs:string" />
-    <xs:attribute name="SelectionTabFont" type="Asset_TMP_FontAsset" />
-    <xs:attribute name="SelectionTabFontSharedMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="SelectionTabFontSharedMaterials" type="xs:string" />
-    <xs:attribute name="SelectionTabFontMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="SelectionTabFontMaterials" type="xs:string" />
-    <xs:attribute name="SelectionTabFontColor" type="xs:string" />
-    <xs:attribute name="SelectionTabTextMeshProUGUIAlpha" type="xs:string" />
-    <xs:attribute name="SelectionTabEnableVertexGradient" type="xs:string" />
-    <xs:attribute name="SelectionTabColorGradient" type="xs:string" />
-    <xs:attribute name="SelectionTabColorGradientPreset" type="Asset_TMP_ColorGradientAsset" />
-    <xs:attribute name="SelectionTabSpriteAsset" type="Asset_TMP_SpriteAsset" />
-    <xs:attribute name="SelectionTabTintAllSprites" type="xs:string" />
-    <xs:attribute name="SelectionTabOverrideColorTags" type="xs:string" />
-    <xs:attribute name="SelectionTabFaceColor" type="xs:string" />
-    <xs:attribute name="SelectionTabOutlineColor" type="xs:string" />
-    <xs:attribute name="SelectionTabOutlineWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabFontSize" type="xs:string" />
-    <xs:attribute name="SelectionTabFontWeight" type="Enum_FontWeight" />
-    <xs:attribute name="SelectionTabEnableAutoSizing" type="xs:string" />
-    <xs:attribute name="SelectionTabFontSizeMin" type="xs:string" />
-    <xs:attribute name="SelectionTabFontSizeMax" type="xs:string" />
-    <xs:attribute name="SelectionTabFontStyle" type="Enum_FontStyles" />
-    <xs:attribute name="SelectionTabTextAlignment" type="Enum_TextAlignmentOptions" />
-    <xs:attribute name="SelectionTabCharacterSpacing" type="xs:string" />
-    <xs:attribute name="SelectionTabWordSpacing" type="xs:string" />
-    <xs:attribute name="SelectionTabLineSpacing" type="xs:string" />
-    <xs:attribute name="SelectionTabLineSpacingAdjustment" type="xs:string" />
-    <xs:attribute name="SelectionTabParagraphSpacing" type="xs:string" />
-    <xs:attribute name="SelectionTabCharacterWidthAdjustment" type="xs:string" />
-    <xs:attribute name="SelectionTabEnableWordWrapping" type="xs:string" />
-    <xs:attribute name="SelectionTabWordWrappingRatios" type="xs:string" />
-    <xs:attribute name="SelectionTabOverflowMode" type="Enum_TextOverflowModes" />
-    <xs:attribute name="SelectionTabLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="SelectionTabIsLinkedTextComponent" type="xs:string" />
-    <xs:attribute name="SelectionTabEnableKerning" type="xs:string" />
-    <xs:attribute name="SelectionTabExtraPadding" type="xs:string" />
-    <xs:attribute name="SelectionTabRichText" type="xs:string" />
-    <xs:attribute name="SelectionTabParseCtrlCharacters" type="xs:string" />
-    <xs:attribute name="SelectionTabIsOverlay" type="xs:string" />
-    <xs:attribute name="SelectionTabIsOrthographic" type="xs:string" />
-    <xs:attribute name="SelectionTabEnableCulling" type="xs:string" />
-    <xs:attribute name="SelectionTabIgnoreRectMaskCulling" type="xs:string" />
-    <xs:attribute name="SelectionTabIgnoreVisibility" type="xs:string" />
-    <xs:attribute name="SelectionTabHorizontalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="SelectionTabVerticalMapping" type="Enum_TextureMappingOptions" />
-    <xs:attribute name="SelectionTabMappingUvLineOffset" type="xs:string" />
-    <xs:attribute name="SelectionTabRenderMode" type="Enum_TextRenderFlags" />
-    <xs:attribute name="SelectionTabGeometrySortingOrder" type="Enum_VertexSortingOrder" />
-    <xs:attribute name="SelectionTabVertexBufferAutoSizeReduction" type="xs:string" />
-    <xs:attribute name="SelectionTabFirstVisibleCharacter" type="xs:string" />
-    <xs:attribute name="SelectionTabMaxVisibleCharacters" type="xs:string" />
-    <xs:attribute name="SelectionTabMaxVisibleWords" type="xs:string" />
-    <xs:attribute name="SelectionTabMaxVisibleLines" type="xs:string" />
-    <xs:attribute name="SelectionTabUseMaxVisibleDescender" type="xs:string" />
-    <xs:attribute name="SelectionTabPageToDisplay" type="xs:string" />
-    <xs:attribute name="SelectionTabTextMargin" type="xs:string" />
-    <xs:attribute name="SelectionTabHavePropertiesChanged" type="xs:string" />
-    <xs:attribute name="SelectionTabIsUsingLegacyAnimationComponent" type="xs:string" />
-    <xs:attribute name="SelectionTabIsVolumetricText" type="xs:string" />
-    <xs:attribute name="SelectionTabOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="SelectionTabMaskable" type="xs:string" />
-    <xs:attribute name="SelectionTabIsMaskingGraphic" type="xs:string" />
-    <xs:attribute name="SelectionTabRaycastTarget" type="xs:string" />
-    <xs:attribute name="SelectionTabMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="SelectionTabLabelWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelHeight" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelOverrideWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelOverrideHeight" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelScale" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelAlignment" type="Enum_ElementAlignment" />
-    <xs:attribute name="SelectionTabLabelMargin" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelOffset" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelOffsetFromParent" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelPivot" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelDisableLayoutUpdate" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelAlpha" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelIsVisible" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
-    <xs:attribute name="SelectionTabLabelUseFastShader" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelIgnoreFlip" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelRotation" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelPosition" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelGameObject" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelEnableScriptEvents" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelIgnoreObject" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelIsActive" type="xs:string" />
-    <xs:attribute name="SelectionTabLabelLoadMode" type="Enum_LoadMode" />
-    <xs:attribute name="SelectionTabMaskContent" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="SelectionTabBackgroundOverrideSprite" type="Asset_SpriteAsset" />
-    <xs:attribute name="SelectionTabBackgroundType" type="Enum_Type" />
-    <xs:attribute name="SelectionTabBackgroundPreserveAspect" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundFillCenter" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundFillMethod" type="Enum_FillMethod" />
-    <xs:attribute name="SelectionTabBackgroundFillAmount" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundFillClockwise" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundFillOrigin" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundAlphaHitTestMinimumThreshold" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundUseSpriteMesh" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundPixelsPerUnitMultiplier" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="SelectionTabBackgroundOnCullStateChanged" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundMaskable" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundIsMaskingGraphic" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundColor" type="xs:string" />
-    <xs:attribute name="SelectionTabBackgroundRaycastTarget" type="xs:string" />
-    <xs:attribute name="SelectionTabWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabHeight" type="xs:string" />
-    <xs:attribute name="SelectionTabOverrideWidth" type="xs:string" />
-    <xs:attribute name="SelectionTabOverrideHeight" type="xs:string" />
-    <xs:attribute name="SelectionTabScale" type="xs:string" />
-    <xs:attribute name="SelectionTabAlignment" type="Enum_ElementAlignment" />
-    <xs:attribute name="SelectionTabMargin" type="xs:string" />
-    <xs:attribute name="SelectionTabOffset" type="xs:string" />
-    <xs:attribute name="SelectionTabOffsetFromParent" type="xs:string" />
-    <xs:attribute name="SelectionTabPivot" type="xs:string" />
-    <xs:attribute name="SelectionTabDisableLayoutUpdate" type="xs:string" />
-    <xs:attribute name="SelectionTabAlpha" type="xs:string" />
-    <xs:attribute name="SelectionTabIsVisible" type="xs:string" />
-    <xs:attribute name="SelectionTabRaycastBlockMode" type="Enum_RaycastBlockMode" />
-    <xs:attribute name="SelectionTabUseFastShader" type="xs:string" />
-    <xs:attribute name="SelectionTabBubbleNotifyChildLayoutChanged" type="xs:string" />
-    <xs:attribute name="SelectionTabIgnoreFlip" type="xs:string" />
-    <xs:attribute name="SelectionTabRotation" type="xs:string" />
-    <xs:attribute name="SelectionTabPosition" type="xs:string" />
-    <xs:attribute name="SelectionTabGameObject" type="xs:string" />
-    <xs:attribute name="SelectionTabEnableScriptEvents" type="xs:string" />
-    <xs:attribute name="SelectionTabIgnoreObject" type="xs:string" />
-    <xs:attribute name="SelectionTabIsActive" type="xs:string" />
-    <xs:attribute name="SelectionTabLoadMode" type="Enum_LoadMode" />
+    <xs:attribute name="SelectedViewInfo" type="xs:string" />
     <xs:attribute name="Mask" type="xs:string" />
     <xs:attribute name="MaskContent" type="xs:string" />
     <xs:attribute name="ImageComponent" type="xs:string" />
@@ -7762,6 +7613,7 @@
     <xs:attribute name="XmlText" type="xs:string" />
     <xs:attribute name="IsFocused" type="xs:string" />
     <xs:attribute name="Edit" type="xs:string" />
+    <xs:attribute name="SelectViewAtLine" type="xs:string" />
     <xs:attribute name="AutoCompleteOptions" type="xs:string" />
     <xs:attribute name="SelectedAutoCompleteOption" type="xs:string" />
     <xs:attribute name="DesignerViews" type="xs:string" />

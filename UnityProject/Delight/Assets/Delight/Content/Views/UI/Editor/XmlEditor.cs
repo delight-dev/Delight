@@ -214,6 +214,16 @@ namespace Delight
                         ActivateCaret();
                         UpdateTextAndCaret(false);
                     }
+                    else if (ctrlDown && !shiftDown)
+                    {
+                        // handle selection logic
+                        GetMouseCaretPosition(out var _, out var clickY);
+
+                        GetViewAtCaret();
+
+                        // select view at line
+                        SelectViewAtLine?.Invoke(this, clickY);
+                    }
                 }
             }
 
@@ -338,20 +348,12 @@ namespace Delight
         }
 
         /// <summary>
-        /// Refreshes text editor.
-        /// </summary>
-        public void Refresh()
-        {
-            
-        }
-
-        /// <summary>
         /// Highlight selected views in the editor.
         /// </summary>
-        public void SetSelectedViews(List<UIView> selectedViews)
+        public void SetSelectedViews(List<UIView> selectedViews, bool scrollToLastSelectedView = true)
         {
             _selectedViews = selectedViews;
-            GenerateTextHighlightMeshes(true);
+            GenerateTextHighlightMeshes(scrollToLastSelectedView);
         }
 
         /// <summary>
@@ -1955,7 +1957,7 @@ namespace Delight
                         }
 
                         // scroll to last highlighted view
-                        if (selectedView == _selectedViews.Last())
+                        if (scrollToLastSelectedView && selectedView == _selectedViews.Last())
                         {
                             // check if highlighted view is outside viewport and update scroll position
                             float lineOffsetY = startLine * LineHeight;

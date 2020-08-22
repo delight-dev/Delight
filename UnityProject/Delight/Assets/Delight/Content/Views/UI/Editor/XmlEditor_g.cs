@@ -94,6 +94,7 @@ namespace Delight
             dependencyProperties.Add(XmlTextProperty);
             dependencyProperties.Add(IsFocusedProperty);
             dependencyProperties.Add(EditProperty);
+            dependencyProperties.Add(SelectViewAtLineProperty);
             dependencyProperties.Add(AutoCompleteOptionsProperty);
             dependencyProperties.Add(SelectedAutoCompleteOptionProperty);
             dependencyProperties.Add(DesignerViewsProperty);
@@ -168,6 +169,13 @@ namespace Delight
         {
             get { return EditProperty.GetValue(this); }
             set { EditProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> SelectViewAtLineProperty = new DependencyProperty<ViewAction>("SelectViewAtLine", () => new ViewAction());
+        public ViewAction SelectViewAtLine
+        {
+            get { return SelectViewAtLineProperty.GetValue(this); }
+            set { SelectViewAtLineProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.AutoCompleteOptionData> AutoCompleteOptionsProperty = new DependencyProperty<Delight.AutoCompleteOptionData>("AutoCompleteOptions");
