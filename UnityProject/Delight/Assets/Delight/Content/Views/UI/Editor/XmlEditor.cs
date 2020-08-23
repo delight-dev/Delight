@@ -16,6 +16,7 @@ using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using Delight.Editor.Parser;
 using UnityEditor;
+using JetBrains.Annotations;
 #endregion
 
 namespace Delight
@@ -144,7 +145,7 @@ namespace Delight
             var scrollableContentOffset = ScrollableRegion.GetContentOffset();
             XmlEditLeftMargin.Offset.Left = -scrollableContentOffset.x;
 
-            bool ctrlDown = (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && !Input.GetKey(KeyCode.AltGr);
+            bool ctrlDown = (Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl)) && !Input.GetKey(KeyCode.AltGr);
             bool scrollEngaged = ctrlDown || Input.GetMouseButton(2);
             bool mouseButtonDown = false;
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
@@ -257,7 +258,7 @@ namespace Delight
                 if (Mathf.Abs(delta.x) > 3 || Mathf.Abs(delta.y) > 3)
                 {
                     _tooltipDeactivatedUntilMouseMove = false;
-                }                
+                }
             }
 
             // handle tooltip hovers
@@ -809,7 +810,7 @@ namespace Delight
                             }
                         }
 
-                        if(IsEditingPropertyValue() || IsEditingViewNameThatExist())
+                        if (IsEditingPropertyValue() || IsEditingViewNameThatExist())
                         {
                             needReparse = true;
                         }
@@ -1782,7 +1783,7 @@ namespace Delight
                         inBinding = false;
                         inEmbeddedCode = false;
                         break;
-                    
+
                     case '$':
                         if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
                         {
@@ -1885,7 +1886,7 @@ namespace Delight
                 {
                     characterColor = CodeColor;
                 }
-                
+
                 if (inBinding)
                 {
                     characterColor = BindingColor;
@@ -2127,7 +2128,7 @@ namespace Delight
                                 }
                                 break;
                             }
-                            
+
                             if (propertyNameAtCaret == "StateAnimations")
                             {
                                 // populate with state animations
