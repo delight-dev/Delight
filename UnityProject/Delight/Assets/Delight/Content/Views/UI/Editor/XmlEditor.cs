@@ -345,6 +345,16 @@ namespace Delight
                 }
             }
 
+            // F1 opens help section
+            if (Input.GetKeyDown(KeyCode.F1))
+            {
+                var viewName = GetViewAtCaret();
+                if (!string.IsNullOrWhiteSpace(viewName))
+                {
+                    Application.OpenURL(String.Format("https://delight-dev.github.io/Api/Views/{0}.html", viewName));
+                }
+            }
+
             _previousMousePosition = Input.mousePosition;
         }
 
