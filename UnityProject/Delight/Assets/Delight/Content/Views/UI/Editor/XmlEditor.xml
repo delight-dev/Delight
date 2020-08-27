@@ -22,7 +22,7 @@
           <!-- Auto-complete -->
           <Region Id="AutoCompleteBox" Width="300" Height="150" Alignment="TopLeft" BackgroundColor="#E2E2E2" IsVisible="False">
             <List Id="AutoCompleteOptionsList" Items="{option in AutoCompleteOptions}" IsScrollable="True" Width="100%" Height="150" BackgroundColor="#E2E2E2"
-                  SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True" TemplateSelector="AutoCompleteOptionSelector">
+                  SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True" TemplateSelector="AutoCompleteOptionSelector"> 
 
               <!--Selected-BackgroundColor="#C6C6C6"-->
               <ListItem Id="DefaultOptionItem" Width="100%" Height="20" BackgroundColor="#E2E2E2" Selected-BackgroundColor="#C8C8C8" Click="AutoCompleteOptionSelected(option)">
