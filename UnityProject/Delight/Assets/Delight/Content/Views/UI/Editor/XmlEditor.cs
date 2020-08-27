@@ -2556,10 +2556,17 @@ namespace Delight
             var autoCompleteType = _autoCompleteType;
             DeactivateAutoComplete();
 
-            if (autoCompleteType == XmlSyntaxElement.PropertyName || autoCompleteType == XmlSyntaxElement.EndViewName)
+            if (autoCompleteType == XmlSyntaxElement.PropertyName || autoCompleteType == XmlSyntaxElement.EndViewName || 
+                autoCompleteType == XmlSyntaxElement.EndView)
             {
                 // when completing property name add ="" to the end and activate auto-complete for property values
-                _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + option.Text + "=\"\"" + _lines[_caretY].Substring(_autoCompleteWordTargetX);
+                var rightOfAutoComplete = _lines[_caretY].Substring(_autoCompleteWordTargetX);
+                string autoCompleteText = option.Text;
+                if (!rightOfAutoComplete.StartsWith("=\""))
+                {
+                    autoCompleteText += "=\"\"";
+                }
+                _lines[_caretY] = _lines[_caretY].Substring(0, _autoCompleteWordOriginX) + autoCompleteText + rightOfAutoComplete;
                 _caretX = _autoCompleteWordOriginX + option.Text.Length + 2;
                 _autoCompleteType = XmlSyntaxElement.PropertyValue;
                 _caretElement = XmlSyntaxElement.PropertyValue;
