@@ -538,76 +538,6 @@ namespace Delight
             try
             {
                 rootXmlElement = XElement.Parse(xml, LoadOptions.SetLineInfo);
-
-                // check if root element has been renamed
-                // if root element has changed, then rename the view. 
-                var viewName = rootXmlElement.Name.LocalName;
-                if (!viewName.IEquals(_currentEditedView.Name))
-                {
-                    var changedView = _currentEditedView;
-
-                    // check if name already exist
-                    int i = 1;
-                    var name = viewName;
-                    bool renameThisViewXml = false;
-                    while (true)
-                    {
-                        if (!DesignerViews.Any(x => x.Name == viewName))
-                        {
-                            break;
-                        }
-
-                        renameThisViewXml = true;
-                        viewName = name + i;
-                        ++i;
-                    }
-
-                    // rename view
-                    var oldViewName = changedView.Name;
-                    changedView.Name = viewName;
-                    changedView.IsRenamed = true;
-                    if (String.IsNullOrEmpty(changedView.OriginalName))
-                    {
-                        changedView.OriginalName = oldViewName;
-                    }
-
-                    // update all references to the view 
-                    foreach (var view in DesignerViews)
-                    {
-                        if (view == changedView && !renameThisViewXml)
-                            continue;
-
-                        var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
-                            File.ReadAllText(view.FilePath);
-
-                        // see if the view references the old view and update the xml
-                        // the regex pattern below matches start/end tags with the specified view name
-                        bool foundMatch = false;
-                        var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
-                        var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
-                        {
-                            foundMatch = true;
-                            return viewName;
-                        });
-
-                        if (foundMatch)
-                        {
-                            // update XML and add to list of changed views
-                            replacedXml = StripNamespaceAndSchema(replacedXml);
-
-                            view.XmlText = replacedXml;
-                            view.IsDirty = true;
-                            view.IsRuntimeParsed = true;
-
-                            if (view == changedView)
-                            {
-                                // update current editor XML
-                                XmlEditor.XmlText = view.XmlText;
-                            }
-                        }
-                    }
-                }
-
             }
             catch (Exception e)
             {
@@ -1145,7 +1075,7 @@ namespace Delight
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
                             List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
-                            CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties);
+                            CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, true);
 
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
@@ -1155,14 +1085,30 @@ namespace Delight
                             {
                                 try
                                 {
+                                    // set template items on parent before execution
+                                    parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                    foreach (var templateItem in templateItems)
+                                    {
+                                        if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                        {
+                                            parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                        }
+                                        else
+                                        {
+                                            parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                        }
+                                    }
+
                                     // uses roslyn to evaluate script at runtime
-                                    return (await script.RunAsync(globals: parent)).ReturnValue;
+                                    var result = (await script.RunAsync(globals: parent)).ReturnValue;
+                                    parent.TemplateItems = null;
+                                    return result;
                                 }
                                 catch (Exception e)
                                 {
                                     ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
                                         String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"{2}\">. Compilation error thrown: {3}",
-                                            childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString, e.InnerException.Message));
+                                            childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString, e.ToString()));
                                     return null;
                                 }
                             };
@@ -1183,6 +1129,7 @@ namespace Delight
 
                         childView.ContentTemplates.Add(new ContentTemplate(x =>
                         {
+                            ti.ContentTemplateData = x;
                             var view = InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId, x).FirstOrDefault();
                             if (view != null)
                             {
@@ -1208,6 +1155,8 @@ namespace Delight
         /// </summary>
         private Script<object> GetCSharpScript(Type parentType, string expression)
         {
+            Debug.Log("Creating script for expression: " + expression);
+
             // cache scripts so they don't have to be re-compiled
             if (!_cachedScripts.TryGetValue(parentType, out var scripts))
             {
