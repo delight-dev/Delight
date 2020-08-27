@@ -33,7 +33,7 @@ namespace Delight
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
                 var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
 
-                // binding <Label Text="{level.Name}">
+                // binding <Label Text="$ {level.Name}">
                 listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.DemoLevel) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiLevel.Item as Delight.DemoLevel).Name, () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiLevel);

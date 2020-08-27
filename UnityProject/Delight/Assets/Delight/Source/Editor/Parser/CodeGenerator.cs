@@ -1537,7 +1537,7 @@ namespace Delight.Editor.Parser
 
                         // generate binding path to source
                         List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
-                        GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties);
+                        GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, false);
 
                         // generate binding path to target
                         var targetPath = new List<string>();
@@ -1680,7 +1680,10 @@ namespace Delight.Editor.Parser
             }
         }
 
-        public static void GetBindingSourceProperties(string fileName, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties)
+        /// <summary>
+        /// Gets binding source properties.
+        /// </summary>
+        public static void GetBindingSourceProperties(string fileName, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
         {
             sourceBindingPathObjects = new List<string>();
             convertedSourceProperties = new List<string>();
@@ -1786,6 +1789,20 @@ namespace Delight.Editor.Parser
                         {
                             // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
                             sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                        }
+                    }
+
+                    // replace tiItem with TemplateItems["tiItem"] for runtime bindings
+                    if (isRuntime)
+                    {
+                        for (int i = 0; i < sourcePath.Count; ++i)
+                        {
+                            sourcePath[i] = sourcePath[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
+                        }
+                        
+                        for (int i = 0; i < sourceGetters.Count; ++i)
+                        {
+                            sourceGetters[i] = sourceGetters[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
                         }
                     }
                 }

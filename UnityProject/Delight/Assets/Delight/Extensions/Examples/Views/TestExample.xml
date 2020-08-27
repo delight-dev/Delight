@@ -3,7 +3,7 @@
   <Group> 
     <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
       <ListItem>
-        <Label Text="{level.Name}" /> 
+        <Label Text="$ {level.Name}" /> 
       </ListItem>
     </List>
     <Button Text="Test" Click="Test" /> 
