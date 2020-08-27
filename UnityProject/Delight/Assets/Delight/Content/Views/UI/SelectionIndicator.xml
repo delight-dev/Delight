@@ -1,3 +1,3 @@
 <SelectionIndicator xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../Delight.xsd" BasedOn="UIImageView"
-                    EnableScriptEvents="True" SelectedViewInfo="t:SelectedViewInfo" DisableLayoutUpdate="True" IsVisible="False" RaycastBlockMode="Never">
+                    EnableScriptEvents="True" SelectedViewInfo="t:SelectedViewInfo" DisableLayoutUpdate="True" IsVisible="False" RaycastBlockMode="Never" IsLocked="True">
 </SelectionIndicator>

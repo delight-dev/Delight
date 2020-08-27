@@ -52,6 +52,7 @@ namespace Delight
         public static float MaxAutoCompleteBoxHeight = 150;
         public static Regex ViewNameStartRegex = new Regex(@"(?<=<)[A-Za-z0-9_]+(?=[\s>/])");
         public static Regex QuoteContentRegex = new Regex(@"""(\\""|[^""])*"""); // "(\\"|[^"])*"
+        public static int UndoHistoryLimit = 30;
 
         private List<string> _lines = new List<string>();
         private int _caretX;
@@ -87,6 +88,8 @@ namespace Delight
         private Vector3 _mouseDownPosition;
         private bool _clickedInsideEditor;
         private List<UIView> _selectedViews = new List<UIView>();
+        private List<XmlEditorUndoInfo> _undoInfo = new List<XmlEditorUndoInfo>();
+        private int _undoCount = 0;
 
         #endregion
 
@@ -106,6 +109,7 @@ namespace Delight
                     {
                         _lines = new List<string>(XmlText.GetLines());
                     }
+                    AddUndoInfo(true);
                     OnEditorChanged();
                     break;
             }
@@ -1252,7 +1256,7 @@ namespace Delight
                 }
             }
 
-            OnTextOrCaretChanged(textChanged, activateAutoComplete, needReparse);
+            OnTextOrCaretChanged(textChanged, activateAutoComplete, needReparse, false);
         }
 
         /// <summary>
@@ -1286,8 +1290,13 @@ namespace Delight
         /// <summary>
         /// Called when text or caret has changed.
         /// </summary>
-        private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete, bool needReparse)
+        private void OnTextOrCaretChanged(bool textChanged, bool activateAutoComplete, bool needReparse, bool skipAddUndoInfo)
         {
+            if (textChanged && !skipAddUndoInfo)
+            {
+                AddUndoInfo(needReparse);
+            }
+
             DeactivateTooltip(true);
 
             ActivateCaret();
@@ -1452,16 +1461,33 @@ namespace Delight
         /// </summary>
         private void HandleControlInput()
         {
-            var inputString = Input.inputString;
             bool updateText = false;
             bool needReparse = false;
+            bool skipAddUndoInfo = false;
+            var repeatKeyDown = KeyCode.None;
 
             // key has been pressed in previous frame
             if (_trackKeyDown != KeyCode.None)
             {
-                _trackKeyDown = KeyCode.None;
-                _keyDownDelayTimeElapsed = 0;
-                _keyDownRepeatTimeElapsed = 0;
+                if (Input.GetKey(_trackKeyDown))
+                {
+                    _keyDownDelayTimeElapsed += Time.deltaTime;
+                    if (_keyDownDelayTimeElapsed > KeyRepeatDelay)
+                    {
+                        _keyDownRepeatTimeElapsed += Time.deltaTime;
+                    }
+                    if (_keyDownRepeatTimeElapsed > KeyRepeatRate)
+                    {
+                        _keyDownRepeatTimeElapsed = 0;
+                        repeatKeyDown = _trackKeyDown;
+                    }
+                }
+                else
+                {
+                    _trackKeyDown = KeyCode.None;
+                    _keyDownDelayTimeElapsed = 0;
+                    _keyDownRepeatTimeElapsed = 0;
+                }
             }
 
             // CTRL+C - copy
@@ -1576,10 +1602,90 @@ namespace Delight
                 ActivateAutoComplete();
             }
 
+            // CTRL+Z - undo
+            else if ((Input.GetKeyDown(KeyCode.Z) || repeatKeyDown == KeyCode.Z) && !IsReadOnly)
+            {
+                Undo();
+                skipAddUndoInfo = true;
+                _trackKeyDown = KeyCode.Z;
+            }
+
+            // CTRL+Y - redo
+            else if ((Input.GetKeyDown(KeyCode.Y) || repeatKeyDown == KeyCode.Y) && !IsReadOnly)
+            {
+                Redo();
+                skipAddUndoInfo = true;
+                _trackKeyDown = KeyCode.Y;
+            }
+
             if (updateText)
             {
+                if (!skipAddUndoInfo)
+                {
+                    AddUndoInfo(needReparse);
+                }
                 OnEditorChanged();
                 Edit.Invoke(this, needReparse);
+            }
+        }
+
+        /// <summary>
+        /// Undos last text edit.
+        /// </summary>
+        private void Undo()
+        {
+            if (_undoCount > 1)
+            {
+                --_undoCount;
+                var undo = _undoInfo[_undoCount - 1];
+                _lines = undo.Lines.ToList();
+                _caretX = undo.CaretX;
+                _caretY = undo.CaretY;
+                OnTextOrCaretChanged(true, false, undo.NeedReparse, true);
+            }
+        }
+
+        /// <summary>
+        /// Redos last text edit.
+        /// </summary>
+        private void Redo()
+        {
+            if (_undoCount < _undoInfo.Count)
+            {
+                ++_undoCount;
+                var redo = _undoInfo[_undoCount - 1];
+                _lines = redo.Lines.ToList();
+                _caretX = redo.CaretX;
+                _caretY = redo.CaretY;
+                OnTextOrCaretChanged(true, false, redo.NeedReparse, true);
+            }
+        }
+
+        /// <summary>
+        /// Adds undo info.
+        /// </summary>
+        private void AddUndoInfo(bool needReparse)
+        {
+            if (_undoCount != _undoInfo.Count)
+            {
+                _undoInfo = _undoInfo.Take(_undoCount).ToList();
+            }
+
+            _undoInfo.Add(new XmlEditorUndoInfo
+            {
+                Lines = _lines.ToList(),
+                NeedReparse = needReparse,
+                CaretX = _caretX,
+                CaretY = _caretY
+            });
+
+            if (_undoCount >= UndoHistoryLimit)
+            {
+                _undoInfo.RemoveAt(0);
+            }
+            else
+            {
+                ++_undoCount;
             }
         }
 
@@ -1606,6 +1712,8 @@ namespace Delight
             _lines.Clear();
             _lines.Add(string.Empty);
             _hasSelection = false;
+            _undoInfo.Clear();
+            _undoCount = 0;
             ScrollableRegion.SetScrollPosition(0, 0);
 
             OnEditorChanged();
@@ -2433,7 +2541,7 @@ namespace Delight
         public void AutoCompleteOptionSelected(AutoCompleteOption option)
         {
             FinishAutoComplete();
-            OnTextOrCaretChanged(true, false, true);
+            OnTextOrCaretChanged(true, false, true, false);
         }
 
         /// <summary>
