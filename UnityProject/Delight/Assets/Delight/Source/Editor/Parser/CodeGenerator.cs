@@ -450,6 +450,7 @@ namespace Delight.Editor.Parser
             if (viewType == null)
                 return;
 
+            var handlersDictionary= new Dictionary<string, string>();
             var sbHandlers = new StringBuilder();
             var methods = viewType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -524,15 +525,23 @@ namespace Delight.Editor.Parser
                 sbHandlers.AppendLine(2, "public void {0}({1})", actionName, parameters);
                 sbHandlers.AppendLine(2, "{{");
                 sbHandlers.AppendLine(2, "}}");
-                ++newActionAssignmentCount;
+
+                string identifyingString = String.Format("public void {0}(", actionName);
+                if (!handlersDictionary.ContainsKey(identifyingString))
+                {
+                    handlersDictionary.Add(identifyingString, sbHandlers.ToString());
+                    ++newActionAssignmentCount;
+                }
+
+                sbHandlers.Clear();                
             }
 
             if (newActionAssignmentCount > 0)
             {
-                // write file
                 var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
                 var sourceFile = String.Format("{0}/{1}.cs", dir, viewObject.Name);
 
+                // write file
                 if (!File.Exists(sourceFile))
                 {
                     // generate new source file 
@@ -550,7 +559,7 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("{");
                     sb.AppendLine("    public partial class {0}", viewObject.TypeName);
                     sb.AppendLine("    {");
-                    sb.Append(sbHandlers.ToString());
+                    sb.Append(string.Concat(handlersDictionary.Values));
                     sb.AppendLine("    }");
                     sb.AppendLine("}");
 
@@ -579,9 +588,25 @@ namespace Delight.Editor.Parser
                         classContentIndex += usingStr.Length;
                     }
 
-                    // insert handlers
-                    fileContent = fileContent.Insert(classContentIndex + 1, Environment.NewLine + sbHandlers.ToString());
-                    File.WriteAllText(sourceFile, fileContent);
+                    // insert missing handlers
+                    var sb = new StringBuilder();
+                    foreach (var handlerKv in handlersDictionary)
+                    {
+                        if (fileContent.IndexOf(handlerKv.Key) >= 0)
+                        {
+                            // handler already exists
+                            continue;
+                        }
+
+                        sb.Append(handlerKv.Value);
+                    }
+
+                    var newHandlers = sb.ToString();
+                    if (!String.IsNullOrWhiteSpace(newHandlers))
+                    {
+                        fileContent = fileContent.Insert(classContentIndex + 1, Environment.NewLine + sb.ToString());
+                        File.WriteAllText(sourceFile, fileContent);
+                    }
                 }
             }
         }
