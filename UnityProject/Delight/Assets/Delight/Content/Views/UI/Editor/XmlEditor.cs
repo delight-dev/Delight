@@ -1697,7 +1697,6 @@ namespace Delight
             base.AfterLoad();
             //XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
             _caretCanvasRenderer = Caret.GameObject.GetComponent<CanvasRenderer>();
-
             ClearEditor();
         }
 
@@ -1796,6 +1795,7 @@ namespace Delight
             bool inBinding = false;
             bool lastCharacterInBinding = false;
 
+            // if caret is at the end of the line use the previous character as indicator for the element we're at
             if (_lines[_caretY].Length == _caretX)
             {
                 --caretX;
@@ -1873,16 +1873,16 @@ namespace Delight
                         break;
 
                     case ' ':
-                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue || xmlSyntaxElement == XmlSyntaxElement.Comment || xmlSyntaxElement == XmlSyntaxElement.Undefined)
+                        if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue || xmlSyntaxElement == XmlSyntaxElement.Comment ||
+                            xmlSyntaxElement == XmlSyntaxElement.Undefined)
                             break;
 
                         // if previous is part of a view name we don't want this to be a property name
-                        if (characterIndex - 1 >= 0)
+                        if (xmlSyntaxElement == XmlSyntaxElement.ViewName && !caretLastInLine && characterIndex - 1 >= 0)
                         {
                             char previousChar = xmlText[characterIndex - 1];
                             if (previousChar == '<' || Char.IsLetterOrDigit(previousChar))
                             {
-                                xmlSyntaxElement = XmlSyntaxElement.ViewName;
                                 break;
                             }
                         }
