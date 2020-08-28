@@ -863,7 +863,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorXmlTextLabel, new ElementSize(2000f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorXmlTextLabel, new ElementSize(10000f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorXmlTextLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorXmlTextLabel, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorXmlTextLabel, 18f);
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorXmlTextLabel, TMPro.TextAlignmentOptions.TopLeft);
                     Delight.Label.RichTextProperty.SetDefault(_xmlEditorXmlTextLabel, false);
                     Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorXmlTextLabel, TMPro.TextOverflowModes.Overflow);
@@ -895,7 +895,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorCaret, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorCaret, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorCaret, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorCaret, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorCaret, 18f);
                     Delight.Label.FontColorProperty.SetDefault(_xmlEditorCaret, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.OffsetProperty.SetDefault(_xmlEditorCaret, new ElementMargin(new ElementSize(-5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorCaret, TMPro.TextAlignmentOptions.TopLeft);
@@ -1445,7 +1445,7 @@ namespace Delight
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorLineNumbersLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 18f);
                     Delight.Label.FontColorProperty.SetDefault(_xmlEditorLineNumbersLabel, new UnityEngine.Color(0.5333334f, 0.5333334f, 0.5333334f, 1f));
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextAlignmentOptions.TopRight);
                     Delight.Label.RichTextProperty.SetDefault(_xmlEditorLineNumbersLabel, false);

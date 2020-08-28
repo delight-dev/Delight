@@ -28,8 +28,8 @@ namespace Delight
     {
         #region Fields
 
-        public static float CharWidth = 10;
-        public static float LineHeight = 20.98f;
+        public static float CharWidth = 9; // 10; // calculate by doing e.g. Label.TextMeshProUGUI.preferredWidth
+        public static float LineHeight = 18.89f; //20.98f; // calculate by doing e.g. Label.TextMeshProUGUI.preferredHeight
         public static int SpacesPerTab = 2;
         public static float XmlTextMarginLeft = 20;
         public static float XmlTextMarginRight = 20;
@@ -1696,6 +1696,11 @@ namespace Delight
         {
             base.AfterLoad();
             //XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
+            LineNumbersRightBorder.Width = CharWidth;
+            LineNumbersRightBorder.Offset.Left = CharWidth;
+            Caret.Offset.Left = -(CharWidth / 2.0f);
+
+
             _caretCanvasRenderer = Caret.GameObject.GetComponent<CanvasRenderer>();
             ClearEditor();
         }

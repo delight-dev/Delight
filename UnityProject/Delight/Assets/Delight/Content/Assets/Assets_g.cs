@@ -209,6 +209,7 @@ namespace Delight
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
+        public readonly SpriteAsset RoundedSquare10_5px;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -256,6 +257,7 @@ namespace Delight
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
+            RoundedSquare10_5px = new SpriteAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -297,6 +299,7 @@ namespace Delight
             Add(RainbowSquare);
             Add(Selection);
             Add(TooltipArrow);
+            Add(RoundedSquare10_5px);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -441,6 +444,60 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
+    }
+
+    #endregion
+
+    #region Texture2Ds
+
+    /// <summary>
+    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
+    {
+        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
+        {
+            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator Texture2DAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.Texture2Ds[assetId];
+        }
+    }
+
+    /// <summary>
+    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
+    /// </summary>
+    public partial class Texture2DAssetData : BindableCollection<Texture2DAsset>
+    {
+        #region Fields
+
+        public readonly Texture2DAsset RoundedSquare10_5px;
+
+        #endregion
+
+        #region Constructor
+
+        public Texture2DAssetData()
+        {
+            RoundedSquare10_5px = new Texture2DAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
+
+            Add(RoundedSquare10_5px);
+        }
+
+        #endregion
+    }
+
+    public static partial class Assets
+    {
+        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
     }
 
     #endregion

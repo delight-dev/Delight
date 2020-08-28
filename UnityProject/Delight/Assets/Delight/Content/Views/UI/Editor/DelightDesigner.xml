@@ -6,16 +6,15 @@
                  DisplayReadOnlyViewsText="t:string = Show Read-Only Views">
 
   <Region Id="ViewsDesigner">
-    <Grid Columns="50[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
+    <Grid Columns="40[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
 
       <!-- Left navigation bar #494b52 -->
       <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1">
-        <Image Sprite="delight-icon" Alignment="Top" Offset="0,5,0,0" />
       </Region>
 
       <!-- Designer Content Region -->
       <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,2" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
-                        UnblockDragEventsInChildren="False"> 
+                        UnblockDragEventsInChildren="False">
         <Canvas Id="ContentRegionCanvas" Scale="1">
           <Region Id="ViewContentRegion">
           </Region>
@@ -23,28 +22,34 @@
       </ScrollableRegion>
 
       <!-- Left Panel - Content Explorer #686a72 -->
-      <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#d0d0d3">
-        <Region Margin="0,8,0,0">
+      <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#dddddd">
+        <!-- <Region Id="ContentExplorerHeader2" BackgroundColor="#d0d0d3" Alignment="Top" Height="40" Offset="0,0,0,0" Margin="0,0,0,0" />-->
+        
+        <Region Margin="0,12,0,0">
 
           <ScrollableRegion Id="ContentExplorerScrollableRegion" Width="100%" Height="100%" ContentAlignment="Top" DisableInteractionScrollDelta="1" HasInertia="False"
                 VerticalScrollbarVisibility="MouseOver" VerticalScrollbarBackgroundColor="Clear" VerticalScrollbarHandleColor="#9f9f9f" VerticalScrollbarBarColor="Clear"
                 VerticalScrollbarWidth="6" VerticalScrollbarBarMargin="0,0,2,0" VerticalScrollbarOffset="0,0,0,0" CanScrollHorizontally="False">
 
-            <Expander Text="Views" Width="100%" Margin="4,0,0,0">
-              <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="4,2,2,2" BackgroundColor="clear" Width="100%"
-                    CanReselect="True" ItemSelected="ViewSelected">
-                <ListItem Margin="4,0,8,0" Pressed-BackgroundSprite="ListSelection" Highlighted-BackgroundSprite="ListSelection" Highlighted-BackgroundColor="#f9f9f9" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#f4f4f4">
-                  <Label Text="{view.DisplayName}" FontSize="16" Font="Segoe UI SDF" Height="24" FontColor="#394459" Width="100%" Margin="12,0,0,0" EnableWordWrapping="False"
-                          OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
-                </ListItem>
-              </List>
+            <Expander Text="Views" Width="100%" Margin="0,0,0,0">
+              <DefaultExpanderHeader Text="Views" Height="26" Margin="4,0,0,0" />
+              <!--BackgroundColor="#d0d0d3"-->
+              <ExpanderContent>
+                <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="0,10,0,0" BackgroundColor="#dddddd" Width="100%"
+                      CanReselect="True" ItemSelected="ViewSelected" AlternateItems="False">
+                  <ListItem Margin="2,2,2,2" Selected-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundColor="#eaeaea" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#eaeaea" Alternate-BackgroundColor="#bbc3c3c3">
+                    <Label Text="{view.DisplayName}" FontSize="12" Font="Segoe UI SDF" Height="19" FontColor="#394459" Width="100%" Margin="15,0,0,0" EnableWordWrapping="False"
+                            OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
+                  </ListItem>
+                </List>
+              </ExpanderContent>
             </Expander>
 
           </ScrollableRegion>
 
         </Region>
 
-        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,4,10,0" ItemSelected="ViewMenuItemSelected"
+        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,7,10,0" ItemSelected="ViewMenuItemSelected"
                   ButtonBackgroundSprite="HamburgerMenuIcon" Pressed-ButtonBackgroundSprite="HamburgerMenuIconPressed"
                   ComboBoxListWidth="180" ShowSelectedItem="False" ComboBoxListOffset="70,2,0,0" DeselectAfterSelect="True"
                   BackgroundColor="#F6F6F6" BackgroundSprite="ContextMenuBg" MaskContent="True">
@@ -59,8 +64,8 @@
 
       <!-- Bottom Panel - XML editor -->
       <Region Id="XmlEditorRegion" Grid.Cell="1,2" BackgroundColor="#fbfbfb" IsVisible="False">
-        <XmlEditor Id="XmlEditor" Margin="10,21,0,20" Edit="OnEdit" SelectViewAtLine="OnSelectViewAtLine" DesignerViews="{DesignerViews}" />
-        <Region Id="XmlEditorStatusBar" BackgroundColor="#e2e2e2" Height="20" Alignment="Bottom">
+        <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" SelectViewAtLine="OnSelectViewAtLine" DesignerViews="{DesignerViews}" />
+        <Region Id="XmlEditorStatusBar" Width="180" Height="20" Alignment="BottomRight" BackgroundColor="White">
           <Image Id="LockIcon" Sprite="Lock" Alignment="Left" Offset="5,0,0,0" />
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
             <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" />

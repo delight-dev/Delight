@@ -8193,6 +8193,7 @@
       <xs:enumeration value="RainbowSquare" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
+      <xs:enumeration value="RoundedSquare10_5px" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -8227,6 +8228,12 @@
   <xs:simpleType name="Asset_ShaderAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UI-Fast-Default" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Asset_Texture2DAsset">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RoundedSquare10_5px" />
     </xs:restriction>
   </xs:simpleType>
 
