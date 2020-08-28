@@ -44,7 +44,7 @@ namespace Delight
         private List<UIView> _raycastedViews = new List<UIView>();
         private int _selectedRaycastedIndex = 0;
         private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
-
+        
         public EventSystem _eventSystem;
         public EventSystem EventSystem
         {
@@ -70,6 +70,8 @@ namespace Delight
                 EditorPrefs.SetString("Delight_DesignerLastOpenedView", value);
             }
         }
+
+        public bool IsMaster = true;
 
         #endregion
 
@@ -283,7 +285,7 @@ namespace Delight
         /// Opens the specified view in the designer.
         /// </summary>
         private void OpenView(DesignerView designerViewName)
-        {
+        {           
             if (DisplayedDesignerViews.Contains(designerViewName))
             {
                 DisplayedDesignerViews.Select(designerViewName);
@@ -387,6 +389,9 @@ namespace Delight
         {
             base.AfterLoad();
 
+            if (!IsMaster)
+                return;
+
             // open last opened designer view on startup
             var lastOpenedViewEditorPref = LastOpenedViewEditorPref;
             if (!String.IsNullOrEmpty(lastOpenedViewEditorPref))
@@ -436,6 +441,11 @@ namespace Delight
                 }
 
                 var sw2 = System.Diagnostics.Stopwatch.StartNew();
+
+                if (_displayedView.GetType() == typeof(DelightDesigner))
+                {
+                    (_displayedView as DelightDesigner).IsMaster = false;
+                }
 
                 await _displayedView?.LoadAsync();
                 _displayedView?.PrepareForDesigner();
@@ -574,6 +584,11 @@ namespace Delight
                     null, _currentEditedView);
                 if (view == null)
                     return;
+
+                if (view.GetType() == typeof(DelightDesigner))
+                {
+                    (view as DelightDesigner).IsMaster = false;
+                }
 
                 // load and present view
                 await view?.LoadAsync();
@@ -1197,7 +1212,11 @@ namespace Delight
 
                         childView.ContentTemplates.Add(new ContentTemplate(x =>
                         {
-                            ti.ContentTemplateData = x;
+                            var tiVar = ti;
+                            if (tiVar != null)
+                            {
+                                ti.ContentTemplateData = x;
+                            }
                             var view = InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId, x).FirstOrDefault();
                             if (view != null)
                             {
@@ -1466,6 +1485,9 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
+            if (!IsMaster)
+                return;
+
             var changedViews = DesignerViews.Where(x => x.IsDirty).ToList();
             UpdateCurrentEditedViewXml();
 
