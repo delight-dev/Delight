@@ -776,14 +776,56 @@ namespace Delight
                         if (actionValue.StartsWith("$"))
                         {
                             var expression = ContentParser.GetExpression(actionValue);
+
+                            // set runtime path to template items in expression
+                            foreach (var templateItem in templateItems)
+                            {
+                                expression = expression.Replace(templateItem.Name, String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
+                            }
                             var script = GetCSharpScript(parent.GetType(), expression);
+
+                            // copy template items
+                            var templateItemsCopy = new List<TemplateItemInfo>();
+                            foreach (var templateItem in templateItems)
+                            {
+                                templateItemsCopy.Add(new TemplateItemInfo
+                                {
+                                    ContentTemplateData = new ContentTemplateData 
+                                    {  
+                                        Id = templateItem.ContentTemplateData.Id,
+                                        Index = templateItem.ContentTemplateData.Index,
+                                        ZeroIndex = templateItem.ContentTemplateData.ZeroIndex,
+                                        Item = templateItem.ContentTemplateData.Item
+                                    },
+                                    ItemIdDeclaration = templateItem.ItemIdDeclaration,
+                                    ItemType = templateItem.ItemType,
+                                    ItemTypeName = templateItem.ItemTypeName,
+                                    Name = templateItem.Name,
+                                    VariableName = templateItem.VariableName,
+                                });
+                            }
 
                             Action runtimeAction = async () =>
                             {
                                 try
                                 {
+                                    // set template items on parent before execution
+                                    parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                    foreach (var templateItem in templateItemsCopy)
+                                    {
+                                        if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                        {
+                                            parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                        }
+                                        else
+                                        {
+                                            parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                        }
+                                    }
+
                                     // uses roslyn to evaluate script at runtime
                                     await script.RunAsync(globals: parent);
+                                    parent.TemplateItems = null;
                                 }
                                 catch (Exception e)
                                 {
