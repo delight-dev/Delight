@@ -32,16 +32,23 @@ namespace Delight
             {
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
                 listItem1.Click.RegisterHandler(() => Button1.Text = (tiLevel.Item as Delight.DemoLevel).Name);
-                var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
+                var group2 = new Group(this, listItem1.Content, "Group2", Group2Template);
+                var label1 = new Label(this, group2.Content, "Label1", Label1Template);
 
                 // binding <Label Text="$ {level.Name}">
                 listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.DemoLevel) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiLevel.Item as Delight.DemoLevel).Name, () => { }, false));
+                var label2 = new Label(this, group2.Content, "Label2", Label2Template);
+                // binding <Label Text="$ Test2(40)">
+                listItem1.Bindings.Add(new Binding(() => label2.Text = Test2(40)));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiLevel);
                 return listItem1;
             }, typeof(ListItem), "ListItem1"));
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
             Button1.Click.RegisterHandler(this, "Test");
+            Label3 = new Label(this, Group1.Content, "Label3", Label3Template);
+            // binding <Label Text="$ Test2(10)">
+            Bindings.Add(new Binding(() => Label3.Text = Test2(10)));
             this.AfterInitializeInternal();
         }
 
@@ -60,10 +67,16 @@ namespace Delight
             dependencyProperties.Add(List1TemplateProperty);
             dependencyProperties.Add(ListItem1Property);
             dependencyProperties.Add(ListItem1TemplateProperty);
+            dependencyProperties.Add(Group2Property);
+            dependencyProperties.Add(Group2TemplateProperty);
             dependencyProperties.Add(Label1Property);
             dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(Button1Property);
             dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(Label3Property);
+            dependencyProperties.Add(Label3TemplateProperty);
         }
 
         #endregion
@@ -112,6 +125,20 @@ namespace Delight
             set { ListItem1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
+        public Group Group2
+        {
+            get { return Group2Property.GetValue(this); }
+            set { Group2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Group2TemplateProperty = new DependencyProperty<Template>("Group2Template");
+        public Template Group2Template
+        {
+            get { return Group2TemplateProperty.GetValue(this); }
+            set { Group2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
         public Label Label1
         {
@@ -126,6 +153,20 @@ namespace Delight
             set { Label1TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
+        {
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
+        {
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
         public Button Button1
         {
@@ -138,6 +179,20 @@ namespace Delight
         {
             get { return Button1TemplateProperty.GetValue(this); }
             set { Button1TemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
+        {
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
+        {
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -177,8 +232,11 @@ namespace Delight
                     Delight.TestExample.Group1TemplateProperty.SetDefault(_testExample, TestExampleGroup1);
                     Delight.TestExample.List1TemplateProperty.SetDefault(_testExample, TestExampleList1);
                     Delight.TestExample.ListItem1TemplateProperty.SetDefault(_testExample, TestExampleListItem1);
+                    Delight.TestExample.Group2TemplateProperty.SetDefault(_testExample, TestExampleGroup2);
                     Delight.TestExample.Label1TemplateProperty.SetDefault(_testExample, TestExampleLabel1);
+                    Delight.TestExample.Label2TemplateProperty.SetDefault(_testExample, TestExampleLabel2);
                     Delight.TestExample.Button1TemplateProperty.SetDefault(_testExample, TestExampleButton1);
+                    Delight.TestExample.Label3TemplateProperty.SetDefault(_testExample, TestExampleLabel3);
                 }
                 return _testExample;
             }
@@ -435,6 +493,29 @@ namespace Delight
             }
         }
 
+        private static Template _testExampleGroup2;
+        public static Template TestExampleGroup2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleGroup2 == null || _testExampleGroup2.CurrentVersion != Template.Version)
+#else
+                if (_testExampleGroup2 == null)
+#endif
+                {
+                    _testExampleGroup2 = new Template(GroupTemplates.Group);
+#if UNITY_EDITOR
+                    _testExampleGroup2.Name = "TestExampleGroup2";
+                    _testExampleGroup2.LineNumber = 6;
+                    _testExampleGroup2.LinePosition = 10;
+#endif
+                    Delight.Group.OrientationProperty.SetDefault(_testExampleGroup2, Delight.ElementOrientation.Horizontal);
+                }
+                return _testExampleGroup2;
+            }
+        }
+
         private static Template _testExampleLabel1;
         public static Template TestExampleLabel1
         {
@@ -449,12 +530,36 @@ namespace Delight
                     _testExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _testExampleLabel1.Name = "TestExampleLabel1";
-                    _testExampleLabel1.LineNumber = 6;
-                    _testExampleLabel1.LinePosition = 10;
+                    _testExampleLabel1.LineNumber = 7;
+                    _testExampleLabel1.LinePosition = 12;
 #endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_testExampleLabel1, Delight.AutoSize.Default);
                     Delight.Label.TextProperty.SetHasBinding(_testExampleLabel1);
                 }
                 return _testExampleLabel1;
+            }
+        }
+
+        private static Template _testExampleLabel2;
+        public static Template TestExampleLabel2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleLabel2 == null || _testExampleLabel2.CurrentVersion != Template.Version)
+#else
+                if (_testExampleLabel2 == null)
+#endif
+                {
+                    _testExampleLabel2 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _testExampleLabel2.Name = "TestExampleLabel2";
+                    _testExampleLabel2.LineNumber = 8;
+                    _testExampleLabel2.LinePosition = 12;
+#endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_testExampleLabel2, Delight.AutoSize.Default);
+                }
+                return _testExampleLabel2;
             }
         }
 
@@ -472,7 +577,7 @@ namespace Delight
                     _testExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _testExampleButton1.Name = "TestExampleButton1";
-                    _testExampleButton1.LineNumber = 9;
+                    _testExampleButton1.LineNumber = 12;
                     _testExampleButton1.LinePosition = 6;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testExampleButton1, TestExampleButton1Label);
@@ -501,6 +606,28 @@ namespace Delight
                     Delight.Label.TextProperty.SetDefault(_testExampleButton1Label, "Test");
                 }
                 return _testExampleButton1Label;
+            }
+        }
+
+        private static Template _testExampleLabel3;
+        public static Template TestExampleLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleLabel3 == null || _testExampleLabel3.CurrentVersion != Template.Version)
+#else
+                if (_testExampleLabel3 == null)
+#endif
+                {
+                    _testExampleLabel3 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _testExampleLabel3.Name = "TestExampleLabel3";
+                    _testExampleLabel3.LineNumber = 13;
+                    _testExampleLabel3.LinePosition = 6;
+#endif
+                }
+                return _testExampleLabel3;
             }
         }
 

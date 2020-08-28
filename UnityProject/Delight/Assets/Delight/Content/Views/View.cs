@@ -501,7 +501,7 @@ namespace Delight
             // update bindings to target object
             foreach (var binding in _bindings)
             {
-                if (binding.Target.Objects.Contains(targetObject))
+                if (binding.HasTarget(targetObject))
                 {
                     binding.UpdateBinding();
                 }

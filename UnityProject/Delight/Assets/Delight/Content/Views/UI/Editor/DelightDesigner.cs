@@ -765,12 +765,7 @@ namespace Delight
 
                 // do we have action handlers?
                 var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
-                var actionAssignments = childPropertyAssignments.Where(x =>
-                {
-                    if (x.PropertyDeclarationInfo == null)
-                        return false;
-                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action;
-                });
+                var actionAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action);
                 if (actionAssignments.Any())
                 {
                     // yes. add initializer for action handlers
@@ -779,41 +774,14 @@ namespace Delight
                         var actionValue = actionAssignment.PropertyValue;
                         var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
 
-                        if (actionValue.StartsWith("$"))
+                        if (actionAssignment.HasEmbeddedCode)
                         {
-                            var expression = ContentParser.GetExpression(actionValue);
-
                             // set runtime path to template items in expression
-                            foreach (var templateItem in templateItems)
-                            {
-                                if (!expression.Contains(templateItem.Name))
-                                    continue;
-                                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
-                                expression = Regex.Replace(expression, pattern, String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
-                            }
-                            var script = GetCSharpScript(parent.GetType(), expression);
+                            actionValue = CodeGenerator.SetTemplateItemsInExpression(templateItems, actionValue, true);
+                            var script = GetCSharpScript(parent.GetType(), actionValue);
 
                             // copy template items
-                            var templateItemsCopy = new List<TemplateItemInfo>();
-                            foreach (var templateItem in templateItems)
-                            {
-                                templateItemsCopy.Add(new TemplateItemInfo
-                                {
-                                    ContentTemplateData = new ContentTemplateData 
-                                    {  
-                                        Id = templateItem.ContentTemplateData.Id,
-                                        Index = templateItem.ContentTemplateData.Index,
-                                        ZeroIndex = templateItem.ContentTemplateData.ZeroIndex,
-                                        Item = templateItem.ContentTemplateData.Item
-                                    },
-                                    ItemIdDeclaration = templateItem.ItemIdDeclaration,
-                                    ItemType = templateItem.ItemType,
-                                    ItemTypeName = templateItem.ItemTypeName,
-                                    Name = templateItem.Name,
-                                    VariableName = templateItem.VariableName,
-                                });
-                            }
-
+                            var templateItemsCopy = CopyTemplateItems(templateItems);
                             Action runtimeAction = async () =>
                             {
                                 try
@@ -893,6 +861,56 @@ namespace Delight
 
                         // register action handler without parameters                        
                         action?.RegisterHandler(parent, actionHandlerName);
+                    }
+                }
+
+                // do we have assignments with embedded expressions?
+                var embeddedAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.HasEmbeddedCode && x.PropertyDeclarationInfo.Declaration.DeclarationType != PropertyDeclarationType.Action);
+                if (embeddedAssignments.Any())
+                {
+                    // generate assignment for expressions
+                    foreach (var embeddedAssignment in embeddedAssignments)
+                    {
+                        var expression = embeddedAssignment.PropertyValue;
+
+                        // set runtime path to template items in expression
+                        expression = CodeGenerator.SetTemplateItemsInExpression(templateItems, expression, true);
+                        var script = GetCSharpScript(parent.GetType(), expression);
+
+                        Func<Task<object>> transformMethod = async () =>
+                        {
+                            try
+                            {
+                                // set template items on parent before execution
+                                parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                foreach (var templateItem in templateItems)
+                                {
+                                    if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                    {
+                                        parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                    }
+                                    else
+                                    {
+                                        parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                    }
+                                }
+
+                                 // uses roslyn to evaluate script at runtime
+                                var result = (await script.RunAsync(globals: parent)).ReturnValue;
+                                parent.TemplateItems = null;
+                                childView.SetPropertyValue(embeddedAssignment.PropertyName, result);
+                                return result;
+                            }
+                            catch (Exception e)
+                            { 
+                                ConsoleLogger.LogParseError(fileName, embeddedAssignment.LineNumber,
+                                    String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"$ {2}\">. Compilation error thrown: {3}",
+                                        childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue, e.ToString()));
+                                return null;
+                            }
+                        };
+
+                        childView.Bindings.Add(new RuntimeBinding(transformMethod));
                     }
                 }
 
@@ -1165,7 +1183,6 @@ namespace Delight
                             };
                         }
 
-                        // TODO try add binding to first template child and see if it fixes binding issue
                         bool isTwoWay = propertyBinding.BindingType == BindingType.SingleBinding && propertyBinding.Sources.First().SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
                         childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType, transformMethod, propertyBinding.FormatString));
                     }
@@ -1199,6 +1216,34 @@ namespace Delight
             }
 
             return instantiatedChildViews;
+        }
+
+        /// <summary>
+        /// Copies template items.
+        /// </summary>
+        private static List<TemplateItemInfo> CopyTemplateItems(List<TemplateItemInfo> templateItems)
+        {
+            var templateItemsCopy = new List<TemplateItemInfo>();
+            foreach (var templateItem in templateItems)
+            {
+                templateItemsCopy.Add(new TemplateItemInfo
+                {
+                    ContentTemplateData = new ContentTemplateData
+                    {
+                        Id = templateItem.ContentTemplateData.Id,
+                        Index = templateItem.ContentTemplateData.Index,
+                        ZeroIndex = templateItem.ContentTemplateData.ZeroIndex,
+                        Item = templateItem.ContentTemplateData.Item
+                    },
+                    ItemIdDeclaration = templateItem.ItemIdDeclaration,
+                    ItemType = templateItem.ItemType,
+                    ItemTypeName = templateItem.ItemTypeName,
+                    Name = templateItem.Name,
+                    VariableName = templateItem.VariableName,
+                });
+            }
+
+            return templateItemsCopy;
         }
 
         /// <summary>

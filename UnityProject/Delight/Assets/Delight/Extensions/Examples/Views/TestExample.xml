@@ -2,11 +2,15 @@
 
   <Group> 
     <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
-      <ListItem Click="$ Button1.Text = level.Name"> 
-        <Label Text="$ {level.Name}" /> 
+      <ListItem Click="$ Button1.Text = level.Name">
+        <Group Orientation="Horizontal">
+          <Label Text="$ {level.Name}" AutoSize="True" />
+          <Label Text="$ Test2(40)" AutoSize="True" />
+        </Group>
       </ListItem>
     </List>
-    <Button Text="Test" Click="Test" /> 
+    <Button Text="Test" Click="Test" />
+    <Label Text="$ Test2(10)" /> 
   </Group>
 
 </TestExample>

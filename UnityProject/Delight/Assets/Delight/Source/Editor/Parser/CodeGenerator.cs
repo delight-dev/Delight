@@ -1158,6 +1158,10 @@ namespace Delight.Editor.Parser
                     decl.Declaration.DeclarationType == PropertyDeclarationType.Method)
                     continue;
 
+                // ignore assignment with embedded expressions as they are set as run-time values (simple bindings created for them)
+                if (propertyAssignment.HasEmbeddedCode)
+                    continue;
+
                 var propertyTypeName = decl.IsAssetReference ? decl.AssetType.FormattedTypeName : decl.Declaration.PropertyTypeFullName;
                 var typeValueInitializer = ValueConverters.GetInitializer(propertyTypeName, propertyAssignment.PropertyValue);
                 if (String.IsNullOrEmpty(typeValueInitializer))
@@ -1383,32 +1387,17 @@ namespace Delight.Editor.Parser
 
                 // do we have action handlers?
                 var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
-                var actionAssignments = childPropertyAssignments.Where(x =>
-                {
-                    if (x.PropertyDeclarationInfo == null)
-                        return false;
-                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action;
-                });
+                var actionAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action);
                 if (actionAssignments.Any())
                 {
                     // yes. add initializer for action handlers
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
-                        if (actionValue.StartsWith("$"))
+                        if (actionAssignment.HasEmbeddedCode)
                         {
-                            var expression = ContentParser.GetExpression(actionValue);
-
-                            // set path to any template items in expression
-                            foreach (var templateItem in templateItems)
-                            {
-                                if (!expression.Contains(templateItem.Name))
-                                    continue;
-                                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
-                                expression = Regex.Replace(expression, pattern, String.Format("({0}.Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
-                            }
-
-                            sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, expression);
+                            actionValue = SetTemplateItemsInExpression(templateItems, actionValue, false);
+                            sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, actionValue);
                             continue;
                         }
 
@@ -1460,6 +1449,23 @@ namespace Delight.Editor.Parser
 
                         // generate action assignment without parameters
                         sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionHandlerName);
+                    }
+                }
+
+                // do we have assignments with embedded expressions?
+                var embeddedAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.HasEmbeddedCode && x.PropertyDeclarationInfo.Declaration.DeclarationType != PropertyDeclarationType.Action);
+                if (embeddedAssignments.Any())
+                {
+                    // generate assignment for expressions
+                    foreach (var embeddedAssignment in embeddedAssignments)
+                    {
+                        var embeddedAssignmentValue = SetTemplateItemsInExpression(templateItems, embeddedAssignment.PropertyValue, false);
+                        sb.AppendLine(indent, "// binding <{0} {1}=\"$ {2}\">", childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue);
+                        sb.AppendLine(indent,
+                            "{0}Bindings.Add(new Binding(() => {1}.{2} = {3}));",
+                            inTemplate ? firstTemplateChild + "." : "",
+                            childIdVar,
+                            embeddedAssignment.PropertyName, embeddedAssignmentValue);
                     }
                 }
 
@@ -1688,6 +1694,24 @@ namespace Delight.Editor.Parser
                     GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
             }
+        }
+
+        /// <summary>
+        /// Sets template items in expression, e.g. player.FirstName => (tiPlayer.Item as Player).FirstName.
+        /// </summary>
+        public static string SetTemplateItemsInExpression(List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
+        {
+            foreach (var templateItem in templateItems)
+            {
+                if (!expression.Contains(templateItem.Name))
+                    continue;
+                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
+                string replace = isRuntime ? String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName) :
+                    String.Format("({0}.Item as {1})", templateItem.VariableName, templateItem.ItemTypeName);
+                expression = Regex.Replace(expression, pattern, replace);
+            }
+
+            return expression;
         }
 
         /// <summary>

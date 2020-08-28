@@ -24,6 +24,7 @@ namespace Delight
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the class. Used by runtime bindings.
         /// </summary>
@@ -38,6 +39,18 @@ namespace Delight
             FormatString = formatString;
         }
 
+        /// <summary>
+        /// Creates a simple runtime binding that just propagates source to target on update. Used by embedded expressions without binding sources.
+        /// </summary>
+        public RuntimeBinding(Func<Task<object>> transformMethod) : base(null)
+        {
+#pragma warning disable CS4014
+            PropagateSourceToTarget = () => PropagateSourceToTargetMethod();
+#pragma warning restore CS4014
+            TransformMethod = transformMethod;
+            IsSimple = true;
+        }
+
         #endregion
 
         #region Methods
@@ -47,6 +60,11 @@ namespace Delight
         /// </summary>
         public async Task PropagateSourceToTargetMethod()
         {
+            if (IsSimple)
+            {
+                var transformedValue = await TransformMethod();
+            }
+
             switch (BindingType)
             {
                 case BindingType.SingleBinding:

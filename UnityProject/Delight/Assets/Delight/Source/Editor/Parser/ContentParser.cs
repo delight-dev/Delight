@@ -1234,7 +1234,13 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
-            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber(), AttachedNeedUpdate = attachedNeedUpdate });
+            bool hasEmbeddedCode = attributeValue.StartsWith("$");
+            if (hasEmbeddedCode)
+            {
+                attributeValue = GetExpression(attributeValue);
+            }
+
+            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber(), AttachedNeedUpdate = attachedNeedUpdate, HasEmbeddedCode = hasEmbeddedCode });
             return propertyExpressions;
         }
 
@@ -1345,8 +1351,8 @@ namespace Delight.Editor.Parser
             // remove '$' prefix
             var expression = propertyValue.Substring(1).Trim();
 
-            // replace single quotes with double quotes 
-            expression = expression.Replace('\'', '"');
+            // replace single quotes with double quotes, replace AND with &&, replace OR with ||
+            expression = expression.Replace('\'', '"').Replace(" AND ", " && ").Replace(" OR ", " || ");
             return expression;
         }
 

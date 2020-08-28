@@ -1129,6 +1129,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(5, AsReference = true)]
         public StyleDeclaration StyleDeclaration;
 
+        [ProtoMember(6)]
+        public bool HasEmbeddedCode;
+
         /// <summary>
         /// Indicates if property assignment is for a view object attribute rather than property. 
         /// </summary>

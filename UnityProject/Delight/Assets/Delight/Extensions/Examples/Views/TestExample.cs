@@ -37,6 +37,11 @@ namespace Delight
 
             Models.FilteredDemoLevels.ItemsModified();
         }
+
+        public string Test2(int number)
+        {
+            return String.Format("Number: {0}", number);
+        }
     }
 
     public static partial class Models

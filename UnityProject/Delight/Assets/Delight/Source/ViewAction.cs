@@ -54,6 +54,11 @@ namespace Delight
 
         #region Method
 
+        public void Invoke()
+        {
+            Invoke(null, null);
+        }
+
         public void Invoke(DependencyObject sender, object eventArgs)
         {
             if (_isEnabled)
