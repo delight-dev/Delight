@@ -1212,6 +1212,8 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(12)]
         public bool BindingNeedUpdate;
+
+        public PropertyDeclarationInfo PropertyDeclarationInfo;
     }
 
     /// <summary>

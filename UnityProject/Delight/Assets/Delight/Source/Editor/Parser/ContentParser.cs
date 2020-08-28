@@ -1287,7 +1287,7 @@ namespace Delight.Editor.Parser
             propertyBinding.LineNumber = element.GetLineNumber();
 
             // check for bindings in string
-            string formatString = String.Empty;
+            string expression = String.Empty;
             List<Match> matches = new List<Match>();
             foreach (Match match in _bindingRegex.Matches(propertyBindingString))
             {
@@ -1307,7 +1307,7 @@ namespace Delight.Editor.Parser
             {
                 // yes. 
                 int matchCount = 0;
-                formatString = _bindingRegex.Replace(propertyBindingString, x =>
+                expression = _bindingRegex.Replace(propertyBindingString, x =>
                 {
                     string matchCountString = matchCount.ToString();
                     ++matchCount;
@@ -1318,15 +1318,15 @@ namespace Delight.Editor.Parser
                 if (propertyBindingString.StartsWith("$"))
                 {
                     // yes. parse transformed multi-binding with evaluated expressions, e.g. {BindingA} > {BindingB}, Math.Abs({BindingA} - {BindingB} + 10) etc. 
-                    formatString = GetExpression(formatString);
-                    propertyBinding.TransformExpression = formatString;
+                    expression = GetExpression(expression);
+                    propertyBinding.TransformExpression = expression;
                     propertyBinding.BindingType = BindingType.MultiBindingTransform;
                 }
                 else
                 {
                     // no. it's a format string binding
                     propertyBinding.BindingType = BindingType.MultiBindingFormatString;
-                    propertyBinding.FormatString = formatString;
+                    propertyBinding.FormatString = expression;
                 }
             }
 

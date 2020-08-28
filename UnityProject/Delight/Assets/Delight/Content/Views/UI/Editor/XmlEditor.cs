@@ -1913,8 +1913,10 @@ namespace Delight
                     case '{':
                         if (xmlSyntaxElement == XmlSyntaxElement.PropertyValue)
                         {
-                            inBinding = true;
-                            // TODO '{{' is not in binding, so we need to check if neither previous or next char is '{'
+                            // '{{' is not in binding, so we need to check if neither previous or next char is '{'
+                            bool bracketsBefore = characterIndex - 1 >= 0 && xmlText[characterIndex - 1] == '{';
+                            bool bracketsAfter = characterIndex + 1 < characterCount && xmlText[characterIndex + 1] == '{';
+                            inBinding = !(bracketsBefore || bracketsAfter);
                         }
                         break;
 

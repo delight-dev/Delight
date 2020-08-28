@@ -1081,6 +1081,8 @@ namespace Delight.Editor.Parser
                         }
                     }
 
+                    propertyBinding.PropertyDeclarationInfo = bindingPropertyDecl;
+
                     if (!instantiateDataTemplateValues)
                     {
                         sb.AppendLine("                    {0}.{1}Property.SetHasBinding({2});", fullViewTypeName, propertyName, localId);
@@ -1460,6 +1462,15 @@ namespace Delight.Editor.Parser
                     foreach (var embeddedAssignment in embeddedAssignments)
                     {
                         var embeddedAssignmentValue = SetTemplateItemsInExpression(templateItems, embeddedAssignment.PropertyValue, false);
+
+                        // handle multi-line expressions
+                        var trimmedEmbeddedAssignmentValue = embeddedAssignmentValue.Trim();
+                        if (trimmedEmbeddedAssignmentValue.StartsWith("{{"))
+                        {
+                            // translate, {{ int x = 0; return x; }} to ((Func<int>)(() => {{ int x = 0; return x; }}))();
+                            embeddedAssignmentValue = String.Format("((Func<{0}>)(() => {1} ))()", embeddedAssignment.PropertyDeclarationInfo.Declaration.PropertyTypeFullName, trimmedEmbeddedAssignmentValue);
+                        }
+
                         sb.AppendLine(indent, "// binding <{0} {1}=\"$ {2}\">", childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue);
                         sb.AppendLine(indent,
                             "{0}Bindings.Add(new Binding(() => {1}.{2} = {3}));",
@@ -1624,7 +1635,16 @@ namespace Delight.Editor.Parser
 
                             case BindingType.MultiBindingTransform:
                                 object[] args = convertedSourceProperties.ToArray<object>();
-                                sourceToTargetValue = string.Format(propertyBinding.TransformExpression, args);
+
+                                // handle multi-line expressions
+                                var trimmedTransformExpression = propertyBinding.TransformExpression.Trim();
+                                if (trimmedTransformExpression.StartsWith("{{"))
+                                {
+                                    // translate, {{ int x = 0; return x; }} to ((Func<int>)(() => {{ int x = 0; return x; }}))();
+                                    trimmedTransformExpression = String.Format("((Func<{0}>)(() => {1} ))()", propertyBinding.PropertyDeclarationInfo.Declaration.PropertyTypeFullName, trimmedTransformExpression);
+                                }
+
+                                sourceToTargetValue = string.Format(trimmedTransformExpression, args);
                                 break;
 
                             case BindingType.MultiBindingFormatString:

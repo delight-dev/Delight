@@ -31,7 +31,7 @@ namespace Delight
             List1.ContentTemplates.Add(new ContentTemplate(tiLevel => 
             {
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
-                listItem1.Click.RegisterHandler(() => Button1.Text = (tiLevel.Item as Delight.DemoLevel).Name);
+                listItem1.Click.RegisterHandler(() => MyButton.Text = (tiLevel.Item as Delight.DemoLevel).Name);
                 var group2 = new Group(this, listItem1.Content, "Group2", Group2Template);
                 var label1 = new Label(this, group2.Content, "Label1", Label1Template);
 
@@ -40,15 +40,24 @@ namespace Delight
                 var label2 = new Label(this, group2.Content, "Label2", Label2Template);
                 // binding <Label Text="$ Test2(40)">
                 listItem1.Bindings.Add(new Binding(() => label2.Text = Test2(40)));
+                var label3 = new Label(this, group2.Content, "Label3", Label3Template);
+
+                // binding <Label Text="$ {{ string name = {level.Name}; return name + '!'; }}">
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.DemoLevel) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = ((Func<System.String>)(() => { string name = (tiLevel.Item as Delight.DemoLevel).Name; return name + "!"; } ))(), () => { }, false));
+                var button1 = new Button(this, group2.Content, "Button1", Button1Template);
+                button1.Click.RegisterHandler(() => {{ string name = (tiLevel.Item as Delight.DemoLevel).Name; Test2(10); return; }});
+
+                // binding <Button Text="$ {level.Index} + '. Test'">
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Index" }, new List<Func<BindableObject>> { () => tiLevel }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => button1 }), () => button1.Text = tiLevel.Index + ". Test", () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiLevel);
                 return listItem1;
             }, typeof(ListItem), "ListItem1"));
-            Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
-            Button1.Click.RegisterHandler(this, "Test");
-            Label3 = new Label(this, Group1.Content, "Label3", Label3Template);
-            // binding <Label Text="$ Test2(10)">
-            Bindings.Add(new Binding(() => Label3.Text = Test2(10)));
+            MyButton = new Button(this, Group1.Content, "MyButton", MyButtonTemplate);
+            MyButton.Click.RegisterHandler(this, "Test");
+            Label4 = new Label(this, Group1.Content, "Label4", Label4Template);
+            // binding <Label Text="$ {{ string test = "hello"; return test; }}">
+            Bindings.Add(new Binding(() => Label4.Text = ((Func<System.String>)(() => {{ string test = "hello"; return test; }} ))()));
             this.AfterInitializeInternal();
         }
 
@@ -73,10 +82,14 @@ namespace Delight
             dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(Label2Property);
             dependencyProperties.Add(Label2TemplateProperty);
-            dependencyProperties.Add(Button1Property);
-            dependencyProperties.Add(Button1TemplateProperty);
             dependencyProperties.Add(Label3Property);
             dependencyProperties.Add(Label3TemplateProperty);
+            dependencyProperties.Add(Button1Property);
+            dependencyProperties.Add(Button1TemplateProperty);
+            dependencyProperties.Add(MyButtonProperty);
+            dependencyProperties.Add(MyButtonTemplateProperty);
+            dependencyProperties.Add(Label4Property);
+            dependencyProperties.Add(Label4TemplateProperty);
         }
 
         #endregion
@@ -167,6 +180,20 @@ namespace Delight
             set { Label2TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
+        {
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
+        {
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Button> Button1Property = new DependencyProperty<Button>("Button1");
         public Button Button1
         {
@@ -181,18 +208,32 @@ namespace Delight
             set { Button1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
-        public Label Label3
+        public readonly static DependencyProperty<Button> MyButtonProperty = new DependencyProperty<Button>("MyButton");
+        public Button MyButton
         {
-            get { return Label3Property.GetValue(this); }
-            set { Label3Property.SetValue(this, value); }
+            get { return MyButtonProperty.GetValue(this); }
+            set { MyButtonProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
-        public Template Label3Template
+        public readonly static DependencyProperty<Template> MyButtonTemplateProperty = new DependencyProperty<Template>("MyButtonTemplate");
+        public Template MyButtonTemplate
         {
-            get { return Label3TemplateProperty.GetValue(this); }
-            set { Label3TemplateProperty.SetValue(this, value); }
+            get { return MyButtonTemplateProperty.GetValue(this); }
+            set { MyButtonTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
+        public Label Label4
+        {
+            get { return Label4Property.GetValue(this); }
+            set { Label4Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
+        public Template Label4Template
+        {
+            get { return Label4TemplateProperty.GetValue(this); }
+            set { Label4TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -235,8 +276,10 @@ namespace Delight
                     Delight.TestExample.Group2TemplateProperty.SetDefault(_testExample, TestExampleGroup2);
                     Delight.TestExample.Label1TemplateProperty.SetDefault(_testExample, TestExampleLabel1);
                     Delight.TestExample.Label2TemplateProperty.SetDefault(_testExample, TestExampleLabel2);
-                    Delight.TestExample.Button1TemplateProperty.SetDefault(_testExample, TestExampleButton1);
                     Delight.TestExample.Label3TemplateProperty.SetDefault(_testExample, TestExampleLabel3);
+                    Delight.TestExample.Button1TemplateProperty.SetDefault(_testExample, TestExampleButton1);
+                    Delight.TestExample.MyButtonTemplateProperty.SetDefault(_testExample, TestExampleMyButton);
+                    Delight.TestExample.Label4TemplateProperty.SetDefault(_testExample, TestExampleLabel4);
                 }
                 return _testExample;
             }
@@ -563,6 +606,29 @@ namespace Delight
             }
         }
 
+        private static Template _testExampleLabel3;
+        public static Template TestExampleLabel3
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleLabel3 == null || _testExampleLabel3.CurrentVersion != Template.Version)
+#else
+                if (_testExampleLabel3 == null)
+#endif
+                {
+                    _testExampleLabel3 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _testExampleLabel3.Name = "TestExampleLabel3";
+                    _testExampleLabel3.LineNumber = 9;
+                    _testExampleLabel3.LinePosition = 12;
+#endif
+                    Delight.Label.TextProperty.SetHasBinding(_testExampleLabel3);
+                }
+                return _testExampleLabel3;
+            }
+        }
+
         private static Template _testExampleButton1;
         public static Template TestExampleButton1
         {
@@ -577,8 +643,8 @@ namespace Delight
                     _testExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _testExampleButton1.Name = "TestExampleButton1";
-                    _testExampleButton1.LineNumber = 12;
-                    _testExampleButton1.LinePosition = 6;
+                    _testExampleButton1.LineNumber = 10;
+                    _testExampleButton1.LinePosition = 12;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testExampleButton1, TestExampleButton1Label);
                 }
@@ -603,31 +669,77 @@ namespace Delight
                     _testExampleButton1Label.LineNumber = 0;
                     _testExampleButton1Label.LinePosition = 0;
 #endif
-                    Delight.Label.TextProperty.SetDefault(_testExampleButton1Label, "Test");
+                    Delight.Label.TextProperty.SetHasBinding(_testExampleButton1Label);
                 }
                 return _testExampleButton1Label;
             }
         }
 
-        private static Template _testExampleLabel3;
-        public static Template TestExampleLabel3
+        private static Template _testExampleMyButton;
+        public static Template TestExampleMyButton
         {
             get
             {
 #if UNITY_EDITOR
-                if (_testExampleLabel3 == null || _testExampleLabel3.CurrentVersion != Template.Version)
+                if (_testExampleMyButton == null || _testExampleMyButton.CurrentVersion != Template.Version)
 #else
-                if (_testExampleLabel3 == null)
+                if (_testExampleMyButton == null)
 #endif
                 {
-                    _testExampleLabel3 = new Template(LabelTemplates.Label);
+                    _testExampleMyButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
-                    _testExampleLabel3.Name = "TestExampleLabel3";
-                    _testExampleLabel3.LineNumber = 13;
-                    _testExampleLabel3.LinePosition = 6;
+                    _testExampleMyButton.Name = "TestExampleMyButton";
+                    _testExampleMyButton.LineNumber = 14;
+                    _testExampleMyButton.LinePosition = 6;
+#endif
+                    Delight.Button.LabelTemplateProperty.SetDefault(_testExampleMyButton, TestExampleMyButtonLabel);
+                }
+                return _testExampleMyButton;
+            }
+        }
+
+        private static Template _testExampleMyButtonLabel;
+        public static Template TestExampleMyButtonLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleMyButtonLabel == null || _testExampleMyButtonLabel.CurrentVersion != Template.Version)
+#else
+                if (_testExampleMyButtonLabel == null)
+#endif
+                {
+                    _testExampleMyButtonLabel = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _testExampleMyButtonLabel.Name = "TestExampleMyButtonLabel";
+                    _testExampleMyButtonLabel.LineNumber = 0;
+                    _testExampleMyButtonLabel.LinePosition = 0;
+#endif
+                    Delight.Label.TextProperty.SetDefault(_testExampleMyButtonLabel, "Test");
+                }
+                return _testExampleMyButtonLabel;
+            }
+        }
+
+        private static Template _testExampleLabel4;
+        public static Template TestExampleLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleLabel4 == null || _testExampleLabel4.CurrentVersion != Template.Version)
+#else
+                if (_testExampleLabel4 == null)
+#endif
+                {
+                    _testExampleLabel4 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _testExampleLabel4.Name = "TestExampleLabel4";
+                    _testExampleLabel4.LineNumber = 15;
+                    _testExampleLabel4.LinePosition = 6;
 #endif
                 }
-                return _testExampleLabel3;
+                return _testExampleLabel4;
             }
         }
 

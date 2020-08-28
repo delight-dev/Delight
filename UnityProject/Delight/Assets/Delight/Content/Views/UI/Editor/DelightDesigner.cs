@@ -1251,7 +1251,7 @@ namespace Delight
         /// </summary>
         private Script<object> GetCSharpScript(Type parentType, string expression)
         {
-            Debug.Log("Creating script for expression: " + expression);
+            //Debug.Log("Creating script for expression: " + expression);
 
             // cache scripts so they don't have to be re-compiled
             if (!_cachedScripts.TryGetValue(parentType, out var scripts))
