@@ -1701,6 +1701,9 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static string SetTemplateItemsInExpression(List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
         {
+            if (templateItems == null)
+                return expression;
+
             foreach (var templateItem in templateItems)
             {
                 if (!expression.Contains(templateItem.Name))

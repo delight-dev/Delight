@@ -1409,7 +1409,7 @@ namespace Delight.Editor.Parser
             int startBracketIndex = value.IndexOf('{');
             if (startBracketIndex >= 0)
             {
-                return value.IndexOf('}') > startBracketIndex;
+                return _bindingRegex.IsMatch(value);
             }
             else
             {
