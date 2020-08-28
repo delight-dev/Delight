@@ -1398,6 +1398,16 @@ namespace Delight.Editor.Parser
                         if (actionValue.StartsWith("$"))
                         {
                             var expression = ContentParser.GetExpression(actionValue);
+
+                            // set path to any template items in expression
+                            foreach (var templateItem in templateItems)
+                            {
+                                if (!expression.Contains(templateItem.Name))
+                                    continue;
+                                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
+                                expression = Regex.Replace(expression, pattern, String.Format("({0}.Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
+                            }
+
                             sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, expression);
                             continue;
                         }

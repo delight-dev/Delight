@@ -625,6 +625,9 @@ namespace Delight
         public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null,
             DesignerView inDesignerView = null)
         {
+            // ** important: changes in runtime instantiation of views need to be reflected in the view code generation in
+            // CodeGenerator.GenerateChildViewDeclarations() **
+
             // update view declarations and mapped properties
             CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
             CodeGenerator.UpdateMappedProperties(viewObject);
@@ -710,6 +713,9 @@ namespace Delight
             string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null,
             ContentTemplateData contentTemplateData = null)
         {
+            // ** important: changes in runtime instantiation of views need to be reflected in the view code generation in
+            // CodeGenerator.GenerateChildViewDeclarations() **
+
             bool inTemplate = templateDepth > 0;
             var contentObjectModel = ContentObjectModel.GetInstance();
             var instantiatedChildViews = new List<View>();
@@ -780,7 +786,10 @@ namespace Delight
                             // set runtime path to template items in expression
                             foreach (var templateItem in templateItems)
                             {
-                                expression = expression.Replace(templateItem.Name, String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
+                                if (!expression.Contains(templateItem.Name))
+                                    continue;
+                                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
+                                expression = Regex.Replace(expression, pattern, String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName));
                             }
                             var script = GetCSharpScript(parent.GetType(), expression);
 

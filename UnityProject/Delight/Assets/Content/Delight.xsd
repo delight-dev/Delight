@@ -29,6 +29,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -231,6 +232,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -311,6 +313,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -543,6 +546,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -638,6 +642,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1267,6 +1272,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1371,6 +1377,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1445,6 +1452,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1547,6 +1555,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1640,6 +1649,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1714,6 +1724,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1807,6 +1818,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1906,6 +1918,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -1986,6 +1999,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2078,6 +2092,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2174,6 +2189,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2264,6 +2280,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2365,6 +2382,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2824,6 +2842,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -2928,6 +2947,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3023,6 +3043,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3227,6 +3248,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3459,6 +3481,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3539,6 +3562,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3632,6 +3656,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -3724,6 +3749,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -4113,6 +4139,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -4496,6 +4523,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -4677,6 +4705,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -4770,6 +4799,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -4999,6 +5029,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5074,6 +5105,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5278,6 +5310,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5425,6 +5458,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5669,6 +5703,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5813,6 +5848,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -5910,6 +5946,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6011,6 +6048,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6106,6 +6144,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6198,6 +6237,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6269,6 +6309,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6344,6 +6385,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6367,6 +6409,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6438,6 +6481,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6540,6 +6584,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6641,6 +6686,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6712,6 +6758,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6814,6 +6861,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6885,6 +6933,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -6957,6 +7006,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7029,6 +7079,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7134,6 +7185,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7235,6 +7287,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7306,6 +7359,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7377,6 +7431,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7478,6 +7533,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7587,6 +7643,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />
@@ -7687,6 +7744,7 @@
     <xs:attribute name="Select" type="xs:string" />
     <xs:attribute name="Submit" type="xs:string" />
     <xs:attribute name="UpdateSelected" type="xs:string" />
+    <xs:attribute name="TemplateItems" type="xs:string" />
     <xs:attribute name="LayoutChildren" type="xs:string" />
     <xs:attribute name="IsLoaded" type="xs:string" />
     <xs:attribute name="Bindings" type="xs:string" />

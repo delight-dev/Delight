@@ -31,6 +31,7 @@ namespace Delight
             List1.ContentTemplates.Add(new ContentTemplate(tiLevel => 
             {
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
+                listItem1.Click.RegisterHandler(() => Button1.Text = (tiLevel.Item as Delight.DemoLevel).Name);
                 var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
 
                 // binding <Label Text="$ {level.Name}">
