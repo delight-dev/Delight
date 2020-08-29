@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Delight;
+using UnityScript.Steps;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
@@ -34,8 +35,9 @@ namespace Delight
     {
         #region Fields
 
-        private UIView _displayedView;
+        private UIView _displayedViewInstance;
         private DesignerView _currentEditedView;
+        private DesignerView _currentDisplayedView;
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
         private bool _readOnlyOverride;
@@ -45,7 +47,7 @@ namespace Delight
         private int _selectedRaycastedIndex = 0;
         private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
         private bool _viewLockEnabled = false;
-        
+
         public EventSystem _eventSystem;
         public EventSystem EventSystem
         {
@@ -69,6 +71,18 @@ namespace Delight
             set
             {
                 EditorPrefs.SetString("Delight_DesignerLastOpenedView", value);
+            }
+        }
+
+        public bool ShowReadOnlyViewsEditorPref
+        {
+            get
+            {
+                return EditorPrefs.GetBool("Delight_DesignerShowReadOnlyViews", false);
+            }
+            set
+            {
+                EditorPrefs.SetBool("Delight_DesignerShowReadOnlyViews", value);
             }
         }
 
@@ -183,7 +197,7 @@ namespace Delight
                             // add all parent views in hierarhcy as raycasted views
                             _raycastedViews.Add(selectedView);
                             var nextView = selectedView;
-                            while (nextView != _displayedView)
+                            while (nextView != _displayedViewInstance)
                             {
                                 nextView = nextView.LayoutParent as UIView;
                                 if (nextView == null || (nextView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
@@ -286,7 +300,7 @@ namespace Delight
         /// Opens the specified view in the designer.
         /// </summary>
         private void OpenView(DesignerView designerViewName)
-        {           
+        {
             if (DisplayedDesignerViews.Contains(designerViewName))
             {
                 DisplayedDesignerViews.Select(designerViewName);
@@ -334,6 +348,9 @@ namespace Delight
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
             DisplayedDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
+
+            DisplayReadOnlyViews = ShowReadOnlyViewsEditorPref;
+            OnDisplayReadOnlyViewsChanged();
         }
 
         /// <summary>
@@ -356,9 +373,21 @@ namespace Delight
         /// </summary>
         public void ToggleViewLock(bool toggleValue)
         {
+            if (_currentEditedView == null)
+                return;
+
             Debug.Log("View lock toggled");
             // when view lock is enabled the user can switch to edit other views and the current view is always displayed
             _viewLockEnabled = toggleValue;
+            _currentDisplayedView.IsDisplayLocked = false;
+            _currentDisplayedView = _currentEditedView;
+            _currentDisplayedView.IsDisplayLocked = _viewLockEnabled;
+
+            if (_viewLockEnabled)
+            {
+                _currentDisplayedView.XmlText = XmlEditor.GetXmlText();
+            }
+            ParseView();
         }
 
         /// <summary>
@@ -436,39 +465,17 @@ namespace Delight
             ClearSelectedViews();
             UpdateCurrentEditedViewXml();
 
-            // clear any existing displayed views
-            if (!_viewLockEnabled)
-            {
-                ViewContentRegion.DestroyChildren();
-                LastOpenedViewEditorPref = designerView.Name;
-            }
-
             _lastOpenView = _currentEditedView;
-            _currentEditedView = designerView;            
+            _currentEditedView = designerView;
+            XmlEditorRegion.IsVisible = true;
+            DisplayRegion.IsVisible = true;
 
+            // change display if editor is readonly
+            UpdateXmlEditorReadonly();
+
+            // set editor XML text
             if (!designerView.IsRuntimeParsed)
             {
-                _displayedView = CreateView(designerView.ViewTypeName, this, ViewContentRegion);
-                if (_displayedView == null)
-                {
-                    return;
-                }
-
-                var sw2 = System.Diagnostics.Stopwatch.StartNew();
-
-                if (_displayedView.GetType() == typeof(DelightDesigner))
-                {
-                    (_displayedView as DelightDesigner).IsMaster = false;
-                }
-
-                await _displayedView?.LoadAsync();
-                _displayedView?.PrepareForDesigner();
-
-                sw2.Stop();
-
-                // uncomment to log loading time 
-                //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
-
                 // load XML into the editor
                 if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
                 {
@@ -487,17 +494,99 @@ namespace Delight
             {
                 // create runtime parsed view
                 XmlEditor.XmlText = _currentEditedView.XmlText;
-                ParseView();
             }
+
+            if (_viewLockEnabled)
+                return; // if view lock we're done here
+
+            _currentDisplayedView = designerView;
+
+            // clear any existing displayed views and instantiate view in display
+            LastOpenedViewEditorPref = designerView.Name;
+
+            await DisplayView(designerView);
 
             // center on view
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
+        }
 
-            XmlEditorRegion.IsVisible = true;
+        /// <summary>
+        /// Instantiates designer view in the display region.
+        /// </summary>
+        private async Task DisplayView(DesignerView designerView)
+        {
+            _currentDisplayedView = designerView;
 
-            // change display if editor is readonly
-            UpdateXmlEditorReadonly();
+            try
+            {
+                ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+                var sw2 = System.Diagnostics.Stopwatch.StartNew();
+
+                UIView view = null;
+                if (!_currentDisplayedView.IsRuntimeParsed)
+                {
+                    view = CreateView(_currentDisplayedView.ViewTypeName, this, ViewContentRegion);
+                }
+                else
+                {
+                    view = InstantiateRuntimeView(_currentDisplayedView.ViewObject, this, ViewContentRegion, 
+                        _currentEditedView.IsNew, null, _currentEditedView);
+                }
+
+                if (view == null)
+                    return;
+
+                if (view.GetType() == typeof(DelightDesigner))
+                {
+                    (view as DelightDesigner).IsMaster = false;
+                }
+
+                await view?.LoadAsync();
+                view?.PrepareForDesigner();
+
+                sw2.Stop();
+
+                // destroy previous view
+                if (_displayedViewInstance != null)
+                {
+                    _displayedViewInstance.Destroy();
+                }
+
+                _displayedViewInstance = view;
+
+                // uncomment to log loading time 
+                //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
+            }
+            catch (Exception e)
+            {
+                //ConsoleLogger.LogException(e);
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                    String.Format("#Delight# Error instantiating view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
+                ConsoleLogger.LogException(e);
+
+                // if view failed to load make sure we remove the partially-constructed view from the content region
+                // while keeping the previously loaded view                
+                for (int i = ViewContentRegion.LayoutChildren.Count - 1; i >= 1; --i)
+                {
+                    var child = ViewContentRegion.LayoutChildren[i];
+                    child.Destroy();
+                }
+
+                // destroy any remaining child objects that should not be there
+                if (ViewContentRegion.GameObject.transform.childCount > 1)
+                {
+                    for (int i = ViewContentRegion.GameObject.transform.childCount - 1; i >= 1; --i)
+                    {
+                        var go = ViewContentRegion.GameObject.transform.GetChild(i).gameObject;
+                        GameObject.DestroyImmediate(go);
+                    }
+                }
+            }
+            finally
+            {
+                ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+            }
         }
 
         /// <summary>
@@ -505,7 +594,7 @@ namespace Delight
         /// </summary>
         public void UpdateXmlEditorReadonly()
         {
-            bool isReadOnly = _displayedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
+            bool isReadOnly = _currentEditedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
             var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
             XmlEditor.IsReadOnly = isReadOnly;
             XmlEditor.BackgroundColor = color;
@@ -550,7 +639,6 @@ namespace Delight
         /// </summary>
         public async void ParseView()
         {
-#if UNITY_EDITOR            
             if (_currentEditedView == null)
                 return;
 
@@ -585,67 +673,34 @@ namespace Delight
                 return;
             }
 
+            // parse view XML into view object
+            ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
             try
             {
-                ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
-
-                // create view object
                 var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
                 _currentEditedView.ViewObject = viewObject;
 
-                // instantiate view
-                var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew,
-                    null, _currentEditedView);
-                if (view == null)
-                    return;
-
-                if (view.GetType() == typeof(DelightDesigner))
+                if (_currentEditedView != _currentDisplayedView)
                 {
-                    (view as DelightDesigner).IsMaster = false;
-                }
-
-                // load and present view
-                await view?.LoadAsync();
-                view?.PrepareForDesigner();
-
-                // destroy previous view
-                if (_displayedView != null)
-                {
-                    _displayedView.Destroy();
-                }
-
-                _displayedView = view;
-            }
-            catch (Exception e)
-            {
-                //ConsoleLogger.LogException(e);
-                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
-                    String.Format("#Delight# Error instantiating view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
-                ConsoleLogger.LogException(e);
-
-                // if view failed to load make sure we remove the partially-constructed view from the content region
-                // while keeping the previously loaded view                
-                for (int i = ViewContentRegion.LayoutChildren.Count - 1; i >= 1; --i)
-                {
-                    var child = ViewContentRegion.LayoutChildren[i];
-                    child.Destroy();
-                }
-
-                // destroy any remaining child objects that should not be there
-                if (ViewContentRegion.GameObject.transform.childCount > 1)
-                {
-                    for (int i = ViewContentRegion.GameObject.transform.childCount - 1; i >= 1; --i)
+                    // even if view isn't displayed we need to instantiate view to update data templates
+                    var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion,
+                        _currentEditedView.IsNew, null, _currentEditedView);
+                    if (view != null)
                     {
-                        var go = ViewContentRegion.GameObject.transform.GetChild(i).gameObject;
-                        GameObject.DestroyImmediate(go);
+                        view.Destroy();
                     }
                 }
             }
-            finally
+            catch (Exception e)
             {
-                ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                    String.Format("#Delight# Error parsing view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
+                ConsoleLogger.LogException(e);
             }
-#endif
+            ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+
+            // display view
+            await DisplayView(_currentDisplayedView);
         }
 
         /// <summary>
@@ -924,14 +979,14 @@ namespace Delight
                                     }
                                 }
 
-                                 // uses roslyn to evaluate script at runtime
+                                // uses roslyn to evaluate script at runtime
                                 var result = (await script.RunAsync(globals: parent)).ReturnValue;
                                 parent.TemplateItems = null;
                                 childView.SetPropertyValue(embeddedAssignment.PropertyName, result);
                                 return result;
                             }
                             catch (Exception e)
-                            { 
+                            {
                                 ConsoleLogger.LogParseError(fileName, embeddedAssignment.LineNumber,
                                     String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"$ {2}\">. Compilation error thrown: {3}",
                                         childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue, e.ToString()));
@@ -1432,7 +1487,7 @@ namespace Delight
         /// </summary>
         public void OnScroll(DependencyObject sender, object eventArgs)
         {
-            if (_displayedView == null)
+            if (_displayedViewInstance == null)
                 return;
 
             bool ctrlDown = Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
@@ -1459,7 +1514,7 @@ namespace Delight
         /// </summary>
         public void SetScale(Vector3 scale)
         {
-            if (_displayedView == null)
+            if (_displayedViewInstance == null)
             {
                 ContentRegionCanvas.Scale = Vector3.one;
                 return;
@@ -1471,8 +1526,8 @@ namespace Delight
             var viewportWidth = ScrollableContentRegion.ActualWidth;
             var viewportHeight = ScrollableContentRegion.ActualHeight;
 
-            var width = _displayedView.OverrideWidth ?? _displayedView.Width ?? ElementSize.FromPercents(1);
-            var height = _displayedView.OverrideHeight ?? _displayedView.Height ?? ElementSize.FromPercents(1);
+            var width = _displayedViewInstance.OverrideWidth ?? _displayedViewInstance.Width ?? ElementSize.FromPercents(1);
+            var height = _displayedViewInstance.OverrideHeight ?? _displayedViewInstance.Height ?? ElementSize.FromPercents(1);
 
             float adjustedWidth = viewportWidth * Mathf.Max(scale.x, 1.0f);
             float adjustedHeight = viewportHeight * Mathf.Max(scale.y, 1.0f);
@@ -1628,7 +1683,7 @@ namespace Delight
 
 #if UNITY_EDITOR
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-#endif            
+#endif
         }
 
         /// <summary>
@@ -1747,6 +1802,15 @@ namespace Delight
         public void ToggleShowReadOnlyViews()
         {
             DisplayReadOnlyViews = !DisplayReadOnlyViews;
+            ShowReadOnlyViewsEditorPref = DisplayReadOnlyViews;
+            OnDisplayReadOnlyViewsChanged();
+        }
+
+        /// <summary>
+        /// Called when display only views option changes value.
+        /// </summary>
+        public void OnDisplayReadOnlyViewsChanged()
+        {
             DisplayReadOnlyViewsText = DisplayReadOnlyViews ? "Hide Read-Only Views" : "Show Read-Only Views";
             DisplayedDesignerViews.Replace(DesignerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
         }

@@ -7559,6 +7559,7 @@
     </xs:sequence>
     <xs:attribute name="EventSystem" type="xs:string" />
     <xs:attribute name="LastOpenedViewEditorPref" type="xs:string" />
+    <xs:attribute name="ShowReadOnlyViewsEditorPref" type="xs:string" />
     <xs:attribute name="DesignerViews" type="xs:string" />
     <xs:attribute name="ChangedDesignerViews" type="xs:string" />
     <xs:attribute name="DisplayedDesignerViews" type="xs:string" />
@@ -8287,6 +8288,8 @@
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
       <xs:enumeration value="RoundedSquare10_5px" />
+      <xs:enumeration value="eye16" />
+      <xs:enumeration value="eye64" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -8327,6 +8330,8 @@
   <xs:simpleType name="Asset_Texture2DAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="RoundedSquare10_5px" />
+      <xs:enumeration value="eye16" />
+      <xs:enumeration value="eye64" />
     </xs:restriction>
   </xs:simpleType>
 

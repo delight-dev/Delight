@@ -102,6 +102,13 @@ namespace Delight.Editor.Parser
             set { SetProperty(ref _filePath, value); }
         }
 
+        private bool _isDisplayLocked;
+        public bool IsDisplayLocked
+        {
+            get { return _isDisplayLocked; }
+            set { SetProperty(ref _isDisplayLocked, value); }
+        }
+
         public string DisplayName
         {
             get

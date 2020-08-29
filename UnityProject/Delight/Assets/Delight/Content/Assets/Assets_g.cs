@@ -210,6 +210,8 @@ namespace Delight
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
         public readonly SpriteAsset RoundedSquare10_5px;
+        public readonly SpriteAsset Eye16;
+        public readonly SpriteAsset Eye64;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -258,6 +260,8 @@ namespace Delight
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
             RoundedSquare10_5px = new SpriteAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
+            Eye16 = new SpriteAsset { Id = "eye16", IsResource = true, RelativePath = "Sprites/" };
+            Eye64 = new SpriteAsset { Id = "eye64", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -300,6 +304,8 @@ namespace Delight
             Add(Selection);
             Add(TooltipArrow);
             Add(RoundedSquare10_5px);
+            Add(Eye16);
+            Add(Eye64);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);
@@ -480,6 +486,8 @@ namespace Delight
         #region Fields
 
         public readonly Texture2DAsset RoundedSquare10_5px;
+        public readonly Texture2DAsset Eye16;
+        public readonly Texture2DAsset Eye64;
 
         #endregion
 
@@ -488,8 +496,12 @@ namespace Delight
         public Texture2DAssetData()
         {
             RoundedSquare10_5px = new Texture2DAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
+            Eye16 = new Texture2DAsset { Id = "eye16", IsResource = true, RelativePath = "Sprites/" };
+            Eye64 = new Texture2DAsset { Id = "eye64", IsResource = true, RelativePath = "Sprites/" };
 
             Add(RoundedSquare10_5px);
+            Add(Eye16);
+            Add(Eye64);
         }
 
         #endregion

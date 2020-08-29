@@ -63,7 +63,7 @@ namespace Delight
         /// <summary>
         /// Called when toggle value changes.
         /// </summary>
-        public void ToggleValueChanged()
+        public void ToggleValueChanged(bool triggerToggleClick = true)
         {
             if (!IsToggleButton)
                 return;
@@ -77,7 +77,10 @@ namespace Delight
                 SetState(DefaultStateName);
             }
 
-            ToggleClick?.Invoke(this, ToggleValue);
+            if (triggerToggleClick)
+            {
+                ToggleClick?.Invoke(this, ToggleValue);
+            }
         }
 
         /// <summary>
@@ -182,7 +185,7 @@ namespace Delight
 
             if (IsToggleButton)
             {
-                ToggleValueChanged();
+                ToggleValueChanged(false);
             }
 
             if (IsDisabled)

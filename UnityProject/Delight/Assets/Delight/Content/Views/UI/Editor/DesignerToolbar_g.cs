@@ -70,6 +70,9 @@ namespace Delight
                     _designerToolbar.LineNumber = 0;
                     _designerToolbar.LinePosition = 0;
 #endif
+                    Delight.DesignerToolbar.WidthProperty.SetDefault(_designerToolbar, new ElementSize(40f, ElementSizeUnit.Pixels));
+                    Delight.DesignerToolbar.BackgroundColorProperty.SetDefault(_designerToolbar, new UnityEngine.Color(0.3882353f, 0.3882353f, 0.3882353f, 1f));
+                    Delight.DesignerToolbar.AlignmentProperty.SetDefault(_designerToolbar, Delight.ElementAlignment.Left);
                 }
                 return _designerToolbar;
             }
