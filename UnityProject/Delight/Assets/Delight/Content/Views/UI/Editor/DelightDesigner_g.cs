@@ -1825,7 +1825,7 @@ namespace Delight
                     _delightDesignerListItem1.LineNumber = 40;
                     _delightDesignerListItem1.LinePosition = 20;
 #endif
-                    Delight.ListItem.MarginProperty.SetDefault(_delightDesignerListItem1, new ElementMargin(new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels)));
+                    Delight.ListItem.MarginProperty.SetDefault(_delightDesignerListItem1, new ElementMargin(new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.ListItem.BackgroundSpriteProperty.SetStateDefault("Selected", _delightDesignerListItem1, Assets.Sprites["RoundedSquare10_5px"]);
                     Delight.ListItem.BackgroundSpriteProperty.SetStateDefault("Highlighted", _delightDesignerListItem1, Assets.Sprites["RoundedSquare10_5px"]);
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Highlighted", _delightDesignerListItem1, new UnityEngine.Color(0.9176471f, 0.9176471f, 0.9176471f, 1f));
@@ -1856,8 +1856,8 @@ namespace Delight
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 12f);
                     Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Segoe UI SDF"]);
-                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(19f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.2235294f, 0.2666667f, 0.3490196f, 1f));
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1921569f, 0.2313726f, 0.2745098f, 1f));
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(15f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);

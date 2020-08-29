@@ -23,7 +23,7 @@
 
       <!-- Left Panel - Content Explorer #686a72 -->
       <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#dddddd">
-        <!-- <Region Id="ContentExplorerHeader2" BackgroundColor="#d0d0d3" Alignment="Top" Height="40" Offset="0,0,0,0" Margin="0,0,0,0" />-->
+        <!--<Region Id="ContentExplorerHeader2" BackgroundColor="#d0d0d3" Alignment="Top" Height="40" Offset="0,0,0,0" Margin="0,0,0,0" />-->
         
         <Region Margin="0,12,0,0">
 
@@ -37,8 +37,8 @@
               <ExpanderContent>
                 <List Items="{view in DisplayedDesignerViews}" Alignment="TopLeft" Margin="0,10,0,0" BackgroundColor="#dddddd" Width="100%"
                       CanReselect="True" ItemSelected="ViewSelected" AlternateItems="False">
-                  <ListItem Margin="2,2,2,2" Selected-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundColor="#eaeaea" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#eaeaea" Alternate-BackgroundColor="#bbc3c3c3">
-                    <Label Text="{view.DisplayName}" FontSize="12" Font="Segoe UI SDF" Height="19" FontColor="#394459" Width="100%" Margin="15,0,0,0" EnableWordWrapping="False"
+                  <ListItem Margin="2,0,2,0" Selected-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundSprite="RoundedSquare10_5px" Highlighted-BackgroundColor="#eaeaea" Selected-BackgroundColor="#f4f4f4" Pressed-BackgroundColor="#eaeaea" Alternate-BackgroundColor="#bbc3c3c3">
+                    <Label Text="{view.DisplayName}" FontSize="12" Font="Segoe UI SDF" Height="21" FontColor="#313b46" Width="100%" Margin="15,0,0,0" EnableWordWrapping="False"
                             OverflowMode="Truncate" ExtraPadding="True" Highlighted-FontColor="#333333" Selected-FontColor="#333333" ListItem.SetListItemState="True"  />
                   </ListItem>
                 </List>
