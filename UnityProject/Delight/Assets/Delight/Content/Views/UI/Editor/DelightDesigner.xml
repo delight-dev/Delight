@@ -12,16 +12,21 @@
       <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1">
       </Region>
 
-      <!-- Designer Content Region -->
-      <ScrollableRegion Id="ScrollableContentRegion" Grid.Cell="0,2" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
-                        UnblockDragEventsInChildren="False">
-        <Canvas Id="ContentRegionCanvas" Scale="1">
-          <Region Id="ViewContentRegion">
-          </Region>
-        </Canvas>
-      </ScrollableRegion>
+      <!-- Designer Display Region -->
+      <Region Id="DisplayRegion" Grid.Cell="0,2">
+        <ScrollableRegion Id="ScrollableContentRegion" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
+                          UnblockDragEventsInChildren="False">
+          <Canvas Id="ContentRegionCanvas" Scale="1">
+            <Region Id="ViewContentRegion">
+            </Region>
+          </Canvas>
+        </ScrollableRegion>
+        
+        <DesignerToolbar IsActive="False" />
+        <Button Text="Lock View" IsToggleButton="True" Alignment="TopRight" Offset="0,5,5,0" ToggleClick="ToggleViewLock" IsActive="False" />
+      </Region>
 
-      <!-- Left Panel - Content Explorer #686a72 -->
+      <!-- Left Panel - Content Explorer -->
       <Region Id="ContentExplorer" Grid.Cell="0,1" Grid.CellSpan="2,1" BackgroundColor="#dddddd">
         <!--<Region Id="ContentExplorerHeader2" BackgroundColor="#d0d0d3" Alignment="Top" Height="40" Offset="0,0,0,0" Margin="0,0,0,0" />-->
         
@@ -65,7 +70,7 @@
       <!-- Bottom Panel - XML editor -->
       <Region Id="XmlEditorRegion" Grid.Cell="1,2" BackgroundColor="#fbfbfb" IsVisible="False">
         <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" SelectViewAtLine="OnSelectViewAtLine" DesignerViews="{DesignerViews}" />
-        <Region Id="XmlEditorStatusBar" Width="180" Height="20" Alignment="BottomRight" BackgroundColor="White">
+        <Region Id="XmlEditorStatusBar" Width="200" Height="20" Alignment="BottomRight" BackgroundColor="White">
           <Image Id="LockIcon" Sprite="Lock" Alignment="Left" Offset="5,0,0,0" />
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
             <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" />
@@ -78,6 +83,7 @@
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
     </Grid>
 
+    <!-- Save Changes Popup -->
     <Region Id="SaveChangesPopup" IsActive="False" Width="450" Height="300" BackgroundColor="#dbdbdb">
       <Label Text="Do you want to save changes to the following items?" FontSize="16" Font="Segoe UI SDF" Width="100%" Alignment="TopLeft" Margin="10,0,0,0" />
 

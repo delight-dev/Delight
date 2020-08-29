@@ -44,6 +44,7 @@ namespace Delight
         private List<UIView> _raycastedViews = new List<UIView>();
         private int _selectedRaycastedIndex = 0;
         private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
+        private bool _viewLockEnabled = false;
         
         public EventSystem _eventSystem;
         public EventSystem EventSystem
@@ -351,6 +352,16 @@ namespace Delight
         }
 
         /// <summary>
+        /// Toogles the view lock.
+        /// </summary>
+        public void ToggleViewLock(bool toggleValue)
+        {
+            Debug.Log("View lock toggled");
+            // when view lock is enabled the user can switch to edit other views and the current view is always displayed
+            _viewLockEnabled = toggleValue;
+        }
+
+        /// <summary>
         /// Called when the user selects a view in the XML editor. 
         /// </summary>
         public void OnSelectViewAtLine(int line)
@@ -426,11 +437,14 @@ namespace Delight
             UpdateCurrentEditedViewXml();
 
             // clear any existing displayed views
-            ViewContentRegion.DestroyChildren();
+            if (!_viewLockEnabled)
+            {
+                ViewContentRegion.DestroyChildren();
+                LastOpenedViewEditorPref = designerView.Name;
+            }
 
             _lastOpenView = _currentEditedView;
-            _currentEditedView = designerView;
-            LastOpenedViewEditorPref = designerView.Name;
+            _currentEditedView = designerView;            
 
             if (!designerView.IsRuntimeParsed)
             {
@@ -1772,6 +1786,10 @@ namespace Delight
             else if (viewName == "XmlEditor")
             {
                 return new XmlEditor(parent, layoutParent, id, template, deferInitialization);
+            }
+            else if (viewName == "DesignerToolbar")
+            {
+                return new DesignerToolbar(parent, layoutParent, id, template, deferInitialization);
             }
             else
             {
