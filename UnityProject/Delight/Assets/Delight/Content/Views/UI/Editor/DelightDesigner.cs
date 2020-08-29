@@ -371,7 +371,7 @@ namespace Delight
         /// <summary>
         /// Toogles the view lock.
         /// </summary>
-        public void ToggleViewLock(bool toggleValue)
+        public async void ToggleViewLock(bool toggleValue)
         {
             if (_currentEditedView == null)
                 return;
@@ -386,8 +386,16 @@ namespace Delight
             if (_viewLockEnabled)
             {
                 _currentDisplayedView.XmlText = XmlEditor.GetXmlText();
+                ParseView();
             }
-            ParseView();
+            else
+            {
+                await DisplayView(_currentDisplayedView); // if lock disabled then display currently selected view
+
+                // center on view
+                ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
+                SetScale(Vector3.one);
+            }
         }
 
         /// <summary>
@@ -499,11 +507,6 @@ namespace Delight
             if (_viewLockEnabled)
                 return; // if view lock we're done here
 
-            _currentDisplayedView = designerView;
-
-            // clear any existing displayed views and instantiate view in display
-            LastOpenedViewEditorPref = designerView.Name;
-
             await DisplayView(designerView);
 
             // center on view
@@ -517,6 +520,7 @@ namespace Delight
         private async Task DisplayView(DesignerView designerView)
         {
             _currentDisplayedView = designerView;
+            LastOpenedViewEditorPref = designerView.Name;
 
             try
             {
