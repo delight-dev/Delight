@@ -256,7 +256,7 @@ namespace Delight
                 Selection.objects = _selectedViews.Select(x => x.GameObject).ToArray();
                 EditorGUIUtility.PingObject(lastSelectedView.GameObject);
 
-                Debug.Log(String.Format("Selecting {0} ({1},{2})", lastSelectedView.GetType().Name, lastSelectedView.Template.LineNumber, lastSelectedView.Template.LinePosition));
+                //Debug.Log(String.Format("Selecting {0} ({1},{2})", lastSelectedView.GetType().Name, lastSelectedView.Template.LineNumber, lastSelectedView.Template.LinePosition));
             }
 
             // destroy selection indicators not in new list
@@ -376,7 +376,6 @@ namespace Delight
             if (_currentEditedView == null)
                 return;
 
-            Debug.Log("View lock toggled");
             // when view lock is enabled the user can switch to edit other views and the current view is always displayed
             _viewLockEnabled = toggleValue;
             _currentDisplayedView.IsDisplayLocked = false;

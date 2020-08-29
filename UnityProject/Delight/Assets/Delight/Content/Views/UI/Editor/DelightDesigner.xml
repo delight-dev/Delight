@@ -15,7 +15,7 @@
       <!-- Designer Display Region -->
       <Region Id="DisplayRegion" Grid.Cell="0,2" IsVisible="False">
         <ScrollableRegion Id="ScrollableContentRegion" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
-                          UnblockDragEventsInChildren="False">
+                          UnblockDragEventsInChildren="False" Margin="40,0,0,0">
           <Canvas Id="ContentRegionCanvas" Scale="1">
             <Region Id="ViewContentRegion">
             </Region>
@@ -70,8 +70,8 @@
       <!-- Bottom Panel - XML editor -->
       <Region Id="XmlEditorRegion" Grid.Cell="1,2" BackgroundColor="#fbfbfb" IsVisible="False">
         <XmlEditor Id="XmlEditor" Margin="10,21,0,0" Edit="OnEdit" SelectViewAtLine="OnSelectViewAtLine" DesignerViews="{DesignerViews}" />
-        <Region Id="XmlEditorStatusBar" Width="200" Height="20" Alignment="BottomRight" BackgroundColor="White">
-          <Image Id="LockIcon" Sprite="Lock" Alignment="Left" Offset="5,0,0,0" />
+        <Image Id="LockIcon" Sprite="Lock" Alignment="TopLeft" Offset="5,5,0,0" Size="16" PreserveAspect="True" />
+        <Region Id="XmlEditorStatusBar" Width="175" Height="20" Alignment="BottomRight" BackgroundColor="White">
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
             <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" />
             <Button Text="Parse" IsDisabled="{AutoParse}" Click="ParseView" FontSize="12" Height="14" />

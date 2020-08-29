@@ -118,8 +118,8 @@ namespace Delight
 
             // binding <XmlEditor DesignerViews="{DesignerViews}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "XmlEditor", "DesignerViews" }, new List<Func<BindableObject>> { () => this, () => XmlEditor }), () => XmlEditor.DesignerViews = DesignerViews, () => { }, false));
+            LockIcon = new Image(this, XmlEditorRegion.Content, "LockIcon", LockIconTemplate);
             XmlEditorStatusBar = new Region(this, XmlEditorRegion.Content, "XmlEditorStatusBar", XmlEditorStatusBarTemplate);
-            LockIcon = new Image(this, XmlEditorStatusBar.Content, "LockIcon", LockIconTemplate);
             Group1 = new Group(this, XmlEditorStatusBar.Content, "Group1", Group1Template);
             AutoParseCheckBox = new CheckBox(this, Group1.Content, "AutoParseCheckBox", AutoParseCheckBoxTemplate);
 
@@ -229,10 +229,10 @@ namespace Delight
             dependencyProperties.Add(XmlEditorRegionTemplateProperty);
             dependencyProperties.Add(XmlEditorProperty);
             dependencyProperties.Add(XmlEditorTemplateProperty);
-            dependencyProperties.Add(XmlEditorStatusBarProperty);
-            dependencyProperties.Add(XmlEditorStatusBarTemplateProperty);
             dependencyProperties.Add(LockIconProperty);
             dependencyProperties.Add(LockIconTemplateProperty);
+            dependencyProperties.Add(XmlEditorStatusBarProperty);
+            dependencyProperties.Add(XmlEditorStatusBarTemplateProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(AutoParseCheckBoxProperty);
@@ -676,20 +676,6 @@ namespace Delight
             set { XmlEditorTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> XmlEditorStatusBarProperty = new DependencyProperty<Region>("XmlEditorStatusBar");
-        public Region XmlEditorStatusBar
-        {
-            get { return XmlEditorStatusBarProperty.GetValue(this); }
-            set { XmlEditorStatusBarProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> XmlEditorStatusBarTemplateProperty = new DependencyProperty<Template>("XmlEditorStatusBarTemplate");
-        public Template XmlEditorStatusBarTemplate
-        {
-            get { return XmlEditorStatusBarTemplateProperty.GetValue(this); }
-            set { XmlEditorStatusBarTemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Image> LockIconProperty = new DependencyProperty<Image>("LockIcon");
         public Image LockIcon
         {
@@ -702,6 +688,20 @@ namespace Delight
         {
             get { return LockIconTemplateProperty.GetValue(this); }
             set { LockIconTemplateProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Region> XmlEditorStatusBarProperty = new DependencyProperty<Region>("XmlEditorStatusBar");
+        public Region XmlEditorStatusBar
+        {
+            get { return XmlEditorStatusBarProperty.GetValue(this); }
+            set { XmlEditorStatusBarProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> XmlEditorStatusBarTemplateProperty = new DependencyProperty<Template>("XmlEditorStatusBarTemplate");
+        public Template XmlEditorStatusBarTemplate
+        {
+            get { return XmlEditorStatusBarTemplateProperty.GetValue(this); }
+            set { XmlEditorStatusBarTemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
@@ -964,8 +964,8 @@ namespace Delight
                     Delight.DelightDesigner.Label3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel3);
                     Delight.DelightDesigner.XmlEditorRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorRegion);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
-                    Delight.DelightDesigner.XmlEditorStatusBarTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorStatusBar);
                     Delight.DelightDesigner.LockIconTemplateProperty.SetDefault(_delightDesigner, DelightDesignerLockIcon);
+                    Delight.DelightDesigner.XmlEditorStatusBarTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorStatusBar);
                     Delight.DelightDesigner.Group1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup1);
                     Delight.DelightDesigner.AutoParseCheckBoxTemplateProperty.SetDefault(_delightDesigner, DelightDesignerAutoParseCheckBox);
                     Delight.DelightDesigner.Button1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton1);
@@ -1098,6 +1098,7 @@ namespace Delight
                     Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerScrollableContentRegion, false);
                     Delight.ScrollableRegion.DisableMouseWheelProperty.SetDefault(_delightDesignerScrollableContentRegion, true);
                     Delight.ScrollableRegion.UnblockDragEventsInChildrenProperty.SetDefault(_delightDesignerScrollableContentRegion, false);
+                    Delight.ScrollableRegion.MarginProperty.SetDefault(_delightDesignerScrollableContentRegion, new ElementMargin(new ElementSize(40f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.ScrollableRegion.HorizontalScrollbarVisibilityProperty.SetDefault(_delightDesignerScrollableContentRegion, Delight.ScrollbarVisibilityMode.Never);
                     Delight.ScrollableRegion.VerticalScrollbarVisibilityProperty.SetDefault(_delightDesignerScrollableContentRegion, Delight.ScrollbarVisibilityMode.Never);
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerScrollableContentRegion, DelightDesignerScrollableContentRegionContentRegion);
@@ -3364,32 +3365,6 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerXmlEditorStatusBar;
-        public static Template DelightDesignerXmlEditorStatusBar
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerXmlEditorStatusBar == null || _delightDesignerXmlEditorStatusBar.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerXmlEditorStatusBar == null)
-#endif
-                {
-                    _delightDesignerXmlEditorStatusBar = new Template(RegionTemplates.Region);
-#if UNITY_EDITOR
-                    _delightDesignerXmlEditorStatusBar.Name = "DelightDesignerXmlEditorStatusBar";
-                    _delightDesignerXmlEditorStatusBar.LineNumber = 73;
-                    _delightDesignerXmlEditorStatusBar.LinePosition = 10;
-#endif
-                    Delight.Region.WidthProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(200f, ElementSizeUnit.Pixels));
-                    Delight.Region.HeightProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(20f, ElementSizeUnit.Pixels));
-                    Delight.Region.AlignmentProperty.SetDefault(_delightDesignerXmlEditorStatusBar, Delight.ElementAlignment.BottomRight);
-                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
-                }
-                return _delightDesignerXmlEditorStatusBar;
-            }
-        }
-
         private static Template _delightDesignerLockIcon;
         public static Template DelightDesignerLockIcon
         {
@@ -3404,14 +3379,43 @@ namespace Delight
                     _delightDesignerLockIcon = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _delightDesignerLockIcon.Name = "DelightDesignerLockIcon";
-                    _delightDesignerLockIcon.LineNumber = 74;
-                    _delightDesignerLockIcon.LinePosition = 12;
+                    _delightDesignerLockIcon.LineNumber = 73;
+                    _delightDesignerLockIcon.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_delightDesignerLockIcon, Assets.Sprites["Lock"]);
-                    Delight.Image.AlignmentProperty.SetDefault(_delightDesignerLockIcon, Delight.ElementAlignment.Left);
-                    Delight.Image.OffsetProperty.SetDefault(_delightDesignerLockIcon, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Image.AlignmentProperty.SetDefault(_delightDesignerLockIcon, Delight.ElementAlignment.TopLeft);
+                    Delight.Image.OffsetProperty.SetDefault(_delightDesignerLockIcon, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Image.PreserveAspectProperty.SetDefault(_delightDesignerLockIcon, true);
+                    Delight.Image.WidthProperty.SetDefault(_delightDesignerLockIcon, new ElementSize(16f, ElementSizeUnit.Pixels));
+                    Delight.Image.HeightProperty.SetDefault(_delightDesignerLockIcon, new ElementSize(16f, ElementSizeUnit.Pixels));
                 }
                 return _delightDesignerLockIcon;
+            }
+        }
+
+        private static Template _delightDesignerXmlEditorStatusBar;
+        public static Template DelightDesignerXmlEditorStatusBar
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerXmlEditorStatusBar == null || _delightDesignerXmlEditorStatusBar.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerXmlEditorStatusBar == null)
+#endif
+                {
+                    _delightDesignerXmlEditorStatusBar = new Template(RegionTemplates.Region);
+#if UNITY_EDITOR
+                    _delightDesignerXmlEditorStatusBar.Name = "DelightDesignerXmlEditorStatusBar";
+                    _delightDesignerXmlEditorStatusBar.LineNumber = 74;
+                    _delightDesignerXmlEditorStatusBar.LinePosition = 10;
+#endif
+                    Delight.Region.WidthProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(175f, ElementSizeUnit.Pixels));
+                    Delight.Region.HeightProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.Region.AlignmentProperty.SetDefault(_delightDesignerXmlEditorStatusBar, Delight.ElementAlignment.BottomRight);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                }
+                return _delightDesignerXmlEditorStatusBar;
             }
         }
 
