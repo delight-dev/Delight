@@ -37,18 +37,6 @@ namespace Delight
         #region Methods
 
         /// <summary>
-        /// Called when a property has been changed.
-        /// </summary>
-        public override void OnPropertyChanged(object source, string property)
-        {
-            base.OnPropertyChanged(source, property);
-            if (!IsLoaded || IgnoreObject)
-                return;
-
-            OnChanged(property);
-        }
-
-        /// <summary>
         /// Called before the view is loaded.
         /// </summary>
         protected override void BeforeLoad()
