@@ -53,7 +53,7 @@ namespace Delight
         public static Regex ViewNameStartRegex = new Regex(@"(?<=<)[A-Za-z0-9_]+(?=[\s>/])");
         public static Regex QuoteContentRegex = new Regex(@"""(\\""|[^""])*"""); // "(\\"|[^"])*"
         public static int UndoHistoryLimit = 30;
-
+      
         private List<string> _lines = new List<string>();
         private int _caretX;
         private int _caretY;
@@ -90,6 +90,8 @@ namespace Delight
         private List<UIView> _selectedViews = new List<UIView>();
         private List<XmlEditorUndoInfo> _undoInfo = new List<XmlEditorUndoInfo>();
         private int _undoCount = 0;
+        private List<int> _addedLines = new List<int>();
+        private List<int> _deletedLines = new List<int>();
 
         #endregion
 
@@ -224,10 +226,8 @@ namespace Delight
                         // handle selection logic
                         GetMouseCaretPosition(out var _, out var clickY);
 
-                        GetViewAtCaret();
-
                         // select view at line
-                        SelectViewAtLine?.Invoke(this, clickY);
+                        SelectViewAtLine?.Invoke(this, GetLineInLastParsedXml(clickY));
                     }
                 }
             }
@@ -360,6 +360,176 @@ namespace Delight
             }
 
             _previousMousePosition = Input.mousePosition;
+        }
+
+        /// <summary>
+        /// Gets line in last parsed XML that corresponds to the line in the edited XML.
+        /// </summary>
+        public int GetLineInEditedXml(int lineInLastParsedXml)
+        {
+            int lineInEditedXml = lineInLastParsedXml;
+            var sortedAddedLines = _addedLines.OrderBy(x => x).ToList();
+            var sortedDeletedLines = _deletedLines.OrderBy(x => x).ToList();
+            int maxCount = Math.Max(sortedAddedLines.Count, sortedDeletedLines.Count);
+
+            for (int i = 0; i < maxCount; ++i)
+            {
+                if (i < sortedAddedLines.Count)
+                {
+                    // if added line is on edited line or before, we add one to it
+                    if (sortedAddedLines[i] <= lineInEditedXml)
+                    {
+                        ++lineInEditedXml;
+                    }
+                }
+
+                if (i < sortedDeletedLines.Count)
+                {
+                    // if deleted line is on edited line or before, we decrement it
+                    if (sortedDeletedLines[i] <= lineInEditedXml)
+                    {
+                        --lineInEditedXml;
+                    }
+                }
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Added lines: ");
+            for (int i = 0; i < _addedLines.Count; ++i)
+            {
+                sb.Append((sortedAddedLines[i] + 1).ToString());
+                if (i + 1 != _addedLines.Count)
+                {
+                    sb.Append(", ");
+                }
+            }
+            sb.Append("\nDeleted lines: ");
+            for (int i = 0; i < _deletedLines.Count; ++i)
+            {
+                sb.Append((sortedDeletedLines[i] + 1).ToString());
+                if (i + 1 != _deletedLines.Count)
+                {
+                    sb.Append(", ");
+                }
+            }
+            UnityEngine.Debug.Log(sb.ToString());
+
+            //int lineInEditedXml = lineInLastParsedXml + _addedLines.Count(x => x <= lineInLastParsedXml) - _deletedLines.Count(x => x <= lineInLastParsedXml);
+            UnityEngine.Debug.Log(String.Format("GetLineInEditedXml({0}) -> {1}", lineInLastParsedXml+1, lineInEditedXml+1));
+            return lineInEditedXml;
+        }
+
+        /// <summary>
+        /// Gets line in last parsed XML that corresponds to the line in the edited XML.
+        /// </summary>
+        public int GetLineInLastParsedXml(int lineInEditedXml)
+        {
+            int lineInLastParsedXml = lineInEditedXml - _addedLines.Count(x => x < lineInEditedXml) + _deletedLines.Count(x => x <= lineInEditedXml);
+            UnityEngine.Debug.Log(String.Format("GetLineInLastParsedXml({0}) = {1}", lineInEditedXml+1, lineInLastParsedXml+1));
+            return lineInLastParsedXml;
+        }
+
+        /// <summary>
+        /// Called when (re-)parse of the XML is successful. Clears selection. 
+        /// </summary>
+        public void OnParseSuccessful()
+        {
+            _addedLines.Clear();
+            _deletedLines.Clear();
+        }
+
+        /// <summary>
+        /// Called when a new line is added.
+        /// </summary>
+        public void OnLineAdded(int line)
+        {
+            int addedLine = line;
+            for (int i = 0; i < _addedLines.Count; ++i)
+            {
+                if (_addedLines[i] >= addedLine)
+                {
+                    _addedLines[i] = _addedLines[i] + 1;
+                }
+            }
+
+            for (int i = 0; i < _deletedLines.Count; ++i)
+            {
+                if (_deletedLines[i] > addedLine)
+                {
+                    _deletedLines[i] = _deletedLines[i] + 1;
+                }
+            }
+
+            // if addded line is an deleted line - clear both
+            int deletedLineIndex = _deletedLines.IndexOf(addedLine);
+            if (deletedLineIndex >= 0)
+            {
+                _deletedLines.RemoveAt(deletedLineIndex);
+            }
+            else
+            {
+                _addedLines.Add(addedLine);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Added lines:");
+            var sortedAddedLines = _addedLines.OrderBy(x => x).ToList();
+            for (int i = 0; i < _addedLines.Count; ++i)
+            {
+                sb.Append((sortedAddedLines[i] + 1).ToString());
+                if (i + 1 != _addedLines.Count)
+                {
+                    sb.Append(", ");
+                }
+            }
+            UnityEngine.Debug.Log(sb.ToString());
+        }
+
+        /// <summary>
+        /// Called when a new line is deleted.
+        /// </summary>
+        public void OnLineDeleted(int line)
+        {
+            int deletedLine = line;
+            for (int i = 0; i < _deletedLines.Count; ++i)
+            {
+                if (_deletedLines[i] >= deletedLine)
+                {
+                    _deletedLines[i] = _deletedLines[i] - 1;
+                }
+            }
+
+            for (int i = 0; i < _addedLines.Count; ++i)
+            {
+                if (_addedLines[i] > deletedLine)
+                {
+                    _addedLines[i] = _addedLines[i] - 1;
+                }
+            }
+
+            // if deleted line is an added line - clear both
+            int addedLineIndex = _addedLines.IndexOf(deletedLine);
+            if (addedLineIndex >= 0)
+            {
+                _addedLines.RemoveAt(addedLineIndex);
+            }
+            else
+            {
+                _deletedLines.Add(deletedLine);
+            }
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Deleted lines:");
+            var sortedDeletedLines = _deletedLines.OrderBy(x => x).ToList();
+            for (int i = 0; i < _deletedLines.Count; ++i)
+            {
+                sb.Append((sortedDeletedLines[i] + 1).ToString());
+                if (i + 1 != _deletedLines.Count)
+                {
+                    sb.Append(", ");
+                }
+            }
+            UnityEngine.Debug.Log(sb.ToString());
         }
 
         /// <summary>
@@ -692,6 +862,7 @@ namespace Delight
 
                                     var spacesStr = new string(' ', indentLevel);
                                     _lines.InsertOrAdd(_caretY + 1, string.Format("{0}</{1}>", spacesStr, viewName));
+                                    OnLineAdded(_caretY + 1);
                                     addIndentation = true;
                                     needReparse = true;
                                 }
@@ -707,10 +878,12 @@ namespace Delight
                         if (_caretX <= 0)
                         {
                             _lines.Insert(_caretY, string.Empty);
+                            OnLineAdded(_caretY);
                         }
                         else if (_caretX >= _lines[_caretY].Length)
                         {
                             _lines.InsertOrAdd(_caretY + 1, string.Empty);
+                            OnLineAdded(_caretY + 1);
                             if (addIndentation)
                                 indentLevel += SpacesPerTab;
                             _lines[_caretY + 1] += new string(' ', indentLevel);
@@ -721,7 +894,8 @@ namespace Delight
                             var rightStr = _lines[_caretY].Substring(_caretX);
                             var leftStr = _lines[_caretY].Substring(0, _caretX);
                             _lines[_caretY] = leftStr;
-                            _lines.InsertOrAdd(_caretY + 1, rightStr);
+                            _lines.InsertOrAdd(_caretY + 1, rightStr.TrimStart());
+                            OnLineAdded(String.IsNullOrWhiteSpace(leftStr) ? _caretY : _caretY + 1); // if left hand side is just white-space we've added a line on caretY
                             _lines[_caretY + 1] = new string(' ', indentLevel) + _lines[_caretY + 1];
                             _caretX = indentLevel;
                         }
@@ -758,6 +932,7 @@ namespace Delight
                                 _lines[_caretY] += _lines[_caretY + 1];
                                 _caretX = newCaretX;
                                 _lines.RemoveAt(_caretY + 1);
+                                OnLineDeleted(_caretY + 1);
                             }
                         }
                         else
@@ -819,7 +994,8 @@ namespace Delight
                             if (_caretY < _lines.Count - 1)
                             {
                                 // yes. append below line to the current line
-                                _lines[_caretY] += _lines[_caretY + 1];
+                                OnLineDeleted(String.IsNullOrWhiteSpace(_lines[_caretY]) ? _caretY : _caretY + 1);
+                                _lines[_caretY] += _lines[_caretY + 1].TrimStart();
                                 _lines.RemoveAt(_caretY + 1);
                             }
                         }
@@ -1410,6 +1586,11 @@ namespace Delight
             {
                 _lines[startLine] = _lines[startLine].Substring(0, startChar) + _lines[endLine].Substring(endChar);
                 _lines.RemoveRange(startLine + 1, endLine - startLine);
+
+                for (int i = 0; i < endLine - startLine; ++i)
+                {
+                    OnLineDeleted(startLine + 1 + i);
+                }
             }
 
             _caretX = startChar;
@@ -1433,7 +1614,11 @@ namespace Delight
             while (caretY >= 0)
             {
                 var line = _lines[caretY];
-                var trimmedLine = line.TrimStart();
+                if (caretY == _caretY)
+                {
+                    line = line.Substring(0, _caretX);
+                }
+                var trimmedLine = line.Trim();
                 if (trimmedLine.StartsWith("<") && !trimmedLine.StartsWith("<!"))
                 {
                     int leadingSpaces = _lines[caretY].TakeWhile(Char.IsWhiteSpace).Count();
@@ -1446,9 +1631,11 @@ namespace Delight
                     {
                         return leadingSpaces + viewName.Length + 2;
                     }
-                    else
+                    else 
                     {
-                        return leadingSpaces;
+                        // if trimmed line ends an open view we want the next indentation level
+                        return trimmedLine.EndsWith(">") && !trimmedLine.StartsWith("</") && !trimmedLine.EndsWith("/>") ? 
+                            leadingSpaces + 2 : leadingSpaces;
                     }
                 }
                 --caretY;
@@ -1567,9 +1754,11 @@ namespace Delight
                         for (int j = 1; j < lastIndex; ++j)
                         {
                             _lines.InsertOrAdd(_caretY + j, pasteLines[j]);
+                            OnLineAdded(_caretY + j);
                         }
 
                         _lines.InsertOrAdd(_caretY + lastIndex, pasteLines[lastIndex] + rightStr);
+                        OnLineAdded(_caretY + lastIndex);
                         _caretX = pasteLines[lastIndex].Length;
                         _caretY += lastIndex;
                     }
@@ -1715,6 +1904,8 @@ namespace Delight
             _desiredCaretX = 0;
             _lines.Clear();
             _lines.Add(string.Empty);
+            _addedLines.Clear();
+            _deletedLines.Clear();
             _hasSelection = false;
             _undoInfo.Clear();
             _undoCount = 0;
@@ -2057,7 +2248,7 @@ namespace Delight
                 {
                     foreach (var selectedView in _selectedViews)
                     {
-                        int startLine = Math.Max(selectedView.Template.LineNumber - 1, 0);
+                        int startLine = Math.Max(GetLineInEditedXml(selectedView.Template.LineNumber - 1), 0);
                         int startChar = Math.Max(selectedView.Template.LinePosition - 2, 0);
                         if (startLine >= _lines.Count)
                             continue;

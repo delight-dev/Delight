@@ -102,6 +102,12 @@ namespace Delight
             bool ctrlDown = Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
+            // F5 reparses the currently edited view
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                ParseView();
+            }
+
             // F11 maximizes designer window in editor
             if (Input.GetKeyDown(KeyCode.F11))
             {
@@ -364,6 +370,7 @@ namespace Delight
             _currentEditedView.IsDirty = true;
             if (AutoParse && needReparsing)
             {
+                ClearSelectedViews();
                 ParseView();
             }
         }
@@ -700,7 +707,13 @@ namespace Delight
                     String.Format("#Delight# Error parsing view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
                 ConsoleLogger.LogException(e);
             }
-            ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+            finally
+            {
+                ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+            }
+
+            // parse successful
+            XmlEditor.OnParseSuccessful();
 
             // display view
             await DisplayView(_currentDisplayedView);
