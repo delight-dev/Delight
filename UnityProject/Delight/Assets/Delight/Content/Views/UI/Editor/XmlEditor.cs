@@ -393,29 +393,7 @@ namespace Delight
                 }
             }
 
-            StringBuilder sb = new StringBuilder();
-            sb.Append("Added lines: ");
-            for (int i = 0; i < _addedLines.Count; ++i)
-            {
-                sb.Append((sortedAddedLines[i] + 1).ToString());
-                if (i + 1 != _addedLines.Count)
-                {
-                    sb.Append(", ");
-                }
-            }
-            sb.Append("\nDeleted lines: ");
-            for (int i = 0; i < _deletedLines.Count; ++i)
-            {
-                sb.Append((sortedDeletedLines[i] + 1).ToString());
-                if (i + 1 != _deletedLines.Count)
-                {
-                    sb.Append(", ");
-                }
-            }
-            UnityEngine.Debug.Log(sb.ToString());
-
-            //int lineInEditedXml = lineInLastParsedXml + _addedLines.Count(x => x <= lineInLastParsedXml) - _deletedLines.Count(x => x <= lineInLastParsedXml);
-            UnityEngine.Debug.Log(String.Format("GetLineInEditedXml({0}) -> {1}", lineInLastParsedXml+1, lineInEditedXml+1));
+            //UnityEngine.Debug.Log(String.Format("GetLineInEditedXml({0}) -> {1}", lineInLastParsedXml+1, lineInEditedXml+1));
             return lineInEditedXml;
         }
 
@@ -425,7 +403,7 @@ namespace Delight
         public int GetLineInLastParsedXml(int lineInEditedXml)
         {
             int lineInLastParsedXml = lineInEditedXml - _addedLines.Count(x => x < lineInEditedXml) + _deletedLines.Count(x => x <= lineInEditedXml);
-            UnityEngine.Debug.Log(String.Format("GetLineInLastParsedXml({0}) = {1}", lineInEditedXml+1, lineInLastParsedXml+1));
+            //UnityEngine.Debug.Log(String.Format("GetLineInLastParsedXml({0}) = {1}", lineInEditedXml+1, lineInLastParsedXml+1));
             return lineInLastParsedXml;
         }
 
@@ -470,19 +448,6 @@ namespace Delight
             {
                 _addedLines.Add(addedLine);
             }
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Added lines:");
-            var sortedAddedLines = _addedLines.OrderBy(x => x).ToList();
-            for (int i = 0; i < _addedLines.Count; ++i)
-            {
-                sb.Append((sortedAddedLines[i] + 1).ToString());
-                if (i + 1 != _addedLines.Count)
-                {
-                    sb.Append(", ");
-                }
-            }
-            UnityEngine.Debug.Log(sb.ToString());
         }
 
         /// <summary>
@@ -517,19 +482,6 @@ namespace Delight
             {
                 _deletedLines.Add(deletedLine);
             }
-
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Deleted lines:");
-            var sortedDeletedLines = _deletedLines.OrderBy(x => x).ToList();
-            for (int i = 0; i < _deletedLines.Count; ++i)
-            {
-                sb.Append((sortedDeletedLines[i] + 1).ToString());
-                if (i + 1 != _deletedLines.Count)
-                {
-                    sb.Append(", ");
-                }
-            }
-            UnityEngine.Debug.Log(sb.ToString());
         }
 
         /// <summary>
