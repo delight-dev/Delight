@@ -197,8 +197,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowImage1 = new Template(MainMenuExampleTemplates.MainMenuExampleImage1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowImage1.Name = "MainMenuDemoSceneMainMenuWindowImage1";
-                    _mainMenuDemoSceneMainMenuWindowImage1.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowImage1.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowImage1.LineNumber = 2;
+                    _mainMenuDemoSceneMainMenuWindowImage1.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowImage1;
@@ -219,8 +219,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowLabel1 = new Template(MainMenuExampleTemplates.MainMenuExampleLabel1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowLabel1.Name = "MainMenuDemoSceneMainMenuWindowLabel1";
-                    _mainMenuDemoSceneMainMenuWindowLabel1.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowLabel1.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowLabel1.LineNumber = 3;
+                    _mainMenuDemoSceneMainMenuWindowLabel1.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowLabel1;
@@ -241,8 +241,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowGroup1 = new Template(MainMenuExampleTemplates.MainMenuExampleGroup1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowGroup1.Name = "MainMenuDemoSceneMainMenuWindowGroup1";
-                    _mainMenuDemoSceneMainMenuWindowGroup1.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowGroup1.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowGroup1.LineNumber = 4;
+                    _mainMenuDemoSceneMainMenuWindowGroup1.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowGroup1;
@@ -263,8 +263,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton1 = new Template(MainMenuExampleTemplates.MainMenuExampleButton1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton1.Name = "MainMenuDemoSceneMainMenuWindowButton1";
-                    _mainMenuDemoSceneMainMenuWindowButton1.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton1.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton1.LineNumber = 5;
+                    _mainMenuDemoSceneMainMenuWindowButton1.LinePosition = 6;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneMainMenuWindowButton1, MainMenuDemoSceneMainMenuWindowButton1Label);
                 }
@@ -286,8 +286,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton1Label = new Template(MainMenuExampleTemplates.MainMenuExampleButton1Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton1Label.Name = "MainMenuDemoSceneMainMenuWindowButton1Label";
-                    _mainMenuDemoSceneMainMenuWindowButton1Label.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton1Label.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton1Label.LineNumber = 15;
+                    _mainMenuDemoSceneMainMenuWindowButton1Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowButton1Label;
@@ -308,8 +308,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton2 = new Template(MainMenuExampleTemplates.MainMenuExampleButton2);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton2.Name = "MainMenuDemoSceneMainMenuWindowButton2";
-                    _mainMenuDemoSceneMainMenuWindowButton2.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton2.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton2.LineNumber = 6;
+                    _mainMenuDemoSceneMainMenuWindowButton2.LinePosition = 6;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneMainMenuWindowButton2, MainMenuDemoSceneMainMenuWindowButton2Label);
                 }
@@ -331,8 +331,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton2Label = new Template(MainMenuExampleTemplates.MainMenuExampleButton2Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton2Label.Name = "MainMenuDemoSceneMainMenuWindowButton2Label";
-                    _mainMenuDemoSceneMainMenuWindowButton2Label.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton2Label.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton2Label.LineNumber = 15;
+                    _mainMenuDemoSceneMainMenuWindowButton2Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowButton2Label;
@@ -353,8 +353,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton3 = new Template(MainMenuExampleTemplates.MainMenuExampleButton3);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton3.Name = "MainMenuDemoSceneMainMenuWindowButton3";
-                    _mainMenuDemoSceneMainMenuWindowButton3.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton3.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton3.LineNumber = 7;
+                    _mainMenuDemoSceneMainMenuWindowButton3.LinePosition = 6;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneMainMenuWindowButton3, MainMenuDemoSceneMainMenuWindowButton3Label);
                 }
@@ -376,8 +376,8 @@ namespace Delight
                     _mainMenuDemoSceneMainMenuWindowButton3Label = new Template(MainMenuExampleTemplates.MainMenuExampleButton3Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneMainMenuWindowButton3Label.Name = "MainMenuDemoSceneMainMenuWindowButton3Label";
-                    _mainMenuDemoSceneMainMenuWindowButton3Label.LineNumber = 0;
-                    _mainMenuDemoSceneMainMenuWindowButton3Label.LinePosition = 0;
+                    _mainMenuDemoSceneMainMenuWindowButton3Label.LineNumber = 15;
+                    _mainMenuDemoSceneMainMenuWindowButton3Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneMainMenuWindowButton3Label;
@@ -429,8 +429,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowImage1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleImage1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowImage1.Name = "MainMenuDemoSceneLevelSelectWindowImage1";
-                    _mainMenuDemoSceneLevelSelectWindowImage1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowImage1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowImage1.LineNumber = 3;
+                    _mainMenuDemoSceneLevelSelectWindowImage1.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowImage1;
@@ -451,8 +451,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowLabel1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleLabel1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowLabel1.Name = "MainMenuDemoSceneLevelSelectWindowLabel1";
-                    _mainMenuDemoSceneLevelSelectWindowLabel1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowLabel1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowLabel1.LineNumber = 4;
+                    _mainMenuDemoSceneLevelSelectWindowLabel1.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowLabel1;
@@ -473,8 +473,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1.Name = "MainMenuDemoSceneLevelSelectWindowList1";
-                    _mainMenuDemoSceneLevelSelectWindowList1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1.LineNumber = 5;
+                    _mainMenuDemoSceneLevelSelectWindowList1.LinePosition = 4;
 #endif
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegion);
                 }
@@ -496,8 +496,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegion);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegion";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LineNumber = 27;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar);
@@ -521,8 +521,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion.LineNumber = 24;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion;
@@ -543,8 +543,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbar, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle);
@@ -567,8 +567,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarBar;
@@ -589,8 +589,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionHorizontalScrollbarHandle;
@@ -611,8 +611,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbar, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle);
@@ -635,8 +635,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarBar;
@@ -657,8 +657,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegionVerticalScrollbarHandle;
@@ -679,8 +679,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowListItem1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleListItem1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowListItem1.Name = "MainMenuDemoSceneLevelSelectWindowListItem1";
-                    _mainMenuDemoSceneLevelSelectWindowListItem1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowListItem1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowListItem1.LineNumber = 10;
+                    _mainMenuDemoSceneLevelSelectWindowListItem1.LinePosition = 6;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowListItem1;
@@ -701,8 +701,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowLabel2 = new Template(LevelSelectExampleTemplates.LevelSelectExampleLabel2);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowLabel2.Name = "MainMenuDemoSceneLevelSelectWindowLabel2";
-                    _mainMenuDemoSceneLevelSelectWindowLabel2.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowLabel2.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowLabel2.LineNumber = 11;
+                    _mainMenuDemoSceneLevelSelectWindowLabel2.LinePosition = 8;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowLabel2;
@@ -723,8 +723,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowImage2 = new Template(LevelSelectExampleTemplates.LevelSelectExampleImage2);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowImage2.Name = "MainMenuDemoSceneLevelSelectWindowImage2";
-                    _mainMenuDemoSceneLevelSelectWindowImage2.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowImage2.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowImage2.LineNumber = 13;
+                    _mainMenuDemoSceneLevelSelectWindowImage2.LinePosition = 8;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowImage2;
@@ -745,8 +745,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleNavigationButton1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton1.Name = "MainMenuDemoSceneLevelSelectWindowNavigationButton1";
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1.LineNumber = 15;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1.LinePosition = 6;
 #endif
                     Delight.NavigationButton.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowNavigationButton1, MainMenuDemoSceneLevelSelectWindowNavigationButton1Label);
                 }
@@ -768,8 +768,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label = new Template(LevelSelectExampleTemplates.LevelSelectExampleNavigationButton1Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label.Name = "MainMenuDemoSceneLevelSelectWindowNavigationButton1Label";
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label.LineNumber = 15;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowNavigationButton1Label;
@@ -790,8 +790,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton2 = new Template(LevelSelectExampleTemplates.LevelSelectExampleNavigationButton2);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton2.Name = "MainMenuDemoSceneLevelSelectWindowNavigationButton2";
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2.LineNumber = 18;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2.LinePosition = 6;
 #endif
                     Delight.NavigationButton.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowNavigationButton2, MainMenuDemoSceneLevelSelectWindowNavigationButton2Label);
                 }
@@ -813,8 +813,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label = new Template(LevelSelectExampleTemplates.LevelSelectExampleNavigationButton2Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label.Name = "MainMenuDemoSceneLevelSelectWindowNavigationButton2Label";
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label.LineNumber = 15;
+                    _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowNavigationButton2Label;
@@ -835,8 +835,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowButton1 = new Template(LevelSelectExampleTemplates.LevelSelectExampleButton1);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowButton1.Name = "MainMenuDemoSceneLevelSelectWindowButton1";
-                    _mainMenuDemoSceneLevelSelectWindowButton1.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowButton1.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowButton1.LineNumber = 22;
+                    _mainMenuDemoSceneLevelSelectWindowButton1.LinePosition = 4;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowButton1, MainMenuDemoSceneLevelSelectWindowButton1Label);
                 }
@@ -858,8 +858,8 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowButton1Label = new Template(LevelSelectExampleTemplates.LevelSelectExampleButton1Label);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowButton1Label.Name = "MainMenuDemoSceneLevelSelectWindowButton1Label";
-                    _mainMenuDemoSceneLevelSelectWindowButton1Label.LineNumber = 0;
-                    _mainMenuDemoSceneLevelSelectWindowButton1Label.LinePosition = 0;
+                    _mainMenuDemoSceneLevelSelectWindowButton1Label.LineNumber = 15;
+                    _mainMenuDemoSceneLevelSelectWindowButton1Label.LinePosition = 4;
 #endif
                 }
                 return _mainMenuDemoSceneLevelSelectWindowButton1Label;

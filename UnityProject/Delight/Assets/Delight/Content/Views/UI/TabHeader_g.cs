@@ -110,8 +110,8 @@ namespace Delight
                     _tabHeaderLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _tabHeaderLabel.Name = "TabHeaderLabel";
-                    _tabHeaderLabel.LineNumber = 0;
-                    _tabHeaderLabel.LinePosition = 0;
+                    _tabHeaderLabel.LineNumber = 15;
+                    _tabHeaderLabel.LinePosition = 4;
 #endif
                 }
                 return _tabHeaderLabel;

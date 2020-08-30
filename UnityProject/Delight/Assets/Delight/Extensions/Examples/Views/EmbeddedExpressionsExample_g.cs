@@ -797,8 +797,8 @@ namespace Delight
                     _embeddedExpressionsExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _embeddedExpressionsExampleButton1Label.Name = "EmbeddedExpressionsExampleButton1Label";
-                    _embeddedExpressionsExampleButton1Label.LineNumber = 0;
-                    _embeddedExpressionsExampleButton1Label.LinePosition = 0;
+                    _embeddedExpressionsExampleButton1Label.LineNumber = 15;
+                    _embeddedExpressionsExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_embeddedExpressionsExampleButton1Label, "Click Me");
                 }
@@ -843,8 +843,8 @@ namespace Delight
                     _embeddedExpressionsExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _embeddedExpressionsExampleButton2Label.Name = "EmbeddedExpressionsExampleButton2Label";
-                    _embeddedExpressionsExampleButton2Label.LineNumber = 0;
-                    _embeddedExpressionsExampleButton2Label.LinePosition = 0;
+                    _embeddedExpressionsExampleButton2Label.LineNumber = 15;
+                    _embeddedExpressionsExampleButton2Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_embeddedExpressionsExampleButton2Label, "Reset");
                 }

@@ -726,8 +726,8 @@ namespace Delight
                     _buttonsExampleCheckBox1CheckBoxGroup = new Template(CheckBoxTemplates.CheckBoxCheckBoxGroup);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox1CheckBoxGroup.Name = "ButtonsExampleCheckBox1CheckBoxGroup";
-                    _buttonsExampleCheckBox1CheckBoxGroup.LineNumber = 0;
-                    _buttonsExampleCheckBox1CheckBoxGroup.LinePosition = 0;
+                    _buttonsExampleCheckBox1CheckBoxGroup.LineNumber = 9;
+                    _buttonsExampleCheckBox1CheckBoxGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleCheckBox1CheckBoxGroup;
@@ -748,8 +748,8 @@ namespace Delight
                     _buttonsExampleCheckBox1CheckBoxImageView = new Template(CheckBoxTemplates.CheckBoxCheckBoxImageView);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox1CheckBoxImageView.Name = "ButtonsExampleCheckBox1CheckBoxImageView";
-                    _buttonsExampleCheckBox1CheckBoxImageView.LineNumber = 0;
-                    _buttonsExampleCheckBox1CheckBoxImageView.LinePosition = 0;
+                    _buttonsExampleCheckBox1CheckBoxImageView.LineNumber = 10;
+                    _buttonsExampleCheckBox1CheckBoxImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleCheckBox1CheckBoxImageView;
@@ -770,8 +770,8 @@ namespace Delight
                     _buttonsExampleCheckBox1CheckBoxLabel = new Template(CheckBoxTemplates.CheckBoxCheckBoxLabel);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox1CheckBoxLabel.Name = "ButtonsExampleCheckBox1CheckBoxLabel";
-                    _buttonsExampleCheckBox1CheckBoxLabel.LineNumber = 0;
-                    _buttonsExampleCheckBox1CheckBoxLabel.LinePosition = 0;
+                    _buttonsExampleCheckBox1CheckBoxLabel.LineNumber = 11;
+                    _buttonsExampleCheckBox1CheckBoxLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleCheckBox1CheckBoxLabel, "Option 1");
                 }
@@ -818,8 +818,8 @@ namespace Delight
                     _buttonsExampleCheckBox2CheckBoxGroup = new Template(CheckBoxTemplates.CheckBoxCheckBoxGroup);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox2CheckBoxGroup.Name = "ButtonsExampleCheckBox2CheckBoxGroup";
-                    _buttonsExampleCheckBox2CheckBoxGroup.LineNumber = 0;
-                    _buttonsExampleCheckBox2CheckBoxGroup.LinePosition = 0;
+                    _buttonsExampleCheckBox2CheckBoxGroup.LineNumber = 9;
+                    _buttonsExampleCheckBox2CheckBoxGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleCheckBox2CheckBoxGroup;
@@ -840,8 +840,8 @@ namespace Delight
                     _buttonsExampleCheckBox2CheckBoxImageView = new Template(CheckBoxTemplates.CheckBoxCheckBoxImageView);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox2CheckBoxImageView.Name = "ButtonsExampleCheckBox2CheckBoxImageView";
-                    _buttonsExampleCheckBox2CheckBoxImageView.LineNumber = 0;
-                    _buttonsExampleCheckBox2CheckBoxImageView.LinePosition = 0;
+                    _buttonsExampleCheckBox2CheckBoxImageView.LineNumber = 10;
+                    _buttonsExampleCheckBox2CheckBoxImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleCheckBox2CheckBoxImageView;
@@ -862,8 +862,8 @@ namespace Delight
                     _buttonsExampleCheckBox2CheckBoxLabel = new Template(CheckBoxTemplates.CheckBoxCheckBoxLabel);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox2CheckBoxLabel.Name = "ButtonsExampleCheckBox2CheckBoxLabel";
-                    _buttonsExampleCheckBox2CheckBoxLabel.LineNumber = 0;
-                    _buttonsExampleCheckBox2CheckBoxLabel.LinePosition = 0;
+                    _buttonsExampleCheckBox2CheckBoxLabel.LineNumber = 11;
+                    _buttonsExampleCheckBox2CheckBoxLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleCheckBox2CheckBoxLabel, "Option 2");
                 }
@@ -910,8 +910,8 @@ namespace Delight
                     _buttonsExampleCheckBox3CheckBoxGroup = new Template(CheckBoxTemplates.CheckBoxCheckBoxGroup);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox3CheckBoxGroup.Name = "ButtonsExampleCheckBox3CheckBoxGroup";
-                    _buttonsExampleCheckBox3CheckBoxGroup.LineNumber = 0;
-                    _buttonsExampleCheckBox3CheckBoxGroup.LinePosition = 0;
+                    _buttonsExampleCheckBox3CheckBoxGroup.LineNumber = 9;
+                    _buttonsExampleCheckBox3CheckBoxGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleCheckBox3CheckBoxGroup;
@@ -932,8 +932,8 @@ namespace Delight
                     _buttonsExampleCheckBox3CheckBoxImageView = new Template(CheckBoxTemplates.CheckBoxCheckBoxImageView);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox3CheckBoxImageView.Name = "ButtonsExampleCheckBox3CheckBoxImageView";
-                    _buttonsExampleCheckBox3CheckBoxImageView.LineNumber = 0;
-                    _buttonsExampleCheckBox3CheckBoxImageView.LinePosition = 0;
+                    _buttonsExampleCheckBox3CheckBoxImageView.LineNumber = 10;
+                    _buttonsExampleCheckBox3CheckBoxImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleCheckBox3CheckBoxImageView;
@@ -954,8 +954,8 @@ namespace Delight
                     _buttonsExampleCheckBox3CheckBoxLabel = new Template(CheckBoxTemplates.CheckBoxCheckBoxLabel);
 #if UNITY_EDITOR
                     _buttonsExampleCheckBox3CheckBoxLabel.Name = "ButtonsExampleCheckBox3CheckBoxLabel";
-                    _buttonsExampleCheckBox3CheckBoxLabel.LineNumber = 0;
-                    _buttonsExampleCheckBox3CheckBoxLabel.LinePosition = 0;
+                    _buttonsExampleCheckBox3CheckBoxLabel.LineNumber = 11;
+                    _buttonsExampleCheckBox3CheckBoxLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleCheckBox3CheckBoxLabel, "Option 3");
                 }
@@ -1026,8 +1026,8 @@ namespace Delight
                     _buttonsExampleRadioButton1RadioButtonGroup = new Template(RadioButtonTemplates.RadioButtonRadioButtonGroup);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton1RadioButtonGroup.Name = "ButtonsExampleRadioButton1RadioButtonGroup";
-                    _buttonsExampleRadioButton1RadioButtonGroup.LineNumber = 0;
-                    _buttonsExampleRadioButton1RadioButtonGroup.LinePosition = 0;
+                    _buttonsExampleRadioButton1RadioButtonGroup.LineNumber = 8;
+                    _buttonsExampleRadioButton1RadioButtonGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleRadioButton1RadioButtonGroup;
@@ -1048,8 +1048,8 @@ namespace Delight
                     _buttonsExampleRadioButton1RadioButtonImageView = new Template(RadioButtonTemplates.RadioButtonRadioButtonImageView);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton1RadioButtonImageView.Name = "ButtonsExampleRadioButton1RadioButtonImageView";
-                    _buttonsExampleRadioButton1RadioButtonImageView.LineNumber = 0;
-                    _buttonsExampleRadioButton1RadioButtonImageView.LinePosition = 0;
+                    _buttonsExampleRadioButton1RadioButtonImageView.LineNumber = 9;
+                    _buttonsExampleRadioButton1RadioButtonImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleRadioButton1RadioButtonImageView;
@@ -1070,8 +1070,8 @@ namespace Delight
                     _buttonsExampleRadioButton1RadioButtonLabel = new Template(RadioButtonTemplates.RadioButtonRadioButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton1RadioButtonLabel.Name = "ButtonsExampleRadioButton1RadioButtonLabel";
-                    _buttonsExampleRadioButton1RadioButtonLabel.LineNumber = 0;
-                    _buttonsExampleRadioButton1RadioButtonLabel.LinePosition = 0;
+                    _buttonsExampleRadioButton1RadioButtonLabel.LineNumber = 10;
+                    _buttonsExampleRadioButton1RadioButtonLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleRadioButton1RadioButtonLabel, "Option 1");
                 }
@@ -1118,8 +1118,8 @@ namespace Delight
                     _buttonsExampleRadioButton2RadioButtonGroup = new Template(RadioButtonTemplates.RadioButtonRadioButtonGroup);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton2RadioButtonGroup.Name = "ButtonsExampleRadioButton2RadioButtonGroup";
-                    _buttonsExampleRadioButton2RadioButtonGroup.LineNumber = 0;
-                    _buttonsExampleRadioButton2RadioButtonGroup.LinePosition = 0;
+                    _buttonsExampleRadioButton2RadioButtonGroup.LineNumber = 8;
+                    _buttonsExampleRadioButton2RadioButtonGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleRadioButton2RadioButtonGroup;
@@ -1140,8 +1140,8 @@ namespace Delight
                     _buttonsExampleRadioButton2RadioButtonImageView = new Template(RadioButtonTemplates.RadioButtonRadioButtonImageView);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton2RadioButtonImageView.Name = "ButtonsExampleRadioButton2RadioButtonImageView";
-                    _buttonsExampleRadioButton2RadioButtonImageView.LineNumber = 0;
-                    _buttonsExampleRadioButton2RadioButtonImageView.LinePosition = 0;
+                    _buttonsExampleRadioButton2RadioButtonImageView.LineNumber = 9;
+                    _buttonsExampleRadioButton2RadioButtonImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleRadioButton2RadioButtonImageView;
@@ -1162,8 +1162,8 @@ namespace Delight
                     _buttonsExampleRadioButton2RadioButtonLabel = new Template(RadioButtonTemplates.RadioButtonRadioButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton2RadioButtonLabel.Name = "ButtonsExampleRadioButton2RadioButtonLabel";
-                    _buttonsExampleRadioButton2RadioButtonLabel.LineNumber = 0;
-                    _buttonsExampleRadioButton2RadioButtonLabel.LinePosition = 0;
+                    _buttonsExampleRadioButton2RadioButtonLabel.LineNumber = 10;
+                    _buttonsExampleRadioButton2RadioButtonLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleRadioButton2RadioButtonLabel, "Option 2");
                 }
@@ -1210,8 +1210,8 @@ namespace Delight
                     _buttonsExampleRadioButton3RadioButtonGroup = new Template(RadioButtonTemplates.RadioButtonRadioButtonGroup);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton3RadioButtonGroup.Name = "ButtonsExampleRadioButton3RadioButtonGroup";
-                    _buttonsExampleRadioButton3RadioButtonGroup.LineNumber = 0;
-                    _buttonsExampleRadioButton3RadioButtonGroup.LinePosition = 0;
+                    _buttonsExampleRadioButton3RadioButtonGroup.LineNumber = 8;
+                    _buttonsExampleRadioButton3RadioButtonGroup.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleRadioButton3RadioButtonGroup;
@@ -1232,8 +1232,8 @@ namespace Delight
                     _buttonsExampleRadioButton3RadioButtonImageView = new Template(RadioButtonTemplates.RadioButtonRadioButtonImageView);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton3RadioButtonImageView.Name = "ButtonsExampleRadioButton3RadioButtonImageView";
-                    _buttonsExampleRadioButton3RadioButtonImageView.LineNumber = 0;
-                    _buttonsExampleRadioButton3RadioButtonImageView.LinePosition = 0;
+                    _buttonsExampleRadioButton3RadioButtonImageView.LineNumber = 9;
+                    _buttonsExampleRadioButton3RadioButtonImageView.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleRadioButton3RadioButtonImageView;
@@ -1254,8 +1254,8 @@ namespace Delight
                     _buttonsExampleRadioButton3RadioButtonLabel = new Template(RadioButtonTemplates.RadioButtonRadioButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleRadioButton3RadioButtonLabel.Name = "ButtonsExampleRadioButton3RadioButtonLabel";
-                    _buttonsExampleRadioButton3RadioButtonLabel.LineNumber = 0;
-                    _buttonsExampleRadioButton3RadioButtonLabel.LinePosition = 0;
+                    _buttonsExampleRadioButton3RadioButtonLabel.LineNumber = 10;
+                    _buttonsExampleRadioButton3RadioButtonLabel.LinePosition = 6;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleRadioButton3RadioButtonLabel, "Option 3");
                 }
@@ -1324,8 +1324,8 @@ namespace Delight
                     _buttonsExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleButton1Label.Name = "ButtonsExampleButton1Label";
-                    _buttonsExampleButton1Label.LineNumber = 0;
-                    _buttonsExampleButton1Label.LinePosition = 0;
+                    _buttonsExampleButton1Label.LineNumber = 15;
+                    _buttonsExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_buttonsExampleButton1Label, "Click Me");
                 }
@@ -1372,8 +1372,8 @@ namespace Delight
                     _buttonsExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleButton2Label.Name = "ButtonsExampleButton2Label";
-                    _buttonsExampleButton2Label.LineNumber = 0;
-                    _buttonsExampleButton2Label.LinePosition = 0;
+                    _buttonsExampleButton2Label.LineNumber = 15;
+                    _buttonsExampleButton2Label.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleButton2Label;
@@ -1496,8 +1496,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxButton = new Template(ComboBoxTemplates.ComboBoxComboBoxButton);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxButton.Name = "ButtonsExampleComboBoxComboBoxButton";
-                    _buttonsExampleComboBoxComboBoxButton.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxButton.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxButton.LineNumber = 10;
+                    _buttonsExampleComboBoxComboBoxButton.LinePosition = 4;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxButton, ButtonsExampleComboBoxComboBoxButtonLabel);
                 }
@@ -1519,8 +1519,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxButtonLabel = new Template(ComboBoxTemplates.ComboBoxComboBoxButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxButtonLabel.Name = "ButtonsExampleComboBoxComboBoxButtonLabel";
-                    _buttonsExampleComboBoxComboBoxButtonLabel.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxButtonLabel.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxButtonLabel.LineNumber = 15;
+                    _buttonsExampleComboBoxComboBoxButtonLabel.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxButtonLabel;
@@ -1541,8 +1541,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListCanvas = new Template(ComboBoxTemplates.ComboBoxComboBoxListCanvas);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListCanvas.Name = "ButtonsExampleComboBoxComboBoxListCanvas";
-                    _buttonsExampleComboBoxComboBoxListCanvas.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListCanvas.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListCanvas.LineNumber = 11;
+                    _buttonsExampleComboBoxComboBoxListCanvas.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListCanvas;
@@ -1563,8 +1563,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxList = new Template(ComboBoxTemplates.ComboBoxComboBoxList);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxList.Name = "ButtonsExampleComboBoxComboBoxList";
-                    _buttonsExampleComboBoxComboBoxList.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxList.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxList.LineNumber = 12;
+                    _buttonsExampleComboBoxComboBoxList.LinePosition = 6;
 #endif
                     Delight.List.ItemsProperty.SetHasBinding(_buttonsExampleComboBoxComboBoxList);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxList, ButtonsExampleComboBoxComboBoxListScrollableRegion);
@@ -1587,8 +1587,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegion.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegion";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LineNumber = 27;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegion, ButtonsExampleComboBoxComboBoxListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegion, ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
@@ -1612,8 +1612,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionContentRegion";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion.LineNumber = 24;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListScrollableRegionContentRegion;
@@ -1634,8 +1634,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
@@ -1658,8 +1658,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
@@ -1680,8 +1680,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
@@ -1702,8 +1702,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
@@ -1726,8 +1726,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
@@ -1748,8 +1748,8 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;
@@ -1843,8 +1843,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxButton = new Template(ComboBoxTemplates.ComboBoxComboBoxButton);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxButton.Name = "ButtonsExampleComboBox1ComboBoxButton";
-                    _buttonsExampleComboBox1ComboBoxButton.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxButton.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxButton.LineNumber = 10;
+                    _buttonsExampleComboBox1ComboBoxButton.LinePosition = 4;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxButton, ButtonsExampleComboBox1ComboBoxButtonLabel);
                 }
@@ -1866,8 +1866,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxButtonLabel = new Template(ComboBoxTemplates.ComboBoxComboBoxButtonLabel);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxButtonLabel.Name = "ButtonsExampleComboBox1ComboBoxButtonLabel";
-                    _buttonsExampleComboBox1ComboBoxButtonLabel.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxButtonLabel.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxButtonLabel.LineNumber = 15;
+                    _buttonsExampleComboBox1ComboBoxButtonLabel.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxButtonLabel;
@@ -1888,8 +1888,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListCanvas = new Template(ComboBoxTemplates.ComboBoxComboBoxListCanvas);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListCanvas.Name = "ButtonsExampleComboBox1ComboBoxListCanvas";
-                    _buttonsExampleComboBox1ComboBoxListCanvas.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListCanvas.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListCanvas.LineNumber = 11;
+                    _buttonsExampleComboBox1ComboBoxListCanvas.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListCanvas;
@@ -1910,8 +1910,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxList = new Template(ComboBoxTemplates.ComboBoxComboBoxList);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxList.Name = "ButtonsExampleComboBox1ComboBoxList";
-                    _buttonsExampleComboBox1ComboBoxList.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxList.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxList.LineNumber = 12;
+                    _buttonsExampleComboBox1ComboBoxList.LinePosition = 6;
 #endif
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxList, ButtonsExampleComboBox1ComboBoxListScrollableRegion);
                 }
@@ -1933,8 +1933,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegion.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegion";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LineNumber = 27;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar);
@@ -1958,8 +1958,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.LineNumber = 24;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListScrollableRegionContentRegion;
@@ -1980,8 +1980,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle);
@@ -2004,8 +2004,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarBar;
@@ -2026,8 +2026,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListScrollableRegionHorizontalScrollbarHandle;
@@ -2048,8 +2048,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbar, ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle);
@@ -2072,8 +2072,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarBar;
@@ -2094,8 +2094,8 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _buttonsExampleComboBox1ComboBoxListScrollableRegionVerticalScrollbarHandle;

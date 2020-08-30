@@ -2750,8 +2750,8 @@ namespace Delight
                     _listScrollableRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _listScrollableRegionContentRegion.Name = "ListScrollableRegionContentRegion";
-                    _listScrollableRegionContentRegion.LineNumber = 0;
-                    _listScrollableRegionContentRegion.LinePosition = 0;
+                    _listScrollableRegionContentRegion.LineNumber = 24;
+                    _listScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _listScrollableRegionContentRegion;
@@ -2772,8 +2772,8 @@ namespace Delight
                     _listScrollableRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _listScrollableRegionHorizontalScrollbar.Name = "ListScrollableRegionHorizontalScrollbar";
-                    _listScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _listScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _listScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _listScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_listScrollableRegionHorizontalScrollbar, ListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_listScrollableRegionHorizontalScrollbar, ListScrollableRegionHorizontalScrollbarHandle);
@@ -2796,8 +2796,8 @@ namespace Delight
                     _listScrollableRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _listScrollableRegionHorizontalScrollbarBar.Name = "ListScrollableRegionHorizontalScrollbarBar";
-                    _listScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _listScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _listScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _listScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _listScrollableRegionHorizontalScrollbarBar;
@@ -2818,8 +2818,8 @@ namespace Delight
                     _listScrollableRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _listScrollableRegionHorizontalScrollbarHandle.Name = "ListScrollableRegionHorizontalScrollbarHandle";
-                    _listScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _listScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _listScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _listScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _listScrollableRegionHorizontalScrollbarHandle;
@@ -2840,8 +2840,8 @@ namespace Delight
                     _listScrollableRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _listScrollableRegionVerticalScrollbar.Name = "ListScrollableRegionVerticalScrollbar";
-                    _listScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _listScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _listScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _listScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_listScrollableRegionVerticalScrollbar, ListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_listScrollableRegionVerticalScrollbar, ListScrollableRegionVerticalScrollbarHandle);
@@ -2864,8 +2864,8 @@ namespace Delight
                     _listScrollableRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _listScrollableRegionVerticalScrollbarBar.Name = "ListScrollableRegionVerticalScrollbarBar";
-                    _listScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _listScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _listScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _listScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _listScrollableRegionVerticalScrollbarBar;
@@ -2886,8 +2886,8 @@ namespace Delight
                     _listScrollableRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _listScrollableRegionVerticalScrollbarHandle.Name = "ListScrollableRegionVerticalScrollbarHandle";
-                    _listScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _listScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _listScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _listScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _listScrollableRegionVerticalScrollbarHandle;

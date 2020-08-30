@@ -370,7 +370,6 @@ namespace Delight
             _currentEditedView.IsDirty = true;
             if (AutoParse && needReparsing)
             {
-                ClearSelectedViews();
                 ParseView();
             }
         }
@@ -409,28 +408,45 @@ namespace Delight
         /// </summary>
         public void OnSelectViewAtLine(int line)
         {
-            var view = ViewContentRegion.Find<UIView>(x =>
+            OnSelectViewsAtLine(new List<int> { line });
+        }
+
+        /// <summary>
+        /// Called when the user selects a view in the XML editor. 
+        /// </summary>
+        public void OnSelectViewsAtLine(List<int> lines)
+        {
+            bool foundView = false;
+            foreach (var line in lines)
             {
-                if (x?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
-                    x.GetType().Name != _currentEditedView.ViewTypeName)
-                    return false;
-
-                int viewLineNumber = Math.Max(x.Template.LineNumber - 1, 0);
-                if (viewLineNumber != line)
-                    return false;
-
-                if (_selectedViews.Contains(x))
+                var view = ViewContentRegion.Find<UIView>(x =>
                 {
-                    _selectedViews.Remove(x);
-                }
-                else
-                {
-                    _selectedViews.Add(x);
-                }
-                return true;
-            });
+                    if (x?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
+                        x.GetType().Name != _currentEditedView.ViewTypeName)
+                        return false;
 
-            if (view != null)
+                    int viewLineNumber = Math.Max(x.Template.LineNumber - 1, 0);
+                    if (viewLineNumber != line)
+                        return false;
+
+                    if (_selectedViews.Contains(x))
+                    {
+                        _selectedViews.Remove(x);
+                    }
+                    else
+                    {
+                        _selectedViews.Add(x);
+                    }
+                    return true;
+                });
+
+                if (view != null)
+                {
+                    foundView = true;
+                }
+            }
+
+            if (foundView)
             {
                 UpdateSelectedViews(false);
             }
@@ -564,6 +580,11 @@ namespace Delight
                 }
 
                 _displayedViewInstance = view;
+
+                // attempt to reselect currently selected views
+                var selectedViews = _selectedViews.ToList();
+                _selectedViews.Clear();
+                OnSelectViewsAtLine(XmlEditor.SelectedLines);
 
                 // uncomment to log loading time 
                 //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
@@ -734,7 +755,7 @@ namespace Delight
 
             // create the runtime data templates used when instantiating the view
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
-            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates);
+            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates, null);
 
             // get view type name
             var viewTypeName = viewObject.TypeName;
@@ -1391,7 +1412,7 @@ namespace Delight
         /// Creates runtime data templates.
         /// </summary>
         private void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
-            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates, ViewDeclaration internalViewDeclaration)
         {
             if (String.IsNullOrEmpty(idPath))
             {
@@ -1450,8 +1471,8 @@ namespace Delight
             // add name in editor so we can easy track which template is used where in the debugger
             dataTemplate.Name = idPath;
 
-            dataTemplate.LineNumber = viewDeclaration != null ? viewDeclaration.LineNumber : 0;
-            dataTemplate.LinePosition = viewDeclaration != null ? viewDeclaration.LinePosition : 0;
+            dataTemplate.LineNumber = internalViewDeclaration != null ? internalViewDeclaration.LineNumber : 0;
+            dataTemplate.LinePosition = internalViewDeclaration != null ? internalViewDeclaration.LinePosition : 0;
 #endif
             dataTemplates.Add(idPath, dataTemplate);
 
@@ -1480,7 +1501,7 @@ namespace Delight
 
                 CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
                     isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName, dataTemplates);
+                    childPropertyAssignments, fileName, dataTemplates, declaration.Declaration);
             }
 
             // set sub-template properties            

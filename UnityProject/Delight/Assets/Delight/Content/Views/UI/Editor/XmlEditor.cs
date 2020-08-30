@@ -53,7 +53,8 @@ namespace Delight
         public static Regex ViewNameStartRegex = new Regex(@"(?<=<)[A-Za-z0-9_]+(?=[\s>/])");
         public static Regex QuoteContentRegex = new Regex(@"""(\\""|[^""])*"""); // "(\\"|[^"])*"
         public static int UndoHistoryLimit = 30;
-      
+        public List<int> SelectedLines = new List<int>();
+
         private List<string> _lines = new List<string>();
         private int _caretX;
         private int _caretY;
@@ -527,6 +528,14 @@ namespace Delight
         public string GetXmlText()
         {
             return XmlTextLabel.TextMeshProUGUI.text;
+        }
+
+        /// <summary>
+        /// Reselect selected views.
+        /// </summary>
+        public void ReselectSelectedLines()
+        {
+            
         }
 
         /// <summary>
@@ -2194,6 +2203,8 @@ namespace Delight
         private void GenerateTextHighlightMeshes(bool scrollToLastSelectedView = false)
         {
             _selectionMesh = new Mesh();
+            SelectedLines.Clear();
+
             using (var vertexHelper = new VertexHelper())
             {
                 if (_selectedViews.Any())
@@ -2208,6 +2219,7 @@ namespace Delight
                         int endLine = startLine;
                         int endChar = selectedView.Template.LinePosition + 20;
 
+                        SelectedLines.Add(startLine);
                         for (int lineIndex = startLine; lineIndex < _lines.Count; ++lineIndex)
                         {
                             string line = _lines[lineIndex];

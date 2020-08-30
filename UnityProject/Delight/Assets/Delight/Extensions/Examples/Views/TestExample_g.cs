@@ -345,8 +345,8 @@ namespace Delight
                     _testExampleList1ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegion.Name = "TestExampleList1ScrollableRegion";
-                    _testExampleList1ScrollableRegion.LineNumber = 0;
-                    _testExampleList1ScrollableRegion.LinePosition = 0;
+                    _testExampleList1ScrollableRegion.LineNumber = 27;
+                    _testExampleList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_testExampleList1ScrollableRegion, TestExampleList1ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_testExampleList1ScrollableRegion, TestExampleList1ScrollableRegionHorizontalScrollbar);
@@ -370,8 +370,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionContentRegion.Name = "TestExampleList1ScrollableRegionContentRegion";
-                    _testExampleList1ScrollableRegionContentRegion.LineNumber = 0;
-                    _testExampleList1ScrollableRegionContentRegion.LinePosition = 0;
+                    _testExampleList1ScrollableRegionContentRegion.LineNumber = 24;
+                    _testExampleList1ScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _testExampleList1ScrollableRegionContentRegion;
@@ -392,8 +392,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionHorizontalScrollbar.Name = "TestExampleList1ScrollableRegionHorizontalScrollbar";
-                    _testExampleList1ScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _testExampleList1ScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _testExampleList1ScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _testExampleList1ScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_testExampleList1ScrollableRegionHorizontalScrollbar, TestExampleList1ScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_testExampleList1ScrollableRegionHorizontalScrollbar, TestExampleList1ScrollableRegionHorizontalScrollbarHandle);
@@ -416,8 +416,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionHorizontalScrollbarBar.Name = "TestExampleList1ScrollableRegionHorizontalScrollbarBar";
-                    _testExampleList1ScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _testExampleList1ScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _testExampleList1ScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _testExampleList1ScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _testExampleList1ScrollableRegionHorizontalScrollbarBar;
@@ -438,8 +438,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionHorizontalScrollbarHandle.Name = "TestExampleList1ScrollableRegionHorizontalScrollbarHandle";
-                    _testExampleList1ScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _testExampleList1ScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _testExampleList1ScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _testExampleList1ScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _testExampleList1ScrollableRegionHorizontalScrollbarHandle;
@@ -460,8 +460,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionVerticalScrollbar.Name = "TestExampleList1ScrollableRegionVerticalScrollbar";
-                    _testExampleList1ScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _testExampleList1ScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _testExampleList1ScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _testExampleList1ScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_testExampleList1ScrollableRegionVerticalScrollbar, TestExampleList1ScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_testExampleList1ScrollableRegionVerticalScrollbar, TestExampleList1ScrollableRegionVerticalScrollbarHandle);
@@ -484,8 +484,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionVerticalScrollbarBar.Name = "TestExampleList1ScrollableRegionVerticalScrollbarBar";
-                    _testExampleList1ScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _testExampleList1ScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _testExampleList1ScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _testExampleList1ScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _testExampleList1ScrollableRegionVerticalScrollbarBar;
@@ -506,8 +506,8 @@ namespace Delight
                     _testExampleList1ScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegionVerticalScrollbarHandle.Name = "TestExampleList1ScrollableRegionVerticalScrollbarHandle";
-                    _testExampleList1ScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _testExampleList1ScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _testExampleList1ScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _testExampleList1ScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _testExampleList1ScrollableRegionVerticalScrollbarHandle;
@@ -666,8 +666,8 @@ namespace Delight
                     _testExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _testExampleButton1Label.Name = "TestExampleButton1Label";
-                    _testExampleButton1Label.LineNumber = 0;
-                    _testExampleButton1Label.LinePosition = 0;
+                    _testExampleButton1Label.LineNumber = 15;
+                    _testExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetHasBinding(_testExampleButton1Label);
                 }
@@ -712,8 +712,8 @@ namespace Delight
                     _testExampleMyButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _testExampleMyButtonLabel.Name = "TestExampleMyButtonLabel";
-                    _testExampleMyButtonLabel.LineNumber = 0;
-                    _testExampleMyButtonLabel.LinePosition = 0;
+                    _testExampleMyButtonLabel.LineNumber = 15;
+                    _testExampleMyButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_testExampleMyButtonLabel, "Test");
                 }

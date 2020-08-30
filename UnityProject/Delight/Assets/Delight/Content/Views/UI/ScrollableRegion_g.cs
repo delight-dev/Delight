@@ -2240,8 +2240,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarBar.Name = "ScrollableRegionHorizontalScrollbarBar";
-                    _scrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _scrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _scrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _scrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
@@ -2264,8 +2264,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarHandle.Name = "ScrollableRegionHorizontalScrollbarHandle";
-                    _scrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _scrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _scrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _scrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -2314,8 +2314,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarBar.Name = "ScrollableRegionVerticalScrollbarBar";
-                    _scrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _scrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _scrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _scrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
@@ -2338,8 +2338,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarHandle.Name = "ScrollableRegionVerticalScrollbarHandle";
-                    _scrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _scrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _scrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _scrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }

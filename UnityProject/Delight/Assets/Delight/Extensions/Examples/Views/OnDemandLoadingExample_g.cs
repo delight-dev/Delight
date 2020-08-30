@@ -749,8 +749,8 @@ namespace Delight
                     _onDemandLoadingExampleLoadAllButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoadAllButtonLabel.Name = "OnDemandLoadingExampleLoadAllButtonLabel";
-                    _onDemandLoadingExampleLoadAllButtonLabel.LineNumber = 0;
-                    _onDemandLoadingExampleLoadAllButtonLabel.LinePosition = 0;
+                    _onDemandLoadingExampleLoadAllButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoadAllButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoadAllButtonLabel, "LoadAll");
                 }
@@ -796,8 +796,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad1ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad1ButtonLabel.Name = "OnDemandLoadingExampleLoad1ButtonLabel";
-                    _onDemandLoadingExampleLoad1ButtonLabel.LineNumber = 0;
-                    _onDemandLoadingExampleLoad1ButtonLabel.LinePosition = 0;
+                    _onDemandLoadingExampleLoad1ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad1ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad1ButtonLabel, "Load Set 1");
                 }
@@ -843,8 +843,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad2ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad2ButtonLabel.Name = "OnDemandLoadingExampleLoad2ButtonLabel";
-                    _onDemandLoadingExampleLoad2ButtonLabel.LineNumber = 0;
-                    _onDemandLoadingExampleLoad2ButtonLabel.LinePosition = 0;
+                    _onDemandLoadingExampleLoad2ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad2ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad2ButtonLabel, "Load Set 2");
                 }
@@ -890,8 +890,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad3ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad3ButtonLabel.Name = "OnDemandLoadingExampleLoad3ButtonLabel";
-                    _onDemandLoadingExampleLoad3ButtonLabel.LineNumber = 0;
-                    _onDemandLoadingExampleLoad3ButtonLabel.LinePosition = 0;
+                    _onDemandLoadingExampleLoad3ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad3ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad3ButtonLabel, "Load Set 3");
                 }
@@ -937,8 +937,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad4ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad4ButtonLabel.Name = "OnDemandLoadingExampleLoad4ButtonLabel";
-                    _onDemandLoadingExampleLoad4ButtonLabel.LineNumber = 0;
-                    _onDemandLoadingExampleLoad4ButtonLabel.LinePosition = 0;
+                    _onDemandLoadingExampleLoad4ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad4ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad4ButtonLabel, "Load Set 4");
                 }
@@ -984,8 +984,8 @@ namespace Delight
                     _onDemandLoadingExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton1Label.Name = "OnDemandLoadingExampleButton1Label";
-                    _onDemandLoadingExampleButton1Label.LineNumber = 0;
-                    _onDemandLoadingExampleButton1Label.LinePosition = 0;
+                    _onDemandLoadingExampleButton1Label.LineNumber = 15;
+                    _onDemandLoadingExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleButton1Label, "UnloadAll");
                 }
@@ -1031,8 +1031,8 @@ namespace Delight
                     _onDemandLoadingExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton2Label.Name = "OnDemandLoadingExampleButton2Label";
-                    _onDemandLoadingExampleButton2Label.LineNumber = 0;
-                    _onDemandLoadingExampleButton2Label.LinePosition = 0;
+                    _onDemandLoadingExampleButton2Label.LineNumber = 15;
+                    _onDemandLoadingExampleButton2Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleButton2Label, "SetSprite");
                 }

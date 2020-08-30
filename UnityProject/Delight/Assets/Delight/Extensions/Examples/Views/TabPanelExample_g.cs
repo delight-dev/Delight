@@ -213,8 +213,8 @@ namespace Delight
                     _tabPanelExampleTabPanel1TabSwitcher = new Template(TabPanelTemplates.TabPanelTabSwitcher);
 #if UNITY_EDITOR
                     _tabPanelExampleTabPanel1TabSwitcher.Name = "TabPanelExampleTabPanel1TabSwitcher";
-                    _tabPanelExampleTabPanel1TabSwitcher.LineNumber = 0;
-                    _tabPanelExampleTabPanel1TabSwitcher.LinePosition = 0;
+                    _tabPanelExampleTabPanel1TabSwitcher.LineNumber = 7;
+                    _tabPanelExampleTabPanel1TabSwitcher.LinePosition = 4;
 #endif
                 }
                 return _tabPanelExampleTabPanel1TabSwitcher;
@@ -235,8 +235,8 @@ namespace Delight
                     _tabPanelExampleTabPanel1TabHeaderGroup = new Template(TabPanelTemplates.TabPanelTabHeaderGroup);
 #if UNITY_EDITOR
                     _tabPanelExampleTabPanel1TabHeaderGroup.Name = "TabPanelExampleTabPanel1TabHeaderGroup";
-                    _tabPanelExampleTabPanel1TabHeaderGroup.LineNumber = 0;
-                    _tabPanelExampleTabPanel1TabHeaderGroup.LinePosition = 0;
+                    _tabPanelExampleTabPanel1TabHeaderGroup.LineNumber = 9;
+                    _tabPanelExampleTabPanel1TabHeaderGroup.LinePosition = 4;
 #endif
                 }
                 return _tabPanelExampleTabPanel1TabHeaderGroup;
@@ -280,8 +280,8 @@ namespace Delight
                     _tabPanelExampleTabHeader1Label = new Template(TabHeaderTemplates.TabHeaderLabel);
 #if UNITY_EDITOR
                     _tabPanelExampleTabHeader1Label.Name = "TabPanelExampleTabHeader1Label";
-                    _tabPanelExampleTabHeader1Label.LineNumber = 0;
-                    _tabPanelExampleTabHeader1Label.LinePosition = 0;
+                    _tabPanelExampleTabHeader1Label.LineNumber = 15;
+                    _tabPanelExampleTabHeader1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetHasBinding(_tabPanelExampleTabHeader1Label);
                 }

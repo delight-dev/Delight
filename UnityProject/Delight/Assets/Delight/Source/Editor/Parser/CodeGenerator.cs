@@ -133,7 +133,7 @@ namespace Delight.Editor.Parser
             var templateSb = new StringBuilder();
 
             // start by generating data template as we update property assignment expressions with property declaration information as we do
-            GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath);
+            GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, null);
 
             bool addEndIf = false;
             if (!String.IsNullOrEmpty(viewObject.Module))
@@ -863,7 +863,7 @@ namespace Delight.Editor.Parser
         /// Updates view object properties and generates data template.
         /// </summary>
         private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
-            List<PropertyExpression> nestedPropertyExpressions, string fileName)
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, ViewDeclaration internalViewDeclaration)
         {
             // ** important: changes in data template generation need to be reflected in the runtime instantiation of data templates in
             // DelightDesigner.CreateRuntimeDataTemplates() **
@@ -908,8 +908,8 @@ namespace Delight.Editor.Parser
             // add name in editor so we can easy track which template is used where in the debugger
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("                    {0}.Name = \"{1}\";", localId, idPath);
-            sb.AppendLine("                    {0}.LineNumber = {1};", localId, viewDeclaration != null ? viewDeclaration.LineNumber : 0);
-            sb.AppendLine("                    {0}.LinePosition = {1};", localId, viewDeclaration != null ? viewDeclaration.LinePosition : 0);
+            sb.AppendLine("                    {0}.LineNumber = {1};", localId, internalViewDeclaration != null ? internalViewDeclaration.LineNumber : 0);
+            sb.AppendLine("                    {0}.LinePosition = {1};", localId, internalViewDeclaration != null ? internalViewDeclaration.LinePosition : 0);
             sb.AppendLine("#endif");
 
             GenerateDataTemplateValueInitializers(sb, viewObject, isParent,
@@ -949,7 +949,7 @@ namespace Delight.Editor.Parser
 
                 GenerateDataTemplate(sb, childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
                     isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName);
+                    childPropertyAssignments, fileName, declaration.Declaration);
             }
         }
 

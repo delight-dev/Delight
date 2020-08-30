@@ -447,8 +447,8 @@ namespace Delight
                     _groupExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton1Label.Name = "GroupExampleButton1Label";
-                    _groupExampleButton1Label.LineNumber = 0;
-                    _groupExampleButton1Label.LinePosition = 0;
+                    _groupExampleButton1Label.LineNumber = 15;
+                    _groupExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton1Label, "Button 1");
                 }
@@ -495,8 +495,8 @@ namespace Delight
                     _groupExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton2Label.Name = "GroupExampleButton2Label";
-                    _groupExampleButton2Label.LineNumber = 0;
-                    _groupExampleButton2Label.LinePosition = 0;
+                    _groupExampleButton2Label.LineNumber = 15;
+                    _groupExampleButton2Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton2Label, "Large Button 2");
                 }
@@ -543,8 +543,8 @@ namespace Delight
                     _groupExampleButton3Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton3Label.Name = "GroupExampleButton3Label";
-                    _groupExampleButton3Label.LineNumber = 0;
-                    _groupExampleButton3Label.LinePosition = 0;
+                    _groupExampleButton3Label.LineNumber = 15;
+                    _groupExampleButton3Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton3Label, "Button 3");
                 }
@@ -642,8 +642,8 @@ namespace Delight
                     _groupExampleButton4Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton4Label.Name = "GroupExampleButton4Label";
-                    _groupExampleButton4Label.LineNumber = 0;
-                    _groupExampleButton4Label.LinePosition = 0;
+                    _groupExampleButton4Label.LineNumber = 15;
+                    _groupExampleButton4Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton4Label, "Button 1");
                 }
@@ -690,8 +690,8 @@ namespace Delight
                     _groupExampleButton5Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton5Label.Name = "GroupExampleButton5Label";
-                    _groupExampleButton5Label.LineNumber = 0;
-                    _groupExampleButton5Label.LinePosition = 0;
+                    _groupExampleButton5Label.LineNumber = 15;
+                    _groupExampleButton5Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton5Label, "Large Button 2");
                 }
@@ -738,8 +738,8 @@ namespace Delight
                     _groupExampleButton6Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton6Label.Name = "GroupExampleButton6Label";
-                    _groupExampleButton6Label.LineNumber = 0;
-                    _groupExampleButton6Label.LinePosition = 0;
+                    _groupExampleButton6Label.LineNumber = 15;
+                    _groupExampleButton6Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton6Label, "Button 3");
                 }
@@ -838,8 +838,8 @@ namespace Delight
                     _groupExampleButton7Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton7Label.Name = "GroupExampleButton7Label";
-                    _groupExampleButton7Label.LineNumber = 0;
-                    _groupExampleButton7Label.LinePosition = 0;
+                    _groupExampleButton7Label.LineNumber = 15;
+                    _groupExampleButton7Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton7Label, "Button 1");
                 }
@@ -886,8 +886,8 @@ namespace Delight
                     _groupExampleButton8Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton8Label.Name = "GroupExampleButton8Label";
-                    _groupExampleButton8Label.LineNumber = 0;
-                    _groupExampleButton8Label.LinePosition = 0;
+                    _groupExampleButton8Label.LineNumber = 15;
+                    _groupExampleButton8Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton8Label, "Large Button 2");
                 }
@@ -934,8 +934,8 @@ namespace Delight
                     _groupExampleButton9Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _groupExampleButton9Label.Name = "GroupExampleButton9Label";
-                    _groupExampleButton9Label.LineNumber = 0;
-                    _groupExampleButton9Label.LinePosition = 0;
+                    _groupExampleButton9Label.LineNumber = 15;
+                    _groupExampleButton9Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_groupExampleButton9Label, "Button 3");
                 }

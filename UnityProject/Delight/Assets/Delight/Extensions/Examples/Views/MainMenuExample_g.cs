@@ -322,8 +322,8 @@ namespace Delight
                     _mainMenuExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton1Label.Name = "MainMenuExampleButton1Label";
-                    _mainMenuExampleButton1Label.LineNumber = 0;
-                    _mainMenuExampleButton1Label.LinePosition = 0;
+                    _mainMenuExampleButton1Label.LineNumber = 15;
+                    _mainMenuExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton1Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton1Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);
@@ -381,8 +381,8 @@ namespace Delight
                     _mainMenuExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton2Label.Name = "MainMenuExampleButton2Label";
-                    _mainMenuExampleButton2Label.LineNumber = 0;
-                    _mainMenuExampleButton2Label.LinePosition = 0;
+                    _mainMenuExampleButton2Label.LineNumber = 15;
+                    _mainMenuExampleButton2Label.LinePosition = 4;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton2Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton2Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);
@@ -440,8 +440,8 @@ namespace Delight
                     _mainMenuExampleButton3Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _mainMenuExampleButton3Label.Name = "MainMenuExampleButton3Label";
-                    _mainMenuExampleButton3Label.LineNumber = 0;
-                    _mainMenuExampleButton3Label.LinePosition = 0;
+                    _mainMenuExampleButton3Label.LineNumber = 15;
+                    _mainMenuExampleButton3Label.LinePosition = 4;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_mainMenuExampleButton3Label, 40f);
                     Delight.Label.FontProperty.SetDefault(_mainMenuExampleButton3Label, Assets.TMP_FontAssets["AveriaSansLibre-Bold SDF"]);

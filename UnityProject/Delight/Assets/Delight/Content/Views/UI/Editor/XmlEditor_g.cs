@@ -614,8 +614,8 @@ namespace Delight
                     _xmlEditorScrollableRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionContentRegion.Name = "XmlEditorScrollableRegionContentRegion";
-                    _xmlEditorScrollableRegionContentRegion.LineNumber = 0;
-                    _xmlEditorScrollableRegionContentRegion.LinePosition = 0;
+                    _xmlEditorScrollableRegionContentRegion.LineNumber = 24;
+                    _xmlEditorScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorScrollableRegionContentRegion;
@@ -636,8 +636,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbar.Name = "XmlEditorScrollableRegionHorizontalScrollbar";
-                    _xmlEditorScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _xmlEditorScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _xmlEditorScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _xmlEditorScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
@@ -662,8 +662,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarBar.Name = "XmlEditorScrollableRegionHorizontalScrollbarBar";
-                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
@@ -686,8 +686,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarHandle.Name = "XmlEditorScrollableRegionHorizontalScrollbarHandle";
-                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -709,8 +709,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbar.Name = "XmlEditorScrollableRegionVerticalScrollbar";
-                    _xmlEditorScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _xmlEditorScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _xmlEditorScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _xmlEditorScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
@@ -735,8 +735,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarBar.Name = "XmlEditorScrollableRegionVerticalScrollbarBar";
-                    _xmlEditorScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _xmlEditorScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _xmlEditorScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _xmlEditorScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
@@ -759,8 +759,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarHandle.Name = "XmlEditorScrollableRegionVerticalScrollbarHandle";
-                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -1003,8 +1003,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegion.Name = "XmlEditorAutoCompleteOptionsListScrollableRegion";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 27;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegion, XmlEditorAutoCompleteOptionsListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegion, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar);
@@ -1028,8 +1028,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionContentRegion";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LineNumber = 24;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion;
@@ -1050,8 +1050,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle);
@@ -1074,8 +1074,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar;
@@ -1096,8 +1096,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle;
@@ -1118,8 +1118,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle);
@@ -1142,8 +1142,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar;
@@ -1164,8 +1164,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LineNumber = 0;
-                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LinePosition = 0;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle;
