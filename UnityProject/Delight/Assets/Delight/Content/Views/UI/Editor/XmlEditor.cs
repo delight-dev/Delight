@@ -2201,7 +2201,7 @@ namespace Delight
                     foreach (var selectedView in _selectedViews)
                     {
                         int startLine = Math.Max(GetLineInEditedXml(selectedView.Template.LineNumber - 1), 0);
-                        int startChar = Math.Max(selectedView.Template.LinePosition - 2, 0);
+                        int startChar = Math.Max(_lines[startLine].IndexOf("<"), 0);// Math.Max(selectedView.Template.LinePosition - 2, 0);
                         if (startLine >= _lines.Count)
                             continue;
 
