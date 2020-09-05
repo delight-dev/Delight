@@ -353,6 +353,13 @@ namespace Delight
             set { CheckBoxImageView.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean CheckBoxIsInteractable
+        {
+            get { return CheckBoxImageView.IsInteractable; }
+            set { CheckBoxImageView.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxUseFastShaderProperty = Image.UseFastShaderProperty;
         public System.Boolean CheckBoxUseFastShader
         {
@@ -1010,6 +1017,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.RaycastBlockMode; }
             set { CheckBoxLabel.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean CheckBoxLabelIsInteractable
+        {
+            get { return CheckBoxLabel.IsInteractable; }
+            set { CheckBoxLabel.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelUseFastShaderProperty = Label.UseFastShaderProperty;

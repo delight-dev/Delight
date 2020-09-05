@@ -450,6 +450,13 @@ namespace Delight
             set { SliderBackgroundImageView.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty SliderIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean SliderIsInteractable
+        {
+            get { return SliderBackgroundImageView.IsInteractable; }
+            set { SliderBackgroundImageView.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty SliderUseFastShaderProperty = Image.UseFastShaderProperty;
         public System.Boolean SliderUseFastShader
         {
@@ -744,6 +751,13 @@ namespace Delight
             set { SliderFillImageView.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty SliderFillIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean SliderFillIsInteractable
+        {
+            get { return SliderFillImageView.IsInteractable; }
+            set { SliderFillImageView.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty SliderFillUseFastShaderProperty = Image.UseFastShaderProperty;
         public System.Boolean SliderFillUseFastShader
         {
@@ -1036,6 +1050,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.RaycastBlockMode; }
             set { SliderHandleImageView.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandleIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean SliderHandleIsInteractable
+        {
+            get { return SliderHandleImageView.IsInteractable; }
+            set { SliderHandleImageView.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty SliderHandleUseFastShaderProperty = Image.UseFastShaderProperty;

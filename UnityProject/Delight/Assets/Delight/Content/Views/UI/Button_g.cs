@@ -799,6 +799,13 @@ namespace Delight
             set { Label.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty LabelIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean LabelIsInteractable
+        {
+            get { return Label.IsInteractable; }
+            set { Label.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty LabelUseFastShaderProperty = Label.UseFastShaderProperty;
         public System.Boolean LabelUseFastShader
         {

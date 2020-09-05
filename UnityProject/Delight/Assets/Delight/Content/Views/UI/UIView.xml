@@ -2,6 +2,7 @@
         RectTransform="t:RectTransform" i.Size="Width, Height" Width="t:ElementSize" Height="t:ElementSize" OverrideWidth="t:ElementSize" OverrideHeight="t:ElementSize" Scale="t:Vector3"
         Alignment="t:ElementAlignment" Margin="t:ElementMargin" Offset="t:ElementMargin" OffsetFromParent="t:ElementMargin" Pivot="t:Vector2 = 0.5,0.5" DisableLayoutUpdate="t:bool"
         Alpha="t:float" IsVisible="t:bool = True" RaycastBlockMode="t:RaycastBlockMode"
+        IsInteractable="t:bool"
         CanvasGroup="t:UnityEngine.CanvasGroup, UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
         UseFastShader="t:bool" FastMaterial="t:Material = UI-Fast-Default"
         BubbleNotifyChildLayoutChanged="t:bool"

@@ -353,6 +353,13 @@ namespace Delight
             set { RadioButtonImageView.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean RadioButtonIsInteractable
+        {
+            get { return RadioButtonImageView.IsInteractable; }
+            set { RadioButtonImageView.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonUseFastShaderProperty = Image.UseFastShaderProperty;
         public System.Boolean RadioButtonUseFastShader
         {
@@ -1010,6 +1017,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.RaycastBlockMode; }
             set { RadioButtonLabel.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean RadioButtonLabelIsInteractable
+        {
+            get { return RadioButtonLabel.IsInteractable; }
+            set { RadioButtonLabel.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelUseFastShaderProperty = Label.UseFastShaderProperty;

@@ -46,6 +46,7 @@ namespace Delight
             dependencyProperties.Add(AlphaProperty);
             dependencyProperties.Add(IsVisibleProperty);
             dependencyProperties.Add(RaycastBlockModeProperty);
+            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(CanvasGroupProperty);
             dependencyProperties.Add(UseFastShaderProperty);
             dependencyProperties.Add(FastMaterialProperty);
@@ -176,6 +177,13 @@ namespace Delight
         {
             get { return RaycastBlockModeProperty.GetValue(this); }
             set { RaycastBlockModeProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
+        public System.Boolean IsInteractable
+        {
+            get { return IsInteractableProperty.GetValue(this); }
+            set { IsInteractableProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<UnityEngine.CanvasGroup> CanvasGroupProperty = new DependencyProperty<UnityEngine.CanvasGroup>("CanvasGroup");

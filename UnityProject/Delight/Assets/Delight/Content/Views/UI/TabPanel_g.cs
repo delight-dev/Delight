@@ -381,6 +381,13 @@ namespace Delight
             set { TabHeaderGroup.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty TabListIsInteractableProperty = ToggleGroup.IsInteractableProperty;
+        public System.Boolean TabListIsInteractable
+        {
+            get { return TabHeaderGroup.IsInteractable; }
+            set { TabHeaderGroup.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty TabListUseFastShaderProperty = ToggleGroup.UseFastShaderProperty;
         public System.Boolean TabListUseFastShader
         {

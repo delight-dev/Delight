@@ -341,6 +341,13 @@ namespace Delight
             set { Bar.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty BarIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean BarIsInteractable
+        {
+            get { return Bar.IsInteractable; }
+            set { Bar.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty BarUseFastShaderProperty = Image.UseFastShaderProperty;
         public System.Boolean BarUseFastShader
         {
@@ -633,6 +640,13 @@ namespace Delight
         {
             get { return Handle.RaycastBlockMode; }
             set { Handle.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HandleIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean HandleIsInteractable
+        {
+            get { return Handle.IsInteractable; }
+            set { Handle.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty HandleUseFastShaderProperty = Image.UseFastShaderProperty;

@@ -715,6 +715,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsInteractableProperty = ScrollableRegion.HorizontalScrollbarBarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarBarIsInteractable
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarIsInteractable; }
+            set { ScrollableRegion.HorizontalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = ScrollableRegion.HorizontalScrollbarBarUseFastShaderProperty;
         public System.Boolean HorizontalScrollbarBarUseFastShader
         {
@@ -1007,6 +1014,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarHandleRaycastBlockMode; }
             set { ScrollableRegion.HorizontalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsInteractableProperty = ScrollableRegion.HorizontalScrollbarHandleIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarHandleIsInteractable
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandleIsInteractable; }
+            set { ScrollableRegion.HorizontalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = ScrollableRegion.HorizontalScrollbarHandleUseFastShaderProperty;
@@ -1308,6 +1322,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarRaycastBlockMode; }
             set { ScrollableRegion.HorizontalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsInteractableProperty = ScrollableRegion.HorizontalScrollbarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarIsInteractable
+        {
+            get { return ScrollableRegion.HorizontalScrollbarIsInteractable; }
+            set { ScrollableRegion.HorizontalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = ScrollableRegion.HorizontalScrollbarUseFastShaderProperty;
@@ -1639,6 +1660,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsInteractableProperty = ScrollableRegion.VerticalScrollbarBarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarBarIsInteractable
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarIsInteractable; }
+            set { ScrollableRegion.VerticalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = ScrollableRegion.VerticalScrollbarBarUseFastShaderProperty;
         public System.Boolean VerticalScrollbarBarUseFastShader
         {
@@ -1931,6 +1959,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarHandleRaycastBlockMode; }
             set { ScrollableRegion.VerticalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsInteractableProperty = ScrollableRegion.VerticalScrollbarHandleIsInteractableProperty;
+        public System.Boolean VerticalScrollbarHandleIsInteractable
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandleIsInteractable; }
+            set { ScrollableRegion.VerticalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = ScrollableRegion.VerticalScrollbarHandleUseFastShaderProperty;
@@ -2232,6 +2267,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarRaycastBlockMode; }
             set { ScrollableRegion.VerticalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsInteractableProperty = ScrollableRegion.VerticalScrollbarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarIsInteractable
+        {
+            get { return ScrollableRegion.VerticalScrollbarIsInteractable; }
+            set { ScrollableRegion.VerticalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = ScrollableRegion.VerticalScrollbarUseFastShaderProperty;
@@ -2589,6 +2631,13 @@ namespace Delight
         {
             get { return ScrollableRegion.RaycastBlockMode; }
             set { ScrollableRegion.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionIsInteractableProperty = ScrollableRegion.IsInteractableProperty;
+        public System.Boolean ScrollableRegionIsInteractable
+        {
+            get { return ScrollableRegion.IsInteractable; }
+            set { ScrollableRegion.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionUseFastShaderProperty = ScrollableRegion.UseFastShaderProperty;

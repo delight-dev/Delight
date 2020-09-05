@@ -1215,6 +1215,13 @@ namespace Delight
             set { InputText.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty InputTextIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean InputTextIsInteractable
+        {
+            get { return InputText.IsInteractable; }
+            set { InputText.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty InputTextUseFastShaderProperty = Label.UseFastShaderProperty;
         public System.Boolean InputTextUseFastShader
         {

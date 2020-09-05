@@ -530,6 +530,13 @@ namespace Delight
             set { HorizontalScrollbar.BarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsInteractableProperty = Scrollbar.BarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarBarIsInteractable
+        {
+            get { return HorizontalScrollbar.BarIsInteractable; }
+            set { HorizontalScrollbar.BarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = Scrollbar.BarUseFastShaderProperty;
         public System.Boolean HorizontalScrollbarBarUseFastShader
         {
@@ -822,6 +829,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.HandleRaycastBlockMode; }
             set { HorizontalScrollbar.HandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsInteractableProperty = Scrollbar.HandleIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarHandleIsInteractable
+        {
+            get { return HorizontalScrollbar.HandleIsInteractable; }
+            set { HorizontalScrollbar.HandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = Scrollbar.HandleUseFastShaderProperty;
@@ -1123,6 +1137,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.RaycastBlockMode; }
             set { HorizontalScrollbar.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsInteractableProperty = Scrollbar.IsInteractableProperty;
+        public System.Boolean HorizontalScrollbarIsInteractable
+        {
+            get { return HorizontalScrollbar.IsInteractable; }
+            set { HorizontalScrollbar.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = Scrollbar.UseFastShaderProperty;
@@ -1454,6 +1475,13 @@ namespace Delight
             set { VerticalScrollbar.BarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsInteractableProperty = Scrollbar.BarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarBarIsInteractable
+        {
+            get { return VerticalScrollbar.BarIsInteractable; }
+            set { VerticalScrollbar.BarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = Scrollbar.BarUseFastShaderProperty;
         public System.Boolean VerticalScrollbarBarUseFastShader
         {
@@ -1746,6 +1774,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandleRaycastBlockMode; }
             set { VerticalScrollbar.HandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsInteractableProperty = Scrollbar.HandleIsInteractableProperty;
+        public System.Boolean VerticalScrollbarHandleIsInteractable
+        {
+            get { return VerticalScrollbar.HandleIsInteractable; }
+            set { VerticalScrollbar.HandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = Scrollbar.HandleUseFastShaderProperty;
@@ -2047,6 +2082,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.RaycastBlockMode; }
             set { VerticalScrollbar.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsInteractableProperty = Scrollbar.IsInteractableProperty;
+        public System.Boolean VerticalScrollbarIsInteractable
+        {
+            get { return VerticalScrollbar.IsInteractable; }
+            set { VerticalScrollbar.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = Scrollbar.UseFastShaderProperty;

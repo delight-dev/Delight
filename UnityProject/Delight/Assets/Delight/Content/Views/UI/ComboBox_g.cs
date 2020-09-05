@@ -695,6 +695,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsInteractableProperty = List.HorizontalScrollbarBarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarBarIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = List.HorizontalScrollbarBarUseFastShaderProperty;
         public System.Boolean HorizontalScrollbarBarUseFastShader
         {
@@ -987,6 +994,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode; }
             set { ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsInteractableProperty = List.HorizontalScrollbarHandleIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarHandleIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = List.HorizontalScrollbarHandleUseFastShaderProperty;
@@ -1288,6 +1302,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarRaycastBlockMode; }
             set { ComboBoxList.HorizontalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsInteractableProperty = List.HorizontalScrollbarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = List.HorizontalScrollbarUseFastShaderProperty;
@@ -1619,6 +1640,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsInteractableProperty = List.VerticalScrollbarBarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarBarIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = List.VerticalScrollbarBarUseFastShaderProperty;
         public System.Boolean VerticalScrollbarBarUseFastShader
         {
@@ -1911,6 +1939,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarHandleRaycastBlockMode; }
             set { ComboBoxList.VerticalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsInteractableProperty = List.VerticalScrollbarHandleIsInteractableProperty;
+        public System.Boolean VerticalScrollbarHandleIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = List.VerticalScrollbarHandleUseFastShaderProperty;
@@ -2212,6 +2247,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarRaycastBlockMode; }
             set { ComboBoxList.VerticalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsInteractableProperty = List.VerticalScrollbarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = List.VerticalScrollbarUseFastShaderProperty;
@@ -2571,6 +2613,13 @@ namespace Delight
             set { ComboBoxList.ScrollableRegionRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty ScrollableRegionIsInteractableProperty = List.ScrollableRegionIsInteractableProperty;
+        public System.Boolean ScrollableRegionIsInteractable
+        {
+            get { return ComboBoxList.ScrollableRegionIsInteractable; }
+            set { ComboBoxList.ScrollableRegionIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionUseFastShaderProperty = List.ScrollableRegionUseFastShaderProperty;
         public System.Boolean ScrollableRegionUseFastShader
         {
@@ -2877,6 +2926,13 @@ namespace Delight
         {
             get { return ComboBoxList.RaycastBlockMode; }
             set { ComboBoxList.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty ComboBoxListIsInteractableProperty = List.IsInteractableProperty;
+        public System.Boolean ComboBoxListIsInteractable
+        {
+            get { return ComboBoxList.IsInteractable; }
+            set { ComboBoxList.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty ComboBoxListUseFastShaderProperty = List.UseFastShaderProperty;
@@ -3635,6 +3691,13 @@ namespace Delight
             set { ComboBoxButton.LabelRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty ButtonLabelIsInteractableProperty = Button.LabelIsInteractableProperty;
+        public System.Boolean ButtonLabelIsInteractable
+        {
+            get { return ComboBoxButton.LabelIsInteractable; }
+            set { ComboBoxButton.LabelIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty ButtonLabelUseFastShaderProperty = Button.LabelUseFastShaderProperty;
         public System.Boolean ButtonLabelUseFastShader
         {
@@ -3934,6 +3997,13 @@ namespace Delight
         {
             get { return ComboBoxButton.RaycastBlockMode; }
             set { ComboBoxButton.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty ButtonIsInteractableProperty = Button.IsInteractableProperty;
+        public System.Boolean ButtonIsInteractable
+        {
+            get { return ComboBoxButton.IsInteractable; }
+            set { ComboBoxButton.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty ButtonUseFastShaderProperty = Button.UseFastShaderProperty;
