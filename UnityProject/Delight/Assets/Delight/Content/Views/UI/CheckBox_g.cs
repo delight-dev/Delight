@@ -41,7 +41,6 @@ namespace Delight
 
             dependencyProperties.Add(IsCheckedProperty);
             dependencyProperties.Add(IsDisabledProperty);
-            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(CheckBoxGroupProperty);
             dependencyProperties.Add(CheckBoxGroupTemplateProperty);
@@ -69,14 +68,6 @@ namespace Delight
         {
             get { return IsDisabledProperty.GetValue(this); }
             set { IsDisabledProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
-        /// <summary>Boolean indicating if the user can interact with the check box.</summary>
-        public System.Boolean IsInteractable
-        {
-            get { return IsInteractableProperty.GetValue(this); }
-            set { IsInteractableProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
@@ -1130,7 +1121,6 @@ namespace Delight
                     _checkBox.LineNumber = 0;
                     _checkBox.LinePosition = 0;
 #endif
-                    Delight.CheckBox.IsInteractableProperty.SetDefault(_checkBox, true);
                     Delight.CheckBox.SpacingProperty.SetDefault(_checkBox, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.CheckBox.HeightProperty.SetDefault(_checkBox, new ElementSize(20f, ElementSizeUnit.Pixels));

@@ -41,7 +41,6 @@ namespace Delight
 
             dependencyProperties.Add(IsCheckedProperty);
             dependencyProperties.Add(IsDisabledProperty);
-            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(RadioButtonGroupProperty);
             dependencyProperties.Add(RadioButtonGroupTemplateProperty);
@@ -69,14 +68,6 @@ namespace Delight
         {
             get { return IsDisabledProperty.GetValue(this); }
             set { IsDisabledProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
-        /// <summary>Boolean indicating if the user can toggle the radio button.</summary>
-        public System.Boolean IsInteractable
-        {
-            get { return IsInteractableProperty.GetValue(this); }
-            set { IsInteractableProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
@@ -1130,7 +1121,6 @@ namespace Delight
                     _radioButton.LineNumber = 0;
                     _radioButton.LinePosition = 0;
 #endif
-                    Delight.RadioButton.IsInteractableProperty.SetDefault(_radioButton, true);
                     Delight.RadioButton.SpacingProperty.SetDefault(_radioButton, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(20f, ElementSizeUnit.Pixels));

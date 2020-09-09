@@ -153,6 +153,7 @@
     <xs:attribute name="LabelAlpha" type="xs:string" />
     <xs:attribute name="LabelIsVisible" type="xs:string" />
     <xs:attribute name="LabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="LabelIsInteractable" type="xs:string" />
     <xs:attribute name="LabelUseFastShader" type="xs:string" />
     <xs:attribute name="LabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="LabelIgnoreFlip" type="xs:string" />
@@ -202,6 +203,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -283,6 +285,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -339,7 +342,6 @@
     </xs:sequence>
     <xs:attribute name="IsChecked" type="xs:string" />
     <xs:attribute name="IsDisabled" type="xs:string" />
-    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="Spacing" type="xs:string" />
     <xs:attribute name="CheckBoxSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="CheckBoxOverrideSprite" type="Asset_SpriteAsset" />
@@ -373,6 +375,7 @@
     <xs:attribute name="CheckBoxAlpha" type="xs:string" />
     <xs:attribute name="CheckBoxIsVisible" type="xs:string" />
     <xs:attribute name="CheckBoxRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="CheckBoxIsInteractable" type="xs:string" />
     <xs:attribute name="CheckBoxUseFastShader" type="xs:string" />
     <xs:attribute name="CheckBoxBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="CheckBoxIgnoreFlip" type="xs:string" />
@@ -467,6 +470,7 @@
     <xs:attribute name="CheckBoxLabelAlpha" type="xs:string" />
     <xs:attribute name="CheckBoxLabelIsVisible" type="xs:string" />
     <xs:attribute name="CheckBoxLabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="CheckBoxLabelIsInteractable" type="xs:string" />
     <xs:attribute name="CheckBoxLabelUseFastShader" type="xs:string" />
     <xs:attribute name="CheckBoxLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="CheckBoxLabelIgnoreFlip" type="xs:string" />
@@ -516,6 +520,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -612,6 +617,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -751,6 +757,7 @@
     <xs:attribute name="HorizontalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -793,6 +800,7 @@
     <xs:attribute name="HorizontalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -836,6 +844,7 @@
     <xs:attribute name="HorizontalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
@@ -883,6 +892,7 @@
     <xs:attribute name="VerticalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -925,6 +935,7 @@
     <xs:attribute name="VerticalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -968,6 +979,7 @@
     <xs:attribute name="VerticalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
@@ -1019,6 +1031,7 @@
     <xs:attribute name="ScrollableRegionAlpha" type="xs:string" />
     <xs:attribute name="ScrollableRegionIsVisible" type="xs:string" />
     <xs:attribute name="ScrollableRegionRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="ScrollableRegionIsInteractable" type="xs:string" />
     <xs:attribute name="ScrollableRegionUseFastShader" type="xs:string" />
     <xs:attribute name="ScrollableRegionBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreFlip" type="xs:string" />
@@ -1063,6 +1076,7 @@
     <xs:attribute name="ComboBoxListAlpha" type="xs:string" />
     <xs:attribute name="ComboBoxListIsVisible" type="xs:string" />
     <xs:attribute name="ComboBoxListRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="ComboBoxListIsInteractable" type="xs:string" />
     <xs:attribute name="ComboBoxListUseFastShader" type="xs:string" />
     <xs:attribute name="ComboBoxListBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ComboBoxListIgnoreFlip" type="xs:string" />
@@ -1171,6 +1185,7 @@
     <xs:attribute name="ButtonLabelAlpha" type="xs:string" />
     <xs:attribute name="ButtonLabelIsVisible" type="xs:string" />
     <xs:attribute name="ButtonLabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="ButtonLabelIsInteractable" type="xs:string" />
     <xs:attribute name="ButtonLabelUseFastShader" type="xs:string" />
     <xs:attribute name="ButtonLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ButtonLabelIgnoreFlip" type="xs:string" />
@@ -1214,6 +1229,7 @@
     <xs:attribute name="ButtonAlpha" type="xs:string" />
     <xs:attribute name="ButtonIsVisible" type="xs:string" />
     <xs:attribute name="ButtonRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="ButtonIsInteractable" type="xs:string" />
     <xs:attribute name="ButtonUseFastShader" type="xs:string" />
     <xs:attribute name="ButtonBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ButtonIgnoreFlip" type="xs:string" />
@@ -1242,6 +1258,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1347,6 +1364,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1422,6 +1440,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1479,7 +1498,6 @@
     <xs:attribute name="ContentTemplates" type="xs:string" />
     <xs:attribute name="IsExpanded" type="xs:string" />
     <xs:attribute name="IsDisabled" type="xs:string" />
-    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="HeaderHeight" type="xs:string" />
     <xs:attribute name="ContentMargin" type="xs:string" />
     <xs:attribute name="HeaderAlignment" type="Enum_ElementAlignment" />
@@ -1525,6 +1543,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1619,6 +1638,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1694,6 +1714,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1788,6 +1809,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1888,6 +1910,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -1969,6 +1992,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2062,6 +2086,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2159,6 +2184,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2250,6 +2276,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2352,6 +2379,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2492,6 +2520,7 @@
     <xs:attribute name="HorizontalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -2534,6 +2563,7 @@
     <xs:attribute name="HorizontalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -2577,6 +2607,7 @@
     <xs:attribute name="HorizontalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
@@ -2624,6 +2655,7 @@
     <xs:attribute name="VerticalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -2666,6 +2698,7 @@
     <xs:attribute name="VerticalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -2709,6 +2742,7 @@
     <xs:attribute name="VerticalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
@@ -2760,6 +2794,7 @@
     <xs:attribute name="ScrollableRegionAlpha" type="xs:string" />
     <xs:attribute name="ScrollableRegionIsVisible" type="xs:string" />
     <xs:attribute name="ScrollableRegionRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="ScrollableRegionIsInteractable" type="xs:string" />
     <xs:attribute name="ScrollableRegionUseFastShader" type="xs:string" />
     <xs:attribute name="ScrollableRegionBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="ScrollableRegionIgnoreFlip" type="xs:string" />
@@ -2812,6 +2847,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -2917,6 +2953,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3013,6 +3050,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3169,6 +3207,7 @@
     <xs:attribute name="LabelAlpha" type="xs:string" />
     <xs:attribute name="LabelIsVisible" type="xs:string" />
     <xs:attribute name="LabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="LabelIsInteractable" type="xs:string" />
     <xs:attribute name="LabelUseFastShader" type="xs:string" />
     <xs:attribute name="LabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="LabelIgnoreFlip" type="xs:string" />
@@ -3218,6 +3257,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3274,7 +3314,6 @@
     </xs:sequence>
     <xs:attribute name="IsChecked" type="xs:string" />
     <xs:attribute name="IsDisabled" type="xs:string" />
-    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="Spacing" type="xs:string" />
     <xs:attribute name="RadioButtonSprite" type="Asset_SpriteAsset" />
     <xs:attribute name="RadioButtonOverrideSprite" type="Asset_SpriteAsset" />
@@ -3308,6 +3347,7 @@
     <xs:attribute name="RadioButtonAlpha" type="xs:string" />
     <xs:attribute name="RadioButtonIsVisible" type="xs:string" />
     <xs:attribute name="RadioButtonRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="RadioButtonIsInteractable" type="xs:string" />
     <xs:attribute name="RadioButtonUseFastShader" type="xs:string" />
     <xs:attribute name="RadioButtonBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="RadioButtonIgnoreFlip" type="xs:string" />
@@ -3402,6 +3442,7 @@
     <xs:attribute name="RadioButtonLabelAlpha" type="xs:string" />
     <xs:attribute name="RadioButtonLabelIsVisible" type="xs:string" />
     <xs:attribute name="RadioButtonLabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="RadioButtonLabelIsInteractable" type="xs:string" />
     <xs:attribute name="RadioButtonLabelUseFastShader" type="xs:string" />
     <xs:attribute name="RadioButtonLabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="RadioButtonLabelIgnoreFlip" type="xs:string" />
@@ -3451,6 +3492,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3532,6 +3574,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3626,6 +3669,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3719,6 +3763,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -3834,6 +3879,7 @@
     <xs:attribute name="HorizontalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -3876,6 +3922,7 @@
     <xs:attribute name="HorizontalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -3919,6 +3966,7 @@
     <xs:attribute name="HorizontalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
@@ -3966,6 +4014,7 @@
     <xs:attribute name="VerticalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -4008,6 +4057,7 @@
     <xs:attribute name="VerticalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -4051,6 +4101,7 @@
     <xs:attribute name="VerticalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
@@ -4109,6 +4160,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -4218,6 +4270,7 @@
     <xs:attribute name="HorizontalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -4260,6 +4313,7 @@
     <xs:attribute name="HorizontalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -4303,6 +4357,7 @@
     <xs:attribute name="HorizontalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HorizontalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HorizontalScrollbarIgnoreFlip" type="xs:string" />
@@ -4350,6 +4405,7 @@
     <xs:attribute name="VerticalScrollbarBarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarBarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBarIgnoreFlip" type="xs:string" />
@@ -4392,6 +4448,7 @@
     <xs:attribute name="VerticalScrollbarHandleAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarHandleIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarHandleIgnoreFlip" type="xs:string" />
@@ -4435,6 +4492,7 @@
     <xs:attribute name="VerticalScrollbarAlpha" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIsVisible" type="xs:string" />
     <xs:attribute name="VerticalScrollbarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="VerticalScrollbarIsInteractable" type="xs:string" />
     <xs:attribute name="VerticalScrollbarUseFastShader" type="xs:string" />
     <xs:attribute name="VerticalScrollbarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="VerticalScrollbarIgnoreFlip" type="xs:string" />
@@ -4493,6 +4551,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -4584,6 +4643,7 @@
     <xs:attribute name="BarAlpha" type="xs:string" />
     <xs:attribute name="BarIsVisible" type="xs:string" />
     <xs:attribute name="BarRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="BarIsInteractable" type="xs:string" />
     <xs:attribute name="BarUseFastShader" type="xs:string" />
     <xs:attribute name="BarBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="BarIgnoreFlip" type="xs:string" />
@@ -4626,6 +4686,7 @@
     <xs:attribute name="HandleAlpha" type="xs:string" />
     <xs:attribute name="HandleIsVisible" type="xs:string" />
     <xs:attribute name="HandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="HandleIsInteractable" type="xs:string" />
     <xs:attribute name="HandleUseFastShader" type="xs:string" />
     <xs:attribute name="HandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="HandleIgnoreFlip" type="xs:string" />
@@ -4675,6 +4736,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -4769,6 +4831,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -4866,6 +4929,7 @@
     <xs:attribute name="SliderAlpha" type="xs:string" />
     <xs:attribute name="SliderIsVisible" type="xs:string" />
     <xs:attribute name="SliderRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="SliderIsInteractable" type="xs:string" />
     <xs:attribute name="SliderUseFastShader" type="xs:string" />
     <xs:attribute name="SliderBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderIgnoreFlip" type="xs:string" />
@@ -4908,6 +4972,7 @@
     <xs:attribute name="SliderFillAlpha" type="xs:string" />
     <xs:attribute name="SliderFillIsVisible" type="xs:string" />
     <xs:attribute name="SliderFillRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="SliderFillIsInteractable" type="xs:string" />
     <xs:attribute name="SliderFillUseFastShader" type="xs:string" />
     <xs:attribute name="SliderFillBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderFillIgnoreFlip" type="xs:string" />
@@ -4950,6 +5015,7 @@
     <xs:attribute name="SliderHandleAlpha" type="xs:string" />
     <xs:attribute name="SliderHandleIsVisible" type="xs:string" />
     <xs:attribute name="SliderHandleRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="SliderHandleIsInteractable" type="xs:string" />
     <xs:attribute name="SliderHandleUseFastShader" type="xs:string" />
     <xs:attribute name="SliderHandleBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="SliderHandleIgnoreFlip" type="xs:string" />
@@ -4999,6 +5065,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5075,6 +5142,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5231,6 +5299,7 @@
     <xs:attribute name="LabelAlpha" type="xs:string" />
     <xs:attribute name="LabelIsVisible" type="xs:string" />
     <xs:attribute name="LabelRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="LabelIsInteractable" type="xs:string" />
     <xs:attribute name="LabelUseFastShader" type="xs:string" />
     <xs:attribute name="LabelBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="LabelIgnoreFlip" type="xs:string" />
@@ -5280,6 +5349,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5376,6 +5446,7 @@
     <xs:attribute name="TabListAlpha" type="xs:string" />
     <xs:attribute name="TabListIsVisible" type="xs:string" />
     <xs:attribute name="TabListRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="TabListIsInteractable" type="xs:string" />
     <xs:attribute name="TabListUseFastShader" type="xs:string" />
     <xs:attribute name="TabListBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="TabListIgnoreFlip" type="xs:string" />
@@ -5428,6 +5499,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5624,6 +5696,7 @@
     <xs:attribute name="InputTextAlpha" type="xs:string" />
     <xs:attribute name="InputTextIsVisible" type="xs:string" />
     <xs:attribute name="InputTextRaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="InputTextIsInteractable" type="xs:string" />
     <xs:attribute name="InputTextUseFastShader" type="xs:string" />
     <xs:attribute name="InputTextBubbleNotifyChildLayoutChanged" type="xs:string" />
     <xs:attribute name="InputTextIgnoreFlip" type="xs:string" />
@@ -5673,6 +5746,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5818,6 +5892,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -5916,6 +5991,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6018,6 +6094,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6114,6 +6191,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6207,6 +6285,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6279,6 +6358,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6355,6 +6435,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6451,6 +6532,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6554,6 +6636,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6657,6 +6740,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6759,6 +6843,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6831,6 +6916,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6903,6 +6989,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -6976,6 +7063,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7049,6 +7137,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7155,6 +7244,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7257,6 +7347,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7329,6 +7420,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7401,6 +7493,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7503,6 +7596,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7614,6 +7708,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7707,6 +7802,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
@@ -7808,6 +7904,7 @@
     <xs:attribute name="Alpha" type="xs:string" />
     <xs:attribute name="IsVisible" type="xs:string" />
     <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
+    <xs:attribute name="IsInteractable" type="xs:string" />
     <xs:attribute name="CanvasGroup" type="xs:string" />
     <xs:attribute name="UseFastShader" type="xs:string" />
     <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
