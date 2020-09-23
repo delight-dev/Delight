@@ -351,10 +351,10 @@ namespace Delight
         /// </summary>
         protected virtual void VisibilityChanged()
         {
-            if (AlphaProperty.IsUndefined(this) &&
-                IsVisibleProperty.IsUndefined(this) &&
-                RaycastBlockModeProperty.IsUndefined(this) &&
-                IsInteractableProperty.IsUndefined(this))
+            if (AlphaProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                IsVisibleProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                RaycastBlockModeProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                IsInteractableProperty.IsUndefined(this, UIViewTemplates.Default))
                 return;
 
             // to change alpha, visibility and raycast we need a canvas group attached

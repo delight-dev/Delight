@@ -316,6 +316,39 @@ namespace Delight
         }
 
         /// <summary>
+        /// Checks if dependency property value is undefined (no run-time or default value set) ignoring initial default value set in specified template. Mainly used check if values of non-nullable types has been set.
+        /// </summary>
+        public bool IsUndefined(DependencyObject key, Template ignoreTemplateDefaultValue)
+        {
+            if (Values.ContainsKey(key))
+                return false;
+
+            if (HasBinding(key))
+            {
+                return false;
+            }
+
+            // try get default value
+            var template = key.Template;
+            if (template == null || template == ignoreTemplateDefaultValue)
+                return false;
+
+            while (true)
+            {
+                if (Defaults.TryGetValue(template, out var defaultValue))
+                {
+                    return false;
+                }
+
+                template = template.BasedOn;
+                if (template == ViewTemplates.Default || template == null || template == ignoreTemplateDefaultValue)
+                {
+                    return true;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets default value from type.
         /// </summary>
         public virtual T GetDefault(DependencyObject key, bool getStateDefault = true)

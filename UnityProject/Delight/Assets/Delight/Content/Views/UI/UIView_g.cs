@@ -277,6 +277,7 @@ namespace Delight
 #endif
                     Delight.UIView.PivotProperty.SetDefault(_uIView, new Vector2(0.5f, 0.5f));
                     Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);
+                    Delight.UIView.IsInteractableProperty.SetDefault(_uIView, true);
                     Delight.UIView.FastMaterialProperty.SetDefault(_uIView, Assets.Materials["UI-Fast-Default"]);
                 }
                 return _uIView;
