@@ -1326,6 +1326,15 @@ namespace Delight
         {
             var actualWidth = OverrideWidth ?? (Width ?? ElementSize.DefaultLayout);
             var actualHeight = OverrideHeight ?? (Height ?? ElementSize.DefaultLayout);
+            
+            if (Orientation == ElementOrientation.Horizontal && actualWidth.Unit != ElementSizeUnit.Pixels)
+            {
+                actualWidth = ActualWidth;
+            }
+            else if (Orientation == ElementOrientation.Vertical && actualHeight.Unit != ElementSizeUnit.Pixels)
+            {
+                actualHeight = ActualHeight;
+            }
 
             bool hasNewSize = false;
             float maxWidth = 0f;
