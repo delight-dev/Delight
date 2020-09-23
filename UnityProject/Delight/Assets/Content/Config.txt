@@ -18,6 +18,7 @@ ServerUri: http://example.com
 UseSimulatedUriInEditor: true
 BuildTargets: Dev
 AssetBundleVersion: 1
+DefaultContentFolder: Delight/Content/
 ContentFolders:
 Modules: 
   TextMeshPro
