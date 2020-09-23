@@ -142,8 +142,26 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void UpdateProjectSettings()
         {
-            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(
-                BuildTargetGroup.Standalone);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Standalone);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.PS4);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Android);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.iOS);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.tvOS);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.XboxOne);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WSA);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Lumin);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Stadia);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Switch);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WebGL);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WSA);
+        }
+
+        /// <summary>
+        /// Updates project settings for specified build target.
+        /// </summary>
+        private static void UpdateTargetSettingsForTarget(BuildTargetGroup targetGroup)
+        {
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
             var config = MasterConfig.GetInstance();
             var newModules = config.Modules.Select(x => String.Format("DELIGHT_MODULE_{0}", x.ToUpper()));
 
@@ -173,7 +191,7 @@ namespace Delight.Editor.Parser
 
             if (symbolsNeedUpdate)
             {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, symbols);
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, symbols);
             }
         }
 
