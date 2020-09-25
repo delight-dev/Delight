@@ -556,7 +556,7 @@ namespace Delight
                 }
                 else
                 {
-                    view = InstantiateRuntimeView(_currentDisplayedView.ViewObject, this, ViewContentRegion, 
+                    view = InstantiateRuntimeView(_currentDisplayedView.ViewObject, this, ViewContentRegion,
                         _currentEditedView.IsNew, null, _currentEditedView);
                 }
 
@@ -1600,6 +1600,13 @@ namespace Delight
             if (!changedViews.Any())
                 return;
 
+            // see if any views are renamed and update references to it
+            for (int viewIndex = changedViews.Count() - 1; viewIndex >= 0; --viewIndex)
+            {
+                var changedView = changedViews[viewIndex];
+                UpdateViewsIfRenamed(changedView, changedViews);
+            }
+
             for (int viewIndex = 0; viewIndex < changedViews.Count(); ++viewIndex)
             {
                 var changedView = changedViews[viewIndex];
@@ -1721,6 +1728,112 @@ namespace Delight
 #if UNITY_EDITOR
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
 #endif
+        }
+
+        /// <summary>
+        /// Checks if designer view has been renamed, and if so renames it and updates all references to it in other views.
+        /// </summary>
+        private void UpdateViewsIfRenamed(DesignerView changedView, List<DesignerView> changedViews)
+        {
+            try
+            {
+                var xmlText = changedView.XmlText;
+                XElement rootXmlElement = XElement.Parse(xmlText, LoadOptions.SetLineInfo);
+
+                // check if root element has been renamed
+                // if root element has changed, then rename the view. 
+                var viewName = rootXmlElement.Name.LocalName;
+                if (!viewName.IEquals(changedView.Name))
+                {
+                    // check if name already exist
+                    int i = 1;
+                    var name = viewName;
+                    bool renameThisViewXml = false;
+                    while (true)
+                    {
+                        if (!DesignerViews.Any(x => x.Name == viewName))
+                        {
+                            break;
+                        }
+
+                        renameThisViewXml = true;
+                        viewName = name + i;
+                        ++i;
+                    }
+
+                    // rename view
+                    var oldViewName = changedView.Name;
+                    changedView.Name = viewName;
+                    changedView.IsRenamed = true;
+                    if (String.IsNullOrEmpty(changedView.OriginalName))
+                    {
+                        changedView.OriginalName = oldViewName;
+                    }
+
+                    // update all references to the view 
+                    foreach (var view in DesignerViews)
+                    {
+                        if (view == changedView && !renameThisViewXml)
+                            continue;
+
+                        var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
+                            File.ReadAllText(view.FilePath);
+
+                        // see if the view references the old view and update the xml
+                        // the regex pattern below matches start/end tags with the specified view name
+                        bool foundMatch = false;
+                        var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
+                        var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
+                        {
+                            foundMatch = true;
+                            return viewName;
+                        });
+
+                        if (foundMatch)
+                        {
+                            // update XML and add to list of changed views
+                            replacedXml = StripNamespaceAndSchema(replacedXml);
+
+                            view.XmlText = replacedXml;
+                            view.IsDirty = true;
+                            view.IsRuntimeParsed = true;
+
+                            if (view == _currentEditedView)
+                            {
+                                // update current editor XML
+                                XmlEditor.XmlText = view.XmlText;
+                            }
+
+                            // update list of changed views
+                            if (!changedViews.Contains(view))
+                            {
+                                changedViews.Add(view);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // get which line error occurred on from exception message
+                int line = 1;
+                int indexOfLine = e.Message.IndexOf("Line");
+                if (indexOfLine > 0)
+                {
+                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
+                    int indexOfComma = msg.IndexOf(",");
+
+                    // get lineinfo
+                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
+                    {
+                        line = 1;
+                    }
+                }
+
+                LogParseErrorToDesignerConsole(changedView.FilePath, line,
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+                return;
+            }
         }
 
         /// <summary>
