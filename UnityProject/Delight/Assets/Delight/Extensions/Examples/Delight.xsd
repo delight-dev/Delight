@@ -7039,8 +7039,8 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:element name="LevelSelectExample2" type="LevelSelectExample2" />
-  <xs:complexType name="LevelSelectExample2">
+  <xs:element name="LevelSelectExample" type="LevelSelectExample" />
+  <xs:complexType name="LevelSelectExample">
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
@@ -7104,11 +7104,11 @@
     <xs:attribute name="LoadMode" type="Enum_LoadMode" />
     <xs:attribute name="State" type="xs:string" />
     <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="Style_LevelSelectExample2" />
+    <xs:attribute name="Style" type="Style_LevelSelectExample" />
     <xs:anyAttribute processContents="skip" />
   </xs:complexType>
 
-  <xs:simpleType name="Style_LevelSelectExample2">
+  <xs:simpleType name="Style_LevelSelectExample">
     <xs:restriction base="xs:string">
     </xs:restriction>
   </xs:simpleType>
@@ -7954,73 +7954,6 @@
     </xs:restriction>
   </xs:simpleType>
 
-  <xs:element name="LevelSelectExample" type="LevelSelectExample" />
-  <xs:complexType name="LevelSelectExample">
-    <xs:sequence>
-      <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="ActualWidth" type="xs:string" />
-    <xs:attribute name="ActualHeight" type="xs:string" />
-    <xs:attribute name="IsFullScreen" type="xs:string" />
-    <xs:attribute name="RectTransform" type="xs:string" />
-    <xs:attribute name="Width" type="xs:string" />
-    <xs:attribute name="Height" type="xs:string" />
-    <xs:attribute name="OverrideWidth" type="xs:string" />
-    <xs:attribute name="OverrideHeight" type="xs:string" />
-    <xs:attribute name="Scale" type="xs:string" />
-    <xs:attribute name="Alignment" type="Enum_ElementAlignment" />
-    <xs:attribute name="Margin" type="xs:string" />
-    <xs:attribute name="Offset" type="xs:string" />
-    <xs:attribute name="OffsetFromParent" type="xs:string" />
-    <xs:attribute name="Pivot" type="xs:string" />
-    <xs:attribute name="DisableLayoutUpdate" type="xs:string" />
-    <xs:attribute name="Alpha" type="xs:string" />
-    <xs:attribute name="IsVisible" type="xs:string" />
-    <xs:attribute name="RaycastBlockMode" type="Enum_RaycastBlockMode" />
-    <xs:attribute name="IsInteractable" type="xs:string" />
-    <xs:attribute name="CanvasGroup" type="xs:string" />
-    <xs:attribute name="UseFastShader" type="xs:string" />
-    <xs:attribute name="FastMaterial" type="Asset_MaterialAsset" />
-    <xs:attribute name="BubbleNotifyChildLayoutChanged" type="xs:string" />
-    <xs:attribute name="IgnoreFlip" type="xs:string" />
-    <xs:attribute name="Rotation" type="xs:string" />
-    <xs:attribute name="Position" type="xs:string" />
-    <xs:attribute name="UnityScript" type="xs:string" />
-    <xs:attribute name="Name" type="xs:string" />
-    <xs:attribute name="GameObject" type="xs:string" />
-    <xs:attribute name="EnableScriptEvents" type="xs:string" />
-    <xs:attribute name="IgnoreObject" type="xs:string" />
-    <xs:attribute name="IsActive" type="xs:string" />
-    <xs:attribute name="BeginDrag" type="xs:string" />
-    <xs:attribute name="Cancel" type="xs:string" />
-    <xs:attribute name="Click" type="xs:string" />
-    <xs:attribute name="Deselect" type="xs:string" />
-    <xs:attribute name="Drag" type="xs:string" />
-    <xs:attribute name="Drop" type="xs:string" />
-    <xs:attribute name="EndDrag" type="xs:string" />
-    <xs:attribute name="InitializePotentialDrag" type="xs:string" />
-    <xs:attribute name="Move" type="xs:string" />
-    <xs:attribute name="MouseDown" type="xs:string" />
-    <xs:attribute name="MouseEnter" type="xs:string" />
-    <xs:attribute name="MouseExit" type="xs:string" />
-    <xs:attribute name="MouseUp" type="xs:string" />
-    <xs:attribute name="Scroll" type="xs:string" />
-    <xs:attribute name="Select" type="xs:string" />
-    <xs:attribute name="Submit" type="xs:string" />
-    <xs:attribute name="UpdateSelected" type="xs:string" />
-    <xs:attribute name="TemplateItems" type="xs:string" />
-    <xs:attribute name="LayoutChildren" type="xs:string" />
-    <xs:attribute name="IsLoaded" type="xs:string" />
-    <xs:attribute name="Bindings" type="xs:string" />
-    <xs:attribute name="IsDynamic" type="xs:string" />
-    <xs:attribute name="StateAnimations" type="xs:string" />
-    <xs:attribute name="ContentTemplates" type="xs:string" />
-    <xs:attribute name="LoadMode" type="Enum_LoadMode" />
-    <xs:attribute name="State" type="xs:string" />
-    <xs:attribute name="Id" type="xs:string" />
-    <xs:attribute name="Style" type="Style_UIView" />
-    <xs:anyAttribute processContents="skip" />
-  </xs:complexType>
 
   <xs:element name="Styles" type="Styles" />
   <xs:complexType name="Styles">
@@ -8442,6 +8375,8 @@
       <xs:enumeration value="EditorGrid" />
       <xs:enumeration value="ExpanderArrowDown" />
       <xs:enumeration value="ExpanderArrowRight" />
+      <xs:enumeration value="eye16" />
+      <xs:enumeration value="eye64" />
       <xs:enumeration value="HamburgerMenuIcon" />
       <xs:enumeration value="HamburgerMenuIconPressed" />
       <xs:enumeration value="ListSelection" />
@@ -8449,11 +8384,9 @@
       <xs:enumeration value="RadioButton" />
       <xs:enumeration value="RadioButtonPressed" />
       <xs:enumeration value="RainbowSquare" />
+      <xs:enumeration value="RoundedSquare10_5px" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
-      <xs:enumeration value="RoundedSquare10_5px" />
-      <xs:enumeration value="eye16" />
-      <xs:enumeration value="eye64" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />
@@ -8488,14 +8421,6 @@
   <xs:simpleType name="Asset_ShaderAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UI-Fast-Default" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Asset_Texture2DAsset">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="RoundedSquare10_5px" />
-      <xs:enumeration value="eye16" />
-      <xs:enumeration value="eye64" />
     </xs:restriction>
   </xs:simpleType>
 
