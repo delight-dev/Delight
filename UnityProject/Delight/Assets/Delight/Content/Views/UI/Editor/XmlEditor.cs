@@ -1786,34 +1786,34 @@ namespace Delight
             }
 
             // Command+Left - home on MAC
-            else if((Input.GetKeyDown(KeyCode.LeftArrow)))
+            else if(Input.GetKeyDown(KeyCode.LeftArrow) || repeatKeyDown == KeyCode.LeftArrow)
             {
                 HandleKeyInput((char)KeyCode.Home + "", true);
-                _trackKeyDown = KeyCode.Home;
+                _trackKeyDown = KeyCode.LeftArrow;
                 return;
             }
 
             // Command+Right - end on MAC
-            else if ((Input.GetKeyDown(KeyCode.RightArrow)))
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || repeatKeyDown == KeyCode.RightArrow)
             {
                 HandleKeyInput((char)KeyCode.End + "", true);
-                _trackKeyDown = KeyCode.End;
+                _trackKeyDown = KeyCode.RightArrow;
                 return;
             }
 
             // Command+Up - page up on MAC
-            else if ((Input.GetKeyDown(KeyCode.UpArrow)))
+            else if (Input.GetKeyDown(KeyCode.UpArrow) || repeatKeyDown == KeyCode.UpArrow)
             {
                 HandleKeyInput((char)KeyCode.PageUp + "", true);
-                _trackKeyDown = KeyCode.PageUp;
+                _trackKeyDown = KeyCode.UpArrow;
                 return;
             }
 
             // Command+Down - page down on MAC
-            else if ((Input.GetKeyDown(KeyCode.DownArrow)))
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || repeatKeyDown == KeyCode.DownArrow)
             {
                 HandleKeyInput((char)KeyCode.PageDown + "", true);
-                _trackKeyDown = KeyCode.PageDown;
+                _trackKeyDown = KeyCode.DownArrow;
                 return;
             }
 
