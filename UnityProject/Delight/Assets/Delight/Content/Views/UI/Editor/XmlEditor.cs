@@ -668,67 +668,67 @@ namespace Delight
             // check if a key has been pressed down, these are the keys that don't show up in Input.inputString
             if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Keypad4))
             {
-                inputString = (char)KeyCode.LeftArrow + inputString;
+                inputString = (char)KeyCode.LeftArrow + "";
                 _trackKeyDown = KeyCode.LeftArrow;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Keypad6))
             {
-                inputString = (char)KeyCode.RightArrow + inputString;
+                inputString = (char)KeyCode.RightArrow + "";
                 _trackKeyDown = KeyCode.RightArrow;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Keypad8))
             {
-                inputString = (char)KeyCode.UpArrow + inputString;
+                inputString = (char)KeyCode.UpArrow + "";
                 _trackKeyDown = KeyCode.UpArrow;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Keypad2))
             {
-                inputString = (char)KeyCode.DownArrow + inputString;
+                inputString = (char)KeyCode.DownArrow + "";
                 _trackKeyDown = KeyCode.DownArrow;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Tab))
             {
-                inputString = (char)KeyCode.Tab + inputString;
+                inputString = (char)KeyCode.Tab + "";
                 _trackKeyDown = KeyCode.Tab;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.KeypadPeriod))
             {
-                inputString = (char)KeyCode.Delete + inputString;
+                inputString = (char)KeyCode.Delete + "";
                 _trackKeyDown = KeyCode.Delete;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Home))
             {
-                inputString = (char)KeyCode.Home + inputString;
+                inputString = (char)KeyCode.Home + "";
                 _trackKeyDown = KeyCode.Home;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.End))
             {
-                inputString = (char)KeyCode.End + inputString;
+                inputString = (char)KeyCode.End + "";
                 _trackKeyDown = KeyCode.End;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.PageDown))
             {
-                inputString = (char)KeyCode.PageDown + inputString;
+                inputString = (char)KeyCode.PageDown + "";
                 _trackKeyDown = KeyCode.PageDown;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.PageUp))
             {
-                inputString = (char)KeyCode.PageUp + inputString;
+                inputString = (char)KeyCode.PageUp + "";
                 _trackKeyDown = KeyCode.PageUp;
                 _keyDownDelayTimeElapsed = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Escape))
             {
-                inputString = (char)KeyCode.Escape + inputString;
+                inputString = (char)KeyCode.Escape + "";
             }
 
             if (inputString.Length <= 0)
