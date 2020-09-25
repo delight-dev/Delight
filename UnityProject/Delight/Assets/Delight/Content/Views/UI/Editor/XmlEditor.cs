@@ -627,9 +627,13 @@ namespace Delight
         /// <summary>
         /// Handles keyboard input. 
         /// </summary>
-        private void HandleKeyInput()
+        private void HandleKeyInput(string inputString = null)
         {
-            var inputString = Input.inputString;
+            if (inputString == null)
+            {
+                inputString = Input.inputString;
+            }
+
             if (Application.platform == RuntimePlatform.OSXEditor)
             {
                 if (inputString.Length > 0)
@@ -747,6 +751,11 @@ namespace Delight
             for (int i = 0; i < inputString.Length; ++i)
             {
                 char c = inputString[i];
+                if (c == 10) // bugfix where return on some devices has keycode 10 not recognized by unity
+                {
+                    c = (char)13;
+                }
+
                 KeyCode keyCode = (KeyCode)c;
                 lastKeyCode = keyCode;
                 //Debug.Log((int)c);
