@@ -1,0 +1,35 @@
+<EmbeddedExpressionsExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
+                            ClickCount="t:int">
+
+  <Group Spacing="10">
+    
+    <Group Orientation="Horizontal" Spacing="5">
+      <Region Size="50" BackgroundColor="Blue">
+        <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 0" />
+        <Label Text="> 0" AutoSize="True" />
+      </Region>
+      <Region Size="50" BackgroundColor="Blue">
+        <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 5" />
+        <Label Text="> 5" AutoSize="True" />
+      </Region>
+      <Region Size="50" BackgroundColor="Blue">
+        <Region BackgroundColor="Yellow" IsVisible="$ {ClickCount} > 10" />
+        <Label Text="> 10" AutoSize="True" />
+      </Region>
+    </Group>
+
+    <Group Spacing="5">
+      <Group Orientation="Horizontal" Spacing="5"> 
+        <Button Text="Click Me" Click="$ ++ClickCount" />
+        <Button Text="Reset" Click="$ ClickCount = 0" />
+      </Group> 
+      <Label Text="Click count: {ClickCount}" AutoSize="True" FontColor="White" />
+      <Group Orientation="Horizontal">
+        <Label Text="{ClickCount}^2 = " AutoSize="True" FontColor="White" /> 
+        <Label Text="$ Math.Pow({ClickCount}, 2).ToString()" AutoSize="True" FontColor="White" />
+      </Group>
+    </Group>
+
+  </Group>
+
+</EmbeddedExpressionsExample>

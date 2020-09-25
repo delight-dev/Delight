@@ -54,11 +54,11 @@ namespace Delight.Editor
                 EditorPrefs.SetBool("Delight_BuildAssetBundles", newBuildAssetBundles);
             }
 
-            var newDeployBuild = EditorGUILayout.Toggle("Rivality Deploy Build", EditorPrefs.GetBool("Delight_DeployBuild"));
-            if (newDeployBuild != deployBuild)
-            {
-                EditorPrefs.SetBool("Delight_DeployBuild", newDeployBuild);
-            }
+            //var newDeployBuild = EditorGUILayout.Toggle("Rivality Deploy Build", EditorPrefs.GetBool("Delight_DeployBuild"));
+            //if (newDeployBuild != deployBuild)
+            //{
+            //    EditorPrefs.SetBool("Delight_DeployBuild", newDeployBuild);
+            //}
 
             bool disableAutoGenerateViews = EditorPrefs.GetBool("Delight_DisableAutoGenerateViews");
             var newDisableAutoGenerateViews = EditorGUILayout.Toggle("Disable view autogen", disableAutoGenerateViews);
@@ -85,8 +85,20 @@ namespace Delight.Editor
             GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
             if (GUILayout.Button(openDesigner))
             {
-                EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
-                EditorApplication.isPlaying = true;
+                // check if designer is activated
+                var config = MasterConfig.GetInstance();
+                if (!config.Modules.Contains("TextMeshPro"))
+                {
+                    // open window explaining designer need to be activated
+                    string message = "The designer need to be activated by enabling TextMeshPro in the project. https://delight-dev.github.io/Tutorials/Designer.html#enabling-the-designer";
+                    Application.OpenURL("https://delight-dev.github.io/Tutorials/Designer.html#enabling-the-designer");
+                    EditorUtility.DisplayDialog("Enabling the designer", message, "Ok");
+                }
+                else
+                {
+                    EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
+                    EditorApplication.isPlaying = true;
+                }
             }
 
             // TODO cleanup

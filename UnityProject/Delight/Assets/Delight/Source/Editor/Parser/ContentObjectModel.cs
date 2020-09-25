@@ -1129,6 +1129,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(5, AsReference = true)]
         public StyleDeclaration StyleDeclaration;
 
+        [ProtoMember(6)]
+        public bool HasEmbeddedCode;
+
         /// <summary>
         /// Indicates if property assignment is for a view object attribute rather than property. 
         /// </summary>
@@ -1184,7 +1187,7 @@ namespace Delight.Editor.Parser
         public BindingType BindingType;
 
         [ProtoMember(4)]
-        public string TransformMethod;
+        public string TransformExpression;
 
         [ProtoMember(5)]
         public List<PropertyBindingSource> Sources = new List<PropertyBindingSource>();
@@ -1209,6 +1212,8 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(12)]
         public bool BindingNeedUpdate;
+
+        public PropertyDeclarationInfo PropertyDeclarationInfo;
     }
 
     /// <summary>
@@ -1261,6 +1266,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(9, AsReference = true)]
         public ViewDeclaration ParentDeclaration;
+
+        [ProtoMember(10)]
+        public int LinePosition;
 
         #endregion
 
@@ -1426,6 +1434,9 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(8, AsReference = true)]
         public List<ModelObjectData> Data;
+
+        [ProtoMember(9)]
+        public string DerivedFrom;
 
         public ModelObject()
         {

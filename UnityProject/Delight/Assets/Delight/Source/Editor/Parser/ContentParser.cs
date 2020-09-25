@@ -142,8 +142,26 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void UpdateProjectSettings()
         {
-            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(
-                BuildTargetGroup.Standalone);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Standalone);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.PS4);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Android);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.iOS);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.tvOS);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.XboxOne);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WSA);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Lumin);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Stadia);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.Switch);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WebGL);
+            UpdateTargetSettingsForTarget(BuildTargetGroup.WSA);
+        }
+
+        /// <summary>
+        /// Updates project settings for specified build target.
+        /// </summary>
+        private static void UpdateTargetSettingsForTarget(BuildTargetGroup targetGroup)
+        {
+            string symbols = PlayerSettings.GetScriptingDefineSymbolsForGroup(targetGroup);
             var config = MasterConfig.GetInstance();
             var newModules = config.Modules.Select(x => String.Format("DELIGHT_MODULE_{0}", x.ToUpper()));
 
@@ -173,7 +191,7 @@ namespace Delight.Editor.Parser
 
             if (symbolsNeedUpdate)
             {
-                PlayerSettings.SetScriptingDefineSymbolsForGroup(BuildTargetGroup.Standalone, symbols);
+                PlayerSettings.SetScriptingDefineSymbolsForGroup(targetGroup, symbols);
             }
         }
 
@@ -804,6 +822,7 @@ namespace Delight.Editor.Parser
                 var viewDeclaration = new ViewDeclaration();
                 viewDeclaration.ViewName = GetActualViewName(viewElement.Name.LocalName);
                 viewDeclaration.LineNumber = viewElement.GetLineNumber();
+                viewDeclaration.LinePosition = viewElement.GetLinePosition();
                 viewDeclaration.ParentDeclaration = parentViewDeclaration;
 
                 // load the view to make sure it's in our content object model
@@ -1233,7 +1252,13 @@ namespace Delight.Editor.Parser
                 return propertyExpressions;
             }
 
-            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber(), AttachedNeedUpdate = attachedNeedUpdate });
+            bool hasEmbeddedCode = attributeValue.StartsWith("$");
+            if (hasEmbeddedCode)
+            {
+                attributeValue = GetExpression(attributeValue);
+            }
+
+            propertyExpressions.Add(new PropertyAssignment { PropertyName = propertyName, StateName = stateName, PropertyValue = attributeValue, LineNumber = element.GetLineNumber(), AttachedNeedUpdate = attachedNeedUpdate, HasEmbeddedCode = hasEmbeddedCode });
             return propertyExpressions;
         }
 
@@ -1279,31 +1304,8 @@ namespace Delight.Editor.Parser
             propertyBinding.PropertyBindingString = propertyBindingString;
             propertyBinding.LineNumber = element.GetLineNumber();
 
-            if (trimmedBinding.StartsWith("$"))
-            {
-                // transformed multi-binding
-                string[] bindings = trimmedBinding.Split(BindingDelimiterChars, StringSplitOptions.RemoveEmptyEntries);
-                if (bindings.Length < 1)
-                {
-                    ConsoleLogger.LogParseError(path, propertyBinding.LineNumber,
-                        String.Format("#Delight# Improperly formatted property binding {0}=\"{1}\".", propertyName, propertyBindingString));
-                    return null;
-                }
-
-                propertyBinding.BindingType = BindingType.MultiBindingTransform;
-                propertyBinding.TransformMethod = bindings[0];
-
-                foreach (var bindingSourceString in bindings.Skip(1))
-                {
-                    var bindingSource = ParseBindingSource(bindingSourceString);
-                    propertyBinding.Sources.Add(bindingSource);
-                }
-
-                return propertyBinding;
-            }
-
             // check for bindings in string
-            string formatString = String.Empty;
+            string expression = String.Empty;
             List<Match> matches = new List<Match>();
             foreach (Match match in _bindingRegex.Matches(propertyBindingString))
             {
@@ -1318,20 +1320,32 @@ namespace Delight.Editor.Parser
                 return null;
             }
 
-            // is the binding a format string?
+            // is the binding a format string or binding expression?
             if (matches.Count > 1 || (matches[0].Value.Length != propertyBindingString.Length) || !String.IsNullOrEmpty(matches[0].Groups["format"].Value))
             {
                 // yes. 
                 int matchCount = 0;
-                formatString = _bindingRegex.Replace(propertyBindingString, x =>
+                expression = _bindingRegex.Replace(propertyBindingString, x =>
                 {
                     string matchCountString = matchCount.ToString();
                     ++matchCount;
                     return String.Format("{{{0}{1}}}", matchCountString, x.Groups["format"]);
                 });
 
-                propertyBinding.BindingType = BindingType.MultiBindingFormatString;
-                propertyBinding.FormatString = formatString;
+                // is the binding a transform expression?
+                if (propertyBindingString.StartsWith("$"))
+                {
+                    // yes. parse transformed multi-binding with evaluated expressions, e.g. {BindingA} > {BindingB}, Math.Abs({BindingA} - {BindingB} + 10) etc. 
+                    expression = GetExpression(expression);
+                    propertyBinding.TransformExpression = expression;
+                    propertyBinding.BindingType = BindingType.MultiBindingTransform;
+                }
+                else
+                {
+                    // no. it's a format string binding
+                    propertyBinding.BindingType = BindingType.MultiBindingFormatString;
+                    propertyBinding.FormatString = expression;
+                }
             }
 
             // parse view fields for binding source(s)
@@ -1345,6 +1359,19 @@ namespace Delight.Editor.Parser
             }
 
             return propertyBinding;
+        }
+
+        /// <summary>
+        /// Gets expression from property value.
+        /// </summary>
+        public static string GetExpression(string propertyValue)
+        {
+            // remove '$' prefix
+            var expression = propertyValue.Substring(1).Trim();
+
+            // replace single quotes with double quotes, replace AND with &&, replace OR with ||
+            expression = expression.Replace('\'', '"').Replace(" AND ", " && ").Replace(" OR ", " || ");
+            return expression;
         }
 
         /// <summary>
@@ -1400,7 +1427,7 @@ namespace Delight.Editor.Parser
             int startBracketIndex = value.IndexOf('{');
             if (startBracketIndex >= 0)
             {
-                return value.IndexOf('}') > startBracketIndex;
+                return _bindingRegex.IsMatch(value);
             }
             else
             {
@@ -1627,9 +1654,24 @@ namespace Delight.Editor.Parser
 
                     // parse model object declaration
                     var modelName = line.Substring(1).Trim();
+
+                    // parse derived from if specified
+                    string derivedFrom = null;
+                    if (modelName.Contains(":"))
+                    {
+                        var classArr = modelName.Split(':');
+                        modelName = classArr[0].Trim();
+                        if (classArr[1]?.Trim().Length > 0)
+                        {
+                            derivedFrom = classArr[1].Trim();
+                        }
+                    }
+
                     newModelObject = _contentObjectModel.LoadModelObject(modelName);
                     newModelObject.Clear();
                     newModelObject.SchemaFilePath = path;
+                    newModelObject.DerivedFrom = derivedFrom;
+                    newModelObject.NeedUpdate = true;
                     inModelDeclaration = true;
                     continue;
                 }

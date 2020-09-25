@@ -31,6 +31,10 @@ namespace Delight
         protected List<StateAnimation> _stateAnimations;
         protected LayoutRoot _layoutRoot;
 
+#if UNITY_EDITOR
+        public Dictionary<string, ContentTemplateData> TemplateItems { get; set; }
+#endif
+
         #endregion
 
         #region Constructor
@@ -497,7 +501,7 @@ namespace Delight
             // update bindings to target object
             foreach (var binding in _bindings)
             {
-                if (binding.Target.Objects.Contains(targetObject))
+                if (binding.HasTarget(targetObject))
                 {
                     binding.UpdateBinding();
                 }
@@ -725,7 +729,7 @@ namespace Delight
 
                             if (animatedProperties == null)
                             {
-                                animatedProperties = new List<DependencyProperty>();                                
+                                animatedProperties = new List<DependencyProperty>();
                             }
                             animatedProperties.Add(animator.Property);
                         }

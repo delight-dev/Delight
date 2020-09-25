@@ -1,28 +1,28 @@
 <XmlEditor xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" BasedOn="UIImageView" IsLocked="True"
            BackgroundColor="#fbfbfb" EnableScriptEvents="True" Module="TextMeshPro" XmlText="t:string" IsFocused="t:bool = True"
-           Edit="t:Action" AutoCompleteOptions="t:AutoCompleteOptionData" SelectedAutoCompleteOption="t:AutoCompleteOption"
-           DesignerViews="t:DesignerViewData" IsEditorView="True" IsReadOnly="t:bool = False">
+           Edit="t:Action" SelectViewAtLine="t:Action" AutoCompleteOptions="t:AutoCompleteOptionData" SelectedAutoCompleteOption="t:AutoCompleteOption"
+           DesignerViews="t:DesignerViewData" IsEditorView="True" IsReadOnly="t:bool = False"> 
   <ScrollableRegion Id="ScrollableRegion" Width="100%" Height="100%" ContentAlignment="TopLeft" HasInertia="False" ScrollBounds="Clamped" ScrollEnabled="False"
                     HorizontalScrollbarBackgroundColor="White" VerticalScrollbarBackgroundColor="White" HorizontalScrollbarBreadth="15" VerticalScrollbarBreadth="15"
                     HorizontalScrollbarBarColor="White" VerticalScrollbarBarColor="White"
-                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf"
+                    HorizontalScrollbarHandleColor="#bfbfbf" VerticalScrollbarHandleColor="#bfbfbf" 
                     HorizontalScrollbarBarMargin="3,5,3,5" VerticalScrollbarBarMargin="5,3,5,3"
                     UnblockDragEventsInChildren="False">
     <Region Id="XmlEditRegion" Width="500" Height="500" Alignment="TopLeft">
 
       <Region Id="XmlTextRegion" Width="100%" Height="100%" Margin="60,0,0,0">
         <CanvasRenderer Id="TextSelection" Width="2000" Height="10000" Alignment="TopLeft" />
-        <Label Id="XmlTextLabel" Width="2000" Height="10000" Font="Inconsolata-Regular SDF" FontSize="20"
+        <Label Id="XmlTextLabel" Width="2000" Height="10000" Font="Inconsolata-Regular SDF" FontSize="18" 
                TextAlignment="TopLeft" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft" />
-        <Label Id="Caret" Text="|" Width="20" Height="20" Font="Inconsolata-Regular SDF" FontSize="20" FontColor="Black" Offset="-5,0,0,0"
+        <Label Id="Caret" Text="|" Width="20" Height="20" Font="Inconsolata-Regular SDF" FontSize="18" FontColor="Black" Offset="-5,0,0,0"
                TextAlignment="TopLeft" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft" />
 
-        <Canvas SortingOrder="1" OverrideSorting="True">
+        <Canvas SortingOrder="1" OverrideSorting="True"> 
 
           <!-- Auto-complete -->
           <Region Id="AutoCompleteBox" Width="300" Height="150" Alignment="TopLeft" BackgroundColor="#E2E2E2" IsVisible="False">
             <List Id="AutoCompleteOptionsList" Items="{option in AutoCompleteOptions}" IsScrollable="True" Width="100%" Height="150" BackgroundColor="#E2E2E2"
-                  SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True" TemplateSelector="AutoCompleteOptionSelector">
+                  SelectedItem="{SelectedAutoCompleteOption}" IsVirtualized="True" TemplateSelector="AutoCompleteOptionSelector"> 
 
               <!--Selected-BackgroundColor="#C6C6C6"-->
               <ListItem Id="DefaultOptionItem" Width="100%" Height="20" BackgroundColor="#E2E2E2" Selected-BackgroundColor="#C8C8C8" Click="AutoCompleteOptionSelected(option)">
@@ -35,12 +35,6 @@
                    Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Margin="25,0,0,0" TextAlignment="TopLeft" />
               </ListItem>
             </List>
-
-            <!-- Label for debugging -->
-            <Label Id="DebugTextLabel" Width="100%" Height="21" Alignment="TopLeft" RichText="false" OverflowMode="Ellipsis" EnableWordWrapping="False"
-                   Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="200,0,0,0" TextAlignment="TopLeft"
-                   IsVisible="False" />
-            <!-- TODO cleanup -->
           </Region>
 
           <!-- Tooltip -->
@@ -55,12 +49,17 @@
       </Region>
 
       <Region Id="XmlEditLeftMargin" Width="50" Height="21" Alignment="TopLeft" Offset="0" Margin="0" BackgroundColor="#fbfbfb">
-        <Label Id="LineNumbersLabel" Width="50" Height="21" Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#888888"
+        <Label Id="LineNumbersLabel" Width="50" Height="21" Font="Inconsolata-Regular SDF" FontSize="18" FontColor="#888888"
                TextAlignment="TopRight" RichText="false" OverflowMode="Overflow" EnableWordWrapping="False" Alignment="TopLeft" />
         <Region Id="LineNumbersRightBorder" BackgroundColor="#fbfbfb" Width="10" Alignment="Right" Offset="10,0,0,0" />
       </Region>
 
     </Region>
   </ScrollableRegion>
+
+  <!-- Label for debugging -->
+  <Label Id="DebugTextLabel" AutoSize="True" Height="21" Alignment="TopRight" RichText="False"
+         Font="Inconsolata-Regular SDF" FontSize="20" FontColor="#5B5B5B" Offset="0,0,0,20" TextAlignment="TopLeft"
+         IsActive="False" /> 
 
 </XmlEditor>

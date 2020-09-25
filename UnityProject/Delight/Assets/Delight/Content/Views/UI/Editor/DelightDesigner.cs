@@ -14,9 +14,15 @@ using System.Text;
 using System.Xml.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Delight;
+using UnityScript.Steps;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.CodeAnalysis.Scripting;
+using Microsoft.CodeAnalysis;
 #endif
 #endregion
 
@@ -29,11 +35,58 @@ namespace Delight
     {
         #region Fields
 
-        private UIView _displayedView;
+        private UIView _displayedViewInstance;
         private DesignerView _currentEditedView;
+        private DesignerView _currentDisplayedView;
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
-        private bool _readOnlyOverride; 
+        private bool _readOnlyOverride;
+        private Dictionary<Type, Dictionary<string, Script<object>>> _cachedScripts = new Dictionary<Type, Dictionary<string, Script<object>>>();
+        private List<UIView> _selectedViews = new List<UIView>();
+        private List<UIView> _raycastedViews = new List<UIView>();
+        private int _selectedRaycastedIndex = 0;
+        private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
+        private bool _viewLockEnabled = false;
+
+        public EventSystem _eventSystem;
+        public EventSystem EventSystem
+        {
+            get
+            {
+                if (_eventSystem == null)
+                {
+                    _eventSystem = GameObject.FindObjectOfType<EventSystem>();
+                }
+
+                return _eventSystem;
+            }
+        }
+
+        public string LastOpenedViewEditorPref
+        {
+            get
+            {
+                return EditorPrefs.GetString("Delight_DesignerLastOpenedView", string.Empty);
+            }
+            set
+            {
+                EditorPrefs.SetString("Delight_DesignerLastOpenedView", value);
+            }
+        }
+
+        public bool ShowReadOnlyViewsEditorPref
+        {
+            get
+            {
+                return EditorPrefs.GetBool("Delight_DesignerShowReadOnlyViews", false);
+            }
+            set
+            {
+                EditorPrefs.SetBool("Delight_DesignerShowReadOnlyViews", value);
+            }
+        }
+
+        public bool IsMaster = true;
 
         #endregion
 
@@ -46,8 +99,14 @@ namespace Delight
         {
             base.Update();
 
-            bool ctrlDown = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool ctrlDown = Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+
+            // F5 reparses the currently edited view
+            if (Input.GetKeyDown(KeyCode.F5))
+            {
+                ParseView();
+            }
 
             // F11 maximizes designer window in editor
             if (Input.GetKeyDown(KeyCode.F11))
@@ -91,21 +150,171 @@ namespace Delight
             {
                 SaveChanges();
             }
+
+            // Mouse click - selection logic for selecting views in the designer
+            if (Input.GetMouseButtonDown(0) &&
+                ScrollableContentRegion.ContainsMouse(Input.mousePosition) &&
+                _currentEditedView != null)
+            {
+                var pointerEventData = new PointerEventData(EventSystem);
+                pointerEventData.position = Input.mousePosition;
+
+                List<RaycastResult> results = new List<RaycastResult>();
+                EventSystem.RaycastAll(pointerEventData, results);
+                bool multiSelect = ctrlDown;
+                results.RemoveAll(x => x.gameObject.name == "SelectionIndicator"); // remove selection indicators from raycast
+
+                // get selected object
+                var selectedObject = results.Select(x => x.gameObject).FirstOrDefault(); // TODO here we might want to handle overlapping views
+                if (selectedObject != null)
+                {
+                    // find view with the selected game object
+                    var selectedView = ViewContentRegion.Find<UIView>(x => x.GameObject == selectedObject);
+                    while (selectedView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName)
+                    {
+                        selectedView = selectedView?.LayoutParent as UIView;
+                        if (selectedView == null)
+                            break;
+                    }
+
+                    if (selectedView != null)
+                    {
+                        _raycastedViews.Clear();
+                        if (multiSelect)
+                        {
+                            // multi-select
+                            if (_selectedViews.Contains(selectedView))
+                            {
+                                // deselect already selected view
+                                _selectedViews.Remove(selectedView);
+                            }
+                            else
+                            {
+                                // select new view
+                                _selectedViews.Add(selectedView);
+                            }
+                        }
+                        else
+                        {
+                            // regular select
+                            _selectedViews.Clear();
+                            _selectedViews.Add(selectedView);
+
+                            // add all parent views in hierarhcy as raycasted views
+                            _raycastedViews.Add(selectedView);
+                            var nextView = selectedView;
+                            while (nextView != _displayedViewInstance)
+                            {
+                                nextView = nextView.LayoutParent as UIView;
+                                if (nextView == null || (nextView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
+                                    nextView.GetType().Name != _currentEditedView.ViewTypeName))
+                                    break;
+
+                                _raycastedViews.Add(nextView);
+                            }
+                        }
+
+                        UpdateSelectedViews();
+                    }
+                    else if (!multiSelect)
+                    {
+                        ClearSelectedViews();
+                    }
+                }
+                else if (!multiSelect)
+                {
+                    ClearSelectedViews();
+                }
+            }
+
+            // CTRL+scroll wheel up/down traverses raycast selection hieararchy to easy e.g. select parent to clicked view
+            if (_selectedViews.Count == 1 && Input.mouseScrollDelta.y > 0 && ctrlDown)
+            {
+                if (_selectedRaycastedIndex > 0)
+                {
+                    --_selectedRaycastedIndex;
+                    _selectedViews.Clear();
+                    _selectedViews.Add(_raycastedViews[_selectedRaycastedIndex]);
+                    UpdateSelectedViews();
+                }
+            }
+            else if (_selectedViews.Count == 1 && Input.mouseScrollDelta.y < 0 && ctrlDown)
+            {
+                if (_selectedRaycastedIndex < _raycastedViews.Count() - 1)
+                {
+                    ++_selectedRaycastedIndex;
+                    _selectedViews.Clear();
+                    _selectedViews.Add(_raycastedViews[_selectedRaycastedIndex]);
+                    UpdateSelectedViews();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Updates selected views.
+        /// </summary>
+        private void UpdateSelectedViews(bool scrollToLastSelectedView = true)
+        {
+            var lastSelectedView = _selectedViews.LastOrDefault();
+            if (lastSelectedView != null)
+            {
+                Selection.activeObject = lastSelectedView.GameObject;
+                Selection.objects = _selectedViews.Select(x => x.GameObject).ToArray();
+                EditorGUIUtility.PingObject(lastSelectedView.GameObject);
+
+                //Debug.Log(String.Format("Selecting {0} ({1},{2})", lastSelectedView.GetType().Name, lastSelectedView.Template.LineNumber, lastSelectedView.Template.LinePosition));
+            }
+
+            // destroy selection indicators not in new list
+            foreach (var selectionIndicator in _selectionIndicators.ToList())
+            {
+                if (!_selectedViews.Contains(selectionIndicator.SelectedViewInfo.View))
+                {
+                    selectionIndicator.Destroy();
+                    _selectionIndicators.Remove(selectionIndicator);
+                }
+            }
+
+            // add selection indicators for selected views
+            _selectedViews.ForEach(x =>
+            {
+                if (_selectionIndicators.Any(y => y.SelectedViewInfo.View == x))
+                    return; // indicator already exist
+
+                var selectionIndicator = new SelectionIndicator(ViewContentRegion);
+                selectionIndicator.SelectedViewInfo = new SelectedViewInfo { View = x };
+                selectionIndicator.Load();
+                _selectionIndicators.Add(selectionIndicator);
+            });
+
+            // highlight selected views in the XML editor
+            XmlEditor.SetSelectedViews(_selectedViews, scrollToLastSelectedView);
+        }
+
+        /// <summary>
+        /// Clears selected views.
+        /// </summary>
+        public void ClearSelectedViews()
+        {
+            _selectedRaycastedIndex = 0;
+            _raycastedViews.Clear();
+            _selectedViews.Clear();
+            UpdateSelectedViews();
         }
 
         /// <summary>
         /// Opens the specified view in the designer.
         /// </summary>
-        private void OpenView(DesignerView designerViewAtCaret)
+        private void OpenView(DesignerView designerViewName)
         {
-            if (DisplayedDesignerViews.Contains(designerViewAtCaret))
+            if (DisplayedDesignerViews.Contains(designerViewName))
             {
-                DisplayedDesignerViews.Select(designerViewAtCaret);
+                DisplayedDesignerViews.Select(designerViewName);
             }
             else
             {
                 // open unlisted designer view
-                ViewSelected(designerViewAtCaret);
+                ViewSelected(designerViewName);
             }
         }
 
@@ -145,29 +354,125 @@ namespace Delight
 
             DesignerViews.AddRange(designerViews.OrderBy(x => x.Id));
             DisplayedDesignerViews.AddRange(designerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
+
+            DisplayReadOnlyViews = ShowReadOnlyViewsEditorPref;
+            OnDisplayReadOnlyViewsChanged();
         }
 
         /// <summary>
         /// Called when the user edits the current view.
         /// </summary>
-        public void OnEdit()
+        public void OnEdit(bool needReparsing)
         {
             if (_currentEditedView == null)
                 return;
 
             _currentEditedView.IsDirty = true;
-            if (AutoParse)
+            if (AutoParse && needReparsing)
             {
                 ParseView();
             }
         }
 
         /// <summary>
+        /// Toogles the view lock.
+        /// </summary>
+        public async void ToggleViewLock(bool toggleValue)
+        {
+            if (_currentEditedView == null)
+                return;
+
+            // when view lock is enabled the user can switch to edit other views and the current view is always displayed
+            _viewLockEnabled = toggleValue;
+            _currentDisplayedView.IsDisplayLocked = false;
+            _currentDisplayedView = _currentEditedView;
+            _currentDisplayedView.IsDisplayLocked = _viewLockEnabled;
+
+            if (_viewLockEnabled)
+            {
+                _currentDisplayedView.XmlText = XmlEditor.GetXmlText();
+                ParseView();
+            }
+            else
+            {
+                await DisplayView(_currentDisplayedView); // if lock disabled then display currently selected view
+
+                // center on view
+                ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
+                SetScale(Vector3.one);
+            }
+        }
+
+        /// <summary>
+        /// Called when the user selects a view in the XML editor. 
+        /// </summary>
+        public void OnSelectViewAtLine(int line)
+        {
+            OnSelectViewsAtLine(new List<int> { line });
+        }
+
+        /// <summary>
+        /// Called when the user selects a view in the XML editor. 
+        /// </summary>
+        public void OnSelectViewsAtLine(List<int> lines)
+        {
+            bool foundView = false;
+            foreach (var line in lines)
+            {
+                var view = ViewContentRegion.Find<UIView>(x =>
+                {
+                    if (x?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
+                        x.GetType().Name != _currentEditedView.ViewTypeName)
+                        return false;
+
+                    int viewLineNumber = Math.Max(x.Template.LineNumber - 1, 0);
+                    if (viewLineNumber != line)
+                        return false;
+
+                    if (_selectedViews.Contains(x))
+                    {
+                        _selectedViews.Remove(x);
+                    }
+                    else
+                    {
+                        _selectedViews.Add(x);
+                    }
+                    return true;
+                });
+
+                if (view != null)
+                {
+                    foundView = true;
+                }
+            }
+
+            if (foundView)
+            {
+                UpdateSelectedViews(false);
+            }
+        }
+
+        /// <summary>
         /// Called after the view has been loaded.
         /// </summary>
-        protected override void AfterLoad()
+        protected override async void AfterLoad()
         {
             base.AfterLoad();
+
+            if (!IsMaster)
+                return;
+
+            // open last opened designer view on startup
+            var lastOpenedViewEditorPref = LastOpenedViewEditorPref;
+            if (!String.IsNullOrEmpty(lastOpenedViewEditorPref))
+            {
+                var lastOpenedDesignerView = DesignerViews.FirstOrDefault(x => x.Name == lastOpenedViewEditorPref);
+                if (lastOpenedDesignerView != null)
+                {
+                    await new WaitForSeconds(0.0001f); // bugfix with syntax highlighting not being initialized
+                    OpenView(lastOpenedDesignerView);
+                }
+            }
         }
 
         /// <summary>
@@ -187,32 +492,20 @@ namespace Delight
         /// </summary>
         public async void ViewSelected(DesignerView designerView)
         {
+            ClearSelectedViews();
             UpdateCurrentEditedViewXml();
-
-            // clear any existing displayed views
-            ViewContentRegion.DestroyChildren();
 
             _lastOpenView = _currentEditedView;
             _currentEditedView = designerView;
+            XmlEditorRegion.IsVisible = true;
+            DisplayRegion.IsVisible = true;
 
+            // change display if editor is readonly
+            UpdateXmlEditorReadonly();
+
+            // set editor XML text
             if (!designerView.IsRuntimeParsed)
             {
-                _displayedView = CreateView(designerView.ViewTypeName, this, ViewContentRegion);
-                if (_displayedView == null)
-                {
-                    return;
-                }
-
-                var sw2 = System.Diagnostics.Stopwatch.StartNew();
-
-                await _displayedView?.LoadAsync();
-                _displayedView?.PrepareForDesigner();
-
-                sw2.Stop();
-
-                // uncomment to log loading time 
-                //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
-
                 // load XML into the editor
                 if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
                 {
@@ -223,7 +516,7 @@ namespace Delight
                     var path = designerView.FilePath;
                     var xmlText = File.ReadAllText(path);
 
-                    xmlText = StripNamespaceAndSchema(xmlText, path);
+                    xmlText = StripNamespaceAndSchema(xmlText);
                     XmlEditor.XmlText = xmlText;
                 }
             }
@@ -231,202 +524,70 @@ namespace Delight
             {
                 // create runtime parsed view
                 XmlEditor.XmlText = _currentEditedView.XmlText;
-                ParseView();
             }
+
+            if (_viewLockEnabled)
+                return; // if view lock we're done here
+
+            await DisplayView(designerView);
 
             // center on view
             ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
             SetScale(Vector3.one);
-
-            XmlEditorRegion.IsVisible = true;
-
-            // change display if editor is readonly
-            UpdateXmlEditorReadonly();
         }
 
         /// <summary>
-        /// Updates the xml editor based on read-only mode. 
+        /// Instantiates designer view in the display region.
         /// </summary>
-        public void UpdateXmlEditorReadonly()
+        private async Task DisplayView(DesignerView designerView)
         {
-            bool isReadOnly = _displayedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
-            var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
-            XmlEditor.IsReadOnly = isReadOnly;
-            XmlEditor.BackgroundColor = color;
-            XmlEditor.XmlEditLeftMargin.BackgroundColor = color;
-            XmlEditor.LineNumbersRightBorder.BackgroundColor = color;
-            XmlEditor.ScrollableRegion.HorizontalScrollbarBackgroundColor = color;
-            XmlEditor.ScrollableRegion.VerticalScrollbarBackgroundColor = color;
-            XmlEditorRegion.BackgroundColor = color;
-            LockIcon.IsActive = isReadOnly;
-        }
-
-        /// <summary>
-        /// Strips namespace and schema from XML root.
-        /// </summary>
-        private string StripNamespaceAndSchema(string xmlText, string path)
-        {
-            // strip namespace and schema elements from XML root
-            xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
-            xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
-
-            int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-            string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
-            int directoryDepth = 1 + p1.Count(x => x == '/');
-            var schemaElement = " xsi:schemaLocation=\"Delight";
-
-            int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
-            if (indexOfSchemaElement > 0)
-            {
-                xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
-            }
-
-            return xmlText;
-        }
-
-        /// <summary>
-        /// Logs parse errors to the designer console. 
-        /// </summary>
-        public static void LogParseErrorToDesignerConsole(string file, int line, string message)
-        {
-            Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
-        }
-
-        /// <summary>
-        /// Parses run-time view XML and generates the view in the designer.
-        /// </summary>
-        public async void ParseView()
-        {
-#if UNITY_EDITOR            
-            if (_currentEditedView == null)
-                return;
-
-            _currentEditedView.IsRuntimeParsed = true;
-
-            // attempt to parse the xml
-            string xml = XmlEditor.GetXmlText();
-            XElement rootXmlElement = null;
-            try
-            {
-                rootXmlElement = XElement.Parse(xml, LoadOptions.SetLineInfo);
-
-                // check if root element has been renamed
-                // if root element has changed, then rename the view. 
-                var viewName = rootXmlElement.Name.LocalName;
-                if (!viewName.IEquals(_currentEditedView.Name))
-                {
-                    var changedView = _currentEditedView;
-
-                    // check if name already exist
-                    int i = 1;
-                    var name = viewName;
-                    bool renameThisViewXml = false;
-                    while (true)
-                    {
-                        if (!DesignerViews.Any(x => x.Name == viewName))
-                        {
-                            break;
-                        }
-
-                        renameThisViewXml = true;
-                        viewName = name + i;
-                        ++i;
-                    }
-
-                    // rename view
-                    var oldViewName = changedView.Name;
-                    changedView.Name = viewName;
-                    changedView.IsRenamed = true;
-                    if (String.IsNullOrEmpty(changedView.OriginalName))
-                    {
-                        changedView.OriginalName = oldViewName;
-                    }
-
-                    // update all references to the view 
-                    foreach (var view in DesignerViews)
-                    {
-                        if (view == changedView && !renameThisViewXml)
-                            continue;
-
-                        var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
-                            File.ReadAllText(view.FilePath);
-
-                        // see if the view references the old view and update the xml
-                        // the regex pattern below matches start/end tags with the specified view name
-                        bool foundMatch = false;
-                        var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
-                        var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
-                        {
-                            foundMatch = true;
-                            return viewName;
-                        });
-
-                        if (foundMatch)
-                        {
-                            // update XML and add to list of changed views
-                            replacedXml = StripNamespaceAndSchema(replacedXml, view.FilePath);
-
-                            view.XmlText = replacedXml;
-                            view.IsDirty = true;
-                            view.IsRuntimeParsed = true;
-
-                            if (view == changedView)
-                            {
-                                // update current editor XML
-                                XmlEditor.XmlText = view.XmlText;
-                            }
-                        }
-                    }
-                }
-
-            }
-            catch (Exception e)
-            {
-                // get which line error occurred on from exception message
-                int line = 1;
-                int indexOfLine = e.Message.IndexOf("Line");
-                if (indexOfLine > 0)
-                {
-                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
-                    int indexOfComma = msg.IndexOf(",");
-
-                    // get lineinfo
-                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
-                    {
-                        line = 1;
-                    }
-                }
-
-                LogParseErrorToDesignerConsole(_currentEditedView.FilePath, line,
-                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
-                return;
-            }
+            _currentDisplayedView = designerView;
+            LastOpenedViewEditorPref = designerView.Name;
 
             try
             {
                 ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+                var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
-                // create view object
-                var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
-                _currentEditedView.ViewObject = viewObject;
+                UIView view = null;
+                if (!_currentDisplayedView.IsRuntimeParsed)
+                {
+                    view = CreateView(_currentDisplayedView.ViewTypeName, this, ViewContentRegion);
+                }
+                else
+                {
+                    view = InstantiateRuntimeView(_currentDisplayedView.ViewObject, this, ViewContentRegion,
+                        _currentEditedView.IsNew, null, _currentEditedView);
+                }
 
-                // instantiate view
-                var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion, _currentEditedView.IsNew,
-                    null, _currentEditedView);
                 if (view == null)
                     return;
 
-                // load and present view
+                if (view.GetType() == typeof(DelightDesigner))
+                {
+                    (view as DelightDesigner).IsMaster = false;
+                }
+
                 await view?.LoadAsync();
                 view?.PrepareForDesigner();
 
+                sw2.Stop();
+
                 // destroy previous view
-                if (_displayedView != null)
+                if (_displayedViewInstance != null)
                 {
-                    _displayedView.Destroy();
+                    _displayedViewInstance.Destroy();
                 }
 
-                _displayedView = view;
+                _displayedViewInstance = view;
+
+                // attempt to reselect currently selected views
+                var selectedViews = _selectedViews.ToList();
+                _selectedViews.Clear();
+                OnSelectViewsAtLine(XmlEditor.SelectedLines);
+
+                // uncomment to log loading time 
+                //Debug.Log(String.Format("Loading view {0}: {1}", designerView.ViewTypeName, sw2.ElapsedMilliseconds));
             }
             catch (Exception e)
             {
@@ -457,7 +618,126 @@ namespace Delight
             {
                 ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
             }
-#endif
+        }
+
+        /// <summary>
+        /// Updates the xml editor based on read-only mode. 
+        /// </summary>
+        public void UpdateXmlEditorReadonly()
+        {
+            bool isReadOnly = _currentEditedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
+            var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
+            XmlEditor.IsReadOnly = isReadOnly;
+            XmlEditor.BackgroundColor = color;
+            XmlEditor.XmlEditLeftMargin.BackgroundColor = color;
+            XmlEditor.LineNumbersRightBorder.BackgroundColor = color;
+            XmlEditor.ScrollableRegion.HorizontalScrollbarBackgroundColor = color;
+            XmlEditor.ScrollableRegion.VerticalScrollbarBackgroundColor = color;
+            XmlEditorRegion.BackgroundColor = color;
+            LockIcon.IsActive = isReadOnly;
+        }
+
+        /// <summary>
+        /// Strips namespace and schema from XML root.
+        /// </summary>
+        private string StripNamespaceAndSchema(string xmlText)
+        {
+            // strip namespace and schema elements from XML root
+            xmlText = xmlText.Replace(" xmlns=\"Delight\"", string.Empty);
+            xmlText = xmlText.Replace(" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"", string.Empty);
+            var schemaElement = " xsi:schemaLocation=\"Delight";
+
+            int indexOfSchemaElement = xmlText.IndexOf(schemaElement);
+            if (indexOfSchemaElement > 0)
+            {
+                xmlText = xmlText.Remove(indexOfSchemaElement, (1 + xmlText.IndexOf("\"", indexOfSchemaElement + schemaElement.Length)) - indexOfSchemaElement);
+            }
+
+            return xmlText;
+        }
+
+        /// <summary>
+        /// Logs parse errors to the designer console. 
+        /// </summary>
+        public static void LogParseErrorToDesignerConsole(string file, int line, string message)
+        {
+            // TODO implement designer console, for now log to unity console
+            Debug.LogException(new XmlParseError(message, String.Format("Delight:XmlError() (at {0}:{1})", file, line)));
+        }
+
+        /// <summary>
+        /// Parses run-time view XML and generates the view in the designer.
+        /// </summary>
+        public async void ParseView()
+        {
+            if (_currentEditedView == null)
+                return;
+
+            _currentEditedView.IsRuntimeParsed = true;
+
+            // attempt to parse the xml
+            string xml = XmlEditor.GetXmlText();
+            XElement rootXmlElement = null;
+            try
+            {
+                rootXmlElement = XElement.Parse(xml, LoadOptions.SetLineInfo);
+            }
+            catch (Exception e)
+            {
+                // get which line error occurred on from exception message
+                int line = 1;
+                int indexOfLine = e.Message.IndexOf("Line");
+                if (indexOfLine > 0)
+                {
+                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
+                    int indexOfComma = msg.IndexOf(",");
+
+                    // get lineinfo
+                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
+                    {
+                        line = 1;
+                    }
+                }
+
+                LogParseErrorToDesignerConsole(_currentEditedView.FilePath, line,
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+                return;
+            }
+
+            // parse view XML into view object
+            ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
+            try
+            {
+                var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
+                _currentEditedView.ViewObject = viewObject;
+
+                if (_currentEditedView != _currentDisplayedView)
+                {
+                    // even if view isn't displayed we need to instantiate view to update data templates
+                    var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion,
+                        _currentEditedView.IsNew, null, _currentEditedView);
+                    if (view != null)
+                    {
+                        view.Destroy();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                    String.Format("#Delight# Error parsing view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
+                ConsoleLogger.LogException(e);
+            }
+            finally
+            {
+                ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
+            }
+
+            // parse successful
+            XmlEditor.OnParseSuccessful();
+
+            // display view
+            await DisplayView(_currentDisplayedView);
         }
 
         /// <summary>
@@ -466,13 +746,16 @@ namespace Delight
         public UIView InstantiateRuntimeView(ViewObject viewObject, View parent, View layoutParent, bool isNew, Template template = null,
             DesignerView inDesignerView = null)
         {
+            // ** important: changes in runtime instantiation of views need to be reflected in the view code generation in
+            // CodeGenerator.GenerateChildViewDeclarations() **
+
             // update view declarations and mapped properties
             CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
             CodeGenerator.UpdateMappedProperties(viewObject);
 
             // create the runtime data templates used when instantiating the view
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
-            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates);
+            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates, null);
 
             // get view type name
             var viewTypeName = viewObject.TypeName;
@@ -551,6 +834,9 @@ namespace Delight
             string parentViewType, ViewDeclaration parentViewDeclaration, List<ViewDeclaration> childViewDeclarations, string localParentId = null, int templateDepth = 0, List<TemplateItemInfo> templateItems = null, string firstTemplateChild = null,
             ContentTemplateData contentTemplateData = null)
         {
+            // ** important: changes in runtime instantiation of views need to be reflected in the view code generation in
+            // CodeGenerator.GenerateChildViewDeclarations() **
+
             bool inTemplate = templateDepth > 0;
             var contentObjectModel = ContentObjectModel.GetInstance();
             var instantiatedChildViews = new List<View>();
@@ -600,18 +886,58 @@ namespace Delight
 
                 // do we have action handlers?
                 var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
-                var actionAssignments = childPropertyAssignments.Where(x =>
-                {
-                    if (x.PropertyDeclarationInfo == null)
-                        return false;
-                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action;
-                });
+                var actionAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action);
                 if (actionAssignments.Any())
                 {
                     // yes. add initializer for action handlers
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
+                        var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+
+                        if (actionAssignment.HasEmbeddedCode)
+                        {
+                            // set runtime path to template items in expression
+                            actionValue = CodeGenerator.SetTemplateItemsInExpression(templateItems, actionValue, true);
+                            var script = GetCSharpScript(parent.GetType(), actionValue);
+
+                            // copy template items
+                            var templateItemsCopy = CopyTemplateItems(templateItems);
+                            Action runtimeAction = async () =>
+                            {
+                                try
+                                {
+                                    // set template items on parent before execution
+                                    parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                    foreach (var templateItem in templateItemsCopy)
+                                    {
+                                        if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                        {
+                                            parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                        }
+                                        else
+                                        {
+                                            parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                        }
+                                    }
+
+                                    // uses roslyn to evaluate script at runtime
+                                    await script.RunAsync(globals: parent);
+                                    parent.TemplateItems = null;
+                                }
+                                catch (Exception e)
+                                {
+                                    ConsoleLogger.LogParseError(fileName, actionAssignment.LineNumber,
+                                        String.Format("#Delight# Unable to execute view action expression <{0} {1}=\"{2}\">. Compilation error thrown: {3}",
+                                            childViewDeclaration.ViewName, actionAssignment.PropertyName, actionValue, e.InnerException.Message));
+                                }
+                            };
+
+                            // register runtime action handler
+                            action?.RegisterHandler(runtimeAction);
+                            continue;
+                        }
+
                         var actionHandlerName = actionValue;
 
                         // does the action have parameters?
@@ -654,9 +980,58 @@ namespace Delight
                             }
                         }
 
-                        // register action handler without parameters
-                        var action = childView.GetPropertyValue(actionAssignment.PropertyName) as ViewAction;
+                        // register action handler without parameters                        
                         action?.RegisterHandler(parent, actionHandlerName);
+                    }
+                }
+
+                // do we have assignments with embedded expressions?
+                var embeddedAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.HasEmbeddedCode && x.PropertyDeclarationInfo.Declaration.DeclarationType != PropertyDeclarationType.Action);
+                if (embeddedAssignments.Any())
+                {
+                    // generate assignment for expressions
+                    foreach (var embeddedAssignment in embeddedAssignments)
+                    {
+                        var expression = embeddedAssignment.PropertyValue;
+
+                        // set runtime path to template items in expression
+                        expression = CodeGenerator.SetTemplateItemsInExpression(templateItems, expression, true);
+                        var script = GetCSharpScript(parent.GetType(), expression);
+
+                        Func<Task<object>> transformMethod = async () =>
+                        {
+                            try
+                            {
+                                // set template items on parent before execution
+                                parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                foreach (var templateItem in templateItems)
+                                {
+                                    if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                    {
+                                        parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                    }
+                                    else
+                                    {
+                                        parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                    }
+                                }
+
+                                // uses roslyn to evaluate script at runtime
+                                var result = (await script.RunAsync(globals: parent)).ReturnValue;
+                                parent.TemplateItems = null;
+                                childView.SetPropertyValue(embeddedAssignment.PropertyName, result);
+                                return result;
+                            }
+                            catch (Exception e)
+                            {
+                                ConsoleLogger.LogParseError(fileName, embeddedAssignment.LineNumber,
+                                    String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"$ {2}\">. Compilation error thrown: {3}",
+                                        childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue, e.ToString()));
+                                return null;
+                            }
+                        };
+
+                        childView.Bindings.Add(new RuntimeBinding(transformMethod));
                     }
                 }
 
@@ -865,7 +1240,6 @@ namespace Delight
                             }
                         }
 
-
                         string targetProperty = string.Join(".", targetPath);
                         string convertedTargetProperty = targetProperty;
                         var bindingTargetPath = new RuntimeBindingPath(targetProperties, targetObjectGetters, false, null);
@@ -886,37 +1260,50 @@ namespace Delight
                         //    targetToSource = "{ }";
                         //}
 
-                        // create transform method
-                        Func<object[], object> transformMethod = null;
+                        // generate code for embedded C# code expressions
+                        Func<Task<object>> transformMethod = null;
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
-                            var transformMethodName = propertyBinding.TransformMethod;
-                            MethodInfo methodInfo = null;
-                            if (transformMethodName.IndexOf(".") >= 0)
+                            List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
+                            CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, true);
+
+                            // get expression to be evaluated at run-time
+                            var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
+                            var script = GetCSharpScript(parent.GetType(), expression);
+
+                            transformMethod = async () =>
                             {
-                                // if method name contains "." it refers to a static class
-                                var methodPath = transformMethodName.Split('.').ToList();
-                                if (methodPath.Count == 2)
+                                try
                                 {
-                                    var staticType = TypeHelper.GetType(methodPath[0], null, MasterConfig.GetInstance().Namespaces);
-                                    methodInfo = staticType?.GetType().GetMethod(transformMethodName);
-                                    if (methodInfo != null)
+                                    // set template items on parent before execution
+                                    parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                    foreach (var templateItem in templateItems)
                                     {
-                                        transformMethod = x => methodInfo.Invoke(null, x);
+                                        if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                        {
+                                            parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                        }
+                                        else
+                                        {
+                                            parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                        }
                                     }
+
+                                    // uses roslyn to evaluate script at runtime
+                                    var result = (await script.RunAsync(globals: parent)).ReturnValue;
+                                    parent.TemplateItems = null;
+                                    return result;
                                 }
-                            }
-                            else
-                            {
-                                methodInfo = parent.GetType().GetMethod(transformMethodName);
-                                if (methodInfo != null)
+                                catch (Exception e)
                                 {
-                                    transformMethod = x => methodInfo.Invoke(parent, x);
+                                    ConsoleLogger.LogParseError(fileName, propertyBinding.LineNumber,
+                                        String.Format("#Delight# Unable to execute binding expression <{0} {1}=\"{2}\">. Compilation error thrown: {3}",
+                                            childViewDeclaration.ViewName, propertyBinding.PropertyName, propertyBinding.PropertyBindingString, e.ToString()));
+                                    return null;
                                 }
-                            }
+                            };
                         }
 
-                        // TODO try add binding to first template child and see if it fixes binding issue
                         bool isTwoWay = propertyBinding.BindingType == BindingType.SingleBinding && propertyBinding.Sources.First().SourceTypes.HasFlag(BindingSourceTypes.TwoWay);
                         childView.Bindings.Add(new RuntimeBinding(bindingSources, bindingTargetPath, isTwoWay, propertyBinding.BindingType, transformMethod, propertyBinding.FormatString));
                     }
@@ -931,6 +1318,11 @@ namespace Delight
 
                         childView.ContentTemplates.Add(new ContentTemplate(x =>
                         {
+                            var tiVar = ti;
+                            if (tiVar != null)
+                            {
+                                ti.ContentTemplateData = x;
+                            }
                             var view = InstantiateRuntimeChildViews(idPath, dataTemplates, parent, childView, viewObject.FilePath, viewObject, parentViewType, childViewDeclaration, new List<ViewDeclaration> { templateChild }, childIdVar, childTemplateDepth, templateItems, templateChildId, x).FirstOrDefault();
                             if (view != null)
                             {
@@ -952,10 +1344,75 @@ namespace Delight
         }
 
         /// <summary>
+        /// Copies template items.
+        /// </summary>
+        private static List<TemplateItemInfo> CopyTemplateItems(List<TemplateItemInfo> templateItems)
+        {
+            var templateItemsCopy = new List<TemplateItemInfo>();
+            foreach (var templateItem in templateItems)
+            {
+                templateItemsCopy.Add(new TemplateItemInfo
+                {
+                    ContentTemplateData = new ContentTemplateData
+                    {
+                        Id = templateItem.ContentTemplateData.Id,
+                        Index = templateItem.ContentTemplateData.Index,
+                        ZeroIndex = templateItem.ContentTemplateData.ZeroIndex,
+                        Item = templateItem.ContentTemplateData.Item
+                    },
+                    ItemIdDeclaration = templateItem.ItemIdDeclaration,
+                    ItemType = templateItem.ItemType,
+                    ItemTypeName = templateItem.ItemTypeName,
+                    Name = templateItem.Name,
+                    VariableName = templateItem.VariableName,
+                });
+            }
+
+            return templateItemsCopy;
+        }
+
+        /// <summary>
+        /// Gets C# script that can be evaluated at runtime, using roslyn compiler.
+        /// </summary>
+        private Script<object> GetCSharpScript(Type parentType, string expression)
+        {
+            //Debug.Log("Creating script for expression: " + expression);
+
+            // cache scripts so they don't have to be re-compiled
+            if (!_cachedScripts.TryGetValue(parentType, out var scripts))
+            {
+                scripts = new Dictionary<string, Script<object>>();
+                _cachedScripts.Add(parentType, scripts);
+            }
+
+            if (!scripts.TryGetValue(expression, out var script))
+            {
+                script = CSharpScript.Create(expression, ScriptOptions.Default.WithImports(
+                "System",
+                "System.Collections.Generic",
+                "System.Runtime.CompilerServices",
+                "System.Linq",
+                "UnityEngine",
+                "UnityEngine.UI",
+                "Delight"
+                ).AddReferences(
+                    typeof(System.Linq.Enumerable).Assembly,
+                    typeof(UnityEngine.GameObject).Assembly,
+                    typeof(UnityEngine.UI.Button).Assembly,
+                    typeof(Delight.Button).Assembly
+                ),
+                globalsType: parentType);
+                scripts.Add(expression, script);
+            }
+
+            return script;
+        }
+
+        /// <summary>
         /// Creates runtime data templates.
         /// </summary>
         private void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
-            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates)
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates, ViewDeclaration internalViewDeclaration)
         {
             if (String.IsNullOrEmpty(idPath))
             {
@@ -1013,6 +1470,9 @@ namespace Delight
 #if UNITY_EDITOR
             // add name in editor so we can easy track which template is used where in the debugger
             dataTemplate.Name = idPath;
+
+            dataTemplate.LineNumber = internalViewDeclaration != null ? internalViewDeclaration.LineNumber : 0;
+            dataTemplate.LinePosition = internalViewDeclaration != null ? internalViewDeclaration.LinePosition : 0;
 #endif
             dataTemplates.Add(idPath, dataTemplate);
 
@@ -1041,7 +1501,7 @@ namespace Delight
 
                 CreateRuntimeDataTemplates(childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
                     isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName, dataTemplates);
+                    childPropertyAssignments, fileName, dataTemplates, declaration.Declaration);
             }
 
             // set sub-template properties            
@@ -1064,8 +1524,15 @@ namespace Delight
         /// </summary>
         public void OnScroll(DependencyObject sender, object eventArgs)
         {
-            if (_displayedView == null)
+            if (_displayedViewInstance == null)
                 return;
+
+            bool ctrlDown = Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+            bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+            if (ctrlDown || shiftDown)
+            {
+                return;
+            }
 
             PointerEventData pointerData = eventArgs as PointerEventData;
             bool zoomIn = pointerData.scrollDelta.x > 0 || pointerData.scrollDelta.y > 0;
@@ -1084,7 +1551,7 @@ namespace Delight
         /// </summary>
         public void SetScale(Vector3 scale)
         {
-            if (_displayedView == null)
+            if (_displayedViewInstance == null)
             {
                 ContentRegionCanvas.Scale = Vector3.one;
                 return;
@@ -1096,8 +1563,8 @@ namespace Delight
             var viewportWidth = ScrollableContentRegion.ActualWidth;
             var viewportHeight = ScrollableContentRegion.ActualHeight;
 
-            var width = _displayedView.OverrideWidth ?? _displayedView.Width ?? ElementSize.FromPercents(1);
-            var height = _displayedView.OverrideHeight ?? _displayedView.Height ?? ElementSize.FromPercents(1);
+            var width = _displayedViewInstance.OverrideWidth ?? _displayedViewInstance.Width ?? ElementSize.FromPercents(1);
+            var height = _displayedViewInstance.OverrideHeight ?? _displayedViewInstance.Height ?? ElementSize.FromPercents(1);
 
             float adjustedWidth = viewportWidth * Mathf.Max(scale.x, 1.0f);
             float adjustedHeight = viewportHeight * Mathf.Max(scale.y, 1.0f);
@@ -1124,11 +1591,21 @@ namespace Delight
         /// </summary>
         public void SaveChanges()
         {
+            if (!IsMaster)
+                return;
+
             var changedViews = DesignerViews.Where(x => x.IsDirty).ToList();
             UpdateCurrentEditedViewXml();
 
             if (!changedViews.Any())
                 return;
+
+            // see if any views are renamed and update references to it
+            for (int viewIndex = changedViews.Count() - 1; viewIndex >= 0; --viewIndex)
+            {
+                var changedView = changedViews[viewIndex];
+                UpdateViewsIfRenamed(changedView, changedViews);
+            }
 
             for (int viewIndex = 0; viewIndex < changedViews.Count(); ++viewIndex)
             {
@@ -1178,11 +1655,11 @@ namespace Delight
 
                     if (startIndex > 0)
                     {
-                        // TODO bug: if it's a scene we need to check ScenesFolder instead
-
                         var path = changedView.FilePath;
-                        int contentDirIndex = path.LastIndexOf(ContentParser.ViewsFolder);
-                        string p1 = path.Substring(contentDirIndex + ContentParser.ViewsFolder.Length);
+                        bool isScene = path.IndexOf(ContentParser.ScenesFolder) > 0;
+                        var contentFolder = isScene ? ContentParser.ScenesFolder : ContentParser.ViewsFolder;
+                        int contentDirIndex = path.LastIndexOf(contentFolder);
+                        string p1 = path.Substring(contentDirIndex + contentFolder.Length);
                         int directoryDepth = 1 + p1.Count(x => x == '/');
                         var ellipsis = string.Concat(Enumerable.Repeat("../", directoryDepth));
                         var namespaceAndSchema = String.Format(" xmlns=\"Delight\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"Delight {0}Delight.xsd\"", ellipsis);
@@ -1204,7 +1681,7 @@ namespace Delight
                     {
                         File.Move(Path.Combine(dir, oldViewName + ".xml"), newPath + ".xml");
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 
@@ -1212,7 +1689,7 @@ namespace Delight
                     {
                         File.Move(Path.Combine(dir, oldViewName + "_g.cs"), newPath + "_g.cs");
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 
@@ -1229,7 +1706,7 @@ namespace Delight
                             File.WriteAllText(csFile, csFileText);
                         }
                     }
-                    catch (Exception e)
+                    catch
                     {
                     }
 
@@ -1250,7 +1727,113 @@ namespace Delight
 
 #if UNITY_EDITOR
             AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
-#endif            
+#endif
+        }
+
+        /// <summary>
+        /// Checks if designer view has been renamed, and if so renames it and updates all references to it in other views.
+        /// </summary>
+        private void UpdateViewsIfRenamed(DesignerView changedView, List<DesignerView> changedViews)
+        {
+            try
+            {
+                var xmlText = changedView.XmlText;
+                XElement rootXmlElement = XElement.Parse(xmlText, LoadOptions.SetLineInfo);
+
+                // check if root element has been renamed
+                // if root element has changed, then rename the view. 
+                var viewName = rootXmlElement.Name.LocalName;
+                if (!viewName.IEquals(changedView.Name))
+                {
+                    // check if name already exist
+                    int i = 1;
+                    var name = viewName;
+                    bool renameThisViewXml = false;
+                    while (true)
+                    {
+                        if (!DesignerViews.Any(x => x.Name == viewName))
+                        {
+                            break;
+                        }
+
+                        renameThisViewXml = true;
+                        viewName = name + i;
+                        ++i;
+                    }
+
+                    // rename view
+                    var oldViewName = changedView.Name;
+                    changedView.Name = viewName;
+                    changedView.IsRenamed = true;
+                    if (String.IsNullOrEmpty(changedView.OriginalName))
+                    {
+                        changedView.OriginalName = oldViewName;
+                    }
+
+                    // update all references to the view 
+                    foreach (var view in DesignerViews)
+                    {
+                        if (view == changedView && !renameThisViewXml)
+                            continue;
+
+                        var viewXmlText = !String.IsNullOrWhiteSpace(view.XmlText) ? view.XmlText :
+                            File.ReadAllText(view.FilePath);
+
+                        // see if the view references the old view and update the xml
+                        // the regex pattern below matches start/end tags with the specified view name
+                        bool foundMatch = false;
+                        var pattern = String.Format(@"(?<=<[/]?){0}(?=[\s>/])", oldViewName);
+                        var replacedXml = Regex.Replace(viewXmlText, pattern, m =>
+                        {
+                            foundMatch = true;
+                            return viewName;
+                        });
+
+                        if (foundMatch)
+                        {
+                            // update XML and add to list of changed views
+                            replacedXml = StripNamespaceAndSchema(replacedXml);
+
+                            view.XmlText = replacedXml;
+                            view.IsDirty = true;
+                            view.IsRuntimeParsed = true;
+
+                            if (view == _currentEditedView)
+                            {
+                                // update current editor XML
+                                XmlEditor.XmlText = view.XmlText;
+                            }
+
+                            // update list of changed views
+                            if (!changedViews.Contains(view))
+                            {
+                                changedViews.Add(view);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // get which line error occurred on from exception message
+                int line = 1;
+                int indexOfLine = e.Message.IndexOf("Line");
+                if (indexOfLine > 0)
+                {
+                    var msg = e.Message.Substring(indexOfLine + "Line".Length);
+                    int indexOfComma = msg.IndexOf(",");
+
+                    // get lineinfo
+                    if (!int.TryParse(msg.Substring(0, indexOfComma), out line))
+                    {
+                        line = 1;
+                    }
+                }
+
+                LogParseErrorToDesignerConsole(changedView.FilePath, line,
+                    String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
+                return;
+            }
         }
 
         /// <summary>
@@ -1314,7 +1897,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Called when user clicks "+ New View" button. 
+        /// Called when user adds new view. 
         /// </summary>
         public void AddNewView()
         {
@@ -1369,6 +1952,15 @@ namespace Delight
         public void ToggleShowReadOnlyViews()
         {
             DisplayReadOnlyViews = !DisplayReadOnlyViews;
+            ShowReadOnlyViewsEditorPref = DisplayReadOnlyViews;
+            OnDisplayReadOnlyViewsChanged();
+        }
+
+        /// <summary>
+        /// Called when display only views option changes value.
+        /// </summary>
+        public void OnDisplayReadOnlyViewsChanged()
+        {
             DisplayReadOnlyViewsText = DisplayReadOnlyViews ? "Hide Read-Only Views" : "Show Read-Only Views";
             DisplayedDesignerViews.Replace(DesignerViews.Where(x => !x.IsLocked || DisplayReadOnlyViews).OrderBy(y => y.Id));
         }
@@ -1408,6 +2000,10 @@ namespace Delight
             else if (viewName == "XmlEditor")
             {
                 return new XmlEditor(parent, layoutParent, id, template, deferInitialization);
+            }
+            else if (viewName == "DesignerToolbar")
+            {
+                return new DesignerToolbar(parent, layoutParent, id, template, deferInitialization);
             }
             else
             {

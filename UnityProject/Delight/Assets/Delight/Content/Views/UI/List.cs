@@ -92,7 +92,9 @@ namespace Delight
                 return;
 
             // call to initialize dynamic lists if necessary
+#pragma warning disable CS4014
             Items.LoadData();
+#pragma warning restore CS4014
             foreach (var item in Items)
             {
                 CreateListItem(item);
@@ -1094,7 +1096,7 @@ namespace Delight
             bool percentageWidth = false;
             bool percentageHeight = false;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
-            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
+            int itemsPerPage = IsPaged && PageSize > 0 ? PageSize : int.MaxValue;
 
             List<UIView> children = null;
             if (!IsVirtualized)
@@ -1324,13 +1326,22 @@ namespace Delight
         {
             var actualWidth = OverrideWidth ?? (Width ?? ElementSize.DefaultLayout);
             var actualHeight = OverrideHeight ?? (Height ?? ElementSize.DefaultLayout);
+            
+            if (Orientation == ElementOrientation.Horizontal && actualWidth.Unit != ElementSizeUnit.Pixels)
+            {
+                actualWidth = ActualWidth;
+            }
+            else if (Orientation == ElementOrientation.Vertical && actualHeight.Unit != ElementSizeUnit.Pixels)
+            {
+                actualHeight = ActualHeight;
+            }
 
             bool hasNewSize = false;
             float maxWidth = 0f;
             float maxHeight = 0f;
             bool isHorizontal = Orientation == ElementOrientation.Horizontal;
             List<UIView> children = null;
-            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
+            int itemsPerPage = IsPaged && PageSize > 0 ? PageSize : int.MaxValue;
             if (!IsVirtualized)
             {
                 children = new List<UIView>();
@@ -2049,7 +2060,7 @@ namespace Delight
             if (Items == null)
                 return 0;
 
-            int itemsPerPage = PageSize > 0 ? PageSize : int.MaxValue;
+            int itemsPerPage = IsPaged && PageSize > 0 ? PageSize : int.MaxValue;
             int maxPageIndex = Mathf.FloorToInt((Items.Count - 1) / itemsPerPage);
             return maxPageIndex;
         }

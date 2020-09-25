@@ -551,6 +551,8 @@ namespace Delight
                     _onDemandLoadingExample = new Template(LayoutRootTemplates.LayoutRoot);
 #if UNITY_EDITOR
                     _onDemandLoadingExample.Name = "OnDemandLoadingExample";
+                    _onDemandLoadingExample.LineNumber = 0;
+                    _onDemandLoadingExample.LinePosition = 0;
 #endif
                     Delight.OnDemandLoadingExample.EnableScriptEventsProperty.SetDefault(_onDemandLoadingExample, true);
                     Delight.OnDemandLoadingExample.Label1TemplateProperty.SetDefault(_onDemandLoadingExample, OnDemandLoadingExampleLabel1);
@@ -597,6 +599,8 @@ namespace Delight
                     _onDemandLoadingExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLabel1.Name = "OnDemandLoadingExampleLabel1";
+                    _onDemandLoadingExampleLabel1.LineNumber = 5;
+                    _onDemandLoadingExampleLabel1.LinePosition = 4;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_onDemandLoadingExampleLabel1, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_onDemandLoadingExampleLabel1, Delight.ElementAlignment.Top);
@@ -621,6 +625,8 @@ namespace Delight
                     _onDemandLoadingExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLabel2.Name = "OnDemandLoadingExampleLabel2";
+                    _onDemandLoadingExampleLabel2.LineNumber = 6;
+                    _onDemandLoadingExampleLabel2.LinePosition = 4;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_onDemandLoadingExampleLabel2, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_onDemandLoadingExampleLabel2, Delight.ElementAlignment.TopRight);
@@ -645,6 +651,8 @@ namespace Delight
                     _onDemandLoadingExampleLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLabel3.Name = "OnDemandLoadingExampleLabel3";
+                    _onDemandLoadingExampleLabel3.LineNumber = 7;
+                    _onDemandLoadingExampleLabel3.LinePosition = 4;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_onDemandLoadingExampleLabel3, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_onDemandLoadingExampleLabel3, Delight.ElementAlignment.TopLeft);
@@ -669,6 +677,8 @@ namespace Delight
                     _onDemandLoadingExampleRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleRegion1.Name = "OnDemandLoadingExampleRegion1";
+                    _onDemandLoadingExampleRegion1.LineNumber = 9;
+                    _onDemandLoadingExampleRegion1.LinePosition = 4;
 #endif
                 }
                 return _onDemandLoadingExampleRegion1;
@@ -689,6 +699,8 @@ namespace Delight
                     _onDemandLoadingExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleGroup1.Name = "OnDemandLoadingExampleGroup1";
+                    _onDemandLoadingExampleGroup1.LineNumber = 10;
+                    _onDemandLoadingExampleGroup1.LinePosition = 6;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleGroup1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.OrientationProperty.SetDefault(_onDemandLoadingExampleGroup1, Delight.ElementOrientation.Vertical);
@@ -713,6 +725,8 @@ namespace Delight
                     _onDemandLoadingExampleLoadAllButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoadAllButton.Name = "OnDemandLoadingExampleLoadAllButton";
+                    _onDemandLoadingExampleLoadAllButton.LineNumber = 11;
+                    _onDemandLoadingExampleLoadAllButton.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleLoadAllButton, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleLoadAllButton, OnDemandLoadingExampleLoadAllButtonLabel);
@@ -735,6 +749,8 @@ namespace Delight
                     _onDemandLoadingExampleLoadAllButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoadAllButtonLabel.Name = "OnDemandLoadingExampleLoadAllButtonLabel";
+                    _onDemandLoadingExampleLoadAllButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoadAllButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoadAllButtonLabel, "LoadAll");
                 }
@@ -756,6 +772,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad1Button = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad1Button.Name = "OnDemandLoadingExampleLoad1Button";
+                    _onDemandLoadingExampleLoad1Button.LineNumber = 12;
+                    _onDemandLoadingExampleLoad1Button.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleLoad1Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleLoad1Button, OnDemandLoadingExampleLoad1ButtonLabel);
@@ -778,6 +796,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad1ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad1ButtonLabel.Name = "OnDemandLoadingExampleLoad1ButtonLabel";
+                    _onDemandLoadingExampleLoad1ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad1ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad1ButtonLabel, "Load Set 1");
                 }
@@ -799,6 +819,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad2Button = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad2Button.Name = "OnDemandLoadingExampleLoad2Button";
+                    _onDemandLoadingExampleLoad2Button.LineNumber = 13;
+                    _onDemandLoadingExampleLoad2Button.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleLoad2Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleLoad2Button, OnDemandLoadingExampleLoad2ButtonLabel);
@@ -821,6 +843,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad2ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad2ButtonLabel.Name = "OnDemandLoadingExampleLoad2ButtonLabel";
+                    _onDemandLoadingExampleLoad2ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad2ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad2ButtonLabel, "Load Set 2");
                 }
@@ -842,6 +866,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad3Button = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad3Button.Name = "OnDemandLoadingExampleLoad3Button";
+                    _onDemandLoadingExampleLoad3Button.LineNumber = 14;
+                    _onDemandLoadingExampleLoad3Button.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleLoad3Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleLoad3Button, OnDemandLoadingExampleLoad3ButtonLabel);
@@ -864,6 +890,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad3ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad3ButtonLabel.Name = "OnDemandLoadingExampleLoad3ButtonLabel";
+                    _onDemandLoadingExampleLoad3ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad3ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad3ButtonLabel, "Load Set 3");
                 }
@@ -885,6 +913,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad4Button = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad4Button.Name = "OnDemandLoadingExampleLoad4Button";
+                    _onDemandLoadingExampleLoad4Button.LineNumber = 15;
+                    _onDemandLoadingExampleLoad4Button.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleLoad4Button, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleLoad4Button, OnDemandLoadingExampleLoad4ButtonLabel);
@@ -907,6 +937,8 @@ namespace Delight
                     _onDemandLoadingExampleLoad4ButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLoad4ButtonLabel.Name = "OnDemandLoadingExampleLoad4ButtonLabel";
+                    _onDemandLoadingExampleLoad4ButtonLabel.LineNumber = 15;
+                    _onDemandLoadingExampleLoad4ButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleLoad4ButtonLabel, "Load Set 4");
                 }
@@ -928,6 +960,8 @@ namespace Delight
                     _onDemandLoadingExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton1.Name = "OnDemandLoadingExampleButton1";
+                    _onDemandLoadingExampleButton1.LineNumber = 16;
+                    _onDemandLoadingExampleButton1.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleButton1, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleButton1, OnDemandLoadingExampleButton1Label);
@@ -950,6 +984,8 @@ namespace Delight
                     _onDemandLoadingExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton1Label.Name = "OnDemandLoadingExampleButton1Label";
+                    _onDemandLoadingExampleButton1Label.LineNumber = 15;
+                    _onDemandLoadingExampleButton1Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleButton1Label, "UnloadAll");
                 }
@@ -971,6 +1007,8 @@ namespace Delight
                     _onDemandLoadingExampleButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton2.Name = "OnDemandLoadingExampleButton2";
+                    _onDemandLoadingExampleButton2.LineNumber = 17;
+                    _onDemandLoadingExampleButton2.LinePosition = 8;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_onDemandLoadingExampleButton2, new ElementSize(200f, ElementSizeUnit.Pixels));
                     Delight.Button.LabelTemplateProperty.SetDefault(_onDemandLoadingExampleButton2, OnDemandLoadingExampleButton2Label);
@@ -993,6 +1031,8 @@ namespace Delight
                     _onDemandLoadingExampleButton2Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleButton2Label.Name = "OnDemandLoadingExampleButton2Label";
+                    _onDemandLoadingExampleButton2Label.LineNumber = 15;
+                    _onDemandLoadingExampleButton2Label.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_onDemandLoadingExampleButton2Label, "SetSprite");
                 }
@@ -1014,6 +1054,8 @@ namespace Delight
                     _onDemandLoadingExampleImageGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImageGroup.Name = "OnDemandLoadingExampleImageGroup";
+                    _onDemandLoadingExampleImageGroup.LineNumber = 21;
+                    _onDemandLoadingExampleImageGroup.LinePosition = 6;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_onDemandLoadingExampleImageGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleImageGroup, new ElementSize(5f, ElementSizeUnit.Pixels));
@@ -1036,6 +1078,8 @@ namespace Delight
                     _onDemandLoadingExampleImageSet1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImageSet1.Name = "OnDemandLoadingExampleImageSet1";
+                    _onDemandLoadingExampleImageSet1.LineNumber = 22;
+                    _onDemandLoadingExampleImageSet1.LinePosition = 8;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleImageSet1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_onDemandLoadingExampleImageSet1, Delight.LoadMode.Manual);
@@ -1058,6 +1102,8 @@ namespace Delight
                     _onDemandLoadingExampleImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage1.Name = "OnDemandLoadingExampleImage1";
+                    _onDemandLoadingExampleImage1.LineNumber = 23;
+                    _onDemandLoadingExampleImage1.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage1, Assets.Sprites["Frame1"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage1, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1081,6 +1127,8 @@ namespace Delight
                     _onDemandLoadingExampleImage2 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage2.Name = "OnDemandLoadingExampleImage2";
+                    _onDemandLoadingExampleImage2.LineNumber = 24;
+                    _onDemandLoadingExampleImage2.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage2, Assets.Sprites["Frame2"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage2, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1104,6 +1152,8 @@ namespace Delight
                     _onDemandLoadingExampleImageSet2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImageSet2.Name = "OnDemandLoadingExampleImageSet2";
+                    _onDemandLoadingExampleImageSet2.LineNumber = 26;
+                    _onDemandLoadingExampleImageSet2.LinePosition = 8;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleImageSet2, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_onDemandLoadingExampleImageSet2, Delight.LoadMode.Manual);
@@ -1126,6 +1176,8 @@ namespace Delight
                     _onDemandLoadingExampleImage3 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage3.Name = "OnDemandLoadingExampleImage3";
+                    _onDemandLoadingExampleImage3.LineNumber = 27;
+                    _onDemandLoadingExampleImage3.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage3, Assets.Sprites["Frame3"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage3, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1149,6 +1201,8 @@ namespace Delight
                     _onDemandLoadingExampleImage4 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage4.Name = "OnDemandLoadingExampleImage4";
+                    _onDemandLoadingExampleImage4.LineNumber = 28;
+                    _onDemandLoadingExampleImage4.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage4, Assets.Sprites["Frame4"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage4, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1172,6 +1226,8 @@ namespace Delight
                     _onDemandLoadingExampleImageSet3 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImageSet3.Name = "OnDemandLoadingExampleImageSet3";
+                    _onDemandLoadingExampleImageSet3.LineNumber = 30;
+                    _onDemandLoadingExampleImageSet3.LinePosition = 8;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleImageSet3, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_onDemandLoadingExampleImageSet3, Delight.LoadMode.Manual);
@@ -1194,6 +1250,8 @@ namespace Delight
                     _onDemandLoadingExampleImage5 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage5.Name = "OnDemandLoadingExampleImage5";
+                    _onDemandLoadingExampleImage5.LineNumber = 31;
+                    _onDemandLoadingExampleImage5.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage5, Assets.Sprites["Frame2"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage5, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1217,6 +1275,8 @@ namespace Delight
                     _onDemandLoadingExampleImage6 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImage6.Name = "OnDemandLoadingExampleImage6";
+                    _onDemandLoadingExampleImage6.LineNumber = 32;
+                    _onDemandLoadingExampleImage6.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleImage6, Assets.Sprites["Frame3"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleImage6, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1240,6 +1300,8 @@ namespace Delight
                     _onDemandLoadingExampleImageSet4 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleImageSet4.Name = "OnDemandLoadingExampleImageSet4";
+                    _onDemandLoadingExampleImageSet4.LineNumber = 34;
+                    _onDemandLoadingExampleImageSet4.LinePosition = 8;
 #endif
                     Delight.Group.SpacingProperty.SetDefault(_onDemandLoadingExampleImageSet4, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.Group.LoadModeProperty.SetDefault(_onDemandLoadingExampleImageSet4, Delight.LoadMode.Manual);
@@ -1262,6 +1324,8 @@ namespace Delight
                     _onDemandLoadingExampleBigSpriteImage = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleBigSpriteImage.Name = "OnDemandLoadingExampleBigSpriteImage";
+                    _onDemandLoadingExampleBigSpriteImage.LineNumber = 35;
+                    _onDemandLoadingExampleBigSpriteImage.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_onDemandLoadingExampleBigSpriteImage, Assets.Sprites["BigSprite"]);
                     Delight.Image.WidthProperty.SetDefault(_onDemandLoadingExampleBigSpriteImage, new ElementSize(100f, ElementSizeUnit.Pixels));
@@ -1285,6 +1349,8 @@ namespace Delight
                     _onDemandLoadingExampleLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _onDemandLoadingExampleLabel4.Name = "OnDemandLoadingExampleLabel4";
+                    _onDemandLoadingExampleLabel4.LineNumber = 38;
+                    _onDemandLoadingExampleLabel4.LinePosition = 6;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_onDemandLoadingExampleLabel4, new ElementSize(400f, ElementSizeUnit.Pixels));
                     Delight.Label.AlignmentProperty.SetDefault(_onDemandLoadingExampleLabel4, Delight.ElementAlignment.Center);

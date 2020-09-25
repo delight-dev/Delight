@@ -67,6 +67,8 @@ namespace Delight
                     _layoutRoot = new Template(UICanvasTemplates.UICanvas);
 #if UNITY_EDITOR
                     _layoutRoot.Name = "LayoutRoot";
+                    _layoutRoot.LineNumber = 0;
+                    _layoutRoot.LinePosition = 0;
 #endif
                     Delight.LayoutRoot.EnableScriptEventsProperty.SetDefault(_layoutRoot, true);
                     Delight.LayoutRoot.RenderModeProperty.SetDefault(_layoutRoot, UnityEngine.RenderMode.ScreenSpaceOverlay);

@@ -257,6 +257,8 @@ namespace Delight
                     _sceneObjectView = new Template(ViewTemplates.View);
 #if UNITY_EDITOR
                     _sceneObjectView.Name = "SceneObjectView";
+                    _sceneObjectView.LineNumber = 0;
+                    _sceneObjectView.LinePosition = 0;
 #endif
                     Delight.SceneObjectView.IsActiveProperty.SetDefault(_sceneObjectView, true);
                 }

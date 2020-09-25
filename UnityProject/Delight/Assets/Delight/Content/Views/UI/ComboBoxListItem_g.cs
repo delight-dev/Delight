@@ -67,6 +67,8 @@ namespace Delight
                     _comboBoxListItem = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _comboBoxListItem.Name = "ComboBoxListItem";
+                    _comboBoxListItem.LineNumber = 0;
+                    _comboBoxListItem.LinePosition = 0;
 #endif
                     Delight.ComboBoxListItem.AutoSizeToContentProperty.SetDefault(_comboBoxListItem, false);
                 }

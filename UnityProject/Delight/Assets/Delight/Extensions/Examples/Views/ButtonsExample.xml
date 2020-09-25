@@ -26,7 +26,7 @@
     
     <Label Text="Click count: {ClickCount}" AutoSize="True" FontColor="White" />
 
-    <ComboBox Id="ComboBox" Items="{player in @Players}" ItemSelected="ItemSelected" IsDropUp="False">
+    <ComboBox Id="ComboBox" Items="{player in @DemoPlayers}" ItemSelected="ItemSelected" IsDropUp="False">
       <Label Text="{player.Name}" Width="100%" Margin="10,0,0,0" />
     </ComboBox>
 

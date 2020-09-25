@@ -67,6 +67,8 @@ namespace Delight
                     _toggleGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _toggleGroup.Name = "ToggleGroup";
+                    _toggleGroup.LineNumber = 0;
+                    _toggleGroup.LinePosition = 0;
 #endif
                 }
                 return _toggleGroup;

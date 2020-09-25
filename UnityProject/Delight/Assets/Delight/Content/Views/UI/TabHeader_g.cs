@@ -87,6 +87,8 @@ namespace Delight
                     _tabHeader = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _tabHeader.Name = "TabHeader";
+                    _tabHeader.LineNumber = 0;
+                    _tabHeader.LinePosition = 0;
 #endif
                     Delight.TabHeader.LabelTemplateProperty.SetDefault(_tabHeader, TabHeaderLabel);
                 }
@@ -108,6 +110,8 @@ namespace Delight
                     _tabHeaderLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _tabHeaderLabel.Name = "TabHeaderLabel";
+                    _tabHeaderLabel.LineNumber = 15;
+                    _tabHeaderLabel.LinePosition = 4;
 #endif
                 }
                 return _tabHeaderLabel;

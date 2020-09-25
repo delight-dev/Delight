@@ -95,6 +95,8 @@ namespace Delight
                     _tab = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _tab.Name = "Tab";
+                    _tab.LineNumber = 0;
+                    _tab.LinePosition = 0;
 #endif
                 }
                 return _tab;

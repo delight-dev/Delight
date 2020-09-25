@@ -381,6 +381,13 @@ namespace Delight
             set { TabHeaderGroup.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty TabListIsInteractableProperty = ToggleGroup.IsInteractableProperty;
+        public System.Boolean TabListIsInteractable
+        {
+            get { return TabHeaderGroup.IsInteractable; }
+            set { TabHeaderGroup.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty TabListUseFastShaderProperty = ToggleGroup.UseFastShaderProperty;
         public System.Boolean TabListUseFastShader
         {
@@ -482,6 +489,8 @@ namespace Delight
                     _tabPanel = new Template(CollectionTemplates.Collection);
 #if UNITY_EDITOR
                     _tabPanel.Name = "TabPanel";
+                    _tabPanel.LineNumber = 0;
+                    _tabPanel.LinePosition = 0;
 #endif
                     Delight.TabPanel.SelectedTabIndexProperty.SetDefault(_tabPanel, 0);
                     Delight.TabPanel.TabSwitchModeProperty.SetDefault(_tabPanel, Delight.SwitchMode.Enable);
@@ -506,6 +515,8 @@ namespace Delight
                     _tabPanelTabSwitcher = new Template(ViewSwitcherTemplates.ViewSwitcher);
 #if UNITY_EDITOR
                     _tabPanelTabSwitcher.Name = "TabPanelTabSwitcher";
+                    _tabPanelTabSwitcher.LineNumber = 7;
+                    _tabPanelTabSwitcher.LinePosition = 4;
 #endif
                 }
                 return _tabPanelTabSwitcher;
@@ -526,6 +537,8 @@ namespace Delight
                     _tabPanelTabHeaderGroup = new Template(ToggleGroupTemplates.ToggleGroup);
 #if UNITY_EDITOR
                     _tabPanelTabHeaderGroup.Name = "TabPanelTabHeaderGroup";
+                    _tabPanelTabHeaderGroup.LineNumber = 9;
+                    _tabPanelTabHeaderGroup.LinePosition = 4;
 #endif
                     Delight.ToggleGroup.OrientationProperty.SetDefault(_tabPanelTabHeaderGroup, Delight.ElementOrientation.Horizontal);
                     Delight.ToggleGroup.AlignmentProperty.SetDefault(_tabPanelTabHeaderGroup, Delight.ElementAlignment.TopLeft);

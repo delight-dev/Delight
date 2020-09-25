@@ -255,6 +255,8 @@ namespace Delight
                     _uIImageView = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _uIImageView.Name = "UIImageView";
+                    _uIImageView.LineNumber = 0;
+                    _uIImageView.LinePosition = 0;
 #endif
                     Delight.UIImageView.MaskContentProperty.SetDefault(_uIImageView, false);
                 }

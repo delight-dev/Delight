@@ -41,7 +41,6 @@ namespace Delight
 
             dependencyProperties.Add(IsCheckedProperty);
             dependencyProperties.Add(IsDisabledProperty);
-            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(SpacingProperty);
             dependencyProperties.Add(RadioButtonGroupProperty);
             dependencyProperties.Add(RadioButtonGroupTemplateProperty);
@@ -69,14 +68,6 @@ namespace Delight
         {
             get { return IsDisabledProperty.GetValue(this); }
             set { IsDisabledProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
-        /// <summary>Boolean indicating if the user can toggle the radio button.</summary>
-        public System.Boolean IsInteractable
-        {
-            get { return IsInteractableProperty.GetValue(this); }
-            set { IsInteractableProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> SpacingProperty = new DependencyProperty<Delight.ElementSize>("Spacing");
@@ -351,6 +342,13 @@ namespace Delight
         {
             get { return RadioButtonImageView.RaycastBlockMode; }
             set { RadioButtonImageView.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonIsInteractableProperty = Image.IsInteractableProperty;
+        public System.Boolean RadioButtonIsInteractable
+        {
+            get { return RadioButtonImageView.IsInteractable; }
+            set { RadioButtonImageView.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty RadioButtonUseFastShaderProperty = Image.UseFastShaderProperty;
@@ -1012,6 +1010,13 @@ namespace Delight
             set { RadioButtonLabel.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonLabelIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean RadioButtonLabelIsInteractable
+        {
+            get { return RadioButtonLabel.IsInteractable; }
+            set { RadioButtonLabel.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonLabelUseFastShaderProperty = Label.UseFastShaderProperty;
         public System.Boolean RadioButtonLabelUseFastShader
         {
@@ -1113,8 +1118,9 @@ namespace Delight
                     _radioButton = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _radioButton.Name = "RadioButton";
+                    _radioButton.LineNumber = 0;
+                    _radioButton.LinePosition = 0;
 #endif
-                    Delight.RadioButton.IsInteractableProperty.SetDefault(_radioButton, true);
                     Delight.RadioButton.SpacingProperty.SetDefault(_radioButton, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.RadioButton.HeightProperty.SetDefault(_radioButton, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -1141,6 +1147,8 @@ namespace Delight
                     _radioButtonRadioButtonGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonGroup.Name = "RadioButtonRadioButtonGroup";
+                    _radioButtonRadioButtonGroup.LineNumber = 8;
+                    _radioButtonRadioButtonGroup.LinePosition = 4;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_radioButtonRadioButtonGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetHasBinding(_radioButtonRadioButtonGroup);
@@ -1163,6 +1171,8 @@ namespace Delight
                     _radioButtonRadioButtonImageView = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonImageView.Name = "RadioButtonRadioButtonImageView";
+                    _radioButtonRadioButtonImageView.LineNumber = 9;
+                    _radioButtonRadioButtonImageView.LinePosition = 6;
 #endif
                     Delight.Image.WidthProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Image.HeightProperty.SetDefault(_radioButtonRadioButtonImageView, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -1191,6 +1201,8 @@ namespace Delight
                     _radioButtonRadioButtonLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _radioButtonRadioButtonLabel.Name = "RadioButtonRadioButtonLabel";
+                    _radioButtonRadioButtonLabel.LineNumber = 10;
+                    _radioButtonRadioButtonLabel.LinePosition = 6;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_radioButtonRadioButtonLabel, Delight.AutoSize.Width);
                     Delight.Label.HeightProperty.SetDefault(_radioButtonRadioButtonLabel, new ElementSize(1f, ElementSizeUnit.Percents));

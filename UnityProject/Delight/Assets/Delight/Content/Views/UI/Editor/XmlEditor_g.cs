@@ -70,13 +70,15 @@ namespace Delight
                 assetOptionItem.SetContentTemplateData(tiOption);
                 return assetOptionItem;
             }, typeof(ListItem), "AssetOptionItem"));
-            DebugTextLabel = new Label(this, AutoCompleteBox.Content, "DebugTextLabel", DebugTextLabelTemplate);
             TooltipBox = new Frame(this, UICanvas1.Content, "TooltipBox", TooltipBoxTemplate);
             TooltipLabel = new Label(this, TooltipBox.Content, "TooltipLabel", TooltipLabelTemplate);
             Image1 = new Image(this, TooltipBox.Content, "Image1", Image1Template);
             XmlEditLeftMargin = new Region(this, XmlEditRegion.Content, "XmlEditLeftMargin", XmlEditLeftMarginTemplate);
             LineNumbersLabel = new Label(this, XmlEditLeftMargin.Content, "LineNumbersLabel", LineNumbersLabelTemplate);
             LineNumbersRightBorder = new Region(this, XmlEditLeftMargin.Content, "LineNumbersRightBorder", LineNumbersRightBorderTemplate);
+
+            // constructing Label (DebugTextLabel)
+            DebugTextLabel = new Label(this, this, "DebugTextLabel", DebugTextLabelTemplate);
             this.AfterInitializeInternal();
         }
 
@@ -92,6 +94,7 @@ namespace Delight
             dependencyProperties.Add(XmlTextProperty);
             dependencyProperties.Add(IsFocusedProperty);
             dependencyProperties.Add(EditProperty);
+            dependencyProperties.Add(SelectViewAtLineProperty);
             dependencyProperties.Add(AutoCompleteOptionsProperty);
             dependencyProperties.Add(SelectedAutoCompleteOptionProperty);
             dependencyProperties.Add(DesignerViewsProperty);
@@ -124,8 +127,6 @@ namespace Delight
             dependencyProperties.Add(RawImage1TemplateProperty);
             dependencyProperties.Add(Label2Property);
             dependencyProperties.Add(Label2TemplateProperty);
-            dependencyProperties.Add(DebugTextLabelProperty);
-            dependencyProperties.Add(DebugTextLabelTemplateProperty);
             dependencyProperties.Add(TooltipBoxProperty);
             dependencyProperties.Add(TooltipBoxTemplateProperty);
             dependencyProperties.Add(TooltipLabelProperty);
@@ -138,6 +139,8 @@ namespace Delight
             dependencyProperties.Add(LineNumbersLabelTemplateProperty);
             dependencyProperties.Add(LineNumbersRightBorderProperty);
             dependencyProperties.Add(LineNumbersRightBorderTemplateProperty);
+            dependencyProperties.Add(DebugTextLabelProperty);
+            dependencyProperties.Add(DebugTextLabelTemplateProperty);
         }
 
         #endregion
@@ -166,6 +169,13 @@ namespace Delight
         {
             get { return EditProperty.GetValue(this); }
             set { EditProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> SelectViewAtLineProperty = new DependencyProperty<ViewAction>("SelectViewAtLine", () => new ViewAction());
+        public ViewAction SelectViewAtLine
+        {
+            get { return SelectViewAtLineProperty.GetValue(this); }
+            set { SelectViewAtLineProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.AutoCompleteOptionData> AutoCompleteOptionsProperty = new DependencyProperty<Delight.AutoCompleteOptionData>("AutoCompleteOptions");
@@ -396,20 +406,6 @@ namespace Delight
             set { Label2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> DebugTextLabelProperty = new DependencyProperty<Label>("DebugTextLabel");
-        public Label DebugTextLabel
-        {
-            get { return DebugTextLabelProperty.GetValue(this); }
-            set { DebugTextLabelProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<Template> DebugTextLabelTemplateProperty = new DependencyProperty<Template>("DebugTextLabelTemplate");
-        public Template DebugTextLabelTemplate
-        {
-            get { return DebugTextLabelTemplateProperty.GetValue(this); }
-            set { DebugTextLabelTemplateProperty.SetValue(this, value); }
-        }
-
         public readonly static DependencyProperty<Frame> TooltipBoxProperty = new DependencyProperty<Frame>("TooltipBox");
         public Frame TooltipBox
         {
@@ -494,6 +490,20 @@ namespace Delight
             set { LineNumbersRightBorderTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> DebugTextLabelProperty = new DependencyProperty<Label>("DebugTextLabel");
+        public Label DebugTextLabel
+        {
+            get { return DebugTextLabelProperty.GetValue(this); }
+            set { DebugTextLabelProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> DebugTextLabelTemplateProperty = new DependencyProperty<Template>("DebugTextLabelTemplate");
+        public Template DebugTextLabelTemplate
+        {
+            get { return DebugTextLabelTemplateProperty.GetValue(this); }
+            set { DebugTextLabelTemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -525,6 +535,8 @@ namespace Delight
                     _xmlEditor = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _xmlEditor.Name = "XmlEditor";
+                    _xmlEditor.LineNumber = 0;
+                    _xmlEditor.LinePosition = 0;
 #endif
                     Delight.XmlEditor.BackgroundColorProperty.SetDefault(_xmlEditor, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
                     Delight.XmlEditor.EnableScriptEventsProperty.SetDefault(_xmlEditor, true);
@@ -544,13 +556,13 @@ namespace Delight
                     Delight.XmlEditor.AssetOptionItemTemplateProperty.SetDefault(_xmlEditor, XmlEditorAssetOptionItem);
                     Delight.XmlEditor.RawImage1TemplateProperty.SetDefault(_xmlEditor, XmlEditorRawImage1);
                     Delight.XmlEditor.Label2TemplateProperty.SetDefault(_xmlEditor, XmlEditorLabel2);
-                    Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorDebugTextLabel);
                     Delight.XmlEditor.TooltipBoxTemplateProperty.SetDefault(_xmlEditor, XmlEditorTooltipBox);
                     Delight.XmlEditor.TooltipLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorTooltipLabel);
                     Delight.XmlEditor.Image1TemplateProperty.SetDefault(_xmlEditor, XmlEditorImage1);
                     Delight.XmlEditor.XmlEditLeftMarginTemplateProperty.SetDefault(_xmlEditor, XmlEditorXmlEditLeftMargin);
                     Delight.XmlEditor.LineNumbersLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersLabel);
                     Delight.XmlEditor.LineNumbersRightBorderTemplateProperty.SetDefault(_xmlEditor, XmlEditorLineNumbersRightBorder);
+                    Delight.XmlEditor.DebugTextLabelTemplateProperty.SetDefault(_xmlEditor, XmlEditorDebugTextLabel);
                 }
                 return _xmlEditor;
             }
@@ -570,6 +582,8 @@ namespace Delight
                     _xmlEditorScrollableRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegion.Name = "XmlEditorScrollableRegion";
+                    _xmlEditorScrollableRegion.LineNumber = 5;
+                    _xmlEditorScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.WidthProperty.SetDefault(_xmlEditorScrollableRegion, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.ScrollableRegion.HeightProperty.SetDefault(_xmlEditorScrollableRegion, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -600,6 +614,8 @@ namespace Delight
                     _xmlEditorScrollableRegionContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionContentRegion.Name = "XmlEditorScrollableRegionContentRegion";
+                    _xmlEditorScrollableRegionContentRegion.LineNumber = 24;
+                    _xmlEditorScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorScrollableRegionContentRegion;
@@ -620,6 +636,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbar.Name = "XmlEditorScrollableRegionHorizontalScrollbar";
+                    _xmlEditorScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _xmlEditorScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
@@ -644,6 +662,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarBar.Name = "XmlEditorScrollableRegionHorizontalScrollbarBar";
+                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _xmlEditorScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
@@ -666,6 +686,8 @@ namespace Delight
                     _xmlEditorScrollableRegionHorizontalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionHorizontalScrollbarHandle.Name = "XmlEditorScrollableRegionHorizontalScrollbarHandle";
+                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -687,6 +709,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbar.Name = "XmlEditorScrollableRegionVerticalScrollbar";
+                    _xmlEditorScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _xmlEditorScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Scrollbar.BreadthProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbar, new ElementSize(15f, ElementSizeUnit.Pixels));
@@ -711,6 +735,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbarBar = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarBar.Name = "XmlEditorScrollableRegionVerticalScrollbarBar";
+                    _xmlEditorScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _xmlEditorScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
@@ -733,6 +759,8 @@ namespace Delight
                     _xmlEditorScrollableRegionVerticalScrollbarHandle = new Template(ScrollableRegionTemplates.ScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorScrollableRegionVerticalScrollbarHandle.Name = "XmlEditorScrollableRegionVerticalScrollbarHandle";
+                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_xmlEditorScrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -754,6 +782,8 @@ namespace Delight
                     _xmlEditorXmlEditRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _xmlEditorXmlEditRegion.Name = "XmlEditorXmlEditRegion";
+                    _xmlEditorXmlEditRegion.LineNumber = 11;
+                    _xmlEditorXmlEditRegion.LinePosition = 6;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorXmlEditRegion, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.Region.HeightProperty.SetDefault(_xmlEditorXmlEditRegion, new ElementSize(500f, ElementSizeUnit.Pixels));
@@ -777,6 +807,8 @@ namespace Delight
                     _xmlEditorXmlTextRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _xmlEditorXmlTextRegion.Name = "XmlEditorXmlTextRegion";
+                    _xmlEditorXmlTextRegion.LineNumber = 13;
+                    _xmlEditorXmlTextRegion.LinePosition = 8;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorXmlTextRegion, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Region.HeightProperty.SetDefault(_xmlEditorXmlTextRegion, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -800,6 +832,8 @@ namespace Delight
                     _xmlEditorTextSelection = new Template(CanvasRendererViewTemplates.CanvasRendererView);
 #if UNITY_EDITOR
                     _xmlEditorTextSelection.Name = "XmlEditorTextSelection";
+                    _xmlEditorTextSelection.LineNumber = 14;
+                    _xmlEditorTextSelection.LinePosition = 10;
 #endif
                     Delight.CanvasRendererView.WidthProperty.SetDefault(_xmlEditorTextSelection, new ElementSize(2000f, ElementSizeUnit.Pixels));
                     Delight.CanvasRendererView.HeightProperty.SetDefault(_xmlEditorTextSelection, new ElementSize(10000f, ElementSizeUnit.Pixels));
@@ -823,11 +857,13 @@ namespace Delight
                     _xmlEditorXmlTextLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorXmlTextLabel.Name = "XmlEditorXmlTextLabel";
+                    _xmlEditorXmlTextLabel.LineNumber = 15;
+                    _xmlEditorXmlTextLabel.LinePosition = 10;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorXmlTextLabel, new ElementSize(2000f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorXmlTextLabel, new ElementSize(10000f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorXmlTextLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorXmlTextLabel, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorXmlTextLabel, 18f);
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorXmlTextLabel, TMPro.TextAlignmentOptions.TopLeft);
                     Delight.Label.RichTextProperty.SetDefault(_xmlEditorXmlTextLabel, false);
                     Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorXmlTextLabel, TMPro.TextOverflowModes.Overflow);
@@ -852,12 +888,14 @@ namespace Delight
                     _xmlEditorCaret = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorCaret.Name = "XmlEditorCaret";
+                    _xmlEditorCaret.LineNumber = 17;
+                    _xmlEditorCaret.LinePosition = 10;
 #endif
                     Delight.Label.TextProperty.SetDefault(_xmlEditorCaret, "|");
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorCaret, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorCaret, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorCaret, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorCaret, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorCaret, 18f);
                     Delight.Label.FontColorProperty.SetDefault(_xmlEditorCaret, new UnityEngine.Color(0f, 0f, 0f, 1f));
                     Delight.Label.OffsetProperty.SetDefault(_xmlEditorCaret, new ElementMargin(new ElementSize(-5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorCaret, TMPro.TextAlignmentOptions.TopLeft);
@@ -884,6 +922,8 @@ namespace Delight
                     _xmlEditorUICanvas1 = new Template(UICanvasTemplates.UICanvas);
 #if UNITY_EDITOR
                     _xmlEditorUICanvas1.Name = "XmlEditorUICanvas1";
+                    _xmlEditorUICanvas1.LineNumber = 20;
+                    _xmlEditorUICanvas1.LinePosition = 10;
 #endif
                     Delight.UICanvas.SortingOrderProperty.SetDefault(_xmlEditorUICanvas1, 1);
                     Delight.UICanvas.OverrideSortingProperty.SetDefault(_xmlEditorUICanvas1, true);
@@ -906,6 +946,8 @@ namespace Delight
                     _xmlEditorAutoCompleteBox = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteBox.Name = "XmlEditorAutoCompleteBox";
+                    _xmlEditorAutoCompleteBox.LineNumber = 23;
+                    _xmlEditorAutoCompleteBox.LinePosition = 12;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorAutoCompleteBox, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.Region.HeightProperty.SetDefault(_xmlEditorAutoCompleteBox, new ElementSize(150f, ElementSizeUnit.Pixels));
@@ -931,6 +973,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsList = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsList.Name = "XmlEditorAutoCompleteOptionsList";
+                    _xmlEditorAutoCompleteOptionsList.LineNumber = 24;
+                    _xmlEditorAutoCompleteOptionsList.LinePosition = 14;
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, true);
                     Delight.List.WidthProperty.SetDefault(_xmlEditorAutoCompleteOptionsList, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -959,6 +1003,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegion.Name = "XmlEditorAutoCompleteOptionsListScrollableRegion";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 27;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegion, XmlEditorAutoCompleteOptionsListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegion, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar);
@@ -982,6 +1028,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionContentRegion";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LineNumber = 24;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionContentRegion;
@@ -1002,6 +1050,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle);
@@ -1024,6 +1074,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarBar;
@@ -1044,6 +1096,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionHorizontalScrollbarHandle;
@@ -1064,6 +1118,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbar, XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle);
@@ -1086,6 +1142,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarBar;
@@ -1106,6 +1164,8 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.Name = "XmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle";
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _xmlEditorAutoCompleteOptionsListScrollableRegionVerticalScrollbarHandle;
@@ -1126,6 +1186,8 @@ namespace Delight
                     _xmlEditorDefaultOptionItem = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _xmlEditorDefaultOptionItem.Name = "XmlEditorDefaultOptionItem";
+                    _xmlEditorDefaultOptionItem.LineNumber = 28;
+                    _xmlEditorDefaultOptionItem.LinePosition = 16;
 #endif
                     Delight.ListItem.WidthProperty.SetDefault(_xmlEditorDefaultOptionItem, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.ListItem.HeightProperty.SetDefault(_xmlEditorDefaultOptionItem, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -1150,6 +1212,8 @@ namespace Delight
                     _xmlEditorLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorLabel1.Name = "XmlEditorLabel1";
+                    _xmlEditorLabel1.LineNumber = 29;
+                    _xmlEditorLabel1.LinePosition = 18;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorLabel1, new ElementSize(21f, ElementSizeUnit.Pixels));
@@ -1182,6 +1246,8 @@ namespace Delight
                     _xmlEditorAssetOptionItem = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _xmlEditorAssetOptionItem.Name = "XmlEditorAssetOptionItem";
+                    _xmlEditorAssetOptionItem.LineNumber = 32;
+                    _xmlEditorAssetOptionItem.LinePosition = 16;
 #endif
                     Delight.ListItem.WidthProperty.SetDefault(_xmlEditorAssetOptionItem, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.ListItem.HeightProperty.SetDefault(_xmlEditorAssetOptionItem, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -1206,6 +1272,8 @@ namespace Delight
                     _xmlEditorRawImage1 = new Template(RawImageTemplates.RawImage);
 #if UNITY_EDITOR
                     _xmlEditorRawImage1.Name = "XmlEditorRawImage1";
+                    _xmlEditorRawImage1.LineNumber = 33;
+                    _xmlEditorRawImage1.LinePosition = 18;
 #endif
                     Delight.RawImage.WidthProperty.SetDefault(_xmlEditorRawImage1, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.RawImage.HeightProperty.SetDefault(_xmlEditorRawImage1, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -1230,6 +1298,8 @@ namespace Delight
                     _xmlEditorLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorLabel2.Name = "XmlEditorLabel2";
+                    _xmlEditorLabel2.LineNumber = 34;
+                    _xmlEditorLabel2.LinePosition = 18;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorLabel2, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorLabel2, new ElementSize(21f, ElementSizeUnit.Pixels));
@@ -1248,38 +1318,6 @@ namespace Delight
             }
         }
 
-        private static Template _xmlEditorDebugTextLabel;
-        public static Template XmlEditorDebugTextLabel
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_xmlEditorDebugTextLabel == null || _xmlEditorDebugTextLabel.CurrentVersion != Template.Version)
-#else
-                if (_xmlEditorDebugTextLabel == null)
-#endif
-                {
-                    _xmlEditorDebugTextLabel = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _xmlEditorDebugTextLabel.Name = "XmlEditorDebugTextLabel";
-#endif
-                    Delight.Label.WidthProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.HeightProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
-                    Delight.Label.AlignmentProperty.SetDefault(_xmlEditorDebugTextLabel, Delight.ElementAlignment.TopLeft);
-                    Delight.Label.RichTextProperty.SetDefault(_xmlEditorDebugTextLabel, false);
-                    Delight.Label.OverflowModeProperty.SetDefault(_xmlEditorDebugTextLabel, TMPro.TextOverflowModes.Ellipsis);
-                    Delight.Label.EnableWordWrappingProperty.SetDefault(_xmlEditorDebugTextLabel, false);
-                    Delight.Label.FontProperty.SetDefault(_xmlEditorDebugTextLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorDebugTextLabel, 20f);
-                    Delight.Label.FontColorProperty.SetDefault(_xmlEditorDebugTextLabel, new UnityEngine.Color(0.3568628f, 0.3568628f, 0.3568628f, 1f));
-                    Delight.Label.OffsetProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementMargin(new ElementSize(200f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorDebugTextLabel, TMPro.TextAlignmentOptions.TopLeft);
-                    Delight.Label.IsVisibleProperty.SetDefault(_xmlEditorDebugTextLabel, false);
-                }
-                return _xmlEditorDebugTextLabel;
-            }
-        }
-
         private static Template _xmlEditorTooltipBox;
         public static Template XmlEditorTooltipBox
         {
@@ -1294,6 +1332,8 @@ namespace Delight
                     _xmlEditorTooltipBox = new Template(FrameTemplates.Frame);
 #if UNITY_EDITOR
                     _xmlEditorTooltipBox.Name = "XmlEditorTooltipBox";
+                    _xmlEditorTooltipBox.LineNumber = 41;
+                    _xmlEditorTooltipBox.LinePosition = 12;
 #endif
                     Delight.Frame.BackgroundColorProperty.SetDefault(_xmlEditorTooltipBox, new UnityEngine.Color(0.8078431f, 0.9058824f, 0.8235294f, 1f));
                     Delight.Frame.AlignmentProperty.SetDefault(_xmlEditorTooltipBox, Delight.ElementAlignment.BottomLeft);
@@ -1317,6 +1357,8 @@ namespace Delight
                     _xmlEditorTooltipLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorTooltipLabel.Name = "XmlEditorTooltipLabel";
+                    _xmlEditorTooltipLabel.LineNumber = 42;
+                    _xmlEditorTooltipLabel.LinePosition = 14;
 #endif
                     Delight.Label.TextProperty.SetDefault(_xmlEditorTooltipLabel, "TooltipLabel");
                     Delight.Label.FontProperty.SetDefault(_xmlEditorTooltipLabel, Assets.TMP_FontAssets["Segoe UI SDF"]);
@@ -1343,6 +1385,8 @@ namespace Delight
                     _xmlEditorImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _xmlEditorImage1.Name = "XmlEditorImage1";
+                    _xmlEditorImage1.LineNumber = 44;
+                    _xmlEditorImage1.LinePosition = 14;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_xmlEditorImage1, Assets.Sprites["TooltipArrow"]);
                     Delight.Image.AlignmentProperty.SetDefault(_xmlEditorImage1, Delight.ElementAlignment.BottomLeft);
@@ -1367,6 +1411,8 @@ namespace Delight
                     _xmlEditorXmlEditLeftMargin = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _xmlEditorXmlEditLeftMargin.Name = "XmlEditorXmlEditLeftMargin";
+                    _xmlEditorXmlEditLeftMargin.LineNumber = 51;
+                    _xmlEditorXmlEditLeftMargin.LinePosition = 8;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.Region.HeightProperty.SetDefault(_xmlEditorXmlEditLeftMargin, new ElementSize(21f, ElementSizeUnit.Pixels));
@@ -1393,11 +1439,13 @@ namespace Delight
                     _xmlEditorLineNumbersLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _xmlEditorLineNumbersLabel.Name = "XmlEditorLineNumbersLabel";
+                    _xmlEditorLineNumbersLabel.LineNumber = 52;
+                    _xmlEditorLineNumbersLabel.LinePosition = 10;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(50f, ElementSizeUnit.Pixels));
                     Delight.Label.HeightProperty.SetDefault(_xmlEditorLineNumbersLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
                     Delight.Label.FontProperty.SetDefault(_xmlEditorLineNumbersLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
-                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 20f);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorLineNumbersLabel, 18f);
                     Delight.Label.FontColorProperty.SetDefault(_xmlEditorLineNumbersLabel, new UnityEngine.Color(0.5333334f, 0.5333334f, 0.5333334f, 1f));
                     Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorLineNumbersLabel, TMPro.TextAlignmentOptions.TopRight);
                     Delight.Label.RichTextProperty.SetDefault(_xmlEditorLineNumbersLabel, false);
@@ -1423,6 +1471,8 @@ namespace Delight
                     _xmlEditorLineNumbersRightBorder = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _xmlEditorLineNumbersRightBorder.Name = "XmlEditorLineNumbersRightBorder";
+                    _xmlEditorLineNumbersRightBorder.LineNumber = 54;
+                    _xmlEditorLineNumbersRightBorder.LinePosition = 10;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
                     Delight.Region.WidthProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new ElementSize(10f, ElementSizeUnit.Pixels));
@@ -1430,6 +1480,38 @@ namespace Delight
                     Delight.Region.OffsetProperty.SetDefault(_xmlEditorLineNumbersRightBorder, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _xmlEditorLineNumbersRightBorder;
+            }
+        }
+
+        private static Template _xmlEditorDebugTextLabel;
+        public static Template XmlEditorDebugTextLabel
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_xmlEditorDebugTextLabel == null || _xmlEditorDebugTextLabel.CurrentVersion != Template.Version)
+#else
+                if (_xmlEditorDebugTextLabel == null)
+#endif
+                {
+                    _xmlEditorDebugTextLabel = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _xmlEditorDebugTextLabel.Name = "XmlEditorDebugTextLabel";
+                    _xmlEditorDebugTextLabel.LineNumber = 61;
+                    _xmlEditorDebugTextLabel.LinePosition = 4;
+#endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_xmlEditorDebugTextLabel, Delight.AutoSize.Default);
+                    Delight.Label.HeightProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Label.AlignmentProperty.SetDefault(_xmlEditorDebugTextLabel, Delight.ElementAlignment.TopRight);
+                    Delight.Label.RichTextProperty.SetDefault(_xmlEditorDebugTextLabel, false);
+                    Delight.Label.FontProperty.SetDefault(_xmlEditorDebugTextLabel, Assets.TMP_FontAssets["Inconsolata-Regular SDF"]);
+                    Delight.Label.FontSizeProperty.SetDefault(_xmlEditorDebugTextLabel, 20f);
+                    Delight.Label.FontColorProperty.SetDefault(_xmlEditorDebugTextLabel, new UnityEngine.Color(0.3568628f, 0.3568628f, 0.3568628f, 1f));
+                    Delight.Label.OffsetProperty.SetDefault(_xmlEditorDebugTextLabel, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(20f, ElementSizeUnit.Pixels)));
+                    Delight.Label.TextAlignmentProperty.SetDefault(_xmlEditorDebugTextLabel, TMPro.TextAlignmentOptions.TopLeft);
+                    Delight.Label.IsActiveProperty.SetDefault(_xmlEditorDebugTextLabel, false);
+                }
+                return _xmlEditorDebugTextLabel;
             }
         }
 

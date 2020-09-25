@@ -695,6 +695,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsInteractableProperty = List.HorizontalScrollbarBarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarBarIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = List.HorizontalScrollbarBarUseFastShaderProperty;
         public System.Boolean HorizontalScrollbarBarUseFastShader
         {
@@ -987,6 +994,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode; }
             set { ComboBoxList.HorizontalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsInteractableProperty = List.HorizontalScrollbarHandleIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarHandleIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = List.HorizontalScrollbarHandleUseFastShaderProperty;
@@ -1288,6 +1302,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarRaycastBlockMode; }
             set { ComboBoxList.HorizontalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsInteractableProperty = List.HorizontalScrollbarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarIsInteractable
+        {
+            get { return ComboBoxList.HorizontalScrollbarIsInteractable; }
+            set { ComboBoxList.HorizontalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = List.HorizontalScrollbarUseFastShaderProperty;
@@ -1619,6 +1640,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsInteractableProperty = List.VerticalScrollbarBarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarBarIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarBarIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarBarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = List.VerticalScrollbarBarUseFastShaderProperty;
         public System.Boolean VerticalScrollbarBarUseFastShader
         {
@@ -1911,6 +1939,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarHandleRaycastBlockMode; }
             set { ComboBoxList.VerticalScrollbarHandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsInteractableProperty = List.VerticalScrollbarHandleIsInteractableProperty;
+        public System.Boolean VerticalScrollbarHandleIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarHandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = List.VerticalScrollbarHandleUseFastShaderProperty;
@@ -2212,6 +2247,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarRaycastBlockMode; }
             set { ComboBoxList.VerticalScrollbarRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarIsInteractableProperty = List.VerticalScrollbarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarIsInteractable
+        {
+            get { return ComboBoxList.VerticalScrollbarIsInteractable; }
+            set { ComboBoxList.VerticalScrollbarIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = List.VerticalScrollbarUseFastShaderProperty;
@@ -2571,6 +2613,13 @@ namespace Delight
             set { ComboBoxList.ScrollableRegionRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty ScrollableRegionIsInteractableProperty = List.ScrollableRegionIsInteractableProperty;
+        public System.Boolean ScrollableRegionIsInteractable
+        {
+            get { return ComboBoxList.ScrollableRegionIsInteractable; }
+            set { ComboBoxList.ScrollableRegionIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionUseFastShaderProperty = List.ScrollableRegionUseFastShaderProperty;
         public System.Boolean ScrollableRegionUseFastShader
         {
@@ -2877,6 +2926,13 @@ namespace Delight
         {
             get { return ComboBoxList.RaycastBlockMode; }
             set { ComboBoxList.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty ComboBoxListIsInteractableProperty = List.IsInteractableProperty;
+        public System.Boolean ComboBoxListIsInteractable
+        {
+            get { return ComboBoxList.IsInteractable; }
+            set { ComboBoxList.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty ComboBoxListUseFastShaderProperty = List.UseFastShaderProperty;
@@ -3635,6 +3691,13 @@ namespace Delight
             set { ComboBoxButton.LabelRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty ButtonLabelIsInteractableProperty = Button.LabelIsInteractableProperty;
+        public System.Boolean ButtonLabelIsInteractable
+        {
+            get { return ComboBoxButton.LabelIsInteractable; }
+            set { ComboBoxButton.LabelIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty ButtonLabelUseFastShaderProperty = Button.LabelUseFastShaderProperty;
         public System.Boolean ButtonLabelUseFastShader
         {
@@ -3936,6 +3999,13 @@ namespace Delight
             set { ComboBoxButton.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty ButtonIsInteractableProperty = Button.IsInteractableProperty;
+        public System.Boolean ButtonIsInteractable
+        {
+            get { return ComboBoxButton.IsInteractable; }
+            set { ComboBoxButton.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty ButtonUseFastShaderProperty = Button.UseFastShaderProperty;
         public System.Boolean ButtonUseFastShader
         {
@@ -4037,6 +4107,8 @@ namespace Delight
                     _comboBox = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _comboBox.Name = "ComboBox";
+                    _comboBox.LineNumber = 0;
+                    _comboBox.LinePosition = 0;
 #endif
                     Delight.ComboBox.WidthProperty.SetDefault(_comboBox, new ElementSize(160f, ElementSizeUnit.Pixels));
                     Delight.ComboBox.HeightProperty.SetDefault(_comboBox, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -4066,6 +4138,8 @@ namespace Delight
                     _comboBoxComboBoxButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _comboBoxComboBoxButton.Name = "ComboBoxComboBoxButton";
+                    _comboBoxComboBoxButton.LineNumber = 10;
+                    _comboBoxComboBoxButton.LinePosition = 4;
 #endif
                     Delight.Button.IsToggleButtonProperty.SetDefault(_comboBoxComboBoxButton, true);
                     Delight.Button.WidthProperty.SetDefault(_comboBoxComboBoxButton, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -4097,6 +4171,8 @@ namespace Delight
                     _comboBoxComboBoxButtonLabel = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _comboBoxComboBoxButtonLabel.Name = "ComboBoxComboBoxButtonLabel";
+                    _comboBoxComboBoxButtonLabel.LineNumber = 15;
+                    _comboBoxComboBoxButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_comboBoxComboBoxButtonLabel, 16f);
                     Delight.Label.FontColorProperty.SetDefault(_comboBoxComboBoxButtonLabel, new UnityEngine.Color(0f, 0f, 0f, 1f));
@@ -4123,6 +4199,8 @@ namespace Delight
                     _comboBoxComboBoxListCanvas = new Template(UICanvasTemplates.UICanvas);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListCanvas.Name = "ComboBoxComboBoxListCanvas";
+                    _comboBoxComboBoxListCanvas.LineNumber = 11;
+                    _comboBoxComboBoxListCanvas.LinePosition = 4;
 #endif
                     Delight.UICanvas.AlignmentProperty.SetDefault(_comboBoxComboBoxListCanvas, Delight.ElementAlignment.Top);
                     Delight.UICanvas.OverrideSortingProperty.SetDefault(_comboBoxComboBoxListCanvas, true);
@@ -4146,6 +4224,8 @@ namespace Delight
                     _comboBoxComboBoxList = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _comboBoxComboBoxList.Name = "ComboBoxComboBoxList";
+                    _comboBoxComboBoxList.LineNumber = 12;
+                    _comboBoxComboBoxList.LinePosition = 6;
 #endif
                     Delight.List.WidthProperty.SetDefault(_comboBoxComboBoxList, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.List.AlignmentProperty.SetDefault(_comboBoxComboBoxList, Delight.ElementAlignment.Top);
@@ -4172,6 +4252,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegion.Name = "ComboBoxComboBoxListScrollableRegion";
+                    _comboBoxComboBoxListScrollableRegion.LineNumber = 27;
+                    _comboBoxComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegion, ComboBoxComboBoxListScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegion, ComboBoxComboBoxListScrollableRegionHorizontalScrollbar);
@@ -4195,6 +4277,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionContentRegion.Name = "ComboBoxComboBoxListScrollableRegionContentRegion";
+                    _comboBoxComboBoxListScrollableRegionContentRegion.LineNumber = 24;
+                    _comboBoxComboBoxListScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _comboBoxComboBoxListScrollableRegionContentRegion;
@@ -4215,6 +4299,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbar.Name = "ComboBoxComboBoxListScrollableRegionHorizontalScrollbar";
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegionHorizontalScrollbar, ComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegionHorizontalScrollbar, ComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle);
@@ -4237,6 +4323,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.Name = "ComboBoxComboBoxListScrollableRegionHorizontalScrollbarBar";
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _comboBoxComboBoxListScrollableRegionHorizontalScrollbarBar;
@@ -4257,6 +4345,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.Name = "ComboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle";
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _comboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _comboBoxComboBoxListScrollableRegionHorizontalScrollbarHandle;
@@ -4277,6 +4367,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbar.Name = "ComboBoxComboBoxListScrollableRegionVerticalScrollbar";
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegionVerticalScrollbar, ComboBoxComboBoxListScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegionVerticalScrollbar, ComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle);
@@ -4299,6 +4391,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbarBar.Name = "ComboBoxComboBoxListScrollableRegionVerticalScrollbarBar";
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _comboBoxComboBoxListScrollableRegionVerticalScrollbarBar;
@@ -4319,6 +4413,8 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.Name = "ComboBoxComboBoxListScrollableRegionVerticalScrollbarHandle";
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _comboBoxComboBoxListScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _comboBoxComboBoxListScrollableRegionVerticalScrollbarHandle;

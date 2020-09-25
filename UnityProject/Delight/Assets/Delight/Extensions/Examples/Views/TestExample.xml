@@ -1,0 +1,18 @@
+<TestExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot">
+
+  <Group> 
+    <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
+      <ListItem Click="$ MyButton.Text = level.Name">
+        <Group Orientation="Horizontal">
+          <Label Text="$ {level.Name}" AutoSize="True" />
+          <Label Text="$ Test2(40) " AutoSize="True" />
+          <Label Text="$ {{ string name = {level.Name}; return name + '!'; }}" />
+          <Button Text="$ {level.Index} + '. Test'" Click="$ {{ string name = level.Name; Test2(10); return; }}" />  
+        </Group>
+      </ListItem>
+    </List>  
+    <Button Id="MyButton" Text="Test" Click="Test" />
+    <Label Text="$ {{ string test = 'hello'; return test; }}" /> 
+  </Group>
+
+</TestExample>

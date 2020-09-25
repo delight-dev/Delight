@@ -148,6 +148,8 @@ namespace Delight
                     _rawImage = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _rawImage.Name = "RawImage";
+                    _rawImage.LineNumber = 0;
+                    _rawImage.LinePosition = 0;
 #endif
                 }
                 return _rawImage;

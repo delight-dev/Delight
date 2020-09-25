@@ -238,6 +238,8 @@ namespace Delight
                     _image = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _image.Name = "Image";
+                    _image.LineNumber = 0;
+                    _image.LinePosition = 0;
 #endif
                 }
                 return _image;

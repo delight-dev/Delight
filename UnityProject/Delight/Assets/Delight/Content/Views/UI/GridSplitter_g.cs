@@ -140,6 +140,8 @@ namespace Delight
                     _gridSplitter = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _gridSplitter.Name = "GridSplitter";
+                    _gridSplitter.LineNumber = 0;
+                    _gridSplitter.LinePosition = 0;
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_gridSplitter, new ElementSize(10f, ElementSizeUnit.Pixels));
                     Delight.GridSplitter.SplitModeProperty.SetDefault(_gridSplitter, Delight.SplitMode.RowsAndColumns);

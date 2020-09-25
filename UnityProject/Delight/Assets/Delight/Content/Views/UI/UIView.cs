@@ -108,6 +108,7 @@ namespace Delight
                 case nameof(Alpha):
                 case nameof(RaycastBlockMode):
                 case nameof(IsVisible):
+                case nameof(IsInteractable):
                     VisibilityChanged();
                     break;
 
@@ -350,9 +351,10 @@ namespace Delight
         /// </summary>
         protected virtual void VisibilityChanged()
         {
-            if (AlphaProperty.IsUndefined(this) &&
-                IsVisibleProperty.IsUndefined(this) &&
-                RaycastBlockModeProperty.IsUndefined(this))
+            if (AlphaProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                IsVisibleProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                RaycastBlockModeProperty.IsUndefined(this, UIViewTemplates.Default) &&
+                IsInteractableProperty.IsUndefined(this, UIViewTemplates.Default))
                 return;
 
             // to change alpha, visibility and raycast we need a canvas group attached
@@ -380,7 +382,14 @@ namespace Delight
                 CanvasGroup.blocksRaycasts = (IsVisible && alpha > 0);
             }
 
-            CanvasGroup.interactable = IsVisible && alpha > 0;
+            if (IsInteractableProperty.IsUndefined(this))
+            {
+                CanvasGroup.interactable = IsVisible && alpha > 0;
+            }
+            else
+            {
+                CanvasGroup.interactable = IsInteractable;
+            }
         }
 
         /// <summary>

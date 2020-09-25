@@ -28,8 +28,8 @@ namespace Delight
             // constructing List (List1)
             List1 = new List(this, this, "List1", List1Template);
 
-            // binding <List Items="{level in @Levels}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = Models.Levels, () => { }, false));
+            // binding <List Items="{level in @DemoLevels}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "List1", "Items" }, new List<Func<BindableObject>> { () => this, () => List1 }), () => List1.Items = Models.DemoLevels, () => { }, false));
 
             // templates for List1
             List1.ContentTemplates.Add(new ContentTemplate(tiLevel => 
@@ -42,7 +42,7 @@ namespace Delight
                 var image2 = new Image(this, listItem1.Content, "Image2", Image2Template);
 
                 // binding <Image Sprite="{level.Stars}">
-                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Stars" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.Level) }) }, new BindingPath(new List<string> { "Sprite" }, new List<Func<BindableObject>> { () => image2 }), () => image2.Sprite = (tiLevel.Item as Delight.Level).Stars, () => { }, false));
+                listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Stars" }, new List<Func<BindableObject>> { () => tiLevel, () => (tiLevel.Item as Delight.DemoLevel) }) }, new BindingPath(new List<string> { "Sprite" }, new List<Func<BindableObject>> { () => image2 }), () => image2.Sprite = (tiLevel.Item as Delight.DemoLevel).Stars, () => { }, false));
                 listItem1.IsDynamic = true;
                 listItem1.SetContentTemplateData(tiLevel);
                 return listItem1;
@@ -270,6 +270,8 @@ namespace Delight
                     _levelSelectExample = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _levelSelectExample.Name = "LevelSelectExample";
+                    _levelSelectExample.LineNumber = 0;
+                    _levelSelectExample.LinePosition = 0;
 #endif
                     Delight.LevelSelectExample.WidthProperty.SetDefault(_levelSelectExample, new ElementSize(750f, ElementSizeUnit.Pixels));
                     Delight.LevelSelectExample.HeightProperty.SetDefault(_levelSelectExample, new ElementSize(600f, ElementSizeUnit.Pixels));
@@ -301,6 +303,8 @@ namespace Delight
                     _levelSelectExampleImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _levelSelectExampleImage1.Name = "LevelSelectExampleImage1";
+                    _levelSelectExampleImage1.LineNumber = 3;
+                    _levelSelectExampleImage1.LinePosition = 4;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_levelSelectExampleImage1, Assets.Sprites["LevelSelectBg"]);
                     Delight.Image.PreserveAspectProperty.SetDefault(_levelSelectExampleImage1, true);
@@ -324,6 +328,8 @@ namespace Delight
                     _levelSelectExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _levelSelectExampleLabel1.Name = "LevelSelectExampleLabel1";
+                    _levelSelectExampleLabel1.LineNumber = 4;
+                    _levelSelectExampleLabel1.LinePosition = 4;
 #endif
                     Delight.Label.TextProperty.SetDefault(_levelSelectExampleLabel1, "Level Select");
                     Delight.Label.AutoSizeProperty.SetDefault(_levelSelectExampleLabel1, Delight.AutoSize.Default);
@@ -350,6 +356,8 @@ namespace Delight
                     _levelSelectExampleList1 = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _levelSelectExampleList1.Name = "LevelSelectExampleList1";
+                    _levelSelectExampleList1.LineNumber = 5;
+                    _levelSelectExampleList1.LinePosition = 4;
 #endif
                     Delight.List.OverflowProperty.SetDefault(_levelSelectExampleList1, Delight.OverflowMode.Wrap);
                     Delight.List.OrientationProperty.SetDefault(_levelSelectExampleList1, Delight.ElementOrientation.Horizontal);
@@ -385,6 +393,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegion.Name = "LevelSelectExampleList1ScrollableRegion";
+                    _levelSelectExampleList1ScrollableRegion.LineNumber = 27;
+                    _levelSelectExampleList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegion, LevelSelectExampleList1ScrollableRegionContentRegion);
                     Delight.ScrollableRegion.HorizontalScrollbarTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegion, LevelSelectExampleList1ScrollableRegionHorizontalScrollbar);
@@ -408,6 +418,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionContentRegion = new Template(ListTemplates.ListScrollableRegionContentRegion);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionContentRegion.Name = "LevelSelectExampleList1ScrollableRegionContentRegion";
+                    _levelSelectExampleList1ScrollableRegionContentRegion.LineNumber = 24;
+                    _levelSelectExampleList1ScrollableRegionContentRegion.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleList1ScrollableRegionContentRegion;
@@ -428,6 +440,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbar);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbar.Name = "LevelSelectExampleList1ScrollableRegionHorizontalScrollbar";
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegionHorizontalScrollbar, LevelSelectExampleList1ScrollableRegionHorizontalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegionHorizontalScrollbar, LevelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle);
@@ -450,6 +464,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbarBar = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarBar);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbarBar.Name = "LevelSelectExampleList1ScrollableRegionHorizontalScrollbarBar";
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleList1ScrollableRegionHorizontalScrollbarBar;
@@ -470,6 +486,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionHorizontalScrollbarHandle);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle.Name = "LevelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle";
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _levelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _levelSelectExampleList1ScrollableRegionHorizontalScrollbarHandle;
@@ -490,6 +508,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbar);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbar.Name = "LevelSelectExampleList1ScrollableRegionVerticalScrollbar";
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.BarTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegionVerticalScrollbar, LevelSelectExampleList1ScrollableRegionVerticalScrollbarBar);
                     Delight.Scrollbar.HandleTemplateProperty.SetDefault(_levelSelectExampleList1ScrollableRegionVerticalScrollbar, LevelSelectExampleList1ScrollableRegionVerticalScrollbarHandle);
@@ -512,6 +532,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbarBar = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarBar);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbarBar.Name = "LevelSelectExampleList1ScrollableRegionVerticalScrollbarBar";
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleList1ScrollableRegionVerticalScrollbarBar;
@@ -532,6 +554,8 @@ namespace Delight
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbarHandle = new Template(ListTemplates.ListScrollableRegionVerticalScrollbarHandle);
 #if UNITY_EDITOR
                     _levelSelectExampleList1ScrollableRegionVerticalScrollbarHandle.Name = "LevelSelectExampleList1ScrollableRegionVerticalScrollbarHandle";
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _levelSelectExampleList1ScrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                 }
                 return _levelSelectExampleList1ScrollableRegionVerticalScrollbarHandle;
@@ -552,6 +576,8 @@ namespace Delight
                     _levelSelectExampleListItem1 = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _levelSelectExampleListItem1.Name = "LevelSelectExampleListItem1";
+                    _levelSelectExampleListItem1.LineNumber = 10;
+                    _levelSelectExampleListItem1.LinePosition = 6;
 #endif
                     Delight.ListItem.BackgroundColorProperty.SetDefault(_levelSelectExampleListItem1, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.ListItem.BackgroundSpriteProperty.SetDefault(_levelSelectExampleListItem1, Assets.Sprites["LevelSelectItemBg"]);
@@ -576,6 +602,8 @@ namespace Delight
                     _levelSelectExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _levelSelectExampleLabel2.Name = "LevelSelectExampleLabel2";
+                    _levelSelectExampleLabel2.LineNumber = 11;
+                    _levelSelectExampleLabel2.LinePosition = 8;
 #endif
                     Delight.Label.FontSizeProperty.SetDefault(_levelSelectExampleLabel2, 50f);
                     Delight.Label.AutoSizeProperty.SetDefault(_levelSelectExampleLabel2, Delight.AutoSize.Default);
@@ -602,6 +630,8 @@ namespace Delight
                     _levelSelectExampleImage2 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _levelSelectExampleImage2.Name = "LevelSelectExampleImage2";
+                    _levelSelectExampleImage2.LineNumber = 13;
+                    _levelSelectExampleImage2.LinePosition = 8;
 #endif
                     Delight.Image.PreserveAspectProperty.SetDefault(_levelSelectExampleImage2, true);
                     Delight.Image.WidthProperty.SetDefault(_levelSelectExampleImage2, new ElementSize(110f, ElementSizeUnit.Pixels));
@@ -626,6 +656,8 @@ namespace Delight
                     _levelSelectExampleNavigationButton1 = new Template(NavigationButtonTemplates.NavigationButton);
 #if UNITY_EDITOR
                     _levelSelectExampleNavigationButton1.Name = "LevelSelectExampleNavigationButton1";
+                    _levelSelectExampleNavigationButton1.LineNumber = 15;
+                    _levelSelectExampleNavigationButton1.LinePosition = 6;
 #endif
                     Delight.NavigationButton.BackgroundSpriteProperty.SetDefault(_levelSelectExampleNavigationButton1, Assets.Sprites["LevelSelectRightArrow"]);
                     Delight.NavigationButton.BackgroundColorProperty.SetDefault(_levelSelectExampleNavigationButton1, new UnityEngine.Color(0.7333333f, 0.7333333f, 0.7333333f, 1f));
@@ -654,6 +686,8 @@ namespace Delight
                     _levelSelectExampleNavigationButton1Label = new Template(NavigationButtonTemplates.NavigationButtonLabel);
 #if UNITY_EDITOR
                     _levelSelectExampleNavigationButton1Label.Name = "LevelSelectExampleNavigationButton1Label";
+                    _levelSelectExampleNavigationButton1Label.LineNumber = 15;
+                    _levelSelectExampleNavigationButton1Label.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleNavigationButton1Label;
@@ -674,6 +708,8 @@ namespace Delight
                     _levelSelectExampleNavigationButton2 = new Template(NavigationButtonTemplates.NavigationButton);
 #if UNITY_EDITOR
                     _levelSelectExampleNavigationButton2.Name = "LevelSelectExampleNavigationButton2";
+                    _levelSelectExampleNavigationButton2.LineNumber = 18;
+                    _levelSelectExampleNavigationButton2.LinePosition = 6;
 #endif
                     Delight.NavigationButton.BackgroundSpriteProperty.SetDefault(_levelSelectExampleNavigationButton2, Assets.Sprites["LevelSelectPageButton"]);
                     Delight.NavigationButton.BackgroundSpriteProperty.SetStateDefault("Pressed", _levelSelectExampleNavigationButton2, Assets.Sprites["LevelSelectPageButtonPressed"]);
@@ -704,6 +740,8 @@ namespace Delight
                     _levelSelectExampleNavigationButton2Label = new Template(NavigationButtonTemplates.NavigationButtonLabel);
 #if UNITY_EDITOR
                     _levelSelectExampleNavigationButton2Label.Name = "LevelSelectExampleNavigationButton2Label";
+                    _levelSelectExampleNavigationButton2Label.LineNumber = 15;
+                    _levelSelectExampleNavigationButton2Label.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleNavigationButton2Label;
@@ -724,6 +762,8 @@ namespace Delight
                     _levelSelectExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _levelSelectExampleButton1.Name = "LevelSelectExampleButton1";
+                    _levelSelectExampleButton1.LineNumber = 22;
+                    _levelSelectExampleButton1.LinePosition = 4;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_levelSelectExampleButton1, Assets.Sprites["MainMenuDemoBackButton"]);
                     Delight.Button.BackgroundSpriteProperty.SetStateDefault("Pressed", _levelSelectExampleButton1, Assets.Sprites["MainMenuDemoBackButtonPressed"]);
@@ -754,6 +794,8 @@ namespace Delight
                     _levelSelectExampleButton1Label = new Template(ButtonTemplates.ButtonLabel);
 #if UNITY_EDITOR
                     _levelSelectExampleButton1Label.Name = "LevelSelectExampleButton1Label";
+                    _levelSelectExampleButton1Label.LineNumber = 15;
+                    _levelSelectExampleButton1Label.LinePosition = 4;
 #endif
                 }
                 return _levelSelectExampleButton1Label;

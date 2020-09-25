@@ -530,6 +530,13 @@ namespace Delight
             set { HorizontalScrollbar.BarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarIsInteractableProperty = Scrollbar.BarIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarBarIsInteractable
+        {
+            get { return HorizontalScrollbar.BarIsInteractable; }
+            set { HorizontalScrollbar.BarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarUseFastShaderProperty = Scrollbar.BarUseFastShaderProperty;
         public System.Boolean HorizontalScrollbarBarUseFastShader
         {
@@ -822,6 +829,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.HandleRaycastBlockMode; }
             set { HorizontalScrollbar.HandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleIsInteractableProperty = Scrollbar.HandleIsInteractableProperty;
+        public System.Boolean HorizontalScrollbarHandleIsInteractable
+        {
+            get { return HorizontalScrollbar.HandleIsInteractable; }
+            set { HorizontalScrollbar.HandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleUseFastShaderProperty = Scrollbar.HandleUseFastShaderProperty;
@@ -1123,6 +1137,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.RaycastBlockMode; }
             set { HorizontalScrollbar.RaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarIsInteractableProperty = Scrollbar.IsInteractableProperty;
+        public System.Boolean HorizontalScrollbarIsInteractable
+        {
+            get { return HorizontalScrollbar.IsInteractable; }
+            set { HorizontalScrollbar.IsInteractable = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarUseFastShaderProperty = Scrollbar.UseFastShaderProperty;
@@ -1454,6 +1475,13 @@ namespace Delight
             set { VerticalScrollbar.BarRaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarIsInteractableProperty = Scrollbar.BarIsInteractableProperty;
+        public System.Boolean VerticalScrollbarBarIsInteractable
+        {
+            get { return VerticalScrollbar.BarIsInteractable; }
+            set { VerticalScrollbar.BarIsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarUseFastShaderProperty = Scrollbar.BarUseFastShaderProperty;
         public System.Boolean VerticalScrollbarBarUseFastShader
         {
@@ -1746,6 +1774,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandleRaycastBlockMode; }
             set { VerticalScrollbar.HandleRaycastBlockMode = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleIsInteractableProperty = Scrollbar.HandleIsInteractableProperty;
+        public System.Boolean VerticalScrollbarHandleIsInteractable
+        {
+            get { return VerticalScrollbar.HandleIsInteractable; }
+            set { VerticalScrollbar.HandleIsInteractable = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleUseFastShaderProperty = Scrollbar.HandleUseFastShaderProperty;
@@ -2049,6 +2084,13 @@ namespace Delight
             set { VerticalScrollbar.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarIsInteractableProperty = Scrollbar.IsInteractableProperty;
+        public System.Boolean VerticalScrollbarIsInteractable
+        {
+            get { return VerticalScrollbar.IsInteractable; }
+            set { VerticalScrollbar.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarUseFastShaderProperty = Scrollbar.UseFastShaderProperty;
         public System.Boolean VerticalScrollbarUseFastShader
         {
@@ -2150,6 +2192,8 @@ namespace Delight
                     _scrollableRegion = new Template(UICanvasTemplates.UICanvas);
 #if UNITY_EDITOR
                     _scrollableRegion.Name = "ScrollableRegion";
+                    _scrollableRegion.LineNumber = 0;
+                    _scrollableRegion.LinePosition = 0;
 #endif
                     Delight.ScrollableRegion.MaskContentProperty.SetDefault(_scrollableRegion, true);
                     Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_scrollableRegion, true);
@@ -2187,6 +2231,8 @@ namespace Delight
                     _scrollableRegionContentRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _scrollableRegionContentRegion.Name = "ScrollableRegionContentRegion";
+                    _scrollableRegionContentRegion.LineNumber = 24;
+                    _scrollableRegionContentRegion.LinePosition = 4;
 #endif
                     Delight.Region.BubbleNotifyChildLayoutChangedProperty.SetDefault(_scrollableRegionContentRegion, true);
                     Delight.Region.AlignmentProperty.SetHasBinding(_scrollableRegionContentRegion);
@@ -2209,6 +2255,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbar = new Template(ScrollbarTemplates.Scrollbar);
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbar.Name = "ScrollableRegionHorizontalScrollbar";
+                    _scrollableRegionHorizontalScrollbar.LineNumber = 26;
+                    _scrollableRegionHorizontalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionHorizontalScrollbar, Delight.ElementOrientation.Horizontal);
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_scrollableRegionHorizontalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
@@ -2234,6 +2282,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarBar.Name = "ScrollableRegionHorizontalScrollbarBar";
+                    _scrollableRegionHorizontalScrollbarBar.LineNumber = 7;
+                    _scrollableRegionHorizontalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_scrollableRegionHorizontalScrollbarBar, new ElementMargin(new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels)));
@@ -2256,6 +2306,8 @@ namespace Delight
                     _scrollableRegionHorizontalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
 #if UNITY_EDITOR
                     _scrollableRegionHorizontalScrollbarHandle.Name = "ScrollableRegionHorizontalScrollbarHandle";
+                    _scrollableRegionHorizontalScrollbarHandle.LineNumber = 8;
+                    _scrollableRegionHorizontalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionHorizontalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }
@@ -2277,6 +2329,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbar = new Template(ScrollbarTemplates.Scrollbar);
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbar.Name = "ScrollableRegionVerticalScrollbar";
+                    _scrollableRegionVerticalScrollbar.LineNumber = 27;
+                    _scrollableRegionVerticalScrollbar.LinePosition = 4;
 #endif
                     Delight.Scrollbar.OrientationProperty.SetDefault(_scrollableRegionVerticalScrollbar, Delight.ElementOrientation.Vertical);
                     Delight.Scrollbar.BackgroundColorProperty.SetDefault(_scrollableRegionVerticalScrollbar, new UnityEngine.Color(1f, 1f, 1f, 1f));
@@ -2302,6 +2356,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbarBar = new Template(ScrollbarTemplates.ScrollbarBar);
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarBar.Name = "ScrollableRegionVerticalScrollbarBar";
+                    _scrollableRegionVerticalScrollbarBar.LineNumber = 7;
+                    _scrollableRegionVerticalScrollbarBar.LinePosition = 4;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new UnityEngine.Color(1f, 1f, 1f, 1f));
                     Delight.Image.MarginProperty.SetDefault(_scrollableRegionVerticalScrollbarBar, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels), new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(3f, ElementSizeUnit.Pixels)));
@@ -2324,6 +2380,8 @@ namespace Delight
                     _scrollableRegionVerticalScrollbarHandle = new Template(ScrollbarTemplates.ScrollbarHandle);
 #if UNITY_EDITOR
                     _scrollableRegionVerticalScrollbarHandle.Name = "ScrollableRegionVerticalScrollbarHandle";
+                    _scrollableRegionVerticalScrollbarHandle.LineNumber = 8;
+                    _scrollableRegionVerticalScrollbarHandle.LinePosition = 6;
 #endif
                     Delight.Image.ColorProperty.SetDefault(_scrollableRegionVerticalScrollbarHandle, new UnityEngine.Color(0.7490196f, 0.7490196f, 0.7490196f, 1f));
                 }

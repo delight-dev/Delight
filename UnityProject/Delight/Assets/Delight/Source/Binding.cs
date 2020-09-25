@@ -21,6 +21,7 @@ namespace Delight
         public Action PropagateTargetToSource;
         public bool SourcesReachable;
         public bool IsTwoWay;
+        public bool IsSimple;
 
         #endregion
 
@@ -42,6 +43,15 @@ namespace Delight
             IsTwoWay = isTwoWay;
         }
 
+        /// <summary>
+        /// Creates a very simple binding that just propagates source to target on update. Used by embedded expressions without binding sources.
+        /// </summary>
+        public Binding(Action propagateSourceToTarget)
+        {
+            PropagateSourceToTarget = propagateSourceToTarget;
+            IsSimple = true;
+        }
+
         #endregion
 
         #region Methods
@@ -51,6 +61,12 @@ namespace Delight
         /// </summary>
         public void UpdateBinding(bool propagateTargetToSource = false)
         {
+            if (IsSimple)
+            {
+                PropagateSourceToTarget();
+                return;
+            }
+
             // detach any existing property changed listeners
             foreach (var source in Sources)
             {
@@ -124,6 +140,14 @@ namespace Delight
                     PropagateTargetToSource();
                 }
             }
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if binding has target object.
+        /// </summary>
+        public bool HasTarget(DependencyObject targetObject)
+        {
+            return IsSimple ? false : Target.Objects.Contains(targetObject);
         }
 
         #endregion

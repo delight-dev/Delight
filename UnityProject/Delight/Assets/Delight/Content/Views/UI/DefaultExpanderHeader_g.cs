@@ -126,6 +126,8 @@ namespace Delight
                     _defaultExpanderHeader = new Template(ExpanderHeaderTemplates.ExpanderHeader);
 #if UNITY_EDITOR
                     _defaultExpanderHeader.Name = "DefaultExpanderHeader";
+                    _defaultExpanderHeader.LineNumber = 0;
+                    _defaultExpanderHeader.LinePosition = 0;
 #endif
                     Delight.DefaultExpanderHeader.HeightProperty.SetDefault(_defaultExpanderHeader, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.DefaultExpanderHeader.HeaderGroupTemplateProperty.SetDefault(_defaultExpanderHeader, DefaultExpanderHeaderHeaderGroup);
@@ -150,6 +152,8 @@ namespace Delight
                     _defaultExpanderHeaderHeaderGroup = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _defaultExpanderHeaderHeaderGroup.Name = "DefaultExpanderHeaderHeaderGroup";
+                    _defaultExpanderHeaderHeaderGroup.LineNumber = 3;
+                    _defaultExpanderHeaderHeaderGroup.LinePosition = 4;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_defaultExpanderHeaderHeaderGroup, Delight.ElementOrientation.Horizontal);
                     Delight.Group.SpacingProperty.SetDefault(_defaultExpanderHeaderHeaderGroup, new ElementSize(5f, ElementSizeUnit.Pixels));
@@ -173,6 +177,8 @@ namespace Delight
                     _defaultExpanderHeaderHeaderIcon = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _defaultExpanderHeaderHeaderIcon.Name = "DefaultExpanderHeaderHeaderIcon";
+                    _defaultExpanderHeaderHeaderIcon.LineNumber = 4;
+                    _defaultExpanderHeaderHeaderIcon.LinePosition = 6;
 #endif
                     Delight.Image.SpriteProperty.SetHasBinding(_defaultExpanderHeaderHeaderIcon);
                 }
@@ -194,6 +200,8 @@ namespace Delight
                     _defaultExpanderHeaderHeaderLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _defaultExpanderHeaderHeaderLabel.Name = "DefaultExpanderHeaderHeaderLabel";
+                    _defaultExpanderHeaderHeaderLabel.LineNumber = 5;
+                    _defaultExpanderHeaderHeaderLabel.LinePosition = 6;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_defaultExpanderHeaderHeaderLabel, Delight.AutoSize.Default);
                     Delight.Label.TextProperty.SetHasBinding(_defaultExpanderHeaderHeaderLabel);

@@ -335,6 +335,8 @@ namespace Delight
                     _uICanvas = new Template(UIViewTemplates.UIView);
 #if UNITY_EDITOR
                     _uICanvas.Name = "UICanvas";
+                    _uICanvas.LineNumber = 0;
+                    _uICanvas.LinePosition = 0;
 #endif
                     Delight.UICanvas.PixelPerfectProperty.SetDefault(_uICanvas, false);
                 }

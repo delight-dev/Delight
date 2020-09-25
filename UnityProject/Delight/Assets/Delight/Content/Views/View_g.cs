@@ -64,6 +64,8 @@ namespace Delight
                     _view = new Template(null);
 #if UNITY_EDITOR
                     _view.Name = "View";
+                    _view.LineNumber = 0;
+                    _view.LinePosition = 0;
 #endif
                 }
                 return _view;

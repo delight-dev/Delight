@@ -9,6 +9,9 @@
   <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a"
             Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a"
             Alternate-BackgroundColor="Gray95" />
+  <ListItem Style="UnselectableListItem" Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="Clear"
+            Highlighted-BackgroundColor="Clear" Pressed-BackgroundColor="Clear"
+            Alternate-BackgroundColor="Clear" />
   <InputField BackgroundColor="White" FontSize="16" FontColor="#000000"
               Width="400" Height="30" SelectionColor="#ef706a" TextMargin="5,7,5,0" />
   <Slider SliderFillColor="#ef706a" SliderHandleColor="#f8f6f3" BackgroundColor="#626262" Breadth="12" SliderHandleWidth="11" SliderHandleHeight="22" />
@@ -27,9 +30,7 @@
                RadioButtonColor="#ffffff" RadioButtonOffset="0,1,0,0" FontSize="16" FontColor="#ffffff" FontStyle="Normal" Spacing="10px"
                Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" />
 
-  <SelectionIndicator BackgroundSprite="Selection"
-                      SelectionTabFontColor="#7a6e6e" Highlighted-SelectionTabFontColor="#7a6e6e" Pressed-SelectionTabFontColor="#7a6e6e"
-                      SelectionTabBackgroundColor="#f4f4f4" Highlighted-SelectionTabBackgroundColor="#f4f4f4" Pressed-SelectionTabBackgroundColor="#f4f4f4" />
+  <SelectionIndicator BackgroundSprite="Selection" />
   <NavigationButton Width="30" Height="40" BackgroundColor="#bbbbbb" Highlighted-BackgroundColor="#dddddd" Pressed-BackgroundColor="#ffffff"/>
 
   <Expander Sprite="ExpanderArrowRight" Expanded-Sprite="ExpanderArrowDown" />

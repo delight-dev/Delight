@@ -87,6 +87,8 @@ namespace Delight
                     _navigationButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _navigationButton.Name = "NavigationButton";
+                    _navigationButton.LineNumber = 0;
+                    _navigationButton.LinePosition = 0;
 #endif
                     Delight.NavigationButton.NavigationTypeProperty.SetDefault(_navigationButton, Delight.NavigationButtonType.NextAndPrevious);
                     Delight.NavigationButton.AutoSizeProperty.SetDefault(_navigationButton, Delight.AutoSize.False);
@@ -115,6 +117,8 @@ namespace Delight
                     _navigationButtonLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _navigationButtonLabel.Name = "NavigationButtonLabel";
+                    _navigationButtonLabel.LineNumber = 15;
+                    _navigationButtonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextAlignmentProperty.SetDefault(_navigationButtonLabel, TMPro.TextAlignmentOptions.Center);
                 }

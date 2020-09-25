@@ -77,6 +77,8 @@ namespace Delight
                     _expanderContent = new Template(FrameTemplates.Frame);
 #if UNITY_EDITOR
                     _expanderContent.Name = "ExpanderContent";
+                    _expanderContent.LineNumber = 0;
+                    _expanderContent.LinePosition = 0;
 #endif
                 }
                 return _expanderContent;

@@ -54,6 +54,11 @@ namespace Delight
 
         #region Method
 
+        public void Invoke()
+        {
+            Invoke(null, null);
+        }
+
         public void Invoke(DependencyObject sender, object eventArgs)
         {
             if (_isEnabled)
@@ -64,16 +69,26 @@ namespace Delight
                 
         public void RegisterHandler(View parent, string actionHandlerName, params Func<object>[] paramGetters)
         {
-            RegisterHandler(ResolveActionHandler(parent, actionHandlerName, paramGetters));
+            RegisterActionHandler(ResolveActionHandler(parent, actionHandlerName, paramGetters));
         }
 
-        public void RegisterHandler(ViewActionDelegate viewAction)
+        public void RegisterHandler(Action action)
+        {
+            RegisterActionHandler((x, y) => action());
+        }
+
+        public void RegisterHandler(Action<DependencyObject, object> action)
+        {
+            RegisterActionHandler((x, y) => action(x, y));
+        }
+
+        public void RegisterActionHandler(ViewActionDelegate viewAction)
         {
             _action -= viewAction;
             _action += viewAction;
         }
 
-        public void UnregisterHandler(ViewActionDelegate viewAction)
+        public void UnregisterActionHandler(ViewActionDelegate viewAction)
         {
             _action -= viewAction;
         }

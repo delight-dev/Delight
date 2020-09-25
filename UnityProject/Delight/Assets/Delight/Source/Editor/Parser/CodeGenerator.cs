@@ -133,7 +133,7 @@ namespace Delight.Editor.Parser
             var templateSb = new StringBuilder();
 
             // start by generating data template as we update property assignment expressions with property declaration information as we do
-            GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath);
+            GenerateDataTemplate(templateSb, viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, null);
 
             bool addEndIf = false;
             if (!String.IsNullOrEmpty(viewObject.Module))
@@ -450,6 +450,7 @@ namespace Delight.Editor.Parser
             if (viewType == null)
                 return;
 
+            var handlersDictionary= new Dictionary<string, string>();
             var sbHandlers = new StringBuilder();
             var methods = viewType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -524,15 +525,23 @@ namespace Delight.Editor.Parser
                 sbHandlers.AppendLine(2, "public void {0}({1})", actionName, parameters);
                 sbHandlers.AppendLine(2, "{{");
                 sbHandlers.AppendLine(2, "}}");
-                ++newActionAssignmentCount;
+
+                string identifyingString = String.Format("public void {0}(", actionName);
+                if (!handlersDictionary.ContainsKey(identifyingString))
+                {
+                    handlersDictionary.Add(identifyingString, sbHandlers.ToString());
+                    ++newActionAssignmentCount;
+                }
+
+                sbHandlers.Clear();                
             }
 
             if (newActionAssignmentCount > 0)
             {
-                // write file
                 var dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(viewObject.FilePath));
                 var sourceFile = String.Format("{0}/{1}.cs", dir, viewObject.Name);
 
+                // write file
                 if (!File.Exists(sourceFile))
                 {
                     // generate new source file 
@@ -550,7 +559,7 @@ namespace Delight.Editor.Parser
                     sb.AppendLine("{");
                     sb.AppendLine("    public partial class {0}", viewObject.TypeName);
                     sb.AppendLine("    {");
-                    sb.Append(sbHandlers.ToString());
+                    sb.Append(string.Concat(handlersDictionary.Values));
                     sb.AppendLine("    }");
                     sb.AppendLine("}");
 
@@ -579,9 +588,25 @@ namespace Delight.Editor.Parser
                         classContentIndex += usingStr.Length;
                     }
 
-                    // insert handlers
-                    fileContent = fileContent.Insert(classContentIndex + 1, Environment.NewLine + sbHandlers.ToString());
-                    File.WriteAllText(sourceFile, fileContent);
+                    // insert missing handlers
+                    var sb = new StringBuilder();
+                    foreach (var handlerKv in handlersDictionary)
+                    {
+                        if (fileContent.IndexOf(handlerKv.Key) >= 0)
+                        {
+                            // handler already exists
+                            continue;
+                        }
+
+                        sb.Append(handlerKv.Value);
+                    }
+
+                    var newHandlers = sb.ToString();
+                    if (!String.IsNullOrWhiteSpace(newHandlers))
+                    {
+                        fileContent = fileContent.Insert(classContentIndex + 1, Environment.NewLine + sb.ToString());
+                        File.WriteAllText(sourceFile, fileContent);
+                    }
                 }
             }
         }
@@ -838,7 +863,7 @@ namespace Delight.Editor.Parser
         /// Updates view object properties and generates data template.
         /// </summary>
         private static void GenerateDataTemplate(StringBuilder sb, ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
-            List<PropertyExpression> nestedPropertyExpressions, string fileName)
+            List<PropertyExpression> nestedPropertyExpressions, string fileName, ViewDeclaration internalViewDeclaration)
         {
             // ** important: changes in data template generation need to be reflected in the runtime instantiation of data templates in
             // DelightDesigner.CreateRuntimeDataTemplates() **
@@ -883,6 +908,8 @@ namespace Delight.Editor.Parser
             // add name in editor so we can easy track which template is used where in the debugger
             sb.AppendLine("#if UNITY_EDITOR");
             sb.AppendLine("                    {0}.Name = \"{1}\";", localId, idPath);
+            sb.AppendLine("                    {0}.LineNumber = {1};", localId, internalViewDeclaration != null ? internalViewDeclaration.LineNumber : 0);
+            sb.AppendLine("                    {0}.LinePosition = {1};", localId, internalViewDeclaration != null ? internalViewDeclaration.LinePosition : 0);
             sb.AppendLine("#endif");
 
             GenerateDataTemplateValueInitializers(sb, viewObject, isParent,
@@ -922,7 +949,7 @@ namespace Delight.Editor.Parser
 
                 GenerateDataTemplate(sb, childViewObject, childIdPath, childBasedOnPath, childBasedOnViewName,
                     isParent && !declaration.IsInherited ? declaration.Declaration : null,
-                    childPropertyAssignments, fileName);
+                    childPropertyAssignments, fileName, declaration.Declaration);
             }
         }
 
@@ -1026,7 +1053,7 @@ namespace Delight.Editor.Parser
                     }
                     else
                     {
-                        childPropertyExpressions.Add(new PropertyBinding { PropertyName = childViewPropertyName, AttachedNeedUpdate = propertyBinding.AttachedNeedUpdate, AttachedToParentViewDeclaration = propertyBinding.AttachedToParentViewDeclaration, BindingNeedUpdate = propertyBinding.BindingNeedUpdate, BindingType = propertyBinding.BindingType, FormatString = propertyBinding.FormatString, IsAttached = propertyBinding.IsAttached, ItemId = propertyBinding.ItemId, LineNumber = propertyBinding.LineNumber, PropertyBindingString = propertyBinding.PropertyBindingString, Sources = propertyBinding.Sources.ToList(), StyleDeclaration = propertyBinding.StyleDeclaration, TransformMethod = propertyBinding.TransformMethod });
+                        childPropertyExpressions.Add(new PropertyBinding { PropertyName = childViewPropertyName, AttachedNeedUpdate = propertyBinding.AttachedNeedUpdate, AttachedToParentViewDeclaration = propertyBinding.AttachedToParentViewDeclaration, BindingNeedUpdate = propertyBinding.BindingNeedUpdate, BindingType = propertyBinding.BindingType, FormatString = propertyBinding.FormatString, IsAttached = propertyBinding.IsAttached, ItemId = propertyBinding.ItemId, LineNumber = propertyBinding.LineNumber, PropertyBindingString = propertyBinding.PropertyBindingString, Sources = propertyBinding.Sources.ToList(), StyleDeclaration = propertyBinding.StyleDeclaration, TransformExpression = propertyBinding.TransformExpression });
                     }
                     continue;
                 }
@@ -1053,6 +1080,8 @@ namespace Delight.Editor.Parser
                             continue;
                         }
                     }
+
+                    propertyBinding.PropertyDeclarationInfo = bindingPropertyDecl;
 
                     if (!instantiateDataTemplateValues)
                     {
@@ -1129,6 +1158,10 @@ namespace Delight.Editor.Parser
                 // ignore action and method assignments as they are always set as run-time values in constructor
                 if (decl.Declaration.DeclarationType == PropertyDeclarationType.Action ||
                     decl.Declaration.DeclarationType == PropertyDeclarationType.Method)
+                    continue;
+
+                // ignore assignment with embedded expressions as they are set as run-time values (simple bindings created for them)
+                if (propertyAssignment.HasEmbeddedCode)
                     continue;
 
                 var propertyTypeName = decl.IsAssetReference ? decl.AssetType.FormattedTypeName : decl.Declaration.PropertyTypeFullName;
@@ -1356,18 +1389,20 @@ namespace Delight.Editor.Parser
 
                 // do we have action handlers?
                 var childPropertyAssignments = childViewDeclaration.GetPropertyAssignmentsWithStyle(out var dummy);
-                var actionAssignments = childPropertyAssignments.Where(x =>
-                {
-                    if (x.PropertyDeclarationInfo == null)
-                        return false;
-                    return x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action;
-                });
+                var actionAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action);
                 if (actionAssignments.Any())
                 {
                     // yes. add initializer for action handlers
                     foreach (var actionAssignment in actionAssignments)
                     {
                         var actionValue = actionAssignment.PropertyValue;
+                        if (actionAssignment.HasEmbeddedCode)
+                        {
+                            actionValue = SetTemplateItemsInExpression(templateItems, actionValue, false);
+                            sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, actionValue);
+                            continue;
+                        }
+
                         var actionHandlerName = actionValue;
 
                         // does the action have parameters?
@@ -1416,6 +1451,32 @@ namespace Delight.Editor.Parser
 
                         // generate action assignment without parameters
                         sb.AppendLine(indent, "{0}.{1}.RegisterHandler(this, \"{2}\");", childIdVar, actionAssignment.PropertyName, actionHandlerName);
+                    }
+                }
+
+                // do we have assignments with embedded expressions?
+                var embeddedAssignments = childPropertyAssignments.Where(x => x.PropertyDeclarationInfo != null && x.HasEmbeddedCode && x.PropertyDeclarationInfo.Declaration.DeclarationType != PropertyDeclarationType.Action);
+                if (embeddedAssignments.Any())
+                {
+                    // generate assignment for expressions
+                    foreach (var embeddedAssignment in embeddedAssignments)
+                    {
+                        var embeddedAssignmentValue = SetTemplateItemsInExpression(templateItems, embeddedAssignment.PropertyValue, false);
+
+                        // handle multi-line expressions
+                        var trimmedEmbeddedAssignmentValue = embeddedAssignmentValue.Trim();
+                        if (trimmedEmbeddedAssignmentValue.StartsWith("{{"))
+                        {
+                            // translate, {{ int x = 0; return x; }} to ((Func<int>)(() => {{ int x = 0; return x; }}))();
+                            embeddedAssignmentValue = String.Format("((Func<{0}>)(() => {1} ))()", embeddedAssignment.PropertyDeclarationInfo.Declaration.PropertyTypeFullName, trimmedEmbeddedAssignmentValue);
+                        }
+
+                        sb.AppendLine(indent, "// binding <{0} {1}=\"$ {2}\">", childViewDeclaration.ViewName, embeddedAssignment.PropertyName, embeddedAssignment.PropertyValue);
+                        sb.AppendLine(indent,
+                            "{0}Bindings.Add(new Binding(() => {1}.{2} = {3}));",
+                            inTemplate ? firstTemplateChild + "." : "",
+                            childIdVar,
+                            embeddedAssignment.PropertyName, embeddedAssignmentValue);
                     }
                 }
 
@@ -1493,7 +1554,7 @@ namespace Delight.Editor.Parser
                         bool castToItemType = false;
                         if (propertyBinding.PropertyName.IEquals("SelectedItem") && ti != null)
                         {
-                            if  (String.IsNullOrEmpty(ti.ItemTypeName))
+                            if (String.IsNullOrEmpty(ti.ItemTypeName))
                             {
                                 // item type could not be inferred so skip binding
                                 continue;
@@ -1502,132 +1563,8 @@ namespace Delight.Editor.Parser
                         }
 
                         // generate binding path to source
-                        var sourceBindingPathObjects = new List<string>();
-                        var convertedSourceProperties = new List<string>();
-                        var sourceProperties = new List<string>();
-                        foreach (var bindingSource in propertyBinding.Sources)
-                        {
-                            var sourcePath = new List<string>();
-                            sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
-
-                            bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
-                            bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
-                            string negatedString = isNegated ? "!" : string.Empty;
-                            bool isLoc = false;
-                            string locId = string.Empty;
-                            bool isIndex = false;
-
-                            // handle special case when source is localization dictionary
-                            if (isModelSource && sourcePath.Count == 3 &&
-                                (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
-                            {
-                                sourcePath[1] = "Loc";
-
-                                // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
-                                locId = sourcePath[2];
-                                sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
-                                sourcePath[2] = "Label";
-                                isLoc = true;
-                            }
-
-                            // get property names along path
-                            var templateItemInfo = templateItems != null
-                                ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
-                                : null;
-                            bool isTemplateItemSource = templateItemInfo != null;
-
-                            if (isTemplateItemSource)
-                            {
-                                if (templateItemInfo.ItemTypeName == null)
-                                    continue; // item type was not inferred so ignore binding
-
-                                if (sourcePath.Count == 2)
-                                {
-                                    if (sourcePath[1].IEquals("Index"))
-                                    {
-                                        isIndex = true;
-                                    }
-                                    else if (sourcePath[1].IEquals("ZeroIndex"))
-                                    {
-                                        isIndex = true;
-                                    }
-                                }
-
-                                sourcePath[0] = templateItemInfo.VariableName;
-                                if (!isIndex)
-                                {
-                                    sourcePath.Insert(1, "Item");
-                                }
-                            }
-
-                            // handle collection indexers in binding path
-                            // The call below translates e.g. Players.Player1 => Players["Player1"]
-                            sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
-
-                            var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
-                            if (isLoc)
-                            {
-                                properties.Insert(0, locId);
-                            }
-
-                            string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
-
-                            // get object getters along path
-                            List<string> sourceGetters = new List<string>();
-                            int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
-                            int sourcePathTake = isModelSource ? 2 : 1;
-                            if (!isModelSource && !isTemplateItemSource)
-                            {
-                                sourceGetters.Add("() => this");
-                            }
-
-                            if (isLoc)
-                            {
-                                sourceGetters.Add("() => Models.Loc");
-                            }
-
-                            for (int i = 0; i < sourcePathCount; ++i)
-                            {
-                                sourceGetters.Add(String.Format("() => {0}",
-                                    string.Join(".", sourcePath.Take(i + sourcePathTake))));
-                            }
-
-                            if (isTemplateItemSource)
-                            {
-                                // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
-                                if (!isIndex)
-                                {
-                                    var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
-                                    var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
-                                    sourcePath = sourcePath.Skip(2).ToList();
-                                    sourcePath.Insert(0, castItemRef);
-
-                                    for (int i = 0; i < sourceGetters.Count; ++i)
-                                    {
-                                        // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
-                                        sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
-                                    }
-                                }
-                            }
-
-                            string sourceGettersString = string.Join(", ", sourceGetters);
-                            string sourceProperty = string.Join(".", sourcePath);
-                            string convertedSourceProperty = sourceProperty;
-
-                            // add converter
-                            if (!String.IsNullOrEmpty(bindingSource.Converter))
-                            {
-                                convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
-                            }
-                            else if (isNegated)
-                            {
-                                convertedSourceProperty = "!" + convertedSourceProperty;
-                            }
-
-                            convertedSourceProperties.Add(convertedSourceProperty);
-                            sourceProperties.Add(sourceProperty);
-                            sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
-                        }
+                        List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
+                        GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, false);
 
                         // generate binding path to target
                         var targetPath = new List<string>();
@@ -1697,7 +1634,17 @@ namespace Delight.Editor.Parser
                                 break;
 
                             case BindingType.MultiBindingTransform:
-                                sourceToTargetValue = string.Format("{0}({1})", propertyBinding.TransformMethod, string.Join(", ", convertedSourceProperties));
+                                object[] args = convertedSourceProperties.ToArray<object>();
+
+                                // handle multi-line expressions
+                                var trimmedTransformExpression = propertyBinding.TransformExpression.Trim();
+                                if (trimmedTransformExpression.StartsWith("{{"))
+                                {
+                                    // translate, {{ int x = 0; return x; }} to ((Func<int>)(() => {{ int x = 0; return x; }}))();
+                                    trimmedTransformExpression = String.Format("((Func<{0}>)(() => {1} ))()", propertyBinding.PropertyDeclarationInfo.Declaration.PropertyTypeFullName, trimmedTransformExpression);
+                                }
+
+                                sourceToTargetValue = string.Format(trimmedTransformExpression, args);
                                 break;
 
                             case BindingType.MultiBindingFormatString:
@@ -1766,6 +1713,174 @@ namespace Delight.Editor.Parser
                     // print child view declaration
                     GenerateChildViewDeclarations(viewObject.FilePath, viewObject, sb, parentViewType, childViewDeclaration, childViewDeclaration.ChildDeclarations, childIdVar, childTemplateDepth, templateItems, firstTemplateChild);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Sets template items in expression, e.g. player.FirstName => (tiPlayer.Item as Player).FirstName.
+        /// </summary>
+        public static string SetTemplateItemsInExpression(List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
+        {
+            if (templateItems == null)
+                return expression;
+
+            foreach (var templateItem in templateItems)
+            {
+                if (!expression.Contains(templateItem.Name))
+                    continue;
+                string pattern = String.Format("\\b{0}\\b", templateItem.Name);
+                string replace = isRuntime ? String.Format("(TemplateItems[\"{0}\"].Item as {1})", templateItem.VariableName, templateItem.ItemTypeName) :
+                    String.Format("({0}.Item as {1})", templateItem.VariableName, templateItem.ItemTypeName);
+                expression = Regex.Replace(expression, pattern, replace);
+            }
+
+            return expression;
+        }
+
+        /// <summary>
+        /// Gets binding source properties.
+        /// </summary>
+        public static void GetBindingSourceProperties(string fileName, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
+        {
+            sourceBindingPathObjects = new List<string>();
+            convertedSourceProperties = new List<string>();
+            sourceProperties = new List<string>();
+            foreach (var bindingSource in propertyBinding.Sources)
+            {
+                var sourcePath = new List<string>();
+                sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
+
+                bool isModelSource = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Model);
+                bool isNegated = bindingSource.SourceTypes.HasFlag(BindingSourceTypes.Negated);
+                string negatedString = isNegated ? "!" : string.Empty;
+                bool isLoc = false;
+                string locId = string.Empty;
+                bool isIndex = false;
+
+                // handle special case when source is localization dictionary
+                if (isModelSource && sourcePath.Count == 3 &&
+                    (sourcePath[1].IEquals("Loc") || sourcePath[1].IEquals("Localization")))
+                {
+                    sourcePath[1] = "Loc";
+
+                    // change Models.Loc.Greeting1 to Models.Loc["Greeting1"].Label
+                    locId = sourcePath[2];
+                    sourcePath[1] = String.Format("{0}[\"{1}\"]", sourcePath[1], locId);
+                    sourcePath[2] = "Label";
+                    isLoc = true;
+                }
+
+                // get property names along path
+                var templateItemInfo = templateItems != null
+                    ? templateItems.FirstOrDefault(x => x.Name == sourcePath[0])
+                    : null;
+                bool isTemplateItemSource = templateItemInfo != null;
+
+                if (isTemplateItemSource)
+                {
+                    if (templateItemInfo.ItemTypeName == null)
+                        continue; // item type was not inferred so ignore binding
+
+                    if (sourcePath.Count == 2)
+                    {
+                        if (sourcePath[1].IEquals("Index"))
+                        {
+                            isIndex = true;
+                        }
+                        else if (sourcePath[1].IEquals("ZeroIndex"))
+                        {
+                            isIndex = true;
+                        }
+                    }
+
+                    sourcePath[0] = templateItemInfo.VariableName;
+                    if (!isIndex)
+                    {
+                        sourcePath.Insert(1, "Item");
+                    }
+                }
+
+                // handle collection indexers in binding path
+                // The call below translates e.g. Players.Player1 => Players["Player1"]
+                sourcePath = UpdateSourcePathWithCollectionIndexers(fileName, viewObject, sourcePath, templateItemInfo, childViewDeclaration);
+
+                var properties = sourcePath.Skip(isModelSource ? 2 : (isTemplateItemSource ? 1 : 0)).ToList();
+                if (isLoc)
+                {
+                    properties.Insert(0, locId);
+                }
+
+                string sourcePropertiesStr = string.Join(", ", properties.Select(x => "\"" + x + "\""));
+
+                // get object getters along path
+                List<string> sourceGetters = new List<string>();
+                int sourcePathCount = isModelSource ? sourcePath.Count - 2 : sourcePath.Count - 1;
+                int sourcePathTake = isModelSource ? 2 : 1;
+                if (!isModelSource && !isTemplateItemSource)
+                {
+                    sourceGetters.Add("() => this");
+                }
+
+                if (isLoc)
+                {
+                    sourceGetters.Add("() => Models.Loc");
+                }
+
+                for (int i = 0; i < sourcePathCount; ++i)
+                {
+                    sourceGetters.Add(String.Format("() => {0}",
+                        string.Join(".", sourcePath.Take(i + sourcePathTake))));
+                }
+
+                if (isTemplateItemSource)
+                {
+                    // in source path and source getters for template items make sure item is cast: () => (tiItem.Item as ItemType).Property
+                    if (!isIndex)
+                    {
+                        var itemRef = String.Format("{0}.Item", templateItemInfo.VariableName);
+                        var castItemRef = String.Format("({0} as {1})", itemRef, templateItemInfo.ItemTypeName);
+                        sourcePath = sourcePath.Skip(2).ToList();
+                        sourcePath.Insert(0, castItemRef);
+
+                        for (int i = 0; i < sourceGetters.Count; ++i)
+                        {
+                            // replace "tiItem.Item" with "(tiItem.Item as ItemType)"
+                            sourceGetters[i] = sourceGetters[i].Replace(itemRef, castItemRef);
+                        }
+                    }
+
+                    // replace tiItem with TemplateItems["tiItem"] for runtime bindings
+                    if (isRuntime)
+                    {
+                        for (int i = 0; i < sourcePath.Count; ++i)
+                        {
+                            sourcePath[i] = sourcePath[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
+                        }
+                        
+                        for (int i = 0; i < sourceGetters.Count; ++i)
+                        {
+                            sourceGetters[i] = sourceGetters[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
+                        }
+                    }
+                }
+
+                string sourceGettersString = string.Join(", ", sourceGetters);
+                string sourceProperty = string.Join(".", sourcePath);
+                string convertedSourceProperty = sourceProperty;
+
+                // add converter
+                if (!String.IsNullOrEmpty(bindingSource.Converter))
+                {
+                    convertedSourceProperty = String.Format("ValueConverters.{0}.ConvertTo({1}{2})", bindingSource.Converter, negatedString, sourceProperty);
+                }
+                else if (isNegated)
+                {
+                    convertedSourceProperty = "!" + convertedSourceProperty;
+                }
+
+                convertedSourceProperties.Add(convertedSourceProperty);
+                sourceProperties.Add(sourceProperty);
+                sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
             }
         }
 
@@ -2645,7 +2760,11 @@ namespace Delight.Editor.Parser
             sb.AppendLine();
             sb.AppendLine("namespace {0}", ns);
             sb.AppendLine("{");
-            sb.AppendLine("    public partial class {0} : ModelObject", modelObject.Name);
+
+            var derivedFrom = String.IsNullOrEmpty(modelObject.DerivedFrom) ? "ModelObject" : modelObject.DerivedFrom;
+
+            sb.AppendLine("    [Serializable]");
+            sb.AppendLine("    public partial class {0} : {1}", modelObject.Name, derivedFrom);
             sb.AppendLine("    {");
 
             // generate model properties
@@ -2667,11 +2786,19 @@ namespace Delight.Editor.Parser
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public string {0}Id;", property.Name);
+#if DELIGHT_MODULE_CUPCAKE
+                    sb.AppendLine("        public {0} _{1}; //for inspector", typeName, property.Name);
+#endif
                     sb.AppendLine("        public {0} {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return Models.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
-                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+#if DELIGHT_MODULE_CUPCAKE
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); _{0} = value;}}", property.Name);
+#else
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); }}", property.Name);
+#endif
+
                     sb.AppendLine("        }");
                 }
                 else if (modelCollectionObject != null)
@@ -2679,18 +2806,18 @@ namespace Delight.Editor.Parser
                     sb.AppendLine();
                     sb.AppendLine("        public BindableCollection<{0}> {1}", modelCollectionObject.Name, property.Name);
                     sb.AppendLine("        {");
-                    sb.AppendLine("            get {{ return Models.{0}.Get(this); }}", property.Name);
+                    sb.AppendLine("            get {{ return Models.{0}.Get(this); }}", modelCollectionObject.Name.Pluralize());
                     sb.AppendLine("        }");
                 }
                 else if (isAssetReference)
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        public string {0}Id {{ get; set; }}", property.Name);
+                    sb.AppendLine("        public string {0}Id;", property.Name);
                     sb.AppendLine("        public {0}Asset {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return Assets.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
-                    sb.AppendLine("            set {{ {0}Id = value?.Id; }}", property.Name);
+                    sb.AppendLine("            set {{ SetProperty(ref {0}Id, value?.Id); }}", property.Name);
                     sb.AppendLine("        }");
                 }
                 else
@@ -2889,6 +3016,74 @@ namespace Delight.Editor.Parser
 
             //Debug.Log("Creating " + sourceFile);
             File.WriteAllText(sourceFile, sb.ToString());
+
+#if DELIGHT_MODULE_CUPCAKE
+            // generate Inspector Monobehaviour
+            sb = new StringBuilder();
+            sb.AppendLine("// Model inspector generated from \"{0}\"", schemaFilename);
+            sb.AppendLine("#region Using Statements");
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine("using UnityEngine.UI;");
+            // TODO allow configuration of namespaces to be included
+            sb.AppendLine("#endregion");
+            sb.AppendLine();
+            sb.AppendLine("namespace {0}", ns);
+            sb.AppendLine("{");
+            sb.AppendLine();
+            sb.AppendLine("    #region Inspector");
+            sb.AppendLine();
+
+            sb.AppendLine("    public class {0}Inspector : MonoBehaviour", modelObject.Name);
+            sb.AppendLine("    {");
+            sb.AppendLine("        #region Fields");
+            sb.AppendLine("        public List<{0}> {1} = new List<{0}>();", modelObject.Name, modelObject.PluralName);
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("        ");
+            sb.AppendLine("        #region Unity Callbacks");
+            sb.AppendLine("        private void OnEnable()");
+            sb.AppendLine("        {");
+            sb.AppendLine("            foreach(var item in Models.{0})", modelObject.PluralName);
+            sb.AppendLine("            {");
+            sb.AppendLine("                {0}.Add(item);", modelObject.PluralName);
+            sb.AppendLine("            }");
+            sb.AppendLine("            Models.{0}.CollectionChanged += OnCollectionChanged;", modelObject.PluralName);
+            sb.AppendLine("        }");
+            sb.AppendLine("        ");
+            sb.AppendLine("        private void OnDisable()");
+            sb.AppendLine("        {");
+            sb.AppendLine("            Models.{0}.CollectionChanged -= OnCollectionChanged;", modelObject.PluralName);
+            sb.AppendLine("        }");
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("        ");
+            sb.AppendLine("        #region Delight Callbacks");
+            sb.AppendLine("        private void OnCollectionChanged(object source, CollectionChangedEventArgs eventArgs)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            switch(eventArgs.ChangeAction)");
+            sb.AppendLine("            {");
+            sb.AppendLine("                case CollectionChangeAction.Add:");
+            sb.AppendLine("                    {0}.Add(({1})eventArgs.Item);", modelObject.PluralName, modelObject.Name);
+            sb.AppendLine("                    break;");
+            sb.AppendLine("                case CollectionChangeAction.Remove:");
+            sb.AppendLine("                    {0}.Remove(({1})eventArgs.Item);", modelObject.PluralName, modelObject.Name);
+            sb.AppendLine("                    break;");
+            sb.AppendLine("            }");
+            sb.AppendLine("        }");
+            sb.AppendLine("        #endregion");
+            sb.AppendLine("    }");
+            sb.AppendLine("    #endregion");
+            // close namespace
+            sb.AppendLine("}");
+
+            // write file
+            dir = MasterConfig.GetFormattedPath(Path.GetDirectoryName(modelObject.SchemaFilePath));
+            sourceFile = String.Format("{0}/{1}Inspector.cs", dir, modelObject.Name);
+
+            //Debug.Log("Creating " + sourceFile);
+            File.WriteAllText(sourceFile, sb.ToString());
+#endif
         }
 
         /// <summary>
@@ -3187,9 +3382,9 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
 
-        #region Config
+#region Config
 
         /// <summary>
         /// Generates model code.
@@ -3246,7 +3441,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
     }
 }
 

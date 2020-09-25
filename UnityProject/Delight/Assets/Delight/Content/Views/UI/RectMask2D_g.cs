@@ -76,6 +76,8 @@ namespace Delight
                     _rectMask2D = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _rectMask2D.Name = "RectMask2D";
+                    _rectMask2D.LineNumber = 0;
+                    _rectMask2D.LinePosition = 0;
 #endif
                     Delight.RectMask2D.WidthProperty.SetDefault(_rectMask2D, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.RectMask2D.HeightProperty.SetDefault(_rectMask2D, new ElementSize(1f, ElementSizeUnit.Percents));

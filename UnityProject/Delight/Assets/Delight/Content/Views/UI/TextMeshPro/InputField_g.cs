@@ -1215,6 +1215,13 @@ namespace Delight
             set { InputText.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty InputTextIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean InputTextIsInteractable
+        {
+            get { return InputText.IsInteractable; }
+            set { InputText.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty InputTextUseFastShaderProperty = Label.UseFastShaderProperty;
         public System.Boolean InputTextUseFastShader
         {
@@ -1316,6 +1323,8 @@ namespace Delight
                     _inputField = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _inputField.Name = "InputField";
+                    _inputField.LineNumber = 0;
+                    _inputField.LinePosition = 0;
 #endif
                     Delight.InputField.WidthProperty.SetDefault(_inputField, new ElementSize(120f, ElementSizeUnit.Pixels));
                     Delight.InputField.HeightProperty.SetDefault(_inputField, new ElementSize(40f, ElementSizeUnit.Pixels));
@@ -1347,6 +1356,8 @@ namespace Delight
                     _inputFieldInputFieldPlaceholder = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _inputFieldInputFieldPlaceholder.Name = "InputFieldInputFieldPlaceholder";
+                    _inputFieldInputFieldPlaceholder.LineNumber = 12;
+                    _inputFieldInputFieldPlaceholder.LinePosition = 4;
 #endif
                 }
                 return _inputFieldInputFieldPlaceholder;
@@ -1367,6 +1378,8 @@ namespace Delight
                     _inputFieldTextArea = new Template(RectMask2DTemplates.RectMask2D);
 #if UNITY_EDITOR
                     _inputFieldTextArea.Name = "InputFieldTextArea";
+                    _inputFieldTextArea.LineNumber = 13;
+                    _inputFieldTextArea.LinePosition = 4;
 #endif
                     Delight.RectMask2D.MarginProperty.SetHasBinding(_inputFieldTextArea);
                 }
@@ -1388,6 +1401,8 @@ namespace Delight
                     _inputFieldInputText = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _inputFieldInputText.Name = "InputFieldInputText";
+                    _inputFieldInputText.LineNumber = 14;
+                    _inputFieldInputText.LinePosition = 6;
 #endif
                     Delight.Label.WidthProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Label.HeightProperty.SetDefault(_inputFieldInputText, new ElementSize(1f, ElementSizeUnit.Percents));

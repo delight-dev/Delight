@@ -102,6 +102,8 @@ namespace Delight
                     _gridSplitterHandle = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _gridSplitterHandle.Name = "GridSplitterHandle";
+                    _gridSplitterHandle.LineNumber = 0;
+                    _gridSplitterHandle.LinePosition = 0;
 #endif
                     Delight.GridSplitterHandle.IsEnabledProperty.SetDefault(_gridSplitterHandle, true);
                     Delight.GridSplitterHandle.BackgroundColorProperty.SetDefault(_gridSplitterHandle, new UnityEngine.Color(0f, 0f, 0f, 0f));
@@ -126,6 +128,8 @@ namespace Delight
                     _gridSplitterHandleSplitterHandle = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _gridSplitterHandleSplitterHandle.Name = "GridSplitterHandleSplitterHandle";
+                    _gridSplitterHandleSplitterHandle.LineNumber = 5;
+                    _gridSplitterHandleSplitterHandle.LinePosition = 4;
 #endif
                     Delight.Image.WidthProperty.SetDefault(_gridSplitterHandleSplitterHandle, new ElementSize(1f, ElementSizeUnit.Percents));
                     Delight.Image.HeightProperty.SetDefault(_gridSplitterHandleSplitterHandle, new ElementSize(1f, ElementSizeUnit.Percents));

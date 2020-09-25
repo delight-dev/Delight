@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Delight/Extensions/Examples/Scenes/MainMenuDemo.unity
+    guid: e7d858af0f7ddac46b0f76504780cf98
   m_configObjects: {}

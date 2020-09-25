@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -16,23 +17,38 @@ namespace Delight
     {
         #region Fields
 
-        public Func<object[], object> TransformMethod;
+        public Func<Task<object>> TransformMethod;
         public string FormatString;
         public BindingType BindingType;
 
         #endregion
 
         #region Constructor
+
         /// <summary>
         /// Creates a new instance of the class. Used by runtime bindings.
         /// </summary>
-        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType, Func<object[], object> transformMethod, string formatString) : base(sources, target, null, null, isTwoWay)
+        public RuntimeBinding(List<BindingPath> sources, BindingPath target, bool isTwoWay, BindingType bindingType, Func<Task<object>> transformMethod, string formatString) : base(sources, target, null, null, isTwoWay)
         {
-            PropagateSourceToTarget = PropagateSourceToTargetMethod;
+#pragma warning disable CS4014
+            PropagateSourceToTarget = () => PropagateSourceToTargetMethod();
+#pragma warning restore CS4014
             PropagateTargetToSource = PropagateTargetToSourceMethod;
             BindingType = bindingType;
             TransformMethod = transformMethod;
             FormatString = formatString;
+        }
+
+        /// <summary>
+        /// Creates a simple runtime binding that just propagates source to target on update. Used by embedded expressions without binding sources.
+        /// </summary>
+        public RuntimeBinding(Func<Task<object>> transformMethod) : base(null)
+        {
+#pragma warning disable CS4014
+            PropagateSourceToTarget = () => PropagateSourceToTargetMethod();
+#pragma warning restore CS4014
+            TransformMethod = transformMethod;
+            IsSimple = true;
         }
 
         #endregion
@@ -42,8 +58,13 @@ namespace Delight
         /// <summary>
         /// Propagates the source value to target. Used by runtime bindings.
         /// </summary>
-        public void PropagateSourceToTargetMethod()
+        public async Task PropagateSourceToTargetMethod()
         {
+            if (IsSimple)
+            {
+                var transformedValue = await TransformMethod();
+            }
+
             switch (BindingType)
             {
                 case BindingType.SingleBinding:
@@ -59,9 +80,7 @@ namespace Delight
                     if (TransformMethod == null)
                         return;
 
-                    var transformSourceValues = Sources.Select(x => (x as RuntimeBindingPath).GetValue()).ToArray();
-                    var transformedValue = TransformMethod(transformSourceValues);
-
+                    var transformedValue = await TransformMethod();
                     var transformTarget = Target as RuntimeBindingPath;
                     transformTarget.SetValue(transformedValue);
                     break;

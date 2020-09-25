@@ -33,7 +33,6 @@ namespace Delight
 
             dependencyProperties.Add(IsExpandedProperty);
             dependencyProperties.Add(IsDisabledProperty);
-            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(HeaderHeightProperty);
             dependencyProperties.Add(ContentMarginProperty);
             dependencyProperties.Add(HeaderAlignmentProperty);
@@ -60,14 +59,6 @@ namespace Delight
         {
             get { return IsDisabledProperty.GetValue(this); }
             set { IsDisabledProperty.SetValue(this, value); }
-        }
-
-        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
-        /// <summary>Boolean indicating if expander responds to user interaction.</summary>
-        public System.Boolean IsInteractable
-        {
-            get { return IsInteractableProperty.GetValue(this); }
-            set { IsInteractableProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementSize> HeaderHeightProperty = new DependencyProperty<Delight.ElementSize>("HeaderHeight");
@@ -149,9 +140,10 @@ namespace Delight
                     _expander = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _expander.Name = "Expander";
+                    _expander.LineNumber = 0;
+                    _expander.LinePosition = 0;
 #endif
                     Delight.Expander.IsExpandedProperty.SetDefault(_expander, true);
-                    Delight.Expander.IsInteractableProperty.SetDefault(_expander, true);
                     Delight.Expander.ContentMarginProperty.SetDefault(_expander, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Expander.HeaderAlignmentProperty.SetDefault(_expander, Delight.ElementAlignment.TopLeft);
                     Delight.Expander.ToggleModeProperty.SetDefault(_expander, Delight.SwitchMode.Enable);

@@ -46,6 +46,7 @@ namespace Delight
             dependencyProperties.Add(AlphaProperty);
             dependencyProperties.Add(IsVisibleProperty);
             dependencyProperties.Add(RaycastBlockModeProperty);
+            dependencyProperties.Add(IsInteractableProperty);
             dependencyProperties.Add(CanvasGroupProperty);
             dependencyProperties.Add(UseFastShaderProperty);
             dependencyProperties.Add(FastMaterialProperty);
@@ -178,6 +179,13 @@ namespace Delight
             set { RaycastBlockModeProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<System.Boolean> IsInteractableProperty = new DependencyProperty<System.Boolean>("IsInteractable");
+        public System.Boolean IsInteractable
+        {
+            get { return IsInteractableProperty.GetValue(this); }
+            set { IsInteractableProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<UnityEngine.CanvasGroup> CanvasGroupProperty = new DependencyProperty<UnityEngine.CanvasGroup>("CanvasGroup");
         public UnityEngine.CanvasGroup CanvasGroup
         {
@@ -264,9 +272,12 @@ namespace Delight
                     _uIView = new Template(SceneObjectViewTemplates.SceneObjectView);
 #if UNITY_EDITOR
                     _uIView.Name = "UIView";
+                    _uIView.LineNumber = 0;
+                    _uIView.LinePosition = 0;
 #endif
                     Delight.UIView.PivotProperty.SetDefault(_uIView, new Vector2(0.5f, 0.5f));
                     Delight.UIView.IsVisibleProperty.SetDefault(_uIView, true);
+                    Delight.UIView.IsInteractableProperty.SetDefault(_uIView, true);
                     Delight.UIView.FastMaterialProperty.SetDefault(_uIView, Assets.Materials["UI-Fast-Default"]);
                 }
                 return _uIView;

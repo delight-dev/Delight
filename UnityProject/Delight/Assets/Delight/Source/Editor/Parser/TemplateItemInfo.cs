@@ -14,5 +14,6 @@ namespace Delight.Editor.Parser
         public PropertyBinding ItemIdDeclaration;
         public Type ItemType;
         public string ItemTypeName;
+        public ContentTemplateData ContentTemplateData;
     }
 }

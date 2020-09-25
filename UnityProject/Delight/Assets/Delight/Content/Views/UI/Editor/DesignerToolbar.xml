@@ -1,0 +1,4 @@
+<DesignerToolbar xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../../../Delight.xsd" BasedOn="UIImageView"
+                 IsLocked="True" IsEditorView="True" Width="40" 
+                 BackgroundColor="#636363" Alignment="Left">   
+</DesignerToolbar> 

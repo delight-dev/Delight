@@ -799,6 +799,13 @@ namespace Delight
             set { Label.RaycastBlockMode = value; }
         }
 
+        public readonly static DependencyProperty LabelIsInteractableProperty = Label.IsInteractableProperty;
+        public System.Boolean LabelIsInteractable
+        {
+            get { return Label.IsInteractable; }
+            set { Label.IsInteractable = value; }
+        }
+
         public readonly static DependencyProperty LabelUseFastShaderProperty = Label.UseFastShaderProperty;
         public System.Boolean LabelUseFastShader
         {
@@ -900,6 +907,8 @@ namespace Delight
                     _button = new Template(UIImageViewTemplates.UIImageView);
 #if UNITY_EDITOR
                     _button.Name = "Button";
+                    _button.LineNumber = 0;
+                    _button.LinePosition = 0;
 #endif
                     Delight.Button.HeightProperty.SetDefault(_button, new ElementSize(40f, ElementSizeUnit.Pixels));
                     Delight.Button.DefaultWidthProperty.SetDefault(_button, new ElementSize(160f, ElementSizeUnit.Pixels));
@@ -934,6 +943,8 @@ namespace Delight
                     _buttonLabel = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _buttonLabel.Name = "ButtonLabel";
+                    _buttonLabel.LineNumber = 15;
+                    _buttonLabel.LinePosition = 4;
 #endif
                     Delight.Label.TextAlignmentProperty.SetDefault(_buttonLabel, TMPro.TextAlignmentOptions.Center);
                     Delight.Label.WidthProperty.SetDefault(_buttonLabel, new ElementSize(1f, ElementSizeUnit.Percents));

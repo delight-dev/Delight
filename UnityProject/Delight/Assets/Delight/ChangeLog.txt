@@ -1,4 +1,19 @@
-﻿2020.1.0
+﻿2020.2.0
+- Designer updated: view selection, undo/redo, lock views, syntax highlighting for bindings, performance improvements
+- Messaging system implemented and can be accessed through the Messenger class
+- Embedded code - C# code can now be embedded in XML in bindings and actions through the '$' prefix, e.g. 
+  <Button IsVisible="$ {ClickCount} > 30" Click="$ GameManager.Start()" />
+- Bugfix: Fixed issue where module preprocessor defines was only added to standalone build target
+- Bugfix: Fixed issue where CanvasGroup was added to views even when canvas group values hasn't been set
+- Bugfix: Fixed issue with non-standalone builds due to module defines (e.g. DELIGHT_MODULE_TEXTMESHPRO) not being set on all platforms
+- Bugfix: Fixed issue with duplicate view handlers being generated
+- Bugfix: Virtualized lists no longer incorrectly paged to 20 items.
+- Bugfix: Mac commands now working in designer
+- Bugfix: Unnecessary "../" no longer added to xsi:schemaLocation path
+- Bugfix: Missing value interpolators added
+- Bugfix: Fixed issue with code referencing a TMP examples class
+
+2020.1.0
 - Delight Designer for LIVE editing of XML
 - State animations
 - Added Expander view for expanding/collapsing content
