@@ -85,8 +85,20 @@ namespace Delight.Editor
             GUIContent openDesigner = new GUIContent("Open Designer", "Opens delight designer.");
             if (GUILayout.Button(openDesigner))
             {
-                EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
-                EditorApplication.isPlaying = true;
+                // check if designer is activated
+                var config = MasterConfig.GetInstance();
+                if (!config.Modules.Contains("TextMeshPro"))
+                {
+                    // open window explaining designer need to be activated
+                    string message = "The designer need to be activated by enabling TextMeshPro in the project. https://delight-dev.github.io/Tutorials/Designer.html#enabling-the-designer";
+                    Application.OpenURL("https://delight-dev.github.io/Tutorials/Designer.html#enabling-the-designer");
+                    EditorUtility.DisplayDialog("Enabling the designer", message, "Ok");
+                }
+                else
+                {
+                    EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
+                    EditorApplication.isPlaying = true;
+                }
             }
 
             // TODO cleanup

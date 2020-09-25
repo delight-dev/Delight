@@ -1326,6 +1326,7 @@ namespace Delight
                     _delightDesignerDesignerToolbar1.LineNumber = 24;
                     _delightDesignerDesignerToolbar1.LinePosition = 10;
 #endif
+                    Delight.DesignerToolbar.IsActiveProperty.SetDefault(_delightDesignerDesignerToolbar1, false);
                 }
                 return _delightDesignerDesignerToolbar1;
             }
