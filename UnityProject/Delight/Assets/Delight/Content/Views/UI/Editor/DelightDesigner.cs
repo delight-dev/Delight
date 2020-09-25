@@ -1277,15 +1277,18 @@ namespace Delight
                                 {
                                     // set template items on parent before execution
                                     parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
-                                    foreach (var templateItem in templateItems)
+                                    if (templateItems != null)
                                     {
-                                        if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                        foreach (var templateItem in templateItems)
                                         {
-                                            parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
-                                        }
-                                        else
-                                        {
-                                            parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                            if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                            {
+                                                parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                            }
+                                            else
+                                            {
+                                                parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                            }
                                         }
                                     }
 
@@ -1349,6 +1352,9 @@ namespace Delight
         private static List<TemplateItemInfo> CopyTemplateItems(List<TemplateItemInfo> templateItems)
         {
             var templateItemsCopy = new List<TemplateItemInfo>();
+            if (templateItems == null)
+                return templateItemsCopy;
+
             foreach (var templateItem in templateItems)
             {
                 templateItemsCopy.Add(new TemplateItemInfo

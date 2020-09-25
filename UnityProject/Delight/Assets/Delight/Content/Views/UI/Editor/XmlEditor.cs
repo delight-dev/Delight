@@ -531,14 +531,6 @@ namespace Delight
         }
 
         /// <summary>
-        /// Reselect selected views.
-        /// </summary>
-        public void ReselectSelectedLines()
-        {
-            
-        }
-
-        /// <summary>
         /// Selects the word at the current caret position.
         /// </summary>
         private void SelectWordAtCaret()
@@ -638,6 +630,18 @@ namespace Delight
         private void HandleKeyInput()
         {
             var inputString = Input.inputString;
+            if (Application.platform == RuntimePlatform.OSXEditor)
+            {
+                if (inputString.Length > 0)
+                {
+                    inputString = inputString.Substring(0, 1);
+                    if (inputString == "\r")
+                    {
+                        inputString = (char)KeyCode.Return + "";
+                    }
+                }
+            }
+
             bool textChanged = false;
             bool needReparse = false;
 
@@ -646,6 +650,7 @@ namespace Delight
             {
                 if (Input.GetKey(_trackKeyDown))
                 {
+                    inputString = ""; // TODO only necessary on MacBook 
                     _keyDownDelayTimeElapsed += Time.deltaTime;
                     if (_keyDownDelayTimeElapsed > KeyRepeatDelay)
                     {
