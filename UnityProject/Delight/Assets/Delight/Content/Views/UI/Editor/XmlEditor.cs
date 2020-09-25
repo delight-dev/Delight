@@ -654,7 +654,7 @@ namespace Delight
                     if (_keyDownRepeatTimeElapsed > KeyRepeatRate)
                     {
                         _keyDownRepeatTimeElapsed = 0;
-                        inputString = (char)_trackKeyDown + inputString;
+                        inputString = (char)_trackKeyDown + "";
                     }
                 }
                 else
