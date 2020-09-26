@@ -1198,6 +1198,11 @@ namespace Delight.Editor.Parser
                                 continue;
                             }
                         }
+                        else if (typeof(Delight.ModelObject).IsAssignableFrom(type))
+                        {
+                            // use generic converter for ModelObject type
+                            typeValueInitializer = GenericModelValueConverter.GetInitializer(type.Name, propertyAssignment.PropertyValue);
+                        }
                         else
                         {
                             // no initializer found for the type being assigned to
@@ -1244,6 +1249,11 @@ namespace Delight.Editor.Parser
                             if (type != null && type.IsEnum)
                             {
                                 typeValueConverter = new GenericEnumValueConverter(type);
+                            }
+                            else if (typeof(Delight.ModelObject).IsAssignableFrom(type))
+                            {
+                                // use generic converter for ModelObject type
+                                typeValueConverter = new GenericModelValueConverter(type, true);
                             }
                             else
                             {
