@@ -2055,6 +2055,9 @@ namespace Delight.Editor.Parser
                     int nextIndex = i + 1;
                     if (nextIndex < sourcePath.Count)
                     {
+                        if (sourcePath[nextIndex] == "Count")
+                            continue; // special case when refering to BindableCollection.Count
+
                         parsedSourcePath[i] += String.Format("[\"{0}\"]", sourcePath[nextIndex]);
                         i = nextIndex;
                     }

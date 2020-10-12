@@ -16,6 +16,7 @@ namespace Delight
     {
         #region Fields
 
+        public Stack<View> ViewStack { get; set; } = new Stack<View>();
         public SceneObjectView ActiveView;
 
         #endregion
@@ -31,6 +32,7 @@ namespace Delight
                 return;
             base.BeforeLoad();
 
+            ViewStack = new Stack<View>();
             var firstChild = Content.LayoutChildren.FirstOrDefault();
 
             // make sure load-mode is set to Manual in children if we're loading them
@@ -61,7 +63,6 @@ namespace Delight
                     child.IsActive = false;
                 }
             }
-
         }
 
         /// <summary>
@@ -93,16 +94,16 @@ namespace Delight
         /// <summary>
         /// Switches to view at index.
         /// </summary>
-        public void SwitchTo(int index)
+        public void SwitchTo(int index, object data = null)
         {
             var view = Content.LayoutChildren.ElementAtOrDefault(index);
-            SwitchTo(view);
+            SwitchTo(view, data);
         }
 
         /// <summary>
         /// Switches to the view specified.
         /// </summary>
-        public void SwitchTo(View view)
+        public void SwitchTo(View view, object data = null)
         {
             if (view == ActiveView)
                 return;
@@ -126,21 +127,22 @@ namespace Delight
             // load/activate view
             ActiveView.Load();
             ActiveView.IsActive = true;
+            ActiveView.Setup(data);
         }
 
         /// <summary>
         /// Switches to view at index.
         /// </summary>
-        public async Task SwitchToAsync(int index)
+        public async Task SwitchToAsync(int index, object data = null)
         {
             var view = Content.LayoutChildren.ElementAtOrDefault(index);
-            await SwitchToAsync(view);
+            await SwitchToAsync(view, data);
         }
 
         /// <summary>
         /// Switches to the view specified.
         /// </summary>
-        public async Task SwitchToAsync(View view)
+        public async Task SwitchToAsync(View view, object data = null)
         {
             if (view == ActiveView)
                 return;
@@ -164,6 +166,30 @@ namespace Delight
             // load/activate view
             await ActiveView.LoadAsync();
             ActiveView.IsActive = true;
+            ActiveView.Setup(data);
+        }
+
+        /// <summary>
+        /// Pushes active view on the stack and switches to new view.
+        /// </summary>
+        public void Push(View view, object data = null)
+        {
+            if (ActiveView != null)
+            {
+                ViewStack.Push(ActiveView);
+            }
+            SwitchTo(view, data);
+        }
+
+        /// <summary>
+        /// Pops view on the stack and switches to it.
+        /// </summary>
+        public void Pop()
+        {
+            if (ViewStack.Count > 0)
+            {
+                SwitchTo(ViewStack.Pop());
+            }
         }
 
         #endregion

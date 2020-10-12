@@ -58,6 +58,10 @@ namespace Delight
             Label4 = new Label(this, Group1.Content, "Label4", Label4Template);
             // binding <Label Text="$ {{ string test = "hello"; return test; }}">
             Bindings.Add(new Binding(() => Label4.Text = ((Func<System.String>)(() => {{ string test = "hello"; return test; }} ))()));
+            Label5 = new Label(this, Group1.Content, "Label5", Label5Template);
+
+            // binding <Label Text="{Player.Name}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Player", "Name" }, new List<Func<BindableObject>> { () => this, () => Player }) }, new BindingPath(new List<string> { "Label5", "Text" }, new List<Func<BindableObject>> { () => this, () => Label5 }), () => Label5.Text = Player.Name, () => { }, false));
             this.AfterInitializeInternal();
         }
 
@@ -70,6 +74,7 @@ namespace Delight
             var dependencyProperties = new List<DependencyProperty>();
             DependencyProperties.Add(TestExampleTemplates.Default, dependencyProperties);
 
+            dependencyProperties.Add(PlayerProperty);
             dependencyProperties.Add(Group1Property);
             dependencyProperties.Add(Group1TemplateProperty);
             dependencyProperties.Add(List1Property);
@@ -90,11 +95,20 @@ namespace Delight
             dependencyProperties.Add(MyButtonTemplateProperty);
             dependencyProperties.Add(Label4Property);
             dependencyProperties.Add(Label4TemplateProperty);
+            dependencyProperties.Add(Label5Property);
+            dependencyProperties.Add(Label5TemplateProperty);
         }
 
         #endregion
 
         #region Properties
+
+        public readonly static DependencyProperty<Delight.DemoPlayer> PlayerProperty = new DependencyProperty<Delight.DemoPlayer>("Player");
+        public Delight.DemoPlayer Player
+        {
+            get { return PlayerProperty.GetValue(this); }
+            set { PlayerProperty.SetValue(this, value); }
+        }
 
         public readonly static DependencyProperty<Group> Group1Property = new DependencyProperty<Group>("Group1");
         public Group Group1
@@ -236,6 +250,20 @@ namespace Delight
             set { Label4TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label5Property = new DependencyProperty<Label>("Label5");
+        public Label Label5
+        {
+            get { return Label5Property.GetValue(this); }
+            set { Label5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label5TemplateProperty = new DependencyProperty<Template>("Label5Template");
+        public Template Label5Template
+        {
+            get { return Label5TemplateProperty.GetValue(this); }
+            set { Label5TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -270,6 +298,7 @@ namespace Delight
                     _testExample.LineNumber = 0;
                     _testExample.LinePosition = 0;
 #endif
+                    Delight.TestExample.PlayerProperty.SetDefault(_testExample, Models.DemoPlayers["Player1"]);
                     Delight.TestExample.Group1TemplateProperty.SetDefault(_testExample, TestExampleGroup1);
                     Delight.TestExample.List1TemplateProperty.SetDefault(_testExample, TestExampleList1);
                     Delight.TestExample.ListItem1TemplateProperty.SetDefault(_testExample, TestExampleListItem1);
@@ -280,6 +309,7 @@ namespace Delight
                     Delight.TestExample.Button1TemplateProperty.SetDefault(_testExample, TestExampleButton1);
                     Delight.TestExample.MyButtonTemplateProperty.SetDefault(_testExample, TestExampleMyButton);
                     Delight.TestExample.Label4TemplateProperty.SetDefault(_testExample, TestExampleLabel4);
+                    Delight.TestExample.Label5TemplateProperty.SetDefault(_testExample, TestExampleLabel5);
                 }
                 return _testExample;
             }
@@ -299,7 +329,7 @@ namespace Delight
                     _testExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _testExampleGroup1.Name = "TestExampleGroup1";
-                    _testExampleGroup1.LineNumber = 3;
+                    _testExampleGroup1.LineNumber = 4;
                     _testExampleGroup1.LinePosition = 4;
 #endif
                 }
@@ -321,7 +351,7 @@ namespace Delight
                     _testExampleList1 = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _testExampleList1.Name = "TestExampleList1";
-                    _testExampleList1.LineNumber = 4;
+                    _testExampleList1.LineNumber = 5;
                     _testExampleList1.LinePosition = 6;
 #endif
                     Delight.List.ItemsProperty.SetHasBinding(_testExampleList1);
@@ -528,7 +558,7 @@ namespace Delight
                     _testExampleListItem1 = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _testExampleListItem1.Name = "TestExampleListItem1";
-                    _testExampleListItem1.LineNumber = 5;
+                    _testExampleListItem1.LineNumber = 6;
                     _testExampleListItem1.LinePosition = 8;
 #endif
                 }
@@ -550,7 +580,7 @@ namespace Delight
                     _testExampleGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _testExampleGroup2.Name = "TestExampleGroup2";
-                    _testExampleGroup2.LineNumber = 6;
+                    _testExampleGroup2.LineNumber = 7;
                     _testExampleGroup2.LinePosition = 10;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_testExampleGroup2, Delight.ElementOrientation.Horizontal);
@@ -573,7 +603,7 @@ namespace Delight
                     _testExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _testExampleLabel1.Name = "TestExampleLabel1";
-                    _testExampleLabel1.LineNumber = 7;
+                    _testExampleLabel1.LineNumber = 8;
                     _testExampleLabel1.LinePosition = 12;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_testExampleLabel1, Delight.AutoSize.Default);
@@ -597,7 +627,7 @@ namespace Delight
                     _testExampleLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _testExampleLabel2.Name = "TestExampleLabel2";
-                    _testExampleLabel2.LineNumber = 8;
+                    _testExampleLabel2.LineNumber = 9;
                     _testExampleLabel2.LinePosition = 12;
 #endif
                     Delight.Label.AutoSizeProperty.SetDefault(_testExampleLabel2, Delight.AutoSize.Default);
@@ -620,7 +650,7 @@ namespace Delight
                     _testExampleLabel3 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _testExampleLabel3.Name = "TestExampleLabel3";
-                    _testExampleLabel3.LineNumber = 9;
+                    _testExampleLabel3.LineNumber = 10;
                     _testExampleLabel3.LinePosition = 12;
 #endif
                     Delight.Label.TextProperty.SetHasBinding(_testExampleLabel3);
@@ -643,7 +673,7 @@ namespace Delight
                     _testExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _testExampleButton1.Name = "TestExampleButton1";
-                    _testExampleButton1.LineNumber = 10;
+                    _testExampleButton1.LineNumber = 11;
                     _testExampleButton1.LinePosition = 12;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testExampleButton1, TestExampleButton1Label);
@@ -689,7 +719,7 @@ namespace Delight
                     _testExampleMyButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _testExampleMyButton.Name = "TestExampleMyButton";
-                    _testExampleMyButton.LineNumber = 14;
+                    _testExampleMyButton.LineNumber = 15;
                     _testExampleMyButton.LinePosition = 6;
 #endif
                     Delight.Button.LabelTemplateProperty.SetDefault(_testExampleMyButton, TestExampleMyButtonLabel);
@@ -735,11 +765,34 @@ namespace Delight
                     _testExampleLabel4 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _testExampleLabel4.Name = "TestExampleLabel4";
-                    _testExampleLabel4.LineNumber = 15;
+                    _testExampleLabel4.LineNumber = 16;
                     _testExampleLabel4.LinePosition = 6;
 #endif
                 }
                 return _testExampleLabel4;
+            }
+        }
+
+        private static Template _testExampleLabel5;
+        public static Template TestExampleLabel5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_testExampleLabel5 == null || _testExampleLabel5.CurrentVersion != Template.Version)
+#else
+                if (_testExampleLabel5 == null)
+#endif
+                {
+                    _testExampleLabel5 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _testExampleLabel5.Name = "TestExampleLabel5";
+                    _testExampleLabel5.LineNumber = 17;
+                    _testExampleLabel5.LinePosition = 6;
+#endif
+                    Delight.Label.TextProperty.SetHasBinding(_testExampleLabel5);
+                }
+                return _testExampleLabel5;
             }
         }
 

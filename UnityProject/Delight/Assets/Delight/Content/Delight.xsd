@@ -6413,6 +6413,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="ViewStack" type="xs:string" />
     <xs:attribute name="SwitchMode" type="Enum_SwitchMode" />
     <xs:attribute name="StartView" type="xs:string" />
     <xs:attribute name="ShowFirstByDefault" type="xs:string" />
@@ -7548,6 +7549,7 @@
     <xs:sequence>
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
+    <xs:attribute name="Player" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />

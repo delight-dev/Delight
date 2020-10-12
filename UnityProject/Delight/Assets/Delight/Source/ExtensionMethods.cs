@@ -97,14 +97,6 @@ namespace Delight
         }
 
         /// <summary>
-        /// Gets line position from XElement.
-        /// </summary>
-        public static int GetLinePosition(this XElement element)
-        {
-            return (element as IXmlLineInfo).LinePosition;
-        }
-
-        /// <summary>
         /// Gets code printable name from field info.
         /// </summary>
         public static string FieldTypeName(this FieldInfo fieldInfo, bool xmlType = false)
@@ -244,6 +236,15 @@ namespace Delight
             if (line.StartsWith("//") || line.StartsWith("#"))
                 return String.Empty;
             return line;
+        }
+
+        /// <summary>
+        /// Truncates a string to a maximum length.
+        /// </summary>
+        public static string Truncate(this string value, int length)
+        {
+            if (value == null) return null;
+            return value.Length <= length ? value : value.Substring(0, length);
         }
 
         /// <summary>
@@ -1065,6 +1066,14 @@ namespace Delight
                 hsv.Hue += 360.0f;
 
             return hsv;
+        }
+
+        /// <summary>
+        /// Gets line position from XElement.
+        /// </summary>
+        public static int GetLinePosition(this XElement element)
+        {
+            return (element as IXmlLineInfo).LinePosition;
         }
 
         #endregion

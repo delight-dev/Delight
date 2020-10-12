@@ -16,6 +16,20 @@ namespace Delight
         #endregion
 
         #region Methods
+        
+        /// <summary>
+        /// Called when a property has been changed. 
+        /// </summary>
+        public override void OnChanged(string property)
+        {
+            base.OnChanged(property);
+            switch (property)
+            {
+                case nameof(Spacing):
+                    SizeChanged();
+                    break;
+            }
+        }
 
         /// <summary>
         /// Called when a child changes its layout.

@@ -520,6 +520,7 @@ namespace Delight
         /// </summary>
         public void OnCollectionChanged(CollectionChangedEventArgs eventArgs)
         {
+            OnPropertyChanged(nameof(Count));
             CollectionChanged?.Invoke(this, eventArgs);
         }
 

@@ -1,6 +1,7 @@
-<TestExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot">
+<TestExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
+             Player="t:DemoPlayer = Player1">
 
-  <Group> 
+  <Group>
     <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
       <ListItem Click="$ MyButton.Text = level.Name">
         <Group Orientation="Horizontal">
@@ -12,7 +13,8 @@
       </ListItem>
     </List>  
     <Button Id="MyButton" Text="Test" Click="Test" />
-    <Label Text="$ {{ string test = 'hello'; return test; }}" /> 
+    <Label Text="$ {{ string test = 'hello'; return test; }}" />
+    <Label Text="{Player.Name}" />
   </Group>
 
 </TestExample>
