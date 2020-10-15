@@ -2,7 +2,7 @@
 
 Delight is an open source component-oriented framework for Unity, mainly centered around creating user-interface components that can easily be extended, combined and shared using a text based declarative design language (similar to HTML). 
 
-[![Gitter](https://badges.gitter.im/DelightChat/community.svg)](https://gitter.im/DelightChat/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
+[![Discord](https://img.shields.io/discord/764484415681593355)](https://discord.gg/9BVyVsB) 
 
 Get the latest API-docs, tutorials, extras and news at [https://delight-dev.github.io/](https://delight-dev.github.io/)
 
