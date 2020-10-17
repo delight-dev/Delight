@@ -1751,7 +1751,7 @@ namespace Delight.Editor.Parser
         /// Gets binding source properties.
         /// </summary>
         public static void GetBindingSourceProperties(string fileName, TemplateItemInfo ti, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
-        { 
+        {  
             sourceBindingPathObjects = new List<string>();
             convertedSourceProperties = new List<string>();
             sourceProperties = new List<string>();
