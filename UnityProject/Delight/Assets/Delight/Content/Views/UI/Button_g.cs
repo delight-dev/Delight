@@ -23,10 +23,10 @@ namespace Delight
             Label = new Label(this, this, "Label", LabelTemplate);
 
             // binding <Label Offset="{TextOffset}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextOffset" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "Offset" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.Offset = TextOffset, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextOffset" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label", "Offset" }, new List<Func<object>> { () => this, () => Label }), () => Label.Offset = TextOffset, () => { }, false));
 
             // binding <Label IsActive="{DisplayLabel}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayLabel" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label", "IsActive" }, new List<Func<BindableObject>> { () => this, () => Label }), () => Label.IsActive = DisplayLabel, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayLabel" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label", "IsActive" }, new List<Func<object>> { () => this, () => Label }), () => Label.IsActive = DisplayLabel, () => { }, false));
             this.StateAnimations.Clear();
             var stateAnimation0 = new StateAnimation(AnyStateName, "Highlighted");
             stateAnimation0.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(this), Button.BackgroundColorProperty, AnyStateName, "Highlighted"));

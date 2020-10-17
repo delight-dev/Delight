@@ -1,6 +1,8 @@
 ﻿#region Using Statements
+using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -30,6 +32,9 @@ namespace Delight
                 { "foot", "feet" },
                 { "mouse", "mice" },
                 { "belief", "beliefs" } };
+
+        public static Type BindableObjectType = typeof(BindableObject);
+        public static Type BindableCollectionType = typeof(BindableCollection);
 
         #endregion
 
@@ -356,7 +361,7 @@ namespace Delight
         /// <summary>
         /// Gets property value from path using reflection.
         /// </summary>
-        public static object GetPropertyValue(this BindableObject obj, IEnumerable<string> path)
+        public static object GetPropertyValue(this object obj, IEnumerable<string> path)
         {
             if (obj == null) return null;
             var type = obj.GetType();
@@ -428,7 +433,7 @@ namespace Delight
         /// <summary>
         /// Gets property value from path using reflection.
         /// </summary>
-        public static object GetPropertyValue(this BindableObject obj, string property)
+        public static object GetPropertyValue(this object obj, string property)
         {
             return obj.GetPropertyValue(new string[] { property });
         }
@@ -436,7 +441,7 @@ namespace Delight
         /// <summary>
         /// Sets property value on view using reflection.
         /// </summary>
-        public static void SetPropertyValue(this BindableObject obj, string property, object value)
+        public static void SetPropertyValue(this object obj, string property, object value)
         {
             if (obj == null) return;
             var type = obj.GetType();
@@ -1074,6 +1079,42 @@ namespace Delight
         public static int GetLinePosition(this XElement element)
         {
             return (element as IXmlLineInfo).LinePosition;
+        }
+
+        /// <summary>
+        /// Converts object to bindable collection.
+        /// </summary>
+        public static BindableCollection ToBindableCollection(this object obj, LayoutRoot layoutRoot)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            Type objType = obj.GetType();
+
+            // converts object to an bindable collection
+            if (BindableCollectionType.IsAssignableFrom(objType))
+            {
+                return obj as BindableCollection;
+            }
+            else if (ObservedCollection.CanBeObserved(obj))
+            {
+                var observedCollection = new ObservedCollection(obj, layoutRoot);
+                return observedCollection;
+            }
+
+            return null;
+        }
+
+        public static List<T> ToList<T>(this System.Collections.IList list)
+        {
+            List<T> castList = new List<T>();
+            foreach (var item in list)
+            {
+                castList.Add((T)item);
+            }
+            return castList;
         }
 
         #endregion

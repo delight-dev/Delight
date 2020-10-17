@@ -5,8 +5,8 @@
     /// </summary>
     public class ContentTemplateData : BindableObject
     {
-        private BindableObject _item;
-        public BindableObject Item
+        private object _item;
+        public object Item
         {
             get { return _item; }
             set { SetProperty(ref _item, value); }

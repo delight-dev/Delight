@@ -1,23 +1,23 @@
 ﻿#region Using Statements
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 #endregion
 
 namespace Delight
 {
-    /// <summary>
-    /// Represents a binding target or source. 
-    /// </summary>
     public class BindingPath
     {
         #region Fields
 
-        public List<Func<BindableObject>> ObjectGetters;
+        public List<Func<object>> ObjectGetters;
         public List<string> Properties;
-        public List<BindableObject> Objects;
+        public List<object> Objects;
         public bool IsReachable;
         public Binding Binding;
         public bool IsTarget;
+        private object _oldValue; 
 
         #endregion
 
@@ -26,11 +26,11 @@ namespace Delight
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
-        public BindingPath(List<string> properties, List<Func<BindableObject>> objectGetters)
+        public BindingPath(List<string> properties, List<Func<object>> objectGetters)
         {
             Properties = properties;
             ObjectGetters = objectGetters;
-            Objects = new List<BindableObject>();
+            Objects = new List<object>();
         }
 
         #endregion
@@ -53,18 +53,17 @@ namespace Delight
             if (!Binding.SourcesReachable || !Binding.Target.IsReachable)
             {
                 // yes. the binding hasn't been connected yet
-                Binding.UpdateBinding(IsTarget);
+                Binding.UpdateBinding(true, IsTarget);
                 return;
             }
 
             if (index < Objects.Count - 1)
             {
                 // yes. the bindable object changed is not last in chain
-                Binding.UpdateBinding(IsTarget);
+                Binding.UpdateBinding(true, IsTarget);
                 return;
             }
 
-            //LogPropagation();
             if (IsTarget)
             {
                 if (Binding.IsTwoWay)
@@ -76,6 +75,57 @@ namespace Delight
             {
                 Binding.PropagateSourceToTarget();
             }
+        }
+
+        /// <summary>
+        /// Checks the binding has changed and propagates changes. Used when binding to non-bindable objects. Returns true if binding has changed.
+        /// </summary>
+        public bool OnUpdate(bool hasUpdatedPreviously)
+        {
+            // check if any object along the chain has been updated
+            for (int i = 0; i < Objects.Count; ++i)
+            {
+                var oldObject = Objects[i];
+                var obj = ObjectGetters[i]();
+                if (oldObject != obj)
+                {
+                    Debug.Log("Non-bindable object changed"); // TODO cleanup
+                    Binding.UpdateBinding(hasUpdatedPreviously, IsTarget);
+                    return true;
+                }
+            }
+
+            // check if value has changed
+            if (Binding.SourcesReachable && Binding.Target.IsReachable)
+            {
+                var obj = ObjectGetters.Last()();
+                object currentValue = obj.GetPropertyValue(Properties.Last());
+
+                // has value changed?
+                if (_oldValue != null ? _oldValue.Equals(currentValue) : currentValue == null)
+                {
+                    return hasUpdatedPreviously; // no.
+                }
+
+                _oldValue = currentValue;
+                if (IsTarget)
+                {
+                    if (Binding.IsTwoWay)
+                    {
+                        Debug.Log("Non-bindable object target value changed"); // TODO cleanup
+                        Binding.PropagateTargetToSource();
+                    }
+                }
+                else
+                {
+                    Debug.Log("Non-bindable object source value changed"); // TODO cleanup
+                    Binding.PropagateSourceToTarget();
+                }
+
+                return true;
+            }
+
+            return hasUpdatedPreviously;
         }
 
         #endregion

@@ -28,7 +28,7 @@ namespace Delight
             TextArea = new RectMask2D(this, this, "TextArea", TextAreaTemplate);
 
             // binding <RectMask2D Margin="{TextMargin}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextMargin" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "TextArea", "Margin" }, new List<Func<BindableObject>> { () => this, () => TextArea }), () => TextArea.Margin = TextMargin, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TextMargin" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "TextArea", "Margin" }, new List<Func<object>> { () => this, () => TextArea }), () => TextArea.Margin = TextMargin, () => { }, false));
             InputText = new Label(this, TextArea.Content, "InputText", InputTextTemplate);
             ContentContainer = InputFieldPlaceholder;
             this.AfterInitializeInternal();

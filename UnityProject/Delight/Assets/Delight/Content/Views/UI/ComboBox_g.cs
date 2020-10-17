@@ -241,7 +241,7 @@ namespace Delight
         }
 
         public readonly static DependencyProperty SelectedItemProperty = List.SelectedItemProperty;
-        public Delight.BindableObject SelectedItem
+        public System.Object SelectedItem
         {
             get { return ComboBoxList.SelectedItem; }
             set { ComboBoxList.SelectedItem = value; }

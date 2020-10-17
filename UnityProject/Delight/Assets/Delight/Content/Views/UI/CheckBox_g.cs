@@ -23,7 +23,7 @@ namespace Delight
             CheckBoxGroup = new Group(this, this, "CheckBoxGroup", CheckBoxGroupTemplate);
 
             // binding <Group Spacing="{Spacing}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Spacing" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "CheckBoxGroup", "Spacing" }, new List<Func<BindableObject>> { () => this, () => CheckBoxGroup }), () => CheckBoxGroup.Spacing = Spacing, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Spacing" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "CheckBoxGroup", "Spacing" }, new List<Func<object>> { () => this, () => CheckBoxGroup }), () => CheckBoxGroup.Spacing = Spacing, () => { }, false));
             CheckBoxImageView = new Image(this, CheckBoxGroup.Content, "CheckBoxImageView", CheckBoxImageViewTemplate);
             CheckBoxLabel = new Label(this, CheckBoxGroup.Content, "CheckBoxLabel", CheckBoxLabelTemplate);
             Click.RegisterHandler(this, "CheckBoxClick");

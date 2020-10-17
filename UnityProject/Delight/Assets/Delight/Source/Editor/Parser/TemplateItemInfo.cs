@@ -14,6 +14,19 @@ namespace Delight.Editor.Parser
         public PropertyBinding ItemIdDeclaration;
         public Type ItemType;
         public string ItemTypeName;
-        public ContentTemplateData ContentTemplateData;
+        public bool IsBindableCollection;
+
+        private ContentTemplateData _contentTemplateData;
+        public ContentTemplateData ContentTemplateData
+        { 
+            get
+            {
+                return _contentTemplateData;
+            }
+            set
+            {
+                _contentTemplateData = value;
+            }
+        }
     }
 }

@@ -7,7 +7,7 @@
 
   <Region Id="ViewsDesigner">
     <Grid Columns="40[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
-
+      
       <!-- Left navigation bar #494b52 -->
       <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1">
       </Region>

@@ -14,7 +14,7 @@ namespace Delight
     public class CollectionChangedEventArgs : EventArgs
     {
         public CollectionChangeAction ChangeAction;
-        public BindableObject Item;
+        public object Item;
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ namespace Delight
     /// </summary>
     public class CollectionChangedRangeEventArgs : CollectionChangedEventArgs
     {
-        public List<BindableObject> Items;
+        public List<object> Items;
     }
 
     /// <summary>

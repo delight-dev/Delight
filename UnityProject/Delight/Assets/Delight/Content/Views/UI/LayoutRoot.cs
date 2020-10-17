@@ -19,6 +19,8 @@ namespace Delight
         private List<ChangeHandler> _changeHandlers = new List<ChangeHandler>();
         private HashSet<Animator> _animators = new HashSet<Animator>();
         private List<Animator> _completedAnimators = new List<Animator>();
+        private List<KeyValuePair<int, WeakReference<IUpdateable>>> _toBeUpdated = new List<KeyValuePair<int, WeakReference<IUpdateable>>>();
+        private HashSet<int> _toBeUpdatedKeys = new HashSet<int>();
 
         #endregion
 
@@ -51,6 +53,38 @@ namespace Delight
                         _animators.Remove(animator);
                     }
                     _completedAnimators.Clear();
+                }
+            }
+
+            if (_toBeUpdated.Count > 0)
+            {
+                // update updateables
+                List<int> updateablesToBeRemoved = null;
+                for (int i = _toBeUpdated.Count - 1; i >= 0; --i)
+                {
+                    var updateable = _toBeUpdated[i];
+                    if (updateable.Value.TryGetTarget(out var target))
+                    {
+                        target.OnUpdate();
+                    }
+                    else
+                    {
+                        if (updateablesToBeRemoved == null)
+                        {
+                            updateablesToBeRemoved = new List<int>();
+                        }
+
+                        updateablesToBeRemoved.Add(updateable.Key);
+                    }
+                }
+
+                if (updateablesToBeRemoved != null)
+                {
+                    foreach (var updateableKey in updateablesToBeRemoved)
+                    {
+                        _toBeUpdated.Remove(_toBeUpdated.First(x => x.Key == updateableKey));
+                        _toBeUpdatedKeys.Remove(updateableKey);
+                    }
                 }
             }
         }
@@ -97,6 +131,19 @@ namespace Delight
         public void UnregisterAnimator(Animator animator)
         {
             _animators.Remove(animator);
+        }
+
+        /// <summary>
+        /// Registers binding to be updated each frame.
+        /// </summary>
+        public void RegisterUpdateable(IUpdateable updateable)
+        {
+            int key = updateable.GetHashCode();
+            if (!_toBeUpdatedKeys.Contains(key))
+            {
+                _toBeUpdated.Add(new KeyValuePair<int, WeakReference<IUpdateable>>(key, new WeakReference<IUpdateable>(updateable)));
+                _toBeUpdatedKeys.Add(key);
+            }
         }
 
         #endregion

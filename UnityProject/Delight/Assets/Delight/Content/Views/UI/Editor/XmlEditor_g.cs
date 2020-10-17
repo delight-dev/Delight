@@ -34,10 +34,10 @@ namespace Delight
             AutoCompleteOptionsList.TemplateSelector.RegisterMethod(this, "AutoCompleteOptionSelector");
 
             // binding <List Items="{option in AutoCompleteOptions}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoCompleteOptions" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "AutoCompleteOptionsList", "Items" }, new List<Func<BindableObject>> { () => this, () => AutoCompleteOptionsList }), () => AutoCompleteOptionsList.Items = AutoCompleteOptions, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoCompleteOptions" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "AutoCompleteOptionsList", "Items" }, new List<Func<object>> { () => this, () => AutoCompleteOptionsList }), () => AutoCompleteOptionsList.Items = AutoCompleteOptions, () => { }, false));
 
             // binding <List SelectedItem="{SelectedAutoCompleteOption}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "SelectedAutoCompleteOption" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "AutoCompleteOptionsList", "SelectedItem" }, new List<Func<BindableObject>> { () => this, () => AutoCompleteOptionsList }), () => AutoCompleteOptionsList.SelectedItem = SelectedAutoCompleteOption, () => SelectedAutoCompleteOption = AutoCompleteOptionsList.SelectedItem as Delight.AutoCompleteOption, true));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "SelectedAutoCompleteOption" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "AutoCompleteOptionsList", "SelectedItem" }, new List<Func<object>> { () => this, () => AutoCompleteOptionsList }), () => AutoCompleteOptionsList.SelectedItem = SelectedAutoCompleteOption, () => SelectedAutoCompleteOption = AutoCompleteOptionsList.SelectedItem as Delight.AutoCompleteOption, true));
 
             // templates for AutoCompleteOptionsList
             AutoCompleteOptionsList.ContentTemplates.Add(new ContentTemplate(tiOption => 
@@ -47,7 +47,7 @@ namespace Delight
                 var label1 = new Label(this, defaultOptionItem.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{option.DisplayText}">
-                defaultOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
+                defaultOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<object>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label1 }), () => label1.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
                 defaultOptionItem.IsDynamic = true;
                 defaultOptionItem.SetContentTemplateData(tiOption);
                 return defaultOptionItem;
@@ -61,11 +61,11 @@ namespace Delight
                 var rawImage1 = new RawImage(this, assetOptionItem.Content, "RawImage1", RawImage1Template);
 
                 // binding <RawImage Texture="{option.PreviewThumbnail}">
-                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "PreviewThumbnail" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Texture" }, new List<Func<BindableObject>> { () => rawImage1 }), () => rawImage1.Texture = (tiOption.Item as Delight.AutoCompleteOption).PreviewThumbnail, () => { }, false));
+                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "PreviewThumbnail" }, new List<Func<object>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Texture" }, new List<Func<object>> { () => rawImage1 }), () => rawImage1.Texture = (tiOption.Item as Delight.AutoCompleteOption).PreviewThumbnail, () => { }, false));
                 var label2 = new Label(this, assetOptionItem.Content, "Label2", Label2Template);
 
                 // binding <Label Text="{option.DisplayText}">
-                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<BindableObject>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label2 }), () => label2.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
+                assetOptionItem.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayText" }, new List<Func<object>> { () => tiOption, () => (tiOption.Item as Delight.AutoCompleteOption) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label2 }), () => label2.Text = (tiOption.Item as Delight.AutoCompleteOption).DisplayText, () => { }, false));
                 assetOptionItem.IsDynamic = true;
                 assetOptionItem.SetContentTemplateData(tiOption);
                 return assetOptionItem;

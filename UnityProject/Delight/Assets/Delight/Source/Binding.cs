@@ -7,10 +7,11 @@ using UnityEngine;
 
 namespace Delight
 {
+
     /// <summary>
     /// Represents a data-binding (single or multi-binding). 
     /// </summary>
-    public class Binding
+    public class Binding : IUpdateable
     {
         #region Fields
 
@@ -22,6 +23,10 @@ namespace Delight
         public bool SourcesReachable;
         public bool IsTwoWay;
         public bool IsSimple;
+        public LayoutRoot LayoutRoot;
+        public bool HasRegisteredInLayoutRoot;
+
+        private static Type BindableObjectType = typeof(BindableObject);
 
         #endregion
 
@@ -57,10 +62,34 @@ namespace Delight
         #region Methods
 
         /// <summary>
+        /// Called each frame and tracks changes in non-bindable objects.
+        /// </summary>
+        public void OnUpdate()
+        {
+            bool hasUpdated = false;
+
+            // track changes in source and propagate value to target
+            foreach (var source in Sources)
+            {
+                hasUpdated = source.OnUpdate(hasUpdated);
+            }
+
+            if (IsTwoWay)
+            {
+                Target.OnUpdate(hasUpdated);
+            }
+        }
+
+        /// <summary>
         /// Updates the binding and propagates it. 
         /// </summary>
-        public void UpdateBinding(bool propagateTargetToSource = false)
+        public void UpdateBinding(bool propagateValues = true, bool propagateTargetToSource = false, LayoutRoot layoutRoot = null)
         {
+            if (layoutRoot != null)
+            {
+                LayoutRoot = layoutRoot;
+            }
+
             if (IsSimple)
             {
                 PropagateSourceToTarget();
@@ -72,7 +101,7 @@ namespace Delight
             {
                 foreach (var sourceObject in source.Objects)
                 {
-                    sourceObject.PropertyChanged -= source.PropertyChanged;
+                    RemoveChangeListener(source, sourceObject);
                 }
             }
 
@@ -80,7 +109,7 @@ namespace Delight
             {
                 foreach (var targetObject in Target.Objects)
                 {
-                    targetObject.PropertyChanged -= Target.PropertyChanged;
+                    RemoveChangeListener(Target, targetObject);
                 }
             }
 
@@ -101,7 +130,7 @@ namespace Delight
                     }
 
                     source.Objects.Add(sourceObject);
-                    sourceObject.PropertyChanged += source.PropertyChanged;
+                    AddChangeListener(source, sourceObject);
                 }
             }
 
@@ -120,7 +149,7 @@ namespace Delight
 
                 if (IsTwoWay)
                 {
-                    targetObject.PropertyChanged += Target.PropertyChanged;
+                    AddChangeListener(Target, targetObject);
                 }
             }
 
@@ -129,15 +158,18 @@ namespace Delight
                 return;
 
             //LogPropagation(propagateTargetToSource);
-            if (!propagateTargetToSource)
+            if (propagateValues)
             {
-                PropagateSourceToTarget();
-            }
-            else
-            {
-                if (IsTwoWay)
+                if (!propagateTargetToSource)
                 {
-                    PropagateTargetToSource();
+                    PropagateSourceToTarget();
+                }
+                else
+                {
+                    if (IsTwoWay)
+                    {
+                        PropagateTargetToSource();
+                    }
                 }
             }
         }
@@ -145,9 +177,41 @@ namespace Delight
         /// <summary>
         /// Returns boolean indicating if binding has target object.
         /// </summary>
-        public bool HasTarget(DependencyObject targetObject)
+        public bool HasTarget(object targetObject)
         {
             return IsSimple ? false : Target.Objects.Contains(targetObject);
+        }
+
+        /// <summary>
+        /// Adds change listener to object.
+        /// </summary>
+        private void AddChangeListener(BindingPath source, object sourceObject)
+        {
+            if (BindableObjectType.IsAssignableFrom(sourceObject.GetType()))
+            {
+                var bindableSourceObject = sourceObject as BindableObject;
+                bindableSourceObject.PropertyChanged += source.PropertyChanged;
+            }
+            else
+            {
+                if (!HasRegisteredInLayoutRoot)
+                {
+                    LayoutRoot.RegisterUpdateable(this);
+                    HasRegisteredInLayoutRoot = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes change listener from object.
+        /// </summary>
+        private void RemoveChangeListener(BindingPath source, object sourceObject)
+        {
+            if (BindableObjectType.IsAssignableFrom(sourceObject.GetType()))
+            {
+                var bindableSourceObject = sourceObject as BindableObject;
+                bindableSourceObject.PropertyChanged -= source.PropertyChanged;
+            }
         }
 
         #endregion

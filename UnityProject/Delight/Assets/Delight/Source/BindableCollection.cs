@@ -15,7 +15,6 @@ namespace Delight
     /// Base class for bindable generic collections. Bindable collections notifies observers when the collection changes and enables e.g. the List view to update when items are added.
     /// </summary>
     public partial class BindableCollection<T> : BindableCollection, IEnumerable<T>
-        where T : BindableObject
     {
         #region Fields
 
@@ -24,6 +23,7 @@ namespace Delight
         protected bool _batchNotifications = false;
         protected List<CollectionChangedEventArgs> _collectionChangedEventArgsBatch = new List<CollectionChangedEventArgs>();
         protected bool _suppressNotifications = false;
+        public static bool IsBindableObject = typeof(BindableObject).IsAssignableFrom(typeof(T));
 
         #endregion
 
@@ -34,14 +34,14 @@ namespace Delight
             get
             {
                 if (id == null)
-                    return null;
+                    return default(T);
 
                 T item;
                 if (Data.TryGetValue(id, out item))
                 {
                     return item;
                 }
-                return null;
+                return default(T);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Delight
             get
             {
                 if (index < 0 || index >= Count)
-                    return null;
+                    return default(T);
 
                 return DataList[index].Value;
             }
@@ -93,16 +93,15 @@ namespace Delight
 
         #region Methods
 
-        public override BindableObject GetGeneric(string id)
+        public override object GetGeneric(string id)
         {
             return this[id];
         }
 
-        public override BindableObject GetGeneric(int index)
+        public override object GetGeneric(int index)
         {
             return this[index];
         }
-
 
         public virtual void Edit(Action edit)
         {
@@ -117,23 +116,39 @@ namespace Delight
             _collectionChangedEventArgsBatch.Clear();
         }
 
+        public string GetId(object item, bool checkSetNewId = false)
+        {
+            if (IsBindableObject)
+            {
+                var bindableObject = item as BindableObject;
+                if (checkSetNewId && String.IsNullOrEmpty(bindableObject.Id))
+                {
+                    bindableObject.Id = Guid.NewGuid().ToString();
+                    return bindableObject.Id;
+                }
+                else
+                {
+                    return bindableObject.Id;
+                }
+            }
+
+            return item.GetHashCode().ToString();
+        }
+
         public virtual void AddRange(IEnumerable<T> items)
         {
-            var addedItems = new List<BindableObject>();
+            var addedItems = new List<object>();
             foreach (var item in items)
             {
-                if (String.IsNullOrEmpty(item.Id))
-                {
-                    item.Id = Guid.NewGuid().ToString();
-                }
-                else if (Data.ContainsKey(item.Id))
+                string id = GetId(item, true);
+                if (Data.ContainsKey(id))
                 {
                     continue;
                 }
 
-                Data.Add(item.Id, item);
-                DataList.Add(new KeyValuePair<string, T>(item.Id, item));
-                OnPropertyChanged(item.Id);
+                Data.Add(id, item);
+                DataList.Add(new KeyValuePair<string, T>(id, item));
+                OnPropertyChanged(id);
                 addedItems.Add(item);
             }
 
@@ -149,45 +164,39 @@ namespace Delight
 
         public virtual void Add(T item)
         {
-            if (String.IsNullOrEmpty(item.Id))
-            {
-                item.Id = Guid.NewGuid().ToString();
-            }
-            else if (Data.ContainsKey(item.Id))
+            string id = GetId(item, true);
+            if (Data.ContainsKey(id))
             {
                 return;
             }
 
-            Data.Add(item.Id, item);
-            DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+            Data.Add(id, item);
+            DataList.Add(new KeyValuePair<string, T>(id, item));
 
             Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
                 Item = item
             });
-            OnPropertyChanged(item.Id);
+            OnPropertyChanged(id);
         }
 
         public virtual void Insert(int index, T item)
         {
-            if (String.IsNullOrEmpty(item.Id))
-            {
-                item.Id = Guid.NewGuid().ToString();
-            }
-            else if (Data.ContainsKey(item.Id))
+            string id = GetId(item, true);
+            if (Data.ContainsKey(id))
             {
                 return;
             }
 
-            Data.Add(item.Id, item);
-            DataList.Insert(index, new KeyValuePair<string, T>(item.Id, item));
+            Data.Add(id, item);
+            DataList.Insert(index, new KeyValuePair<string, T>(id, item));
 
             Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Replace
             });
-            OnPropertyChanged(item.Id);
+            OnPropertyChanged(id);
         }
 
         public virtual void Clear()
@@ -217,8 +226,9 @@ namespace Delight
             DataList.Clear();
             foreach (var item in items)
             {
-                Data.Add(item.Id, item);
-                DataList.Add(new KeyValuePair<string, T>(item.Id, item));
+                string id = GetId(item, true);
+                Data.Add(id, item);
+                DataList.Add(new KeyValuePair<string, T>(id, item));
             }
             Notify(new CollectionChangedEventArgs
             {
@@ -235,36 +245,9 @@ namespace Delight
             });
         }
 
-        // TODO here for backwards compatibility with MarkLight
-        public void ItemsModified(string fieldPath)
-        {
-            foreach (var item in this)
-            {
-                item.OnPropertyChanged(fieldPath);
-            }
-        }
-
-        // TODO here for backwards compatibility with MarkLight
-        public void ItemModified(T item, string fieldPath = "")
-        {
-            Notify(new CollectionChangedEventArgs
-            {
-                ChangeAction = CollectionChangeAction.Replace
-            });
-        }
-
-        // TODO here for backwards compatibility with MarkLight
-        public void ItemModified(int index, string fieldPath = "")
-        {
-            Notify(new CollectionChangedEventArgs
-            {
-                ChangeAction = CollectionChangeAction.Replace
-            });
-        }
-
         public virtual bool Contains(T item)
         {
-            return Data.ContainsKey(item.Id);
+            return Data.ContainsKey(GetId(item));
         }
 
         public virtual bool RemoveAt(int index)
@@ -278,12 +261,12 @@ namespace Delight
         public virtual bool Remove(T item)
         {
             // TODO we might want a dictionary to keep track of index to make this O(1)
-            bool wasRemoved = Data.Remove(item.Id);
+            bool wasRemoved = Data.Remove(GetId(item));
             if (wasRemoved)
             {
                 for (int i = 0; i < DataList.Count; ++i)
                 {
-                    if (_dataList[i].Value == item)
+                    if (EqualityComparer<T>.Default.Equals(_dataList[i].Value, item))
                     {
                         DataList.RemoveAt(i);
                         break;
@@ -303,7 +286,6 @@ namespace Delight
 
         public virtual void Reverse()
         {
-            //Data.Reverse();
             DataList.Reverse();
         }
 
@@ -385,7 +367,7 @@ namespace Delight
                     return item.Value;
             }
 
-            return null;
+            return default(T);
         }
 
         public int FindIndex(Predicate<T> predicate)
@@ -415,7 +397,7 @@ namespace Delight
                 if (predicate(item.Value))
                     return item.Value;
             }
-            return null;
+            return default(T);
         }
 
         public bool Any()
@@ -457,7 +439,7 @@ namespace Delight
             // TODO we might want a dictionary to keep track of index to make it O(1)
             for (int i = 0; i < Count; ++i)
             {
-                if (_dataList[i].Value == item)
+                if (EqualityComparer<T>.Default.Equals(_dataList[i].Value, item))
                 {
                     return i;
                 }
@@ -488,7 +470,7 @@ namespace Delight
     /// <summary>
     /// Base class for bindable collections. Bindable collections notifies observers when the collection changes and enables e.g. the List view to update when items are added.
     /// </summary>
-    public abstract partial class BindableCollection : BindableObject, IEnumerable<BindableObject>, INotifyCollectionChanged
+    public abstract partial class BindableCollection : BindableObject, IEnumerable<object>, INotifyCollectionChanged
     {
         #region Fields
 
@@ -504,8 +486,8 @@ namespace Delight
 
         #region Methods
 
-        public abstract BindableObject GetGeneric(string id);
-        public abstract BindableObject GetGeneric(int index);
+        public abstract object GetGeneric(string id);
+        public abstract object GetGeneric(int index);
         protected virtual void UpdateData()
         {
         }
@@ -529,7 +511,7 @@ namespace Delight
             return GetEnumerator();
         }
 
-        public IEnumerator<BindableObject> GetEnumerator()
+        public IEnumerator<object> GetEnumerator()
         {
             UpdateData();
             for (int i = 0; i < Count; ++i)

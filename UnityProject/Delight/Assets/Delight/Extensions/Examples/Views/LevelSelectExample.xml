@@ -6,7 +6,7 @@
         Offset="0,170,0,0" DeselectAfterSelect="True" Alignment="Top" IsPaged="True" PageSize="6"
         ShowNavigationButtons="All"
         PageNavigationGroupOffset="0,50,0,0"
-        PageNavigationGroupSpacing="5">
+        PageNavigationGroupSpacing="5"> 
     <ListItem Size="150,150" BackgroundColor="White" BackgroundSprite="LevelSelectItemBg">
       <Label Text="{level.Index:0}" FontSize="50" AutoSize="True" Font="AveriaSansLibre-Bold SDF"
              FontColor="#ecce2d" Offset="0,0,0,30" />

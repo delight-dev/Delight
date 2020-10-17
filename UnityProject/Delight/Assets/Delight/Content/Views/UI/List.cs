@@ -19,12 +19,12 @@ namespace Delight
     {
         #region Fields
 
-        private BindableObject _selectedItem;
+        private object _selectedItem;
         private BindableCollection _oldCollection;
-        private Dictionary<BindableObject, ListItem> _presentedItems = new Dictionary<BindableObject, ListItem>();
+        private Dictionary<object, ListItem> _presentedItems = new Dictionary<object, ListItem>();
 
         // for virtualized list
-        private Dictionary<BindableObject, int> _indexOfItem;
+        private Dictionary<object, int> _indexOfItem;
         private Dictionary<ContentTemplate, VirtualItem> _contentTemplateVirtualItem;
         private Dictionary<ContentTemplate, List<ListItem>> _realizedItemPool;
         private List<VirtualItem> _virtualItems;
@@ -116,7 +116,7 @@ namespace Delight
 
             if (IsVirtualized)
             {
-                _indexOfItem = new Dictionary<BindableObject, int>();
+                _indexOfItem = new Dictionary<object, int>();
                 _virtualItems = new List<VirtualItem>();
                 _realizedItemPool = new Dictionary<ContentTemplate, List<ListItem>>();
                 IsScrollable = true; // virtualized lists are always scrollable
@@ -407,6 +407,15 @@ namespace Delight
                     updateLayout = true;
                     break;
 
+                case CollectionChangeAction.RemoveRange:
+                    var removeRangeArgs = e as CollectionChangedRangeEventArgs;
+                    foreach (var item in removeRangeArgs.Items)
+                    {
+                        DestroyItem(item);
+                    }
+                    updateLayout = true;
+                    break;
+
                 case CollectionChangeAction.Replace:
                     ReplaceItems();
                     updateLayout = true;
@@ -453,7 +462,7 @@ namespace Delight
         /// <summary>
         /// Gets virtual item from bindable item.
         /// </summary>
-        public VirtualItem GetVirtualItem(BindableObject item)
+        public VirtualItem GetVirtualItem(object item)
         {
             if (!_indexOfItem.TryGetValue(item, out int index))
                 return null;
@@ -464,7 +473,7 @@ namespace Delight
         /// <summary>
         /// Scrolls to specified item.
         /// </summary>
-        public void ScrollTo(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        public void ScrollTo(object item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
             if (!IsScrollable || item == null)
                 return;
@@ -626,7 +635,7 @@ namespace Delight
         /// <summary>
         /// Destroys item in list.
         /// </summary>
-        protected virtual void DestroyItem(BindableObject item)
+        protected virtual void DestroyItem(object item)
         {
             if (IsVirtualized)
             {
@@ -783,7 +792,7 @@ namespace Delight
         /// <summary>
         /// Called when a new dynamic list item is to be generated.
         /// </summary>
-        protected void CreateListItem(BindableObject item)
+        protected void CreateListItem(object item)
         {
             string templateId = TemplateSelector?.Invoke(item) as string;
             if (IsVirtualized)
@@ -1589,7 +1598,7 @@ namespace Delight
         /// <summary>
         /// Selects item and scrolls to it.
         /// </summary>
-        public void SelectAndScrollToItem(BindableObject item, ElementAlignment? alignment = null, ElementMargin offset = null)
+        public void SelectAndScrollToItem(object item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
             SelectItem(item, true);
             ScrollTo(item, alignment, offset);
@@ -1620,7 +1629,7 @@ namespace Delight
         /// <summary>
         /// Selects item in the list.
         /// </summary>
-        public void SelectItem(BindableObject item, bool triggeredByClick = false)
+        public void SelectItem(object item, bool triggeredByClick = false)
         {
             if (item == null)
             {
@@ -1851,9 +1860,9 @@ namespace Delight
         /// <summary>
         /// Gets selected item of type.
         /// </summary>
-        public T GetSelected<T>() where T : BindableObject
+        public T GetSelected<T>()
         {
-            return SelectedItem as T;
+            return (T)SelectedItem;
         }
 
         /// <summary>
@@ -1910,7 +1919,7 @@ namespace Delight
         /// <summary>
         /// Gets list item based belonging to bindable object.
         /// </summary>
-        public ListItem GetListItem(BindableObject key)
+        public ListItem GetListItem(object key)
         {
             if (IsVirtualized)
             {

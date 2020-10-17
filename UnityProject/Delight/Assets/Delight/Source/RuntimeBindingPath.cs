@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 #endregion
 
 namespace Delight
@@ -15,6 +16,8 @@ namespace Delight
 
         public bool IsNegated;
         public ValueConverter ValueConverter;
+        public bool ConvertToBindableCollection;
+        public Func<LayoutRoot> LayoutRootGetter;
 
         #endregion
 
@@ -23,10 +26,13 @@ namespace Delight
         /// <summary>
         /// Creates a new instance of the class.
         /// </summary>
-        public RuntimeBindingPath(List<string> properties, List<Func<BindableObject>> objectGetters, bool isNegated, ValueConverter valueConverter) : base(properties, objectGetters)
+        public RuntimeBindingPath(List<string> properties, List<Func<object>> objectGetters, bool isNegated, ValueConverter valueConverter,
+            bool convertToBindableCollection = false, Func<LayoutRoot> layoutRootGetter = null) : base(properties, objectGetters)
         {
             IsNegated = isNegated;
             ValueConverter = valueConverter;
+            ConvertToBindableCollection = convertToBindableCollection;
+            LayoutRootGetter = layoutRootGetter;
         }
 
         #endregion
@@ -50,6 +56,11 @@ namespace Delight
             if (ValueConverter != null)
             {
                 transformedValue = ValueConverter.ConvertToGeneric(transformedValue);
+            }
+
+            if (ConvertToBindableCollection)
+            {
+                transformedValue = transformedValue.ToBindableCollection(LayoutRootGetter());
             }
 
             return transformedValue; 

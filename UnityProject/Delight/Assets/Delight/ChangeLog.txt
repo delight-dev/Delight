@@ -1,4 +1,7 @@
-﻿2020.2.0
+﻿2020.2.1a
+- Framework now allows binding to non-bindable objects i.e. objects that don't inherit from BindableObject or BindableCollection
+
+2020.2.0
 - Designer updated: view selection, undo/redo, lock views, syntax highlighting for bindings, performance improvements
 - Messaging system implemented and can be accessed through the Messenger class
 - Embedded code - C# code can now be embedded in XML in bindings and actions through the '$' prefix, e.g. 

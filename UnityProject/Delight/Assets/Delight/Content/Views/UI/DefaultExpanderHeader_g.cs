@@ -24,11 +24,11 @@ namespace Delight
             HeaderIcon = new Image(this, HeaderGroup.Content, "HeaderIcon", HeaderIconTemplate);
 
             // binding <Image Sprite="{Sprite}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Sprite" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "HeaderIcon", "Sprite" }, new List<Func<BindableObject>> { () => this, () => HeaderIcon }), () => HeaderIcon.Sprite = Sprite, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Sprite" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "HeaderIcon", "Sprite" }, new List<Func<object>> { () => this, () => HeaderIcon }), () => HeaderIcon.Sprite = Sprite, () => { }, false));
             HeaderLabel = new Label(this, HeaderGroup.Content, "HeaderLabel", HeaderLabelTemplate);
 
             // binding <Label Text="{Text}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "HeaderLabel", "Text" }, new List<Func<BindableObject>> { () => this, () => HeaderLabel }), () => HeaderLabel.Text = Text, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "HeaderLabel", "Text" }, new List<Func<object>> { () => this, () => HeaderLabel }), () => HeaderLabel.Text = Text, () => { }, false));
             this.AfterInitializeInternal();
         }
 

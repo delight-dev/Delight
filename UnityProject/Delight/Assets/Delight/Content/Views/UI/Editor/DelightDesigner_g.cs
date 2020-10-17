@@ -60,7 +60,7 @@ namespace Delight
                 list1.ItemSelected.RegisterHandler(this, "ViewSelected");
 
                 // binding <List Items="{view in DisplayedDesignerViews}">
-                expanderContent1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayedDesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Items" }, new List<Func<BindableObject>> { () => list1 }), () => list1.Items = DisplayedDesignerViews, () => { }, false));
+                expanderContent1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayedDesignerViews" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Items" }, new List<Func<object>> { () => list1 }), () => list1.Items = DisplayedDesignerViews, () => { }, false));
 
                 // templates for list1
                 list1.ContentTemplates.Add(new ContentTemplate(tiView => 
@@ -70,11 +70,11 @@ namespace Delight
                     listItem1.SetListItemState.SetValue(label1, true);
 
                     // binding <Label Text="{view.DisplayName}">
-                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayName" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).DisplayName, () => { }, false));
+                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayName" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).DisplayName, () => { }, false));
                     var image1 = new Image(this, listItem1.Content, "Image1", Image1Template);
 
                     // binding <Image IsActive="{view.IsDisplayLocked}">
-                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "IsDisplayLocked" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "IsActive" }, new List<Func<BindableObject>> { () => image1 }), () => image1.IsActive = (tiView.Item as Delight.Editor.Parser.DesignerView).IsDisplayLocked, () => { }, false));
+                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "IsDisplayLocked" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "IsActive" }, new List<Func<object>> { () => image1 }), () => image1.IsActive = (tiView.Item as Delight.Editor.Parser.DesignerView).IsDisplayLocked, () => { }, false));
                     listItem1.IsDynamic = true;
                     listItem1.SetContentTemplateData(tiView);
                     return listItem1;
@@ -105,7 +105,7 @@ namespace Delight
                 var label3 = new Label(this, comboBoxListItem2.Content, "Label3", Label3Template);
 
                 // binding <Label Text="{DisplayReadOnlyViewsText}">
-                comboBoxListItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayReadOnlyViewsText" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = DisplayReadOnlyViewsText, () => { }, false));
+                comboBoxListItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayReadOnlyViewsText" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label3 }), () => label3.Text = DisplayReadOnlyViewsText, () => { }, false));
                 comboBoxListItem2.IsDynamic = true;
                 comboBoxListItem2.SetContentTemplateData(x0);
                 return comboBoxListItem2;
@@ -117,14 +117,14 @@ namespace Delight
             XmlEditor.SelectViewAtLine.RegisterHandler(this, "OnSelectViewAtLine");
 
             // binding <XmlEditor DesignerViews="{DesignerViews}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "XmlEditor", "DesignerViews" }, new List<Func<BindableObject>> { () => this, () => XmlEditor }), () => XmlEditor.DesignerViews = DesignerViews, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DesignerViews" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "XmlEditor", "DesignerViews" }, new List<Func<object>> { () => this, () => XmlEditor }), () => XmlEditor.DesignerViews = DesignerViews, () => { }, false));
             LockIcon = new Image(this, XmlEditorRegion.Content, "LockIcon", LockIconTemplate);
             XmlEditorStatusBar = new Region(this, XmlEditorRegion.Content, "XmlEditorStatusBar", XmlEditorStatusBarTemplate);
             Group1 = new Group(this, XmlEditorStatusBar.Content, "Group1", Group1Template);
             AutoParseCheckBox = new CheckBox(this, Group1.Content, "AutoParseCheckBox", AutoParseCheckBoxTemplate);
 
             // binding <CheckBox IsChecked="{AutoParse}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoParse" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "AutoParseCheckBox", "IsChecked" }, new List<Func<BindableObject>> { () => this, () => AutoParseCheckBox }), () => AutoParseCheckBox.IsChecked = AutoParse, () => AutoParse = AutoParseCheckBox.IsChecked, true));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoParse" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "AutoParseCheckBox", "IsChecked" }, new List<Func<object>> { () => this, () => AutoParseCheckBox }), () => AutoParseCheckBox.IsChecked = AutoParse, () => AutoParse = AutoParseCheckBox.IsChecked, true));
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
             Button1.Click.RegisterHandler(this, "ParseView");
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
@@ -135,7 +135,7 @@ namespace Delight
             List2 = new List(this, SaveChangesPopup.Content, "List2", List2Template);
 
             // binding <List Items="{view in ChangedDesignerViews}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ChangedDesignerViews" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "List2", "Items" }, new List<Func<BindableObject>> { () => this, () => List2 }), () => List2.Items = ChangedDesignerViews, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ChangedDesignerViews" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "List2", "Items" }, new List<Func<object>> { () => this, () => List2 }), () => List2.Items = ChangedDesignerViews, () => { }, false));
 
             // templates for List2
             List2.ContentTemplates.Add(new ContentTemplate(tiView => 
@@ -144,7 +144,7 @@ namespace Delight
                 var label5 = new Label(this, listItem2.Content, "Label5", Label5Template);
 
                 // binding <Label Text="{view.Name}">
-                listItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label5 }), () => label5.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).Name, () => { }, false));
+                listItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label5 }), () => label5.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).Name, () => { }, false));
                 listItem2.IsDynamic = true;
                 listItem2.SetContentTemplateData(tiView);
                 return listItem2;

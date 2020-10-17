@@ -20,7 +20,7 @@ namespace Delight
         public ElementMargin Offset { get; set; }
         public ElementAlignment Alignment { get; set; }
         public ContentTemplate ContentTemplate { get; set; }
-        public BindableObject Item { get; set; }
+        public object Item { get; set; }
         public ListItem RealizedItem { get; set; }
         public bool IsSelected { get; set; }
         public bool IsAlternate { get; set; }

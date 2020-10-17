@@ -9,6 +9,7 @@ using System.Collections;
 using System.Reflection;
 using System.Linq.Expressions;
 using UnityEngine;
+using System.Runtime.InteropServices;
 #endregion
 
 namespace Delight
@@ -58,6 +59,7 @@ namespace Delight
             _typeDictionary.Add("int", new List<Type> { typeof(int) });
             _typeDictionary.Add("bool", new List<Type> { typeof(bool) });
             _typeDictionary.Add("float", new List<Type> { typeof(float) });
+            _typeDictionary.Add("object", new List<Type> { typeof(object) });
         }
 
         /// <summary>

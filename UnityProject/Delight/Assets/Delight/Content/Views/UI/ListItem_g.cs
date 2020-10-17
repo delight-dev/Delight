@@ -54,9 +54,9 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<Delight.BindableObject> ItemProperty = new DependencyProperty<Delight.BindableObject>("Item");
+        public readonly static DependencyProperty<System.Object> ItemProperty = new DependencyProperty<System.Object>("Item");
         /// <summary>References the data collection item bound to this list item (set when the list item resides in a dynamic list).</summary>
-        public Delight.BindableObject Item
+        public System.Object Item
         {
             get { return ItemProperty.GetValue(this); }
             set { ItemProperty.SetValue(this, value); }

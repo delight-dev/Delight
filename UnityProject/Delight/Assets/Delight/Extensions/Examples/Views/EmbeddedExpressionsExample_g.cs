@@ -26,19 +26,19 @@ namespace Delight
             Region2 = new Region(this, Region1.Content, "Region2", Region2Template);
 
             // binding <Region IsVisible="$ {ClickCount} > 0">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region2", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region2 }), () => Region2.IsVisible = ClickCount > 0, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Region2", "IsVisible" }, new List<Func<object>> { () => this, () => Region2 }), () => Region2.IsVisible = ClickCount > 0, () => { }, false));
             Label1 = new Label(this, Region1.Content, "Label1", Label1Template);
             Region3 = new Region(this, Group2.Content, "Region3", Region3Template);
             Region4 = new Region(this, Region3.Content, "Region4", Region4Template);
 
             // binding <Region IsVisible="$ {ClickCount} > 5">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region4", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region4 }), () => Region4.IsVisible = ClickCount > 5, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Region4", "IsVisible" }, new List<Func<object>> { () => this, () => Region4 }), () => Region4.IsVisible = ClickCount > 5, () => { }, false));
             Label2 = new Label(this, Region3.Content, "Label2", Label2Template);
             Region5 = new Region(this, Group2.Content, "Region5", Region5Template);
             Region6 = new Region(this, Region5.Content, "Region6", Region6Template);
 
             // binding <Region IsVisible="$ {ClickCount} > 10">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Region6", "IsVisible" }, new List<Func<BindableObject>> { () => this, () => Region6 }), () => Region6.IsVisible = ClickCount > 10, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Region6", "IsVisible" }, new List<Func<object>> { () => this, () => Region6 }), () => Region6.IsVisible = ClickCount > 10, () => { }, false));
             Label3 = new Label(this, Region5.Content, "Label3", Label3Template);
             Group3 = new Group(this, Group1.Content, "Group3", Group3Template);
             Group4 = new Group(this, Group3.Content, "Group4", Group4Template);
@@ -49,16 +49,16 @@ namespace Delight
             Label4 = new Label(this, Group3.Content, "Label4", Label4Template);
 
             // binding <Label Text="Click count: {ClickCount}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label4", "Text" }, new List<Func<BindableObject>> { () => this, () => Label4 }), () => Label4.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label4", "Text" }, new List<Func<object>> { () => this, () => Label4 }), () => Label4.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
             Group5 = new Group(this, Group3.Content, "Group5", Group5Template);
             Label5 = new Label(this, Group5.Content, "Label5", Label5Template);
 
             // binding <Label Text="{ClickCount}^2 = ">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label5", "Text" }, new List<Func<BindableObject>> { () => this, () => Label5 }), () => Label5.Text = String.Format("{0}^2 = ", ClickCount), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label5", "Text" }, new List<Func<object>> { () => this, () => Label5 }), () => Label5.Text = String.Format("{0}^2 = ", ClickCount), () => { }, false));
             Label6 = new Label(this, Group5.Content, "Label6", Label6Template);
 
             // binding <Label Text="$ Math.Pow({ClickCount}, 2).ToString()">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label6", "Text" }, new List<Func<BindableObject>> { () => this, () => Label6 }), () => Label6.Text = Math.Pow(ClickCount, 2).ToString(), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label6", "Text" }, new List<Func<object>> { () => this, () => Label6 }), () => Label6.Text = Math.Pow(ClickCount, 2).ToString(), () => { }, false));
             this.AfterInitializeInternal();
         }
 

@@ -486,14 +486,14 @@ namespace Delight
 
             foreach (var binding in _bindings)
             {
-                binding.UpdateBinding();
+                binding.UpdateBinding(true, false, LayoutRoot);
             }
         }
 
         /// <summary>
         /// Updates bindings to specific target object.
         /// </summary>
-        public void UpdateBindings(DependencyObject targetObject)
+        public void UpdateBindings(object targetObject)
         {
             if (_bindings == null)
                 return;
@@ -503,7 +503,7 @@ namespace Delight
             {
                 if (binding.HasTarget(targetObject))
                 {
-                    binding.UpdateBinding();
+                    binding.UpdateBinding(true, false, LayoutRoot);
                 }
             }
         }

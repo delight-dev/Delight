@@ -26,13 +26,13 @@ namespace Delight
             Label1 = new Label(this, Group2.Content, "Label1", Label1Template);
 
             // binding <Label Text="{Slider1.Value:0} %">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Slider1", "Value" }, new List<Func<BindableObject>> { () => this, () => Slider1 }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<BindableObject>> { () => this, () => Label1 }), () => Label1.Text = String.Format("{0:0} %", Slider1.Value), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Slider1", "Value" }, new List<Func<object>> { () => this, () => Slider1 }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<object>> { () => this, () => Label1 }), () => Label1.Text = String.Format("{0:0} %", Slider1.Value), () => { }, false));
             Group3 = new Group(this, Group1.Content, "Group3", Group3Template);
             Slider2 = new Slider(this, Group3.Content, "Slider2", Slider2Template);
             Label2 = new Label(this, Group3.Content, "Label2", Label2Template);
 
             // binding <Label Text="{Slider2.Value:0.0}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Slider2", "Value" }, new List<Func<BindableObject>> { () => this, () => Slider2 }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = String.Format("{0:0.0}", Slider2.Value), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Slider2", "Value" }, new List<Func<object>> { () => this, () => Slider2 }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<object>> { () => this, () => Label2 }), () => Label2.Text = String.Format("{0:0.0}", Slider2.Value), () => { }, false));
             this.AfterInitializeInternal();
         }
 

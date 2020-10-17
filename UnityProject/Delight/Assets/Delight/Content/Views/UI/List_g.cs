@@ -226,9 +226,9 @@ namespace Delight
             set { SelectOnMouseUpProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Delight.BindableObject> SelectedItemProperty = new DependencyProperty<Delight.BindableObject>("SelectedItem");
+        public readonly static DependencyProperty<System.Object> SelectedItemProperty = new DependencyProperty<System.Object>("SelectedItem");
         /// <summary>References the data collection item that corresponds to the currently selected list item.</summary>
-        public Delight.BindableObject SelectedItem
+        public System.Object SelectedItem
         {
             get { return SelectedItemProperty.GetValue(this); }
             set { SelectedItemProperty.SetValue(this, value); }

@@ -19,8 +19,8 @@ namespace Delight
 
         private BindableObject _selectedItem;
         private BindableCollection _oldCollection;
-        private Dictionary<BindableObject, Tab> _tabs = new Dictionary<BindableObject, Tab>();
-        private Dictionary<BindableObject, TabHeader> _tabHeaders = new Dictionary<BindableObject, TabHeader>();
+        private Dictionary<object, Tab> _tabs = new Dictionary<object, Tab>();
+        private Dictionary<object, TabHeader> _tabHeaders = new Dictionary<object, TabHeader>();
 
         #endregion
 
@@ -216,7 +216,7 @@ namespace Delight
         /// <summary>
         /// Destroys item in list.
         /// </summary>
-        protected virtual void DestroyItem(BindableObject item)
+        protected virtual void DestroyItem(object item)
         {
             if (_tabs.TryGetValue(item, out var tabItem))
             {
@@ -285,7 +285,7 @@ namespace Delight
         /// <summary>
         /// Called when a new item is to be generated.
         /// </summary>
-        protected View CreateTabItem(BindableObject item)
+        protected View CreateTabItem(object item)
         {
             var tabItem = CreateItem(item, typeof(Tab)) as Tab;
             if (tabItem == null)
@@ -343,7 +343,7 @@ namespace Delight
         /// <summary>
         /// Creates tab header for tab.
         /// </summary>
-        protected View CreateTabHeader(Tab tab, BindableObject item = null)
+        protected View CreateTabHeader(Tab tab, object item = null)
         {
             var tabHeader = CreateItem(item, typeof(TabHeader), tab.TabHeaderId) as TabHeader;
             if (tabHeader == null)

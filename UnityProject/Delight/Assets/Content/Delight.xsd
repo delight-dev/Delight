@@ -692,7 +692,6 @@
     <xs:attribute name="CanReselect" type="xs:string" />
     <xs:attribute name="DeselectAfterSelect" type="xs:string" />
     <xs:attribute name="SelectOnMouseUp" type="xs:string" />
-    <xs:attribute name="SelectedItem" type="xs:string" />
     <xs:attribute name="IsStatic" type="xs:string" />
     <xs:attribute name="RealizationMargin" type="xs:string" />
     <xs:attribute name="DisableItemArrangement" type="xs:string" />
@@ -7550,6 +7549,7 @@
       <xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="Player" type="xs:string" />
+    <xs:attribute name="NonBindableLevel" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />

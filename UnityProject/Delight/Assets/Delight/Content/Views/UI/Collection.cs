@@ -28,7 +28,7 @@ namespace Delight
         /// <summary>
         /// Creates new item in collection.
         /// </summary>
-        protected virtual View CreateItem(BindableObject item, Type templateType = null, string templateId = null)
+        protected virtual View CreateItem(object item, Type templateType = null, string templateId = null)
         {
             var template = GetContentTemplate(templateType, templateId);
 

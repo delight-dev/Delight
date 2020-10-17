@@ -450,7 +450,7 @@ namespace Delight.Editor.Parser
             if (viewType == null)
                 return;
 
-            var handlersDictionary= new Dictionary<string, string>();
+            var handlersDictionary = new Dictionary<string, string>();
             var sbHandlers = new StringBuilder();
             var methods = viewType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
 
@@ -533,7 +533,7 @@ namespace Delight.Editor.Parser
                     ++newActionAssignmentCount;
                 }
 
-                sbHandlers.Clear();                
+                sbHandlers.Clear();
             }
 
             if (newActionAssignmentCount > 0)
@@ -1550,7 +1550,7 @@ namespace Delight.Editor.Parser
                         ti.ItemIdDeclaration = itemIdDeclaration;
                         templateItems.Add(ti);
 
-                        ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                        ti.ItemType = GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration, out ti.IsBindableCollection);
                         ti.ItemTypeName = ti.ItemType != null ? ti.ItemType.TypeName() : null;
                     }
                 }
@@ -1574,7 +1574,7 @@ namespace Delight.Editor.Parser
 
                         // generate binding path to source
                         List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
-                        GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, false);
+                        GetBindingSourceProperties(fileName, ti, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, false);
 
                         // generate binding path to target
                         var targetPath = new List<string>();
@@ -1690,7 +1690,7 @@ namespace Delight.Editor.Parser
                             inTemplate ? firstTemplateChild + "." : "",
                             string.Join(", ", sourceBindingPathObjects),
                             String.Format(
-                                "new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})",
+                                "new BindingPath(new List<string> {{ {0} }}, new List<Func<object>> {{ {1} }})",
                                 targetProperties, targetGettersString),
                             sourceToTarget,
                             targetToSource,
@@ -1750,11 +1750,14 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets binding source properties.
         /// </summary>
-        public static void GetBindingSourceProperties(string fileName, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
+        public static void GetBindingSourceProperties(string fileName, TemplateItemInfo ti, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
         {
             sourceBindingPathObjects = new List<string>();
             convertedSourceProperties = new List<string>();
             sourceProperties = new List<string>();
+
+            // handle special case when binding non-bindable lists to List Item <List Item="{level in NonBindableList}">
+            bool convertToBindableCollection = ti != null && !String.IsNullOrEmpty(ti.ItemTypeName) && !ti.IsBindableCollection;
             foreach (var bindingSource in propertyBinding.Sources)
             {
                 var sourcePath = new List<string>();
@@ -1866,7 +1869,7 @@ namespace Delight.Editor.Parser
                         {
                             sourcePath[i] = sourcePath[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
                         }
-                        
+
                         for (int i = 0; i < sourceGetters.Count; ++i)
                         {
                             sourceGetters[i] = sourceGetters[i].Replace(templateItemInfo.VariableName, String.Format("TemplateItems[\"{0}\"]", templateItemInfo.VariableName));
@@ -1877,6 +1880,10 @@ namespace Delight.Editor.Parser
                 string sourceGettersString = string.Join(", ", sourceGetters);
                 string sourceProperty = string.Join(".", sourcePath);
                 string convertedSourceProperty = sourceProperty;
+                if (convertToBindableCollection)
+                {
+                    convertedSourceProperty += ".ToBindableCollection(LayoutRoot)";
+                }
 
                 // add converter
                 if (!String.IsNullOrEmpty(bindingSource.Converter))
@@ -1890,7 +1897,7 @@ namespace Delight.Editor.Parser
 
                 convertedSourceProperties.Add(convertedSourceProperty);
                 sourceProperties.Add(sourceProperty);
-                sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<BindableObject>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
+                sourceBindingPathObjects.Add(String.Format("new BindingPath(new List<string> {{ {0} }}, new List<Func<object>> {{ {1} }})", sourcePropertiesStr, sourceGettersString));
             }
         }
 
@@ -2070,11 +2077,13 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets item type from item declaration.
         /// </summary>
-        public static Type GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration)
+        public static Type GetItemTypeFromDeclaration(string fileName, ViewObject viewObject, PropertyBinding itemIdDeclaration, List<TemplateItemInfo> templateIdInfo, ViewDeclaration viewDeclaration,
+            out bool isBindableCollection)
         {
+            isBindableCollection = true;
             var bindingSource = itemIdDeclaration.Sources.FirstOrDefault();
             if (bindingSource == null)
-                return typeof(BindableObject);
+                return typeof(object);
 
             var sourcePath = new List<string>();
             sourcePath.AddRange(bindingSource.BindingPath.Split('.'));
@@ -2104,6 +2113,7 @@ namespace Delight.Editor.Parser
             }
 
             // loop through each property and infer their type
+            var collectionBase = typeof(IEnumerable);
             var bindableCollectionBase = typeof(BindableCollection);
             bool previousWasCollection = false;
             for (int i = startIndex; i < sourcePath.Count; ++i)
@@ -2124,17 +2134,18 @@ namespace Delight.Editor.Parser
                     return null;
                 }
 
-                // if it's a bindable collection get the type from the generic argument
+                // if it's a collection get the type from the generic argument
                 sourceType = memberInfo.GetMemberType();
                 previousWasCollection = false;
-                if (bindableCollectionBase.IsAssignableFrom(sourceType))
+                if (collectionBase.IsAssignableFrom(sourceType))
                 {
+                    isBindableCollection = bindableCollectionBase.IsAssignableFrom(sourceType);
                     previousWasCollection = true;
                     while (!sourceType.IsGenericType)
                     {
-                        if (sourceType == bindableCollectionBase)
+                        if (sourceType == collectionBase)
                         {
-                            return typeof(BindableObject);
+                            return typeof(object);
                         }
                         sourceType = sourceType.BaseType;
                     }
@@ -3395,9 +3406,9 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-#endregion
+        #endregion
 
-#region Config
+        #region Config
 
         /// <summary>
         /// Generates model code.
@@ -3454,7 +3465,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-#endregion
+        #endregion
     }
 }
 

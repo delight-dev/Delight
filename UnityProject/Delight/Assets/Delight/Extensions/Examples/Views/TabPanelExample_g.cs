@@ -23,7 +23,7 @@ namespace Delight
             TabPanel1 = new TabPanel(this, this, "TabPanel1", TabPanel1Template);
 
             // binding <TabPanel Items="{player in @DemoPlayers}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "TabPanel1", "Items" }, new List<Func<BindableObject>> { () => this, () => TabPanel1 }), () => TabPanel1.Items = Models.DemoPlayers, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<object>> {  }) }, new BindingPath(new List<string> { "TabPanel1", "Items" }, new List<Func<object>> { () => this, () => TabPanel1 }), () => TabPanel1.Items = Models.DemoPlayers, () => { }, false));
 
             // templates for TabPanel1
             TabPanel1.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
@@ -31,7 +31,7 @@ namespace Delight
                 var tabHeader1 = new TabHeader(this, TabPanel1.Content, "TabHeader1", TabHeader1Template);
 
                 // binding <TabHeader Text="{player.Name}">
-                tabHeader1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => tabHeader1 }), () => tabHeader1.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
+                tabHeader1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => tabHeader1 }), () => tabHeader1.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
                 tabHeader1.IsDynamic = true;
                 tabHeader1.SetContentTemplateData(tiPlayer);
                 return tabHeader1;
@@ -44,7 +44,7 @@ namespace Delight
                 var label1 = new Label(this, tab1.Content, "Label1", Label1Template);
 
                 // binding <Label Text="{player.Name}">
-                tab1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
+                tab1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label1 }), () => label1.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
                 tab1.IsDynamic = true;
                 tab1.SetContentTemplateData(tiPlayer);
                 return tab1;

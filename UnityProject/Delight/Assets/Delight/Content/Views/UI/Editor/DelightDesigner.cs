@@ -1072,7 +1072,7 @@ namespace Delight
                         ti.ItemIdDeclaration = itemIdDeclaration;
                         templateItems.Add(ti);
 
-                        ti.ItemType = CodeGenerator.GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration);
+                        ti.ItemType = CodeGenerator.GetItemTypeFromDeclaration(fileName, viewObject, itemIdDeclaration, templateItems, childViewDeclaration, out ti.IsBindableCollection);
                         ti.ItemTypeName = ti.ItemType != null ? ti.ItemType.TypeName() : null;
                     }
                 }
@@ -1157,9 +1157,10 @@ namespace Delight
 
                             int skipCount = isModelSource ? 1 : 0; //isModelSource || (isTemplateItemSource && !isIndex) ? 1 : 0;
                             var sourceProperties = sourcePath.Skip(skipCount).ToList();
+                            bool convertToBindableCollection = ti != null && !String.IsNullOrEmpty(ti.ItemTypeName) && !ti.IsBindableCollection;
 
                             // get object getters along path depending on the type of binding
-                            var sourceObjectGetters = new List<Func<BindableObject>>();
+                            var sourceObjectGetters = new List<Func<object>>();
                             if (isModelSource)
                             {
                                 // model binding
@@ -1168,7 +1169,7 @@ namespace Delight
                                 for (int i = 0; i < modelPropertyPath.Count - 1; ++i)
                                 {
                                     var currentSourcePath = modelPropertyPath.Take(i + 1);
-                                    sourceObjectGetters.Add(() => Models.RuntimeModelObject.GetPropertyValue(currentSourcePath) as BindableObject);
+                                    sourceObjectGetters.Add(() => Models.RuntimeModelObject.GetPropertyValue(currentSourcePath));
                                 }
                             }
                             else if (isTemplateItemSource)
@@ -1178,7 +1179,7 @@ namespace Delight
                                 for (int i = 0; i < sourcePath.Count - 1; ++i)
                                 {
                                     var currentSourcePath = sourcePath.Take(i + 1);
-                                    sourceObjectGetters.Add(() => contentTemplateData.GetPropertyValue(currentSourcePath) as BindableObject);
+                                    sourceObjectGetters.Add(() => contentTemplateData.GetPropertyValue(currentSourcePath));
                                 }
                             }
                             else
@@ -1188,7 +1189,7 @@ namespace Delight
                                 for (int i = 0; i < sourcePath.Count - 1; ++i)
                                 {
                                     var currentSourcePath = sourcePath.Take(i + 1);
-                                    sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath) as BindableObject);
+                                    sourceObjectGetters.Add(() => parent.GetPropertyValue(currentSourcePath));
                                 }
                             }
 
@@ -1200,7 +1201,8 @@ namespace Delight
                             }
 
                             // add binding path
-                            var bindingSourcePath = new RuntimeBindingPath(sourceProperties, sourceObjectGetters, isNegated, valueConverter);
+                            var bindingSourcePath = new RuntimeBindingPath(sourceProperties, sourceObjectGetters, isNegated, valueConverter,
+                                convertToBindableCollection, () => parent.LayoutRoot);
                             bindingSources.Add(bindingSourcePath);
                         }
 
@@ -1218,7 +1220,7 @@ namespace Delight
                         }
                         targetPath.AddRange(propertyBinding.PropertyName.Split('.'));
                         List<string> targetProperties = targetPath.Skip(inTemplate ? 1 : 0).ToList();
-                        var targetObjectGetters = new List<Func<BindableObject>>();
+                        var targetObjectGetters = new List<Func<object>>();
 
                         if (!inTemplate)
                         {
@@ -1226,7 +1228,7 @@ namespace Delight
                             for (int i = 0; i < targetPath.Count - 1; ++i)
                             {
                                 var currentTargetPath = targetPath.Take(i + 1);
-                                targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath) as BindableObject);
+                                targetObjectGetters.Add(() => parent.GetPropertyValue(currentTargetPath));
                             }
                         }
                         else
@@ -1236,7 +1238,7 @@ namespace Delight
                             for (int i = 0; i < templateTargetPath.Count - 1; ++i)
                             {
                                 var currentTargetPath = templateTargetPath.Take(i + 1);
-                                targetObjectGetters.Add(() => childView.GetPropertyValue(currentTargetPath) as BindableObject);
+                                targetObjectGetters.Add(() => childView.GetPropertyValue(currentTargetPath));
                             }
                         }
 
@@ -1265,7 +1267,7 @@ namespace Delight
                         if (propertyBinding.BindingType == BindingType.MultiBindingTransform)
                         {
                             List<string> sourceBindingPathObjects, convertedSourceProperties, sourceProperties;
-                            CodeGenerator.GetBindingSourceProperties(fileName, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, true);
+                            CodeGenerator.GetBindingSourceProperties(fileName, ti, viewObject, templateItems, childViewDeclaration, propertyBinding, out sourceBindingPathObjects, out convertedSourceProperties, out sourceProperties, true);
 
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());

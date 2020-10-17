@@ -14,7 +14,6 @@ namespace Delight
     /// Contains a subset of items from a parent bindable collection. It's automatically updated when the parent collection changes and allows for things like filtered and sorted collections. 
     /// </summary>
     public class BindableCollectionSubset<T> : BindableCollection<T>
-        where T : BindableObject
     {
         #region Fields
 
@@ -69,7 +68,7 @@ namespace Delight
                     List<T> addedItems = new List<T>();
                     foreach (var item in rangeArgs.Items)
                     {
-                        var newItemInRange = item as T;
+                        var newItemInRange = (T)item;
                         if (_filter(newItemInRange))
                         {
                             addedItems.Add(newItemInRange);                            
@@ -81,7 +80,7 @@ namespace Delight
                     break;
 
                 case CollectionChangeAction.Add:
-                    var newItem = e.Item as T;
+                    var newItem = (T)e.Item;
                     if (_filter(newItem))
                     {
                         base.Add(newItem);
@@ -89,7 +88,7 @@ namespace Delight
                     AddPropertyChangedListener(newItem);
                     break;
                 case CollectionChangeAction.Remove:
-                    var removedItem = e.Item as T;
+                    var removedItem = (T)e.Item;
                     if (_filter(removedItem))
                     {
                         base.Remove(removedItem);
@@ -113,7 +112,7 @@ namespace Delight
             }
         }
 
-        public override BindableObject GetGeneric(string id)
+        public override object GetGeneric(string id)
         {
             return this[id];
         }
@@ -137,8 +136,12 @@ namespace Delight
             if (_updateOnPropertyChanged == null)
                 return;
 
-            item.PropertyChanged -= ItemPropertyChanged;
-            item.PropertyChanged += ItemPropertyChanged;
+            if (IsBindableObject)
+            {
+                var bindableObject = item as BindableObject;
+                bindableObject.PropertyChanged -= ItemPropertyChanged;
+                bindableObject.PropertyChanged += ItemPropertyChanged;
+            }
         }
 
         private void RemovePropertyChangedListener(T item)
@@ -146,7 +149,11 @@ namespace Delight
             if (_updateOnPropertyChanged == null)
                 return;
 
-            item.PropertyChanged -= ItemPropertyChanged;
+            if (IsBindableObject)
+            {
+                var bindableObject = item as BindableObject;
+                bindableObject.PropertyChanged -= ItemPropertyChanged;
+            }
         }
 
         private void ItemPropertyChanged(object source, string propertyName)
@@ -211,7 +218,7 @@ namespace Delight
 
         public override bool Contains(T item)
         {
-            return Data.ContainsKey(item.Id);
+            return Data.ContainsKey(GetId(item));
         }
 
         public override bool Remove(T item)
@@ -264,8 +271,9 @@ namespace Delight
             {
                 if (_filter(item))
                 {
-                    Data.Add(item.Id, item);
-                    DataList.Add(new KeyValuePair<string, T>(item.Id, item));                    
+                    string id = GetId(item);
+                    Data.Add(id, item);
+                    DataList.Add(new KeyValuePair<string, T>(id, item));
                 }
 
                 AddPropertyChangedListener(item);

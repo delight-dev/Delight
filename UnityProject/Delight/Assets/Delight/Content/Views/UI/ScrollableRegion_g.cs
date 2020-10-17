@@ -23,7 +23,7 @@ namespace Delight
             ContentRegion = new Region(this, this, "ContentRegion", ContentRegionTemplate);
 
             // binding <Region Alignment="{ContentAlignment}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ContentAlignment" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "ContentRegion", "Alignment" }, new List<Func<BindableObject>> { () => this, () => ContentRegion }), () => ContentRegion.Alignment = ContentAlignment, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ContentAlignment" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "ContentRegion", "Alignment" }, new List<Func<object>> { () => this, () => ContentRegion }), () => ContentRegion.Alignment = ContentAlignment, () => { }, false));
 
             // constructing Scrollbar (HorizontalScrollbar)
             HorizontalScrollbar = new Scrollbar(this, this, "HorizontalScrollbar", HorizontalScrollbarTemplate);

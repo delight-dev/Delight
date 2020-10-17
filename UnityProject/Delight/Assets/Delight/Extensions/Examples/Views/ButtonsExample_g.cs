@@ -39,12 +39,12 @@ namespace Delight
             Label2 = new Label(this, Group1.Content, "Label2", Label2Template);
 
             // binding <Label Text="Click count: {ClickCount}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<BindableObject>> { () => this }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<BindableObject>> { () => this, () => Label2 }), () => Label2.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ClickCount" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label2", "Text" }, new List<Func<object>> { () => this, () => Label2 }), () => Label2.Text = String.Format("Click count: {0}", ClickCount), () => { }, false));
             ComboBox = new ComboBox(this, Group1.Content, "ComboBox", ComboBoxTemplate);
             ComboBox.ItemSelected.RegisterHandler(this, "ItemSelected");
 
             // binding <ComboBox Items="{player in @DemoPlayers}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<BindableObject>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<BindableObject>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.DemoPlayers, () => { }, false));
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> {  }, new List<Func<object>> {  }) }, new BindingPath(new List<string> { "ComboBox", "Items" }, new List<Func<object>> { () => this, () => ComboBox }), () => ComboBox.Items = Models.DemoPlayers, () => { }, false));
 
             // templates for ComboBox
             ComboBox.ContentTemplates.Add(new ContentTemplate(tiPlayer => 
@@ -53,7 +53,7 @@ namespace Delight
                 var label3 = new Label(this, comboBoxContent.Content, "Label3", Label3Template);
 
                 // binding <Label Text="{player.Name}">
-                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<BindableObject>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<BindableObject>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
+                comboBoxContent.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiPlayer, () => (tiPlayer.Item as Delight.DemoPlayer) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label3 }), () => label3.Text = (tiPlayer.Item as Delight.DemoPlayer).Name, () => { }, false));
                 comboBoxContent.IsDynamic = true;
                 comboBoxContent.SetContentTemplateData(tiPlayer);
                 return comboBoxContent;
