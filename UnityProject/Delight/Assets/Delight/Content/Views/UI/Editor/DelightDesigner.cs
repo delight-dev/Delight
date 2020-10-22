@@ -1175,11 +1175,12 @@ namespace Delight
                             else if (isTemplateItemSource)
                             {
                                 // list item binding
-                                sourceObjectGetters.Add(() => contentTemplateData);
+                                ContentTemplateData cd = contentTemplateData; 
+                                sourceObjectGetters.Add(() => cd);
                                 for (int i = 0; i < sourcePath.Count - 1; ++i)
                                 {
                                     var currentSourcePath = sourcePath.Take(i + 1);
-                                    sourceObjectGetters.Add(() => contentTemplateData.GetPropertyValue(currentSourcePath));
+                                    sourceObjectGetters.Add(() => cd.GetPropertyValue(currentSourcePath));
                                 }
                             }
                             else
@@ -1272,31 +1273,35 @@ namespace Delight
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
                             var script = GetCSharpScript(parent.GetType(), expression);
+                            View parentCapture = parent;
+
+                            // copy template items
+                            var templateItemsCopy = CopyTemplateItems(templateItems);
 
                             transformMethod = async () =>
                             {
                                 try
                                 {
                                     // set template items on parent before execution
-                                    parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
+                                    parentCapture.TemplateItems = new Dictionary<string, ContentTemplateData>();
                                     if (templateItems != null)
                                     {
-                                        foreach (var templateItem in templateItems)
+                                        foreach (var templateItem in templateItemsCopy)
                                         {
-                                            if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
+                                            if (parentCapture.TemplateItems.ContainsKey(templateItem.VariableName))
                                             {
-                                                parent.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
+                                                parentCapture.TemplateItems[templateItem.VariableName] = templateItem.ContentTemplateData;
                                             }
                                             else
                                             {
-                                                parent.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
+                                                parentCapture.TemplateItems.Add(templateItem.VariableName, templateItem.ContentTemplateData);
                                             }
                                         }
                                     }
 
                                     // uses roslyn to evaluate script at runtime
-                                    var result = (await script.RunAsync(globals: parent)).ReturnValue;
-                                    parent.TemplateItems = null;
+                                    var result = (await script.RunAsync(globals: parentCapture)).ReturnValue;
+                                    parentCapture.TemplateItems = null;
                                     return result;
                                 }
                                 catch (Exception e)
@@ -1361,7 +1366,7 @@ namespace Delight
             {
                 templateItemsCopy.Add(new TemplateItemInfo
                 {
-                    ContentTemplateData = new ContentTemplateData
+                    ContentTemplateData = templateItem.ContentTemplateData == null ? null : new ContentTemplateData
                     {
                         Id = templateItem.ContentTemplateData.Id,
                         Index = templateItem.ContentTemplateData.Index,
