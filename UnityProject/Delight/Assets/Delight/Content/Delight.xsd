@@ -7663,6 +7663,8 @@
     <xs:attribute name="AutoParse" type="xs:string" />
     <xs:attribute name="DisplayReadOnlyViews" type="xs:string" />
     <xs:attribute name="DisplayReadOnlyViewsText" type="xs:string" />
+    <xs:attribute name="DisplayedView" type="xs:string" />
+    <xs:attribute name="EditedView" type="xs:string" />
     <xs:attribute name="Canvas" type="xs:string" />
     <xs:attribute name="CanvasScaler" type="xs:string" />
     <xs:attribute name="GraphicRaycaster" type="xs:string" />

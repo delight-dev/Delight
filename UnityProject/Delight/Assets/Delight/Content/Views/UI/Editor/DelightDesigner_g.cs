@@ -36,6 +36,13 @@ namespace Delight
             DesignerToolbar1 = new DesignerToolbar(this, DisplayRegion.Content, "DesignerToolbar1", DesignerToolbar1Template);
             LockDisplayButton = new Button(this, DisplayRegion.Content, "LockDisplayButton", LockDisplayButtonTemplate);
             LockDisplayButton.ToggleClick.RegisterHandler(this, "ToggleViewLock");
+            Label1 = new Label(this, DisplayRegion.Content, "Label1", Label1Template);
+
+            // binding <Label Text="{DisplayedView.Name}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayedView", "Name" }, new List<Func<object>> { () => this, () => DisplayedView }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<object>> { () => this, () => Label1 }), () => Label1.Text = DisplayedView.Name, () => { }, false));
+
+            // binding <Label IsActive="{LockDisplayButton.ToggleValue}">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "LockDisplayButton", "ToggleValue" }, new List<Func<object>> { () => this, () => LockDisplayButton }) }, new BindingPath(new List<string> { "Label1", "IsActive" }, new List<Func<object>> { () => this, () => Label1 }), () => Label1.IsActive = LockDisplayButton.ToggleValue, () => { }, false));
             ContentExplorer = new Region(this, Grid1.Content, "ContentExplorer", ContentExplorerTemplate);
             Grid1.Cell.SetValue(ContentExplorer, new CellIndex(0, 1));
             Grid1.CellSpan.SetValue(ContentExplorer, new CellIndex(2, 1));
@@ -66,11 +73,11 @@ namespace Delight
                 list1.ContentTemplates.Add(new ContentTemplate(tiView => 
                 {
                     var listItem1 = new ListItem(this, list1.Content, "ListItem1", ListItem1Template);
-                    var label1 = new Label(this, listItem1.Content, "Label1", Label1Template);
-                    listItem1.SetListItemState.SetValue(label1, true);
+                    var label2 = new Label(this, listItem1.Content, "Label2", Label2Template);
+                    listItem1.SetListItemState.SetValue(label2, true);
 
                     // binding <Label Text="{view.DisplayName}">
-                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayName" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label1 }), () => label1.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).DisplayName, () => { }, false));
+                    listItem1.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "DisplayName" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label2 }), () => label2.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).DisplayName, () => { }, false));
                     var image1 = new Image(this, listItem1.Content, "Image1", Image1Template);
 
                     // binding <Image IsActive="{view.IsDisplayLocked}">
@@ -91,7 +98,7 @@ namespace Delight
             {
                 var comboBoxListItem1 = new ComboBoxListItem(this, ViewMenu.Content, "ComboBoxListItem1", ComboBoxListItem1Template);
                 comboBoxListItem1.ItemSelected.RegisterHandler(this, "AddNewView");
-                var label2 = new Label(this, comboBoxListItem1.Content, "Label2", Label2Template);
+                var label3 = new Label(this, comboBoxListItem1.Content, "Label3", Label3Template);
                 comboBoxListItem1.IsDynamic = true;
                 comboBoxListItem1.SetContentTemplateData(x0);
                 return comboBoxListItem1;
@@ -102,10 +109,10 @@ namespace Delight
             {
                 var comboBoxListItem2 = new ComboBoxListItem(this, ViewMenu.Content, "ComboBoxListItem2", ComboBoxListItem2Template);
                 comboBoxListItem2.ItemSelected.RegisterHandler(this, "ToggleShowReadOnlyViews");
-                var label3 = new Label(this, comboBoxListItem2.Content, "Label3", Label3Template);
+                var label4 = new Label(this, comboBoxListItem2.Content, "Label4", Label4Template);
 
                 // binding <Label Text="{DisplayReadOnlyViewsText}">
-                comboBoxListItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayReadOnlyViewsText" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label3 }), () => label3.Text = DisplayReadOnlyViewsText, () => { }, false));
+                comboBoxListItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayReadOnlyViewsText" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label4 }), () => label4.Text = DisplayReadOnlyViewsText, () => { }, false));
                 comboBoxListItem2.IsDynamic = true;
                 comboBoxListItem2.SetContentTemplateData(x0);
                 return comboBoxListItem2;
@@ -131,7 +138,7 @@ namespace Delight
             Grid1.Cell.SetValue(GridSplitter1, new CellIndex(0, 2));
             GridSplitter2 = new GridSplitter(this, Grid1.Content, "GridSplitter2", GridSplitter2Template);
             SaveChangesPopup = new Region(this, ViewsDesigner.Content, "SaveChangesPopup", SaveChangesPopupTemplate);
-            Label4 = new Label(this, SaveChangesPopup.Content, "Label4", Label4Template);
+            Label5 = new Label(this, SaveChangesPopup.Content, "Label5", Label5Template);
             List2 = new List(this, SaveChangesPopup.Content, "List2", List2Template);
 
             // binding <List Items="{view in ChangedDesignerViews}">
@@ -141,10 +148,10 @@ namespace Delight
             List2.ContentTemplates.Add(new ContentTemplate(tiView => 
             {
                 var listItem2 = new ListItem(this, List2.Content, "ListItem2", ListItem2Template);
-                var label5 = new Label(this, listItem2.Content, "Label5", Label5Template);
+                var label6 = new Label(this, listItem2.Content, "Label6", Label6Template);
 
                 // binding <Label Text="{view.Name}">
-                listItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label5 }), () => label5.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).Name, () => { }, false));
+                listItem2.Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "Item", "Name" }, new List<Func<object>> { () => tiView, () => (tiView.Item as Delight.Editor.Parser.DesignerView) }) }, new BindingPath(new List<string> { "Text" }, new List<Func<object>> { () => label6 }), () => label6.Text = (tiView.Item as Delight.Editor.Parser.DesignerView).Name, () => { }, false));
                 listItem2.IsDynamic = true;
                 listItem2.SetContentTemplateData(tiView);
                 return listItem2;
@@ -174,6 +181,8 @@ namespace Delight
             dependencyProperties.Add(AutoParseProperty);
             dependencyProperties.Add(DisplayReadOnlyViewsProperty);
             dependencyProperties.Add(DisplayReadOnlyViewsTextProperty);
+            dependencyProperties.Add(DisplayedViewProperty);
+            dependencyProperties.Add(EditedViewProperty);
             dependencyProperties.Add(ViewsDesignerProperty);
             dependencyProperties.Add(ViewsDesignerTemplateProperty);
             dependencyProperties.Add(Grid1Property);
@@ -192,6 +201,8 @@ namespace Delight
             dependencyProperties.Add(DesignerToolbar1TemplateProperty);
             dependencyProperties.Add(LockDisplayButtonProperty);
             dependencyProperties.Add(LockDisplayButtonTemplateProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
             dependencyProperties.Add(ContentExplorerProperty);
             dependencyProperties.Add(ContentExplorerTemplateProperty);
             dependencyProperties.Add(Region2Property);
@@ -208,20 +219,20 @@ namespace Delight
             dependencyProperties.Add(List1TemplateProperty);
             dependencyProperties.Add(ListItem1Property);
             dependencyProperties.Add(ListItem1TemplateProperty);
-            dependencyProperties.Add(Label1Property);
-            dependencyProperties.Add(Label1TemplateProperty);
+            dependencyProperties.Add(Label2Property);
+            dependencyProperties.Add(Label2TemplateProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(ViewMenuProperty);
             dependencyProperties.Add(ViewMenuTemplateProperty);
             dependencyProperties.Add(ComboBoxListItem1Property);
             dependencyProperties.Add(ComboBoxListItem1TemplateProperty);
-            dependencyProperties.Add(Label2Property);
-            dependencyProperties.Add(Label2TemplateProperty);
-            dependencyProperties.Add(ComboBoxListItem2Property);
-            dependencyProperties.Add(ComboBoxListItem2TemplateProperty);
             dependencyProperties.Add(Label3Property);
             dependencyProperties.Add(Label3TemplateProperty);
+            dependencyProperties.Add(ComboBoxListItem2Property);
+            dependencyProperties.Add(ComboBoxListItem2TemplateProperty);
+            dependencyProperties.Add(Label4Property);
+            dependencyProperties.Add(Label4TemplateProperty);
             dependencyProperties.Add(XmlEditorRegionProperty);
             dependencyProperties.Add(XmlEditorRegionTemplateProperty);
             dependencyProperties.Add(XmlEditorProperty);
@@ -242,14 +253,14 @@ namespace Delight
             dependencyProperties.Add(GridSplitter2TemplateProperty);
             dependencyProperties.Add(SaveChangesPopupProperty);
             dependencyProperties.Add(SaveChangesPopupTemplateProperty);
-            dependencyProperties.Add(Label4Property);
-            dependencyProperties.Add(Label4TemplateProperty);
+            dependencyProperties.Add(Label5Property);
+            dependencyProperties.Add(Label5TemplateProperty);
             dependencyProperties.Add(List2Property);
             dependencyProperties.Add(List2TemplateProperty);
             dependencyProperties.Add(ListItem2Property);
             dependencyProperties.Add(ListItem2TemplateProperty);
-            dependencyProperties.Add(Label5Property);
-            dependencyProperties.Add(Label5TemplateProperty);
+            dependencyProperties.Add(Label6Property);
+            dependencyProperties.Add(Label6TemplateProperty);
             dependencyProperties.Add(Group2Property);
             dependencyProperties.Add(Group2TemplateProperty);
             dependencyProperties.Add(Button2Property);
@@ -307,6 +318,20 @@ namespace Delight
         {
             get { return DisplayReadOnlyViewsTextProperty.GetValue(this); }
             set { DisplayReadOnlyViewsTextProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.Editor.Parser.DesignerView> DisplayedViewProperty = new DependencyProperty<Delight.Editor.Parser.DesignerView>("DisplayedView");
+        public Delight.Editor.Parser.DesignerView DisplayedView
+        {
+            get { return DisplayedViewProperty.GetValue(this); }
+            set { DisplayedViewProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.Editor.Parser.DesignerView> EditedViewProperty = new DependencyProperty<Delight.Editor.Parser.DesignerView>("EditedView");
+        public Delight.Editor.Parser.DesignerView EditedView
+        {
+            get { return EditedViewProperty.GetValue(this); }
+            set { EditedViewProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> ViewsDesignerProperty = new DependencyProperty<Region>("ViewsDesigner");
@@ -435,6 +460,20 @@ namespace Delight
             set { LockDisplayButtonTemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
+        {
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
+        {
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
+        }
+
         public readonly static DependencyProperty<Region> ContentExplorerProperty = new DependencyProperty<Region>("ContentExplorer");
         public Region ContentExplorer
         {
@@ -547,18 +586,18 @@ namespace Delight
             set { ListItem1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
-        public Label Label1
+        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
+        public Label Label2
         {
-            get { return Label1Property.GetValue(this); }
-            set { Label1Property.SetValue(this, value); }
+            get { return Label2Property.GetValue(this); }
+            set { Label2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
-        public Template Label1Template
+        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
+        public Template Label2Template
         {
-            get { return Label1TemplateProperty.GetValue(this); }
-            set { Label1TemplateProperty.SetValue(this, value); }
+            get { return Label2TemplateProperty.GetValue(this); }
+            set { Label2TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");
@@ -603,18 +642,18 @@ namespace Delight
             set { ComboBoxListItem1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label2Property = new DependencyProperty<Label>("Label2");
-        public Label Label2
+        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
+        public Label Label3
         {
-            get { return Label2Property.GetValue(this); }
-            set { Label2Property.SetValue(this, value); }
+            get { return Label3Property.GetValue(this); }
+            set { Label3Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label2TemplateProperty = new DependencyProperty<Template>("Label2Template");
-        public Template Label2Template
+        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
+        public Template Label3Template
         {
-            get { return Label2TemplateProperty.GetValue(this); }
-            set { Label2TemplateProperty.SetValue(this, value); }
+            get { return Label3TemplateProperty.GetValue(this); }
+            set { Label3TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ComboBoxListItem> ComboBoxListItem2Property = new DependencyProperty<ComboBoxListItem>("ComboBoxListItem2");
@@ -631,18 +670,18 @@ namespace Delight
             set { ComboBoxListItem2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label3Property = new DependencyProperty<Label>("Label3");
-        public Label Label3
+        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
+        public Label Label4
         {
-            get { return Label3Property.GetValue(this); }
-            set { Label3Property.SetValue(this, value); }
+            get { return Label4Property.GetValue(this); }
+            set { Label4Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label3TemplateProperty = new DependencyProperty<Template>("Label3Template");
-        public Template Label3Template
+        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
+        public Template Label4Template
         {
-            get { return Label3TemplateProperty.GetValue(this); }
-            set { Label3TemplateProperty.SetValue(this, value); }
+            get { return Label4TemplateProperty.GetValue(this); }
+            set { Label4TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> XmlEditorRegionProperty = new DependencyProperty<Region>("XmlEditorRegion");
@@ -785,18 +824,18 @@ namespace Delight
             set { SaveChangesPopupTemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label4Property = new DependencyProperty<Label>("Label4");
-        public Label Label4
+        public readonly static DependencyProperty<Label> Label5Property = new DependencyProperty<Label>("Label5");
+        public Label Label5
         {
-            get { return Label4Property.GetValue(this); }
-            set { Label4Property.SetValue(this, value); }
+            get { return Label5Property.GetValue(this); }
+            set { Label5Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label4TemplateProperty = new DependencyProperty<Template>("Label4Template");
-        public Template Label4Template
+        public readonly static DependencyProperty<Template> Label5TemplateProperty = new DependencyProperty<Template>("Label5Template");
+        public Template Label5Template
         {
-            get { return Label4TemplateProperty.GetValue(this); }
-            set { Label4TemplateProperty.SetValue(this, value); }
+            get { return Label5TemplateProperty.GetValue(this); }
+            set { Label5TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<List> List2Property = new DependencyProperty<List>("List2");
@@ -827,18 +866,18 @@ namespace Delight
             set { ListItem2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Label> Label5Property = new DependencyProperty<Label>("Label5");
-        public Label Label5
+        public readonly static DependencyProperty<Label> Label6Property = new DependencyProperty<Label>("Label6");
+        public Label Label6
         {
-            get { return Label5Property.GetValue(this); }
-            set { Label5Property.SetValue(this, value); }
+            get { return Label6Property.GetValue(this); }
+            set { Label6Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> Label5TemplateProperty = new DependencyProperty<Template>("Label5Template");
-        public Template Label5Template
+        public readonly static DependencyProperty<Template> Label6TemplateProperty = new DependencyProperty<Template>("Label6Template");
+        public Template Label6Template
         {
-            get { return Label5TemplateProperty.GetValue(this); }
-            set { Label5TemplateProperty.SetValue(this, value); }
+            get { return Label6TemplateProperty.GetValue(this); }
+            set { Label6TemplateProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Group> Group2Property = new DependencyProperty<Group>("Group2");
@@ -944,6 +983,7 @@ namespace Delight
                     Delight.DelightDesigner.ViewContentRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewContentRegion);
                     Delight.DelightDesigner.DesignerToolbar1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerDesignerToolbar1);
                     Delight.DelightDesigner.LockDisplayButtonTemplateProperty.SetDefault(_delightDesigner, DelightDesignerLockDisplayButton);
+                    Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
                     Delight.DelightDesigner.ContentExplorerTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentExplorer);
                     Delight.DelightDesigner.Region2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerRegion2);
                     Delight.DelightDesigner.ContentExplorerScrollableRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerContentExplorerScrollableRegion);
@@ -952,13 +992,13 @@ namespace Delight
                     Delight.DelightDesigner.ExpanderContent1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerExpanderContent1);
                     Delight.DelightDesigner.List1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList1);
                     Delight.DelightDesigner.ListItem1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem1);
-                    Delight.DelightDesigner.Label1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel1);
+                    Delight.DelightDesigner.Label2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel2);
                     Delight.DelightDesigner.Image1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerImage1);
                     Delight.DelightDesigner.ViewMenuTemplateProperty.SetDefault(_delightDesigner, DelightDesignerViewMenu);
                     Delight.DelightDesigner.ComboBoxListItem1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerComboBoxListItem1);
-                    Delight.DelightDesigner.Label2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel2);
-                    Delight.DelightDesigner.ComboBoxListItem2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerComboBoxListItem2);
                     Delight.DelightDesigner.Label3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel3);
+                    Delight.DelightDesigner.ComboBoxListItem2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerComboBoxListItem2);
+                    Delight.DelightDesigner.Label4TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel4);
                     Delight.DelightDesigner.XmlEditorRegionTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditorRegion);
                     Delight.DelightDesigner.XmlEditorTemplateProperty.SetDefault(_delightDesigner, DelightDesignerXmlEditor);
                     Delight.DelightDesigner.LockIconTemplateProperty.SetDefault(_delightDesigner, DelightDesignerLockIcon);
@@ -969,10 +1009,10 @@ namespace Delight
                     Delight.DelightDesigner.GridSplitter1TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter1);
                     Delight.DelightDesigner.GridSplitter2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGridSplitter2);
                     Delight.DelightDesigner.SaveChangesPopupTemplateProperty.SetDefault(_delightDesigner, DelightDesignerSaveChangesPopup);
-                    Delight.DelightDesigner.Label4TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel4);
+                    Delight.DelightDesigner.Label5TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel5);
                     Delight.DelightDesigner.List2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerList2);
                     Delight.DelightDesigner.ListItem2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerListItem2);
-                    Delight.DelightDesigner.Label5TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel5);
+                    Delight.DelightDesigner.Label6TemplateProperty.SetDefault(_delightDesigner, DelightDesignerLabel6);
                     Delight.DelightDesigner.Group2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerGroup2);
                     Delight.DelightDesigner.Button2TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton2);
                     Delight.DelightDesigner.Button3TemplateProperty.SetDefault(_delightDesigner, DelightDesignerButton3);
@@ -996,7 +1036,7 @@ namespace Delight
                     _delightDesignerViewsDesigner = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerViewsDesigner.Name = "DelightDesignerViewsDesigner";
-                    _delightDesignerViewsDesigner.LineNumber = 8;
+                    _delightDesignerViewsDesigner.LineNumber = 10;
                     _delightDesignerViewsDesigner.LinePosition = 4;
 #endif
                 }
@@ -1018,7 +1058,7 @@ namespace Delight
                     _delightDesignerGrid1 = new Template(LayoutGridTemplates.LayoutGrid);
 #if UNITY_EDITOR
                     _delightDesignerGrid1.Name = "DelightDesignerGrid1";
-                    _delightDesignerGrid1.LineNumber = 9;
+                    _delightDesignerGrid1.LineNumber = 11;
                     _delightDesignerGrid1.LinePosition = 6;
 #endif
                     Delight.LayoutGrid.ColumnsProperty.SetDefault(_delightDesignerGrid1, new ColumnDefinitions { new ColumnDefinition(new ElementSize(40f, ElementSizeUnit.Pixels), 50f, 50f), new ColumnDefinition(new ElementSize(200f, ElementSizeUnit.Pixels)), new ColumnDefinition(new ElementSize(1f, ElementSizeUnit.Proportional))});
@@ -1043,7 +1083,7 @@ namespace Delight
                     _delightDesignerRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerRegion1.Name = "DelightDesignerRegion1";
-                    _delightDesignerRegion1.LineNumber = 12;
+                    _delightDesignerRegion1.LineNumber = 14;
                     _delightDesignerRegion1.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerRegion1, new UnityEngine.Color(0.2352941f, 0.254902f, 0.3960784f, 1f));
@@ -1066,7 +1106,7 @@ namespace Delight
                     _delightDesignerDisplayRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerDisplayRegion.Name = "DelightDesignerDisplayRegion";
-                    _delightDesignerDisplayRegion.LineNumber = 16;
+                    _delightDesignerDisplayRegion.LineNumber = 18;
                     _delightDesignerDisplayRegion.LinePosition = 8;
 #endif
                     Delight.Region.IsVisibleProperty.SetDefault(_delightDesignerDisplayRegion, false);
@@ -1089,7 +1129,7 @@ namespace Delight
                     _delightDesignerScrollableContentRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerScrollableContentRegion.Name = "DelightDesignerScrollableContentRegion";
-                    _delightDesignerScrollableContentRegion.LineNumber = 17;
+                    _delightDesignerScrollableContentRegion.LineNumber = 19;
                     _delightDesignerScrollableContentRegion.LinePosition = 10;
 #endif
                     Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerScrollableContentRegion, false);
@@ -1278,7 +1318,7 @@ namespace Delight
                     _delightDesignerContentRegionCanvas = new Template(UICanvasTemplates.UICanvas);
 #if UNITY_EDITOR
                     _delightDesignerContentRegionCanvas.Name = "DelightDesignerContentRegionCanvas";
-                    _delightDesignerContentRegionCanvas.LineNumber = 19;
+                    _delightDesignerContentRegionCanvas.LineNumber = 21;
                     _delightDesignerContentRegionCanvas.LinePosition = 12;
 #endif
                     Delight.UICanvas.ScaleProperty.SetDefault(_delightDesignerContentRegionCanvas, new Vector3(1f, 1f, 1f));
@@ -1301,7 +1341,7 @@ namespace Delight
                     _delightDesignerViewContentRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerViewContentRegion.Name = "DelightDesignerViewContentRegion";
-                    _delightDesignerViewContentRegion.LineNumber = 20;
+                    _delightDesignerViewContentRegion.LineNumber = 22;
                     _delightDesignerViewContentRegion.LinePosition = 14;
 #endif
                 }
@@ -1323,7 +1363,7 @@ namespace Delight
                     _delightDesignerDesignerToolbar1 = new Template(DesignerToolbarTemplates.DesignerToolbar);
 #if UNITY_EDITOR
                     _delightDesignerDesignerToolbar1.Name = "DelightDesignerDesignerToolbar1";
-                    _delightDesignerDesignerToolbar1.LineNumber = 24;
+                    _delightDesignerDesignerToolbar1.LineNumber = 26;
                     _delightDesignerDesignerToolbar1.LinePosition = 10;
 #endif
                     Delight.DesignerToolbar.IsActiveProperty.SetDefault(_delightDesignerDesignerToolbar1, false);
@@ -1346,7 +1386,7 @@ namespace Delight
                     _delightDesignerLockDisplayButton = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _delightDesignerLockDisplayButton.Name = "DelightDesignerLockDisplayButton";
-                    _delightDesignerLockDisplayButton.LineNumber = 25;
+                    _delightDesignerLockDisplayButton.LineNumber = 27;
                     _delightDesignerLockDisplayButton.LinePosition = 10;
 #endif
                     Delight.Button.IsToggleButtonProperty.SetDefault(_delightDesignerLockDisplayButton, true);
@@ -1386,6 +1426,35 @@ namespace Delight
             }
         }
 
+        private static Template _delightDesignerLabel1;
+        public static Template DelightDesignerLabel1
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerLabel1 == null || _delightDesignerLabel1.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerLabel1 == null)
+#endif
+                {
+                    _delightDesignerLabel1 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _delightDesignerLabel1.Name = "DelightDesignerLabel1";
+                    _delightDesignerLabel1.LineNumber = 29;
+                    _delightDesignerLabel1.LinePosition = 10;
+#endif
+                    Delight.Label.AutoSizeProperty.SetDefault(_delightDesignerLabel1, Delight.AutoSize.Default);
+                    Delight.Label.AlignmentProperty.SetDefault(_delightDesignerLabel1, Delight.ElementAlignment.TopRight);
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 12f);
+                    Delight.Label.OffsetProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(7f, ElementSizeUnit.Pixels), new ElementSize(35f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
+                    Delight.Label.IsActiveProperty.SetHasBinding(_delightDesignerLabel1);
+                }
+                return _delightDesignerLabel1;
+            }
+        }
+
         private static Template _delightDesignerContentExplorer;
         public static Template DelightDesignerContentExplorer
         {
@@ -1400,7 +1469,7 @@ namespace Delight
                     _delightDesignerContentExplorer = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerContentExplorer.Name = "DelightDesignerContentExplorer";
-                    _delightDesignerContentExplorer.LineNumber = 30;
+                    _delightDesignerContentExplorer.LineNumber = 33;
                     _delightDesignerContentExplorer.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerContentExplorer, new UnityEngine.Color(0.8666667f, 0.8666667f, 0.8666667f, 1f));
@@ -1423,7 +1492,7 @@ namespace Delight
                     _delightDesignerRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerRegion2.Name = "DelightDesignerRegion2";
-                    _delightDesignerRegion2.LineNumber = 33;
+                    _delightDesignerRegion2.LineNumber = 36;
                     _delightDesignerRegion2.LinePosition = 10;
 #endif
                     Delight.Region.MarginProperty.SetDefault(_delightDesignerRegion2, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(12f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -1446,7 +1515,7 @@ namespace Delight
                     _delightDesignerContentExplorerScrollableRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerContentExplorerScrollableRegion.Name = "DelightDesignerContentExplorerScrollableRegion";
-                    _delightDesignerContentExplorerScrollableRegion.LineNumber = 35;
+                    _delightDesignerContentExplorerScrollableRegion.LineNumber = 38;
                     _delightDesignerContentExplorerScrollableRegion.LinePosition = 12;
 #endif
                     Delight.ScrollableRegion.WidthProperty.SetDefault(_delightDesignerContentExplorerScrollableRegion, new ElementSize(1f, ElementSizeUnit.Percents));
@@ -1642,7 +1711,7 @@ namespace Delight
                     _delightDesignerExpander1 = new Template(ExpanderTemplates.Expander);
 #if UNITY_EDITOR
                     _delightDesignerExpander1.Name = "DelightDesignerExpander1";
-                    _delightDesignerExpander1.LineNumber = 39;
+                    _delightDesignerExpander1.LineNumber = 42;
                     _delightDesignerExpander1.LinePosition = 14;
 #endif
                     Delight.Expander.TextProperty.SetDefault(_delightDesignerExpander1, "Views");
@@ -1667,7 +1736,7 @@ namespace Delight
                     _delightDesignerDefaultExpanderHeader1 = new Template(DefaultExpanderHeaderTemplates.DefaultExpanderHeader);
 #if UNITY_EDITOR
                     _delightDesignerDefaultExpanderHeader1.Name = "DelightDesignerDefaultExpanderHeader1";
-                    _delightDesignerDefaultExpanderHeader1.LineNumber = 40;
+                    _delightDesignerDefaultExpanderHeader1.LineNumber = 43;
                     _delightDesignerDefaultExpanderHeader1.LinePosition = 16;
 #endif
                     Delight.DefaultExpanderHeader.TextProperty.SetDefault(_delightDesignerDefaultExpanderHeader1, "Views");
@@ -1761,7 +1830,7 @@ namespace Delight
                     _delightDesignerExpanderContent1 = new Template(ExpanderContentTemplates.ExpanderContent);
 #if UNITY_EDITOR
                     _delightDesignerExpanderContent1.Name = "DelightDesignerExpanderContent1";
-                    _delightDesignerExpanderContent1.LineNumber = 41;
+                    _delightDesignerExpanderContent1.LineNumber = 44;
                     _delightDesignerExpanderContent1.LinePosition = 16;
 #endif
                 }
@@ -1783,7 +1852,7 @@ namespace Delight
                     _delightDesignerList1 = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _delightDesignerList1.Name = "DelightDesignerList1";
-                    _delightDesignerList1.LineNumber = 42;
+                    _delightDesignerList1.LineNumber = 45;
                     _delightDesignerList1.LinePosition = 18;
 #endif
                     Delight.List.AlignmentProperty.SetDefault(_delightDesignerList1, Delight.ElementAlignment.TopLeft);
@@ -1996,7 +2065,7 @@ namespace Delight
                     _delightDesignerListItem1 = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _delightDesignerListItem1.Name = "DelightDesignerListItem1";
-                    _delightDesignerListItem1.LineNumber = 44;
+                    _delightDesignerListItem1.LineNumber = 47;
                     _delightDesignerListItem1.LinePosition = 20;
 #endif
                     Delight.ListItem.MarginProperty.SetDefault(_delightDesignerListItem1, new ElementMargin(new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(2f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -2013,37 +2082,37 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerLabel1;
-        public static Template DelightDesignerLabel1
+        private static Template _delightDesignerLabel2;
+        public static Template DelightDesignerLabel2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerLabel1 == null || _delightDesignerLabel1.CurrentVersion != Template.Version)
+                if (_delightDesignerLabel2 == null || _delightDesignerLabel2.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerLabel1 == null)
+                if (_delightDesignerLabel2 == null)
 #endif
                 {
-                    _delightDesignerLabel1 = new Template(LabelTemplates.Label);
+                    _delightDesignerLabel2 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _delightDesignerLabel1.Name = "DelightDesignerLabel1";
-                    _delightDesignerLabel1.LineNumber = 45;
-                    _delightDesignerLabel1.LinePosition = 22;
+                    _delightDesignerLabel2.Name = "DelightDesignerLabel2";
+                    _delightDesignerLabel2.LineNumber = 48;
+                    _delightDesignerLabel2.LinePosition = 22;
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel1, 12f);
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel1, Assets.TMP_FontAssets["Segoe UI SDF"]);
-                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel1, new ElementSize(21f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel1, new UnityEngine.Color(0.1921569f, 0.2313726f, 0.2745098f, 1f));
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel1, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel1, new ElementMargin(new ElementSize(15f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel1, false);
-                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel1, TMPro.TextOverflowModes.Truncate);
-                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel1, true);
-                    Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _delightDesignerLabel1, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
-                    Delight.Label.FontColorProperty.SetStateDefault("Selected", _delightDesignerLabel1, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
-                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel1);
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel2, 12f);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel2, Assets.TMP_FontAssets["Segoe UI SDF"]);
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel2, new ElementSize(21f, ElementSizeUnit.Pixels));
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel2, new UnityEngine.Color(0.1921569f, 0.2313726f, 0.2745098f, 1f));
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel2, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel2, new ElementMargin(new ElementSize(15f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel2, false);
+                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel2, TMPro.TextOverflowModes.Truncate);
+                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel2, true);
+                    Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _delightDesignerLabel2, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
+                    Delight.Label.FontColorProperty.SetStateDefault("Selected", _delightDesignerLabel2, new UnityEngine.Color(0.2f, 0.2f, 0.2f, 1f));
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel2);
                 }
-                return _delightDesignerLabel1;
+                return _delightDesignerLabel2;
             }
         }
 
@@ -2061,7 +2130,7 @@ namespace Delight
                     _delightDesignerImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _delightDesignerImage1.Name = "DelightDesignerImage1";
-                    _delightDesignerImage1.LineNumber = 47;
+                    _delightDesignerImage1.LineNumber = 50;
                     _delightDesignerImage1.LinePosition = 22;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_delightDesignerImage1, Assets.Sprites["eye16"]);
@@ -2088,7 +2157,7 @@ namespace Delight
                     _delightDesignerViewMenu = new Template(ComboBoxTemplates.ComboBox);
 #if UNITY_EDITOR
                     _delightDesignerViewMenu.Name = "DelightDesignerViewMenu";
-                    _delightDesignerViewMenu.LineNumber = 57;
+                    _delightDesignerViewMenu.LineNumber = 60;
                     _delightDesignerViewMenu.LinePosition = 10;
 #endif
                     Delight.ComboBox.AlignmentProperty.SetDefault(_delightDesignerViewMenu, Delight.ElementAlignment.TopRight);
@@ -2399,63 +2468,12 @@ namespace Delight
                     _delightDesignerComboBoxListItem1 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
 #if UNITY_EDITOR
                     _delightDesignerComboBoxListItem1.Name = "DelightDesignerComboBoxListItem1";
-                    _delightDesignerComboBoxListItem1.LineNumber = 61;
+                    _delightDesignerComboBoxListItem1.LineNumber = 64;
                     _delightDesignerComboBoxListItem1.LinePosition = 12;
 #endif
                     Delight.ComboBoxListItem.HeightProperty.SetDefault(_delightDesignerComboBoxListItem1, new ElementSize(20f, ElementSizeUnit.Pixels));
                 }
                 return _delightDesignerComboBoxListItem1;
-            }
-        }
-
-        private static Template _delightDesignerLabel2;
-        public static Template DelightDesignerLabel2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerLabel2 == null || _delightDesignerLabel2.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerLabel2 == null)
-#endif
-                {
-                    _delightDesignerLabel2 = new Template(LabelTemplates.Label);
-#if UNITY_EDITOR
-                    _delightDesignerLabel2.Name = "DelightDesignerLabel2";
-                    _delightDesignerLabel2.LineNumber = 62;
-                    _delightDesignerLabel2.LinePosition = 14;
-#endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerLabel2, "Create View");
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel2, 14f);
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel2, Assets.TMP_FontAssets["Segoe UI SDF"]);
-                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel2, new ElementSize(20f, ElementSizeUnit.Pixels));
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel2, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel2, new ElementSize(1f, ElementSizeUnit.Percents));
-                }
-                return _delightDesignerLabel2;
-            }
-        }
-
-        private static Template _delightDesignerComboBoxListItem2;
-        public static Template DelightDesignerComboBoxListItem2
-        {
-            get
-            {
-#if UNITY_EDITOR
-                if (_delightDesignerComboBoxListItem2 == null || _delightDesignerComboBoxListItem2.CurrentVersion != Template.Version)
-#else
-                if (_delightDesignerComboBoxListItem2 == null)
-#endif
-                {
-                    _delightDesignerComboBoxListItem2 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
-#if UNITY_EDITOR
-                    _delightDesignerComboBoxListItem2.Name = "DelightDesignerComboBoxListItem2";
-                    _delightDesignerComboBoxListItem2.LineNumber = 64;
-                    _delightDesignerComboBoxListItem2.LinePosition = 12;
-#endif
-                    Delight.ComboBoxListItem.HeightProperty.SetDefault(_delightDesignerComboBoxListItem2, new ElementSize(20f, ElementSizeUnit.Pixels));
-                }
-                return _delightDesignerComboBoxListItem2;
             }
         }
 
@@ -2476,14 +2494,65 @@ namespace Delight
                     _delightDesignerLabel3.LineNumber = 65;
                     _delightDesignerLabel3.LinePosition = 14;
 #endif
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerLabel3, "Create View");
                     Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel3, 14f);
                     Delight.Label.FontProperty.SetDefault(_delightDesignerLabel3, Assets.TMP_FontAssets["Segoe UI SDF"]);
                     Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel3, new ElementSize(20f, ElementSizeUnit.Pixels));
                     Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel3, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                     Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel3, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel3);
                 }
                 return _delightDesignerLabel3;
+            }
+        }
+
+        private static Template _delightDesignerComboBoxListItem2;
+        public static Template DelightDesignerComboBoxListItem2
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerComboBoxListItem2 == null || _delightDesignerComboBoxListItem2.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerComboBoxListItem2 == null)
+#endif
+                {
+                    _delightDesignerComboBoxListItem2 = new Template(ComboBoxListItemTemplates.ComboBoxListItem);
+#if UNITY_EDITOR
+                    _delightDesignerComboBoxListItem2.Name = "DelightDesignerComboBoxListItem2";
+                    _delightDesignerComboBoxListItem2.LineNumber = 67;
+                    _delightDesignerComboBoxListItem2.LinePosition = 12;
+#endif
+                    Delight.ComboBoxListItem.HeightProperty.SetDefault(_delightDesignerComboBoxListItem2, new ElementSize(20f, ElementSizeUnit.Pixels));
+                }
+                return _delightDesignerComboBoxListItem2;
+            }
+        }
+
+        private static Template _delightDesignerLabel4;
+        public static Template DelightDesignerLabel4
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_delightDesignerLabel4 == null || _delightDesignerLabel4.CurrentVersion != Template.Version)
+#else
+                if (_delightDesignerLabel4 == null)
+#endif
+                {
+                    _delightDesignerLabel4 = new Template(LabelTemplates.Label);
+#if UNITY_EDITOR
+                    _delightDesignerLabel4.Name = "DelightDesignerLabel4";
+                    _delightDesignerLabel4.LineNumber = 68;
+                    _delightDesignerLabel4.LinePosition = 14;
+#endif
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel4, 14f);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel4, Assets.TMP_FontAssets["Segoe UI SDF"]);
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel4, new ElementSize(20f, ElementSizeUnit.Pixels));
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel4, new ElementMargin(new ElementSize(5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel4, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel4);
+                }
+                return _delightDesignerLabel4;
             }
         }
 
@@ -2501,7 +2570,7 @@ namespace Delight
                     _delightDesignerXmlEditorRegion = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerXmlEditorRegion.Name = "DelightDesignerXmlEditorRegion";
-                    _delightDesignerXmlEditorRegion.LineNumber = 71;
+                    _delightDesignerXmlEditorRegion.LineNumber = 74;
                     _delightDesignerXmlEditorRegion.LinePosition = 8;
 #endif
                     Delight.Region.BackgroundColorProperty.SetDefault(_delightDesignerXmlEditorRegion, new UnityEngine.Color(0.9843137f, 0.9843137f, 0.9843137f, 1f));
@@ -2525,7 +2594,7 @@ namespace Delight
                     _delightDesignerXmlEditor = new Template(XmlEditorTemplates.XmlEditor);
 #if UNITY_EDITOR
                     _delightDesignerXmlEditor.Name = "DelightDesignerXmlEditor";
-                    _delightDesignerXmlEditor.LineNumber = 72;
+                    _delightDesignerXmlEditor.LineNumber = 75;
                     _delightDesignerXmlEditor.LinePosition = 10;
 #endif
                     Delight.XmlEditor.MarginProperty.SetDefault(_delightDesignerXmlEditor, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(21f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -3377,7 +3446,7 @@ namespace Delight
                     _delightDesignerLockIcon = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _delightDesignerLockIcon.Name = "DelightDesignerLockIcon";
-                    _delightDesignerLockIcon.LineNumber = 73;
+                    _delightDesignerLockIcon.LineNumber = 76;
                     _delightDesignerLockIcon.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_delightDesignerLockIcon, Assets.Sprites["Lock"]);
@@ -3405,7 +3474,7 @@ namespace Delight
                     _delightDesignerXmlEditorStatusBar = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerXmlEditorStatusBar.Name = "DelightDesignerXmlEditorStatusBar";
-                    _delightDesignerXmlEditorStatusBar.LineNumber = 74;
+                    _delightDesignerXmlEditorStatusBar.LineNumber = 77;
                     _delightDesignerXmlEditorStatusBar.LinePosition = 10;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_delightDesignerXmlEditorStatusBar, new ElementSize(175f, ElementSizeUnit.Pixels));
@@ -3431,7 +3500,7 @@ namespace Delight
                     _delightDesignerGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _delightDesignerGroup1.Name = "DelightDesignerGroup1";
-                    _delightDesignerGroup1.LineNumber = 75;
+                    _delightDesignerGroup1.LineNumber = 78;
                     _delightDesignerGroup1.LinePosition = 12;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_delightDesignerGroup1, Delight.ElementOrientation.Horizontal);
@@ -3457,7 +3526,7 @@ namespace Delight
                     _delightDesignerAutoParseCheckBox = new Template(CheckBoxTemplates.CheckBox);
 #if UNITY_EDITOR
                     _delightDesignerAutoParseCheckBox.Name = "DelightDesignerAutoParseCheckBox";
-                    _delightDesignerAutoParseCheckBox.LineNumber = 76;
+                    _delightDesignerAutoParseCheckBox.LineNumber = 79;
                     _delightDesignerAutoParseCheckBox.LinePosition = 14;
 #endif
                     Delight.CheckBox.IsCheckedProperty.SetHasBinding(_delightDesignerAutoParseCheckBox);
@@ -3554,7 +3623,7 @@ namespace Delight
                     _delightDesignerButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _delightDesignerButton1.Name = "DelightDesignerButton1";
-                    _delightDesignerButton1.LineNumber = 77;
+                    _delightDesignerButton1.LineNumber = 80;
                     _delightDesignerButton1.LinePosition = 14;
 #endif
                     Delight.Button.HeightProperty.SetDefault(_delightDesignerButton1, new ElementSize(14f, ElementSizeUnit.Pixels));
@@ -3602,7 +3671,7 @@ namespace Delight
                     _delightDesignerGridSplitter1 = new Template(GridSplitterTemplates.GridSplitter);
 #if UNITY_EDITOR
                     _delightDesignerGridSplitter1.Name = "DelightDesignerGridSplitter1";
-                    _delightDesignerGridSplitter1.LineNumber = 82;
+                    _delightDesignerGridSplitter1.LineNumber = 85;
                     _delightDesignerGridSplitter1.LinePosition = 8;
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_delightDesignerGridSplitter1, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -3627,7 +3696,7 @@ namespace Delight
                     _delightDesignerGridSplitter2 = new Template(GridSplitterTemplates.GridSplitter);
 #if UNITY_EDITOR
                     _delightDesignerGridSplitter2.Name = "DelightDesignerGridSplitter2";
-                    _delightDesignerGridSplitter2.LineNumber = 83;
+                    _delightDesignerGridSplitter2.LineNumber = 86;
                     _delightDesignerGridSplitter2.LinePosition = 8;
 #endif
                     Delight.GridSplitter.ThicknessProperty.SetDefault(_delightDesignerGridSplitter2, new ElementSize(20f, ElementSizeUnit.Pixels));
@@ -3652,7 +3721,7 @@ namespace Delight
                     _delightDesignerSaveChangesPopup = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _delightDesignerSaveChangesPopup.Name = "DelightDesignerSaveChangesPopup";
-                    _delightDesignerSaveChangesPopup.LineNumber = 87;
+                    _delightDesignerSaveChangesPopup.LineNumber = 90;
                     _delightDesignerSaveChangesPopup.LinePosition = 6;
 #endif
                     Delight.Region.IsActiveProperty.SetDefault(_delightDesignerSaveChangesPopup, false);
@@ -3664,31 +3733,31 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerLabel4;
-        public static Template DelightDesignerLabel4
+        private static Template _delightDesignerLabel5;
+        public static Template DelightDesignerLabel5
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerLabel4 == null || _delightDesignerLabel4.CurrentVersion != Template.Version)
+                if (_delightDesignerLabel5 == null || _delightDesignerLabel5.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerLabel4 == null)
+                if (_delightDesignerLabel5 == null)
 #endif
                 {
-                    _delightDesignerLabel4 = new Template(LabelTemplates.Label);
+                    _delightDesignerLabel5 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _delightDesignerLabel4.Name = "DelightDesignerLabel4";
-                    _delightDesignerLabel4.LineNumber = 88;
-                    _delightDesignerLabel4.LinePosition = 8;
+                    _delightDesignerLabel5.Name = "DelightDesignerLabel5";
+                    _delightDesignerLabel5.LineNumber = 91;
+                    _delightDesignerLabel5.LinePosition = 8;
 #endif
-                    Delight.Label.TextProperty.SetDefault(_delightDesignerLabel4, "Do you want to save changes to the following items?");
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel4, 16f);
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel4, Assets.TMP_FontAssets["Segoe UI SDF"]);
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel4, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.AlignmentProperty.SetDefault(_delightDesignerLabel4, Delight.ElementAlignment.TopLeft);
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel4, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.TextProperty.SetDefault(_delightDesignerLabel5, "Do you want to save changes to the following items?");
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel5, 16f);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel5, Assets.TMP_FontAssets["Segoe UI SDF"]);
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel5, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.AlignmentProperty.SetDefault(_delightDesignerLabel5, Delight.ElementAlignment.TopLeft);
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel5, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
-                return _delightDesignerLabel4;
+                return _delightDesignerLabel5;
             }
         }
 
@@ -3706,7 +3775,7 @@ namespace Delight
                     _delightDesignerList2 = new Template(ListTemplates.List);
 #if UNITY_EDITOR
                     _delightDesignerList2.Name = "DelightDesignerList2";
-                    _delightDesignerList2.LineNumber = 90;
+                    _delightDesignerList2.LineNumber = 93;
                     _delightDesignerList2.LinePosition = 8;
 #endif
                     Delight.List.IsScrollableProperty.SetDefault(_delightDesignerList2, true);
@@ -3921,7 +3990,7 @@ namespace Delight
                     _delightDesignerListItem2 = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _delightDesignerListItem2.Name = "DelightDesignerListItem2";
-                    _delightDesignerListItem2.LineNumber = 93;
+                    _delightDesignerListItem2.LineNumber = 96;
                     _delightDesignerListItem2.LinePosition = 10;
 #endif
                 }
@@ -3929,35 +3998,35 @@ namespace Delight
             }
         }
 
-        private static Template _delightDesignerLabel5;
-        public static Template DelightDesignerLabel5
+        private static Template _delightDesignerLabel6;
+        public static Template DelightDesignerLabel6
         {
             get
             {
 #if UNITY_EDITOR
-                if (_delightDesignerLabel5 == null || _delightDesignerLabel5.CurrentVersion != Template.Version)
+                if (_delightDesignerLabel6 == null || _delightDesignerLabel6.CurrentVersion != Template.Version)
 #else
-                if (_delightDesignerLabel5 == null)
+                if (_delightDesignerLabel6 == null)
 #endif
                 {
-                    _delightDesignerLabel5 = new Template(LabelTemplates.Label);
+                    _delightDesignerLabel6 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _delightDesignerLabel5.Name = "DelightDesignerLabel5";
-                    _delightDesignerLabel5.LineNumber = 94;
-                    _delightDesignerLabel5.LinePosition = 12;
+                    _delightDesignerLabel6.Name = "DelightDesignerLabel6";
+                    _delightDesignerLabel6.LineNumber = 97;
+                    _delightDesignerLabel6.LinePosition = 12;
 #endif
-                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel5, 16f);
-                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel5, Assets.TMP_FontAssets["Segoe UI SDF"]);
-                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel5, new ElementSize(24f, ElementSizeUnit.Pixels));
-                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel5, new UnityEngine.Color(0f, 0f, 0f, 1f));
-                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel5, new ElementSize(1f, ElementSizeUnit.Percents));
-                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel5, new ElementMargin(new ElementSize(16f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
-                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel5, false);
-                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel5, TMPro.TextOverflowModes.Truncate);
-                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel5, true);
-                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel5);
+                    Delight.Label.FontSizeProperty.SetDefault(_delightDesignerLabel6, 16f);
+                    Delight.Label.FontProperty.SetDefault(_delightDesignerLabel6, Assets.TMP_FontAssets["Segoe UI SDF"]);
+                    Delight.Label.HeightProperty.SetDefault(_delightDesignerLabel6, new ElementSize(24f, ElementSizeUnit.Pixels));
+                    Delight.Label.FontColorProperty.SetDefault(_delightDesignerLabel6, new UnityEngine.Color(0f, 0f, 0f, 1f));
+                    Delight.Label.WidthProperty.SetDefault(_delightDesignerLabel6, new ElementSize(1f, ElementSizeUnit.Percents));
+                    Delight.Label.MarginProperty.SetDefault(_delightDesignerLabel6, new ElementMargin(new ElementSize(16f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Label.EnableWordWrappingProperty.SetDefault(_delightDesignerLabel6, false);
+                    Delight.Label.OverflowModeProperty.SetDefault(_delightDesignerLabel6, TMPro.TextOverflowModes.Truncate);
+                    Delight.Label.ExtraPaddingProperty.SetDefault(_delightDesignerLabel6, true);
+                    Delight.Label.TextProperty.SetHasBinding(_delightDesignerLabel6);
                 }
-                return _delightDesignerLabel5;
+                return _delightDesignerLabel6;
             }
         }
 
@@ -3975,7 +4044,7 @@ namespace Delight
                     _delightDesignerGroup2 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _delightDesignerGroup2.Name = "DelightDesignerGroup2";
-                    _delightDesignerGroup2.LineNumber = 98;
+                    _delightDesignerGroup2.LineNumber = 101;
                     _delightDesignerGroup2.LinePosition = 8;
 #endif
                     Delight.Group.OrientationProperty.SetDefault(_delightDesignerGroup2, Delight.ElementOrientation.Horizontal);
@@ -4001,7 +4070,7 @@ namespace Delight
                     _delightDesignerButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _delightDesignerButton2.Name = "DelightDesignerButton2";
-                    _delightDesignerButton2.LineNumber = 99;
+                    _delightDesignerButton2.LineNumber = 102;
                     _delightDesignerButton2.LinePosition = 10;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_delightDesignerButton2, new ElementSize(90f, ElementSizeUnit.Pixels));
@@ -4050,7 +4119,7 @@ namespace Delight
                     _delightDesignerButton3 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _delightDesignerButton3.Name = "DelightDesignerButton3";
-                    _delightDesignerButton3.LineNumber = 100;
+                    _delightDesignerButton3.LineNumber = 103;
                     _delightDesignerButton3.LinePosition = 10;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_delightDesignerButton3, new ElementSize(90f, ElementSizeUnit.Pixels));
@@ -4099,7 +4168,7 @@ namespace Delight
                     _delightDesignerButton4 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _delightDesignerButton4.Name = "DelightDesignerButton4";
-                    _delightDesignerButton4.LineNumber = 101;
+                    _delightDesignerButton4.LineNumber = 104;
                     _delightDesignerButton4.LinePosition = 10;
 #endif
                     Delight.Button.WidthProperty.SetDefault(_delightDesignerButton4, new ElementSize(90f, ElementSizeUnit.Pixels));

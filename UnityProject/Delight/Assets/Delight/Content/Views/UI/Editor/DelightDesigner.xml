@@ -3,7 +3,9 @@
                  DisplayedDesignerViews="t:DesignerViewData"
                  IsEditorView="True" AutoParse="t:bool = True"
                  DisplayReadOnlyViews="t:bool = False"
-                 DisplayReadOnlyViewsText="t:string = Show Read-Only Views">
+                 DisplayReadOnlyViewsText="t:string = Show Read-Only Views"
+                 DisplayedView="t:DesignerView"
+                 EditedView="t:DesignerView">
 
   <Region Id="ViewsDesigner">
     <Grid Columns="40[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
@@ -24,6 +26,7 @@
         <DesignerToolbar IsActive="False" />
         <Button Id="LockDisplayButton" IsToggleButton="True" Alignment="TopRight" Offset="0,0,5,0" ToggleClick="ToggleViewLock" IsActive="True"
                 BackgroundSprite="eye64" Size="28,28" BackgroundColor="#50ffffff" Pressed-BackgroundColor="#ffffffff" />
+        <Label Text="{DisplayedView.Name}" AutoSize="True" Alignment="TopRight" FontColor="White" FontSize="12" Offset="0,7,35,0" IsActive="{LockDisplayButton.ToggleValue}" />
       </Region>
 
       <!-- Left Panel - Content Explorer -->

@@ -36,8 +36,6 @@ namespace Delight
         #region Fields
 
         private UIView _displayedViewInstance;
-        private DesignerView _currentEditedView;
-        private DesignerView _currentDisplayedView;
         private Dictionary<string, Template> _runtimeTemplates;
         private DesignerView _lastOpenView;
         private bool _readOnlyOverride;
@@ -119,13 +117,13 @@ namespace Delight
             }
 
             // F12 jumps to definition
-            if (Input.GetKeyDown(KeyCode.F12) && _currentEditedView != null)
+            if (Input.GetKeyDown(KeyCode.F12) && EditedView != null)
             {
                 var viewAtCaret = XmlEditor.GetViewAtCaret();
                 if (!String.IsNullOrEmpty(viewAtCaret))
                 {
                     var designerViewAtCaret = DesignerViews.FirstOrDefault(x => x.Name == viewAtCaret);
-                    if (designerViewAtCaret != null && designerViewAtCaret != _currentEditedView)
+                    if (designerViewAtCaret != null && designerViewAtCaret != EditedView)
                     {
                         OpenView(designerViewAtCaret);
                     }
@@ -154,7 +152,7 @@ namespace Delight
             // Mouse click - selection logic for selecting views in the designer
             if (Input.GetMouseButtonDown(0) &&
                 ScrollableContentRegion.ContainsMouse(Input.mousePosition) &&
-                _currentEditedView != null)
+                EditedView != null)
             {
                 var pointerEventData = new PointerEventData(EventSystem);
                 pointerEventData.position = Input.mousePosition;
@@ -170,7 +168,7 @@ namespace Delight
                 {
                     // find view with the selected game object
                     var selectedView = ViewContentRegion.Find<UIView>(x => x.GameObject == selectedObject);
-                    while (selectedView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName)
+                    while (selectedView?.Parent?.GetType().Name != EditedView.ViewTypeName)
                     {
                         selectedView = selectedView?.LayoutParent as UIView;
                         if (selectedView == null)
@@ -206,8 +204,8 @@ namespace Delight
                             while (nextView != _displayedViewInstance)
                             {
                                 nextView = nextView.LayoutParent as UIView;
-                                if (nextView == null || (nextView?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
-                                    nextView.GetType().Name != _currentEditedView.ViewTypeName))
+                                if (nextView == null || (nextView?.Parent?.GetType().Name != EditedView.ViewTypeName &&
+                                    nextView.GetType().Name != EditedView.ViewTypeName))
                                     break;
 
                                 _raycastedViews.Add(nextView);
@@ -364,10 +362,10 @@ namespace Delight
         /// </summary>
         public void OnEdit(bool needReparsing)
         {
-            if (_currentEditedView == null)
+            if (EditedView == null)
                 return;
 
-            _currentEditedView.IsDirty = true;
+            EditedView.IsDirty = true;
             if (AutoParse && needReparsing)
             {
                 ParseView();
@@ -379,23 +377,25 @@ namespace Delight
         /// </summary>
         public async void ToggleViewLock(bool toggleValue)
         {
-            if (_currentEditedView == null)
+            if (EditedView == null)
                 return;
 
             // when view lock is enabled the user can switch to edit other views and the current view is always displayed
             _viewLockEnabled = toggleValue;
-            _currentDisplayedView.IsDisplayLocked = false;
-            _currentDisplayedView = _currentEditedView;
-            _currentDisplayedView.IsDisplayLocked = _viewLockEnabled;
+            DisplayedView.IsDisplayLocked = false;
+            DisplayedView = EditedView;
+            DisplayedView.IsDisplayLocked = _viewLockEnabled;
+
+
 
             if (_viewLockEnabled)
             {
-                _currentDisplayedView.XmlText = XmlEditor.GetXmlText();
+                DisplayedView.XmlText = XmlEditor.GetXmlText();
                 ParseView();
             }
             else
             {
-                await DisplayView(_currentDisplayedView); // if lock disabled then display currently selected view
+                await DisplayView(DisplayedView); // if lock disabled then display currently selected view
 
                 // center on view
                 ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
@@ -419,10 +419,10 @@ namespace Delight
             bool foundView = false;
             foreach (var line in lines)
             {
-                var view = ViewContentRegion.Find<UIView>(x =>
+                var view = ViewContentRegion.Find((Predicate<UIView>)(x =>
                 {
-                    if (x?.Parent?.GetType().Name != _currentEditedView.ViewTypeName &&
-                        x.GetType().Name != _currentEditedView.ViewTypeName)
+                    if (x?.Parent?.GetType().Name != this.EditedView.ViewTypeName &&
+                        x.GetType().Name != this.EditedView.ViewTypeName)
                         return false;
 
                     int viewLineNumber = Math.Max(x.Template.LineNumber - 1, 0);
@@ -438,7 +438,7 @@ namespace Delight
                         _selectedViews.Add(x);
                     }
                     return true;
-                });
+                }));
 
                 if (view != null)
                 {
@@ -495,8 +495,8 @@ namespace Delight
             ClearSelectedViews();
             UpdateCurrentEditedViewXml();
 
-            _lastOpenView = _currentEditedView;
-            _currentEditedView = designerView;
+            _lastOpenView = EditedView;
+            EditedView = designerView;
             XmlEditorRegion.IsVisible = true;
             DisplayRegion.IsVisible = true;
 
@@ -507,9 +507,9 @@ namespace Delight
             if (!designerView.IsRuntimeParsed)
             {
                 // load XML into the editor
-                if (!String.IsNullOrEmpty(_currentEditedView.XmlText))
+                if (!String.IsNullOrEmpty(EditedView.XmlText))
                 {
-                    XmlEditor.XmlText = _currentEditedView.XmlText;
+                    XmlEditor.XmlText = EditedView.XmlText;
                 }
                 else
                 {
@@ -523,7 +523,7 @@ namespace Delight
             else
             {
                 // create runtime parsed view
-                XmlEditor.XmlText = _currentEditedView.XmlText;
+                XmlEditor.XmlText = EditedView.XmlText;
             }
 
             if (_viewLockEnabled)
@@ -541,7 +541,7 @@ namespace Delight
         /// </summary>
         private async Task DisplayView(DesignerView designerView)
         {
-            _currentDisplayedView = designerView;
+            DisplayedView = designerView;
             LastOpenedViewEditorPref = designerView.Name;
 
             try
@@ -550,14 +550,14 @@ namespace Delight
                 var sw2 = System.Diagnostics.Stopwatch.StartNew();
 
                 UIView view = null;
-                if (!_currentDisplayedView.IsRuntimeParsed)
+                if (!DisplayedView.IsRuntimeParsed)
                 {
-                    view = CreateView(_currentDisplayedView.ViewTypeName, this, ViewContentRegion);
+                    view = CreateView(DisplayedView.ViewTypeName, this, ViewContentRegion);
                 }
                 else
                 {
-                    view = InstantiateRuntimeView(_currentDisplayedView.ViewObject, this, ViewContentRegion,
-                        _currentEditedView.IsNew, null, _currentEditedView);
+                    view = InstantiateRuntimeView(DisplayedView.ViewObject, this, ViewContentRegion,
+                        EditedView.IsNew, null, EditedView);
                 }
 
                 if (view == null)
@@ -592,7 +592,7 @@ namespace Delight
             catch (Exception e)
             {
                 //ConsoleLogger.LogException(e);
-                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                ConsoleLogger.LogParseError(EditedView.FilePath, 1,
                     String.Format("#Delight# Error instantiating view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
                 ConsoleLogger.LogException(e);
 
@@ -625,7 +625,7 @@ namespace Delight
         /// </summary>
         public void UpdateXmlEditorReadonly()
         {
-            bool isReadOnly = _currentEditedView != null ? _currentEditedView.IsLocked && !_readOnlyOverride : false;
+            bool isReadOnly = EditedView != null ? EditedView.IsLocked && !_readOnlyOverride : false;
             var color = isReadOnly ? ColorValueConverter.HexToColor("#ECECEC").Value : ColorValueConverter.HexToColor("#fbfbfb").Value;
             XmlEditor.IsReadOnly = isReadOnly;
             XmlEditor.BackgroundColor = color;
@@ -670,10 +670,10 @@ namespace Delight
         /// </summary>
         public async void ParseView()
         {
-            if (_currentEditedView == null)
+            if (EditedView == null)
                 return;
 
-            _currentEditedView.IsRuntimeParsed = true;
+            EditedView.IsRuntimeParsed = true;
 
             // attempt to parse the xml
             string xml = XmlEditor.GetXmlText();
@@ -699,7 +699,7 @@ namespace Delight
                     }
                 }
 
-                LogParseErrorToDesignerConsole(_currentEditedView.FilePath, line,
+                LogParseErrorToDesignerConsole(EditedView.FilePath, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
                 return;
             }
@@ -708,14 +708,14 @@ namespace Delight
             ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
             try
             {
-                var viewObject = ContentParser.ParseViewXml(_currentEditedView.FilePath, rootXmlElement, false);
-                _currentEditedView.ViewObject = viewObject;
+                var viewObject = ContentParser.ParseViewXml(EditedView.FilePath, rootXmlElement, false);
+                EditedView.ViewObject = viewObject;
 
-                if (_currentEditedView != _currentDisplayedView)
+                if (EditedView != DisplayedView)
                 {
                     // even if view isn't displayed we need to instantiate view to update data templates
                     var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion,
-                        _currentEditedView.IsNew, null, _currentEditedView);
+                        EditedView.IsNew, null, EditedView);
                     if (view != null)
                     {
                         view.Destroy();
@@ -724,7 +724,7 @@ namespace Delight
             }
             catch (Exception e)
             {
-                ConsoleLogger.LogParseError(_currentEditedView.FilePath, 1,
+                ConsoleLogger.LogParseError(EditedView.FilePath, 1,
                     String.Format("#Delight# Error parsing view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
                 ConsoleLogger.LogException(e);
             }
@@ -737,7 +737,7 @@ namespace Delight
             XmlEditor.OnParseSuccessful();
 
             // display view
-            await DisplayView(_currentDisplayedView);
+            await DisplayView(DisplayedView);
         }
 
         /// <summary>
@@ -1811,7 +1811,7 @@ namespace Delight
                             view.IsDirty = true;
                             view.IsRuntimeParsed = true;
 
-                            if (view == _currentEditedView)
+                            if (view == EditedView)
                             {
                                 // update current editor XML
                                 XmlEditor.XmlText = view.XmlText;
@@ -1854,9 +1854,9 @@ namespace Delight
         /// </summary>
         private void UpdateCurrentEditedViewXml()
         {
-            if (_currentEditedView != null && _currentEditedView.IsDirty)
+            if (EditedView != null && EditedView.IsDirty)
             {
-                _currentEditedView.XmlText = XmlEditor.GetXmlText();
+                EditedView.XmlText = XmlEditor.GetXmlText();
             }
         }
 
