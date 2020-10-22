@@ -53,6 +53,10 @@ namespace Delight
             base.OnChanged(property);
             switch (property)
             {
+                case nameof(IsDisabled):
+                    IsDisabledChanged();
+                    break;
+
                 case nameof(IsAlternate):
                     IsAlternateChanged();
                     break;
@@ -60,6 +64,35 @@ namespace Delight
                 case nameof(IsSelected):
                     IsSelectedChanged();
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Called when the button is disabled/enabled.
+        /// </summary>
+        public void IsDisabledChanged()
+        {
+            if (IsDisabled)
+            {
+                SetState("Disabled");
+
+                // disable button actions
+                Click.IsEnabled = false;
+                MouseEnter.IsEnabled = false;
+                MouseExit.IsEnabled = false;
+                MouseDown.IsEnabled = false;
+                MouseUp.IsEnabled = false;
+            }
+            else
+            {
+                SetState(IsSelected ? "Selected" : DefaultItemStyle);
+
+                // enable button actions
+                Click.IsEnabled = true;
+                MouseEnter.IsEnabled = true;
+                MouseExit.IsEnabled = true;
+                MouseDown.IsEnabled = true;
+                MouseUp.IsEnabled = true;
             }
         }
 
@@ -96,6 +129,18 @@ namespace Delight
             if (Width != null || Height != null)
             {
                 _sizeSet = true;
+            }
+        }
+
+        /// <summary>
+        /// Called after the view is loaded.
+        /// </summary>
+        protected override void AfterLoad()
+        {
+            base.AfterLoad();            
+            if (IsDisabled)
+            {
+                IsDisabledChanged();
             }
         }
 
