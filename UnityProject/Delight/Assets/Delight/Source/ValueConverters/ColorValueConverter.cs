@@ -111,6 +111,25 @@ namespace Delight
                         int.Parse(trimmedValue.Substring(5, 2), System.Globalization.NumberStyles.HexNumber) / 255f
                         );
                 }
+                else if (trimmedValue.Length == 5)
+                {
+                    // #argb -> #aarrggbb
+                    return new Color(
+                        int.Parse(new string(trimmedValue[2], 2), System.Globalization.NumberStyles.HexNumber) / 255f,
+                        int.Parse(new string(trimmedValue[3], 2), System.Globalization.NumberStyles.HexNumber) / 255f,
+                        int.Parse(new string(trimmedValue[4], 2), System.Globalization.NumberStyles.HexNumber) / 255f,
+                        int.Parse(new string(trimmedValue[1], 2), System.Globalization.NumberStyles.HexNumber) / 255f
+                        );
+                }
+                else if (trimmedValue.Length == 4)
+                {
+                    // #rgb -> #rrggbb
+                    return new Color(
+                        int.Parse(new string(trimmedValue[1], 2), System.Globalization.NumberStyles.HexNumber) / 255f,
+                        int.Parse(new string(trimmedValue[2], 2), System.Globalization.NumberStyles.HexNumber) / 255f,
+                        int.Parse(new string(trimmedValue[3], 2), System.Globalization.NumberStyles.HexNumber) / 255f
+                    );
+                }
             }
 
             return null;
