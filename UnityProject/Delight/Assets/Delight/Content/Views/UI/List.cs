@@ -355,6 +355,9 @@ namespace Delight
             if (!IsLoaded)
                 return;
 
+            if (GameObject == null)
+                return;
+
             // Debug.Log("Collection changed");
             bool updateLayout = false;
             if (e.ChangeAction == CollectionChangeAction.Batch)
