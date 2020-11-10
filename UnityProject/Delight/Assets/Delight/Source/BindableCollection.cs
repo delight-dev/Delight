@@ -361,7 +361,7 @@ namespace Delight
         /// </summary>
         public T Find(Predicate<T> predicate)
         {
-            foreach (var item in _dataList)
+            foreach (var item in DataList)
             {
                 if (predicate(item.Value))
                     return item.Value;
@@ -392,7 +392,7 @@ namespace Delight
 
         public T FirstOrDefault(Func<T, bool> predicate)
         {
-            foreach (var item in _dataList)
+            foreach (var item in DataList)
             {
                 if (predicate(item.Value))
                     return item.Value;
@@ -407,7 +407,7 @@ namespace Delight
 
         public bool Any(Func<T, bool> predicate)
         {
-            foreach (var item in _dataList)
+            foreach (var item in DataList)
             {
                 if (predicate(item.Value))
                     return true;
@@ -417,7 +417,7 @@ namespace Delight
 
         public void ForEach(Action<T> action)
         {
-            foreach (var item in _dataList)
+            foreach (var item in DataList)
             {
                 action(item.Value);
             }
@@ -439,7 +439,7 @@ namespace Delight
             // TODO we might want a dictionary to keep track of index to make it O(1)
             for (int i = 0; i < Count; ++i)
             {
-                if (EqualityComparer<T>.Default.Equals(_dataList[i].Value, item))
+                if (EqualityComparer<T>.Default.Equals(DataList[i].Value, item))
                 {
                     return i;
                 }
