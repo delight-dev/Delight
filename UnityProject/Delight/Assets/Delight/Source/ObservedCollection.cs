@@ -25,6 +25,7 @@ namespace Delight
         private IList _genericList;
         private int _oldCount;
         public override int Count => _genericList != null ? _genericList.Count : 0;
+        public override bool IsEmpty => Count <= 0;
         private bool _hasBindableItems;
 
         #endregion

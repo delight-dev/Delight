@@ -75,6 +75,7 @@ namespace Delight
         }
 
         public override int Count => Data.Count;
+        public override bool IsEmpty => Data.Count <= 0;
 
         #endregion
 
@@ -481,6 +482,7 @@ namespace Delight
         #region Properties
 
         public abstract int Count { get; }
+        public abstract bool IsEmpty { get; }
 
         #endregion
 
@@ -503,6 +505,7 @@ namespace Delight
         public void OnCollectionChanged(CollectionChangedEventArgs eventArgs)
         {
             OnPropertyChanged(nameof(Count));
+            OnPropertyChanged(nameof(IsEmpty));
             CollectionChanged?.Invoke(this, eventArgs);
         }
 
