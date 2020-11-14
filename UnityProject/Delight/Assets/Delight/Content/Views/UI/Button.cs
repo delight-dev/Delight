@@ -80,6 +80,14 @@ namespace Delight
             if (triggerToggleClick)
             {
                 ToggleClick?.Invoke(this, ToggleValue);
+                if (ToggleValue)
+                {
+                    ToggleOn?.Invoke(this, null);
+                }
+                else
+                {
+                    ToggleOff?.Invoke(this, null);
+                }
             }
         }
 

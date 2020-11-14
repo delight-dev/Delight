@@ -5,7 +5,7 @@
         MouseEnter="ButtonMouseEnter" MouseExit="ButtonMouseExit"
         MouseDown="ButtonMouseDown" MouseUp="ButtonMouseUp"
         IsToggleButton="t:bool" IsDisabled="t:bool" ToggleValue="t:bool" TextPadding="t:ElementMargin = 20,10,20,10"
-        CanToggleOn="t:bool = True" CanToggleOff="t:bool = True" ToggleClick="t:Action" IsMouseOver="t:bool" IsPressed="t:bool"
+        CanToggleOn="t:bool = True" CanToggleOff="t:bool = True" ToggleClick="t:Action" ToggleOn="t:Action" ToggleOff="t:Action" IsMouseOver="t:bool" IsPressed="t:bool"
         AutoSize="t:AutoSize" 
         TextOffset="t:ElementMargin = 0" 
         IsCloseButton="t:bool" 

@@ -61,6 +61,8 @@ namespace Delight
             dependencyProperties.Add(CanToggleOnProperty);
             dependencyProperties.Add(CanToggleOffProperty);
             dependencyProperties.Add(ToggleClickProperty);
+            dependencyProperties.Add(ToggleOnProperty);
+            dependencyProperties.Add(ToggleOffProperty);
             dependencyProperties.Add(IsMouseOverProperty);
             dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(AutoSizeProperty);
@@ -138,6 +140,20 @@ namespace Delight
         {
             get { return ToggleClickProperty.GetValue(this); }
             set { ToggleClickProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ToggleOnProperty = new DependencyProperty<ViewAction>("ToggleOn", () => new ViewAction());
+        public ViewAction ToggleOn
+        {
+            get { return ToggleOnProperty.GetValue(this); }
+            set { ToggleOnProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ToggleOffProperty = new DependencyProperty<ViewAction>("ToggleOff", () => new ViewAction());
+        public ViewAction ToggleOff
+        {
+            get { return ToggleOffProperty.GetValue(this); }
+            set { ToggleOffProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> IsMouseOverProperty = new DependencyProperty<System.Boolean>("IsMouseOver");
