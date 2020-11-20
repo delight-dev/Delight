@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Delight
 {
     /// <summary>
-    /// Provides logic for switching between mutliple child views and displaying one at a time. By default the views are loaded when they are displayed, behavior can be changed through the SwitchMode property. 
+    /// Provides logic for switching between mutliple child views and displaying one at a time. By default the views are enabled when they are displayed, behavior can be changed through the SwitchMode property. 
     /// </summary>
     public partial class ViewSwitcher
     {

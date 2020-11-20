@@ -18,6 +18,7 @@ namespace Delight
         {
             public WeakAction Action;
             public object Token;
+            public bool ListenToNullToken;
         }
 
         #endregion
@@ -30,14 +31,14 @@ namespace Delight
         public static void Register<TMessage>(object recipient, Action<TMessage> action,
             bool keepTargetAlive = false)
         {
-            Register(recipient, null, action, keepTargetAlive);
+            Register(recipient, null, action, keepTargetAlive, false);
         }
 
         /// <summary>
         /// Registers a recipient of messages of specified type.
         /// </summary>
         public static void Register<TMessage>(object recipient, object token, Action<TMessage> action,
-            bool keepTargetAlive = false)
+            bool keepTargetAlive = false, bool listenToNullToken = false)
         {
             lock (_recipients)
             {
@@ -49,7 +50,7 @@ namespace Delight
                 }
 
                 var weakAction = new WeakAction<TMessage>(recipient, action, keepTargetAlive);
-                var actionAndToken = new WeakActionAndToken { Action = weakAction, Token = token };
+                var actionAndToken = new WeakActionAndToken { Action = weakAction, Token = token, ListenToNullToken = listenToNullToken };
                 actions.Add(actionAndToken);
             }
         }
@@ -172,7 +173,7 @@ namespace Delight
                     }
 
                     // does the tokens match? 
-                    if ((token == null && actionAndToken.Token == null) ||
+                    if ((token == null && (actionAndToken.Token == null || actionAndToken.ListenToNullToken )) ||
                         (token != null && actionAndToken.Token.Equals(token)))
                     {
                         // yes.

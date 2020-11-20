@@ -42,6 +42,7 @@ namespace Delight
             ViewActivators.Add("NavigationButton", (x, y, z, w, a) => new NavigationButton(x, y, z, w, a));
             ViewActivators.Add("ScrollableRegion", (x, y, z, w, a) => new ScrollableRegion(x, y, z, w, a));
             ViewActivators.Add("Mask", (x, y, z, w, a) => new Mask(x, y, z, w, a));
+            ViewActivators.Add("Navigator", (x, y, z, w, a) => new Navigator(x, y, z, w, a));
             ViewActivators.Add("RadioButton", (x, y, z, w, a) => new RadioButton(x, y, z, w, a));
             ViewActivators.Add("RawImage", (x, y, z, w, a) => new RawImage(x, y, z, w, a));
             ViewActivators.Add("RectMask2D", (x, y, z, w, a) => new RectMask2D(x, y, z, w, a));
@@ -97,6 +98,7 @@ namespace Delight
             ViewTypes.Add("NavigationButton", typeof(NavigationButton));
             ViewTypes.Add("ScrollableRegion", typeof(ScrollableRegion));
             ViewTypes.Add("Mask", typeof(Mask));
+            ViewTypes.Add("Navigator", typeof(Navigator));
             ViewTypes.Add("RadioButton", typeof(RadioButton));
             ViewTypes.Add("RawImage", typeof(RawImage));
             ViewTypes.Add("RectMask2D", typeof(RectMask2D));
@@ -128,6 +130,7 @@ namespace Delight
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));
             AttachedPropertyActivators.Add("System.Boolean", (x, y) => new AttachedProperty<System.Boolean>(x, y));
             AttachedPropertyActivators.Add("Delight.CellIndex", (x, y) => new AttachedProperty<Delight.CellIndex>(x, y));
+            AttachedPropertyActivators.Add("System.String", (x, y) => new AttachedProperty<System.String>(x, y));
         }
     }
 }
