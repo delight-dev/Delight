@@ -87,6 +87,11 @@ namespace Delight
                 Pop();
                 return;
             }
+            else if (message.MessageType == NavigatorMessageType.Close)
+            {
+                Close();
+                return;
+            }
 
             var view = message.NavigateToView ?? GetViewAtPath(message.NavigateToPath);
             if (message.MessageType == NavigatorMessageType.Push)
@@ -195,6 +200,15 @@ namespace Delight
         /// <summary>
         /// Opens the page specified.
         /// </summary>
+        public void Open(string path, object data = null)
+        {
+            var view = GetViewAtPath(path);
+            Open(view, data);
+        }
+
+        /// <summary>
+        /// Opens the page specified.
+        /// </summary>
         public void Open(View view, object data = null)
         {
             if (view == ActiveView)
@@ -223,9 +237,9 @@ namespace Delight
         }
 
         /// <summary>
-        /// Switches to the view specified.
+        /// Opens the page specified asynchronously.
         /// </summary>
-        public async Task SwitchToAsync(View view, object data = null)
+        public async Task OpenAsync(View view, object data = null)
         {
             if (view == ActiveView)
                 return;
@@ -262,7 +276,16 @@ namespace Delight
         }
 
         /// <summary>
-        /// Pushes active view on the stack and switches to new view.
+        /// Pushes active view on the stack and opens specified view.
+        /// </summary>
+        public void Push(string path, object data = null)
+        {
+            var view = GetViewAtPath(path);
+            Push(view, data);
+        }
+
+        /// <summary>
+        /// Pushes active view on the stack and opens specified view.
         /// </summary>
         public void Push(View view, object data = null)
         {
@@ -277,7 +300,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Pops view on the stack and switches to it.
+        /// Pops view on the stack and opens it.
         /// </summary>
         public void Pop()
         {
@@ -311,5 +334,6 @@ namespace Delight
         NavigateTo = 0,
         Push = 1,
         Pop = 2,
+        Close = 3
     }
 }
