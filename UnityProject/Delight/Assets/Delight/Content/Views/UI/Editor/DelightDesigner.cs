@@ -677,6 +677,11 @@ namespace Delight
 
             // attempt to parse the xml
             string xml = XmlEditor.GetXmlText();
+            if (String.IsNullOrEmpty(EditedView.XmlText))
+            {
+                EditedView.XmlText = xml; // happens if refresh F5 is called or "Parse" button clicked when view hasn't been edited
+            }
+
             XElement rootXmlElement = null;
             try
             {
