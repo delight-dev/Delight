@@ -103,7 +103,7 @@ namespace Delight
             // F5 reparses the currently edited view
             if (Input.GetKeyDown(KeyCode.F5))
             {
-                ParseView();
+                ParseEditedView();
             }
 
             // F11 maximizes designer window in editor
@@ -368,7 +368,7 @@ namespace Delight
             EditedView.IsDirty = true;
             if (AutoParse && needReparsing)
             {
-                ParseView();
+                ParseEditedView();
             }
         }
 
@@ -386,12 +386,10 @@ namespace Delight
             DisplayedView = EditedView;
             DisplayedView.IsDisplayLocked = _viewLockEnabled;
 
-
-
             if (_viewLockEnabled)
             {
                 DisplayedView.XmlText = XmlEditor.GetXmlText();
-                ParseView();
+                ParseEditedView();
             }
             else
             {
@@ -668,7 +666,7 @@ namespace Delight
         /// <summary>
         /// Parses run-time view XML and generates the view in the designer.
         /// </summary>
-        public async void ParseView()
+        public async void ParseEditedView()
         {
             if (EditedView == null)
                 return;
@@ -682,6 +680,24 @@ namespace Delight
                 EditedView.XmlText = xml; // happens if refresh F5 is called or "Parse" button clicked when view hasn't been edited
             }
 
+            bool result = ParseView(xml, EditedView);
+            if (!result)
+            {
+                return;
+            }
+
+            // parse successful
+            XmlEditor.OnParseSuccessful();
+
+            // display view
+            await DisplayView(DisplayedView);
+        }
+
+        /// <summary>
+        /// Parses view. 
+        /// </summary>
+        public bool ParseView(string xml, DesignerView view)
+        {
             XElement rootXmlElement = null;
             try
             {
@@ -704,32 +720,32 @@ namespace Delight
                     }
                 }
 
-                LogParseErrorToDesignerConsole(EditedView.FilePath, line,
+                LogParseErrorToDesignerConsole(view.FilePath, line,
                     String.Format("#Delight# Error parsing XML file. Exception thrown: {0}", e.Message));
-                return;
+                return false;
             }
 
             // parse view XML into view object
             ConsoleLogger.LogParseError = LogParseErrorToDesignerConsole;
             try
             {
-                var viewObject = ContentParser.ParseViewXml(EditedView.FilePath, rootXmlElement, false);
-                EditedView.ViewObject = viewObject;
+                var viewObject = ContentParser.ParseViewXml(view.FilePath, rootXmlElement, false);
+                view.ViewObject = viewObject;
 
-                if (EditedView != DisplayedView)
+                if (view != DisplayedView)
                 {
                     // even if view isn't displayed we need to instantiate view to update data templates
-                    var view = InstantiateRuntimeView(viewObject, this, ViewContentRegion,
-                        EditedView.IsNew, null, EditedView);
-                    if (view != null)
+                    var tempView = InstantiateRuntimeView(viewObject, this, ViewContentRegion,
+                        view.IsNew, null, view);
+                    if (tempView != null)
                     {
-                        view.Destroy();
+                        tempView.Destroy();
                     }
                 }
             }
             catch (Exception e)
             {
-                ConsoleLogger.LogParseError(EditedView.FilePath, 1,
+                ConsoleLogger.LogParseError(view.FilePath, 1,
                     String.Format("#Delight# Error parsing view. Exception thrown: {0}. See Unity console for code stacktrace.", e.Message));
                 ConsoleLogger.LogException(e);
             }
@@ -738,11 +754,7 @@ namespace Delight
                 ConsoleLogger.LogParseError = ConsoleLogger.LogParseErrorToDebug;
             }
 
-            // parse successful
-            XmlEditor.OnParseSuccessful();
-
-            // display view
-            await DisplayView(DisplayedView);
+            return true;
         }
 
         /// <summary>
@@ -755,12 +767,18 @@ namespace Delight
             // CodeGenerator.GenerateChildViewDeclarations() **
 
             // update view declarations and mapped properties
-            CodeGenerator.UpdateViewDeclarations(viewObject, viewObject.ViewDeclarations, false);
-            CodeGenerator.UpdateMappedProperties(viewObject);
-
-            // create the runtime data templates used when instantiating the view
+            var viewObjectToUpdate = viewObject;
             Dictionary<string, Template> dataTemplates = new Dictionary<string, Template>();
-            CreateRuntimeDataTemplates(viewObject, string.Empty, string.Empty, string.Empty, null, null, viewObject.FilePath, dataTemplates, null);
+            while (viewObjectToUpdate != null)
+            {
+                // update mapped declarations
+                CodeGenerator.UpdateViewDeclarations(viewObjectToUpdate, viewObjectToUpdate.ViewDeclarations, false);
+                CodeGenerator.UpdateMappedProperties(viewObjectToUpdate);
+
+                // create the runtime data templates used when instantiating the view and update property declaration info
+                CreateRuntimeDataTemplates(viewObjectToUpdate, string.Empty, string.Empty, string.Empty, null, null, viewObjectToUpdate.FilePath, dataTemplates, null);
+                viewObjectToUpdate = viewObjectToUpdate.BasedOn;
+            }
 
             // get view type name
             var viewTypeName = viewObject.TypeName;
@@ -788,7 +806,7 @@ namespace Delight
             InstantiateRuntimeChildViews(viewObject.TypeName, dataTemplates, view, view, viewObject.FilePath, viewObject, viewTypeName, null, viewObject.ViewDeclarations);
 
             // register action handlers, methods and initialize attached properties
-            var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle();
+            var propertyAssignments = viewObject.GetPropertyAssignmentsWithStyle(true);
             var actionAssignments = propertyAssignments.Where(x => x.PropertyDeclarationInfo != null &&
                             x.PropertyDeclarationInfo.Declaration.DeclarationType == PropertyDeclarationType.Action).ToList();
 
@@ -1427,7 +1445,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Creates runtime data templates.
+        /// Creates runtime data templates and updates property declaration infos.
         /// </summary>
         private void CreateRuntimeDataTemplates(ViewObject viewObject, string idPath, string basedOnPath, string basedOnViewName, ViewDeclaration viewDeclaration,
             List<PropertyExpression> nestedPropertyExpressions, string fileName, Dictionary<string, Template> dataTemplates, ViewDeclaration internalViewDeclaration)
@@ -1953,9 +1971,10 @@ namespace Delight
             sb.AppendLine("</{0}>", viewName);
             newView.XmlText = sb.ToString();
 
-            newView.IsDirty = false;
+            newView.IsDirty = true;
             newView.IsNew = true;
             newView.IsRuntimeParsed = true;
+            ParseView(newView.XmlText, newView);
 
             DesignerViews.Add(newView);
             DisplayedDesignerViews.Add(newView);
