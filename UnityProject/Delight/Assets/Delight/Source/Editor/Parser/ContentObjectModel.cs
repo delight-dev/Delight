@@ -599,6 +599,7 @@ namespace Delight.Editor.Parser
 
                             var animateInfo = new AnimateInfo();
                             stateAnimationInfo.AnimateInfos.Add(animateInfo);
+                            //var durationValueConverter = new DurationValueConverter();
 
                             // set properties of <Animate> elements
                             foreach (var propertyAssignment in animateDeclaration.PropertyAssignments)
@@ -644,12 +645,14 @@ namespace Delight.Editor.Parser
                                 else if (propertyName.IEquals("Duration"))
                                 {
                                     float duration = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
+                                    //float duration = durationValueConverter.Convert(propertyValue);
                                     animateInfo.Duration = duration;
                                     continue;
                                 }
                                 else if (propertyName.IEquals("StartOffset"))
                                 {
                                     float startOffset = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
+                                    //float startOffset = durationValueConverter.Convert(propertyValue);
                                     animateInfo.StartOffset = startOffset;
                                     continue;
                                 }
@@ -804,11 +807,16 @@ namespace Delight.Editor.Parser
         /// <summary>
         /// Gets property assignments, including those set by styles. 
         /// </summary>
-        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle()
+        public List<PropertyAssignment> GetPropertyAssignmentsWithStyle(bool includeInheritedAssignments = false)
         {
+            // gets all view declarations in the view
             var propertyAssignments = new List<PropertyAssignment>();
-            propertyAssignments.AddRange(PropertyExpressions.OfType<PropertyAssignment>());
+            if (includeInheritedAssignments && BasedOn != null)
+            {
+                propertyAssignments.AddRange(BasedOn.GetPropertyAssignmentsWithStyle(true));
+            }
 
+            propertyAssignments.AddRange(PropertyExpressions.OfType<PropertyAssignment>());
             var stylePropertyAssignments = ContentObjectModel.GetViewObjectStylePropertyAssignments(Name);
             propertyAssignments.AddRange(stylePropertyAssignments);
 
