@@ -77,7 +77,7 @@
         <Region Id="XmlEditorStatusBar" Width="175" Height="20" Alignment="BottomRight" BackgroundColor="White">
           <Group Orientation="Horizontal" Spacing="10" Alignment="Right" Margin="5,0,5,0">
             <CheckBox Id="AutoParseCheckBox" Text="Auto parse" FontSize="12" FontColor="#333333" CheckBoxWidth="15" CheckBoxHeight="15" IsChecked="{AutoParse}" />
-            <Button Text="Parse" Click="ParseView" FontSize="12" Height="14" />
+            <Button Text="Parse" Click="ParseEditedView" FontSize="12" Height="14" />
           </Group>
         </Region>
       </Region>
