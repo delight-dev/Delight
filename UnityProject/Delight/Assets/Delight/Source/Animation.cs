@@ -19,9 +19,9 @@ namespace Delight
         /// <summary>
         /// Starts the animation.
         /// </summary>
-        public Task Animate(LayoutRoot layoutRoot)
+        public Task Animate(LayoutRoot layoutRoot, float initialDelay)
         {
-            return Task.WhenAll(this.Select(x => x.Animate(layoutRoot)));
+            return Task.WhenAll(this.Select(x => x.Animate(layoutRoot, initialDelay)));
         }
 
         /// <summary>

@@ -567,7 +567,7 @@ namespace Delight
                     _testExampleList1ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _testExampleList1ScrollableRegion.Name = "TestExampleList1ScrollableRegion";
-                    _testExampleList1ScrollableRegion.LineNumber = 27;
+                    _testExampleList1ScrollableRegion.LineNumber = 28;
                     _testExampleList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_testExampleList1ScrollableRegion, TestExampleList1ScrollableRegionContentRegion);
@@ -1139,7 +1139,7 @@ namespace Delight
                     _testExampleList2ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _testExampleList2ScrollableRegion.Name = "TestExampleList2ScrollableRegion";
-                    _testExampleList2ScrollableRegion.LineNumber = 27;
+                    _testExampleList2ScrollableRegion.LineNumber = 28;
                     _testExampleList2ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_testExampleList2ScrollableRegion, TestExampleList2ScrollableRegionContentRegion);

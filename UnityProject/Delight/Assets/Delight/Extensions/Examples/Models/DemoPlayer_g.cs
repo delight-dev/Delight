@@ -22,6 +22,14 @@ namespace Delight
             set { SetProperty(ref _name, value); }
         }
 
+        [SerializeField]
+        public string IconId;
+        public SpriteAsset Icon
+        {
+            get { return Assets.Sprites[IconId]; }
+            set { SetProperty(ref IconId, value?.Id); }
+        }
+
         #endregion
     }
 
@@ -51,32 +59,30 @@ namespace Delight
 
         public DemoPlayerData()
         {
-            Player1 = new DemoPlayer { Id = "Player1", Name = "Wizball" };
-            Add(Player1);
-            Player2 = new DemoPlayer { Id = "Player2", Name = "asdf" };
-            Add(Player2);
-            Player3 = new DemoPlayer { Id = "Player3", Name = "Yesper" };
-            Add(Player3);
-            Player4 = new DemoPlayer { Id = "Player4", Name = "Jacob4" };
-            Add(Player4);
-            Player5 = new DemoPlayer { Id = "Player5", Name = "xCool" };
-            Add(Player5);
-            Player6 = new DemoPlayer { Id = "Player6", Name = "pking1" };
-            Add(Player6);
-            Player7 = new DemoPlayer { Id = "Player7", Name = "pjkminCoo" };
-            Add(Player7);
-            Player8 = new DemoPlayer { Id = "Player8", Name = "Machin1st" };
-            Add(Player8);
-            Player9 = new DemoPlayer { Id = "Player9", Name = "DWerck16" };
-            Add(Player9);
-            Player10 = new DemoPlayer { Id = "Player10", Name = "Pfauxhypocricy" };
-            Add(Player10);
-            Player11 = new DemoPlayer { Id = "Player11", Name = "Bananaman13" };
-            Add(Player11);
-            Player12 = new DemoPlayer { Id = "Player12", Name = "Opwiz" };
-            Add(Player12);
-            Player13 = new DemoPlayer { Id = "Player13", Name = "afauxicy" };
-            Add(Player13);
+            Player1 = new DemoPlayer { Id = "Player1", Name = "Wizball", Icon = Assets.Sprites["ProfilePicture1"] };
+            Player2 = new DemoPlayer { Id = "Player2", Name = "asdf", Icon = Assets.Sprites["ProfilePicture2"] };
+            Player3 = new DemoPlayer { Id = "Player3", Name = "Yesper", Icon = Assets.Sprites["ProfilePicture3"] };
+            Player4 = new DemoPlayer { Id = "Player4", Name = "Jacob4", Icon = Assets.Sprites["ProfilePicture4"] };
+            Player5 = new DemoPlayer { Id = "Player5", Name = "xCool", Icon = Assets.Sprites["ProfilePicture5"] };
+            Player6 = new DemoPlayer { Id = "Player6", Name = "pking1", Icon = Assets.Sprites["ProfilePicture6"] };
+            Player7 = new DemoPlayer { Id = "Player7", Name = "pjkminCoo", Icon = Assets.Sprites["ProfilePicture7"] };
+            Player8 = new DemoPlayer { Id = "Player8", Name = "Machin1st", Icon = Assets.Sprites["ProfilePicture1"] };
+            Player9 = new DemoPlayer { Id = "Player9", Name = "DWerck16", Icon = Assets.Sprites["DefaultProfilePicture"] };
+            Player10 = new DemoPlayer { Id = "Player10", Name = "Pfauxhypocricy", Icon = Assets.Sprites["ProfilePicture1"] };
+            Player11 = new DemoPlayer { Id = "Player11", Name = "Bananaman13", Icon = Assets.Sprites["ProfilePicture2"] };
+            Player12 = new DemoPlayer { Id = "Player12", Name = "Opwiz", Icon = Assets.Sprites["ProfilePicture3"] };
+            Player13 = new DemoPlayer { Id = "Player13", Name = "afauxicy", Icon = Assets.Sprites["ProfilePicture4"] };
+            Reset();
+        }
+
+        #endregion
+
+        #region Methods
+
+        public override void Reset()
+        {
+            base.Reset();
+            AddRange(new List<DemoPlayer> { Player1, Player2, Player3, Player4, Player5, Player6, Player7, Player8, Player9, Player10, Player11, Player12, Player13 });
         }
 
         #endregion

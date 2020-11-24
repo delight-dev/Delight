@@ -1751,7 +1751,7 @@ namespace Delight.Editor.Parser
         /// Gets binding source properties.
         /// </summary>
         public static void GetBindingSourceProperties(string fileName, TemplateItemInfo ti, ViewObject viewObject, List<TemplateItemInfo> templateItems, ViewDeclaration childViewDeclaration, PropertyBinding propertyBinding, out List<string> sourceBindingPathObjects, out List<string> convertedSourceProperties, out List<string> sourceProperties, bool isRuntime)
-        {  
+        {
             sourceBindingPathObjects = new List<string>();
             convertedSourceProperties = new List<string>();
             sourceProperties = new List<string>();
@@ -1979,7 +1979,7 @@ namespace Delight.Editor.Parser
 
                     var dependencyPropertyName = string.Format("{0}.{1}", childViewObject.TypeName, property.Declaration.PropertyName + "Property");
                     var valueSetter = String.Format("x => {0}.{1} = x", childIdVar, property.Declaration.PropertyName);
-                    var interpolator = String.Format("{0}.Interpolator", typeValueConverter.GetType().FullName);
+                    var interpolator = String.Format("{0}.Interpolator", typeValueConverter.GetType().TypeName());
                     var valueGetter = String.Format("() => {0}.{1}", childIdVar, property.Declaration.PropertyName);
                     var notifyPropertyChanged = String.Format("() => {0}.NotifyPropertyChanged({1})", dependencyPropertyName, childIdVar);
 
@@ -2869,10 +2869,11 @@ namespace Delight.Editor.Parser
             sb.AppendLine("    public partial class {0}Data : DataProvider<{0}>", modelObject.Name);
             sb.AppendLine("    {");
 
+            var config = MasterConfig.GetInstance();
+            List<string> addedItems = null; 
             if (modelObject.Data.Any())
             {
-                var config = MasterConfig.GetInstance();
-
+                addedItems = new List<string>();
                 sb.AppendLine("        #region Fields");
                 sb.AppendLine();
 
@@ -2898,13 +2899,13 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("        #endregion");
                 sb.AppendLine();
 
-
                 // generate data inserts
                 sb.AppendLine("        #region Constructor");
                 sb.AppendLine();
 
                 sb.AppendLine("        public {0}Data()", modelObject.Name);
                 sb.AppendLine("        {");
+
 
                 foreach (var modelData in modelObject.Data)
                 {
@@ -2955,19 +2956,31 @@ namespace Delight.Editor.Parser
                         sb.AppendLine("            {0} = {1};", modelId, newModel);
                     }
 
-                    sb.AppendLine("            Add({0});", hasId ? modelId : newModel);
+                    addedItems.Add(hasId ? modelId : newModel);
                 }
 
+                sb.AppendLine("            Reset();");
                 sb.AppendLine("        }");
                 sb.AppendLine();
 
                 sb.AppendLine("        #endregion");
             }
 
+            sb.AppendLine();
+            sb.AppendLine("        #region Methods");
+            sb.AppendLine();
+
+            if (addedItems != null)
+            {
+                sb.AppendLine("        public override void Reset()");
+                sb.AppendLine("        {");
+                sb.AppendLine("            base.Reset();");
+                sb.AppendLine("            AddRange(new List<{0}> {{ {1} }});", modelObject.Name, String.Join(", ", addedItems));
+                sb.AppendLine("        }");
+                sb.AppendLine();
+            }
+
             var sb2 = new StringBuilder();
-            if (modelObject.Data.Any()) sb2.AppendLine();
-            sb2.AppendLine("        #region Methods");
-            sb2.AppendLine();
             bool referencedInOtherModels = false;
 
             // check if this data model is referenced in other models, if so add Get methods retrieve a collection subset
@@ -3010,11 +3023,10 @@ namespace Delight.Editor.Parser
                 sb2.AppendLine();
             }
 
-
-            sb2.AppendLine("        #endregion");
-
             if (referencedInOtherModels)
                 sb.Append(sb2.ToString());
+
+            sb.AppendLine("        #endregion");
 
             // TODO generate Get methods by checking if any other model references this one 
 

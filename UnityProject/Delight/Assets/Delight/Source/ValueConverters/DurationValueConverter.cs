@@ -10,7 +10,7 @@ namespace Delight
     /// <summary>
     /// Duration value converter.
     /// </summary>
-    public class DurationValueConverter : ValueConverter<float>
+    public class DurationValueConverter : ValueConverter<Duration>
     {
         #region Methods
 
@@ -20,46 +20,24 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var convertedValue = Convert(stringValue);
-            return convertedValue.ToString(CultureInfo.InvariantCulture) + "f";
+            return convertedValue.Value.ToString(CultureInfo.InvariantCulture) + "f";
         }
 
         /// <summary>
         /// Converts value from string.
         /// </summary>
-        public override float Convert(string stringValue)
+        public override Duration Convert(string stringValue)
         {
-            float duration = 0;
-            string trimmedValue = stringValue.Trim();
-            if (trimmedValue.EndsWith("ms", StringComparison.OrdinalIgnoreCase))
-            {
-                int lastIndex = trimmedValue.LastIndexOf("ms", StringComparison.OrdinalIgnoreCase);
-                duration = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) / 1000f;
-            }
-            else if (trimmedValue.EndsWith("s", StringComparison.OrdinalIgnoreCase))
-            {
-                int lastIndex = trimmedValue.LastIndexOf("s", StringComparison.OrdinalIgnoreCase);
-                duration = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture);
-            }
-            else if (trimmedValue.EndsWith("min", StringComparison.OrdinalIgnoreCase))
-            {
-                int lastIndex = trimmedValue.LastIndexOf("min", StringComparison.OrdinalIgnoreCase);
-                duration = System.Convert.ToSingle(trimmedValue.Substring(0, lastIndex), CultureInfo.InvariantCulture) * 60f;
-            }
-            else
-            {
-                duration = System.Convert.ToSingle(trimmedValue, CultureInfo.InvariantCulture);
-            }
-
-            return duration;
+            return Duration.Parse(stringValue);
         } 
 
         /// <summary>
         /// Converts value from object.
         /// </summary>
-        public override float Convert(object objectValue)
+        public override Duration Convert(object objectValue)
         {
             if (objectValue == null)
-                return default(float);
+                return Duration.Default;
 
             return System.Convert.ToSingle(objectValue, CultureInfo.InvariantCulture);            
         }
@@ -67,7 +45,7 @@ namespace Delight
         /// <summary>
         /// Interpolates value for type.
         /// </summary>
-        public override float Interpolate(float from, float to, float weight)
+        public override Duration Interpolate(Duration from, Duration to, float weight)
         {
             return Interpolator(from, to, weight);
         }
@@ -75,7 +53,7 @@ namespace Delight
         /// <summary>
         /// Interpolates value for type.
         /// </summary>
-        public static float Interpolator(float from, float to, float weight)
+        public static Duration Interpolator(Duration from, Duration to, float weight)
         {
             return Lerp(from, to, weight);
         }

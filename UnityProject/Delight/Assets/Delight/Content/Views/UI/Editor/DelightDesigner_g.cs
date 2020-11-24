@@ -1882,7 +1882,7 @@ namespace Delight
                     _delightDesignerList1ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerList1ScrollableRegion.Name = "DelightDesignerList1ScrollableRegion";
-                    _delightDesignerList1ScrollableRegion.LineNumber = 27;
+                    _delightDesignerList1ScrollableRegion.LineNumber = 28;
                     _delightDesignerList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerList1ScrollableRegion, DelightDesignerList1ScrollableRegionContentRegion);
@@ -2285,7 +2285,7 @@ namespace Delight
                     _delightDesignerViewMenuComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerViewMenuComboBoxListScrollableRegion.Name = "DelightDesignerViewMenuComboBoxListScrollableRegion";
-                    _delightDesignerViewMenuComboBoxListScrollableRegion.LineNumber = 27;
+                    _delightDesignerViewMenuComboBoxListScrollableRegion.LineNumber = 28;
                     _delightDesignerViewMenuComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerViewMenuComboBoxListScrollableRegion, DelightDesignerViewMenuComboBoxListScrollableRegionContentRegion);
@@ -2999,7 +2999,7 @@ namespace Delight
                     _delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion = new Template(XmlEditorTemplates.XmlEditorAutoCompleteOptionsListScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion.Name = "DelightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion";
-                    _delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 27;
+                    _delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 28;
                     _delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_delightDesignerXmlEditorAutoCompleteOptionsListScrollableRegion, DelightDesignerXmlEditorAutoCompleteOptionsListScrollableRegionContentRegion);
@@ -3806,7 +3806,7 @@ namespace Delight
                     _delightDesignerList2ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _delightDesignerList2ScrollableRegion.Name = "DelightDesignerList2ScrollableRegion";
-                    _delightDesignerList2ScrollableRegion.LineNumber = 27;
+                    _delightDesignerList2ScrollableRegion.LineNumber = 28;
                     _delightDesignerList2ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.HasInertiaProperty.SetDefault(_delightDesignerList2ScrollableRegion, false);

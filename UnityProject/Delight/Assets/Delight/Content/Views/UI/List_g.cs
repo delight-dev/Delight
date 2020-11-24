@@ -66,6 +66,7 @@ namespace Delight
             dependencyProperties.Add(PageNavigationGroupOrientationProperty);
             dependencyProperties.Add(PageNavigationGroupSpacingProperty);
             dependencyProperties.Add(ShowNavigationButtonsProperty);
+            dependencyProperties.Add(CascadingAnimationDelayProperty);
             dependencyProperties.Add(ScrollableRegionProperty);
             dependencyProperties.Add(ScrollableRegionTemplateProperty);
         }
@@ -328,6 +329,13 @@ namespace Delight
         {
             get { return ShowNavigationButtonsProperty.GetValue(this); }
             set { ShowNavigationButtonsProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.Duration> CascadingAnimationDelayProperty = new DependencyProperty<Delight.Duration>("CascadingAnimationDelay");
+        public Delight.Duration CascadingAnimationDelay
+        {
+            get { return CascadingAnimationDelayProperty.GetValue(this); }
+            set { CascadingAnimationDelayProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<ScrollableRegion> ScrollableRegionProperty = new DependencyProperty<ScrollableRegion>("ScrollableRegion");
@@ -2751,6 +2759,7 @@ namespace Delight
                     Delight.List.PageNavigationGroupOrientationProperty.SetDefault(_list, Delight.ElementOrientation.Horizontal);
                     Delight.List.PageNavigationGroupSpacingProperty.SetDefault(_list, new ElementSize(2f, ElementSizeUnit.Pixels));
                     Delight.List.ShowNavigationButtonsProperty.SetDefault(_list, Delight.NavigationButtonsVisibility.NextPrevious);
+                    Delight.List.CascadingAnimationDelayProperty.SetDefault(_list, 0f);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;
@@ -2771,7 +2780,7 @@ namespace Delight
                     _listScrollableRegion = new Template(ScrollableRegionTemplates.ScrollableRegion);
 #if UNITY_EDITOR
                     _listScrollableRegion.Name = "ListScrollableRegion";
-                    _listScrollableRegion.LineNumber = 27;
+                    _listScrollableRegion.LineNumber = 28;
                     _listScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.MaskContentProperty.SetDefault(_listScrollableRegion, true);

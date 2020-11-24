@@ -324,6 +324,13 @@ namespace Delight
             set { ComboBoxList.ShowNavigationButtons = value; }
         }
 
+        public readonly static DependencyProperty CascadingAnimationDelayProperty = List.CascadingAnimationDelayProperty;
+        public Delight.Duration CascadingAnimationDelay
+        {
+            get { return ComboBoxList.CascadingAnimationDelay; }
+            set { ComboBoxList.CascadingAnimationDelay = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionMaskContentProperty = List.ScrollableRegionMaskContentProperty;
         public System.Boolean ScrollableRegionMaskContent
         {
@@ -4252,7 +4259,7 @@ namespace Delight
                     _comboBoxComboBoxListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _comboBoxComboBoxListScrollableRegion.Name = "ComboBoxComboBoxListScrollableRegion";
-                    _comboBoxComboBoxListScrollableRegion.LineNumber = 27;
+                    _comboBoxComboBoxListScrollableRegion.LineNumber = 28;
                     _comboBoxComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_comboBoxComboBoxListScrollableRegion, ComboBoxComboBoxListScrollableRegionContentRegion);

@@ -700,7 +700,7 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public virtual async Task SetState(string newState, bool animate = true)
+        public virtual async Task SetState(string newState, bool animate = true, float initialDelay = 0)
         {
             if (newState.IEquals(_previousState))
                 return;
@@ -785,7 +785,7 @@ namespace Delight
                 // start any state animators applicable to current state transition
                 if (animate && triggeredStateAnimations != null)
                 {
-                    await Task.WhenAll(triggeredStateAnimations.Select(x => x.Animate(LayoutRoot)));
+                    await Task.WhenAll(triggeredStateAnimations.Select(x => x.Animate(LayoutRoot, initialDelay)));
                 }
             }
         }

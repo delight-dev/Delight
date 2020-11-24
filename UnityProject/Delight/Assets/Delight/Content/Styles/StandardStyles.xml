@@ -9,6 +9,9 @@
   <ListItem Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="#ef706a"
             Highlighted-BackgroundColor="#d5d4d4" Pressed-BackgroundColor="#ef706a"
             Alternate-BackgroundColor="Gray95" />
+  <ListItem Style="Clear" BackgroundColor="Clear" Selected-BackgroundColor="Clear"
+            Highlighted-BackgroundColor="Clear" Pressed-BackgroundColor="Clear"
+            Alternate-BackgroundColor="Clear" />
   <ListItem Style="UnselectableListItem" Breadth="30" BackgroundColor="Clear" Selected-BackgroundColor="Clear"
             Highlighted-BackgroundColor="Clear" Pressed-BackgroundColor="Clear"
             Alternate-BackgroundColor="Clear" />
@@ -73,4 +76,29 @@
     </StateAnimation>
   </StateAnimations>
 
+  <ListItem Style="SwipeItem" StateAnimations="ListItemSwipe" Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%" IsVisible="True" Unlisted-IsVisible="False" />
+  <ListItem Style="ListExampleItem" BasedOn="Clear" StateAnimations="ListItemSwipe" Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%" IsVisible="True" Unlisted-IsVisible="False"
+            RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" />
+  <StateAnimations Id="ListItemSwipe">
+    <!-- Called when item is added -->
+    <StateAnimation From="Unlisted" To="Default">
+      <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="Scale" Duration="2850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="IsVisible" Duration="2850ms" EasingFunction="FlipStart" />
+      <Animate Property="RaycastBlockMode" Duration="2850ms" EasingFunction="FlipEnd" />
+    </StateAnimation>
+
+    <!-- Called when item is removed -->
+    <StateAnimation From="Default" To="Unlisted">
+      <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="Scale" Duration="2850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="IsVisible" Duration="2850ms" EasingFunction="FlipEnd" />
+      <Animate Property="RaycastBlockMode" Duration="2850ms" EasingFunction="FlipStart" />
+    </StateAnimation>
+  </StateAnimations>
+  <Button Style="RoundedButton" BackgroundSprite="RoundedSquareFull@128px" BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal"
+          Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
+          Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="30" FontSize="16"
+          Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d"
+          StateAnimations="FadeInOutHighlighted" />
 </StandardStyle> 

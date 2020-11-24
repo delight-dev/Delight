@@ -23,7 +23,8 @@
       PageNavigationGroupAlignment="t:ElementAlignment = Bottom"
       PageNavigationGroupOrientation="t:ElementOrientation = Horizontal"
       PageNavigationGroupSpacing="t:ElementSize = 2"
-      ShowNavigationButtons="t:NavigationButtonsVisibility = True"> 
+      ShowNavigationButtons="t:NavigationButtonsVisibility = True"
+      CascadingAnimationDelay="t:Duration = 0"> 
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"
                     AutoSizeContentRegion="False">
   </ScrollableRegion> 

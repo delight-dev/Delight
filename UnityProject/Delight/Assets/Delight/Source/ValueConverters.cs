@@ -101,9 +101,11 @@ namespace Delight
             Converters.Add("TMPro.FontStyles", new EnumValueConverter<TMPro.FontStyles>());
             Converters.Add("Delight.RowDefinitions", new RowDefinitionsValueConverter());
             Converters.Add("Delight.ColumnDefinitions", new ColumnDefinitionsValueConverter());
-            Converters.Add("Delight.CellIndex", new CellIndexValueConverter());
+            Converters.Add("Delight.CellIndex", new CellIndexValueConverter());            
             Converters.Add("CellIndex", new CellIndexValueConverter());
             Converters.Add("ScrollbarVisibilityConverter", new ScrollbarVisibilityConverter());
+            Converters.Add("Delight.Duration", new DurationValueConverter());
+            Converters.Add("Duration", new DurationValueConverter());
         }
 
         #endregion

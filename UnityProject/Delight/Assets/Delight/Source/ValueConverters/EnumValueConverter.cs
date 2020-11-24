@@ -50,6 +50,22 @@ namespace Delight
             return Convert(objectValue.ToString());
         }
 
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public override T Interpolate(T from, T to, float weight)
+        {
+            return Interpolator(from, to, weight);
+        }
+
+        /// <summary>
+        /// Interpolates value for type.
+        /// </summary>
+        public static T Interpolator(T from, T to, float weight)
+        {
+            return weight < 1f ? from : to;
+        }
+
         #endregion
     }
 }

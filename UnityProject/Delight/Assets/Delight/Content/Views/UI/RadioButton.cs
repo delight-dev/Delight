@@ -142,14 +142,14 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override async Task SetState(string state, bool animate = true)
+        public override async Task SetState(string state, bool animate = true, float initialDelay = 0)
         {
             if (state.IEquals(_previousState))
                 return;
 
-            RadioButtonImageView.SetState(state, animate);
-            RadioButtonLabel.SetState(state, animate);
-            await base.SetState(state, animate);
+            RadioButtonImageView.SetState(state, animate, initialDelay);
+            RadioButtonLabel.SetState(state, animate, initialDelay);
+            await base.SetState(state, animate, initialDelay);
         }
 
         /// <summary>

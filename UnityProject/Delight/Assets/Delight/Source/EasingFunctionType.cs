@@ -162,6 +162,16 @@ namespace Delight
         /// <summary>
         /// Back ease in and out function.
         /// </summary>
-        BackEaseInOut = 30
+        BackEaseInOut = 30,
+
+        /// <summary>
+        /// Flip the value at the end.
+        /// </summary>
+        FlipEnd = 31,
+
+        /// <summary>
+        /// Flip the value at the beginning.
+        /// </summary>
+        FlipStart = 32            
     }
 }

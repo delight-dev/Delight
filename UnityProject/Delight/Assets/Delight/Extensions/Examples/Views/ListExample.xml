@@ -1,0 +1,23 @@
+<ListExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" SelectedPlayer="t:DemoPlayer">  
+  <List Items="{player in @DemoPlayers}" SelectedItem="{SelectedPlayer}" Spacing="5" CascadingAnimationDelay="50ms">
+    <ListItem Style="ListExampleItem" Size="180,43">
+      <Region Size="180,43">
+        <Image Size="43" Sprite="CircleFull@512px" Alignment="Left" ListItem.SetListItemState="True" Highlighted-Color="#f679fe" Selected-Color="#d919e0" />
+        <Image Size="43" Sprite="CircleFull@512px" Alignment="Right" ListItem.SetListItemState="True" Highlighted-Color="#f679fe" Selected-Color="#d919e0" />
+        <Region Margin="21.5,0,21.5,0" BackgroundColor="White" ListItem.SetListItemState="True" Highlighted-BackgroundColor="#f679fe" Selected-BackgroundColor="#d919e0">
+          <Label Text="{player.Name}" Offset="20,0,0,0" FontColor="Black" ListItem.SetListItemState="True" Selected-FontColor="White" />
+        </Region>
+        <Mask Size="35,35" BackgroundSprite="CircleFull@512px" Alignment="Left" Offset="5,0,0,0">
+          <Image Sprite="{player.Icon}" Size="35" Offset="0,0,0,0" PreserveAspect="True" />
+        </Mask>
+      </Region>
+    </ListItem>
+  </List>  
+  
+  <Group Alignment="Left" Spacing="5" Offset="10,0,0,0">
+    <Button Style="RoundedButton" Text="Add" Width="150" Click="Add" />
+    <Button Style="RoundedButton" Text="Remove Selected" Width="150" Click="$ Models.DemoPlayers.Remove(SelectedPlayer)" />
+    <Button Style="RoundedButton" Text="Clear" Width="150" Click="$ Models.DemoPlayers.Clear()" />
+    <Button Style="RoundedButton" Text="Reset" Width="150" Click="$ Models.DemoPlayers.Reset()" />
+  </Group> 
+</ListExample>

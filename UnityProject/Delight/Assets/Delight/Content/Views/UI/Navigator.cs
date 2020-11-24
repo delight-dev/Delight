@@ -187,17 +187,23 @@ namespace Delight
             // load active view if it hasn't been loaded
             if (ActiveView != null)
             {
-                if (!ActiveView.IsLoaded)
+                if (SwitchMode != SwitchMode.Manual)
                 {
-                    ActiveView.Load();
+                    if (!ActiveView.IsLoaded)
+                    {
+                        ActiveView.Load();
+                    }
+
+                    if (!ActiveView.IsActive)
+                    {
+                        ActiveView.IsActive = true;
+                    }
                 }
 
-                if (!ActiveView.IsActive)
+                if (ActiveView.IsLoaded)
                 {
-                    ActiveView.IsActive = true;
+                    ActiveView.Setup(null);
                 }
-
-                ActiveView.Setup(null);
             }
         }
 
@@ -276,7 +282,7 @@ namespace Delight
                         break;
 
                     case NavigationTransition.Pop:
-                        await ActiveView.SetState("Pushed");
+                        await ActiveView.SetState("Pushed", false);
                         transitionTasks.Add(ActiveView.SetState(DefaultStateName));
                         break;
 

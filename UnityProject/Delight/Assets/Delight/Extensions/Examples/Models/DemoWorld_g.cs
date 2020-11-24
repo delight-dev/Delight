@@ -34,6 +34,10 @@ namespace Delight
 
     public partial class DemoWorldData : DataProvider<DemoWorld>
     {
+
+        #region Methods
+
+        #endregion
     }
 
     public static partial class Models

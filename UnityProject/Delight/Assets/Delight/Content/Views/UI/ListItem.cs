@@ -421,7 +421,7 @@ namespace Delight
         /// <summary>
         /// Sets state.
         /// </summary>
-        public override async Task SetState(string newState, bool animate = true)
+        public override async Task SetState(string newState, bool animate = true, float initialDelay = 0)
         {
             if (newState.IEquals(_previousState))
                 return;
@@ -434,10 +434,10 @@ namespace Delight
                 var view = kv.Key as View;
                 if (view != null)
                 {
-                    view.SetState(newState, animate);
+                    view.SetState(newState, animate, initialDelay);
                 }
             }
-            await base.SetState(newState, animate);
+            await base.SetState(newState, animate, initialDelay);
         }
 
         #endregion

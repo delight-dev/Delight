@@ -114,11 +114,11 @@ namespace Delight
                 _elapsedTime + deltaTime;
 
             // start animation once passed startOffset
-            if (!IsReversing && _elapsedTime < StartOffset)
+            if (!IsReversing && _elapsedTime < ActualStartOffset)
                 return;
 
             // clamp elapsed time to max duration
-            float t = IsReversing ? _elapsedTime.Clamp(0, Duration) : (_elapsedTime - StartOffset).Clamp(0, Duration);
+            float t = IsReversing ? _elapsedTime.Clamp(0, Duration) : (_elapsedTime - ActualStartOffset).Clamp(0, Duration);
             float weight = Duration > 0 ? EasingFunction(t / Duration) : (IsReversing ? 0f : 1f);
 
             T interpolatedValue = default(T);
@@ -191,6 +191,7 @@ namespace Delight
         public string ToState;
         public float Duration; // duration in seconds
         public float StartOffset;
+        public float InitialDelay;
         public bool AutoReset;
         public bool AutoReverse;
         public float ReverseSpeed;
@@ -216,6 +217,14 @@ namespace Delight
         protected float _elapsedTime;
 
         protected TaskCompletionSource<bool> _taskCompletionSource;
+
+        public float ActualStartOffset
+        {
+            get
+            {
+                return StartOffset + InitialDelay;
+            }
+        }
 
         #endregion
 
@@ -250,7 +259,7 @@ namespace Delight
         /// <summary>
         /// Does the animation.
         /// </summary>
-        public Task Animate(LayoutRoot layoutRoot)
+        public Task Animate(LayoutRoot layoutRoot, float initialDelay)
         {
             if (!IsCompleted)
             {
@@ -258,6 +267,7 @@ namespace Delight
             }
 
             _taskCompletionSource = new TaskCompletionSource<bool>();
+            InitialDelay = initialDelay;
 
             layoutRoot.RegisterAnimator(this);
             StartAnimation();

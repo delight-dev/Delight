@@ -62,6 +62,7 @@ namespace Delight
             ViewActivators.Add("GroupExample", (x, y, z, w, a) => new GroupExample(x, y, z, w, a));
             ViewActivators.Add("InputFieldExample", (x, y, z, w, a) => new InputFieldExample(x, y, z, w, a));
             ViewActivators.Add("LevelSelectExample", (x, y, z, w, a) => new LevelSelectExample(x, y, z, w, a));
+            ViewActivators.Add("ListExample", (x, y, z, w, a) => new ListExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuExample", (x, y, z, w, a) => new MainMenuExample(x, y, z, w, a));
             ViewActivators.Add("NavigatorExample", (x, y, z, w, a) => new NavigatorExample(x, y, z, w, a));
             ViewActivators.Add("OnDemandLoadingExample", (x, y, z, w, a) => new OnDemandLoadingExample(x, y, z, w, a));
@@ -119,6 +120,7 @@ namespace Delight
             ViewTypes.Add("GroupExample", typeof(GroupExample));
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("LevelSelectExample", typeof(LevelSelectExample));
+            ViewTypes.Add("ListExample", typeof(ListExample));
             ViewTypes.Add("MainMenuExample", typeof(MainMenuExample));
             ViewTypes.Add("NavigatorExample", typeof(NavigatorExample));
             ViewTypes.Add("OnDemandLoadingExample", typeof(OnDemandLoadingExample));

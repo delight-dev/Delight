@@ -86,6 +86,10 @@ namespace Delight
                     return BackEaseOut;
                 case EasingFunctionType.BackEaseInOut:
                     return BackEaseInOut;
+                case EasingFunctionType.FlipEnd:
+                    return FlipEnd;
+                case EasingFunctionType.FlipStart:
+                    return FlipStart;
                 default:
                     return Linear;
             }
@@ -104,6 +108,22 @@ namespace Delight
             {
                 return Linear;
             }
+        }
+
+        /// <summary>
+        /// Value 1 if p >= 1 otherwise 0.
+        /// </summary>
+        public static float FlipEnd(float p)
+        {
+            return p >= 1 ? 1 : 0;
+        }
+
+        /// <summary>
+        /// Value 0 if p <= 0 otherwise 1.
+        /// </summary>
+        public static float FlipStart(float p)
+        {
+            return  p <= 0 ? 0 : 1;
         }
 
         /// <summary>

@@ -86,7 +86,7 @@ namespace Delight
         /// <summary>
         /// Generates views from data in collection. 
         /// </summary>
-        protected void CreateItems()
+        protected async void CreateItems()
         {
             if (Items == null)
                 return;
@@ -95,10 +95,8 @@ namespace Delight
 #pragma warning disable CS4014
             Items.LoadData();
 #pragma warning restore CS4014
-            foreach (var item in Items)
-            {
-                CreateListItem(item);
-            }
+            
+            await CreateListItems(Items);
 
             // update layout and notify parents if size has changed
             if (UpdateLayout(false))
@@ -393,10 +391,7 @@ namespace Delight
             {
                 case CollectionChangeAction.AddRange:
                     var rangeArgs = e as CollectionChangedRangeEventArgs;
-                    foreach (var item in rangeArgs.Items)
-                    {
-                        CreateListItem(item);
-                    }
+                    CreateListItems(rangeArgs.Items);
                     updateLayout = true;
                     break;
 
@@ -613,10 +608,12 @@ namespace Delight
             if (newItemsCount > childCount)
             {
                 // old list smaller than new - add items
+                var newItems = new List<object>();
                 for (int i = childCount; i < newItemsCount; ++i)
                 {
-                    CreateListItem(Items.GetGeneric(i));
+                    newItems.Add(Items.GetGeneric(i));                    
                 }
+                CreateListItems(newItems);
             }
             else if (newItemsCount < childCount)
             {
@@ -793,66 +790,99 @@ namespace Delight
         }
 
         /// <summary>
+        /// Called dynamic list items are to be generated.
+        /// </summary>
+        protected async void CreateListItem(object item, bool animate = true)
+        {
+            await CreateListItems(new List<object> { item });
+        }
+
+        /// <summary>
         /// Called when a new dynamic list item is to be generated.
         /// </summary>
-        protected void CreateListItem(object item)
+        protected async Task CreateListItems(IEnumerable<object> items, bool animate = true)
         {
-            string templateId = TemplateSelector?.Invoke(item) as string;
-            if (IsVirtualized)
+            List<ListItem> addedItems = new List<ListItem>();
+            foreach (var item in items)
             {
-                // add virtual item
-                VirtualItem virtualItem = null;
-                if (VirtualItemGetter.Method != null)
+                string templateId = TemplateSelector?.Invoke(item) as string;
+                if (IsVirtualized)
                 {
-                    virtualItem = VirtualItemGetter.Invoke(item) as VirtualItem;
-                }
-                else
-                {
-                    var template = GetContentTemplate(null, templateId);
-                    if (template != null)
+                    // add virtual item
+                    VirtualItem virtualItem = null;
+                    if (VirtualItemGetter.Method != null)
                     {
-                        _contentTemplateVirtualItem.TryGetValue(template, out virtualItem);
+                        virtualItem = VirtualItemGetter.Invoke(item) as VirtualItem;
                     }
-                }
-
-                if (virtualItem != null)
-                {
-                    var newVirtualItem = new VirtualItem(virtualItem.Width, virtualItem.Height, virtualItem.ContentTemplate);
-                    if (newVirtualItem.ContentTemplate == null)
+                    else
                     {
                         var template = GetContentTemplate(null, templateId);
-                        newVirtualItem.ContentTemplate = template;
+                        if (template != null)
+                        {
+                            _contentTemplateVirtualItem.TryGetValue(template, out virtualItem);
+                        }
                     }
-                    _virtualItems.Add(newVirtualItem);
-                    _indexOfItem.Add(item, _virtualItems.Count - 1);
 
-                    newVirtualItem.Item = item;
-                    newVirtualItem.IsAlternate = IsOdd(_virtualItems.Count - 1);
-                    newVirtualItem.Index = _virtualItems.Count - 1;
+                    if (virtualItem != null)
+                    {
+                        var newVirtualItem = new VirtualItem(virtualItem.Width, virtualItem.Height, virtualItem.ContentTemplate);
+                        if (newVirtualItem.ContentTemplate == null)
+                        {
+                            var template = GetContentTemplate(null, templateId);
+                            newVirtualItem.ContentTemplate = template;
+                        }
+                        _virtualItems.Add(newVirtualItem);
+                        _indexOfItem.Add(item, _virtualItems.Count - 1);
+
+                        newVirtualItem.Item = item;
+                        newVirtualItem.IsAlternate = IsOdd(_virtualItems.Count - 1);
+                        newVirtualItem.Index = _virtualItems.Count - 1;
+                    }
+                    continue;
                 }
-                return;
-            }
 
-            var listItem = base.CreateItem(item, null, templateId) as ListItem;
-            if (listItem == null)
-                return;
+                var listItem = base.CreateItem(item, null, templateId) as ListItem;
+                if (listItem == null)
+                    continue;
 
-            listItem.Load();
-
-            UnblockListItemDragEvents(listItem);
-
-            if (item != null)
-            {
-                if (!_presentedItems.ContainsKey(item))
-                {
-                    _presentedItems.Add(item, listItem);
-                }
+                addedItems.Add(listItem);
 
                 // set item data on list item for easy reference
                 listItem.Item = item;
-                listItem.IsAlternate = IsOdd(_presentedItems.Count - 1);
-                listItem.ContentTemplateData.ZeroIndex = _presentedItems.Count - 1;
             }
+
+            if (!addedItems.Any())
+            {
+                return;
+            }
+
+            // load the items asynchronously
+            await Task.WhenAll(addedItems.Select(x => x.LoadAsync()));
+            float cascadingDelay = 0;
+            foreach (var listItem in addedItems)
+            {
+                UnblockListItemDragEvents(listItem);
+                var item = listItem.Item;
+                if (item != null)
+                {
+                    if (!_presentedItems.ContainsKey(item))
+                    {
+                        _presentedItems.Add(item, listItem);
+                    }
+
+                    listItem.IsAlternate = IsOdd(_presentedItems.Count - 1);
+                    listItem.ContentTemplateData.ZeroIndex = _presentedItems.Count - 1;
+                }
+
+                // TODO here we might want to UpdateLayout before starting animations, at this point I don't believe we need to await the animations
+                await listItem.SetState("Unlisted", false);
+
+                // set state
+                listItem.SetState(DefaultStateName, animate, cascadingDelay);
+                cascadingDelay += CascadingAnimationDelay;
+            }
+
+            // TODO to prevent flickering we might want to set visibility to false and set it to true here after every item is loaded and the animation should set it to visible as well
         }
 
         /// <summary>

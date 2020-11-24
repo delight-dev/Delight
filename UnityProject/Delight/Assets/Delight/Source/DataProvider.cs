@@ -40,6 +40,14 @@ namespace Delight
             PersistenceManager.Save(this);
         }
 
+        /// <summary>
+        /// Restores the data-provider to its initial state that contains only static data.
+        /// </summary>
+        public virtual void Reset()
+        {
+            Clear();
+        }
+
         #endregion
     }
 

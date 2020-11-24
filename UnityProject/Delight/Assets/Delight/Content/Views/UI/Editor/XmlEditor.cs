@@ -812,7 +812,6 @@ namespace Delight
                         string viewName = string.Empty;
                         int indentLevel = 0;
                         bool hasGottenIndentLevel = false;
-                        bool addIndentation = false;
 
                         if (_caretElement == XmlSyntaxElement.PropertyName || _caretElement == XmlSyntaxElement.ViewName)
                         {
@@ -838,10 +837,13 @@ namespace Delight
                                     indentLevel = GetIndentLevelOfNextLine(out viewName);
                                     hasGottenIndentLevel = true;
 
-                                    var spacesStr = new string(' ', indentLevel);
+                                    int currentIdentLevel = indentLevel - SpacesPerTab;
+                                    if (currentIdentLevel < 0)
+                                        currentIdentLevel = 0;
+
+                                    var spacesStr = new string(' ', currentIdentLevel);
                                     _lines.InsertOrAdd(_caretY + 1, string.Format("{0}</{1}>", spacesStr, viewName));
                                     OnLineAdded(_caretY + 1);
-                                    addIndentation = true;
                                     needReparse = true;
                                 }
                             }
@@ -862,8 +864,6 @@ namespace Delight
                         {
                             _lines.InsertOrAdd(_caretY + 1, string.Empty);
                             OnLineAdded(_caretY + 1);
-                            if (addIndentation)
-                                indentLevel += SpacesPerTab;
                             _lines[_caretY + 1] += new string(' ', indentLevel);
                             _caretX = indentLevel;
                         }
