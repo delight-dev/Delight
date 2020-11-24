@@ -70,8 +70,6 @@ namespace Delight
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
             ViewActivators.Add("TestExample", (x, y, z, w, a) => new TestExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuDemoScene", (x, y, z, w, a) => new MainMenuDemoScene(x, y, z, w, a));
-            ViewActivators.Add("DraggableRegion", (x, y, z, w, a) => new DraggableRegion(x, y, z, w, a));
-            ViewActivators.Add("DraggableThing", (x, y, z, w, a) => new DraggableThing(x, y, z, w, a));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
@@ -129,8 +127,6 @@ namespace Delight
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
             ViewTypes.Add("TestExample", typeof(TestExample));
             ViewTypes.Add("MainMenuDemoScene", typeof(MainMenuDemoScene));
-            ViewTypes.Add("DraggableRegion", typeof(DraggableRegion));
-            ViewTypes.Add("DraggableThing", typeof(DraggableThing));
 
             AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));
