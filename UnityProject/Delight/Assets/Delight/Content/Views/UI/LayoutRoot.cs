@@ -17,7 +17,7 @@ namespace Delight
 
         private HashSet<ChangeHandler> _registeredChangeHandlers = new HashSet<ChangeHandler>();
         private List<ChangeHandler> _changeHandlers = new List<ChangeHandler>();
-        private HashSet<Animator> _stateAnimators = new HashSet<Animator>();
+        private HashSet<Animator> _animators = new HashSet<Animator>();
         private List<Animator> _completedAnimators = new List<Animator>();
         private List<KeyValuePair<int, WeakReference<IUpdateable>>> _toBeUpdated = new List<KeyValuePair<int, WeakReference<IUpdateable>>>();
         private HashSet<int> _toBeUpdatedKeys = new HashSet<int>();
@@ -33,11 +33,11 @@ namespace Delight
         {
             base.Update();
 
-            if (_stateAnimators.Count > 0)
+            if (_animators.Count > 0)
             {
                 // update state animations
                 float deltaTime = Time.deltaTime;
-                foreach (var animator in _stateAnimators)
+                foreach (var animator in _animators)
                 {
                     animator.Update(deltaTime);
                     if (animator.IsCompleted)
@@ -50,7 +50,7 @@ namespace Delight
                 {
                     foreach (var animator in _completedAnimators)
                     {
-                        _stateAnimators.Remove(animator);
+                        _animators.Remove(animator);
                     }
                     _completedAnimators.Clear();
                 }
@@ -120,9 +120,9 @@ namespace Delight
         /// <summary>
         /// Registers a state animator to be updated each frame.
         /// </summary>
-        public void RegisterStateAnimator(Animator animator)
+        public void RegisterAnimator(Animator animator)
         {
-            _stateAnimators.Add(animator);
+            _animators.Add(animator);
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Delight
         /// </summary>
         public void UnregisterStateAnimator(Animator animator)
         {
-            _stateAnimators.Remove(animator);
+            _animators.Remove(animator);
         }
 
         /// <summary>

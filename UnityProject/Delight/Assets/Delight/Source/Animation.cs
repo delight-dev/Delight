@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -18,12 +19,9 @@ namespace Delight
         /// <summary>
         /// Starts the animation.
         /// </summary>
-        public void StartAnimation()
+        public Task Animate(LayoutRoot layoutRoot)
         {
-            for (int i = 0; i < Count; ++i)
-            {
-                this[i].StartAnimation();
-            }
+            return Task.WhenAll(this.Select(x => x.Animate(layoutRoot)));
         }
 
         /// <summary>

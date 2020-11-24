@@ -228,62 +228,81 @@ namespace Delight
             if (view == ActiveView)
                 return;
 
+            List<Task> transitionTasks = null;
+            SceneObjectView transitionOutView = null;
             if (ActiveView != null)
             {
+                transitionOutView = ActiveView;
+                transitionTasks = new List<Task>();
+
+                // add transition out task
                 switch (navigationTransition)
                 {
                     case NavigationTransition.Open:
-                        ActiveView.SetState("Closed");
+                        transitionTasks.Add(ActiveView.SetState("Closed"));
                         break;
                     case NavigationTransition.Push:
-                        ActiveView.SetState("Pushed");
+                        transitionTasks.Add(ActiveView.SetState("Pushed"));
                         break;
                     case NavigationTransition.Pop:
-                        ActiveView.SetState("Closed");
+                        transitionTasks.Add(ActiveView.SetState("Closed"));
                         break;
                     case NavigationTransition.Close:
-                        ActiveView.SetState("Closed");
+                        transitionTasks.Add(ActiveView.SetState("Closed"));
                         break;
                 }
-
-                // TODO if animating the below call should be made after the animation is complete
-                //if (SwitchMode == SwitchMode.Load)
-                //{
-                //    ActiveView.Unload();
-                //}
-                //else
-                //{
-                //    ActiveView.IsActive = false;
-                //}
             }
 
             ActiveView = view as SceneObjectView;
-            if (ActiveView == null)
-                return;
-
-            // load/activate view
-            await ActiveView.LoadAsync();
-            ActiveView.IsActive = true;
-            ActiveView.Setup(data);
-
-            // run load animations
-            switch (navigationTransition)
+            if (ActiveView != null)
             {
-                case NavigationTransition.Push:
-                case NavigationTransition.Open:
-                    ActiveView.SetState("Closed", false);
-                    ActiveView.SetState(DefaultStateName);
-                    break;
+                // load/activate view
+                await ActiveView.LoadAsync();
+                ActiveView.IsActive = true;
+                ActiveView.Setup(data);
 
-                case NavigationTransition.Pop:
-                    ActiveView.SetState("Pushed");
-                    ActiveView.SetState(DefaultStateName);
-                    break;
+                if (transitionTasks == null)
+                {
+                    transitionTasks = new List<Task>();
+                }
 
-                default:
-                case NavigationTransition.Close:
-                    break;
-            }      
+                // add transition in task
+                switch (navigationTransition)
+                {
+                    case NavigationTransition.Push:
+                    case NavigationTransition.Open:
+                        await ActiveView.SetState("Closed", false);
+                        transitionTasks.Add(ActiveView.SetState(DefaultStateName));
+                        break;
+
+                    case NavigationTransition.Pop:
+                        await ActiveView.SetState("Pushed");
+                        transitionTasks.Add(ActiveView.SetState(DefaultStateName));
+                        break;
+
+                    default:
+                    case NavigationTransition.Close:
+                        break;
+                }
+            }
+
+            if (transitionTasks != null)
+            {
+                await Task.WhenAll(transitionTasks);
+            }
+
+            // unload/deactivate views that has transitioned out
+            if (transitionOutView != null && SwitchMode != SwitchMode.Manual)
+            {
+                if (SwitchMode == SwitchMode.Load)
+                {
+                    transitionOutView.Unload();
+                }
+                else
+                {
+                    transitionOutView.IsActive = false;
+                }
+            }
         }
 
         /// <summary>

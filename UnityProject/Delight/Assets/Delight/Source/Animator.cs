@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using UnityEngine;
 #endregion
 
@@ -214,6 +215,8 @@ namespace Delight
 
         protected float _elapsedTime;
 
+        protected TaskCompletionSource<bool> _taskCompletionSource;
+
         #endregion
 
         #region Constructor
@@ -242,6 +245,24 @@ namespace Delight
         /// </summary>
         public virtual void Update(float deltaTime)
         {
+        }
+
+        /// <summary>
+        /// Does the animation.
+        /// </summary>
+        public Task Animate(LayoutRoot layoutRoot)
+        {
+            if (!IsCompleted)
+            {
+                CompleteAnimation();
+            }
+
+            _taskCompletionSource = new TaskCompletionSource<bool>();
+
+            layoutRoot.RegisterAnimator(this);
+            StartAnimation();
+
+            return _taskCompletionSource.Task;
         }
 
         /// <summary>
@@ -285,6 +306,11 @@ namespace Delight
 
             // call animation completed event
             OnCompleted();
+            if (_taskCompletionSource != null && !_taskCompletionSource.Task.IsCompleted)
+            {
+                _taskCompletionSource.SetResult(true);
+                _taskCompletionSource = null;
+            }
         }
 
         /// <summary>

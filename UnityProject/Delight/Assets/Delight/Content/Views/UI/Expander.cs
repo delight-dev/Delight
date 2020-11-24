@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Threading.Tasks;
 #endregion
 
 namespace Delight
@@ -244,13 +245,13 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override void SetState(string state, bool animate = true)
+        public override async Task SetState(string state, bool animate = true)
         {
             if (state.IEquals(_previousState))
                 return;
-
-            base.SetState(state, animate);
+            
             _expanderHeader?.SetState(state, animate);
+            await base.SetState(state, animate);
         }
 
         /// <summary>
