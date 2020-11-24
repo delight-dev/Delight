@@ -35,7 +35,7 @@ namespace Delight
 
             if (_animators.Count > 0)
             {
-                // update animations
+                // update state animations
                 float deltaTime = Time.deltaTime;
                 foreach (var animator in _animators)
                 {
@@ -118,7 +118,7 @@ namespace Delight
         }
 
         /// <summary>
-        /// Registers an animator to be updated each frame.
+        /// Registers a state animator to be updated each frame.
         /// </summary>
         public void RegisterAnimator(Animator animator)
         {
@@ -128,7 +128,7 @@ namespace Delight
         /// <summary>
         /// Unregisters an animator to be updated each frame.
         /// </summary>
-        public void UnregisterAnimator(Animator animator)
+        public void UnregisterStateAnimator(Animator animator)
         {
             _animators.Remove(animator);
         }

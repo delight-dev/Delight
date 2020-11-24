@@ -47,4 +47,30 @@
     </StateAnimation>
   </StateAnimations>
 
+  <StateAnimations Id="NavigationTransitionSwipe">
+    <!-- Called when navigating to a page when all pages are closed -->
+    <StateAnimation From="Closed" To="Default">
+      <Animate Property="Offset" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+      <Animate Property="Scale" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+    </StateAnimation>
+
+    <!-- Called when page is pushed on the stack -->
+    <StateAnimation From="Default" To="Pushed">
+      <Animate Property="Offset" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+      <Animate Property="Scale" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+    </StateAnimation>
+
+    <!-- Called when page is popped -->
+    <StateAnimation From="Pushed" To="Default">
+      <Animate Property="Offset" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+      <Animate Property="Scale" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+    </StateAnimation>
+
+    <!-- Called when page is closed -->
+    <StateAnimation From="Default" To="Closed">
+      <Animate Property="Offset" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+      <Animate Property="Scale" Duration="850ms" EasingFunction="QuadraticEaseOut" />
+    </StateAnimation>
+  </StateAnimations>
+
 </StandardStyle> 

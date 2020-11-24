@@ -133,7 +133,7 @@ namespace Delight
             // binding <CheckBox IsChecked="{AutoParse}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "AutoParse" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "AutoParseCheckBox", "IsChecked" }, new List<Func<object>> { () => this, () => AutoParseCheckBox }), () => AutoParseCheckBox.IsChecked = AutoParse, () => AutoParse = AutoParseCheckBox.IsChecked, true));
             Button1 = new Button(this, Group1.Content, "Button1", Button1Template);
-            Button1.Click.RegisterHandler(this, "ParseView");
+            Button1.Click.RegisterHandler(this, "ParseEditedView");
             GridSplitter1 = new GridSplitter(this, Grid1.Content, "GridSplitter1", GridSplitter1Template);
             Grid1.Cell.SetValue(GridSplitter1, new CellIndex(0, 2));
             GridSplitter2 = new GridSplitter(this, Grid1.Content, "GridSplitter2", GridSplitter2Template);

@@ -700,33 +700,33 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public virtual void SetState(string newState)
+        public virtual async Task SetState(string newState, bool animate = true)
         {
             if (newState.IEquals(_previousState))
                 return;
 
-            // handle state animations
-            List<DependencyProperty> animatedProperties = null;
-            if (_stateAnimations != null)
+            if (newState == "Default")
             {
-                // complete any previous state animators if active 
-                foreach (var stateAnimator in _stateAnimations)
-                {
-                    stateAnimator.StopAnimation();
-                    stateAnimator.IsCompleted = true;
-                }
+                newState = DefaultStateName;
+            }
 
-                // start any state animators applicable to current state transition
-                foreach (var stateAnimator in _stateAnimations)
+            // get animated properties
+            List<DependencyProperty> animatedProperties = null;
+            List<StateAnimation> triggeredStateAnimations = null;
+            if (_stateAnimations != null && animate)
+            {
+                foreach (var stateAnimation in _stateAnimations)
                 {
-                    if ((stateAnimator.FromAny || stateAnimator.FromState == _previousState) &&
-                        (stateAnimator.ToAny || stateAnimator.ToState == newState))
+                    if ((stateAnimation.FromAny || stateAnimation.FromState == _previousState) &&
+                        (stateAnimation.ToAny || stateAnimation.ToState == newState))
                     {
-                        foreach (var animator in stateAnimator)
+                        if (triggeredStateAnimations == null)
                         {
-                            animator.StartAnimation();
-                            LayoutRoot.RegisterAnimator(animator);
-
+                            triggeredStateAnimations = new List<StateAnimation>();
+                        }
+                        triggeredStateAnimations.Add(stateAnimation);
+                        foreach (var animator in stateAnimation)
+                        {
                             if (animatedProperties == null)
                             {
                                 animatedProperties = new List<DependencyProperty>();
@@ -759,7 +759,7 @@ namespace Delight
                 for (int i = 0; i < stateChangingProperties.Count; ++i)
                 {
                     var stateChangingProperty = stateChangingProperties[i];
-                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty))
+                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty) && animate)
                         continue;
 
                     stateChangingProperties[i].Load(this);
@@ -770,6 +770,23 @@ namespace Delight
                 // set state
                 _state = newState;
                 _previousState = newState;
+            }
+
+            // start animations
+            if (_stateAnimations != null)
+            {
+                // complete any previous state animators if active 
+                foreach (var stateAnimation in _stateAnimations)
+                {
+                    stateAnimation.StopAnimation();
+                    stateAnimation.IsCompleted = true;
+                }
+
+                // start any state animators applicable to current state transition
+                if (animate && triggeredStateAnimations != null)
+                {
+                    await Task.WhenAll(triggeredStateAnimations.Select(x => x.Animate(LayoutRoot)));
+                }
             }
         }
 

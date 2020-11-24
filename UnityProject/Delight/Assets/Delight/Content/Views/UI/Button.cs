@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -304,13 +305,13 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override void SetState(string state)
+        public override async Task SetState(string state, bool animate = true)
         {
             if (state.IEquals(_previousState))
                 return;
 
-            base.SetState(state);
-            Label.SetState(state);
+            Label.SetState(state, animate);
+            await base.SetState(state, animate);
         }
 
         /// <summary>

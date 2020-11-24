@@ -28,14 +28,14 @@ namespace Delight
             // binding <Label IsActive="{DisplayLabel}">
             Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "DisplayLabel" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "Label", "IsActive" }, new List<Func<object>> { () => this, () => Label }), () => Label.IsActive = DisplayLabel, () => { }, false));
             this.StateAnimations.Clear();
-            var stateAnimation0 = new StateAnimation(AnyStateName, "Highlighted");
-            stateAnimation0.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(this), Button.BackgroundColorProperty, AnyStateName, "Highlighted"));
-            stateAnimation0.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.FontColor = x, () => this.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(this), Button.FontColorProperty, AnyStateName, "Highlighted"));
-            this.StateAnimations.Add(stateAnimation0);
-            var stateAnimation1 = new StateAnimation("Highlighted", DefaultStateName);
-            stateAnimation1.Add(new Animator<UnityEngine.Color>(this, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(this), Button.BackgroundColorProperty, "Highlighted", DefaultStateName));
-            stateAnimation1.Add(new Animator<UnityEngine.Color>(this, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.FontColor = x, () => this.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(this), Button.FontColorProperty, "Highlighted", DefaultStateName));
-            this.StateAnimations.Add(stateAnimation1);
+            var thisStateAnimation1 = new StateAnimation(AnyStateName, "Highlighted");
+            thisStateAnimation1.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(this), Button.BackgroundColorProperty, AnyStateName, "Highlighted"));
+            thisStateAnimation1.Add(new Animator<UnityEngine.Color>(this, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.FontColor = x, () => this.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(this), Button.FontColorProperty, AnyStateName, "Highlighted"));
+            this.StateAnimations.Add(thisStateAnimation1);
+            var thisStateAnimation2 = new StateAnimation("Highlighted", DefaultStateName);
+            thisStateAnimation2.Add(new Animator<UnityEngine.Color>(this, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.BackgroundColor = x, () => this.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(this), Button.BackgroundColorProperty, "Highlighted", DefaultStateName));
+            thisStateAnimation2.Add(new Animator<UnityEngine.Color>(this, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => this.FontColor = x, () => this.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(this), Button.FontColorProperty, "Highlighted", DefaultStateName));
+            this.StateAnimations.Add(thisStateAnimation2);
             Click.RegisterHandler(this, "ButtonMouseClick");
             MouseEnter.RegisterHandler(this, "ButtonMouseEnter");
             MouseExit.RegisterHandler(this, "ButtonMouseExit");

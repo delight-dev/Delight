@@ -82,15 +82,8 @@ namespace Delight
 
             if (from.Unit == ElementSizeUnit.Percents || to.Unit == ElementSizeUnit.Percents)
             {
-                if (from.Unit != to.Unit)
-                {
-                    // can't interpolate between percent and another unit type
-                    return from;
-                }
-                else
-                {
-                    return new ElementSize(Lerp(from.Percent, to.Percent, weight), ElementSizeUnit.Percents);
-                }
+                // if interpolating between percent and another unit type, percentage overrides the unit type
+                return new ElementSize(Lerp(from.Percent, to.Percent, weight), ElementSizeUnit.Percents);
             }
 
             return new ElementSize(Lerp(from.Pixels, to.Pixels, weight), ElementSizeUnit.Pixels);

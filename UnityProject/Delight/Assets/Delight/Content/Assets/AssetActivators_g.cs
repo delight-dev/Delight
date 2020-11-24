@@ -63,12 +63,15 @@ namespace Delight
             ViewActivators.Add("InputFieldExample", (x, y, z, w, a) => new InputFieldExample(x, y, z, w, a));
             ViewActivators.Add("LevelSelectExample", (x, y, z, w, a) => new LevelSelectExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuExample", (x, y, z, w, a) => new MainMenuExample(x, y, z, w, a));
+            ViewActivators.Add("NavigatorExample", (x, y, z, w, a) => new NavigatorExample(x, y, z, w, a));
             ViewActivators.Add("OnDemandLoadingExample", (x, y, z, w, a) => new OnDemandLoadingExample(x, y, z, w, a));
             ViewActivators.Add("ScrollExample", (x, y, z, w, a) => new ScrollExample(x, y, z, w, a));
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
             ViewActivators.Add("TestExample", (x, y, z, w, a) => new TestExample(x, y, z, w, a));
             ViewActivators.Add("MainMenuDemoScene", (x, y, z, w, a) => new MainMenuDemoScene(x, y, z, w, a));
+            ViewActivators.Add("DraggableRegion", (x, y, z, w, a) => new DraggableRegion(x, y, z, w, a));
+            ViewActivators.Add("DraggableThing", (x, y, z, w, a) => new DraggableThing(x, y, z, w, a));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
@@ -119,12 +122,15 @@ namespace Delight
             ViewTypes.Add("InputFieldExample", typeof(InputFieldExample));
             ViewTypes.Add("LevelSelectExample", typeof(LevelSelectExample));
             ViewTypes.Add("MainMenuExample", typeof(MainMenuExample));
+            ViewTypes.Add("NavigatorExample", typeof(NavigatorExample));
             ViewTypes.Add("OnDemandLoadingExample", typeof(OnDemandLoadingExample));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
             ViewTypes.Add("TestExample", typeof(TestExample));
             ViewTypes.Add("MainMenuDemoScene", typeof(MainMenuDemoScene));
+            ViewTypes.Add("DraggableRegion", typeof(DraggableRegion));
+            ViewTypes.Add("DraggableThing", typeof(DraggableThing));
 
             AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));

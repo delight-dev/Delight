@@ -204,6 +204,25 @@ namespace Delight
             return base.GetHashCode();
         }
 
+        /// <summary>
+        /// Gets actual offset.
+        /// </summary>
+        public ElementMargin GetActualOffset(float actualWidth, float actualHeight)
+        {
+            if (Left.Unit == ElementSizeUnit.Percents || Top.Unit == ElementSizeUnit.Percents ||
+                Right.Unit == ElementSizeUnit.Percents || Bottom.Unit == ElementSizeUnit.Percents)
+            {
+                var elementMargin = new ElementMargin();
+                elementMargin.Left = Left.Unit == ElementSizeUnit.Percents ? actualWidth * Left.Percent : Left.Pixels;
+                elementMargin.Top = Top.Unit == ElementSizeUnit.Percents ? actualHeight * Top.Percent : Top.Pixels;
+                elementMargin.Right = Right.Unit == ElementSizeUnit.Percents ? actualWidth * Right.Percent : Right.Pixels;
+                elementMargin.Bottom = Bottom.Unit == ElementSizeUnit.Percents ? actualHeight * Bottom.Percent : Bottom.Pixels;
+                return elementMargin;
+            }
+
+            return this;
+        }
+
         #endregion
     }
 }

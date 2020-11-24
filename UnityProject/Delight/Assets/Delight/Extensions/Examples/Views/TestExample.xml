@@ -1,27 +1,7 @@
 <TestExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
              Player="t:DemoPlayer = Player1" NonBindableLevel="t:NonBindableLevel">
-  
-  <Navigator>
-    <Region Navigator.Path="/" BackgroundColor="Blue">
-      <Label Text="/" />
-    </Region>
 
-    <Region Navigator.Path="/test" BackgroundColor="Purple">
-      <Label Text="/test" />      
-    </Region>
-  </Navigator>
-  
-  <Group Spacing="5" Alignment="TopLeft" Orientation="Horizontal" Offset="20,0,0,0">
-    <Button Text="Open '/'" Click="$ Navigator.Push('/')" />
-    <Button Text="Open '/test'" Click="$ Navigator.Push('/test')" />
-    <Button Text="Back" Click="$ Navigator.Pop()" />
-  </Group>
-    
-      
-  
-  
-
-  <Group LoadMode="Manual">
+  <Group>
     <List Items="{level in @FilteredDemoLevels}" ItemSelected="OnItemSelected">
       <ListItem Click="$ MyButton.Text = level.Name">
         <Group Orientation="Horizontal">
