@@ -700,10 +700,15 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public virtual void SetState(string newState)
+        public virtual async void SetState(string newState, bool animate = true)
         {
             if (newState.IEquals(_previousState))
                 return;
+
+            if (newState == "Default")
+            {
+                newState = DefaultStateName;
+            }
 
             // handle state animations
             List<DependencyProperty> animatedProperties = null;
@@ -717,21 +722,26 @@ namespace Delight
                 }
 
                 // start any state animators applicable to current state transition
-                foreach (var stateAnimator in _stateAnimations)
+                if (animate)
                 {
-                    if ((stateAnimator.FromAny || stateAnimator.FromState == _previousState) &&
-                        (stateAnimator.ToAny || stateAnimator.ToState == newState))
+                    foreach (var stateAnimator in _stateAnimations)
                     {
-                        foreach (var animator in stateAnimator)
+                        if ((stateAnimator.FromAny || stateAnimator.FromState == _previousState) &&
+                            (stateAnimator.ToAny || stateAnimator.ToState == newState))
                         {
-                            animator.StartAnimation();
-                            LayoutRoot.RegisterAnimator(animator);
+                            //await stateAnimator.StartAnimation(LayoutRoot);
 
-                            if (animatedProperties == null)
+                            foreach (var animator in stateAnimator)
                             {
-                                animatedProperties = new List<DependencyProperty>();
+                                animator.StartAnimation();
+                                LayoutRoot.RegisterStateAnimator(animator);
+
+                                if (animatedProperties == null)
+                                {
+                                    animatedProperties = new List<DependencyProperty>();
+                                }
+                                animatedProperties.Add(animator.Property);
                             }
-                            animatedProperties.Add(animator.Property);
                         }
                     }
                 }
@@ -759,7 +769,7 @@ namespace Delight
                 for (int i = 0; i < stateChangingProperties.Count; ++i)
                 {
                     var stateChangingProperty = stateChangingProperties[i];
-                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty))
+                    if (animatedProperties != null && animatedProperties.Contains(stateChangingProperty) && animate)
                         continue;
 
                     stateChangingProperties[i].Load(this);

@@ -22,6 +22,11 @@ namespace Delight
         /// <summary>
         /// Views are loaded first time when switched to and then enabled/disabled when switched to/from.
         /// </summary>
-        LoadOnce = 2
+        LoadOnce = 2,
+
+        /// <summary>
+        /// View switching are handled by animations or code.
+        /// </summary>
+        Manual = 3,
     }
 }

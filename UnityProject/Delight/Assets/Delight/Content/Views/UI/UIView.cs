@@ -322,8 +322,9 @@ namespace Delight
             RectTransform.anchorMax = new Vector2(xMax - margin.Right.Percent, yMax - margin.Top.Percent);
 
             // positioning and margins
-            var offset = Offset ?? ElementMargin.Default;
-            var offsetFromParent = OffsetFromParent ?? ElementMargin.Default;
+            var offset = Offset?.GetActualOffset(ActualWidth, ActualHeight) ?? ElementMargin.Default;
+            var offsetFromParent = OffsetFromParent?.GetActualOffset(ActualWidth, ActualHeight) ?? ElementMargin.Default;
+
             RectTransform.offsetMin = new Vector2(
                 offsetMinX + margin.Left.Pixels + offset.Left.Pixels - offset.Right.Pixels + offsetFromParent.Left.Pixels - offsetFromParent.Right.Pixels,
                 offsetMinY + margin.Bottom.Pixels - offset.Top.Pixels + offset.Bottom.Pixels - offsetFromParent.Top.Pixels + offsetFromParent.Bottom.Pixels);

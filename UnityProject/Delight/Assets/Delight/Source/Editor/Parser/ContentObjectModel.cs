@@ -599,7 +599,7 @@ namespace Delight.Editor.Parser
 
                             var animateInfo = new AnimateInfo();
                             stateAnimationInfo.AnimateInfos.Add(animateInfo);
-                            //var durationValueConverter = new DurationValueConverter();
+                            var durationValueConverter = new DurationValueConverter();
 
                             // set properties of <Animate> elements
                             foreach (var propertyAssignment in animateDeclaration.PropertyAssignments)
@@ -644,15 +644,13 @@ namespace Delight.Editor.Parser
                                 }
                                 else if (propertyName.IEquals("Duration"))
                                 {
-                                    float duration = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
-                                    //float duration = durationValueConverter.Convert(propertyValue);
+                                    float duration = durationValueConverter.Convert(propertyValue);
                                     animateInfo.Duration = duration;
                                     continue;
                                 }
                                 else if (propertyName.IEquals("StartOffset"))
                                 {
-                                    float startOffset = System.Convert.ToSingle(propertyValue, CultureInfo.InvariantCulture);
-                                    //float startOffset = durationValueConverter.Convert(propertyValue);
+                                    float startOffset = durationValueConverter.Convert(propertyValue);
                                     animateInfo.StartOffset = startOffset;
                                     continue;
                                 }

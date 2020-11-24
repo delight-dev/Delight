@@ -420,12 +420,12 @@ namespace Delight
         /// <summary>
         /// Sets state.
         /// </summary>
-        public override void SetState(string newState)
+        public override void SetState(string newState, bool animate = true)
         {
             if (newState.IEquals(_previousState))
                 return;
 
-            base.SetState(newState);
+            base.SetState(newState, animate);
             foreach (var kv in SetListItemState.AttachedValues)
             {
                 if (!kv.Value)
@@ -434,7 +434,7 @@ namespace Delight
                 var view = kv.Key as View;
                 if (view != null)
                 {
-                    view.SetState(newState);
+                    view.SetState(newState, animate);
                 }
             }
         }

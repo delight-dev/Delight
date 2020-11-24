@@ -304,13 +304,13 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override void SetState(string state)
+        public override void SetState(string state, bool animate = true)
         {
             if (state.IEquals(_previousState))
                 return;
 
-            base.SetState(state);
-            Label.SetState(state);
+            base.SetState(state, animate);
+            Label.SetState(state, animate);
         }
 
         /// <summary>

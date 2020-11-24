@@ -17,7 +17,7 @@ namespace Delight
 
         private HashSet<ChangeHandler> _registeredChangeHandlers = new HashSet<ChangeHandler>();
         private List<ChangeHandler> _changeHandlers = new List<ChangeHandler>();
-        private HashSet<Animator> _animators = new HashSet<Animator>();
+        private HashSet<Animator> _stateAnimators = new HashSet<Animator>();
         private List<Animator> _completedAnimators = new List<Animator>();
         private List<KeyValuePair<int, WeakReference<IUpdateable>>> _toBeUpdated = new List<KeyValuePair<int, WeakReference<IUpdateable>>>();
         private HashSet<int> _toBeUpdatedKeys = new HashSet<int>();
@@ -33,11 +33,11 @@ namespace Delight
         {
             base.Update();
 
-            if (_animators.Count > 0)
+            if (_stateAnimators.Count > 0)
             {
-                // update animations
+                // update state animations
                 float deltaTime = Time.deltaTime;
-                foreach (var animator in _animators)
+                foreach (var animator in _stateAnimators)
                 {
                     animator.Update(deltaTime);
                     if (animator.IsCompleted)
@@ -50,7 +50,7 @@ namespace Delight
                 {
                     foreach (var animator in _completedAnimators)
                     {
-                        _animators.Remove(animator);
+                        _stateAnimators.Remove(animator);
                     }
                     _completedAnimators.Clear();
                 }
@@ -118,19 +118,19 @@ namespace Delight
         }
 
         /// <summary>
-        /// Registers an animator to be updated each frame.
+        /// Registers a state animator to be updated each frame.
         /// </summary>
-        public void RegisterAnimator(Animator animator)
+        public void RegisterStateAnimator(Animator animator)
         {
-            _animators.Add(animator);
+            _stateAnimators.Add(animator);
         }
 
         /// <summary>
         /// Unregisters an animator to be updated each frame.
         /// </summary>
-        public void UnregisterAnimator(Animator animator)
+        public void UnregisterStateAnimator(Animator animator)
         {
-            _animators.Remove(animator);
+            _stateAnimators.Remove(animator);
         }
 
         /// <summary>

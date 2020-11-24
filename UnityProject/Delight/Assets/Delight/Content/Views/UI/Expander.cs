@@ -244,13 +244,13 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override void SetState(string state)
+        public override void SetState(string state, bool animate = true)
         {
             if (state.IEquals(_previousState))
                 return;
 
-            base.SetState(state);
-            _expanderHeader?.SetState(state);
+            base.SetState(state, animate);
+            _expanderHeader?.SetState(state, animate);
         }
 
         /// <summary>

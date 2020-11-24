@@ -954,7 +954,7 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Generates data template value initializers for property assignments.
+        /// Generates data template value initializers for property assignments and update property declaration infos.
         /// </summary>
         public static void GenerateDataTemplateValueInitializers(StringBuilder sb, ViewObject viewObject, bool isParent, ViewDeclaration viewDeclaration, string fileName,
             List<PropertyExpression> nestedPropertyExpressions, string fullViewTypeName, string localId, out Dictionary<string, List<PropertyExpression>> nestedChildViewPropertyExpressions,
@@ -1920,7 +1920,7 @@ namespace Delight.Editor.Parser
             for (int i = 0; i < stateAnimations.Count; ++i)
             {
                 var stateAnimation = stateAnimations[i];
-                string stateAnimationId = string.Format("stateAnimation{0}", i);
+                string stateAnimationId = string.Format("{0}StateAnimation{1}", childIdVar.ToLocalVariableName(), i + 1);
 
                 string fromState = string.Empty;
                 if (stateAnimation.FromState.IEquals("Any"))
@@ -1955,8 +1955,6 @@ namespace Delight.Editor.Parser
                 for (int j = 0; j < stateAnimation.AnimateInfos.Count; ++j)
                 {
                     var animator = stateAnimation.AnimateInfos[j];
-                    string animateId = string.Format("sa{0}Animator{1}", i, j);
-
                     if (childPropertyDeclarations == null)
                     {
                         childPropertyDeclarations = GetPropertyDeclarations(childViewObject, true, true, true);

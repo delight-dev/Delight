@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Threading.Tasks;
+using UnityEditorInternal;
 #endregion
 
 namespace Delight
@@ -48,7 +49,7 @@ namespace Delight
                 }
 
                 var childLoadMode = child.LoadMode | ChildLoadMode;
-                if (SwitchMode != SwitchMode.Enable)
+                if (SwitchMode == SwitchMode.Load || SwitchMode == SwitchMode.LoadOnce)
                 {
                     var loadMode = childLoadMode | LoadMode.Manual;
                     child.LoadMode = loadMode;
@@ -57,7 +58,10 @@ namespace Delight
                 {
                     childLoadMode &= ~LoadMode.Manual; // remove any manual flag to force automatic if we're activating them
                     child.LoadMode = childLoadMode;
-                    child.IsActive = false;
+                    if (SwitchMode == SwitchMode.Enable)
+                    {
+                        child.IsActive = false;
+                    }
                 }
             }
         }
@@ -213,47 +217,44 @@ namespace Delight
         {
             if (view == ActiveView)
                 return;
-
-            if (ActiveView != null)
-            {
-                if (SwitchMode == SwitchMode.Load)
-                {
-                    ActiveView.Unload();
-                }
-                else
-                {
-                    ActiveView.IsActive = false;
-                }
-            }
-
-            ActiveView = view as SceneObjectView;
-            if (ActiveView == null)
-                return;
-
-            // load/activate view
-            ActiveView.Load();
-            ActiveView.IsActive = true;
-            ActiveView.Setup(data);
+            SetPageState(view, data, NavigationTransition.Open);
         }
 
         /// <summary>
-        /// Opens the page specified asynchronously.
+        /// Opens the page specified.
         /// </summary>
-        public async Task OpenAsync(View view, object data = null)
+        public async void SetPageState(View view, object data, NavigationTransition navigationTransition)
         {
             if (view == ActiveView)
                 return;
 
             if (ActiveView != null)
             {
-                if (SwitchMode == SwitchMode.Load)
+                switch (navigationTransition)
                 {
-                    ActiveView.Unload();
+                    case NavigationTransition.Open:
+                        ActiveView.SetState("Closed");
+                        break;
+                    case NavigationTransition.Push:
+                        ActiveView.SetState("Pushed");
+                        break;
+                    case NavigationTransition.Pop:
+                        ActiveView.SetState("Closed");
+                        break;
+                    case NavigationTransition.Close:
+                        ActiveView.SetState("Closed");
+                        break;
                 }
-                else
-                {
-                    ActiveView.IsActive = false;
-                }
+
+                // TODO if animating the below call should be made after the animation is complete
+                //if (SwitchMode == SwitchMode.Load)
+                //{
+                //    ActiveView.Unload();
+                //}
+                //else
+                //{
+                //    ActiveView.IsActive = false;
+                //}
             }
 
             ActiveView = view as SceneObjectView;
@@ -264,6 +265,25 @@ namespace Delight
             await ActiveView.LoadAsync();
             ActiveView.IsActive = true;
             ActiveView.Setup(data);
+
+            // run load animations
+            switch (navigationTransition)
+            {
+                case NavigationTransition.Push:
+                case NavigationTransition.Open:
+                    ActiveView.SetState("Closed", false);
+                    ActiveView.SetState(DefaultStateName);
+                    break;
+
+                case NavigationTransition.Pop:
+                    ActiveView.SetState("Pushed");
+                    ActiveView.SetState(DefaultStateName);
+                    break;
+
+                default:
+                case NavigationTransition.Close:
+                    break;
+            }      
         }
 
         /// <summary>
@@ -272,7 +292,7 @@ namespace Delight
         public void Close()
         {
             ViewStack.Clear();
-            Open((View)null);
+            SetPageState(null, null, NavigationTransition.Close);
         }
 
         /// <summary>
@@ -296,7 +316,7 @@ namespace Delight
             {
                 ViewStack.Push(ActiveView);
             }
-            Open(view, data);
+            SetPageState(view, data, NavigationTransition.Push);
         }
 
         /// <summary>
@@ -306,7 +326,7 @@ namespace Delight
         {
             if (ViewStack.Count > 0)
             {
-                Open(ViewStack.Pop());
+                SetPageState(ViewStack.Pop(), null, NavigationTransition.Pop);
             }
             else
             {
@@ -335,5 +355,13 @@ namespace Delight
         Push = 1,
         Pop = 2,
         Close = 3
+    }
+
+    public enum NavigationTransition
+    {
+        Open,
+        Push,
+        Pop,
+        Close,
     }
 }

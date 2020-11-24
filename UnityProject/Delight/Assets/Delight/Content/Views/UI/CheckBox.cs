@@ -131,14 +131,14 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override void SetState(string state)
+        public override void SetState(string state, bool animate = true)
         {
             if (state.IEquals(_previousState))
                 return;
 
-            base.SetState(state);
-            CheckBoxImageView.SetState(state);
-            CheckBoxLabel.SetState(state);
+            base.SetState(state, animate);
+            CheckBoxImageView.SetState(state, animate);
+            CheckBoxLabel.SetState(state, animate);
         }
 
         /// <summary>

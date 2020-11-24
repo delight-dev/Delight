@@ -473,6 +473,8 @@ namespace Delight.Editor.Parser
                 }
             }
 
+            // TODO if xml contains conditional content or loops @ we need to pre-parse it
+
             ViewObject viewObject = _contentObjectModel.LoadViewObject(viewName, updateContentObjectModel);
 
             // clear view object 

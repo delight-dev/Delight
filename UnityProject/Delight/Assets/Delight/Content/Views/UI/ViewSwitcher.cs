@@ -51,7 +51,7 @@ namespace Delight
                 }
 
                 var childLoadMode = child.LoadMode | ChildLoadMode;
-                if (SwitchMode != SwitchMode.Enable)
+                if (SwitchMode == SwitchMode.Load || SwitchMode == SwitchMode.LoadOnce)
                 {
                     var loadMode = childLoadMode | LoadMode.Manual;
                     child.LoadMode = loadMode;
@@ -60,7 +60,10 @@ namespace Delight
                 {
                     childLoadMode &= ~LoadMode.Manual; // remove any manual flag to force automatic if we're activating them
                     child.LoadMode = childLoadMode;
-                    child.IsActive = false;
+                    if (SwitchMode == SwitchMode.Enable)
+                    {
+                        child.IsActive = false;
+                    }
                 }
             }
         }

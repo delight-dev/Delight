@@ -1,0 +1,27 @@
+<NavigatorExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot">
+  
+  <Navigator>
+    <Region Navigator.Path="/" BackgroundColor="Blue" StateAnimations="NavigationTransitionSwipe"
+            Offset="0%,0%,0%,0%" Closed-Offset="0%,0%,100%,0%" Pushed-Offset="100%,0%,0%,0%">
+      <Label Text="/" />
+    </Region>
+
+    <Region Navigator.Path="/test" BackgroundColor="Purple" StateAnimations="NavigationTransitionSwipe" 
+            Offset="0%,0%,0%,0%" Closed-Offset="0%,0%,100%,0%" Pushed-Offset="100%,0%,0%,0%">
+      <Label Text="/test" />
+    </Region>
+  </Navigator>
+
+  <Group Spacing="5" Alignment="TopLeft" Orientation="Horizontal" Offset="20,0,0,0">
+    <Button Text="Open '/'" Click="OpenRoot" /> 
+    <Button Text="Open '/test'" Click="OpenTest" />
+    <Button Text="Back" Click="Pop" />
+  </Group>
+
+  <!--<Group Spacing="5" Alignment="TopLeft" Orientation="Horizontal" Offset="20,0,0,0">
+    <Button Text="Open '/'" Click="$ Navigator.Push('/')" />
+    <Button Text="Open '/test'" Click="$ Navigator.Push('/test')" />
+    <Button Text="Back" Click="$ Navigator.Pop()" />
+  </Group>-->
+
+</NavigatorExample>
