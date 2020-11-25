@@ -113,6 +113,17 @@ namespace Delight
             button4StateAnimation2.Add(new Animator<UnityEngine.Color>(Button4, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button4.BackgroundColor = x, () => Button4.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(Button4), Button.BackgroundColorProperty, "Highlighted", DefaultStateName));
             button4StateAnimation2.Add(new Animator<UnityEngine.Color>(Button4, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button4.FontColor = x, () => Button4.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(Button4), Button.FontColorProperty, "Highlighted", DefaultStateName));
             Button4.StateAnimations.Add(button4StateAnimation2);
+            Button5 = new Button(this, Group1.Content, "Button5", Button5Template);
+            Button5.Click.RegisterHandler(this, "Replace");
+            Button5.StateAnimations.Clear();
+            var button5StateAnimation1 = new StateAnimation(AnyStateName, "Highlighted");
+            button5StateAnimation1.Add(new Animator<UnityEngine.Color>(Button5, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button5.BackgroundColor = x, () => Button5.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(Button5), Button.BackgroundColorProperty, AnyStateName, "Highlighted"));
+            button5StateAnimation1.Add(new Animator<UnityEngine.Color>(Button5, 0.05f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button5.FontColor = x, () => Button5.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(Button5), Button.FontColorProperty, AnyStateName, "Highlighted"));
+            Button5.StateAnimations.Add(button5StateAnimation1);
+            var button5StateAnimation2 = new StateAnimation("Highlighted", DefaultStateName);
+            button5StateAnimation2.Add(new Animator<UnityEngine.Color>(Button5, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button5.BackgroundColor = x, () => Button5.BackgroundColor, () => Button.BackgroundColorProperty.NotifyPropertyChanged(Button5), Button.BackgroundColorProperty, "Highlighted", DefaultStateName));
+            button5StateAnimation2.Add(new Animator<UnityEngine.Color>(Button5, 0.5f, 0f, false, false, 0f, false, EasingFunctions.Get("Linear"), Delight.ColorValueConverter.Interpolator, x => Button5.FontColor = x, () => Button5.FontColor, () => Button.FontColorProperty.NotifyPropertyChanged(Button5), Button.FontColorProperty, "Highlighted", DefaultStateName));
+            Button5.StateAnimations.Add(button5StateAnimation2);
             this.AfterInitializeInternal();
         }
 
@@ -154,6 +165,8 @@ namespace Delight
             dependencyProperties.Add(Button3TemplateProperty);
             dependencyProperties.Add(Button4Property);
             dependencyProperties.Add(Button4TemplateProperty);
+            dependencyProperties.Add(Button5Property);
+            dependencyProperties.Add(Button5TemplateProperty);
         }
 
         #endregion
@@ -363,6 +376,20 @@ namespace Delight
             set { Button4TemplateProperty.SetValue(this, value); }
         }
 
+        public readonly static DependencyProperty<Button> Button5Property = new DependencyProperty<Button>("Button5");
+        public Button Button5
+        {
+            get { return Button5Property.GetValue(this); }
+            set { Button5Property.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Template> Button5TemplateProperty = new DependencyProperty<Template>("Button5Template");
+        public Template Button5Template
+        {
+            get { return Button5TemplateProperty.GetValue(this); }
+            set { Button5TemplateProperty.SetValue(this, value); }
+        }
+
         #endregion
     }
 
@@ -411,6 +438,7 @@ namespace Delight
                     Delight.ListExample.Button2TemplateProperty.SetDefault(_listExample, ListExampleButton2);
                     Delight.ListExample.Button3TemplateProperty.SetDefault(_listExample, ListExampleButton3);
                     Delight.ListExample.Button4TemplateProperty.SetDefault(_listExample, ListExampleButton4);
+                    Delight.ListExample.Button5TemplateProperty.SetDefault(_listExample, ListExampleButton5);
                 }
                 return _listExample;
             }
@@ -866,7 +894,7 @@ namespace Delight
 #endif
                     Delight.Group.AlignmentProperty.SetDefault(_listExampleGroup1, Delight.ElementAlignment.Left);
                     Delight.Group.SpacingProperty.SetDefault(_listExampleGroup1, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.Group.OffsetProperty.SetDefault(_listExampleGroup1, new ElementMargin(new ElementSize(300f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
+                    Delight.Group.OffsetProperty.SetDefault(_listExampleGroup1, new ElementMargin(new ElementSize(10f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
                 }
                 return _listExampleGroup1;
             }
@@ -1109,6 +1137,66 @@ namespace Delight
                     Delight.Label.TextProperty.SetDefault(_listExampleButton4Label, "Reset");
                 }
                 return _listExampleButton4Label;
+            }
+        }
+
+        private static Template _listExampleButton5;
+        public static Template ListExampleButton5
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton5 == null || _listExampleButton5.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton5 == null)
+#endif
+                {
+                    _listExampleButton5 = new Template(ButtonTemplates.Button);
+#if UNITY_EDITOR
+                    _listExampleButton5.Name = "ListExampleButton5";
+                    _listExampleButton5.LineNumber = 22;
+                    _listExampleButton5.LinePosition = 6;
+#endif
+                    Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton5, Assets.Sprites["RoundedSquareFull@128px"]);
+                    Delight.Button.BackgroundColorProperty.SetDefault(_listExampleButton5, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Highlighted", _listExampleButton5, new UnityEngine.Color(0.8980392f, 0.8980392f, 0.8980392f, 1f));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Pressed", _listExampleButton5, new UnityEngine.Color(0.9372549f, 0.4392157f, 0.4156863f, 1f));
+                    Delight.Button.HeightProperty.SetDefault(_listExampleButton5, new ElementSize(30f, ElementSizeUnit.Pixels));
+                    Delight.Button.BackgroundColorProperty.SetStateDefault("Disabled", _listExampleButton5, new UnityEngine.Color(0.4901961f, 0.4901961f, 0.4901961f, 1f));
+                    Delight.Button.WidthProperty.SetDefault(_listExampleButton5, new ElementSize(150f, ElementSizeUnit.Pixels));
+                    Delight.Button.LabelTemplateProperty.SetDefault(_listExampleButton5, ListExampleButton5Label);
+                }
+                return _listExampleButton5;
+            }
+        }
+
+        private static Template _listExampleButton5Label;
+        public static Template ListExampleButton5Label
+        {
+            get
+            {
+#if UNITY_EDITOR
+                if (_listExampleButton5Label == null || _listExampleButton5Label.CurrentVersion != Template.Version)
+#else
+                if (_listExampleButton5Label == null)
+#endif
+                {
+                    _listExampleButton5Label = new Template(ButtonTemplates.ButtonLabel);
+#if UNITY_EDITOR
+                    _listExampleButton5Label.Name = "ListExampleButton5Label";
+                    _listExampleButton5Label.LineNumber = 15;
+                    _listExampleButton5Label.LinePosition = 4;
+#endif
+                    Delight.Label.FontColorProperty.SetDefault(_listExampleButton5Label, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontStyleProperty.SetDefault(_listExampleButton5Label, TMPro.FontStyles.Normal);
+                    Delight.Label.FontColorProperty.SetStateDefault("Highlighted", _listExampleButton5Label, new UnityEngine.Color(0f, 0f, 0f, 1f));
+                    Delight.Label.FontColorProperty.SetStateDefault("Pressed", _listExampleButton5Label, new UnityEngine.Color(1f, 1f, 1f, 1f));
+                    Delight.Label.FontSizeProperty.SetDefault(_listExampleButton5Label, 16f);
+                    Delight.Label.FontStyleProperty.SetStateDefault("Disabled", _listExampleButton5Label, TMPro.FontStyles.Italic);
+                    Delight.Label.FontColorProperty.SetStateDefault("Disabled", _listExampleButton5Label, new UnityEngine.Color(0.8f, 0.8f, 0.8f, 1f));
+                    Delight.Label.TextProperty.SetDefault(_listExampleButton5Label, "Replace");
+                }
+                return _listExampleButton5Label;
             }
         }
 

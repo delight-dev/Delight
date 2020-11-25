@@ -107,8 +107,7 @@ namespace Delight
 
         public override void Reset()
         {
-            base.Reset();
-            AddRange(new List<DemoLevel> { Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level8, Level9, Level10, Level11, Level12, Level13, Level14, Level15, Level16, Level17, Level18 });
+            Replace(new List<DemoLevel> { Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level8, Level9, Level10, Level11, Level12, Level13, Level14, Level15, Level16, Level17, Level18 });
         }
 
         protected Dictionary<string, BindableCollectionSubset<DemoLevel>> _demoWorldDemoLevels = new Dictionary<string, BindableCollectionSubset<DemoLevel>>();

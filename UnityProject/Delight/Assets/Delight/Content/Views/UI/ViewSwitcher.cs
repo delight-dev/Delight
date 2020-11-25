@@ -201,6 +201,48 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Switches to next view.
+        /// </summary>
+        public void Next(bool cycle = true, object data = null)
+        {
+            int index = ActiveView != null ? Content.LayoutChildren.IndexOf(ActiveView) + 1 : 0;
+            if (index >= Content.LayoutChildren.Count)
+            {
+                if (cycle)
+                {
+                    index = 0;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            SwitchTo(index, data);
+        }
+
+        /// <summary>
+        /// Switches to previous view.
+        /// </summary>
+        public void Previous(bool cycle = true, object data = null)
+        {
+            int index = ActiveView != null ? Content.LayoutChildren.IndexOf(ActiveView) - 1 : 0;
+            if (index < 0)
+            {
+                if (cycle)
+                {
+                    index = Content.LayoutChildren.Count - 1;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            SwitchTo(index, data);
+        }
+
         #endregion
     }
 }

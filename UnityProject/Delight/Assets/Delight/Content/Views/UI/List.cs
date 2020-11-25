@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Net;
+using System.Threading;
 #endregion
 
 namespace Delight
@@ -35,6 +36,8 @@ namespace Delight
         private Group _pageButtonGroup;
         private ContentTemplate _pageButtonTemplate;
 
+        private SemaphoreSlim _listOperationSemaphore = new SemaphoreSlim(1, 1);
+
         #endregion
 
         #region Methods
@@ -42,7 +45,7 @@ namespace Delight
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
-        public override void OnChanged(string property)
+        public override async void OnChanged(string property)
         {
             base.OnChanged(property);
             switch (property)
@@ -57,8 +60,8 @@ namespace Delight
                 case nameof(Orientation):
                     if (IsLoaded)
                     {
-                        ClearItems();
-                        CreateItems();
+                        await ClearItems();
+                        await CreateItems();
                     }
                     break;
 
@@ -86,16 +89,13 @@ namespace Delight
         /// <summary>
         /// Generates views from data in collection. 
         /// </summary>
-        protected async void CreateItems()
+        protected async Task CreateItems()
         {
             if (Items == null)
                 return;
 
             // call to initialize dynamic lists if necessary
-#pragma warning disable CS4014
-            Items.LoadData();
-#pragma warning restore CS4014
-            
+            await Items.LoadData();
             await CreateListItems(Items);
 
             // update layout and notify parents if size has changed
@@ -348,7 +348,7 @@ namespace Delight
         /// <summary>
         /// Called when the list of items has been changed.
         /// </summary>
-        private void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
+        private async void OnCollectionChanged(object sender, CollectionChangedEventArgs e)
         {
             if (!IsLoaded)
                 return;
@@ -363,12 +363,14 @@ namespace Delight
                 var eventArgsBatch = (e as BatchedCollectionChangedEventArgs).CollectionChangedEventArgsBatch;
                 foreach (var eventArgs in eventArgsBatch)
                 {
-                    updateLayout |= OnCollectionChanged(eventArgs);
+                    updateLayout |= CollectionChangeNeedLayoutUpdate(eventArgs);
+                    await OnCollectionChanged(eventArgs);
                 }
             }
             else
             {
-                updateLayout = OnCollectionChanged(e);
+                updateLayout |= CollectionChangeNeedLayoutUpdate(e);
+                await OnCollectionChanged(e);
             }
 
             if (updateLayout)
@@ -382,43 +384,58 @@ namespace Delight
         }
 
         /// <summary>
+        /// Returns boolean indicating if collection operation requires the layout to update.
+        /// </summary>
+        private bool CollectionChangeNeedLayoutUpdate(CollectionChangedEventArgs e)
+        {
+            switch (e.ChangeAction)
+            {
+                case CollectionChangeAction.Add:
+                case CollectionChangeAction.AddRange:
+                case CollectionChangeAction.Remove:
+                case CollectionChangeAction.RemoveRange:
+                case CollectionChangeAction.Replace:
+                case CollectionChangeAction.Clear:
+                    return true;
+
+                default:
+                case CollectionChangeAction.ScrollTo:
+                case CollectionChangeAction.Select:
+                    return false;
+            }
+        }
+
+        /// <summary>
         /// Handles collection changed events.
         /// </summary>
-        private bool OnCollectionChanged(CollectionChangedEventArgs e)
+        private async Task OnCollectionChanged(CollectionChangedEventArgs e)
         {
-            bool updateLayout = false;
             switch (e.ChangeAction)
             {
                 case CollectionChangeAction.AddRange:
                     var rangeArgs = e as CollectionChangedRangeEventArgs;
-                    CreateListItems(rangeArgs.Items);
-                    updateLayout = true;
+                    await CreateListItems(rangeArgs.Items);
                     break;
 
                 case CollectionChangeAction.Add:
-                    CreateListItem(e.Item);
-                    updateLayout = true;
+                    await CreateListItem(e.Item);
                     break;
 
                 case CollectionChangeAction.Remove:
-                    DestroyItem(e.Item);
-                    updateLayout = true;
+                    await DestroyItem(e.Item);
                     break;
 
                 case CollectionChangeAction.RemoveRange:
                     var removeRangeArgs = e as CollectionChangedRangeEventArgs;
-                    DestroyItems(removeRangeArgs.Items);
-                    updateLayout = true;
+                    await DestroyItems(removeRangeArgs.Items);
                     break;
 
                 case CollectionChangeAction.Replace:
-                    ReplaceItems();
-                    updateLayout = true;
+                    await ReplaceItems();
                     break;
 
                 case CollectionChangeAction.Clear:
-                    ClearItems();
-                    updateLayout = true;
+                    await ClearItems();
                     break;
 
                 case CollectionChangeAction.Select:
@@ -441,8 +458,6 @@ namespace Delight
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            return updateLayout;
         }
 
         /// <summary>
@@ -564,7 +579,7 @@ namespace Delight
         /// <summary>
         /// Replaces presented items. 
         /// </summary>
-        private void ReplaceItems()
+        private async Task ReplaceItems()
         {
             // deselect all items
             int selectedIndex = GetSelectedItemIndex();
@@ -572,23 +587,36 @@ namespace Delight
 
             if (IsVirtualized)
             {
-                ClearItems();
-                CreateItems();
+                await ClearItems();
+                await CreateItems();
                 return;
             }
 
             int newItemsCount = Items.Count;
             if (newItemsCount <= 0)
             {
-                ClearItems();
+                await ClearItems();
                 return;
             }
-
-            _presentedItems.Clear();
 
             // we assume layout sibling index corresponds to item index
             var childCount = Content.LayoutChildren.Count;
             int replaceCount = newItemsCount >= childCount ? childCount : newItemsCount;
+
+            // start by removing excess items 
+            if (newItemsCount < childCount)
+            {
+                // old list larger than new - remove items
+                var removedItems = new List<object>();
+                for (int i = childCount - 1; i >= newItemsCount; --i)
+                {
+                    var listItem = Content.LayoutChildren[i] as ListItem;
+                    removedItems.Add(listItem.Item);
+                }
+                await DestroyItems(removedItems);
+            }
+
+            _presentedItems.Clear();
             for (int i = 0; i < replaceCount; ++i)
             {
                 // replace items
@@ -608,18 +636,9 @@ namespace Delight
                 var newItems = new List<object>();
                 for (int i = childCount; i < newItemsCount; ++i)
                 {
-                    newItems.Add(Items.GetGeneric(i));                    
+                    newItems.Add(Items.GetGeneric(i));
                 }
-                CreateListItems(newItems);
-            }
-            else if (newItemsCount < childCount)
-            {
-                // old list larger than new - remove items
-                for (int i = childCount - 1; i >= newItemsCount; --i)
-                {
-                    var listItem = Content.LayoutChildren[i];
-                    listItem.Unload();
-                }
+                await CreateListItems(newItems);
             }
 
             // reselect item
@@ -640,12 +659,12 @@ namespace Delight
         /// <summary>
         /// Destroys items in list.
         /// </summary>
-        protected virtual async Task DestroyItems(List<object> items)
+        protected virtual async Task DestroyItems(IEnumerable<object> items)
         {
             if (IsVirtualized)
             {
-                ClearItems();
-                CreateItems();
+                await ClearItems();
+                await CreateItems();
                 return;
             }
 
@@ -657,7 +676,16 @@ namespace Delight
             foreach (var item in items)
             {
                 if (!_presentedItems.TryGetValue(item, out var listItem))
-                    return;
+                {
+                    listItem = Content.LayoutChildren.FirstOrDefault(x =>
+                    {
+                        var xListItem = x as ListItem;
+                        return xListItem != null && xListItem.Item == item;                        
+                    }) as ListItem;
+
+                    if (listItem == null)
+                        continue;
+                }
 
                 _presentedItems.Remove(item);
                 listItemsRemoved.Add(listItem);
@@ -676,19 +704,21 @@ namespace Delight
             }
 
             // destroy list item
+            int minIndex = 0;
             foreach (var listItem in listItemsRemoved)
             {
                 var index = Content.LayoutChildren.IndexOf(listItem);
                 listItem.Unload();
                 Content.LayoutChildren.Remove(listItem);
+                minIndex = Math.Min(index, minIndex);
+            }
 
-                // update index and IsAlternate on subsequent list items
-                for (int i = index; i < Content.LayoutChildren.Count; ++i)
-                {
-                    var subsequentListItem = Content.LayoutChildren[i] as ListItem;
-                    subsequentListItem.IsAlternate = IsOdd(i);
-                    subsequentListItem.ContentTemplateData.ZeroIndex = i;
-                }
+            // update index and IsAlternate on subsequent list items
+            for (int i = minIndex; i < Content.LayoutChildren.Count; ++i)
+            {
+                var subsequentListItem = Content.LayoutChildren[i] as ListItem;
+                subsequentListItem.IsAlternate = IsOdd(i);
+                subsequentListItem.ContentTemplateData.ZeroIndex = i;
             }
 
             if (animatesRemove)
@@ -703,7 +733,7 @@ namespace Delight
         /// <summary>
         /// Called when the list of items has been replaced.
         /// </summary>
-        public virtual void ItemsChanged()
+        public virtual async void ItemsChanged()
         {
             if (_oldCollection != null)
             {
@@ -722,15 +752,15 @@ namespace Delight
             // generate new items
             if (IsLoaded)
             {
-                ClearItems();
-                CreateItems();
+                await ClearItems();
+                await CreateItems();
             }
         }
 
         /// <summary>
         /// Clears the list. 
         /// </summary>
-        private void ClearItems()
+        private async Task ClearItems()
         {
             if (IsVirtualized)
             {
@@ -745,16 +775,23 @@ namespace Delight
                 return;
             }
 
-            // unload and clear existing children
-            for (int i = Content.LayoutChildren.Count - 1; i >= 0; --i)
+            if (Items != null)
             {
-                var child = Content.LayoutChildren[i];
-                if (IsPaged && child is NavigationButton)
-                    continue;
+                // unload and clear existing children
+                var removedItems = new List<object>();
+                for (int i = Content.LayoutChildren.Count - 1; i >= 0; --i)
+                {
+                    var child = Content.LayoutChildren[i];
+                    if (IsPaged && child is NavigationButton)
+                        continue;
 
-                child.Unload();
+                    var listItem = Content.LayoutChildren[i] as ListItem;
+                    removedItems.Add(listItem.Item);
+                }
+
+                removedItems.Reverse();
+                await DestroyItems(removedItems);
             }
-            _presentedItems.Clear();
         }
 
         /// <summary>
@@ -897,7 +934,9 @@ namespace Delight
 
             // load the items asynchronously
             await Task.WhenAll(addedItems.Select(x => x.LoadAsync()));
+
             float cascadingDelay = 0;
+            var addStateChangeTasks = new List<Task>();
             foreach (var listItem in addedItems)
             {
                 UnblockListItemDragEvents(listItem);
@@ -916,9 +955,11 @@ namespace Delight
                 await listItem.SetState("Unlisted", false);
 
                 // set state
-                listItem.SetState(DefaultStateName, animate, cascadingDelay);
+                addStateChangeTasks.Add(listItem.SetState(DefaultStateName, animate, cascadingDelay));
                 cascadingDelay += CascadingAnimationDelay;
             }
+
+            await Task.WhenAll(addStateChangeTasks);
         }
 
         /// <summary>
@@ -1404,7 +1445,7 @@ namespace Delight
         {
             var actualWidth = OverrideWidth ?? (Width ?? ElementSize.DefaultLayout);
             var actualHeight = OverrideHeight ?? (Height ?? ElementSize.DefaultLayout);
-            
+
             if (Orientation == ElementOrientation.Horizontal && actualWidth.Unit != ElementSizeUnit.Pixels)
             {
                 actualWidth = ActualWidth;
@@ -1963,8 +2004,6 @@ namespace Delight
                 ++index;
             }
         }
-
-
 
         /// <summary>
         /// Unblocks drag events from list items, which makes it so draggable items don't block the list from being scrolled.

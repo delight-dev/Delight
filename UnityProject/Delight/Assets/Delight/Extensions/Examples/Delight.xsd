@@ -8666,6 +8666,11 @@
       <xs:enumeration value="BigSprite" />
       <xs:enumeration value="Frame3" />
       <xs:enumeration value="Frame4" />
+      <xs:enumeration value="DemoBlueGem" />
+      <xs:enumeration value="DemoPurpleGem" />
+      <xs:enumeration value="DemoRedGem" />
+      <xs:enumeration value="DemoWhiteGem" />
+      <xs:enumeration value="DemoYellowGem" />
       <xs:enumeration value="LevelSelectBg" />
       <xs:enumeration value="LevelSelectItemBg" />
       <xs:enumeration value="LevelSelectPageButton" />
@@ -8680,22 +8685,17 @@
       <xs:enumeration value="Stars1" />
       <xs:enumeration value="Stars2" />
       <xs:enumeration value="Stars3" />
-      <xs:enumeration value="ProfilePicture6" />
-      <xs:enumeration value="ProfilePicture3" />
-      <xs:enumeration value="ProfilePicture2" />
-      <xs:enumeration value="ProfilePicture4" />
-      <xs:enumeration value="ProfilePicture1" />
-      <xs:enumeration value="ProfilePicture7" />
-      <xs:enumeration value="ProfilePicture5" />
-      <xs:enumeration value="DemoWhiteGem" />
-      <xs:enumeration value="DemoRedGem" />
-      <xs:enumeration value="DemoYellowGem" />
-      <xs:enumeration value="DemoBlueGem" />
-      <xs:enumeration value="DemoPurpleGem" />
       <xs:enumeration value="CircleFull@512px" />
       <xs:enumeration value="DefaultProfilePicture" />
-      <xs:enumeration value="RoundedSquareFull@512px" />
+      <xs:enumeration value="ProfilePicture1" />
+      <xs:enumeration value="ProfilePicture2" />
+      <xs:enumeration value="ProfilePicture3" />
+      <xs:enumeration value="ProfilePicture4" />
+      <xs:enumeration value="ProfilePicture5" />
+      <xs:enumeration value="ProfilePicture6" />
+      <xs:enumeration value="ProfilePicture7" />
       <xs:enumeration value="RoundedSquareFull@128px" />
+      <xs:enumeration value="RoundedSquareFull@512px" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -8711,27 +8711,6 @@
   <xs:simpleType name="Asset_ShaderAsset">
     <xs:restriction base="xs:string">
       <xs:enumeration value="UI-Fast-Default" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Asset_Texture2DAsset">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="DemoWhiteGem" />
-      <xs:enumeration value="DemoRedGem" />
-      <xs:enumeration value="DemoYellowGem" />
-      <xs:enumeration value="DemoBlueGem" />
-      <xs:enumeration value="DemoPurpleGem" />
-      <xs:enumeration value="RoundedSquareFull@512px" />
-      <xs:enumeration value="RoundedSquareFull@128px" />
-    </xs:restriction>
-  </xs:simpleType>
-
-  <xs:simpleType name="Asset_DefaultAsset">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Gems" />
-      <xs:enumeration value="MainMenu" />
-      <xs:enumeration value="PlayerProfile" />
-      <xs:enumeration value="Fonts" />
     </xs:restriction>
   </xs:simpleType>
 

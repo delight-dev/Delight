@@ -37,6 +37,7 @@ namespace Delight
             {
                 // update state animations
                 float deltaTime = Time.deltaTime;
+
                 foreach (var animator in _animators)
                 {
                     animator.Update(deltaTime);

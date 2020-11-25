@@ -217,6 +217,11 @@ namespace Delight
         public readonly SpriteAsset BigSprite;
         public readonly SpriteAsset Frame3;
         public readonly SpriteAsset Frame4;
+        public readonly SpriteAsset DemoBlueGem;
+        public readonly SpriteAsset DemoPurpleGem;
+        public readonly SpriteAsset DemoRedGem;
+        public readonly SpriteAsset DemoWhiteGem;
+        public readonly SpriteAsset DemoYellowGem;
         public readonly SpriteAsset LevelSelectBg;
         public readonly SpriteAsset LevelSelectItemBg;
         public readonly SpriteAsset LevelSelectPageButton;
@@ -231,22 +236,17 @@ namespace Delight
         public readonly SpriteAsset Stars1;
         public readonly SpriteAsset Stars2;
         public readonly SpriteAsset Stars3;
-        public readonly SpriteAsset ProfilePicture6;
-        public readonly SpriteAsset ProfilePicture3;
-        public readonly SpriteAsset ProfilePicture2;
-        public readonly SpriteAsset ProfilePicture4;
-        public readonly SpriteAsset ProfilePicture1;
-        public readonly SpriteAsset ProfilePicture7;
-        public readonly SpriteAsset ProfilePicture5;
-        public readonly SpriteAsset DemoWhiteGem;
-        public readonly SpriteAsset DemoRedGem;
-        public readonly SpriteAsset DemoYellowGem;
-        public readonly SpriteAsset DemoBlueGem;
-        public readonly SpriteAsset DemoPurpleGem;
         public readonly SpriteAsset CircleFull512px;
         public readonly SpriteAsset DefaultProfilePicture;
-        public readonly SpriteAsset RoundedSquareFull512px;
+        public readonly SpriteAsset ProfilePicture1;
+        public readonly SpriteAsset ProfilePicture2;
+        public readonly SpriteAsset ProfilePicture3;
+        public readonly SpriteAsset ProfilePicture4;
+        public readonly SpriteAsset ProfilePicture5;
+        public readonly SpriteAsset ProfilePicture6;
+        public readonly SpriteAsset ProfilePicture7;
         public readonly SpriteAsset RoundedSquareFull128px;
+        public readonly SpriteAsset RoundedSquareFull512px;
 
         #endregion
 
@@ -283,6 +283,11 @@ namespace Delight
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame3 = new SpriteAsset { Id = "Frame3", AssetBundleId = "Bundle2", RelativePath = "" };
             Frame4 = new SpriteAsset { Id = "Frame4", AssetBundleId = "Bundle2", RelativePath = "" };
+            DemoBlueGem = new SpriteAsset { Id = "DemoBlueGem", IsResource = true, RelativePath = "Gems/" };
+            DemoPurpleGem = new SpriteAsset { Id = "DemoPurpleGem", IsResource = true, RelativePath = "Gems/" };
+            DemoRedGem = new SpriteAsset { Id = "DemoRedGem", IsResource = true, RelativePath = "Gems/" };
+            DemoWhiteGem = new SpriteAsset { Id = "DemoWhiteGem", IsResource = true, RelativePath = "Gems/" };
+            DemoYellowGem = new SpriteAsset { Id = "DemoYellowGem", IsResource = true, RelativePath = "Gems/" };
             LevelSelectBg = new SpriteAsset { Id = "LevelSelectBg", IsResource = true, RelativePath = "MainMenu/" };
             LevelSelectItemBg = new SpriteAsset { Id = "LevelSelectItemBg", IsResource = true, RelativePath = "MainMenu/" };
             LevelSelectPageButton = new SpriteAsset { Id = "LevelSelectPageButton", IsResource = true, RelativePath = "MainMenu/" };
@@ -297,22 +302,17 @@ namespace Delight
             Stars1 = new SpriteAsset { Id = "Stars1", IsResource = true, RelativePath = "MainMenu/" };
             Stars2 = new SpriteAsset { Id = "Stars2", IsResource = true, RelativePath = "MainMenu/" };
             Stars3 = new SpriteAsset { Id = "Stars3", IsResource = true, RelativePath = "MainMenu/" };
-            ProfilePicture6 = new SpriteAsset { Id = "ProfilePicture6", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture3 = new SpriteAsset { Id = "ProfilePicture3", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture2 = new SpriteAsset { Id = "ProfilePicture2", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture4 = new SpriteAsset { Id = "ProfilePicture4", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture1 = new SpriteAsset { Id = "ProfilePicture1", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture7 = new SpriteAsset { Id = "ProfilePicture7", IsResource = true, RelativePath = "PlayerProfile/" };
-            ProfilePicture5 = new SpriteAsset { Id = "ProfilePicture5", IsResource = true, RelativePath = "PlayerProfile/" };
-            DemoWhiteGem = new SpriteAsset { Id = "DemoWhiteGem", IsResource = true, RelativePath = "Gems/" };
-            DemoRedGem = new SpriteAsset { Id = "DemoRedGem", IsResource = true, RelativePath = "Gems/" };
-            DemoYellowGem = new SpriteAsset { Id = "DemoYellowGem", IsResource = true, RelativePath = "Gems/" };
-            DemoBlueGem = new SpriteAsset { Id = "DemoBlueGem", IsResource = true, RelativePath = "Gems/" };
-            DemoPurpleGem = new SpriteAsset { Id = "DemoPurpleGem", IsResource = true, RelativePath = "Gems/" };
             CircleFull512px = new SpriteAsset { Id = "CircleFull@512px", IsResource = true, RelativePath = "PlayerProfile/" };
             DefaultProfilePicture = new SpriteAsset { Id = "DefaultProfilePicture", IsResource = true, RelativePath = "PlayerProfile/" };
-            RoundedSquareFull512px = new SpriteAsset { Id = "RoundedSquareFull@512px", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture1 = new SpriteAsset { Id = "ProfilePicture1", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture2 = new SpriteAsset { Id = "ProfilePicture2", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture3 = new SpriteAsset { Id = "ProfilePicture3", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture4 = new SpriteAsset { Id = "ProfilePicture4", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture5 = new SpriteAsset { Id = "ProfilePicture5", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture6 = new SpriteAsset { Id = "ProfilePicture6", IsResource = true, RelativePath = "PlayerProfile/" };
+            ProfilePicture7 = new SpriteAsset { Id = "ProfilePicture7", IsResource = true, RelativePath = "PlayerProfile/" };
             RoundedSquareFull128px = new SpriteAsset { Id = "RoundedSquareFull@128px", IsResource = true, RelativePath = "PlayerProfile/" };
+            RoundedSquareFull512px = new SpriteAsset { Id = "RoundedSquareFull@512px", IsResource = true, RelativePath = "PlayerProfile/" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
@@ -343,6 +343,11 @@ namespace Delight
             Add(BigSprite);
             Add(Frame3);
             Add(Frame4);
+            Add(DemoBlueGem);
+            Add(DemoPurpleGem);
+            Add(DemoRedGem);
+            Add(DemoWhiteGem);
+            Add(DemoYellowGem);
             Add(LevelSelectBg);
             Add(LevelSelectItemBg);
             Add(LevelSelectPageButton);
@@ -357,22 +362,17 @@ namespace Delight
             Add(Stars1);
             Add(Stars2);
             Add(Stars3);
-            Add(ProfilePicture6);
-            Add(ProfilePicture3);
-            Add(ProfilePicture2);
-            Add(ProfilePicture4);
-            Add(ProfilePicture1);
-            Add(ProfilePicture7);
-            Add(ProfilePicture5);
-            Add(DemoWhiteGem);
-            Add(DemoRedGem);
-            Add(DemoYellowGem);
-            Add(DemoBlueGem);
-            Add(DemoPurpleGem);
             Add(CircleFull512px);
             Add(DefaultProfilePicture);
-            Add(RoundedSquareFull512px);
+            Add(ProfilePicture1);
+            Add(ProfilePicture2);
+            Add(ProfilePicture3);
+            Add(ProfilePicture4);
+            Add(ProfilePicture5);
+            Add(ProfilePicture6);
+            Add(ProfilePicture7);
             Add(RoundedSquareFull128px);
+            Add(RoundedSquareFull512px);
         }
 
         #endregion
@@ -498,78 +498,6 @@ namespace Delight
     public static partial class Assets
     {
         public static ShaderAssetData Shaders = new ShaderAssetData();
-    }
-
-    #endregion
-
-    #region Texture2Ds
-
-    /// <summary>
-    /// Manages a UnityEngine.Texture2D object. Loads/unloads the asset on-demand as it's requested by views.
-    /// </summary>
-    public partial class Texture2DAsset : AssetObject<UnityEngine.Texture2D>
-    {
-        public static implicit operator Texture2DAsset(UnityEngine.Texture2D unityObject)
-        {
-            return new Texture2DAsset { UnityObject = unityObject, IsUnmanaged = true };
-        }
-
-        public static implicit operator Texture2DAsset(string assetId)
-        {
-            if (String.IsNullOrEmpty(assetId))
-                return null;
-
-            if (assetId.StartsWith("?"))
-                assetId = assetId.Substring(1);
-
-            return Assets.Texture2Ds[assetId];
-        }
-    }
-
-    /// <summary>
-    /// Texture2DAsset data provider. Contains references to all texture2ds in the project.
-    /// </summary>
-    public partial class Texture2DAssetData : BindableCollection<Texture2DAsset>
-    {
-        #region Fields
-
-        public readonly Texture2DAsset DemoWhiteGem;
-        public readonly Texture2DAsset DemoRedGem;
-        public readonly Texture2DAsset DemoYellowGem;
-        public readonly Texture2DAsset DemoBlueGem;
-        public readonly Texture2DAsset DemoPurpleGem;
-        public readonly Texture2DAsset RoundedSquareFull512px;
-        public readonly Texture2DAsset RoundedSquareFull128px;
-
-        #endregion
-
-        #region Constructor
-
-        public Texture2DAssetData()
-        {
-            DemoWhiteGem = new Texture2DAsset { Id = "DemoWhiteGem", IsResource = true, RelativePath = "Gems/" };
-            DemoRedGem = new Texture2DAsset { Id = "DemoRedGem", IsResource = true, RelativePath = "Gems/" };
-            DemoYellowGem = new Texture2DAsset { Id = "DemoYellowGem", IsResource = true, RelativePath = "Gems/" };
-            DemoBlueGem = new Texture2DAsset { Id = "DemoBlueGem", IsResource = true, RelativePath = "Gems/" };
-            DemoPurpleGem = new Texture2DAsset { Id = "DemoPurpleGem", IsResource = true, RelativePath = "Gems/" };
-            RoundedSquareFull512px = new Texture2DAsset { Id = "RoundedSquareFull@512px", IsResource = true, RelativePath = "PlayerProfile/" };
-            RoundedSquareFull128px = new Texture2DAsset { Id = "RoundedSquareFull@128px", IsResource = true, RelativePath = "PlayerProfile/" };
-
-            Add(DemoWhiteGem);
-            Add(DemoRedGem);
-            Add(DemoYellowGem);
-            Add(DemoBlueGem);
-            Add(DemoPurpleGem);
-            Add(RoundedSquareFull512px);
-            Add(RoundedSquareFull128px);
-        }
-
-        #endregion
-    }
-
-    public static partial class Assets
-    {
-        public static Texture2DAssetData Texture2Ds = new Texture2DAssetData();
     }
 
     #endregion

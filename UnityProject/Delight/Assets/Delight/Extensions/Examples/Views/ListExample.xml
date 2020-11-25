@@ -14,10 +14,11 @@
     </ListItem>
   </List>  
   
-  <Group Alignment="Left" Spacing="5" Offset="300,0,0,0">
+  <Group Alignment="Left" Spacing="5" Offset="10,0,0,0">
     <Button Style="RoundedButton" Text="Add" Width="150" Click="Add" />
     <Button Style="RoundedButton" Text="Remove Selected" Width="150" Click="$ Models.DemoPlayers.Remove(SelectedPlayer)" />
     <Button Style="RoundedButton" Text="Clear" Width="150" Click="$ Models.DemoPlayers.Clear()" />
     <Button Style="RoundedButton" Text="Reset" Width="150" Click="$ Models.DemoPlayers.Reset()" />
+    <Button Style="RoundedButton" Text="Replace" Width="150" Click="Replace" />
   </Group> 
 </ListExample>

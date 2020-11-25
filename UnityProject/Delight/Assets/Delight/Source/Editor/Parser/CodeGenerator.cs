@@ -2974,8 +2974,7 @@ namespace Delight.Editor.Parser
             {
                 sb.AppendLine("        public override void Reset()");
                 sb.AppendLine("        {");
-                sb.AppendLine("            base.Reset();");
-                sb.AppendLine("            AddRange(new List<{0}> {{ {1} }});", modelObject.Name, String.Join(", ", addedItems));
+                sb.AppendLine("            Replace(new List<{0}> {{ {1} }});", modelObject.Name, String.Join(", ", addedItems));
                 sb.AppendLine("        }");
                 sb.AppendLine();
             }
