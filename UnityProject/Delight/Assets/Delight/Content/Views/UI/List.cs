@@ -407,10 +407,7 @@ namespace Delight
 
                 case CollectionChangeAction.RemoveRange:
                     var removeRangeArgs = e as CollectionChangedRangeEventArgs;
-                    foreach (var item in removeRangeArgs.Items)
-                    {
-                        DestroyItem(item);
-                    }
+                    DestroyItems(removeRangeArgs.Items);
                     updateLayout = true;
                     break;
 
@@ -635,7 +632,15 @@ namespace Delight
         /// <summary>
         /// Destroys item in list.
         /// </summary>
-        protected virtual void DestroyItem(object item)
+        protected virtual async Task DestroyItem(object item)
+        {
+            await DestroyItems(new List<object> { item });
+        }
+
+        /// <summary>
+        /// Destroys items in list.
+        /// </summary>
+        protected virtual async Task DestroyItems(List<object> items)
         {
             if (IsVirtualized)
             {
@@ -644,20 +649,54 @@ namespace Delight
                 return;
             }
 
-            if (!_presentedItems.TryGetValue(item, out var listItem))
-                return;
+            var listItemsRemoved = new List<ListItem>();
+            var removeStateChangeTasks = new List<Task>();
+            float cascadingDelay = 0;
+            bool animatesRemove = false;
 
-            var index = Content.LayoutChildren.IndexOf(listItem);
-            listItem.Unload();
-            Content.LayoutChildren.Remove(listItem);
-            _presentedItems.Remove(item);
-
-            // update index and IsAlternate on subsequent list items
-            for (int i = index; i < Content.LayoutChildren.Count; ++i)
+            foreach (var item in items)
             {
-                var subsequentListItem = Content.LayoutChildren[i] as ListItem;
-                subsequentListItem.IsAlternate = IsOdd(i);
-                subsequentListItem.ContentTemplateData.ZeroIndex = i;
+                if (!_presentedItems.TryGetValue(item, out var listItem))
+                    return;
+
+                _presentedItems.Remove(item);
+                listItemsRemoved.Add(listItem);
+
+                animatesRemove |= listItem.AnimatesStateChange(DefaultStateName, "Unlisted");
+
+                await listItem.SetState(DefaultStateName, false);
+                removeStateChangeTasks.Add(listItem.SetState("Unlisted", true, cascadingDelay));
+                cascadingDelay += CascadingAnimationDelay;
+            }
+
+            // animate destroyed children
+            if (listItemsRemoved.Any())
+            {
+                await Task.WhenAll(removeStateChangeTasks);
+            }
+
+            // destroy list item
+            foreach (var listItem in listItemsRemoved)
+            {
+                var index = Content.LayoutChildren.IndexOf(listItem);
+                listItem.Unload();
+                Content.LayoutChildren.Remove(listItem);
+
+                // update index and IsAlternate on subsequent list items
+                for (int i = index; i < Content.LayoutChildren.Count; ++i)
+                {
+                    var subsequentListItem = Content.LayoutChildren[i] as ListItem;
+                    subsequentListItem.IsAlternate = IsOdd(i);
+                    subsequentListItem.ContentTemplateData.ZeroIndex = i;
+                }
+            }
+
+            if (animatesRemove)
+            {
+                if (UpdateLayout(false))
+                {
+                    NotifyParentOfChildLayoutChanged();
+                }
             }
         }
 
@@ -792,7 +831,7 @@ namespace Delight
         /// <summary>
         /// Called dynamic list items are to be generated.
         /// </summary>
-        protected async void CreateListItem(object item, bool animate = true)
+        protected async Task CreateListItem(object item, bool animate = true)
         {
             await CreateListItems(new List<object> { item });
         }
@@ -874,15 +913,12 @@ namespace Delight
                     listItem.ContentTemplateData.ZeroIndex = _presentedItems.Count - 1;
                 }
 
-                // TODO here we might want to UpdateLayout before starting animations, at this point I don't believe we need to await the animations
                 await listItem.SetState("Unlisted", false);
 
                 // set state
                 listItem.SetState(DefaultStateName, animate, cascadingDelay);
                 cascadingDelay += CascadingAnimationDelay;
             }
-
-            // TODO to prevent flickering we might want to set visibility to false and set it to true here after every item is loaded and the animation should set it to visible as well
         }
 
         /// <summary>

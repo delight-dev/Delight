@@ -45,6 +45,7 @@ namespace Delight
         private int _selectedRaycastedIndex = 0;
         private List<SelectionIndicator> _selectionIndicators = new List<SelectionIndicator>();
         private bool _viewLockEnabled = false;
+        private bool _disableSelectionLogic = false;
 
         public EventSystem _eventSystem;
         public EventSystem EventSystem
@@ -152,7 +153,7 @@ namespace Delight
             // Mouse click - selection logic for selecting views in the designer
             if (Input.GetMouseButtonDown(0) &&
                 ScrollableContentRegion.ContainsMouse(Input.mousePosition) &&
-                EditedView != null)
+                EditedView != null && !_disableSelectionLogic)
             {
                 var pointerEventData = new PointerEventData(EventSystem);
                 pointerEventData.position = Input.mousePosition;

@@ -791,6 +791,25 @@ namespace Delight
         }
 
         /// <summary>
+        /// Returns boolean indicating if current view animates the specified state change.
+        /// </summary>
+        public bool AnimatesStateChange(string from, string to)
+        {
+            if (_stateAnimations == null)
+                return false;
+
+            foreach (var stateAnimation in _stateAnimations)
+            {
+                if ((stateAnimation.FromAny || stateAnimation.FromState == from) &&
+                    (stateAnimation.ToAny || stateAnimation.ToState == to))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Gets list of state changing properties.
         /// </summary>
         private List<DependencyProperty> GetStateChangingProperties(string newState)

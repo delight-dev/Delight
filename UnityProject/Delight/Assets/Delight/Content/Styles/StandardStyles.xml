@@ -90,10 +90,10 @@
 
     <!-- Called when item is removed -->
     <StateAnimation From="Default" To="Unlisted">
-      <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
-      <Animate Property="Scale" Duration="2850ms" EasingFunction="ElasticEaseOut" />
-      <Animate Property="IsVisible" Duration="2850ms" EasingFunction="FlipEnd" />
-      <Animate Property="RaycastBlockMode" Duration="2850ms" EasingFunction="FlipStart" />
+      <Animate Property="Offset" Duration="850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="Scale" Duration="850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="IsVisible" Duration="850ms" EasingFunction="FlipEnd" />
+      <Animate Property="RaycastBlockMode" Duration="850ms" EasingFunction="FlipStart" />
     </StateAnimation>
   </StateAnimations>
   <Button Style="RoundedButton" BackgroundSprite="RoundedSquareFull@128px" BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal"
