@@ -136,7 +136,7 @@ namespace Delight
             return item.GetHashCode().ToString();
         }
 
-        public virtual void AddRange(IEnumerable<T> items)
+        public virtual void AddRange(IEnumerable<T> items, bool? animate = null)
         {
             var addedItems = new List<object>();
             foreach (var item in items)
@@ -158,12 +158,13 @@ namespace Delight
                 Notify(new CollectionChangedRangeEventArgs
                 {
                     ChangeAction = CollectionChangeAction.AddRange,
-                    Items = addedItems
+                    Items = addedItems,
+                    Animate = animate
                 });
             }
         }
 
-        public virtual void Add(T item)
+        public virtual void Add(T item, bool? animate = null)
         {
             string id = GetId(item, true);
             if (Data.ContainsKey(id))
@@ -177,12 +178,13 @@ namespace Delight
             Notify(new CollectionChangedEventArgs
             {
                 ChangeAction = CollectionChangeAction.Add,
-                Item = item
+                Item = item,
+                Animate = animate
             });
             OnPropertyChanged(id);
         }
 
-        public virtual void Insert(int index, T item)
+        public virtual void Insert(int index, T item, bool? animate = null)
         {
             string id = GetId(item, true);
             if (Data.ContainsKey(id))
@@ -195,18 +197,20 @@ namespace Delight
 
             Notify(new CollectionChangedEventArgs
             {
-                ChangeAction = CollectionChangeAction.Replace
+                ChangeAction = CollectionChangeAction.Replace,
+                Animate = animate
             });
             OnPropertyChanged(id);
         }
 
-        public virtual void Clear()
+        public virtual void Clear(bool? animate = null)
         {
             Data.Clear();
             DataList.Clear();
             Notify(new CollectionChangedEventArgs
             {
-                ChangeAction = CollectionChangeAction.Clear
+                ChangeAction = CollectionChangeAction.Clear,
+                Animate = animate
             });
         }
 
@@ -221,7 +225,7 @@ namespace Delight
                 OnCollectionChanged(eventArgs);
         }
 
-        public virtual void Replace(IEnumerable<T> items)
+        public virtual void Replace(IEnumerable<T> items, bool? animate = null)
         {
             Data.Clear();
             DataList.Clear();
@@ -233,7 +237,8 @@ namespace Delight
             }
             Notify(new CollectionChangedEventArgs
             {
-                ChangeAction = CollectionChangeAction.Replace
+                ChangeAction = CollectionChangeAction.Replace,
+                Animate = animate
             });
         }
 
@@ -251,15 +256,15 @@ namespace Delight
             return Data.ContainsKey(GetId(item));
         }
 
-        public virtual bool RemoveAt(int index)
+        public virtual bool RemoveAt(int index, bool? animate = null)
         {
             if (index < 0 || index >= Count)
                 return false;
 
-            return Remove(this[index]);
+            return Remove(this[index], animate);
         }
 
-        public virtual bool Remove(T item)
+        public virtual bool Remove(T item, bool? animate = null)
         {
             // TODO we might want a dictionary to keep track of index to make this O(1)
             bool wasRemoved = Data.Remove(GetId(item));
@@ -277,12 +282,45 @@ namespace Delight
                 Notify(new CollectionChangedEventArgs
                 {
                     ChangeAction = CollectionChangeAction.Remove,
-                    Item = item
+                    Item = item,
+                    Animate = animate
                 });
                 return true;
             }
 
             return false;
+        }
+
+        public virtual void RemoveRange(IEnumerable<T> items, bool? animate = null)
+        {
+            // TODO we might want a dictionary to keep track of index to make this O(1)
+            var removedItems = new List<object>();
+            foreach (var item in items)
+            {
+                bool wasRemoved = Data.Remove(GetId(item));
+                if (wasRemoved)
+                {
+                    for (int i = 0; i < DataList.Count; ++i)
+                    {
+                        if (EqualityComparer<T>.Default.Equals(_dataList[i].Value, item))
+                        {
+                            DataList.RemoveAt(i);
+                            removedItems.Add(item);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (removedItems.Any())
+            {
+                Notify(new CollectionChangedRangeEventArgs
+                {
+                    ChangeAction = CollectionChangeAction.RemoveRange,
+                    Items = removedItems,
+                    Animate = animate
+                });
+            }
         }
 
         public virtual void Reverse()
@@ -347,14 +385,6 @@ namespace Delight
                 Alignment = alignment,
                 Offset = offset
             });
-        }
-
-        public virtual void RemoveRange(IEnumerable<T> items)
-        {
-            foreach (var item in items)
-            {
-                Remove(item);
-            }
         }
 
         /// <summary>

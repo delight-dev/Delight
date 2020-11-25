@@ -1587,7 +1587,7 @@ namespace Delight
                     _buttonsExampleComboBoxComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBoxComboBoxListScrollableRegion.Name = "ButtonsExampleComboBoxComboBoxListScrollableRegion";
-                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LineNumber = 28;
+                    _buttonsExampleComboBoxComboBoxListScrollableRegion.LineNumber = 29;
                     _buttonsExampleComboBoxComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_buttonsExampleComboBoxComboBoxListScrollableRegion, ButtonsExampleComboBoxComboBoxListScrollableRegionContentRegion);
@@ -1933,7 +1933,7 @@ namespace Delight
                     _buttonsExampleComboBox1ComboBoxListScrollableRegion = new Template(ComboBoxTemplates.ComboBoxComboBoxListScrollableRegion);
 #if UNITY_EDITOR
                     _buttonsExampleComboBox1ComboBoxListScrollableRegion.Name = "ButtonsExampleComboBox1ComboBoxListScrollableRegion";
-                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LineNumber = 28;
+                    _buttonsExampleComboBox1ComboBoxListScrollableRegion.LineNumber = 29;
                     _buttonsExampleComboBox1ComboBoxListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_buttonsExampleComboBox1ComboBoxListScrollableRegion, ButtonsExampleComboBox1ComboBoxListScrollableRegionContentRegion);

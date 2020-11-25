@@ -496,7 +496,7 @@ namespace Delight
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion = new Template(LevelSelectExampleTemplates.LevelSelectExampleList1ScrollableRegion);
 #if UNITY_EDITOR
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.Name = "MainMenuDemoSceneLevelSelectWindowList1ScrollableRegion";
-                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LineNumber = 28;
+                    _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LineNumber = 29;
                     _mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_mainMenuDemoSceneLevelSelectWindowList1ScrollableRegion, MainMenuDemoSceneLevelSelectWindowList1ScrollableRegionContentRegion);

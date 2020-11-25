@@ -15,6 +15,7 @@ namespace Delight
     {
         public CollectionChangeAction ChangeAction;
         public object Item;
+        public bool? Animate;
     }
 
     /// <summary>

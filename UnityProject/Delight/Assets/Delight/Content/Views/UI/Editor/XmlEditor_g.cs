@@ -1003,7 +1003,7 @@ namespace Delight
                     _xmlEditorAutoCompleteOptionsListScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _xmlEditorAutoCompleteOptionsListScrollableRegion.Name = "XmlEditorAutoCompleteOptionsListScrollableRegion";
-                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 28;
+                    _xmlEditorAutoCompleteOptionsListScrollableRegion.LineNumber = 29;
                     _xmlEditorAutoCompleteOptionsListScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_xmlEditorAutoCompleteOptionsListScrollableRegion, XmlEditorAutoCompleteOptionsListScrollableRegionContentRegion);

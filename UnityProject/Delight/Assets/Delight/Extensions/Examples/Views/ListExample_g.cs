@@ -485,7 +485,7 @@ namespace Delight
                     _listExampleList1ScrollableRegion = new Template(ListTemplates.ListScrollableRegion);
 #if UNITY_EDITOR
                     _listExampleList1ScrollableRegion.Name = "ListExampleList1ScrollableRegion";
-                    _listExampleList1ScrollableRegion.LineNumber = 28;
+                    _listExampleList1ScrollableRegion.LineNumber = 29;
                     _listExampleList1ScrollableRegion.LinePosition = 4;
 #endif
                     Delight.ScrollableRegion.ContentRegionTemplateProperty.SetDefault(_listExampleList1ScrollableRegion, ListExampleList1ScrollableRegionContentRegion);

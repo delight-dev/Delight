@@ -36,8 +36,6 @@ namespace Delight
         private Group _pageButtonGroup;
         private ContentTemplate _pageButtonTemplate;
 
-        private SemaphoreSlim _listOperationSemaphore = new SemaphoreSlim(1, 1);
-
         #endregion
 
         #region Methods
@@ -60,8 +58,8 @@ namespace Delight
                 case nameof(Orientation):
                     if (IsLoaded)
                     {
-                        await ClearItems();
-                        await CreateItems();
+                        await ClearItems(ListAnimationOptions == ListAnimationOptions.Always);
+                        await CreateItems(ListAnimationOptions == ListAnimationOptions.Always);
                     }
                     break;
 
@@ -89,14 +87,14 @@ namespace Delight
         /// <summary>
         /// Generates views from data in collection. 
         /// </summary>
-        protected async Task CreateItems()
+        protected async Task CreateItems(bool animate)
         {
             if (Items == null)
                 return;
 
             // call to initialize dynamic lists if necessary
             await Items.LoadData();
-            await CreateListItems(Items);
+            await CreateListItems(Items, animate);
 
             // update layout and notify parents if size has changed
             if (UpdateLayout(false))
@@ -410,32 +408,47 @@ namespace Delight
         /// </summary>
         private async Task OnCollectionChanged(CollectionChangedEventArgs e)
         {
+            bool animate = true;
+            switch (ListAnimationOptions)
+            {
+                case ListAnimationOptions.OnListOperationsAndSet:
+                case ListAnimationOptions.OnListOperations:
+                    animate = e.Animate.HasValue ? e.Animate.Value : true;
+                    break;
+                case ListAnimationOptions.Never:
+                    animate = false;
+                    break;
+                case ListAnimationOptions.Always:
+                    animate = true;
+                    break;
+            }
+
             switch (e.ChangeAction)
             {
                 case CollectionChangeAction.AddRange:
                     var rangeArgs = e as CollectionChangedRangeEventArgs;
-                    await CreateListItems(rangeArgs.Items);
+                    await CreateListItems(rangeArgs.Items, animate);
                     break;
 
                 case CollectionChangeAction.Add:
-                    await CreateListItem(e.Item);
+                    await CreateListItem(e.Item, animate);
                     break;
 
                 case CollectionChangeAction.Remove:
-                    await DestroyItem(e.Item);
+                    await DestroyItem(e.Item, animate);
                     break;
 
                 case CollectionChangeAction.RemoveRange:
                     var removeRangeArgs = e as CollectionChangedRangeEventArgs;
-                    await DestroyItems(removeRangeArgs.Items);
+                    await DestroyItems(removeRangeArgs.Items, animate);
                     break;
 
                 case CollectionChangeAction.Replace:
-                    await ReplaceItems();
+                    await ReplaceItems(animate);
                     break;
 
                 case CollectionChangeAction.Clear:
-                    await ClearItems();
+                    await ClearItems(animate);
                     break;
 
                 case CollectionChangeAction.Select:
@@ -579,7 +592,7 @@ namespace Delight
         /// <summary>
         /// Replaces presented items. 
         /// </summary>
-        private async Task ReplaceItems()
+        private async Task ReplaceItems(bool animate)
         {
             // deselect all items
             int selectedIndex = GetSelectedItemIndex();
@@ -587,15 +600,15 @@ namespace Delight
 
             if (IsVirtualized)
             {
-                await ClearItems();
-                await CreateItems();
+                await ClearItems(animate);
+                await CreateItems(animate);
                 return;
             }
 
             int newItemsCount = Items.Count;
             if (newItemsCount <= 0)
             {
-                await ClearItems();
+                await ClearItems(animate);
                 return;
             }
 
@@ -613,7 +626,7 @@ namespace Delight
                     var listItem = Content.LayoutChildren[i] as ListItem;
                     removedItems.Add(listItem.Item);
                 }
-                await DestroyItems(removedItems);
+                await DestroyItems(removedItems, animate);
             }
 
             _presentedItems.Clear();
@@ -638,7 +651,7 @@ namespace Delight
                 {
                     newItems.Add(Items.GetGeneric(i));
                 }
-                await CreateListItems(newItems);
+                await CreateListItems(newItems, animate);
             }
 
             // reselect item
@@ -651,20 +664,20 @@ namespace Delight
         /// <summary>
         /// Destroys item in list.
         /// </summary>
-        protected virtual async Task DestroyItem(object item)
+        protected virtual async Task DestroyItem(object item, bool animate)
         {
-            await DestroyItems(new List<object> { item });
+            await DestroyItems(new List<object> { item }, animate);
         }
 
         /// <summary>
         /// Destroys items in list.
         /// </summary>
-        protected virtual async Task DestroyItems(IEnumerable<object> items)
+        protected virtual async Task DestroyItems(IEnumerable<object> items, bool animate)
         {
             if (IsVirtualized)
             {
-                await ClearItems();
-                await CreateItems();
+                await ClearItems(animate);
+                await CreateItems(animate);
                 return;
             }
 
@@ -693,7 +706,7 @@ namespace Delight
                 animatesRemove |= listItem.AnimatesStateChange(DefaultStateName, "Unlisted");
 
                 await listItem.SetState(DefaultStateName, false);
-                removeStateChangeTasks.Add(listItem.SetState("Unlisted", true, cascadingDelay));
+                removeStateChangeTasks.Add(listItem.SetState("Unlisted", animate, cascadingDelay));
                 cascadingDelay += CascadingAnimationDelay;
             }
 
@@ -752,15 +765,15 @@ namespace Delight
             // generate new items
             if (IsLoaded)
             {
-                await ClearItems();
-                await CreateItems();
+                await ClearItems(ListAnimationOptions == ListAnimationOptions.Always);
+                await CreateItems(ListAnimationOptions == ListAnimationOptions.Always);
             }
         }
 
         /// <summary>
         /// Clears the list. 
         /// </summary>
-        private async Task ClearItems()
+        private async Task ClearItems(bool animate)
         {
             if (IsVirtualized)
             {
@@ -790,7 +803,7 @@ namespace Delight
                 }
 
                 removedItems.Reverse();
-                await DestroyItems(removedItems);
+                await DestroyItems(removedItems, animate);
             }
         }
 
@@ -868,15 +881,15 @@ namespace Delight
         /// <summary>
         /// Called dynamic list items are to be generated.
         /// </summary>
-        protected async Task CreateListItem(object item, bool animate = true)
+        protected async Task CreateListItem(object item, bool animate)
         {
-            await CreateListItems(new List<object> { item });
+            await CreateListItems(new List<object> { item }, animate);
         }
 
         /// <summary>
         /// Called when a new dynamic list item is to be generated.
         /// </summary>
-        protected async Task CreateListItems(IEnumerable<object> items, bool animate = true)
+        protected async Task CreateListItems(IEnumerable<object> items, bool animate)
         {
             List<ListItem> addedItems = new List<ListItem>();
             foreach (var item in items)
@@ -2254,5 +2267,16 @@ namespace Delight
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Represent list animation options.
+    /// </summary>
+    public enum ListAnimationOptions
+    {
+        OnListOperationsAndSet = 0,
+        OnListOperations = 1,
+        Always = 2,
+        Never = 3
     }
 }

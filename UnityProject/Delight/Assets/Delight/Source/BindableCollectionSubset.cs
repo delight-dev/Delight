@@ -117,17 +117,17 @@ namespace Delight
             return this[id];
         }
 
-        public override void Add(T item)
+        public override void Add(T item, bool? animate = null)
         {
             if (_fkSetter != null)
                 _fkSetter(item);
 
-            base.Add(item);
+            base.Add(item, animate);
 
             AddPropertyChangedListener(item);
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
-            _parentCollection.Add(item);
+            _parentCollection.Add(item, animate);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
@@ -178,9 +178,9 @@ namespace Delight
             }
         }
 
-        public override void Clear()
+        public override void Clear(bool? animate = null)
         {
-            base.Clear();
+            base.Clear(animate);
 
             foreach (var item in _data.Values)
             {
@@ -188,11 +188,11 @@ namespace Delight
             }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
-            _parentCollection.RemoveRange(Data.Values);
+            _parentCollection.RemoveRange(Data.Values, animate);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
-        public override void Replace(IEnumerable<T> items)
+        public override void Replace(IEnumerable<T> items, bool? animate = null)
         {
             foreach (var item in _data.Values)
             {
@@ -209,10 +209,10 @@ namespace Delight
                 AddPropertyChangedListener(item);
             }
 
-            base.Replace(items);
+            base.Replace(items, animate);
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
-            _parentCollection.Replace(items);
+            _parentCollection.Replace(items, animate);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
@@ -221,31 +221,31 @@ namespace Delight
             return Data.ContainsKey(GetId(item));
         }
 
-        public override bool Remove(T item)
+        public override bool Remove(T item, bool? animate = null)
         {
-            var result = base.Remove(item);
+            var result = base.Remove(item, animate);
             if (result)
             {
                 RemovePropertyChangedListener(item);
             }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
-            _parentCollection.Remove(item);
+            _parentCollection.Remove(item, animate);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
 
             return result;
         }
 
-        public override void RemoveRange(IEnumerable<T> items)
+        public override void RemoveRange(IEnumerable<T> items, bool? animate = null)
         {
-            base.RemoveRange(items);
+            base.RemoveRange(items, animate);
             foreach (var item in items)
             {
                 RemovePropertyChangedListener(item);
             }
 
             _parentCollection.CollectionChanged -= ParentCollectionChanged;
-            _parentCollection.RemoveRange(items);
+            _parentCollection.RemoveRange(items, animate);
             _parentCollection.CollectionChanged += ParentCollectionChanged;
         }
 
@@ -259,7 +259,6 @@ namespace Delight
                 return;
 
             _needUpdate = false;
-
             foreach (var item in _data.Values)
             {
                 RemovePropertyChangedListener(item);
