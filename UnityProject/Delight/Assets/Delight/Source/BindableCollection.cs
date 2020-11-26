@@ -269,6 +269,9 @@ namespace Delight
 
         public virtual bool Remove(T item, bool? animate = null)
         {
+            if (item == null)
+                return false;
+
             // TODO we might want a dictionary to keep track of index to make this O(1)
             bool wasRemoved = Data.Remove(GetId(item));
             if (wasRemoved)
@@ -300,6 +303,9 @@ namespace Delight
             var removedItems = new List<object>();
             foreach (var item in items)
             {
+                if (item == null)
+                    continue;
+
                 bool wasRemoved = Data.Remove(GetId(item));
                 if (wasRemoved)
                 {
