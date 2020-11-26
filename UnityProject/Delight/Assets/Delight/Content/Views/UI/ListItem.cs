@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using System.Threading.Tasks;
 #endregion
 
+#pragma warning disable CS4014
+
 namespace Delight
 {
     /// <summary>
@@ -443,3 +445,5 @@ namespace Delight
         #endregion
     }
 }
+
+#pragma warning restore CS4014

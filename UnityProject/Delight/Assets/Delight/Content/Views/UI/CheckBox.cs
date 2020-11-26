@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 #endregion
 
+#pragma warning disable CS4014
+
 namespace Delight
 {
     /// <summary>
@@ -92,7 +94,6 @@ namespace Delight
         {
             if (IsDisabled)
                 return;
-
             if (IsChecked)
             {
                 SetState("Checked");
@@ -153,3 +154,5 @@ namespace Delight
         #endregion
     }
 }
+
+#pragma warning restore CS4014

@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.UI;
 #endregion
 
+#pragma warning disable CS4014
+
 namespace Delight
 {
     /// <summary>
@@ -146,7 +148,6 @@ namespace Delight
         {
             if (state.IEquals(_previousState))
                 return;
-
             RadioButtonImageView.SetState(state, animate, initialDelay);
             RadioButtonLabel.SetState(state, animate, initialDelay);
             await base.SetState(state, animate, initialDelay);
@@ -163,3 +164,5 @@ namespace Delight
         #endregion
     }
 }
+
+#pragma warning restore CS4014

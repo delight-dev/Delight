@@ -34,14 +34,15 @@ namespace Delight
                 var listItem1 = new ListItem(this, List1.Content, "ListItem1", ListItem1Template);
                 listItem1.StateAnimations.Clear();
                 var listItem1StateAnimation1 = new StateAnimation("Unlisted", DefaultStateName);
+                listItem1StateAnimation1.Add(new Animator<UnityEngine.Vector3>(listItem1, 2.85f, 0f, false, false, 0f, false, EasingFunctions.Get("ElasticEaseOut"), Delight.Vector3ValueConverter.Interpolator, x => listItem1.Scale = x, () => listItem1.Scale, () => ListItem.ScaleProperty.NotifyPropertyChanged(listItem1), ListItem.ScaleProperty, "Unlisted", DefaultStateName));
                 listItem1StateAnimation1.Add(new Animator<Delight.ElementMargin>(listItem1, 2.85f, 0f, false, false, 0f, false, EasingFunctions.Get("ElasticEaseOut"), Delight.ElementMarginValueConverter.Interpolator, x => listItem1.Offset = x, () => listItem1.Offset, () => ListItem.OffsetProperty.NotifyPropertyChanged(listItem1), ListItem.OffsetProperty, "Unlisted", DefaultStateName));
                 listItem1StateAnimation1.Add(new Animator<System.Boolean>(listItem1, 2.85f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipStart"), Delight.BoolValueConverter.Interpolator, x => listItem1.IsVisible = x, () => listItem1.IsVisible, () => ListItem.IsVisibleProperty.NotifyPropertyChanged(listItem1), ListItem.IsVisibleProperty, "Unlisted", DefaultStateName));
                 listItem1StateAnimation1.Add(new Animator<Delight.RaycastBlockMode>(listItem1, 2.85f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipEnd"), Delight.EnumValueConverter<Delight.RaycastBlockMode>.Interpolator, x => listItem1.RaycastBlockMode = x, () => listItem1.RaycastBlockMode, () => ListItem.RaycastBlockModeProperty.NotifyPropertyChanged(listItem1), ListItem.RaycastBlockModeProperty, "Unlisted", DefaultStateName));
                 listItem1.StateAnimations.Add(listItem1StateAnimation1);
                 var listItem1StateAnimation2 = new StateAnimation(DefaultStateName, "Removed");
-                listItem1StateAnimation2.Add(new Animator<UnityEngine.Vector3>(listItem1, 0.15f, 0f, false, false, 0f, false, EasingFunctions.Get("QuadraticEaseOut"), Delight.Vector3ValueConverter.Interpolator, x => listItem1.Scale = x, () => listItem1.Scale, () => ListItem.ScaleProperty.NotifyPropertyChanged(listItem1), ListItem.ScaleProperty, DefaultStateName, "Removed"));
-                listItem1StateAnimation2.Add(new Animator<System.Boolean>(listItem1, 0.15f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipEnd"), Delight.BoolValueConverter.Interpolator, x => listItem1.IsVisible = x, () => listItem1.IsVisible, () => ListItem.IsVisibleProperty.NotifyPropertyChanged(listItem1), ListItem.IsVisibleProperty, DefaultStateName, "Removed"));
-                listItem1StateAnimation2.Add(new Animator<Delight.RaycastBlockMode>(listItem1, 0.15f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipStart"), Delight.EnumValueConverter<Delight.RaycastBlockMode>.Interpolator, x => listItem1.RaycastBlockMode = x, () => listItem1.RaycastBlockMode, () => ListItem.RaycastBlockModeProperty.NotifyPropertyChanged(listItem1), ListItem.RaycastBlockModeProperty, DefaultStateName, "Removed"));
+                listItem1StateAnimation2.Add(new Animator<UnityEngine.Vector3>(listItem1, 0.35f, 0f, false, false, 0f, false, EasingFunctions.Get("QuadricEaseIn"), Delight.Vector3ValueConverter.Interpolator, x => listItem1.Scale = x, () => listItem1.Scale, () => ListItem.ScaleProperty.NotifyPropertyChanged(listItem1), ListItem.ScaleProperty, DefaultStateName, "Removed"));
+                listItem1StateAnimation2.Add(new Animator<System.Boolean>(listItem1, 0.45f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipEnd"), Delight.BoolValueConverter.Interpolator, x => listItem1.IsVisible = x, () => listItem1.IsVisible, () => ListItem.IsVisibleProperty.NotifyPropertyChanged(listItem1), ListItem.IsVisibleProperty, DefaultStateName, "Removed"));
+                listItem1StateAnimation2.Add(new Animator<Delight.RaycastBlockMode>(listItem1, 0.45f, 0f, false, false, 0f, false, EasingFunctions.Get("FlipStart"), Delight.EnumValueConverter<Delight.RaycastBlockMode>.Interpolator, x => listItem1.RaycastBlockMode = x, () => listItem1.RaycastBlockMode, () => ListItem.RaycastBlockModeProperty.NotifyPropertyChanged(listItem1), ListItem.RaycastBlockModeProperty, DefaultStateName, "Removed"));
                 listItem1.StateAnimations.Add(listItem1StateAnimation2);
                 var region1 = new Region(this, listItem1.Content, "Region1", Region1Template);
                 var image1 = new Image(this, region1.Content, "Image1", Image1Template);
@@ -675,7 +676,7 @@ namespace Delight
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Selected", _listExampleListItem1, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.ListItem.BackgroundColorProperty.SetDefault(_listExampleListItem1, new UnityEngine.Color(0f, 0f, 0f, 0f));
                     Delight.ListItem.OffsetProperty.SetDefault(_listExampleListItem1, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents)));
-                    Delight.ListItem.OffsetProperty.SetStateDefault("Unlisted", _listExampleListItem1, new ElementMargin(new ElementSize(1f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents)));
+                    Delight.ListItem.OffsetProperty.SetStateDefault("Unlisted", _listExampleListItem1, new ElementMargin(new ElementSize(0.5f, ElementSizeUnit.Percents), new ElementSize(0.5f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents), new ElementSize(0f, ElementSizeUnit.Percents)));
                     Delight.ListItem.IsVisibleProperty.SetDefault(_listExampleListItem1, true);
                     Delight.ListItem.IsVisibleProperty.SetStateDefault("Unlisted", _listExampleListItem1, false);
                     Delight.ListItem.IsVisibleProperty.SetStateDefault("Removed", _listExampleListItem1, false);
@@ -683,7 +684,7 @@ namespace Delight
                     Delight.ListItem.RaycastBlockModeProperty.SetStateDefault("Unlisted", _listExampleListItem1, Delight.RaycastBlockMode.Never);
                     Delight.ListItem.RaycastBlockModeProperty.SetStateDefault("Removed", _listExampleListItem1, Delight.RaycastBlockMode.Never);
                     Delight.ListItem.ScaleProperty.SetDefault(_listExampleListItem1, new Vector3(1f, 1f, 0f));
-                    Delight.ListItem.ScaleProperty.SetStateDefault("Unlisted", _listExampleListItem1, new Vector3(1f, 1f, 0f));
+                    Delight.ListItem.ScaleProperty.SetStateDefault("Unlisted", _listExampleListItem1, new Vector3(0.75f, 0.75f, 0f));
                     Delight.ListItem.ScaleProperty.SetStateDefault("Removed", _listExampleListItem1, new Vector3(0f, 0f, 0f));
                     Delight.ListItem.WidthProperty.SetDefault(_listExampleListItem1, new ElementSize(180f, ElementSizeUnit.Pixels));
                     Delight.ListItem.HeightProperty.SetDefault(_listExampleListItem1, new ElementSize(43f, ElementSizeUnit.Pixels));

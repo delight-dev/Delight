@@ -80,6 +80,7 @@
   <StateAnimations Id="ListItemAnimation1">
     <!-- Called when item is added -->
     <StateAnimation From="Unlisted" To="Default">
+      <Animate Property="Scale" Duration="2850ms" EasingFunction="ElasticEaseOut" />
       <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
       <Animate Property="IsVisible" Duration="2850ms" EasingFunction="FlipStart" />
       <Animate Property="RaycastBlockMode" Duration="2850ms" EasingFunction="FlipEnd" />
@@ -87,16 +88,16 @@
 
     <!-- Called when item is removed -->
     <StateAnimation From="Default" To="Removed">
-      <Animate Property="Scale" Duration="150ms" EasingFunction="QuadraticEaseOut" />
-      <Animate Property="IsVisible" Duration="150ms" EasingFunction="FlipEnd" />
-      <Animate Property="RaycastBlockMode" Duration="150ms" EasingFunction="FlipStart" />
+      <Animate Property="Scale" Duration="350ms" EasingFunction="QuadricEaseIn" /> 
+      <Animate Property="IsVisible" Duration="450ms" EasingFunction="FlipEnd" />
+      <Animate Property="RaycastBlockMode" Duration="450ms" EasingFunction="FlipStart" />
     </StateAnimation>
   </StateAnimations>
   <ListItem Style="AnimatedItem1" BasedOn="Clear" StateAnimations="ListItemAnimation1" 
-            Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%"
+            Offset="0%,0%,0%,0%" Unlisted-Offset="50%,50%,0%,0%"
             IsVisible="True" Unlisted-IsVisible="False" Removed-IsVisible="False"
             RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" Removed-RaycastBlockMode="Never"
-            Scale="1,1" Unlisted-Scale="1,1" Removed-Scale="0,0" />
+            Scale="1,1" Unlisted-Scale="0.75,0.75" Removed-Scale="0,0" />
 
   <!-- Example of list item animation where adding and removing does same animations just reverses the states -->
   <StateAnimations Id="ListItemAnimation2">

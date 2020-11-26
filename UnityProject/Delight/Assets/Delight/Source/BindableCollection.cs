@@ -122,6 +122,9 @@ namespace Delight
             if (IsBindableObject)
             {
                 var bindableObject = item as BindableObject;
+                if (bindableObject == null)
+                    return null;
+
                 if (checkSetNewId && String.IsNullOrEmpty(bindableObject.Id))
                 {
                     bindableObject.Id = Guid.NewGuid().ToString();
