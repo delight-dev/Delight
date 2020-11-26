@@ -76,10 +76,30 @@
     </StateAnimation>
   </StateAnimations>
 
-  <ListItem Style="SwipeItem" StateAnimations="ListItemSwipe" Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%" IsVisible="True" Unlisted-IsVisible="False" />
-  <ListItem Style="ListExampleItem" BasedOn="Clear" StateAnimations="ListItemSwipe" Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%" IsVisible="True" Unlisted-IsVisible="False"
-            RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" />
-  <StateAnimations Id="ListItemSwipe">
+  <!-- Example of list item animation where adding and removing does different animations -->
+  <StateAnimations Id="ListItemAnimation1">
+    <!-- Called when item is added -->
+    <StateAnimation From="Unlisted" To="Default">
+      <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
+      <Animate Property="IsVisible" Duration="2850ms" EasingFunction="FlipStart" />
+      <Animate Property="RaycastBlockMode" Duration="2850ms" EasingFunction="FlipEnd" />
+    </StateAnimation>
+
+    <!-- Called when item is removed -->
+    <StateAnimation From="Default" To="Removed">
+      <Animate Property="Scale" Duration="150ms" EasingFunction="QuadraticEaseOut" />
+      <Animate Property="IsVisible" Duration="150ms" EasingFunction="FlipEnd" />
+      <Animate Property="RaycastBlockMode" Duration="150ms" EasingFunction="FlipStart" />
+    </StateAnimation>
+  </StateAnimations>
+  <ListItem Style="AnimatedItem1" BasedOn="Clear" StateAnimations="ListItemAnimation1" 
+            Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%"
+            IsVisible="True" Unlisted-IsVisible="False" Removed-IsVisible="False"
+            RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" Removed-RaycastBlockMode="Never"
+            Scale="1,1" Unlisted-Scale="1,1" Removed-Scale="0,0" />
+
+  <!-- Example of list item animation where adding and removing does same animations just reverses the states -->
+  <StateAnimations Id="ListItemAnimation2">
     <!-- Called when item is added -->
     <StateAnimation From="Unlisted" To="Default">
       <Animate Property="Offset" Duration="2850ms" EasingFunction="ElasticEaseOut" />
@@ -96,9 +116,12 @@
       <Animate Property="RaycastBlockMode" Duration="850ms" EasingFunction="FlipStart" />
     </StateAnimation>
   </StateAnimations>
+  <ListItem Style="AnimatedItem2" BasedOn="Clear" StateAnimations="ListItemAnimation2" Offset="0%,0%,0%,0%" Unlisted-Offset="100%,0%,0%,0%" IsVisible="True" Unlisted-IsVisible="False"
+            RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" />
+
   <Button Style="RoundedButton" BackgroundSprite="RoundedSquareFull@128px" BackgroundColor="#7d7d7d" FontColor="#ffffff" FontStyle="Normal"
           Highlighted-BackgroundColor="Gray90" Pressed-BackgroundColor="#ef706a"
           Highlighted-FontColor="#000000" Pressed-FontColor="#ffffff" Height="30" FontSize="16"
           Disabled-FontStyle="Italic" Disabled-FontColor="Gray80" Disabled-BackgroundColor="#7d7d7d"
           StateAnimations="FadeInOutHighlighted" />
-</StandardStyle> 
+</StandardStyle>

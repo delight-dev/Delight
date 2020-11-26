@@ -25,7 +25,7 @@
       PageNavigationGroupSpacing="t:ElementSize = 2"
       ShowNavigationButtons="t:NavigationButtonsVisibility = True"
       CascadingAnimationDelay="t:Duration = 0"
-      ListAnimationOptions="t:ListAnimationOptions"> 
+      ListAnimationOptions="t:ListAnimationOptions = OnListOperationsAndSet"> 
   <ScrollableRegion Id="ScrollableRegion" MaskContent="True" BubbleNotifyChildLayoutChanged="True" IsContentContainer="True"
                     AutoSizeContentRegion="False">
   </ScrollableRegion>   

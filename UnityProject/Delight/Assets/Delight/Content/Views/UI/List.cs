@@ -58,8 +58,8 @@ namespace Delight
                 case nameof(Orientation):
                     if (IsLoaded)
                     {
-                        await ClearItems(ListAnimationOptions == ListAnimationOptions.Always);
-                        await CreateItems(ListAnimationOptions == ListAnimationOptions.Always);
+                        await ClearItems(AnimateOnSet);
+                        await CreateItems(AnimateOnSet);
                     }
                     break;
 
@@ -703,10 +703,11 @@ namespace Delight
                 _presentedItems.Remove(item);
                 listItemsRemoved.Add(listItem);
 
-                animatesRemove |= listItem.AnimatesStateChange(DefaultStateName, "Unlisted");
+                string removedStateName = GetRemovedStateName(listItem);
+                animatesRemove |= listItem.AnimatesStateChange(DefaultStateName, removedStateName);
 
                 await listItem.SetState(DefaultStateName, false);
-                removeStateChangeTasks.Add(listItem.SetState("Unlisted", animate, cascadingDelay));
+                removeStateChangeTasks.Add(listItem.SetState(removedStateName, animate, cascadingDelay));
                 cascadingDelay += CascadingAnimationDelay;
             }
 
@@ -744,6 +745,21 @@ namespace Delight
         }
 
         /// <summary>
+        /// Get removed state name. If the state animation has a "Removed" state use that one, otherwise use "Unlisted" as removed state name.
+        /// </summary>
+        private string GetRemovedStateName(ListItem listItem)
+        {
+            if (listItem.AnimatesStateChange(DefaultStateName, "Removed") || listItem.AnimatesStateChange("Alternate", "Removed"))
+            {
+                return "Removed";
+            }
+            else
+            {
+                return "Unlisted";
+            }
+        }
+
+        /// <summary>
         /// Called when the list of items has been replaced.
         /// </summary>
         public virtual async void ItemsChanged()
@@ -765,8 +781,8 @@ namespace Delight
             // generate new items
             if (IsLoaded)
             {
-                await ClearItems(ListAnimationOptions == ListAnimationOptions.Always);
-                await CreateItems(ListAnimationOptions == ListAnimationOptions.Always);
+                await ClearItems(AnimateOnSet);
+                await CreateItems(AnimateOnSet);
             }
         }
 
@@ -2263,6 +2279,17 @@ namespace Delight
             get
             {
                 return Overflow == OverflowMode.Wrap ? Orientation == ElementOrientation.Vertical : Orientation == ElementOrientation.Horizontal;
+            }
+        }
+
+        /// <summary>
+        /// Returns boolean indicating if list should animate on set.
+        /// </summary>
+        protected bool AnimateOnSet
+        {
+            get
+            {
+                return ListAnimationOptions == ListAnimationOptions.Always || ListAnimationOptions == ListAnimationOptions.OnListOperationsAndSet;
             }
         }
 

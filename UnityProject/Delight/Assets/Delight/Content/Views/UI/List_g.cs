@@ -2768,6 +2768,7 @@ namespace Delight
                     Delight.List.PageNavigationGroupSpacingProperty.SetDefault(_list, new ElementSize(2f, ElementSizeUnit.Pixels));
                     Delight.List.ShowNavigationButtonsProperty.SetDefault(_list, Delight.NavigationButtonsVisibility.NextPrevious);
                     Delight.List.CascadingAnimationDelayProperty.SetDefault(_list, 0f);
+                    Delight.List.ListAnimationOptionsProperty.SetDefault(_list, Delight.ListAnimationOptions.OnListOperationsAndSet);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_list, ListScrollableRegion);
                 }
                 return _list;

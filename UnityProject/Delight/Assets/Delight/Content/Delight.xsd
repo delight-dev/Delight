@@ -708,6 +708,7 @@
     <xs:attribute name="PageNavigationGroupSpacing" type="xs:string" />
     <xs:attribute name="ShowNavigationButtons" type="Enum_NavigationButtonsVisibility" />
     <xs:attribute name="CascadingAnimationDelay" type="xs:string" />
+    <xs:attribute name="ListAnimationOptions" type="Enum_ListAnimationOptions" />
     <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -2472,6 +2473,7 @@
     <xs:attribute name="PageNavigationGroupSpacing" type="xs:string" />
     <xs:attribute name="ShowNavigationButtons" type="Enum_NavigationButtonsVisibility" />
     <xs:attribute name="CascadingAnimationDelay" type="xs:string" />
+    <xs:attribute name="ListAnimationOptions" type="Enum_ListAnimationOptions" />
     <xs:attribute name="ScrollableRegionMaskContent" type="xs:string" />
     <xs:attribute name="HasInertia" type="xs:string" />
     <xs:attribute name="DecelerationRate" type="xs:string" />
@@ -3007,8 +3009,8 @@
     <xs:restriction base="xs:string">
       <xs:enumeration value="Clear" />
       <xs:enumeration value="UnselectableListItem" />
-      <xs:enumeration value="SwipeItem" />
-      <xs:enumeration value="ListExampleItem" />
+      <xs:enumeration value="AnimatedItem1" />
+      <xs:enumeration value="AnimatedItem2" />
     </xs:restriction>
   </xs:simpleType>
 
@@ -8446,6 +8448,15 @@
       <xs:enumeration value="True" />
       <xs:enumeration value="NextPrevious" />
       <xs:enumeration value="Page" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="Enum_ListAnimationOptions">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OnListOperationsAndSet" />
+      <xs:enumeration value="OnListOperations" />
+      <xs:enumeration value="Always" />
+      <xs:enumeration value="Never" />
     </xs:restriction>
   </xs:simpleType>
 
