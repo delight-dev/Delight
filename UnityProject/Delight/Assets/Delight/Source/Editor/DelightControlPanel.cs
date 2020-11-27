@@ -101,12 +101,11 @@ namespace Delight.Editor
                 }
             }
 
-            // TODO cleanup
-            //GUIContent test = new GUIContent("Test", "");
+            // button for testing
+            //GUIContent test = new GUIContent("Assets Refresh", "");
             //if (GUILayout.Button(test))
             //{
-            //    //var config = MasterConfig.GetInstance();
-            //    //config.SaveConfig();
+            //    AssetDatabase.Refresh();
             //}
         }
 

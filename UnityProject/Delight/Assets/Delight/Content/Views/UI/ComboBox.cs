@@ -57,7 +57,7 @@ namespace Delight
             // if list is scrollable we need to force select on mouse up and set scroll delta for the combo box to be usable
             if (IsScrollable)
             {
-                if (!DisableInteractionScrollDeltaProperty.IsUndefined(ComboBoxList.ScrollableRegion)) // TODO implement
+                if (!DisableInteractionScrollDeltaProperty.IsUndefined(ComboBoxList.ScrollableRegion))
                 {
                     DisableInteractionScrollDelta = 1f;
                 }

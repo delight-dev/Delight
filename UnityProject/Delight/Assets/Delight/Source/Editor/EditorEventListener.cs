@@ -73,15 +73,7 @@ namespace Delight.Editor
                     var bundles = ContentObjectModel.GetInstance().AssetBundleObjects.Where(x => x.NeedBuild).ToList();
                     if (bundles.Count > 0)
                     {
-                        try
-                        {
-                            ContentAssetProcessor.IgnoreChanges = true;
-                            ContentParser.BuildAssetBundles(bundles);
-                        }
-                        finally
-                        {
-                            ContentAssetProcessor.IgnoreChanges = false;
-                        }
+                        ContentParser.BuildAssetBundles(bundles);
                     }
                     break;
 

@@ -654,7 +654,7 @@ namespace Delight
             {
                 if (Input.GetKey(_trackKeyDown))
                 {
-                    inputString = ""; // TODO only necessary on MacBook 
+                    inputString = ""; // only necessary on MacBook 
                     _keyDownDelayTimeElapsed += Time.deltaTime;
                     if (_keyDownDelayTimeElapsed > KeyRepeatDelay)
                     {
@@ -1894,7 +1894,7 @@ namespace Delight
         protected override void AfterLoad()
         {
             base.AfterLoad();
-            //XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // TODO remove after debugging
+            //XmlTextLabel.GameObject.AddComponent<TMPro.Examples.TMP_TextInfoDebugTool>(); // comment after debugging
             LineNumbersRightBorder.Width = CharWidth;
             LineNumbersRightBorder.Offset.Left = CharWidth;
             Caret.Offset.Left = -(CharWidth / 2.0f);
@@ -2242,7 +2242,7 @@ namespace Delight
             // generate caret and selection meshes
             GenerateTextHighlightMeshes();
 
-            // TODO for debugging purposes show which element we are in
+            // for debugging purposes show which element we are in
             DebugTextLabel.Text = _caretElement.ToString();
         }
 

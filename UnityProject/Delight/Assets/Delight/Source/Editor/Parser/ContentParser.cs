@@ -2007,7 +2007,7 @@ namespace Delight.Editor.Parser
             var unityAssetObject = AssetDatabase.LoadMainAssetAtPath(assetFile);
             if (unityAssetObject == null)
             {
-                ConsoleLogger.LogError(String.Format("#Delight# Unable to load asset at \"{0}\". Asset ignored.", assetFile));
+                ConsoleLogger.LogWarning(String.Format("#Delight# Unable to load asset at \"{0}\". Asset ignored.", assetFile));
                 return null;
             }
 

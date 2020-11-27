@@ -26,7 +26,6 @@ namespace Delight.Editor
         #region Fields
 
         public static bool ForceProcessing = false;
-        public static bool IgnoreChanges = true;
         private static EditorApplication.CallbackFunction _refreshDelegate;
 
         #endregion
@@ -385,7 +384,6 @@ namespace Delight.Editor
         /// </summary>
         private static void RefreshAssetDatabase()
         {
-            Debug.Log("Calling AssetDatabase.Refresh!"); // TODO remove
             EditorApplication.update = Delegate.Remove(EditorApplication.update, _refreshDelegate) as EditorApplication.CallbackFunction;
             AssetDatabase.Refresh();
             _refreshDelegate = null;

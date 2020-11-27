@@ -89,12 +89,12 @@
     <!-- Called when item is removed -->
     <StateAnimation From="Default" To="Removed">
       <Animate Property="Scale" Duration="350ms" EasingFunction="QuadricEaseIn" /> 
-      <Animate Property="IsVisible" Duration="450ms" EasingFunction="FlipEnd" />
-      <Animate Property="RaycastBlockMode" Duration="450ms" EasingFunction="FlipStart" />
+      <Animate Property="IsVisible" Duration="350ms" EasingFunction="FlipEnd" />
+      <Animate Property="RaycastBlockMode" Duration="350ms" EasingFunction="FlipStart" />
     </StateAnimation>
   </StateAnimations>
   <ListItem Style="AnimatedItem1" BasedOn="Clear" StateAnimations="ListItemAnimation1" 
-            Offset="0%,0%,0%,0%" Unlisted-Offset="50%,50%,0%,0%"
+            Offset="0%,0%,0%,0%" Unlisted-Offset="50%,0%,0%,0%"
             IsVisible="True" Unlisted-IsVisible="False" Removed-IsVisible="False"
             RaycastBlockMode="Always" Unlisted-RaycastBlockMode="Never" Removed-RaycastBlockMode="Never"
             Scale="1,1" Unlisted-Scale="0.75,0.75" Removed-Scale="0,0" />
