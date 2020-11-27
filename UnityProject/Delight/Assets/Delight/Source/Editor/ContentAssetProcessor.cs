@@ -27,6 +27,7 @@ namespace Delight.Editor
 
         public static bool ForceProcessing = false;
         public static bool IgnoreChanges = true;
+        private static EditorApplication.CallbackFunction _refreshDelegate;
 
         #endregion
 
@@ -313,7 +314,7 @@ namespace Delight.Editor
             if (refreshScripts)
             {
                 // refresh generated scripts
-                AssetDatabase.Refresh(ImportAssetOptions.ForceSynchronousImport);
+                Refresh();
             }
 
             if (generateXsdSchema)
@@ -365,6 +366,29 @@ namespace Delight.Editor
             int contentTypeFolderIndex = path.ILastIndexOf(contentTypeFolder);
             int contentFolderIndex = path.IIndexOf(contentFolder);
             return contentTypeFolderIndex >= 0 && contentTypeFolderIndex >= contentFolderIndex;
+        }
+
+        /// <summary>
+        /// Queues a call to AssetDatabase.Refresh() from outside the AssetPostprocessor
+        /// </summary>
+        public static void Refresh()
+        {
+            if (_refreshDelegate != null)
+                return; // refresh already queued
+            
+            _refreshDelegate = new EditorApplication.CallbackFunction(RefreshAssetDatabase);
+            EditorApplication.update = Delegate.Combine(EditorApplication.update, _refreshDelegate) as EditorApplication.CallbackFunction;
+        }
+
+        /// <summary>
+        /// Calls AssetDatabase.Refresh().
+        /// </summary>
+        private static void RefreshAssetDatabase()
+        {
+            Debug.Log("Calling AssetDatabase.Refresh!"); // TODO remove
+            EditorApplication.update = Delegate.Remove(EditorApplication.update, _refreshDelegate) as EditorApplication.CallbackFunction;
+            AssetDatabase.Refresh();
+            _refreshDelegate = null;
         }
 
         #endregion
