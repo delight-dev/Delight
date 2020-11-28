@@ -46,6 +46,11 @@ Check out the [Tutorials](https://delight-dev.github.io/Tutorials/Tutorials) and
 You're welcome to contribute to the project. For minor contributions, such as bugfixes, open a pull request. If your contribution is larger, such as new views or features, consider opening an issue first to engage the community. If you want to contribute to the website check out the [Delight website GitHub](https://github.com/delight-dev/delight-dev.github.io). 
 
 
+## Sponsoring
+
+If you enjoy the framework and like what I do, consider [sponsoring the project](https://github.com/sponsors/delight-dev?o=esc) as it helps me keep developing it and be of service to the community. Thank you.
+
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details. 
