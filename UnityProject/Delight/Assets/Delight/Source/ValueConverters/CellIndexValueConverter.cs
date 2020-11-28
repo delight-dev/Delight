@@ -96,6 +96,14 @@ namespace Delight
             return new CellIndex((int)Math.Round(Lerp(from.Row, to.Row, weight)), (int)Math.Round(Lerp(from.Column, to.Column, weight)));
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((CellIndex)from, (CellIndex)to, weight);
+        }
+
         #endregion
     }
 }

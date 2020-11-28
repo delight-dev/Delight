@@ -61,6 +61,14 @@ namespace Delight
             return Lerp(from, to, weight);
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((float)from, (float)to, weight);
+        }
+
         #endregion
 
         #region Constructor

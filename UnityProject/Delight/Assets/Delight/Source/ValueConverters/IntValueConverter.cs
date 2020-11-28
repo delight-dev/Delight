@@ -61,6 +61,14 @@ namespace Delight
             return (int)Math.Round(Lerp(from, to, weight));
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((int)from, (int)to, weight);
+        }
+
         #endregion
     }
 }

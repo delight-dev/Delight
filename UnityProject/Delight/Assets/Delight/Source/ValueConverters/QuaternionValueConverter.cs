@@ -87,6 +87,14 @@ namespace Delight
             return Quaternion.Lerp(from, to, weight);
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((Quaternion)from, (Quaternion)to, weight);
+        }
+
         #endregion
     }
 }

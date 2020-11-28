@@ -579,7 +579,15 @@ namespace Delight
         /// </summary>
         public override void SetValueGeneric(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
         {
-            SetValue(key, (T)value, notifyPropertyChangedListeners);
+            SetValue(key, value == null ? default(T) : (T)value, notifyPropertyChangedListeners);
+        }
+
+        /// <summary>
+        /// Gets dependency property value for specified instance.
+        /// </summary>
+        public override object GetValueGeneric(DependencyObject key)
+        {
+            return GetValue(key);
         }
 
         /// <summary>
@@ -625,7 +633,7 @@ namespace Delight
     /// <summary>
     /// Base class for dependency properties.
     /// </summary>
-    public class DependencyProperty
+    public abstract class DependencyProperty
     {
         #region Fields
 
@@ -711,6 +719,14 @@ namespace Delight
         /// </summary>
         public virtual void SetValueGeneric(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
         {
+        }
+
+        /// <summary>
+        /// Gets dependency property value for specified instance.
+        /// </summary
+        public virtual object GetValueGeneric(DependencyObject key)
+        {
+            return null;
         }
 
         /// <summary>

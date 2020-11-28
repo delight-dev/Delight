@@ -216,6 +216,14 @@ namespace Delight
             return result;
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((Color)from, (Color)to, weight);
+        }
+
         #endregion
 
         #region Constructor

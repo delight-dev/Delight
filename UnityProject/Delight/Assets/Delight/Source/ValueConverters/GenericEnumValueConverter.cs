@@ -68,7 +68,7 @@ namespace Delight
             }
             return null;
         }
-        
+
         #endregion
     }
 }

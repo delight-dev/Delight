@@ -135,6 +135,14 @@ namespace Delight
                 ElementSizeValueConverter.Interpolator(from.Bottom, to.Bottom, weight));
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((ElementMargin)from, (ElementMargin)to, weight);
+        }
+
         #endregion
     }
 }

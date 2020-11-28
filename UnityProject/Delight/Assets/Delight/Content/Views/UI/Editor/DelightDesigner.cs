@@ -1076,6 +1076,10 @@ namespace Delight
                     }
                 }
 
+                // do we have state animations?
+                var stateAnimationsAssignment = childPropertyAssignments.Where(x => x.PropertyName.IEquals("StateAnimations")).LastOrDefault();
+                GenerateStateAnimations(viewObject.FilePath, childView, stateAnimationsAssignment, childViewObject, childIdVar, childViewDeclaration.LineNumber);
+
                 // get templated content data
                 var childTemplateDepth = templateDepth;
                 TemplateItemInfo ti = null;
@@ -1199,7 +1203,7 @@ namespace Delight
                             else if (isTemplateItemSource)
                             {
                                 // list item binding
-                                ContentTemplateData cd = contentTemplateData; 
+                                ContentTemplateData cd = contentTemplateData;
                                 sourceObjectGetters.Add(() => cd);
                                 for (int i = 0; i < sourcePath.Count - 1; ++i)
                                 {
@@ -1375,6 +1379,99 @@ namespace Delight
             }
 
             return instantiatedChildViews;
+        }
+
+        /// <summary>
+        /// Generates state animations.
+        /// </summary>
+        private static void GenerateStateAnimations(string fileName, UIView view, PropertyAssignment stateAnimationsAssignment, ViewObject childViewObject, string childIdVar, int lineNumber)
+        {
+            // ** important: changes in runtime instantiation of views need to be reflected in the view code generation in
+            // CodeGenerator.GenerateStateAnimations() **
+
+            if (String.IsNullOrEmpty(stateAnimationsAssignment?.PropertyValue))
+                return;
+
+            var contentObjectModel = ContentObjectModel.GetInstance();
+            var stateAnimationsId = stateAnimationsAssignment.PropertyValue;
+            var stateAnimations = contentObjectModel.GetStateAnimations(stateAnimationsId)?.ToList();
+            List<PropertyDeclarationInfo> childPropertyDeclarations = null;
+            if (stateAnimations == null)
+                return;
+
+            view.StateAnimations.Clear();
+
+            // create animations
+            for (int i = 0; i < stateAnimations.Count; ++i)
+            {
+                var stateAnimationInfo = stateAnimations[i];
+                string fromState = string.Empty;
+                if (stateAnimationInfo.FromState.IEquals("Any"))
+                {
+                    fromState = AnyStateName;
+                }
+                else if (stateAnimationInfo.FromState.IEquals("Default"))
+                {
+                    fromState = DefaultStateName;
+                }
+                else
+                {
+                    fromState = stateAnimationInfo.FromState;
+                }
+
+                string toState = string.Empty;
+                if (stateAnimationInfo.ToState.IEquals("Any"))
+                {
+                    toState = AnyStateName;
+                }
+                else if (stateAnimationInfo.ToState.IEquals("Default"))
+                {
+                    toState = DefaultStateName;
+                }
+                else
+                {
+                    toState = stateAnimationInfo.ToState;
+                }
+
+                var stateAnimation = new StateAnimation(fromState, toState);
+                for (int j = 0; j < stateAnimationInfo.AnimateInfos.Count; ++j)
+                {
+                    var animatorInfo = stateAnimationInfo.AnimateInfos[j];
+                    if (childPropertyDeclarations == null)
+                    {
+                        childPropertyDeclarations = CodeGenerator.GetPropertyDeclarations(childViewObject, true, true, true);
+                    }
+
+                    var property = childPropertyDeclarations.FirstOrDefault(x => x.Declaration.PropertyName == animatorInfo.Property);
+                    if (property == null)
+                    {
+                        continue; // swallow mismatched animators
+                    }
+
+                    var propertyTypeName = property.Declaration.PropertyTypeFullName;
+                    var typeValueConverter = ValueConverters.Get(propertyTypeName);
+                    if (typeValueConverter == null)
+                    {
+                        // interpolator missing 
+                        ConsoleLogger.LogParseError(fileName, lineNumber,
+                            String.Format("#Delight# Unable to create state animations for view <{0} StateAnimations=\"{1}\">. Interpolator missing for type \"{2}\". Makes sure value converter exists for type that contains an interpolator method.",
+                            childViewObject.Name, stateAnimationsId, propertyTypeName));
+                        continue;
+                    }
+
+                    string dependencyPropertyName = property.Declaration.PropertyName + "Property";
+
+                    // look for static dependency property in this view and its ascendants
+                    var viewType = view.GetType();
+                    var dependencyProperty = viewType.GetField(dependencyPropertyName, BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)?.GetValue(null) as DependencyProperty;
+                    if (dependencyProperty == null)
+                        continue;
+                    var animator = new RuntimeAnimator(view, animatorInfo.Duration, animatorInfo.StartOffset, animatorInfo.AutoReset, animatorInfo.AutoReverse, animatorInfo.ReverseSpeed, animatorInfo.NotifyPropertyChangedWhileAnimating, EasingFunctions.Get(animatorInfo.EasingFunction), typeValueConverter, dependencyProperty, fromState, toState);
+                    stateAnimation.Add(animator);
+                }
+
+                view.StateAnimations.Add(stateAnimation);
+            }
         }
 
         /// <summary>

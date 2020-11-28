@@ -41,7 +41,7 @@ namespace Delight.Editor
                 return;
 
             // check if any views have been added or changed
-            var config = MasterConfig.GetInstance();
+            var config = MasterConfig.GetInstance(); 
             config.UpdateExtensionContentFolders(); // update extension content folders in case new extension content is added
 
             // xml content

@@ -89,6 +89,14 @@ namespace Delight
             return new ElementSize(Lerp(from.Pixels, to.Pixels, weight), ElementSizeUnit.Pixels);
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((ElementSize)from, (ElementSize)to, weight);
+        }
+
         #endregion
     }
 }

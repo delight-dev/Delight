@@ -67,6 +67,14 @@ namespace Delight
             return weight < 1f ? from : to;
         }
 
+        /// <summary>
+        /// Interpolates generic value for type.
+        /// </summary>
+        public override object InterpolateGeneric(object from, object to, float weight)
+        {
+            return Interpolate((SpriteAsset)from, (SpriteAsset)to, weight);
+        }
+
         #endregion
     }
 }

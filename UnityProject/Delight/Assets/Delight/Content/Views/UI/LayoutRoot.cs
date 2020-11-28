@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using UnityEngine;
 #endregion
 
@@ -38,13 +39,19 @@ namespace Delight
                 // update state animations
                 float deltaTime = Time.deltaTime;
 
-                foreach (var animator in _animators)
+                try
                 {
-                    animator.Update(deltaTime);
-                    if (animator.IsCompleted)
+                    foreach (var animator in _animators)
                     {
-                        _completedAnimators.Add(animator);
+                        animator.Update(deltaTime);
+                        if (animator.IsCompleted)
+                        {
+                            _completedAnimators.Add(animator);
+                        }
                     }
+                }
+                catch
+                {
                 }
 
                 if (_completedAnimators.Any())
@@ -121,7 +128,7 @@ namespace Delight
         /// <summary>
         /// Registers a state animator to be updated each frame.
         /// </summary>
-        public void RegisterAnimator(Animator animator)
+        public async void RegisterAnimator(Animator animator)
         {
             _animators.Add(animator);
         }
@@ -129,7 +136,7 @@ namespace Delight
         /// <summary>
         /// Unregisters an animator to be updated each frame.
         /// </summary>
-        public void UnregisterStateAnimator(Animator animator)
+        public async void UnregisterStateAnimator(Animator animator)
         {
             _animators.Remove(animator);
         }

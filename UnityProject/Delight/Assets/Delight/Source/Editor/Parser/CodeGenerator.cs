@@ -1906,6 +1906,9 @@ namespace Delight.Editor.Parser
         /// </summary>
         private static void GenerateStateAnimations(StringBuilder sb, string fileName, PropertyAssignment stateAnimationsAssignment, int indent, ViewObject childViewObject, string childIdVar, int lineNumber)
         {
+            // ** important: changes in view code generation need to be reflected in the runtime instantiation of views in
+            // DelightDesigner.GenerateStateAnimations() **
+
             if (String.IsNullOrEmpty(stateAnimationsAssignment?.PropertyValue))
                 return;
 

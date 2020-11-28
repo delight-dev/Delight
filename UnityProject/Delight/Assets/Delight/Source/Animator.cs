@@ -179,6 +179,138 @@ namespace Delight
     }
 
     /// <summary>
+    /// Animates the values of a property during runtime.
+    /// </summary>
+    public class RuntimeAnimator : Animator
+    {
+        #region Fields
+
+        public EasingFunctionDelegate EasingFunction;
+        public ValueConverter ValueInterpolator;
+
+        protected object From;
+        protected object To;
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Initializes a new instance of the class.
+        /// </summary>
+        public RuntimeAnimator(View target, float duration, float startOffset, bool autoReset, bool autoReverse, float reverseSpeed, bool notifyPropertyChangedWhileAnimating,
+            EasingFunctionDelegate easingFunction, ValueConverter valueInterpolator, DependencyProperty property, string fromState, string toState)
+        {
+            Duration = duration;
+            StartOffset = startOffset;
+            AutoReset = autoReset;
+            AutoReverse = autoReverse;
+            ReverseSpeed = reverseSpeed;
+            NotifyPropertyChangedWhileAnimating = notifyPropertyChangedWhileAnimating;
+            ValueInterpolator = valueInterpolator;
+            NotifyPropertyChanged = () => property.NotifyPropertyChanged(target);
+            Property = property;
+            FromState = fromState;
+            ToState = toState;
+
+            Target = new WeakReference<View>(target);
+            EasingFunction = easingFunction;
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Updates the animation each frame. 
+        /// </summary>
+        public override void Update(float deltaTime)
+        {
+            bool targetIsAlive = Target.TryGetTarget(out var target);
+            if (!targetIsAlive || !target.IsLoaded)
+            {
+                if (!IsCompleted)
+                {
+                    CompleteAnimation();
+                }
+                return;
+            }
+
+            if (!IsRunning || IsCompleted)
+                return;
+
+            _elapsedTime = IsReversing ? _elapsedTime - deltaTime * ReverseSpeed :
+                _elapsedTime + deltaTime;
+
+            // start animation once passed startOffset
+            if (!IsReversing && _elapsedTime < ActualStartOffset)
+                return;
+
+            // clamp elapsed time to max duration
+            float t = IsReversing ? _elapsedTime.Clamp(0, Duration) : (_elapsedTime - ActualStartOffset).Clamp(0, Duration);
+            float weight = Duration > 0 ? EasingFunction(t / Duration) : (IsReversing ? 0f : 1f);
+
+            object interpolatedValue = ValueInterpolator.InterpolateGeneric(From, To, weight);
+
+            Property.DisableNotifyPropertyChanged = !NotifyPropertyChangedWhileAnimating;
+            Property.SetValue(target, interpolatedValue);
+            Property.DisableNotifyPropertyChanged = false;
+
+            // is animation done?
+            if ((IsReversing && t <= 0) || (!IsReversing && t >= Duration))
+            {
+                // yes. should animation auto-reverse?
+                if (!IsReversing && AutoReverse)
+                {
+                    // yes. reverse the animation
+                    IsReversing = true;
+
+                    // call animation reversed event
+                    OnReversed();
+                    return;
+                }
+
+                // animation is complete
+                CompleteAnimation();
+            }
+
+            return;
+        }
+
+        /// <summary>
+        /// Resets the value. 
+        /// </summary>
+        public override void ResetValue()
+        {
+            bool targetIsAlive = Target.TryGetTarget(out var target);
+            if (!targetIsAlive || !target.IsLoaded)
+                return;
+
+            Property.SetValueGeneric(target, From);
+        }
+
+        /// <summary>
+        /// Starts animation.
+        /// </summary>
+        public override void StartAnimation()
+        {
+            bool targetIsAlive = Target.TryGetTarget(out var target);
+            if (!targetIsAlive || !target.IsLoaded)
+                return;
+
+            base.StartAnimation();
+
+            Property.State = FromState;
+            From = Property.GetValueGeneric(target);
+            Property.State = ToState;
+            To = Property.GetValueGeneric(target);
+            Property.State = null;
+        }
+
+        #endregion
+    }
+
+    /// <summary>
     /// Base class for animators.
     /// </summary>
     public class Animator

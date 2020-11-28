@@ -406,7 +406,15 @@ namespace Delight
         /// </summary>
         public override void SetValueGeneric(DependencyObject key, object value, bool notifyPropertyChangedListeners = true)
         {
-            SetValue(key, (T)value, notifyPropertyChangedListeners);
+            SetValue(key, value == null ? default(T) : (T)value, notifyPropertyChangedListeners);
+        }
+
+        /// <summary>
+        /// Gets dependency property value for specified instance.
+        /// </summary>
+        public override object GetValueGeneric(DependencyObject key)
+        {
+            return GetValue(key);
         }
 
         /// <summary>
