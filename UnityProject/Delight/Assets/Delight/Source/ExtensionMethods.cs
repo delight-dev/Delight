@@ -273,9 +273,18 @@ namespace Delight
         /// </summary>
         public static string Pluralize(this string text, string pluralWhenEndsWithS = null)
         {
+            if (String.IsNullOrEmpty(text))
+                return text;
+
             if (PluralizeExceptions.ContainsKey(text.ToLowerInvariant()))
             {
-                return PluralizeExceptions[text.ToLowerInvariant()];
+                var pluralizedText = PluralizeExceptions[text.ToLowerInvariant()];
+                if (Char.IsUpper(text[0]))
+                {
+                    pluralizedText = pluralizedText.CapitalizeFirstLetter();
+                }
+
+                return pluralizedText;
             }
             else if (text.EndsWith("y", StringComparison.OrdinalIgnoreCase) &&
                 !text.EndsWith("ay", StringComparison.OrdinalIgnoreCase) &&
@@ -337,6 +346,14 @@ namespace Delight
         }
 
         /// <summary>
+        /// Capitalizes the first letter.
+        /// </summary>
+        public static string CapitalizeFirstLetter(this string str)
+        {
+            return char.ToUpper(str[0]) + str.Substring(1);
+        }
+
+        /// <summary>
         /// Converts a name to property name.
         /// </summary>
         public static string ToPropertyName(this string str)
@@ -344,7 +361,7 @@ namespace Delight
             if (String.IsNullOrEmpty(str)) return str;
 
             // capitalize the first letter
-            var str2 = char.ToUpper(str[0]) + str.Substring(1);
+            var str2 = str.CapitalizeFirstLetter();
 
             // add prefix 'N' if starting with a digit
             if (char.IsDigit(str[0]))
