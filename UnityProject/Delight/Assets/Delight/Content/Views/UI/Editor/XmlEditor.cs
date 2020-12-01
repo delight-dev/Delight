@@ -654,7 +654,7 @@ namespace Delight
             {
                 if (Input.GetKey(_trackKeyDown))
                 {
-                    inputString = ""; // only necessary on MacBook 
+                    inputString = "";
                     _keyDownDelayTimeElapsed += Time.deltaTime;
                     if (_keyDownDelayTimeElapsed > KeyRepeatDelay)
                     {
@@ -677,25 +677,25 @@ namespace Delight
             if (!ignoreCheckKeyDown)
             {
                 // check if a key has been pressed down, these are the keys that don't show up in Input.inputString
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.Keypad4))
+                if (Input.GetKeyDown(KeyCode.LeftArrow))
                 {
                     inputString = (char)KeyCode.LeftArrow + "";
                     _trackKeyDown = KeyCode.LeftArrow;
                     _keyDownDelayTimeElapsed = 0;
                 }
-                else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.Keypad6))
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
                 {
                     inputString = (char)KeyCode.RightArrow + "";
                     _trackKeyDown = KeyCode.RightArrow;
                     _keyDownDelayTimeElapsed = 0;
                 }
-                else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.Keypad8))
+                else if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     inputString = (char)KeyCode.UpArrow + "";
                     _trackKeyDown = KeyCode.UpArrow;
                     _keyDownDelayTimeElapsed = 0;
                 }
-                else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.Keypad2))
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
                 {
                     inputString = (char)KeyCode.DownArrow + "";
                     _trackKeyDown = KeyCode.DownArrow;
@@ -707,7 +707,7 @@ namespace Delight
                     _trackKeyDown = KeyCode.Tab;
                     _keyDownDelayTimeElapsed = 0;
                 }
-                else if (Input.GetKeyDown(KeyCode.Delete) || Input.GetKeyDown(KeyCode.KeypadPeriod))
+                else if (Input.GetKeyDown(KeyCode.Delete))
                 {
                     inputString = (char)KeyCode.Delete + "";
                     _trackKeyDown = KeyCode.Delete;
