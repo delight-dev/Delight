@@ -128,7 +128,7 @@ namespace Delight
         /// <summary>
         /// Registers a state animator to be updated each frame.
         /// </summary>
-        public async void RegisterAnimator(Animator animator)
+        public void RegisterAnimator(Animator animator)
         {
             _animators.Add(animator);
         }
@@ -136,13 +136,13 @@ namespace Delight
         /// <summary>
         /// Unregisters an animator to be updated each frame.
         /// </summary>
-        public async void UnregisterStateAnimator(Animator animator)
+        public void UnregisterStateAnimator(Animator animator)
         {
             _animators.Remove(animator);
         }
 
         /// <summary>
-        /// Registers binding to be updated each frame.
+        /// Registers object to be to be updated each frame.
         /// </summary>
         public void RegisterUpdateable(IUpdateable updateable)
         {

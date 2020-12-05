@@ -13,7 +13,7 @@ namespace Delight
     /// </summary>
     public static partial class Models
     {
-        public static string DefaultRepositoryName = "Default";
         public static DependencyObject RuntimeModelObject = new DependencyObject(); // used in runtime bindings
+        public static Globals Globals = new Globals();
     }
 }

@@ -212,6 +212,7 @@ namespace Delight
         public readonly SpriteAsset RoundedSquare10_5px;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
+        public readonly SpriteAsset Fullscreen;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -278,6 +279,7 @@ namespace Delight
             RoundedSquare10_5px = new SpriteAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
+            Fullscreen = new SpriteAsset { Id = "fullscreen", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -338,6 +340,7 @@ namespace Delight
             Add(RoundedSquare10_5px);
             Add(Selection);
             Add(TooltipArrow);
+            Add(Fullscreen);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);

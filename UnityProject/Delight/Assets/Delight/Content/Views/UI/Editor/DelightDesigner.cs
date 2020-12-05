@@ -16,7 +16,6 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Delight;
-using UnityScript.Steps;
 #if UNITY_EDITOR
 using UnityEditor;
 using Delight.Editor;
@@ -2146,9 +2145,18 @@ namespace Delight
             }
         }
 
-        public void ViewMenuItemSelected(ItemSelectionActionData selectionData)
+        public void ToggleHideUI(bool toggleValue)
         {
-
+            if (toggleValue)
+            {
+                MainGrid.Cell.SetValue(DisplayRegion, new CellIndex(0, 0));
+                MainGrid.CellSpan.SetValue(DisplayRegion, new CellIndex(3, 3));
+            }
+            else
+            {
+                MainGrid.Cell.SetValue(DisplayRegion, new CellIndex(0, 2));
+                MainGrid.CellSpan.SetValue(DisplayRegion, new CellIndex(1, 1));
+            }
         }
 
         #endregion

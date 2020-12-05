@@ -1,0 +1,68 @@
+<AdaptableUITest xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd"
+                 EnableScriptEvents="True" TestWidth="t:ElementSize = 100px">
+
+  <Region Id="RegionTest" Width="{TestWidth}" Landscape-Width="500" BackgroundColor="Blue" Landscape-BackgroundColor="Red">
+  </Region>
+
+  <!-- 
+  So we have different ideas we want to implement:
+  
+  - Min and Max constraints on percentage Width/Height - I thought of making this generic constraint functionality, but Width/Height will need specialized
+  functionality that responds to parent Width/Height etc. so I think we need to go for a specialized solution.
+  
+   <Region Width="100%[100,1000]" />  <- constrains width between 100 and 1000 pixels
+  
+  - Conditional values based on the size of parent, aka Media Queries in CSS. 
+    To e.g. change UI based on Mobile, Tablet and Desktop - as well as portrait/landscape mode. 
+    
+  - So we want certain values to be applied when conditions are met, e.g. when it's greater than minSize, lesser than maxSize
+    or inside a range. How do we do this?
+    
+    <Region IsActive="$ {ActualWidth} > 100: True ELSE {ActualWidth} < 100: False ELSE False" />
+    
+    So if we bind to ActualWidth on any view that need to update its actual width every frame. We can do this by
+    automatically adding it when we see a binding, or manually we can set some flag like "NotifyActualSizeChange"
+    that adds an actual size change listener to the view when activated. 
+    We can also make it so that if ActualWidth is referenced, the view sets NotifyActualSizeChange to true. We can 
+    call it TrackWidth or ObservedWidth or something. Or we might be able to make it so that the system knows when
+    we bind to ActualWidth and then automatically makes sure NotifyActualSizeChange is set to true.
+    
+    @IsMobile
+    @IsTablet
+    @ScreenWidth
+    @ScreenHeight
+    @IsPortrait
+    @IsLandscape
+    
+  
+  
+  
+  
+  
+  Using state variable system 
+  
+  <Region Id="RegionTest" Width="100%" Landscape-Width="500" BackgroundColor="Blue" Landscape-BackgroundColor="Red">    
+  </Region>
+
+  Using notation:
+  <Region Width="100%[l:50%, max:1000px, min:100]" Landscape-Width="500" BackgroundColor="Blue" Landscape-BackgroundColor="Red">
+  </Region>
+
+  The above can be translated to a transform binding with optional named parameters:
+  <Region Width="$ ApplyConstraints({Region1.Width}, )  100%[lm:50%,max:1000px,min:100]" Landscape-Width="500" BackgroundColor="Blue" Landscape-BackgroundColor="Red">
+  </Region>
+
+  We can try do it with bindings at first and see how it pans out 
+  Another way to apply constraints would be to register updatable (requires unregister as well), that checks every frame.
+  Alternatively, the view itself will have a list of constraints that it will update itself - which might
+  be trickier to implement for list items, as they don't listen to unity script events. 
+  Let's see if we can do it with a generic method. 
+  
+  The advantage of using bindings is that you can apply the constraints to properties you have bindings to... but again
+  this works with checking each frame as well. In fact it's probably better. 
+  
+  
+  -->
+  
+
+</AdaptableUITest>

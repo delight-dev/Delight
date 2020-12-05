@@ -8,25 +8,10 @@
                  EditedView="t:DesignerView">
 
   <Region Id="ViewsDesigner">
-    <Grid Columns="40[50-50],200,*" Rows="*,240[20]" BackgroundColor="#394552">
+    <Grid Id="MainGrid" Columns="40[50-50],200,*" Rows="*,240[20]">
       
       <!-- Left navigation bar #494b52 -->
       <Region BackgroundColor="#3c4165" Grid.Cell="0,0" Grid.CellSpan="2,1">
-      </Region>
-
-      <!-- Designer Display Region -->
-      <Region Id="DisplayRegion" Grid.Cell="0,2" IsVisible="False">
-        <ScrollableRegion Id="ScrollableContentRegion" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
-                          UnblockDragEventsInChildren="False" Margin="0,0,0,0">
-          <Canvas Id="ContentRegionCanvas" Scale="1">
-            <Region Id="ViewContentRegion">
-            </Region>
-          </Canvas>
-        </ScrollableRegion>
-        <DesignerToolbar IsActive="False" />
-        <Button Id="LockDisplayButton" IsToggleButton="True" Alignment="TopRight" Offset="0,0,5,0" ToggleClick="ToggleViewLock" IsActive="True"
-                BackgroundSprite="eye64" Size="28,28" BackgroundColor="#50ffffff" Pressed-BackgroundColor="#ffffffff" />
-        <Label Text="{DisplayedView.Name}" AutoSize="True" Alignment="TopRight" FontColor="White" FontSize="12" Offset="0,7,35,0" IsActive="{LockDisplayButton.ToggleValue}" />
       </Region>
 
       <!-- Left Panel - Content Explorer -->
@@ -57,7 +42,7 @@
 
         </Region>
 
-        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,7,10,0" ItemSelected="ViewMenuItemSelected"
+        <ComboBox Id="ViewMenu" Size="23,23" Alignment="TopRight" Offset="0,7,10,0"
                   ButtonBackgroundSprite="HamburgerMenuIcon" Pressed-ButtonBackgroundSprite="HamburgerMenuIconPressed"
                   ComboBoxListWidth="180" ShowSelectedItem="False" ComboBoxListOffset="70,2,0,0" DeselectAfterSelect="True"
                   BackgroundColor="#F6F6F6" BackgroundSprite="ContextMenuBg" MaskContent="True">
@@ -82,6 +67,25 @@
         </Region>
       </Region>
 
+      <!-- Designer Display Region -->
+      <Region Id="DisplayRegion" Grid.Cell="0,2" IsVisible="False" BackgroundColor="#394552">
+        <ScrollableRegion Id="ScrollableContentRegion" HasInertia="False" ScrollbarVisibility="Never" Scroll="OnScroll" DisableMouseWheel="True"
+                          UnblockDragEventsInChildren="False" Margin="0,0,0,0">
+          <Canvas Id="ContentRegionCanvas" Scale="1">
+            <Region Id="ViewContentRegion">
+            </Region>
+          </Canvas>
+        </ScrollableRegion>
+        <DesignerToolbar IsActive="False" />
+        <Group Orientation="Horizontal" Alignment="TopRight" Offset="0,5,15,0" Spacing="10">
+          <Label Text="{DisplayedView.Name}" AutoSize="True" FontColor="White" FontSize="12" Offset="0,0,0,0" IsActive="{LockDisplayButton.ToggleValue}" />
+          <Button Id="LockDisplayButton" IsToggleButton="True" Offset="0,0,0,1" ToggleClick="ToggleViewLock" IsActive="True"
+                  BackgroundSprite="eye64" Size="28" BackgroundColor="#50ffffff" Pressed-BackgroundColor="#ffffffff" />
+          <Button Id="HideUI" IsToggleButton="True" ToggleClick="ToggleHideUI" IsActive="True"
+                  BackgroundSprite="fullscreen" Size="16" BackgroundColor="#50ffffff" Pressed-BackgroundColor="#ffffffff" />
+        </Group>
+      </Region>
+      
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Rows" Grid.Cell="0,2" />
       <GridSplitter Thickness="20" OverrideProportionalSize="False" SplitMode="Columns" />
     </Grid>

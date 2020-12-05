@@ -112,13 +112,11 @@ namespace Delight
                 {
                     if (Binding.IsTwoWay)
                     {
-                        Debug.Log("Non-bindable object target value changed"); // TODO cleanup
                         Binding.PropagateTargetToSource();
                     }
                 }
                 else
                 {
-                    Debug.Log("Non-bindable object source value changed"); // TODO cleanup
                     Binding.PropagateSourceToTarget();
                 }
 

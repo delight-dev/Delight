@@ -461,7 +461,10 @@ namespace Delight
                     _listExampleList1.LinePosition = 4;
 #endif
                     Delight.List.SpacingProperty.SetDefault(_listExampleList1, new ElementSize(5f, ElementSizeUnit.Pixels));
-                    Delight.List.CascadingAnimationDelayProperty.SetDefault(_listExampleList1, 0.05f);
+                    Delight.List.CascadingAnimationDelayProperty.SetDefault(_listExampleList1, 0.035f);
+                    Delight.List.IsVirtualizedProperty.SetDefault(_listExampleList1, true);
+                    Delight.List.HeightProperty.SetDefault(_listExampleList1, new ElementSize(500f, ElementSizeUnit.Pixels));
+                    Delight.List.WidthProperty.SetDefault(_listExampleList1, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.List.ItemsProperty.SetHasBinding(_listExampleList1);
                     Delight.List.SelectedItemProperty.SetHasBinding(_listExampleList1);
                     Delight.List.ScrollableRegionTemplateProperty.SetDefault(_listExampleList1, ListExampleList1ScrollableRegion);
@@ -667,7 +670,7 @@ namespace Delight
                     _listExampleListItem1 = new Template(ListItemTemplates.ListItem);
 #if UNITY_EDITOR
                     _listExampleListItem1.Name = "ListExampleListItem1";
-                    _listExampleListItem1.LineNumber = 3;
+                    _listExampleListItem1.LineNumber = 4;
                     _listExampleListItem1.LinePosition = 6;
 #endif
                     Delight.ListItem.BackgroundColorProperty.SetStateDefault("Alternate", _listExampleListItem1, new UnityEngine.Color(0f, 0f, 0f, 0f));
@@ -707,7 +710,7 @@ namespace Delight
                     _listExampleRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _listExampleRegion1.Name = "ListExampleRegion1";
-                    _listExampleRegion1.LineNumber = 4;
+                    _listExampleRegion1.LineNumber = 5;
                     _listExampleRegion1.LinePosition = 8;
 #endif
                     Delight.Region.WidthProperty.SetDefault(_listExampleRegion1, new ElementSize(180f, ElementSizeUnit.Pixels));
@@ -731,7 +734,7 @@ namespace Delight
                     _listExampleImage1 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _listExampleImage1.Name = "ListExampleImage1";
-                    _listExampleImage1.LineNumber = 5;
+                    _listExampleImage1.LineNumber = 6;
                     _listExampleImage1.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_listExampleImage1, Assets.Sprites["CircleFull@512px"]);
@@ -759,7 +762,7 @@ namespace Delight
                     _listExampleImage2 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _listExampleImage2.Name = "ListExampleImage2";
-                    _listExampleImage2.LineNumber = 6;
+                    _listExampleImage2.LineNumber = 7;
                     _listExampleImage2.LinePosition = 10;
 #endif
                     Delight.Image.SpriteProperty.SetDefault(_listExampleImage2, Assets.Sprites["CircleFull@512px"]);
@@ -787,7 +790,7 @@ namespace Delight
                     _listExampleRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
                     _listExampleRegion2.Name = "ListExampleRegion2";
-                    _listExampleRegion2.LineNumber = 7;
+                    _listExampleRegion2.LineNumber = 8;
                     _listExampleRegion2.LinePosition = 10;
 #endif
                     Delight.Region.MarginProperty.SetDefault(_listExampleRegion2, new ElementMargin(new ElementSize(21.5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(21.5f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -813,7 +816,7 @@ namespace Delight
                     _listExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
                     _listExampleLabel1.Name = "ListExampleLabel1";
-                    _listExampleLabel1.LineNumber = 8;
+                    _listExampleLabel1.LineNumber = 9;
                     _listExampleLabel1.LinePosition = 12;
 #endif
                     Delight.Label.OffsetProperty.SetDefault(_listExampleLabel1, new ElementMargin(new ElementSize(20f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -839,7 +842,7 @@ namespace Delight
                     _listExampleMask1 = new Template(MaskTemplates.Mask);
 #if UNITY_EDITOR
                     _listExampleMask1.Name = "ListExampleMask1";
-                    _listExampleMask1.LineNumber = 10;
+                    _listExampleMask1.LineNumber = 11;
                     _listExampleMask1.LinePosition = 10;
 #endif
                     Delight.Mask.BackgroundSpriteProperty.SetDefault(_listExampleMask1, Assets.Sprites["CircleFull@512px"]);
@@ -866,7 +869,7 @@ namespace Delight
                     _listExampleImage3 = new Template(ImageTemplates.Image);
 #if UNITY_EDITOR
                     _listExampleImage3.Name = "ListExampleImage3";
-                    _listExampleImage3.LineNumber = 11;
+                    _listExampleImage3.LineNumber = 12;
                     _listExampleImage3.LinePosition = 12;
 #endif
                     Delight.Image.OffsetProperty.SetDefault(_listExampleImage3, new ElementMargin(new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels), new ElementSize(0f, ElementSizeUnit.Pixels)));
@@ -893,7 +896,7 @@ namespace Delight
                     _listExampleGroup1 = new Template(GroupTemplates.Group);
 #if UNITY_EDITOR
                     _listExampleGroup1.Name = "ListExampleGroup1";
-                    _listExampleGroup1.LineNumber = 17;
+                    _listExampleGroup1.LineNumber = 18;
                     _listExampleGroup1.LinePosition = 4;
 #endif
                     Delight.Group.AlignmentProperty.SetDefault(_listExampleGroup1, Delight.ElementAlignment.Left);
@@ -918,7 +921,7 @@ namespace Delight
                     _listExampleButton1 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _listExampleButton1.Name = "ListExampleButton1";
-                    _listExampleButton1.LineNumber = 18;
+                    _listExampleButton1.LineNumber = 19;
                     _listExampleButton1.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton1, Assets.Sprites["RoundedSquareFull@128px"]);
@@ -978,7 +981,7 @@ namespace Delight
                     _listExampleButton2 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _listExampleButton2.Name = "ListExampleButton2";
-                    _listExampleButton2.LineNumber = 19;
+                    _listExampleButton2.LineNumber = 20;
                     _listExampleButton2.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton2, Assets.Sprites["RoundedSquareFull@128px"]);
@@ -1038,7 +1041,7 @@ namespace Delight
                     _listExampleButton3 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _listExampleButton3.Name = "ListExampleButton3";
-                    _listExampleButton3.LineNumber = 20;
+                    _listExampleButton3.LineNumber = 21;
                     _listExampleButton3.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton3, Assets.Sprites["RoundedSquareFull@128px"]);
@@ -1098,7 +1101,7 @@ namespace Delight
                     _listExampleButton4 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _listExampleButton4.Name = "ListExampleButton4";
-                    _listExampleButton4.LineNumber = 21;
+                    _listExampleButton4.LineNumber = 22;
                     _listExampleButton4.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton4, Assets.Sprites["RoundedSquareFull@128px"]);
@@ -1158,7 +1161,7 @@ namespace Delight
                     _listExampleButton5 = new Template(ButtonTemplates.Button);
 #if UNITY_EDITOR
                     _listExampleButton5.Name = "ListExampleButton5";
-                    _listExampleButton5.LineNumber = 22;
+                    _listExampleButton5.LineNumber = 23;
                     _listExampleButton5.LinePosition = 6;
 #endif
                     Delight.Button.BackgroundSpriteProperty.SetDefault(_listExampleButton5, Assets.Sprites["RoundedSquareFull@128px"]);
