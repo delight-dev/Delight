@@ -1,7 +1,8 @@
-Delight 2020.2.0
+Delight 2020.2.1
 ----------------
 
 Check out https://delight-dev.github.io/ for latest API docs, tutorials, extras and news.
+Join the Discord chat for engaging with a supportive community: https://discord.gg/9BVyVsB
 
 Introduction
 ------------
@@ -47,3 +48,18 @@ Delight\* ..................... Framework source and content
 (recommended)
 Content\* ..................... Your project's content processed by Delight
 Delight\Extensions\ ........... Optional extensions and examples
+
+Contributing
+------------
+
+The framework is open source which means anyone is welcome to contribute to the project. You find the project at GitHub: 
+https://github.com/delight-dev/Delight
+
+For minor contributions, such as bugfixes, open a pull request. If your contribution is larger, such as new views or features, consider opening an issue first to engage the community.
+
+Sponsoring
+----------
+
+If you enjoy the framework and like what I do, consider sponsoring the project as it helps me keep developing it and be of service to the community. Thank you.
+
+https://github.com/sponsors/delight-dev

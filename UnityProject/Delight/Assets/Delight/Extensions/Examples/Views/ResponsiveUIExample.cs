@@ -12,7 +12,7 @@ namespace Delight
     /// <summary>
     /// Demonstrates how UI can adapt to screen size and orientation.
     /// </summary>
-    public partial class AdaptableUITest
+    public partial class ResponsiveUIExample
     {
         public override void Update()
         {
@@ -23,9 +23,6 @@ namespace Delight
         public override void AfterInitialize()
         {
             base.AfterInitialize();
-
-            // binding <Region Width="{TestWidth}">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "TestWidth" }, new List<Func<object>> { () => this }) }, new BindingPath(new List<string> { "RegionTest", "Width" }, new List<Func<object>> { () => this, () => RegionTest }), () => RegionTest.Width = TestWidth, () => { }, false));
         }
 
         protected override void AfterLoad()

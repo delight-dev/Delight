@@ -45,8 +45,16 @@ namespace Delight
 
             // update screen orientation
             Models.Globals.ScreenOrientation = Screen.orientation;
-            Models.Globals.ScreenWidth.Pixels = Screen.width;
-            Models.Globals.ScreenHeight.Pixels = Screen.height;
+
+            if (Models.Globals.ScreenWidth.Pixels != Screen.width)
+            {
+                Models.Globals.ScreenWidth = Screen.width;
+            }
+
+            if (Models.Globals.ScreenHeight.Pixels != Screen.height)
+            {
+                Models.Globals.ScreenHeight = Screen.height;
+            }
         }
 
         public DeviceType GetDeviceType()

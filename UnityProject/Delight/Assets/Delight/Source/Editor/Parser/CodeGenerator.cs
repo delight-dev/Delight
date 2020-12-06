@@ -1731,6 +1731,9 @@ namespace Delight.Editor.Parser
         /// </summary>
         public static string SetTemplateItemsInExpression(List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
         {
+            // TODO here can be a good place to also replace #(XMLValue) with C# initializor,
+            // let's first see if the string contains '#' that isn't inside a string literal
+
             if (templateItems == null)
                 return expression;
 
@@ -1758,6 +1761,8 @@ namespace Delight.Editor.Parser
 
             // handle special case when binding non-bindable lists to List Item <List Item="{level in NonBindableList}">
             bool convertToBindableCollection = ti != null && !String.IsNullOrEmpty(ti.ItemTypeName) && !ti.IsBindableCollection;
+
+            // go through each binding source and get binding source properties
             foreach (var bindingSource in propertyBinding.Sources)
             {
                 var sourcePath = new List<string>();

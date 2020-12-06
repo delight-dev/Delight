@@ -56,7 +56,6 @@ namespace Delight
             ViewActivators.Add("ViewSwitcher", (x, y, z, w, a) => new ViewSwitcher(x, y, z, w, a));
             ViewActivators.Add("ToggleGroup", (x, y, z, w, a) => new ToggleGroup(x, y, z, w, a));
             ViewActivators.Add("InputField", (x, y, z, w, a) => new InputField(x, y, z, w, a));
-            ViewActivators.Add("AdaptableUITest", (x, y, z, w, a) => new AdaptableUITest(x, y, z, w, a));
             ViewActivators.Add("ButtonsExample", (x, y, z, w, a) => new ButtonsExample(x, y, z, w, a));
             ViewActivators.Add("EmbeddedExpressionsExample", (x, y, z, w, a) => new EmbeddedExpressionsExample(x, y, z, w, a));
             ViewActivators.Add("GridExample", (x, y, z, w, a) => new GridExample(x, y, z, w, a));
@@ -67,6 +66,7 @@ namespace Delight
             ViewActivators.Add("MainMenuExample", (x, y, z, w, a) => new MainMenuExample(x, y, z, w, a));
             ViewActivators.Add("NavigatorExample", (x, y, z, w, a) => new NavigatorExample(x, y, z, w, a));
             ViewActivators.Add("OnDemandLoadingExample", (x, y, z, w, a) => new OnDemandLoadingExample(x, y, z, w, a));
+            ViewActivators.Add("ResponsiveUIExample", (x, y, z, w, a) => new ResponsiveUIExample(x, y, z, w, a));
             ViewActivators.Add("ScrollExample", (x, y, z, w, a) => new ScrollExample(x, y, z, w, a));
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
@@ -115,7 +115,6 @@ namespace Delight
             ViewTypes.Add("ViewSwitcher", typeof(ViewSwitcher));
             ViewTypes.Add("ToggleGroup", typeof(ToggleGroup));
             ViewTypes.Add("InputField", typeof(InputField));
-            ViewTypes.Add("AdaptableUITest", typeof(AdaptableUITest));
             ViewTypes.Add("ButtonsExample", typeof(ButtonsExample));
             ViewTypes.Add("EmbeddedExpressionsExample", typeof(EmbeddedExpressionsExample));
             ViewTypes.Add("GridExample", typeof(GridExample));
@@ -126,6 +125,7 @@ namespace Delight
             ViewTypes.Add("MainMenuExample", typeof(MainMenuExample));
             ViewTypes.Add("NavigatorExample", typeof(NavigatorExample));
             ViewTypes.Add("OnDemandLoadingExample", typeof(OnDemandLoadingExample));
+            ViewTypes.Add("ResponsiveUIExample", typeof(ResponsiveUIExample));
             ViewTypes.Add("ScrollExample", typeof(ScrollExample));
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));

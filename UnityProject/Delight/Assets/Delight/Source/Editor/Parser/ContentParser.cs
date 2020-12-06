@@ -39,6 +39,7 @@ namespace Delight.Editor.Parser
         private const string DefaultViewType = "UIView";
         private const string DefaultNamespace = "Delight";
         private const string ModelsClassName = "Models";
+        private const string GlobalsClassName = "Globals";
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
         private static readonly char[] ModuleDelimiterChars = { ' ', ';' };
         private static readonly char[] ContentTemplateDelimiterChars = { ' ', ';' };
@@ -1399,7 +1400,16 @@ namespace Delight.Editor.Parser
                 else if (viewField.StartsWith("@"))
                 {
                     bindingSource.SourceTypes |= BindingSourceTypes.Model;
-                    viewField = String.Format("{0}.{1}", ModelsClassName, viewField.Substring(1));
+
+                    var firstField = string.Concat(viewField.Substring(1).TakeWhile(x => x != '.'));
+                    if (Models.Globals.GlobalProperties.Contains(firstField))
+                    {
+                        viewField = String.Format("{0}.{1}.{2}", ModelsClassName, GlobalsClassName, viewField.Substring(1));                        
+                    }
+                    else
+                    {
+                        viewField = String.Format("{0}.{1}", ModelsClassName, viewField.Substring(1));
+                    }
                 }
                 else if (viewField.StartsWith("#"))
                 {

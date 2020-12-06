@@ -13,6 +13,14 @@ namespace Delight
     /// </summary>
     public partial class Globals : BindableObject
     {
+        #region Fields
+
+        public HashSet<string> GlobalProperties = new HashSet<string>();
+
+        #endregion
+
+        #region Properties
+
         private ElementSize _screenWidth = new ElementSize();
         public ElementSize ScreenWidth
         {
@@ -91,6 +99,26 @@ namespace Delight
         {
             get { return _screenOrientation == ScreenOrientation.Landscape || _screenOrientation == ScreenOrientation.LandscapeRight; }
         }
+
+        #endregion
+
+        #region Constructor
+
+        public Globals()
+        {
+            GlobalProperties.Add(nameof(ScreenWidth));
+            GlobalProperties.Add(nameof(ScreenHeight));
+            GlobalProperties.Add(nameof(DeviceType));
+            GlobalProperties.Add(nameof(IsMobile));
+            GlobalProperties.Add(nameof(IsTablet));
+            GlobalProperties.Add(nameof(IsDesktop));
+            GlobalProperties.Add(nameof(IsHandheld));
+            GlobalProperties.Add(nameof(ScreenOrientation));
+            GlobalProperties.Add(nameof(IsPortrait));
+            GlobalProperties.Add(nameof(IsLandscape));
+        }
+
+        #endregion
     }
 
     /// <summary>

@@ -1,9 +1,13 @@
-<AdaptableUITest xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd"
-                 EnableScriptEvents="True" TestWidth="t:ElementSize = 100px">
+<ResponsiveUIExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" EnableScriptEvents="True" 
+                     TestWidth="t:ElementSize = 100px">
+  
+  <Region Id="RegionTest2" Width="$ {@ScreenWidth.Pixels} - 600" BackgroundColor="Green" />
+  <Region Id="RegionTest3" Width="$ {@ScreenWidth.Pixels} - 300" BackgroundColor="Blue" />
 
-  <Region Id="RegionTest" Width="{TestWidth}" Landscape-Width="500" BackgroundColor="Blue" Landscape-BackgroundColor="Red">
-  </Region>
-
+  <Region Id="RegionTest4" Width="$ {@IsPortrait} ? 500 : 1000" BackgroundColor="Yellow" />
+  
+  
+   
   <!-- 
   So we have different ideas we want to implement:
   
@@ -65,4 +69,4 @@
   -->
   
 
-</AdaptableUITest>
+</ResponsiveUIExample>
