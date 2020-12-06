@@ -1374,6 +1374,10 @@ namespace Delight.Editor.Parser
 
             // replace single quotes with double quotes, replace AND with &&, replace OR with ||
             expression = expression.Replace('\'', '"').Replace(" AND ", " && ").Replace(" OR ", " || ");
+
+            // GT to >, GTE to >=, LT to < LTE to <=, EQ to ==
+            expression = expression.Replace(" GT ", " > ").Replace(" GTE ", " >= ").Replace(" LT ", " < ").Replace(" LTE ", " <= ").Replace(" EQ ", " == "); ;
+
             return expression;
         }
 

@@ -1408,7 +1408,7 @@ namespace Delight.Editor.Parser
                         var actionValue = actionAssignment.PropertyValue;
                         if (actionAssignment.HasEmbeddedCode)
                         {
-                            actionValue = SetTemplateItemsInExpression(templateItems, actionValue, false);
+                            actionValue = FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment.PropertyDeclarationInfo.Declaration, templateItems, actionValue, false);
                             sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, actionValue);
                             continue;
                         }
@@ -1471,7 +1471,7 @@ namespace Delight.Editor.Parser
                     // generate assignment for expressions
                     foreach (var embeddedAssignment in embeddedAssignments)
                     {
-                        var embeddedAssignmentValue = SetTemplateItemsInExpression(templateItems, embeddedAssignment.PropertyValue, false);
+                        var embeddedAssignmentValue = FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment.PropertyDeclarationInfo.Declaration, templateItems, embeddedAssignment.PropertyValue, false);
 
                         // handle multi-line expressions
                         var trimmedEmbeddedAssignmentValue = embeddedAssignmentValue.Trim();
@@ -1648,6 +1648,8 @@ namespace Delight.Editor.Parser
 
                                 // handle multi-line expressions
                                 var trimmedTransformExpression = propertyBinding.TransformExpression.Trim();
+                                trimmedTransformExpression = FormatEmbeddedExpression(fileName, propertyBinding.LineNumber, propertyBinding?.PropertyDeclarationInfo?.Declaration, templateItems, trimmedTransformExpression, false);
+
                                 if (trimmedTransformExpression.StartsWith("{{"))
                                 {
                                     // translate, {{ int x = 0; return x; }} to ((Func<int>)(() => {{ int x = 0; return x; }}))();
@@ -1727,16 +1729,56 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Sets template items in expression, e.g. player.FirstName => (tiPlayer.Item as Player).FirstName.
+        /// Formats the embedded expression. 
         /// </summary>
-        public static string SetTemplateItemsInExpression(List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
+        public static string FormatEmbeddedExpression(string fileName, int lineNumber, PropertyDeclaration propertyDeclaration, List<TemplateItemInfo> templateItems, string expression, bool isRuntime)
         {
-            // TODO here can be a good place to also replace #(XMLValue) with C# initializor,
-            // let's first see if the string contains '#' that isn't inside a string literal
+            //  replace XML values in expression, e.g. XML(#ffffff) => new Color(255f,255f,255f,255f)
+            int xmlValueIndex = expression.IndexOf("XML(", StringComparison.OrdinalIgnoreCase);
+            if (xmlValueIndex >= 0)
+            {
+                if (propertyDeclaration == null)
+                {
+                    // TODO not sure under which circumstance this happens
+                    ConsoleLogger.LogParseError(fileName, lineNumber,
+                        String.Format("#Delight# Unable to find property type for embedded expression with XML values \"{0}\". Problem might go away if you Rebuild All views.",
+                        expression));
+                }
+                else
+                {
+                    while(xmlValueIndex >= 0)
+                    {
+                        int lastIndex = expression.IndexOf(")", xmlValueIndex);
+                        if (lastIndex <= 0)
+                        {
+                            ConsoleLogger.LogParseError(fileName, lineNumber,
+                                String.Format("#Delight# Invalid XML value. Unable to find closing parenthesis \"{0}\".",
+                                expression));
+                            break;
+                        }
+
+                        string xmlValue = expression.Substring(xmlValueIndex + 4, lastIndex - (xmlValueIndex + 4));
+                        
+                        // get initializer for property type
+                        var initializer = GetInitializerForType(propertyDeclaration.PropertyTypeName, xmlValue);
+                        if (initializer == null)
+                        {
+                            ConsoleLogger.LogParseError(fileName, lineNumber,
+                                String.Format("#Delight# Unable to parse expression with XML value in expression \"{0}\". Can't find value converter and initializer for the target property type \"{1}\".",
+                                expression, propertyDeclaration.PropertyTypeName));
+                            break;
+                        }
+
+                        expression = expression.Substring(0, xmlValueIndex) + initializer + expression.Substring(lastIndex + 1);
+                        xmlValueIndex = expression.IndexOf("XML(", xmlValueIndex + 4, StringComparison.OrdinalIgnoreCase);
+                    }
+                }
+            }
 
             if (templateItems == null)
                 return expression;
 
+            // format template items in expression, e.g.player.FirstName => (tiPlayer.Item as Player).FirstName.
             foreach (var templateItem in templateItems)
             {
                 if (!expression.Contains(templateItem.Name))
@@ -3149,8 +3191,15 @@ namespace Delight.Editor.Parser
             if (type != null && type.IsEnum)
             {
                 // generate generic initializer for enum type
-                return String.Format("{0}.{1}", typeName, Enum.Parse(type, propertyValue, true));
+                return String.Format("{0}.{1}", typeName.Replace('+', '.'), Enum.Parse(type, propertyValue, true));
             }
+
+            if (typeof(Delight.ModelObject).IsAssignableFrom(type))
+            {
+                // use generic converter for ModelObject type
+                typeValueInitializer = GenericModelValueConverter.GetInitializer(type.Name, propertyValue);
+            }
+
 
             return null; // no initializer found for type
         }

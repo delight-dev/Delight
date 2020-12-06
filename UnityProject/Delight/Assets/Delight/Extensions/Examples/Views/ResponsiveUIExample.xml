@@ -1,14 +1,20 @@
 <ResponsiveUIExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" EnableScriptEvents="True" 
                      TestWidth="t:ElementSize = 100px">
+
+  <Region Width="$ {@IsPortrait} ? XML(100%) : XML(50%)" BackgroundColor="Green" />
+  <Region IsActive="$ {@ScreenWidth} LT 500 ? true : false" BackgroundColor="Green" />
+
+  <Label Text="$ ({@ScreenWidth} GT 100).ToString()" />      
+        
+  <!-- 
+  
   
   <Region Id="RegionTest2" Width="$ {@ScreenWidth.Pixels} - 600" BackgroundColor="Green" />
   <Region Id="RegionTest3" Width="$ {@ScreenWidth.Pixels} - 300" BackgroundColor="Blue" />
 
   <Region Id="RegionTest4" Width="$ {@IsPortrait} ? 500 : 1000" BackgroundColor="Yellow" />
+
   
-  
-   
-  <!-- 
   So we have different ideas we want to implement:
   
   - Min and Max constraints on percentage Width/Height - I thought of making this generic constraint functionality, but Width/Height will need specialized

@@ -19,23 +19,23 @@ namespace Delight
             if (deferInitialization)
                 return;
 
-            // constructing Region (RegionTest2)
-            RegionTest2 = new Region(this, this, "RegionTest2", RegionTest2Template);
+            // constructing Region (Region1)
+            Region1 = new Region(this, this, "Region1", Region1Template);
 
-            // binding <Region Width="$ {@ScreenWidth.Pixels} - 600">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ScreenWidth", "Pixels" }, new List<Func<object>> { () => Models.Globals, () => Models.Globals.ScreenWidth }) }, new BindingPath(new List<string> { "RegionTest2", "Width" }, new List<Func<object>> { () => this, () => RegionTest2 }), () => RegionTest2.Width = Models.Globals.ScreenWidth.Pixels - 600, () => { }, false));
+            // binding <Region Width="$ {@IsPortrait} ? XML(100%) : XML(50%)">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "IsPortrait" }, new List<Func<object>> { () => Models.Globals }) }, new BindingPath(new List<string> { "Region1", "Width" }, new List<Func<object>> { () => this, () => Region1 }), () => Region1.Width = Models.Globals.IsPortrait ? new ElementSize(1f, ElementSizeUnit.Percents) : new ElementSize(0.5f, ElementSizeUnit.Percents), () => { }, false));
 
-            // constructing Region (RegionTest3)
-            RegionTest3 = new Region(this, this, "RegionTest3", RegionTest3Template);
+            // constructing Region (Region2)
+            Region2 = new Region(this, this, "Region2", Region2Template);
 
-            // binding <Region Width="$ {@ScreenWidth.Pixels} - 300">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ScreenWidth", "Pixels" }, new List<Func<object>> { () => Models.Globals, () => Models.Globals.ScreenWidth }) }, new BindingPath(new List<string> { "RegionTest3", "Width" }, new List<Func<object>> { () => this, () => RegionTest3 }), () => RegionTest3.Width = Models.Globals.ScreenWidth.Pixels - 300, () => { }, false));
+            // binding <Region IsActive="$ {@ScreenWidth} LT 500 ? true : false">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ScreenWidth" }, new List<Func<object>> { () => Models.Globals }) }, new BindingPath(new List<string> { "Region2", "IsActive" }, new List<Func<object>> { () => this, () => Region2 }), () => Region2.IsActive = Models.Globals.ScreenWidth < 500 ? true : false, () => { }, false));
 
-            // constructing Region (RegionTest4)
-            RegionTest4 = new Region(this, this, "RegionTest4", RegionTest4Template);
+            // constructing Label (Label1)
+            Label1 = new Label(this, this, "Label1", Label1Template);
 
-            // binding <Region Width="$ {@IsPortrait} ? 500 : 1000">
-            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "IsPortrait" }, new List<Func<object>> { () => Models.Globals }) }, new BindingPath(new List<string> { "RegionTest4", "Width" }, new List<Func<object>> { () => this, () => RegionTest4 }), () => RegionTest4.Width = Models.Globals.IsPortrait ? 500 : 1000, () => { }, false));
+            // binding <Label Text="$ ({@ScreenWidth} GT 100).ToString()">
+            Bindings.Add(new Binding(new List<BindingPath> { new BindingPath(new List<string> { "ScreenWidth" }, new List<Func<object>> { () => Models.Globals }) }, new BindingPath(new List<string> { "Label1", "Text" }, new List<Func<object>> { () => this, () => Label1 }), () => Label1.Text = (Models.Globals.ScreenWidth > 100).ToString(), () => { }, false));
             this.AfterInitializeInternal();
         }
 
@@ -49,12 +49,12 @@ namespace Delight
             DependencyProperties.Add(ResponsiveUIExampleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(TestWidthProperty);
-            dependencyProperties.Add(RegionTest2Property);
-            dependencyProperties.Add(RegionTest2TemplateProperty);
-            dependencyProperties.Add(RegionTest3Property);
-            dependencyProperties.Add(RegionTest3TemplateProperty);
-            dependencyProperties.Add(RegionTest4Property);
-            dependencyProperties.Add(RegionTest4TemplateProperty);
+            dependencyProperties.Add(Region1Property);
+            dependencyProperties.Add(Region1TemplateProperty);
+            dependencyProperties.Add(Region2Property);
+            dependencyProperties.Add(Region2TemplateProperty);
+            dependencyProperties.Add(Label1Property);
+            dependencyProperties.Add(Label1TemplateProperty);
         }
 
         #endregion
@@ -68,46 +68,46 @@ namespace Delight
             set { TestWidthProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> RegionTest2Property = new DependencyProperty<Region>("RegionTest2");
-        public Region RegionTest2
+        public readonly static DependencyProperty<Region> Region1Property = new DependencyProperty<Region>("Region1");
+        public Region Region1
         {
-            get { return RegionTest2Property.GetValue(this); }
-            set { RegionTest2Property.SetValue(this, value); }
+            get { return Region1Property.GetValue(this); }
+            set { Region1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> RegionTest2TemplateProperty = new DependencyProperty<Template>("RegionTest2Template");
-        public Template RegionTest2Template
+        public readonly static DependencyProperty<Template> Region1TemplateProperty = new DependencyProperty<Template>("Region1Template");
+        public Template Region1Template
         {
-            get { return RegionTest2TemplateProperty.GetValue(this); }
-            set { RegionTest2TemplateProperty.SetValue(this, value); }
+            get { return Region1TemplateProperty.GetValue(this); }
+            set { Region1TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> RegionTest3Property = new DependencyProperty<Region>("RegionTest3");
-        public Region RegionTest3
+        public readonly static DependencyProperty<Region> Region2Property = new DependencyProperty<Region>("Region2");
+        public Region Region2
         {
-            get { return RegionTest3Property.GetValue(this); }
-            set { RegionTest3Property.SetValue(this, value); }
+            get { return Region2Property.GetValue(this); }
+            set { Region2Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> RegionTest3TemplateProperty = new DependencyProperty<Template>("RegionTest3Template");
-        public Template RegionTest3Template
+        public readonly static DependencyProperty<Template> Region2TemplateProperty = new DependencyProperty<Template>("Region2Template");
+        public Template Region2Template
         {
-            get { return RegionTest3TemplateProperty.GetValue(this); }
-            set { RegionTest3TemplateProperty.SetValue(this, value); }
+            get { return Region2TemplateProperty.GetValue(this); }
+            set { Region2TemplateProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Region> RegionTest4Property = new DependencyProperty<Region>("RegionTest4");
-        public Region RegionTest4
+        public readonly static DependencyProperty<Label> Label1Property = new DependencyProperty<Label>("Label1");
+        public Label Label1
         {
-            get { return RegionTest4Property.GetValue(this); }
-            set { RegionTest4Property.SetValue(this, value); }
+            get { return Label1Property.GetValue(this); }
+            set { Label1Property.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<Template> RegionTest4TemplateProperty = new DependencyProperty<Template>("RegionTest4Template");
-        public Template RegionTest4Template
+        public readonly static DependencyProperty<Template> Label1TemplateProperty = new DependencyProperty<Template>("Label1Template");
+        public Template Label1Template
         {
-            get { return RegionTest4TemplateProperty.GetValue(this); }
-            set { RegionTest4TemplateProperty.SetValue(this, value); }
+            get { return Label1TemplateProperty.GetValue(this); }
+            set { Label1TemplateProperty.SetValue(this, value); }
         }
 
         #endregion
@@ -146,83 +146,82 @@ namespace Delight
 #endif
                     Delight.ResponsiveUIExample.EnableScriptEventsProperty.SetDefault(_responsiveUIExample, true);
                     Delight.ResponsiveUIExample.TestWidthProperty.SetDefault(_responsiveUIExample, new ElementSize(100f, ElementSizeUnit.Pixels));
-                    Delight.ResponsiveUIExample.RegionTest2TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleRegionTest2);
-                    Delight.ResponsiveUIExample.RegionTest3TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleRegionTest3);
-                    Delight.ResponsiveUIExample.RegionTest4TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleRegionTest4);
+                    Delight.ResponsiveUIExample.Region1TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleRegion1);
+                    Delight.ResponsiveUIExample.Region2TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleRegion2);
+                    Delight.ResponsiveUIExample.Label1TemplateProperty.SetDefault(_responsiveUIExample, ResponsiveUIExampleLabel1);
                 }
                 return _responsiveUIExample;
             }
         }
 
-        private static Template _responsiveUIExampleRegionTest2;
-        public static Template ResponsiveUIExampleRegionTest2
+        private static Template _responsiveUIExampleRegion1;
+        public static Template ResponsiveUIExampleRegion1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_responsiveUIExampleRegionTest2 == null || _responsiveUIExampleRegionTest2.CurrentVersion != Template.Version)
+                if (_responsiveUIExampleRegion1 == null || _responsiveUIExampleRegion1.CurrentVersion != Template.Version)
 #else
-                if (_responsiveUIExampleRegionTest2 == null)
+                if (_responsiveUIExampleRegion1 == null)
 #endif
                 {
-                    _responsiveUIExampleRegionTest2 = new Template(RegionTemplates.Region);
+                    _responsiveUIExampleRegion1 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _responsiveUIExampleRegionTest2.Name = "ResponsiveUIExampleRegionTest2";
-                    _responsiveUIExampleRegionTest2.LineNumber = 4;
-                    _responsiveUIExampleRegionTest2.LinePosition = 4;
+                    _responsiveUIExampleRegion1.Name = "ResponsiveUIExampleRegion1";
+                    _responsiveUIExampleRegion1.LineNumber = 4;
+                    _responsiveUIExampleRegion1.LinePosition = 4;
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_responsiveUIExampleRegionTest2, new UnityEngine.Color(0f, 1f, 0f, 1f));
-                    Delight.Region.WidthProperty.SetHasBinding(_responsiveUIExampleRegionTest2);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_responsiveUIExampleRegion1, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.Region.WidthProperty.SetHasBinding(_responsiveUIExampleRegion1);
                 }
-                return _responsiveUIExampleRegionTest2;
+                return _responsiveUIExampleRegion1;
             }
         }
 
-        private static Template _responsiveUIExampleRegionTest3;
-        public static Template ResponsiveUIExampleRegionTest3
+        private static Template _responsiveUIExampleRegion2;
+        public static Template ResponsiveUIExampleRegion2
         {
             get
             {
 #if UNITY_EDITOR
-                if (_responsiveUIExampleRegionTest3 == null || _responsiveUIExampleRegionTest3.CurrentVersion != Template.Version)
+                if (_responsiveUIExampleRegion2 == null || _responsiveUIExampleRegion2.CurrentVersion != Template.Version)
 #else
-                if (_responsiveUIExampleRegionTest3 == null)
+                if (_responsiveUIExampleRegion2 == null)
 #endif
                 {
-                    _responsiveUIExampleRegionTest3 = new Template(RegionTemplates.Region);
+                    _responsiveUIExampleRegion2 = new Template(RegionTemplates.Region);
 #if UNITY_EDITOR
-                    _responsiveUIExampleRegionTest3.Name = "ResponsiveUIExampleRegionTest3";
-                    _responsiveUIExampleRegionTest3.LineNumber = 5;
-                    _responsiveUIExampleRegionTest3.LinePosition = 4;
+                    _responsiveUIExampleRegion2.Name = "ResponsiveUIExampleRegion2";
+                    _responsiveUIExampleRegion2.LineNumber = 5;
+                    _responsiveUIExampleRegion2.LinePosition = 4;
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_responsiveUIExampleRegionTest3, new UnityEngine.Color(0f, 0f, 1f, 1f));
-                    Delight.Region.WidthProperty.SetHasBinding(_responsiveUIExampleRegionTest3);
+                    Delight.Region.BackgroundColorProperty.SetDefault(_responsiveUIExampleRegion2, new UnityEngine.Color(0f, 1f, 0f, 1f));
+                    Delight.Region.IsActiveProperty.SetHasBinding(_responsiveUIExampleRegion2);
                 }
-                return _responsiveUIExampleRegionTest3;
+                return _responsiveUIExampleRegion2;
             }
         }
 
-        private static Template _responsiveUIExampleRegionTest4;
-        public static Template ResponsiveUIExampleRegionTest4
+        private static Template _responsiveUIExampleLabel1;
+        public static Template ResponsiveUIExampleLabel1
         {
             get
             {
 #if UNITY_EDITOR
-                if (_responsiveUIExampleRegionTest4 == null || _responsiveUIExampleRegionTest4.CurrentVersion != Template.Version)
+                if (_responsiveUIExampleLabel1 == null || _responsiveUIExampleLabel1.CurrentVersion != Template.Version)
 #else
-                if (_responsiveUIExampleRegionTest4 == null)
+                if (_responsiveUIExampleLabel1 == null)
 #endif
                 {
-                    _responsiveUIExampleRegionTest4 = new Template(RegionTemplates.Region);
+                    _responsiveUIExampleLabel1 = new Template(LabelTemplates.Label);
 #if UNITY_EDITOR
-                    _responsiveUIExampleRegionTest4.Name = "ResponsiveUIExampleRegionTest4";
-                    _responsiveUIExampleRegionTest4.LineNumber = 7;
-                    _responsiveUIExampleRegionTest4.LinePosition = 4;
+                    _responsiveUIExampleLabel1.Name = "ResponsiveUIExampleLabel1";
+                    _responsiveUIExampleLabel1.LineNumber = 7;
+                    _responsiveUIExampleLabel1.LinePosition = 4;
 #endif
-                    Delight.Region.BackgroundColorProperty.SetDefault(_responsiveUIExampleRegionTest4, new UnityEngine.Color(1f, 1f, 0f, 1f));
-                    Delight.Region.WidthProperty.SetHasBinding(_responsiveUIExampleRegionTest4);
+                    Delight.Label.TextProperty.SetHasBinding(_responsiveUIExampleLabel1);
                 }
-                return _responsiveUIExampleRegionTest4;
+                return _responsiveUIExampleLabel1;
             }
         }
 

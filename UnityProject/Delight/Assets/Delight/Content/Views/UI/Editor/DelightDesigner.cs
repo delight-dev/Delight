@@ -921,7 +921,7 @@ namespace Delight
                         if (actionAssignment.HasEmbeddedCode)
                         {
                             // set runtime path to template items in expression
-                            actionValue = CodeGenerator.SetTemplateItemsInExpression(templateItems, actionValue, true);
+                            actionValue = CodeGenerator.FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment.PropertyDeclarationInfo.Declaration, templateItems, actionValue, true);
                             var script = GetCSharpScript(parent.GetType(), actionValue);
 
                             // copy template items
@@ -1018,8 +1018,11 @@ namespace Delight
                         var expression = embeddedAssignment.PropertyValue;
 
                         // set runtime path to template items in expression
-                        expression = CodeGenerator.SetTemplateItemsInExpression(templateItems, expression, true);
+                        expression = CodeGenerator.FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment.PropertyDeclarationInfo.Declaration, templateItems, expression, true);
                         var script = GetCSharpScript(parent.GetType(), expression);
+
+                        // copy template items
+                        var templateItemsCopy = CopyTemplateItems(templateItems);
 
                         Func<Task<object>> transformMethod = async () =>
                         {
@@ -1027,7 +1030,7 @@ namespace Delight
                             {
                                 // set template items on parent before execution
                                 parent.TemplateItems = new Dictionary<string, ContentTemplateData>();
-                                foreach (var templateItem in templateItems)
+                                foreach (var templateItem in templateItemsCopy)
                                 {
                                     if (parent.TemplateItems.ContainsKey(templateItem.VariableName))
                                     {
@@ -1299,6 +1302,7 @@ namespace Delight
 
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
+                            expression = CodeGenerator.FormatEmbeddedExpression(fileName, propertyBinding.LineNumber, propertyBinding.PropertyDeclarationInfo.Declaration, templateItems, expression, true);
                             var script = GetCSharpScript(parent.GetType(), expression);
                             View parentCapture = parent;
 
