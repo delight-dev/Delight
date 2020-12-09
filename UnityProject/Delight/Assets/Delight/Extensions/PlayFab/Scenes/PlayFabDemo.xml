@@ -13,7 +13,7 @@
       </ToggleGroup>
     </Group>
 
-    <Navigator Id="FeatureNavigator" Grid.Cell="0,1"> 
+    <Navigator Id="FeatureNavigator" Grid.Cell="0,1" StartPath="/Login"> 
       <PlayFabLogin Navigator.Path="/Login" />
       <PlayFabRegister Navigator.Path="/Register" />
       <PlayFabPlayerProfileDetail Navigator.Path="/PlayerProfile" />

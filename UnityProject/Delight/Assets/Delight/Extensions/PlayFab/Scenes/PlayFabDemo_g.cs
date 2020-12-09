@@ -610,6 +610,7 @@ namespace Delight
                     _playFabDemoFeatureNavigator.LineNumber = 16;
                     _playFabDemoFeatureNavigator.LinePosition = 6;
 #endif
+                    Delight.Navigator.StartPathProperty.SetDefault(_playFabDemoFeatureNavigator, "/Login");
                 }
                 return _playFabDemoFeatureNavigator;
             }
