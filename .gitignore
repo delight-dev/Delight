@@ -279,3 +279,8 @@ UnityProject/Delight/Temp/
 UnityProject/Delight/obj/
 UnityProject/Delight/UnityGenerated/
 UnityProject/Delight/Library/
+
+# PlayFab
+
+UnityProject/Delight/Assets/PlayFabEditorExtensions/Editor/Resources/PlayFabEditorPrefsSO.asset
+UnityProject/Delight/Assets/PlayFabSDK/Shared/Public/Resources/PlayFabSharedSettings.asset
