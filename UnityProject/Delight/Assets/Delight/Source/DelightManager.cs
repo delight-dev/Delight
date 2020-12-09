@@ -2,12 +2,15 @@
 using System;
 using System.Reflection;
 using UnityEngine;
+#if DELIGHT_MODULE_PLAYFAB
+using PlayFab;
+#endif
 #endregion
 
 namespace Delight
 {
     /// <summary>
-    /// Manages Delight content. 
+    /// Global manager that performs initialization and updates for Delight.
     /// </summary>
     public class DelightManager : MonoBehaviour
     {
@@ -19,6 +22,9 @@ namespace Delight
 
         #region Method
 
+        /// <summary>
+        /// Makes sure an instance of the Delight manager is created.
+        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         static void OnRuntimeMethodLoad()
         {
@@ -32,13 +38,25 @@ namespace Delight
             Instance = instance;
         }
 
+        /// <summary>
+        /// Initializes the Delight framework.
+        /// </summary>
         public void Awake()
         {
             // detect device, screen size, etc.
             // get device type
             Models.Globals.DeviceType = GetDeviceType();
+#if DELIGHT_MODULE_PLAYFAB
+            if (!String.IsNullOrEmpty(Config.PlayFabTitleId))
+            {
+                PlayFabSettings.TitleId = Config.PlayFabTitleId;
+            }
+#endif
         }
 
+        /// <summary>
+        /// Updates the Delight framework.
+        /// </summary>
         public void Update()
         {
             // TODO maybe use the messenger system to notify screen orientation and size changes
@@ -57,6 +75,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Gets device type. If handheld it guesses if it's a Tablet or Mobile based on aspect ratio and diagonal size in inches.
+        /// </summary>
         public DeviceType GetDeviceType()
         {
             if (SystemInfo.deviceType != UnityEngine.DeviceType.Handheld)
@@ -81,6 +102,9 @@ namespace Delight
             return isTablet ? DeviceType.Tablet : DeviceType.Mobile;
         }
 
+        /// <summary>
+        /// Gets diagonal size of screen in inches.
+        /// </summary>
         private float DeviceDiagonalSizeInInches()
         {
             float screenWidth = Screen.width / Screen.dpi;

@@ -71,7 +71,11 @@ namespace Delight
             ViewActivators.Add("SliderExample", (x, y, z, w, a) => new SliderExample(x, y, z, w, a));
             ViewActivators.Add("TabPanelExample", (x, y, z, w, a) => new TabPanelExample(x, y, z, w, a));
             ViewActivators.Add("TestExample", (x, y, z, w, a) => new TestExample(x, y, z, w, a));
+            ViewActivators.Add("PlayFabLogin", (x, y, z, w, a) => new PlayFabLogin(x, y, z, w, a));
+            ViewActivators.Add("PlayFabPlayerProfileDetail", (x, y, z, w, a) => new PlayFabPlayerProfileDetail(x, y, z, w, a));
+            ViewActivators.Add("PlayFabRegister", (x, y, z, w, a) => new PlayFabRegister(x, y, z, w, a));
             ViewActivators.Add("MainMenuDemoScene", (x, y, z, w, a) => new MainMenuDemoScene(x, y, z, w, a));
+            ViewActivators.Add("PlayFabDemo", (x, y, z, w, a) => new PlayFabDemo(x, y, z, w, a));
 
             ViewTypes = new Dictionary<string, Type>();
             ViewTypes.Add("SceneObjectView", typeof(SceneObjectView));
@@ -130,7 +134,11 @@ namespace Delight
             ViewTypes.Add("SliderExample", typeof(SliderExample));
             ViewTypes.Add("TabPanelExample", typeof(TabPanelExample));
             ViewTypes.Add("TestExample", typeof(TestExample));
+            ViewTypes.Add("PlayFabLogin", typeof(PlayFabLogin));
+            ViewTypes.Add("PlayFabPlayerProfileDetail", typeof(PlayFabPlayerProfileDetail));
+            ViewTypes.Add("PlayFabRegister", typeof(PlayFabRegister));
             ViewTypes.Add("MainMenuDemoScene", typeof(MainMenuDemoScene));
+            ViewTypes.Add("PlayFabDemo", typeof(PlayFabDemo));
 
             AttachedPropertyActivators = new Dictionary<string, Func<View, string, AttachedProperty>>();
             AttachedPropertyActivators.Add("System.Int32", (x, y) => new AttachedProperty<System.Int32>(x, y));

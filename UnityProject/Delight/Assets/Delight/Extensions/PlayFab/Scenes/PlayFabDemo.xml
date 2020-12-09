@@ -1,0 +1,24 @@
+<PlayFabDemo xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="LayoutRoot"
+             Module="PlayFab">
+
+  <Grid Columns="300, *">
+
+    <Group Grid.Cell="0,0" Margin="10" Spacing="10">
+      <Label Text="PlayFab features" AutoSize="True" FontSize="30" FontColor="White" Font="Segoe UI SDF" Alignment="Left" />
+      <ToggleGroup Spacing="5" Alignment="Left" ContentAlignment="Left">
+        <Button Text="Log in" Click="$ FeatureNavigator.Open('/Login')" ToggleValue="True" Width="200" />
+        <Button Text="Register new user" Click="$ FeatureNavigator.Open('/Register')" Width="200" />
+        <Button Text="Player profile" Click="$ FeatureNavigator.Open('/PlayerProfile')" Width="200" />
+        <Button Text="Exit" Click="$ Application.Quit()" Width="200" />
+      </ToggleGroup>
+    </Group>
+
+    <Navigator Id="FeatureNavigator" Grid.Cell="0,1"> 
+      <PlayFabLogin Navigator.Path="/Login" />
+      <PlayFabRegister Navigator.Path="/Register" />
+      <PlayFabPlayerProfileDetail Navigator.Path="/PlayerProfile" />
+    </Navigator>
+    
+  </Grid>
+  
+</PlayFabDemo>

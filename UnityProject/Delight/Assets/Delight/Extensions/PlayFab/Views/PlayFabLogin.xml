@@ -1,0 +1,23 @@
+<PlayFabLogin xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" BasedOn="UIView"
+              Module="PlayFab" Email="t:string = opacic@gmail.com" Password="t:string = kattkatt">
+
+  <Grid Columns="1*,1*">
+
+    <!-- Login view -->
+    <Region Grid.Cell="0,0" Margin="10">
+      <Group IsActive="{!@PlayFabUser.IsLoggedIn}" Spacing="5" Alignment="TopLeft">
+        <Label Text="Login" AutoSize="True" FontSize="30" FontColor="White" Font="Segoe UI SDF" Alignment="Left" />
+        <Label Text="Email" AutoSize="True" FontSize="14" FontColor="White" Font="Segoe UI SDF" Alignment="Left" />
+        <InputField Text="{Email}" Alignment="Left" />
+        <Label Text="Password" AutoSize="True" FontSize="14" FontColor="White" Font="Segoe UI SDF" Alignment="Left" />
+        <InputField Text="{Password}" InputType="Password" Alignment="Left" />
+        <Button Text="Log in" Alignment="Left" Click="LogIn" IsDisabled="{@PlayFabUser.IsLoggingIn}" />
+        <Label Text="Failed to log in: {@PlayFabUser.LoggedInFailedMessage}" IsVisible="{@PlayFabUser.LoggedInFailed}" AutoSize="True" FontSize="20" FontColor="White" Font="Segoe UI SDF" />
+      </Group>
+      <Group IsActive="{@PlayFabUser.IsLoggedIn}" Alignment="TopLeft" ContentAlignment="Left">
+        <Button Text="Log out" Alignment="Left" Click="LogOut" />
+      </Group>
+    </Region>
+
+  </Grid>
+</PlayFabLogin>

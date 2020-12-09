@@ -2347,6 +2347,13 @@ namespace Delight
             set { ComboBoxList.RenderCamera = value; }
         }
 
+        public readonly static DependencyProperty AdjustToScreenOrientationProperty = List.AdjustToScreenOrientationProperty;
+        public Delight.AdjustToScreenOrientation AdjustToScreenOrientation
+        {
+            get { return ComboBoxList.AdjustToScreenOrientation; }
+            set { ComboBoxList.AdjustToScreenOrientation = value; }
+        }
+
         public readonly static DependencyProperty RenderModeProperty = List.RenderModeProperty;
         public UnityEngine.RenderMode RenderMode
         {

@@ -100,6 +100,10 @@ namespace Delight
             bool ctrlDown = Input.GetKey(KeyCode.LeftApple) || Input.GetKey(KeyCode.RightApple) || Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
             bool shiftDown = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
 
+            // update view content scale 
+            // TODO optimize if possible
+            SetScale(ContentRegionCanvas.Scale);
+
             // F5 reparses the currently edited view
             if (Input.GetKeyDown(KeyCode.F5))
             {
@@ -921,7 +925,7 @@ namespace Delight
                         if (actionAssignment.HasEmbeddedCode)
                         {
                             // set runtime path to template items in expression
-                            actionValue = CodeGenerator.FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment.PropertyDeclarationInfo.Declaration, templateItems, actionValue, true);
+                            actionValue = CodeGenerator.FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, actionValue, true);
                             var script = GetCSharpScript(parent.GetType(), actionValue);
 
                             // copy template items
@@ -1018,7 +1022,7 @@ namespace Delight
                         var expression = embeddedAssignment.PropertyValue;
 
                         // set runtime path to template items in expression
-                        expression = CodeGenerator.FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment.PropertyDeclarationInfo.Declaration, templateItems, expression, true);
+                        expression = CodeGenerator.FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, expression, true);
                         var script = GetCSharpScript(parent.GetType(), expression);
 
                         // copy template items
@@ -1302,7 +1306,7 @@ namespace Delight
 
                             // get expression to be evaluated at run-time
                             var expression = String.Format(propertyBinding.TransformExpression, convertedSourceProperties.ToArray<object>());
-                            expression = CodeGenerator.FormatEmbeddedExpression(fileName, propertyBinding.LineNumber, propertyBinding.PropertyDeclarationInfo.Declaration, templateItems, expression, true);
+                            expression = CodeGenerator.FormatEmbeddedExpression(fileName, propertyBinding.LineNumber, propertyBinding?.PropertyDeclarationInfo?.Declaration, templateItems, expression, true);
                             var script = GetCSharpScript(parent.GetType(), expression);
                             View parentCapture = parent;
 
@@ -2161,6 +2165,10 @@ namespace Delight
                 MainGrid.Cell.SetValue(DisplayRegion, new CellIndex(0, 2));
                 MainGrid.CellSpan.SetValue(DisplayRegion, new CellIndex(1, 1));
             }
+
+            // center on view
+            ScrollableContentRegion.SetScrollPosition(0.5f, 0.5f);
+            SetScale(Vector3.one);
         }
 
         #endregion

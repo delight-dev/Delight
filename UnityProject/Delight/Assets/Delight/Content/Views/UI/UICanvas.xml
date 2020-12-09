@@ -4,5 +4,6 @@
           GraphicRaycaster="t:UnityEngine.UI.GraphicRaycaster, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"
           RenderCamera="t:string"
           m.Canvas="" m.CanvasScaler="" m.GraphicRaycaster=""
-          PixelPerfect="False">
+          PixelPerfect="False"
+          AdjustToScreenOrientation="t:AdjustToScreenOrientation = Never"> 
 </UICanvas> 

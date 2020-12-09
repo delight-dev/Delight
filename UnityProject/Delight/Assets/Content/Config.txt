@@ -19,5 +19,7 @@ UseSimulatedUriInEditor: true
 BuildTargets: Dev
 AssetBundleVersion: 1
 ContentFolders:
+PlayFabTitleId: E5CB4
 Modules: 
   TextMeshPro
+  PlayFab

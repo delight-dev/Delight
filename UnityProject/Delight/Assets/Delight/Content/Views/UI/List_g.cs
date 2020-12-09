@@ -2369,6 +2369,13 @@ namespace Delight
             set { ScrollableRegion.RenderCamera = value; }
         }
 
+        public readonly static DependencyProperty AdjustToScreenOrientationProperty = ScrollableRegion.AdjustToScreenOrientationProperty;
+        public Delight.AdjustToScreenOrientation AdjustToScreenOrientation
+        {
+            get { return ScrollableRegion.AdjustToScreenOrientation; }
+            set { ScrollableRegion.AdjustToScreenOrientation = value; }
+        }
+
         public readonly static DependencyProperty RenderModeProperty = ScrollableRegion.RenderModeProperty;
         public UnityEngine.RenderMode RenderMode
         {

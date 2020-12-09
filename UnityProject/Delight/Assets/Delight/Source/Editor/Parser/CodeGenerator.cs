@@ -1408,7 +1408,7 @@ namespace Delight.Editor.Parser
                         var actionValue = actionAssignment.PropertyValue;
                         if (actionAssignment.HasEmbeddedCode)
                         {
-                            actionValue = FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment.PropertyDeclarationInfo.Declaration, templateItems, actionValue, false);
+                            actionValue = FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, actionValue, false);
                             sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, actionValue);
                             continue;
                         }
@@ -1471,7 +1471,7 @@ namespace Delight.Editor.Parser
                     // generate assignment for expressions
                     foreach (var embeddedAssignment in embeddedAssignments)
                     {
-                        var embeddedAssignmentValue = FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment.PropertyDeclarationInfo.Declaration, templateItems, embeddedAssignment.PropertyValue, false);
+                        var embeddedAssignmentValue = FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, embeddedAssignment.PropertyValue, false);
 
                         // handle multi-line expressions
                         var trimmedEmbeddedAssignmentValue = embeddedAssignmentValue.Trim();
@@ -3507,6 +3507,11 @@ namespace Delight.Editor.Parser
             if (!String.IsNullOrEmpty(config.ServerUri))
             {
                 sb.AppendLine("            ServerUri = \"{0}\";", config.ServerUri);
+            }
+
+            if (!String.IsNullOrEmpty(config.PlayFabTitleId))
+            {
+                sb.AppendLine("            PlayFabTitleId = \"{0}\";", config.PlayFabTitleId);
             }
 
             if (!String.IsNullOrEmpty(config.ServerUriLocator))
