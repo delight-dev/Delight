@@ -22,4 +22,3 @@ ContentFolders:
 PlayFabTitleId: E5CB4
 Modules: 
   TextMeshPro
-  PlayFab

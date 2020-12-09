@@ -202,6 +202,7 @@ namespace Delight
         public readonly SpriteAsset ExpanderArrowRight;
         public readonly SpriteAsset Eye16;
         public readonly SpriteAsset Eye64;
+        public readonly SpriteAsset Fullscreen;
         public readonly SpriteAsset HamburgerMenuIcon;
         public readonly SpriteAsset HamburgerMenuIconPressed;
         public readonly SpriteAsset ListSelection;
@@ -212,7 +213,6 @@ namespace Delight
         public readonly SpriteAsset RoundedSquare10_5px;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
-        public readonly SpriteAsset Fullscreen;
         public readonly SpriteAsset Frame1;
         public readonly SpriteAsset Frame2;
         public readonly SpriteAsset BigSprite;
@@ -269,6 +269,7 @@ namespace Delight
             ExpanderArrowRight = new SpriteAsset { Id = "ExpanderArrowRight", IsResource = true, RelativePath = "Sprites/" };
             Eye16 = new SpriteAsset { Id = "eye16", IsResource = true, RelativePath = "Sprites/" };
             Eye64 = new SpriteAsset { Id = "eye64", IsResource = true, RelativePath = "Sprites/" };
+            Fullscreen = new SpriteAsset { Id = "fullscreen", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIcon = new SpriteAsset { Id = "HamburgerMenuIcon", IsResource = true, RelativePath = "Sprites/" };
             HamburgerMenuIconPressed = new SpriteAsset { Id = "HamburgerMenuIconPressed", IsResource = true, RelativePath = "Sprites/" };
             ListSelection = new SpriteAsset { Id = "ListSelection", IsResource = true, RelativePath = "Sprites/" };
@@ -279,7 +280,6 @@ namespace Delight
             RoundedSquare10_5px = new SpriteAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
-            Fullscreen = new SpriteAsset { Id = "fullscreen", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
             Frame2 = new SpriteAsset { Id = "Frame2", AssetBundleId = "Bundle1", RelativePath = "" };
             BigSprite = new SpriteAsset { Id = "BigSprite", AssetBundleId = "Bundle2", RelativePath = "" };
@@ -330,6 +330,7 @@ namespace Delight
             Add(ExpanderArrowRight);
             Add(Eye16);
             Add(Eye64);
+            Add(Fullscreen);
             Add(HamburgerMenuIcon);
             Add(HamburgerMenuIconPressed);
             Add(ListSelection);
@@ -340,7 +341,6 @@ namespace Delight
             Add(RoundedSquare10_5px);
             Add(Selection);
             Add(TooltipArrow);
-            Add(Fullscreen);
             Add(Frame1);
             Add(Frame2);
             Add(BigSprite);

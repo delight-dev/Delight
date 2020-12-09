@@ -15,7 +15,6 @@ namespace Delight
         static Config()
         {
             ServerUri = "http://example.com";
-            PlayFabTitleId = "E5CB4";
             UseSimulatedUriInEditor = true;
             AssetBundleVersion = 1;
         }

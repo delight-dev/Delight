@@ -3509,10 +3509,12 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("            ServerUri = \"{0}\";", config.ServerUri);
             }
 
+#if DELIGHT_MODULE_PLAYFAB
             if (!String.IsNullOrEmpty(config.PlayFabTitleId))
             {
                 sb.AppendLine("            PlayFabTitleId = \"{0}\";", config.PlayFabTitleId);
             }
+#endif
 
             if (!String.IsNullOrEmpty(config.ServerUriLocator))
             {
@@ -3536,7 +3538,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
     }
 }
 
