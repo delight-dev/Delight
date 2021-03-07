@@ -1,5 +1,26 @@
-﻿2020.2.1a
+﻿2020.2.1
+- Added support for transition animations to list items in List views as items are added / removed. See ListExample view for demo.
+- Added Navigator view for navigating/switching between views with transition animations. See NavigatorExample view for example how it's used.
+- Global values can be defined through the partial class Globals, and they can be accessed in the XML.
+  <Label Text="{@GlobalValue}" />
+- Added global values for creating responsive UIs: ScreenWidth, ScreenHeight, IsMobile, IsTablet, IsDesktop, IsPortrait, IsLandscape.
+- XML values can now be specified in embedded expressions through the notation XML(value):
+  <Region Width="$ {@IsPortrait} ? XML(100%) : XML(50%)">
 - Framework now allows binding to non-bindable objects i.e. objects that don't inherit from BindableObject or BindableCollection
+- Added AdjustToParent enum to all views. Views can now adjust their size to Fill the parent (retaining aspect ratio), Fit inside parent (retaining aspect ratio) or Stretch. 
+- Model properties can be assigned to in XML through their Id:
+  <MyView Player="Player1" />
+  Which translates to MyView.Player = Models.DemoPlayers.Player1
+- Color values can now also be defined with 3-digit hex notation: #fff like in css, which duplicates the hexvalues into 6-digits: #ffffff. And the 4-digit notation for #argb -> #aarrggbb. 
+- Offsets can now be specified as percentage. Example of offsetting a view 100% of its size to the right:
+  <Region Offset="100%,0,0,0" />
+- Bugfix: Views not being unloaded as scene is destroyed, causing issues with List views bound to global data.
+- Bugfix: Fixed bug where XML files and code didn't update until switching back and forth in the editor. 
+- Bugfix: IsDisabled on ListItems no longer ignored.
+- Bugfix: Fixed a couple of bugs with runtime parsed list item bindings when having multiple lists. 
+- Bugfix: Added XML editor Command+Left/Right/Up/Down shortcuts for Mac
+- Bugfix: Fixed issues with designer XML editor on Mac
+- Bugfix: Fixed bug with runtime parsed views not applying property assignments declared in base views.
 
 2020.2.0
 - Designer updated: view selection, undo/redo, lock views, syntax highlighting for bindings, performance improvements
