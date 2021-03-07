@@ -386,6 +386,13 @@ namespace Delight
             set { CheckBoxImageView.Position = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent CheckBoxAdjustToParent
+        {
+            get { return CheckBoxImageView.AdjustToParent; }
+            set { CheckBoxImageView.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject CheckBoxGameObject
         {
@@ -1050,6 +1057,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.Position; }
             set { CheckBoxLabel.Position = value; }
+        }
+
+        public readonly static DependencyProperty CheckBoxLabelAdjustToParentProperty = Label.AdjustToParentProperty;
+        public Delight.AdjustToParent CheckBoxLabelAdjustToParent
+        {
+            get { return CheckBoxLabel.AdjustToParent; }
+            set { CheckBoxLabel.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty CheckBoxLabelGameObjectProperty = Label.GameObjectProperty;

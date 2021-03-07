@@ -857,6 +857,13 @@ namespace Delight
             set { Label.Position = value; }
         }
 
+        public readonly static DependencyProperty LabelAdjustToParentProperty = Label.AdjustToParentProperty;
+        public Delight.AdjustToParent LabelAdjustToParent
+        {
+            get { return Label.AdjustToParent; }
+            set { Label.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty LabelGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject LabelGameObject
         {

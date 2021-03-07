@@ -88,6 +88,9 @@ namespace Delight.Editor.Parser
         [ProtoMember(18)]
         public string DefaultContentFolder;
 
+        [ProtoMember(19)]
+        public string PlayFabTitleId;
+
         private static MasterConfig _config;
 
         #endregion

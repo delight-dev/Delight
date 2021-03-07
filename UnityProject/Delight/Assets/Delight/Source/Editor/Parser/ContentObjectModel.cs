@@ -1472,6 +1472,12 @@ namespace Delight.Editor.Parser
 
         [ProtoMember(4)]
         public bool IsModelReference;
+
+        [ProtoMember(5)]
+        public string DefaultValue;
+
+        [ProtoMember(6)]
+        public int Line;
     }
 
     [ProtoContract]

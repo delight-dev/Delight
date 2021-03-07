@@ -211,6 +211,9 @@ namespace Delight
         public readonly SpriteAsset RadioButtonPressed;
         public readonly SpriteAsset RainbowSquare;
         public readonly SpriteAsset RoundedSquare10_5px;
+        public readonly SpriteAsset RoundedSquareFull128px;
+        public readonly SpriteAsset RoundedSquareFull256px;
+        public readonly SpriteAsset RoundedSquareFull512px;
         public readonly SpriteAsset Selection;
         public readonly SpriteAsset TooltipArrow;
         public readonly SpriteAsset Frame1;
@@ -246,8 +249,6 @@ namespace Delight
         public readonly SpriteAsset ProfilePicture5;
         public readonly SpriteAsset ProfilePicture6;
         public readonly SpriteAsset ProfilePicture7;
-        public readonly SpriteAsset RoundedSquareFull128px;
-        public readonly SpriteAsset RoundedSquareFull512px;
 
         #endregion
 
@@ -278,6 +279,9 @@ namespace Delight
             RadioButtonPressed = new SpriteAsset { Id = "RadioButtonPressed", IsResource = true, RelativePath = "Sprites/" };
             RainbowSquare = new SpriteAsset { Id = "RainbowSquare", IsResource = true, RelativePath = "Sprites/" };
             RoundedSquare10_5px = new SpriteAsset { Id = "RoundedSquare10_5px", IsResource = true, RelativePath = "Sprites/" };
+            RoundedSquareFull128px = new SpriteAsset { Id = "RoundedSquareFull@128px", IsResource = true, RelativePath = "Sprites/" };
+            RoundedSquareFull256px = new SpriteAsset { Id = "RoundedSquareFull@256px", IsResource = true, RelativePath = "Sprites/" };
+            RoundedSquareFull512px = new SpriteAsset { Id = "RoundedSquareFull@512px", IsResource = true, RelativePath = "Sprites/" };
             Selection = new SpriteAsset { Id = "Selection", IsResource = true, RelativePath = "Sprites/" };
             TooltipArrow = new SpriteAsset { Id = "TooltipArrow", IsResource = true, RelativePath = "Sprites/" };
             Frame1 = new SpriteAsset { Id = "Frame1", AssetBundleId = "Bundle1", RelativePath = "" };
@@ -313,8 +317,6 @@ namespace Delight
             ProfilePicture5 = new SpriteAsset { Id = "ProfilePicture5", IsResource = true, RelativePath = "PlayerProfile/" };
             ProfilePicture6 = new SpriteAsset { Id = "ProfilePicture6", IsResource = true, RelativePath = "PlayerProfile/" };
             ProfilePicture7 = new SpriteAsset { Id = "ProfilePicture7", IsResource = true, RelativePath = "PlayerProfile/" };
-            RoundedSquareFull128px = new SpriteAsset { Id = "RoundedSquareFull@128px", IsResource = true, RelativePath = "PlayerProfile/" };
-            RoundedSquareFull512px = new SpriteAsset { Id = "RoundedSquareFull@512px", IsResource = true, RelativePath = "PlayerProfile/" };
 
             Add(CheckBox);
             Add(CheckBoxPressed);
@@ -339,6 +341,9 @@ namespace Delight
             Add(RadioButtonPressed);
             Add(RainbowSquare);
             Add(RoundedSquare10_5px);
+            Add(RoundedSquareFull128px);
+            Add(RoundedSquareFull256px);
+            Add(RoundedSquareFull512px);
             Add(Selection);
             Add(TooltipArrow);
             Add(Frame1);
@@ -374,8 +379,6 @@ namespace Delight
             Add(ProfilePicture5);
             Add(ProfilePicture6);
             Add(ProfilePicture7);
-            Add(RoundedSquareFull128px);
-            Add(RoundedSquareFull512px);
         }
 
         #endregion

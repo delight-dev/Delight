@@ -56,11 +56,7 @@ namespace Delight
             GameObject = go;
 
             // if script events are enabled add component that relays the events
-            if (EnableScriptEvents)
-            {
-                _unityScriptRelay = go.AddComponent<UnityScriptRelay>();
-                _unityScriptRelay.SceneObjectView = this;
-            }
+            EnableScriptEventsChanged();
         }
 
         /// <summary>
@@ -141,6 +137,25 @@ namespace Delight
                 case nameof(IsActive):
                     IsActiveChanged();
                     break;
+
+                case nameof(EnableScriptEvents):
+                    EnableScriptEventsChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when EnableScriptEvents has been changed.
+        /// </summary>
+        private void EnableScriptEventsChanged()
+        {
+            if (EnableScriptEvents)
+            {
+                if (GameObject.GetComponent<UnityScriptRelay>())
+                    return; // already has script relay
+
+                _unityScriptRelay = GameObject.AddComponent<UnityScriptRelay>();
+                _unityScriptRelay.SceneObjectView = this;
             }
         }
 

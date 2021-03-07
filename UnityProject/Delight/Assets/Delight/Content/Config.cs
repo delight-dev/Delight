@@ -20,7 +20,9 @@ namespace Delight
         public static string ServerUri = AssetBundle.SimulatedUri;
         public static ServerUriLocator ServerUriLocator = new ServerUriLocator();
         public static uint AssetBundleVersion = 0;
-
+#if DELIGHT_MODULE_PLAYFAB
+        public static string PlayFabTitleId = string.Empty;
+#endif
         #endregion
     }
 }
