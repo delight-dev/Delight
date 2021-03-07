@@ -386,6 +386,13 @@ namespace Delight
             set { RadioButtonImageView.Position = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent RadioButtonAdjustToParent
+        {
+            get { return RadioButtonImageView.AdjustToParent; }
+            set { RadioButtonImageView.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject RadioButtonGameObject
         {
@@ -1050,6 +1057,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.Position; }
             set { RadioButtonLabel.Position = value; }
+        }
+
+        public readonly static DependencyProperty RadioButtonLabelAdjustToParentProperty = Label.AdjustToParentProperty;
+        public Delight.AdjustToParent RadioButtonLabelAdjustToParent
+        {
+            get { return RadioButtonLabel.AdjustToParent; }
+            set { RadioButtonLabel.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty RadioButtonLabelGameObjectProperty = Label.GameObjectProperty;

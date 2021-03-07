@@ -1408,7 +1408,7 @@ namespace Delight.Editor.Parser
                         var actionValue = actionAssignment.PropertyValue;
                         if (actionAssignment.HasEmbeddedCode)
                         {
-                            actionValue = FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment.PropertyDeclarationInfo.Declaration, templateItems, actionValue, false);
+                            actionValue = FormatEmbeddedExpression(fileName, actionAssignment.LineNumber, actionAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, actionValue, false);
                             sb.AppendLine(indent, "{0}.{1}.RegisterHandler(() => {2});", childIdVar, actionAssignment.PropertyName, actionValue);
                             continue;
                         }
@@ -1471,7 +1471,7 @@ namespace Delight.Editor.Parser
                     // generate assignment for expressions
                     foreach (var embeddedAssignment in embeddedAssignments)
                     {
-                        var embeddedAssignmentValue = FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment.PropertyDeclarationInfo.Declaration, templateItems, embeddedAssignment.PropertyValue, false);
+                        var embeddedAssignmentValue = FormatEmbeddedExpression(fileName, embeddedAssignment.LineNumber, embeddedAssignment?.PropertyDeclarationInfo?.Declaration, templateItems, embeddedAssignment.PropertyValue, false);
 
                         // handle multi-line expressions
                         var trimmedEmbeddedAssignmentValue = embeddedAssignmentValue.Trim();
@@ -2885,7 +2885,15 @@ namespace Delight.Editor.Parser
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        public string {0}Id;", property.Name);
+
+                    if (String.IsNullOrEmpty(property.DefaultValue))
+                    {
+                        sb.AppendLine("        public string {0}Id;", property.Name);
+                    }
+                    else
+                    {
+                        sb.AppendLine("        public string {0}Id = \"{1}\";", property.Name, property.DefaultValue);
+                    }
                     sb.AppendLine("        public {0}Asset {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return Assets.{0}[{1}Id]; }}", typeName.Pluralize(), property.Name);
@@ -2896,7 +2904,27 @@ namespace Delight.Editor.Parser
                 {
                     sb.AppendLine();
                     sb.AppendLine("        [SerializeField]");
-                    sb.AppendLine("        private {0} {1};", typeName, field);
+                    if (String.IsNullOrEmpty(property.DefaultValue))
+                    {
+                        sb.AppendLine("        private {0} {1};", typeName, field);
+                    }
+                    else
+                    {
+                        // get initializer for property type
+                        string typeInitializer = GetInitializerForType(property.TypeName, property.DefaultValue);
+                        if (typeInitializer == null)
+                        {
+                            // no initializer found for the property being assigned to
+                            ConsoleLogger.LogParseError(modelObject.SchemaFilePath, property.Line,
+                                String.Format("#Delight# Unable to assign default value for for property \"{0}\". No value initializer found for property type \"{1}\".",
+                                 property.Name, property.TypeName));
+                            sb.AppendLine("        private {0} {1};", typeName, field);
+                        }
+                        else
+                        {
+                            sb.AppendLine("        private {0} {1} = {2};", typeName, field, typeInitializer);
+                        }
+                    }                    
                     sb.AppendLine("        public {0} {1}", typeName, property.Name);
                     sb.AppendLine("        {");
                     sb.AppendLine("            get {{ return {0}; }}", field);
@@ -3509,6 +3537,14 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("            ServerUri = \"{0}\";", config.ServerUri);
             }
 
+            if (config.Modules.Contains("PlayFab"))
+            {
+                if (!String.IsNullOrEmpty(config.PlayFabTitleId))
+                {
+                    sb.AppendLine("            PlayFabTitleId = \"{0}\";", config.PlayFabTitleId);
+                }
+            }
+
             if (!String.IsNullOrEmpty(config.ServerUriLocator))
             {
                 sb.AppendLine("            ServerUriLocator = new {0}();", config.ServerUriLocator);
@@ -3531,7 +3567,7 @@ namespace Delight.Editor.Parser
             File.WriteAllText(sourceFile, sb.ToString());
         }
 
-        #endregion
+#endregion
     }
 }
 

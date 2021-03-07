@@ -35,6 +35,7 @@ namespace Delight
             dependencyProperties.Add(CanvasScalerProperty);
             dependencyProperties.Add(GraphicRaycasterProperty);
             dependencyProperties.Add(RenderCameraProperty);
+            dependencyProperties.Add(AdjustToScreenOrientationProperty);
             dependencyProperties.Add(RenderModeProperty);
             dependencyProperties.Add(ScaleFactorProperty);
             dependencyProperties.Add(ReferencePixelsPerUnitProperty);
@@ -94,6 +95,13 @@ namespace Delight
         {
             get { return RenderCameraProperty.GetValue(this); }
             set { RenderCameraProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.AdjustToScreenOrientation> AdjustToScreenOrientationProperty = new DependencyProperty<Delight.AdjustToScreenOrientation>("AdjustToScreenOrientation");
+        public Delight.AdjustToScreenOrientation AdjustToScreenOrientation
+        {
+            get { return AdjustToScreenOrientationProperty.GetValue(this); }
+            set { AdjustToScreenOrientationProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<UnityEngine.RenderMode, UnityEngine.Canvas, UICanvas> RenderModeProperty = new MappedDependencyProperty<UnityEngine.RenderMode, UnityEngine.Canvas, UICanvas>("RenderMode", x => x.Canvas, x => x.renderMode, (x, y) => x.renderMode = y);
@@ -339,6 +347,7 @@ namespace Delight
                     _uICanvas.LinePosition = 0;
 #endif
                     Delight.UICanvas.PixelPerfectProperty.SetDefault(_uICanvas, false);
+                    Delight.UICanvas.AdjustToScreenOrientationProperty.SetDefault(_uICanvas, Delight.AdjustToScreenOrientation.Never);
                 }
                 return _uICanvas;
             }

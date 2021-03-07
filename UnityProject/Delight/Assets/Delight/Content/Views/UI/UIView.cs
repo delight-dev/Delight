@@ -19,6 +19,10 @@ namespace Delight
         /// </summary>
         protected override void BeforeLoad()
         {
+            // if adjusting size to parent EnableScriptEvents needs to be true before scene object is loaded
+            AdjustToParentChanged();
+
+            // load scene object
             base.BeforeLoad();
 
             // initialize root canvas
@@ -115,6 +119,78 @@ namespace Delight
                 case nameof(FastMaterial):
                     FastMaterialChanged();
                     break;
+
+                case nameof(AdjustToParent):
+                    AdjustToParentChanged();
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called when AdjustsToParent changes.
+        /// </summary>
+        protected virtual void AdjustToParentChanged()
+        {
+            switch (AdjustToParent)
+            {
+                case AdjustToParent.Default:
+                    break;
+
+                case AdjustToParent.Stretch:
+                    Width = ElementSize.DefaultLayout;
+                    Height = ElementSize.DefaultLayout;
+                    break;
+
+                case AdjustToParent.Fill:
+                    if (!EnableScriptEvents)
+                    {
+                        EnableScriptEvents = true;
+                    }
+                    break;
+
+                case AdjustToParent.Fit:
+                    if (!EnableScriptEvents)
+                    {
+                        EnableScriptEvents = true;
+                    }
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Called each frame and updates the view.
+        /// </summary>
+        public override void Update()
+        {
+            base.Update();
+            OnAdjustSizeToParent();
+        }
+
+        /// <summary>
+        /// Adjusts the view size to parent. Called each frame when AdjustToParent is set.
+        /// </summary>
+        protected virtual void OnAdjustSizeToParent()
+        {
+            var parent = LayoutParent as UIView;
+            if (parent == null)
+                return;
+
+            switch (AdjustToParent)
+            {
+                default:
+                    break;
+
+                case AdjustToParent.Fill:
+                    float maxSize = Mathf.Max(parent.ActualWidth, parent.ActualHeight);
+                    OverrideWidth = maxSize;
+                    OverrideHeight = maxSize;
+                    break;
+
+                case AdjustToParent.Fit:
+                    float minSize = Mathf.Min(parent.ActualWidth, parent.ActualHeight);
+                    OverrideWidth = minSize;
+                    OverrideHeight = minSize;
+                    break;
             }
         }
 
@@ -153,7 +229,7 @@ namespace Delight
             if (IgnoreObject || DisableLayoutUpdate)
                 return;
 
-            //Debug.Log(String.Format("{0}.LayoutChanged()", Name));            
+            //Debug.Log(String.Format("{0}.OnSizeChanged()", Name));            
             LayoutRoot.RegisterChangeHandler(OnSizeChanged);
         }
 
@@ -662,5 +738,31 @@ namespace Delight
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Enum indicating how the view should adjust its size to the parent.
+    /// </summary>
+    public enum AdjustToParent
+    {
+        /// <summary>
+        /// Does no adjustments.
+        /// </summary>
+        Default = 0,
+
+        /// <summary>
+        /// Stretches the view to parent size. Equivalent of setting Width and Height to 100%.
+        /// </summary>
+        Stretch = 1, 
+
+        /// <summary>
+        /// Retains aspect ratio of view and resizes it to fill out the parent area.
+        /// </summary>
+        Fill = 2,
+
+        /// <summary>
+        /// Retains aspect ration of view and resizes it to fit inside the parent area.
+        /// </summary>
+        Fit = 3,
     }
 }

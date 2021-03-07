@@ -43,6 +43,7 @@ namespace Delight.Editor.Parser
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
         private static readonly char[] ModuleDelimiterChars = { ' ', ';' };
         private static readonly char[] ContentTemplateDelimiterChars = { ' ', ';' };
+        private static readonly char[] ModelPropertyDelimiterChars = { ' ', '=' };
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
@@ -1749,14 +1750,14 @@ namespace Delight.Editor.Parser
                 {
                     // parse model property declaration
                     string[] args = line.Split(null);
-                    if (args.Length > 2)
+
+                    var propertyName = args.Length > 1 ? args[1] : args[0];
+                    var propertyType = args[0];
+                    if (propertyName == "=")
                     {
-                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.\nError line:\n{0}", line));
-                        continue;
+                        propertyName = propertyType;
                     }
 
-                    var propertyName = args.Length == 2 ? args[1] : args[0];
-                    var propertyType = args[0];
                     var property = newModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
                     if (property == null)
                     {
@@ -1765,6 +1766,15 @@ namespace Delight.Editor.Parser
                     }
                     property.Name = propertyName;
                     property.TypeName = propertyType;
+                    property.Line = i + 1;
+
+                    int indexOfAssignment = line.IndexOf('=');
+                    if (indexOfAssignment > 0)
+                    {
+                        // property has default value set
+                        property.DefaultValue = line.Substring(indexOfAssignment + 1).Trim();
+                    }
+   
                     newModelObject.NeedUpdate = true;
                 }
                 else if (inDataInsertDeclaration)
@@ -2308,246 +2318,173 @@ namespace Delight.Editor.Parser
                 switch (configOption.ToLower())
                 {
                     case "serveruri":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.ServerUri = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.ServerUri = configValue;
-                        }
+                        ParseStringConfigValue(ref config.ServerUri, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "usesimulateduriineditor":
-                        var value = configValue;
-                        if (String.IsNullOrWhiteSpace(value))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                value = values.FirstOrDefault();
-                            }
-                        }
-
-                        if (!String.IsNullOrWhiteSpace(value))
-                        {
-                            if (value.IEquals("true"))
-                                config.UseSimulatedUriInEditor = true;
-                            else if (value.IEquals("false"))
-                                config.UseSimulatedUriInEditor = false;
-                            else
-                                ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be either true or false.\nError line:\n{0}", line, configOption));
-                        }
+                        ParseBoolConfigValue(ref config.UseSimulatedUriInEditor, fileContent, config, ref i, configValue, ref linesParsed, path, line, configOption);
                         break;
 
                     case "serverurilocator":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.ServerUriLocator = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.ServerUriLocator = configValue;
-                        }
+                        ParseStringConfigValue(ref config.ServerUriLocator, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "buildtargets":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.BuildTargets.AddRange(values);
-                            }
-                        }
-                        else
-                        {
-                            config.BuildTargets.Add(configValue);
-                        }
+                        ParseStringConfigValues(ref config.BuildTargets, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "contentfolders":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.ContentFolders.AddRange(values);
-                            }
-                        }
-                        else
-                        {
-                            config.ContentFolders.Add(configValue);
-                        }
+                        ParseStringConfigValues(ref config.ContentFolders, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "defaultcontentfolder":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.DefaultContentFolder = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.DefaultContentFolder = configValue;
-                        }
+                        ParseStringConfigValue(ref config.DefaultContentFolder, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "streamedbundles":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.StreamedBundles.AddRange(values);
-                            }
-                        }
-                        else
-                        {
-                            config.StreamedBundles.Add(configValue);
-                        }
+                        ParseStringConfigValues(ref config.StreamedBundles, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "namespaces":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.Namespaces.AddRange(values);
-                            }
-                        }
-                        else
-                        {
-                            config.Namespaces.Add(configValue);
-                        }
+                        ParseStringConfigValues(ref config.Namespaces, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "delightpath":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.DelightPath = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.DelightPath = configValue;
-                        }
+                        ParseStringConfigValue(ref config.DelightPath, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "defaultbasedon":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.DefaultBasedOn = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.DefaultBasedOn = configValue;
-                        }
+                        ParseStringConfigValue(ref config.DefaultBasedOn, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "baseview":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.BaseView = values.FirstOrDefault();
-                            }
-                        }
-                        else
-                        {
-                            config.BaseView = configValue;
-                        }
+                        ParseStringConfigValue(ref config.BaseView, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
                     case "assetbundleversion":
-                        var version = configValue;
-                        if (String.IsNullOrWhiteSpace(version))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                version = values.FirstOrDefault();
-                            }
-                        }
-
-                        if (!String.IsNullOrWhiteSpace(version))
-                        {
-                            try
-                            {
-                                config.AssetBundleVersion = System.Convert.ToInt32(version, CultureInfo.InvariantCulture);
-                            }
-                            catch
-                            {
-                                ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be an integer.\nError line:\n{0}", line, configOption));
-                            }
-                        }
+                        ParseIntConfigValue(ref config.AssetBundleVersion, fileContent, config, ref i, configValue, ref linesParsed, path, line, configOption);
                         break;
 
                     case "modules":
-                        if (String.IsNullOrWhiteSpace(configValue))
-                        {
-                            // parse values
-                            var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
-                            i += linesParsed;
-                            if (values.Count() > 0)
-                            {
-                                config.Modules.AddRange(values.Where(x => !String.IsNullOrWhiteSpace(x)));
-                            }
-                        }
-                        else
-                        {
-                            config.Modules.Add(configValue);
-                        }
+                        ParseStringConfigValues(ref config.Modules, fileContent, config, ref i, configValue, ref linesParsed);
                         break;
 
+                    case "playfabtitleid":
+                        ParseStringConfigValue(ref config.PlayFabTitleId, fileContent, config, ref i, configValue, ref linesParsed);
+                        break;
 
                     default:
                         ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse config option. Option \"{0}\" not recognized.\nError line:\n{1}", configOption, line));
                         continue;
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Parses string values from config file.
+        /// </summary>
+        private static void ParseStringConfigValues(ref List<string> list, string[] fileContent, MasterConfig config, ref int i, string configValue, ref int linesParsed)
+        {
+            if (String.IsNullOrWhiteSpace(configValue))
+            {
+                // parse values
+                var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                i += linesParsed;
+                if (values.Count() > 0)
+                {
+                    list.AddRange(values.Where(x => !String.IsNullOrWhiteSpace(x)));
+                }
+            }
+            else
+            {
+                list.Add(configValue);
+            }
+        }
+
+        /// <summary>
+        /// Parses string value from config file.
+        /// </summary>
+        private static void ParseStringConfigValue(ref string value, string[] fileContent, MasterConfig config, ref int i, string configValue, ref int linesParsed)
+        {
+            if (String.IsNullOrWhiteSpace(configValue))
+            {
+                // parse values
+                var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                i += linesParsed;
+                if (values.Count() > 0)
+                {
+                    value = values.FirstOrDefault();
+                }
+            }
+            else
+            {
+                value = configValue;
+            }
+        }
+
+        /// <summary>
+        /// Parses bool value from config file.
+        /// </summary>
+        private static void ParseBoolConfigValue(ref bool boolValue, string[] fileContent, MasterConfig config, ref int i, string configValue, ref int linesParsed,
+            string path, string line, string configOption)
+        {
+            var value = configValue;
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                // parse values
+                var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                i += linesParsed;
+                if (values.Count() > 0)
+                {
+                    value = values.FirstOrDefault();
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(value))
+            {
+                if (value.IEquals("true"))
+                {
+                    boolValue = true;
+                }
+                else if (value.IEquals("false"))
+                {
+                    boolValue = false;
+                }
+                else
+                {
+                    ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be either true or false.\nError line:\n{0}", line, configOption));
+                }
+            }
+        }
+
+        /// <summary>
+        /// Parses int value from config file.
+        /// </summary>
+        private static void ParseIntConfigValue(ref int intValue, string[] fileContent, MasterConfig config, ref int i, string configValue, ref int linesParsed,
+            string path, string line, string configOption)
+        {
+            var value = configValue;
+            if (String.IsNullOrWhiteSpace(value))
+            {
+                // parse values
+                var values = ParseConfigValues(fileContent, i + 1, out linesParsed);
+                i += linesParsed;
+                if (values.Count() > 0)
+                {
+                    value = values.FirstOrDefault();
+                }
+            }
+
+            if (!String.IsNullOrWhiteSpace(value))
+            {
+                try
+                {
+                    intValue = System.Convert.ToInt32(value, CultureInfo.InvariantCulture);
+                }
+                catch
+                {
+                    ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse value of config option {1}. Value need to be an integer.\nError line:\n{0}", line, configOption));
                 }
             }
         }

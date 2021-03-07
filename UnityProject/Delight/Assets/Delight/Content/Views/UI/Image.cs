@@ -14,6 +14,14 @@ namespace Delight
     /// </summary>
     public partial class Image
     {
+        #region Fields
+
+        private float _nativeAspectRatio = -1;
+
+        #endregion
+
+        #region Methods
+
         /// <summary>
         /// Called when a property has been changed. 
         /// </summary>
@@ -143,7 +151,15 @@ namespace Delight
                     ImageComponent.SetNativeSize();
                     OverrideWidth = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.x);
                     OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
+                    if (OverrideHeight.Pixels != 0)
+                    {
+                        _nativeAspectRatio = OverrideWidth.Pixels / OverrideHeight.Pixels;
+                    }
                 }
+            }
+            else
+            {
+                _nativeAspectRatio = -1;
             }
 
             bool isLoading = Sprite != null && !Sprite.IsLoaded;
@@ -173,5 +189,58 @@ namespace Delight
 
             ImageComponent.material = FastMaterial?.UnityObject;
         }
+
+        /// <summary>
+        /// Adjusts the view size to parent. Called each frame when AdjustToParent is set.
+        /// </summary>
+        protected override void OnAdjustSizeToParent()
+        {
+            if (_nativeAspectRatio < 0)
+            {
+                // use normal adjustment logic when image aspect ratio doesn't matter
+                base.OnAdjustSizeToParent();
+                return;
+            }
+
+            var parent = LayoutParent as UIView;
+            if (parent == null)
+                return;
+
+            switch (AdjustToParent)
+            {
+                default:
+                    break;
+
+                case AdjustToParent.Fill:
+                case AdjustToParent.Fit:
+                    if (parent.ActualWidth <= 0 || parent.ActualHeight <= 0)
+                    {
+                        OverrideWidth = 0;
+                        OverrideHeight = 0;
+                        break;
+                    }
+
+                    bool fill = AdjustToParent == AdjustToParent.Fill;
+                    float width;
+                    float height;
+                    float parentAspectRatio = parent.ActualWidth / parent.ActualHeight;
+                    if ((fill && _nativeAspectRatio >= parentAspectRatio) || (!fill && _nativeAspectRatio < parentAspectRatio))
+                    {
+                        height = parent.ActualHeight;
+                        width = height * _nativeAspectRatio;
+                    }
+                    else
+                    {
+                        width = parent.ActualWidth;
+                        height = width / _nativeAspectRatio;
+                    }
+
+                    OverrideWidth = width;
+                    OverrideHeight = height;
+                    break;
+            }
+        }
+
+        #endregion
     }
 }

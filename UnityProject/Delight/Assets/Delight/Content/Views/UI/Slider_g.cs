@@ -492,6 +492,13 @@ namespace Delight
             set { SliderBackgroundImageView.Position = value; }
         }
 
+        public readonly static DependencyProperty SliderAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent SliderAdjustToParent
+        {
+            get { return SliderBackgroundImageView.AdjustToParent; }
+            set { SliderBackgroundImageView.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty SliderGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject SliderGameObject
         {
@@ -793,6 +800,13 @@ namespace Delight
             set { SliderFillImageView.Position = value; }
         }
 
+        public readonly static DependencyProperty SliderFillAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent SliderFillAdjustToParent
+        {
+            get { return SliderFillImageView.AdjustToParent; }
+            set { SliderFillImageView.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty SliderFillGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject SliderFillGameObject
         {
@@ -1092,6 +1106,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.Position; }
             set { SliderHandleImageView.Position = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandleAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent SliderHandleAdjustToParent
+        {
+            get { return SliderHandleImageView.AdjustToParent; }
+            set { SliderHandleImageView.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty SliderHandleGameObjectProperty = Image.GameObjectProperty;

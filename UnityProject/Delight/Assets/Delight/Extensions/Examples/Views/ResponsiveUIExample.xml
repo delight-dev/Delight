@@ -5,6 +5,5 @@
   <Region IsActive="$ {@ScreenWidth} LT 500 ? true : false" BackgroundColor="Green" />
 
   <Label Text="$ ({@ScreenWidth} GT 100).ToString()" />      
-      
-
+     
 </ResponsiveUIExample>

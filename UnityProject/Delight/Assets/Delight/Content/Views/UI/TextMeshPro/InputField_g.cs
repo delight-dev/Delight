@@ -1257,6 +1257,13 @@ namespace Delight
             set { InputText.Position = value; }
         }
 
+        public readonly static DependencyProperty InputTextAdjustToParentProperty = Label.AdjustToParentProperty;
+        public Delight.AdjustToParent InputTextAdjustToParent
+        {
+            get { return InputText.AdjustToParent; }
+            set { InputText.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty InputTextGameObjectProperty = Label.GameObjectProperty;
         public UnityEngine.GameObject InputTextGameObject
         {

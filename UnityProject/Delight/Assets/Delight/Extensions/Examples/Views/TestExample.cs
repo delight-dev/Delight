@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 #endregion
 
 namespace Delight
@@ -32,6 +33,9 @@ namespace Delight
         //private bool _toggle = true;
         public void Test()
         {
+            // test switching scenes
+            //SceneManager.LoadScene("MainMenuDemoScene");
+
             //foreach (var demoLevel in Models.DemoLevels.ToList())
             //{
             //    if (_toggle)
