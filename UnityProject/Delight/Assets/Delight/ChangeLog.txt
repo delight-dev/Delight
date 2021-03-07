@@ -1,4 +1,4 @@
-﻿2020.2.1
+﻿2020.3.0
 - Added support for transition animations to list items in List views as items are added / removed. See ListExample view for demo.
 - Added Navigator view for navigating/switching between views with transition animations. See NavigatorExample view for example how it's used.
 - Global values can be defined through the partial class Globals, and they can be accessed in the XML.
