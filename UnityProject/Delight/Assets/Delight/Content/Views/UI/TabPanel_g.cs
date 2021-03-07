@@ -423,6 +423,13 @@ namespace Delight
             set { TabHeaderGroup.Position = value; }
         }
 
+        public readonly static DependencyProperty TabListAdjustToParentProperty = ToggleGroup.AdjustToParentProperty;
+        public Delight.AdjustToParent TabListAdjustToParent
+        {
+            get { return TabHeaderGroup.AdjustToParent; }
+            set { TabHeaderGroup.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty TabListGameObjectProperty = ToggleGroup.GameObjectProperty;
         public UnityEngine.GameObject TabListGameObject
         {

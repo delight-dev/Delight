@@ -773,6 +773,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarPosition = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarAdjustToParentProperty = ScrollableRegion.HorizontalScrollbarBarAdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarBarAdjustToParent
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarAdjustToParent; }
+            set { ScrollableRegion.HorizontalScrollbarBarAdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = ScrollableRegion.HorizontalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -1072,6 +1079,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarHandlePosition; }
             set { ScrollableRegion.HorizontalScrollbarHandlePosition = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleAdjustToParentProperty = ScrollableRegion.HorizontalScrollbarHandleAdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarHandleAdjustToParent
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandleAdjustToParent; }
+            set { ScrollableRegion.HorizontalScrollbarHandleAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = ScrollableRegion.HorizontalScrollbarHandleGameObjectProperty;
@@ -1380,6 +1394,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarPosition; }
             set { ScrollableRegion.HorizontalScrollbarPosition = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarAdjustToParentProperty = ScrollableRegion.HorizontalScrollbarAdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarAdjustToParent
+        {
+            get { return ScrollableRegion.HorizontalScrollbarAdjustToParent; }
+            set { ScrollableRegion.HorizontalScrollbarAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = ScrollableRegion.HorizontalScrollbarGameObjectProperty;
@@ -1718,6 +1739,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarPosition = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarAdjustToParentProperty = ScrollableRegion.VerticalScrollbarBarAdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarBarAdjustToParent
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarAdjustToParent; }
+            set { ScrollableRegion.VerticalScrollbarBarAdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = ScrollableRegion.VerticalScrollbarBarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -2017,6 +2045,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarHandlePosition; }
             set { ScrollableRegion.VerticalScrollbarHandlePosition = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleAdjustToParentProperty = ScrollableRegion.VerticalScrollbarHandleAdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarHandleAdjustToParent
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandleAdjustToParent; }
+            set { ScrollableRegion.VerticalScrollbarHandleAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = ScrollableRegion.VerticalScrollbarHandleGameObjectProperty;
@@ -2325,6 +2360,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarPosition; }
             set { ScrollableRegion.VerticalScrollbarPosition = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarAdjustToParentProperty = ScrollableRegion.VerticalScrollbarAdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarAdjustToParent
+        {
+            get { return ScrollableRegion.VerticalScrollbarAdjustToParent; }
+            set { ScrollableRegion.VerticalScrollbarAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = ScrollableRegion.VerticalScrollbarGameObjectProperty;
@@ -2696,6 +2738,13 @@ namespace Delight
         {
             get { return ScrollableRegion.Position; }
             set { ScrollableRegion.Position = value; }
+        }
+
+        public readonly static DependencyProperty ScrollableRegionAdjustToParentProperty = ScrollableRegion.AdjustToParentProperty;
+        public Delight.AdjustToParent ScrollableRegionAdjustToParent
+        {
+            get { return ScrollableRegion.AdjustToParent; }
+            set { ScrollableRegion.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionGameObjectProperty = ScrollableRegion.GameObjectProperty;

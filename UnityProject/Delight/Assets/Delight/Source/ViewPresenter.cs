@@ -46,6 +46,9 @@ namespace Delight
 
         #region Methods
 
+        /// <summary>
+        /// Called at scene start and Loads the view to be presented unless LoadMode is set to Manual.
+        /// </summary>
         public async void Start()
         {
             if (!LoadMode.HasFlag(LoadMode.Manual))
@@ -54,6 +57,9 @@ namespace Delight
             }
         }
 
+        /// <summary>
+        /// Loads the view to be presented. Called automatically on scene start unless LoadMode is set to Manual.
+        /// </summary>
         public async Task Load()
         {
             if (String.IsNullOrEmpty(ViewTypeName))
@@ -106,7 +112,18 @@ namespace Delight
             _layoutRootGameObject = go;
         }
 
+        /// <summary>
+        /// Unloads the presented view.
+        /// </summary>
         public void Unload()
+        {
+            _presentedView?.Unload();
+        }
+
+        /// <summary>
+        /// Called on scene destroy. Unloads the presented view. 
+        /// </summary>
+        public void OnDestroy()
         {
             _presentedView?.Unload();
         }

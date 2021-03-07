@@ -43,6 +43,7 @@ namespace Delight.Editor.Parser
         private static readonly char[] BindingDelimiterChars = { ' ', ',', '$', '(', ')', '{', '}' };
         private static readonly char[] ModuleDelimiterChars = { ' ', ';' };
         private static readonly char[] ContentTemplateDelimiterChars = { ' ', ';' };
+        private static readonly char[] ModelPropertyDelimiterChars = { ' ', '=' };
 
         private static ContentObjectModel _contentObjectModel = ContentObjectModel.GetInstance();
 
@@ -1749,14 +1750,14 @@ namespace Delight.Editor.Parser
                 {
                     // parse model property declaration
                     string[] args = line.Split(null);
-                    if (args.Length > 2)
+
+                    var propertyName = args.Length > 1 ? args[1] : args[0];
+                    var propertyType = args[0];
+                    if (propertyName == "=")
                     {
-                        ConsoleLogger.LogParseError(path, i + 1, String.Format("#Delight# Unable to parse property declaration. Declaration must follow the syntax: \"PropertyType PropertyName\" where PropertyName is optional.\nError line:\n{0}", line));
-                        continue;
+                        propertyName = propertyType;
                     }
 
-                    var propertyName = args.Length == 2 ? args[1] : args[0];
-                    var propertyType = args[0];
                     var property = newModelObject.Properties.FirstOrDefault(x => x.Name.IEquals(propertyName));
                     if (property == null)
                     {
@@ -1765,6 +1766,15 @@ namespace Delight.Editor.Parser
                     }
                     property.Name = propertyName;
                     property.TypeName = propertyType;
+                    property.Line = i + 1;
+
+                    int indexOfAssignment = line.IndexOf('=');
+                    if (indexOfAssignment > 0)
+                    {
+                        // property has default value set
+                        property.DefaultValue = line.Substring(indexOfAssignment + 1).Trim();
+                    }
+   
                     newModelObject.NeedUpdate = true;
                 }
                 else if (inDataInsertDeclaration)

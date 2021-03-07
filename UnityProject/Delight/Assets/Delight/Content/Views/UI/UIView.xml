@@ -8,5 +8,6 @@
         BubbleNotifyChildLayoutChanged="t:bool" 
         IgnoreFlip="t:bool"
         Rotation="t:Quaternion"
-        Position="t:Vector3">   
+        Position="t:Vector3"
+        AdjustToParent="t:AdjustToParent">
 </UIView> 

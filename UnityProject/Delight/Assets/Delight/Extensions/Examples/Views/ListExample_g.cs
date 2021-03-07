@@ -462,7 +462,7 @@ namespace Delight
 #endif
                     Delight.List.SpacingProperty.SetDefault(_listExampleList1, new ElementSize(5f, ElementSizeUnit.Pixels));
                     Delight.List.CascadingAnimationDelayProperty.SetDefault(_listExampleList1, 0.035f);
-                    Delight.List.IsVirtualizedProperty.SetDefault(_listExampleList1, true);
+                    Delight.List.IsVirtualizedProperty.SetDefault(_listExampleList1, false);
                     Delight.List.HeightProperty.SetDefault(_listExampleList1, new ElementSize(500f, ElementSizeUnit.Pixels));
                     Delight.List.WidthProperty.SetDefault(_listExampleList1, new ElementSize(300f, ElementSizeUnit.Pixels));
                     Delight.List.ItemsProperty.SetHasBinding(_listExampleList1);

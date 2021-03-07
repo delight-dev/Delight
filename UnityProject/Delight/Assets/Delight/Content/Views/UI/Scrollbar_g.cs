@@ -383,6 +383,13 @@ namespace Delight
             set { Bar.Position = value; }
         }
 
+        public readonly static DependencyProperty BarAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent BarAdjustToParent
+        {
+            get { return Bar.AdjustToParent; }
+            set { Bar.AdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty BarGameObjectProperty = Image.GameObjectProperty;
         public UnityEngine.GameObject BarGameObject
         {
@@ -682,6 +689,13 @@ namespace Delight
         {
             get { return Handle.Position; }
             set { Handle.Position = value; }
+        }
+
+        public readonly static DependencyProperty HandleAdjustToParentProperty = Image.AdjustToParentProperty;
+        public Delight.AdjustToParent HandleAdjustToParent
+        {
+            get { return Handle.AdjustToParent; }
+            set { Handle.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty HandleGameObjectProperty = Image.GameObjectProperty;

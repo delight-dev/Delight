@@ -572,6 +572,13 @@ namespace Delight
             set { HorizontalScrollbar.BarPosition = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarAdjustToParentProperty = Scrollbar.BarAdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarBarAdjustToParent
+        {
+            get { return HorizontalScrollbar.BarAdjustToParent; }
+            set { HorizontalScrollbar.BarAdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject HorizontalScrollbarBarGameObject
         {
@@ -871,6 +878,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.HandlePosition; }
             set { HorizontalScrollbar.HandlePosition = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleAdjustToParentProperty = Scrollbar.HandleAdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarHandleAdjustToParent
+        {
+            get { return HorizontalScrollbar.HandleAdjustToParent; }
+            set { HorizontalScrollbar.HandleAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
@@ -1179,6 +1193,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.Position; }
             set { HorizontalScrollbar.Position = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarAdjustToParentProperty = Scrollbar.AdjustToParentProperty;
+        public Delight.AdjustToParent HorizontalScrollbarAdjustToParent
+        {
+            get { return HorizontalScrollbar.AdjustToParent; }
+            set { HorizontalScrollbar.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;
@@ -1517,6 +1538,13 @@ namespace Delight
             set { VerticalScrollbar.BarPosition = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarAdjustToParentProperty = Scrollbar.BarAdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarBarAdjustToParent
+        {
+            get { return VerticalScrollbar.BarAdjustToParent; }
+            set { VerticalScrollbar.BarAdjustToParent = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarGameObjectProperty = Scrollbar.BarGameObjectProperty;
         public UnityEngine.GameObject VerticalScrollbarBarGameObject
         {
@@ -1816,6 +1844,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandlePosition; }
             set { VerticalScrollbar.HandlePosition = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleAdjustToParentProperty = Scrollbar.HandleAdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarHandleAdjustToParent
+        {
+            get { return VerticalScrollbar.HandleAdjustToParent; }
+            set { VerticalScrollbar.HandleAdjustToParent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleGameObjectProperty = Scrollbar.HandleGameObjectProperty;
@@ -2124,6 +2159,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.Position; }
             set { VerticalScrollbar.Position = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarAdjustToParentProperty = Scrollbar.AdjustToParentProperty;
+        public Delight.AdjustToParent VerticalScrollbarAdjustToParent
+        {
+            get { return VerticalScrollbar.AdjustToParent; }
+            set { VerticalScrollbar.AdjustToParent = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarGameObjectProperty = Scrollbar.GameObjectProperty;

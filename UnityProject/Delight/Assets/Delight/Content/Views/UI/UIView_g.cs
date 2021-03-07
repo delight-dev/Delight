@@ -54,6 +54,7 @@ namespace Delight
             dependencyProperties.Add(IgnoreFlipProperty);
             dependencyProperties.Add(RotationProperty);
             dependencyProperties.Add(PositionProperty);
+            dependencyProperties.Add(AdjustToParentProperty);
         }
 
         #endregion
@@ -239,6 +240,13 @@ namespace Delight
         {
             get { return PositionProperty.GetValue(this); }
             set { PositionProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<Delight.AdjustToParent> AdjustToParentProperty = new DependencyProperty<Delight.AdjustToParent>("AdjustToParent");
+        public Delight.AdjustToParent AdjustToParent
+        {
+            get { return AdjustToParentProperty.GetValue(this); }
+            set { AdjustToParentProperty.SetValue(this, value); }
         }
 
         #endregion
