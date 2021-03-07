@@ -1,6 +1,6 @@
 <ListExample xmlns="Delight" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="Delight ../Delight.xsd" SelectedPlayer="t:DemoPlayer">  
   <List Items="{player in @DemoPlayers}" SelectedItem="{SelectedPlayer}" Spacing="5" CascadingAnimationDelay="35ms"
-        IsVirtualized="True" Height="500" Width="300">
+        Height="500" Width="300">
     <ListItem Style="AnimatedItem1" Size="180,43"> 
       <Region Size="180,43">
         <Image Size="43" Sprite="CircleFull@512px" Alignment="Left" ListItem.SetListItemState="True" Highlighted-Color="#f679fe" Selected-Color="#d919e0" />

@@ -96,7 +96,7 @@ namespace Delight.Editor
                 }
                 else
                 {
-                    EditorSceneManager.OpenScene("Assets/Delight/Content/Scenes/DelightDesigner.unity");
+                    EditorSceneManager.OpenScene(MasterConfig.RootDirectory + "Delight/Content/Scenes/DelightDesigner.unity");
                     EditorApplication.isPlaying = true;
                 }
             }

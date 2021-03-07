@@ -8736,6 +8736,7 @@
       <xs:enumeration value="ExpanderArrowRight" />
       <xs:enumeration value="eye16" />
       <xs:enumeration value="eye64" />
+      <xs:enumeration value="fullscreen" />
       <xs:enumeration value="HamburgerMenuIcon" />
       <xs:enumeration value="HamburgerMenuIconPressed" />
       <xs:enumeration value="ListSelection" />
@@ -8746,7 +8747,6 @@
       <xs:enumeration value="RoundedSquare10_5px" />
       <xs:enumeration value="Selection" />
       <xs:enumeration value="TooltipArrow" />
-      <xs:enumeration value="fullscreen" />
       <xs:enumeration value="Frame1" />
       <xs:enumeration value="Frame2" />
       <xs:enumeration value="BigSprite" />

@@ -25,6 +25,9 @@ namespace Delight.Editor.Parser
     {
         #region Fields
 
+        public static string DefaultDirectory = "/"; // edit the following string to add Delight framework into a default subfolder, e.g. "SUB_DIR/"
+        public static string RootDirectory = "Assets/" + DefaultDirectory; 
+
         public static string ConfigFile = "DelightConfig.bin";
         private static readonly object _fileLock = new object();
 
@@ -268,13 +271,13 @@ namespace Delight.Editor.Parser
         }
 
         /// <summary>
-        /// Gets uniformally formatted path with forward slashes "/" as directory separators.
+        /// Gets uniformally formatted path with single forward slashes "/" as directory separators.
         /// </summary>
         public static string GetFormattedPath(string path)
         {
             if (String.IsNullOrEmpty(path))
                 return path;
-            return path.Replace("\\", "/");
+            return path.Replace("\\", "/").Replace("//", "/");
         }
 
         /// <summary>
@@ -289,14 +292,15 @@ namespace Delight.Editor.Parser
             ServerUri = String.Empty;
             ServerUriLocator = String.Empty;
             UseSimulatedUriInEditor = true;
-            ContentFolders.Add("Assets/Content/");
-            ContentFolders.Add("Assets/DelightDevContent/");
-            ContentFolders.Add("Assets/Delight/Content/");
-            ContentFolders.Add("Assets/Plugins/Content/");
-            ContentFolders.Add("Assets/Plugins/Delight/Content/");
+            DelightPath = SanitizePath(DefaultDirectory);
+            RootDirectory = SanitizePath(RootDirectory);
+            ContentFolders.Add(RootDirectory + "Content/");
+            ContentFolders.Add(RootDirectory + "DelightDevContent/");
+            ContentFolders.Add(RootDirectory + "Delight/Content/");
+            ContentFolders.Add(RootDirectory + "Plugins/Content/");
+            ContentFolders.Add(RootDirectory + "Plugins/Delight/Content/");
             UpdateExtensionContentFolders();
             Namespaces.Add("Delight");
-            DelightPath = "/";
             DefaultBasedOn = String.Empty;
             BaseView = String.Empty;
             AssetBundleVersion = 0;
@@ -309,7 +313,7 @@ namespace Delight.Editor.Parser
         /// </summary>
         public void UpdateExtensionContentFolders()
         {
-            string path = String.Format("{0}/Delight/Extensions/", Application.dataPath);
+            string path = String.Format("{0}/{1}Delight/Extensions/", Application.dataPath, DelightPath);
             if (!Directory.Exists(path))
                 return;
 
@@ -319,7 +323,7 @@ namespace Delight.Editor.Parser
                 {
                     var directoryName = Path.GetFileName(directoryPath.TrimEnd(Path.DirectorySeparatorChar));
 
-                    string contentFolder = String.Format("Assets/Delight/Extensions/{0}/", directoryName);
+                    string contentFolder = String.Format(RootDirectory + "Delight/Extensions/{0}/", directoryName);
                     if (!ContentFolders.Contains(contentFolder))
                     {
                         ContentFolders.Add(contentFolder);
