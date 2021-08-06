@@ -119,7 +119,12 @@ namespace Delight
                 var getBundleRequest = version > 0 ? UnityWebRequestAssetBundle.GetAssetBundle(bundleUri, version, 0) :
                     UnityWebRequestAssetBundle.GetAssetBundle(bundleUri);
                 var response = (await getBundleRequest.SendWebRequest()) as UnityWebRequestAsyncOperation;
+                #if UNITY_2021_2_OR_NEWER
+                if (response.webRequest.result == UnityWebRequest.Result.ConnectionError ||
+                    response.webRequest.result == UnityWebRequest.Result.ProtocolError)
+                #else
                 if (response.webRequest.isNetworkError || response.webRequest.isHttpError)
+                #endif
                 {
                     Debug.Log(String.Format("#Delight# Failed to load asset bundle \"{0}\" from URI \"{1}\".", Id, bundleUri));
                     return;
