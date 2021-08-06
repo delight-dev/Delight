@@ -22,7 +22,7 @@ namespace Delight
         public override string GetInitializer(string stringValue)
         {
             var convertedValue = Convert(stringValue);
-            return String.Format(CultureInfo.InvariantCulture, "Quaternion.Euler({0}f, {1}f, {2}f)", convertedValue.x, convertedValue.y, convertedValue.z);
+            return String.Format(CultureInfo.InvariantCulture, "new Quaternion({0}f, {1}f, {2}f, {3}f)", convertedValue.x, convertedValue.y, convertedValue.z, convertedValue.w);
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Delight
             }
             else if (valueList.Length == 2)
             {
-                return Quaternion.Euler( new Vector3(valueList[0], valueList[1]));
+                return Quaternion.Euler(new Vector3(valueList[0], valueList[1]));
             }
             else if (valueList.Length == 3)
             {
