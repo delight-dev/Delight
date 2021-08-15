@@ -37,6 +37,7 @@ namespace Delight
 
                 case nameof(AutoSize):
                 case nameof(Text):
+                case nameof(FontSize):
                     TextChanged();
                     break;
             }
