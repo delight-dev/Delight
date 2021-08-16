@@ -478,8 +478,15 @@ namespace Delight
         /// </summary>
         public void ScrollTo(int index, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            var item = Items.GetGeneric(index);
-            ScrollTo(item, alignment, offset);
+            if (IsStatic)
+            {
+                ScrollToListItem(Content.LayoutChildren[index] as ListItem, null, alignment, offset);
+            }
+            else
+            {
+                var item = Items.GetGeneric(index);
+                ScrollTo(item, alignment, offset);
+            }
         }
 
         /// <summary>
@@ -498,7 +505,7 @@ namespace Delight
         /// </summary>
         public void ScrollTo(object item, ElementAlignment? alignment = null, ElementMargin offset = null)
         {
-            if (!IsScrollable || item == null)
+            if (IsStatic || !IsScrollable || item == null)
                 return;
 
             ListItem listItem = null;
@@ -515,6 +522,14 @@ namespace Delight
                     return;
             }
 
+            ScrollToListItem(listItem, virtualItem, alignment, offset);
+        }
+
+        /// <summary>
+        /// Scrolls to specified list item or virtual item.
+        /// </summary>
+        public void ScrollToListItem(ListItem listItem, VirtualItem virtualItem = null, ElementAlignment? alignment = null, ElementMargin offset = null)
+        {
             if (offset == null)
             {
                 offset = new ElementMargin();
