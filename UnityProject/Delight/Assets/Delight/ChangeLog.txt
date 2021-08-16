@@ -1,4 +1,10 @@
-﻿2021.1.0
+﻿2021.2.0a
+- Bugfix: Fixed Quaternion conversion so Rotation property can be specified with euler angles
+- Bugfix: Fix autosizing when setting FontSize
+- Bugfix: Updated deprecated error checks in UnityWebRequest for Unity 2021.2 or higher
+- Bugfix: Fixed bug with ScrollTo(index) in static lists
+
+2021.1.0
 - Added support for transition animations to list items in List views as items are added / removed. See ListExample view for demo.
 - Added Navigator view for navigating/switching between views with transition animations. See NavigatorExample view for example how it's used.
 - Global values can be defined through the partial class Globals, and they can be accessed in the XML.
