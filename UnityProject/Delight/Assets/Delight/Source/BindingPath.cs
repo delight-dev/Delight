@@ -89,7 +89,6 @@ namespace Delight
                 var obj = ObjectGetters[i]();
                 if (oldObject != obj)
                 {
-                    Debug.Log("Non-bindable object changed"); // TODO cleanup
                     Binding.UpdateBinding(hasUpdatedPreviously, IsTarget);
                     return true;
                 }

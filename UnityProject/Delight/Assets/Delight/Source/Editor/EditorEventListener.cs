@@ -85,8 +85,6 @@ namespace Delight.Editor
 #if DELIGHT_MODULE_TEXTMESHPRO
                     if (IsInDelightDesigner)
                     {
-                        //var activeScene = EditorSceneManager.GetActiveScene(); // TODO cleanup
-
                         // check if delight designer has unsaved progress
                         var viewPresenter = GameObject.Find("/Delight")?.GetComponent<ViewPresenter>();
                         if (viewPresenter == null)
