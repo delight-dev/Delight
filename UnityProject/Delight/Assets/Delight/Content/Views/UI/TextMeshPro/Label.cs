@@ -46,6 +46,17 @@ namespace Delight
             base.BeforeLoad();
 
             TextMeshProUGUI = GameObject.AddComponent<TMPro.TextMeshProUGUI>();
+
+            // for some reason the TextMesh Pro component isn't always activated properly and code below attempts to work around it
+            if (!TextMeshProUGUI.isActiveAndEnabled)
+            {
+                // fixes text size measurement problems
+                TextMeshProUGUI.isOrthographic = true;
+
+                // fixes issue with m_rectTransform being null
+                var transform = TextMeshProUGUI.rectTransform;
+                transform.right = transform.right;
+            }
         }
 
         /// <summary>
