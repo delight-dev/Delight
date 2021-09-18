@@ -2665,6 +2665,9 @@ namespace Delight.Editor.Parser
                 if (assetType.Name == "DefaultAsset")
                     continue; // ignore default assets
 
+                if (assetType.FullName.Contains("UnityEditor."))
+                    continue; // ignore editor assets
+
                 var assetObjectsOfType = assetObjects.Where(x => x.Type == assetType).ToList();
                 var assetTypeName = assetType.FormattedTypeName;
                 var assetTypeNamePlural = assetType.Name.Pluralize();
