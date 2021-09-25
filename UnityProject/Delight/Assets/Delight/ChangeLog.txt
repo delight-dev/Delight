@@ -1,4 +1,5 @@
 ﻿2021.2.0a
+- Bugfix: UnityEditor assets being generated and breaking builds
 - Bugfix: Fix issue with TextMeshPro component not activating properly often when being nested in dynamic lists
 - Bugfix: Fixed Quaternion conversion so Rotation property can be specified with euler angles
 - Bugfix: Fix autosizing when setting FontSize
