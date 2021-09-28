@@ -246,6 +246,13 @@ namespace Delight
             set { RadioButtonImageView.RaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty RadioButtonRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 RadioButtonRaycastPadding
+        {
+            get { return RadioButtonImageView.RaycastPadding; }
+            set { RadioButtonImageView.RaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty RadioButtonWidthProperty = Image.WidthProperty;
         public Delight.ElementSize RadioButtonWidth
         {
@@ -464,6 +471,13 @@ namespace Delight
             set { RadioButtonLabel.Text = value; }
         }
 
+        public readonly static DependencyProperty TextPreprocessorProperty = Label.TextPreprocessorProperty;
+        public TMPro.ITextPreprocessor TextPreprocessor
+        {
+            get { return RadioButtonLabel.TextPreprocessor; }
+            set { RadioButtonLabel.TextPreprocessor = value; }
+        }
+
         public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
         public System.Boolean IsRightToLeftText
         {
@@ -555,6 +569,20 @@ namespace Delight
             set { RadioButtonLabel.TintAllSprites = value; }
         }
 
+        public readonly static DependencyProperty StyleSheetProperty = Label.StyleSheetProperty;
+        public TMP_StyleSheetAsset StyleSheet
+        {
+            get { return RadioButtonLabel.StyleSheet; }
+            set { RadioButtonLabel.StyleSheet = value; }
+        }
+
+        public readonly static DependencyProperty TextStyleProperty = Label.TextStyleProperty;
+        public TMPro.TMP_Style TextStyle
+        {
+            get { return RadioButtonLabel.TextStyle; }
+            set { RadioButtonLabel.TextStyle = value; }
+        }
+
         public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
         public System.Boolean OverrideColorTags
         {
@@ -623,6 +651,20 @@ namespace Delight
         {
             get { return RadioButtonLabel.FontStyle; }
             set { RadioButtonLabel.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalAlignmentProperty = Label.HorizontalAlignmentProperty;
+        public TMPro.HorizontalAlignmentOptions HorizontalAlignment
+        {
+            get { return RadioButtonLabel.HorizontalAlignment; }
+            set { RadioButtonLabel.HorizontalAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalAlignmentProperty = Label.VerticalAlignmentProperty;
+        public TMPro.VerticalAlignmentOptions VerticalAlignment
+        {
+            get { return RadioButtonLabel.VerticalAlignment; }
+            set { RadioButtonLabel.VerticalAlignment = value; }
         }
 
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
@@ -702,13 +744,6 @@ namespace Delight
             set { RadioButtonLabel.LinkedTextComponent = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
-        {
-            get { return RadioButtonLabel.IsLinkedTextComponent; }
-            set { RadioButtonLabel.IsLinkedTextComponent = value; }
-        }
-
         public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
         public System.Boolean EnableKerning
         {
@@ -758,13 +793,6 @@ namespace Delight
             set { RadioButtonLabel.EnableCulling = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
-        {
-            get { return RadioButtonLabel.IgnoreRectMaskCulling; }
-            set { RadioButtonLabel.IgnoreRectMaskCulling = value; }
-        }
-
         public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
         public System.Boolean IgnoreVisibility
         {
@@ -805,6 +833,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.GeometrySortingOrder; }
             set { RadioButtonLabel.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty IsTextObjectScaleStaticProperty = Label.IsTextObjectScaleStaticProperty;
+        public System.Boolean IsTextObjectScaleStatic
+        {
+            get { return RadioButtonLabel.IsTextObjectScaleStatic; }
+            set { RadioButtonLabel.IsTextObjectScaleStatic = value; }
         }
 
         public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
@@ -910,6 +945,13 @@ namespace Delight
         {
             get { return RadioButtonLabel.RaycastTarget; }
             set { RadioButtonLabel.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty RaycastPaddingProperty = Label.RaycastPaddingProperty;
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return RadioButtonLabel.RaycastPadding; }
+            set { RadioButtonLabel.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty MaterialProperty = Label.MaterialProperty;

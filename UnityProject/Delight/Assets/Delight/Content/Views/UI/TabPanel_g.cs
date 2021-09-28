@@ -42,6 +42,7 @@ namespace Delight
             dependencyProperties.Add(TabHeaderWidthProperty);
             dependencyProperties.Add(TabHeaderHeightProperty);
             dependencyProperties.Add(TabSelectedProperty);
+            dependencyProperties.Add(TabSelectedSoundProperty);
             dependencyProperties.Add(TabSwitchModeProperty);
             dependencyProperties.Add(TabSwitcherProperty);
             dependencyProperties.Add(TabSwitcherTemplateProperty);
@@ -85,12 +86,19 @@ namespace Delight
             set { TabHeaderHeightProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> TabSelectedProperty = new DependencyProperty<ViewAction>("TabSelected", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> TabSelectedProperty = new DependencyProperty<ViewAction>("TabSelected", () => new ViewAction(TabSelectedSoundProperty));
         /// <summary>Action called when a tab is selected.</summary>
         public ViewAction TabSelected
         {
             get { return TabSelectedProperty.GetValue(this); }
             set { TabSelectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> TabSelectedSoundProperty = new DependencyProperty<AudioClipAsset>("TabSelectedSound");
+        public AudioClipAsset TabSelectedSound
+        {
+            get { return TabSelectedSoundProperty.GetValue(this); }
+            set { TabSelectedSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.SwitchMode> TabSwitchModeProperty = new DependencyProperty<Delight.SwitchMode>("TabSwitchMode");
@@ -281,6 +289,13 @@ namespace Delight
         {
             get { return TabHeaderGroup.BackgroundRaycastTarget; }
             set { TabHeaderGroup.BackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty TabListBackgroundRaycastPaddingProperty = ToggleGroup.BackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 TabListBackgroundRaycastPadding
+        {
+            get { return TabHeaderGroup.BackgroundRaycastPadding; }
+            set { TabHeaderGroup.BackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty TabListWidthProperty = ToggleGroup.WidthProperty;

@@ -246,6 +246,13 @@ namespace Delight
             set { CheckBoxImageView.RaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty CheckBoxRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 CheckBoxRaycastPadding
+        {
+            get { return CheckBoxImageView.RaycastPadding; }
+            set { CheckBoxImageView.RaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty CheckBoxWidthProperty = Image.WidthProperty;
         public Delight.ElementSize CheckBoxWidth
         {
@@ -464,6 +471,13 @@ namespace Delight
             set { CheckBoxLabel.Text = value; }
         }
 
+        public readonly static DependencyProperty TextPreprocessorProperty = Label.TextPreprocessorProperty;
+        public TMPro.ITextPreprocessor TextPreprocessor
+        {
+            get { return CheckBoxLabel.TextPreprocessor; }
+            set { CheckBoxLabel.TextPreprocessor = value; }
+        }
+
         public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
         public System.Boolean IsRightToLeftText
         {
@@ -555,6 +569,20 @@ namespace Delight
             set { CheckBoxLabel.TintAllSprites = value; }
         }
 
+        public readonly static DependencyProperty StyleSheetProperty = Label.StyleSheetProperty;
+        public TMP_StyleSheetAsset StyleSheet
+        {
+            get { return CheckBoxLabel.StyleSheet; }
+            set { CheckBoxLabel.StyleSheet = value; }
+        }
+
+        public readonly static DependencyProperty TextStyleProperty = Label.TextStyleProperty;
+        public TMPro.TMP_Style TextStyle
+        {
+            get { return CheckBoxLabel.TextStyle; }
+            set { CheckBoxLabel.TextStyle = value; }
+        }
+
         public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
         public System.Boolean OverrideColorTags
         {
@@ -623,6 +651,20 @@ namespace Delight
         {
             get { return CheckBoxLabel.FontStyle; }
             set { CheckBoxLabel.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalAlignmentProperty = Label.HorizontalAlignmentProperty;
+        public TMPro.HorizontalAlignmentOptions HorizontalAlignment
+        {
+            get { return CheckBoxLabel.HorizontalAlignment; }
+            set { CheckBoxLabel.HorizontalAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalAlignmentProperty = Label.VerticalAlignmentProperty;
+        public TMPro.VerticalAlignmentOptions VerticalAlignment
+        {
+            get { return CheckBoxLabel.VerticalAlignment; }
+            set { CheckBoxLabel.VerticalAlignment = value; }
         }
 
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
@@ -702,13 +744,6 @@ namespace Delight
             set { CheckBoxLabel.LinkedTextComponent = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
-        {
-            get { return CheckBoxLabel.IsLinkedTextComponent; }
-            set { CheckBoxLabel.IsLinkedTextComponent = value; }
-        }
-
         public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
         public System.Boolean EnableKerning
         {
@@ -758,13 +793,6 @@ namespace Delight
             set { CheckBoxLabel.EnableCulling = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
-        {
-            get { return CheckBoxLabel.IgnoreRectMaskCulling; }
-            set { CheckBoxLabel.IgnoreRectMaskCulling = value; }
-        }
-
         public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
         public System.Boolean IgnoreVisibility
         {
@@ -805,6 +833,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.GeometrySortingOrder; }
             set { CheckBoxLabel.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty IsTextObjectScaleStaticProperty = Label.IsTextObjectScaleStaticProperty;
+        public System.Boolean IsTextObjectScaleStatic
+        {
+            get { return CheckBoxLabel.IsTextObjectScaleStatic; }
+            set { CheckBoxLabel.IsTextObjectScaleStatic = value; }
         }
 
         public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
@@ -910,6 +945,13 @@ namespace Delight
         {
             get { return CheckBoxLabel.RaycastTarget; }
             set { CheckBoxLabel.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty RaycastPaddingProperty = Label.RaycastPaddingProperty;
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return CheckBoxLabel.RaycastPadding; }
+            set { CheckBoxLabel.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty MaterialProperty = Label.MaterialProperty;

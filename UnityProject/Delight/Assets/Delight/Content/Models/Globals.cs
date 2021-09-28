@@ -100,12 +100,38 @@ namespace Delight
             get { return _screenOrientation == ScreenOrientation.Landscape || _screenOrientation == ScreenOrientation.LandscapeRight; }
         }
 
+        #region Location Data
+
+        private float _latitude;
+        public float Latitude
+        {
+            get { return _latitude; }
+            set { SetProperty(ref _latitude, value); }
+        }
+
+        private float _longitude;
+        public float Longitude
+        {
+            get { return _longitude; }
+            set { SetProperty(ref _longitude, value); }
+        }
+
+        private float _altitude;
+        public float Altitude
+        {
+            get { return _altitude; }
+            set { SetProperty(ref _altitude, value); }
+        }
+
+        #endregion
+
         #endregion
 
         #region Constructor
 
         public Globals()
         {
+            // TODO use reflection to get global properties          
             GlobalProperties.Add(nameof(ScreenWidth));
             GlobalProperties.Add(nameof(ScreenHeight));
             GlobalProperties.Add(nameof(DeviceType));
@@ -116,6 +142,9 @@ namespace Delight
             GlobalProperties.Add(nameof(ScreenOrientation));
             GlobalProperties.Add(nameof(IsPortrait));
             GlobalProperties.Add(nameof(IsLandscape));
+            GlobalProperties.Add(nameof(Latitude));
+            GlobalProperties.Add(nameof(Longitude));
+            GlobalProperties.Add(nameof(Altitude));
         }
 
         #endregion

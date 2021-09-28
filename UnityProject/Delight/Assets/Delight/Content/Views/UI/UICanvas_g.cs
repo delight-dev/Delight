@@ -62,6 +62,7 @@ namespace Delight
             dependencyProperties.Add(DynamicPixelsPerUnitProperty);
             dependencyProperties.Add(IgnoreReversedGraphicsProperty);
             dependencyProperties.Add(BlockingObjectsProperty);
+            dependencyProperties.Add(BlockingMaskProperty);
         }
 
         #endregion
@@ -310,6 +311,13 @@ namespace Delight
         {
             get { return BlockingObjectsProperty.GetValue(this); }
             set { BlockingObjectsProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<UnityEngine.LayerMask, UnityEngine.UI.GraphicRaycaster, UICanvas> BlockingMaskProperty = new MappedDependencyProperty<UnityEngine.LayerMask, UnityEngine.UI.GraphicRaycaster, UICanvas>("BlockingMask", x => x.GraphicRaycaster, x => x.blockingMask, (x, y) => x.blockingMask = y);
+        public UnityEngine.LayerMask BlockingMask
+        {
+            get { return BlockingMaskProperty.GetValue(this); }
+            set { BlockingMaskProperty.SetValue(this, value); }
         }
 
         #endregion

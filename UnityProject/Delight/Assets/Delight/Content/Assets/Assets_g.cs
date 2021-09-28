@@ -508,6 +508,59 @@ namespace Delight
 
     #endregion
 
+    #region AudioClips
+
+    /// <summary>
+    /// Manages a UnityEngine.AudioClip object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class AudioClipAsset : AssetObject<UnityEngine.AudioClip>
+    {
+        public static implicit operator AudioClipAsset(UnityEngine.AudioClip unityObject)
+        {
+            return new AudioClipAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator AudioClipAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.AudioClips[assetId];
+        }
+    }
+
+    /// <summary>
+    /// AudioClipAsset data provider. Contains references to all audioclips in the project.
+    /// </summary>
+    public partial class AudioClipAssetData : BindableCollection<AudioClipAsset>
+    {
+        #region Fields
+
+        public readonly AudioClipAsset Leszekmenuclick;
+        public readonly AudioClipAsset Leszekmenuclick2;
+
+        #endregion
+
+        #region Constructor
+
+        public AudioClipAssetData()
+        {
+            Leszekmenuclick = new AudioClipAsset { Id = "leszek-menu-click", IsResource = true, RelativePath = "Sounds/" };
+            Leszekmenuclick2 = new AudioClipAsset { Id = "leszek-menu-click2", IsResource = true, RelativePath = "Sounds/" };
+
+            Add(Leszekmenuclick);
+            Add(Leszekmenuclick2);
+        }
+
+        #endregion
+    }
+
+
+    #endregion
+
     #region TMP_ColorGradients
 
     /// <summary>
@@ -580,6 +633,44 @@ namespace Delight
     public static partial class Assets
     {
         public static TMP_SpriteAssetData TMP_SpriteAssets = new TMP_SpriteAssetData();
+    }
+
+    #endregion
+
+    #region TMP_StyleSheets
+
+    /// <summary>
+    /// Manages a TMPro.TMP_StyleSheet object. Loads/unloads the asset on-demand as it's requested by views.
+    /// </summary>
+    public partial class TMP_StyleSheetAsset : AssetObject<TMPro.TMP_StyleSheet>
+    {
+        public static implicit operator TMP_StyleSheetAsset(TMPro.TMP_StyleSheet unityObject)
+        {
+            return new TMP_StyleSheetAsset { UnityObject = unityObject, IsUnmanaged = true };
+        }
+
+        public static implicit operator TMP_StyleSheetAsset(string assetId)
+        {
+            if (String.IsNullOrEmpty(assetId))
+                return null;
+
+            if (assetId.StartsWith("?"))
+                assetId = assetId.Substring(1);
+
+            return Assets.TMP_StyleSheets[assetId];
+        }
+    }
+
+    /// <summary>
+    /// TMP_StyleSheetAsset data provider. Contains references to all tmp_stylesheets in the project.
+    /// </summary>
+    public partial class TMP_StyleSheetAssetData : BindableCollection<TMP_StyleSheetAsset>
+    {
+    }
+
+    public static partial class Assets
+    {
+        public static TMP_StyleSheetAssetData TMP_StyleSheets = new TMP_StyleSheetAssetData();
     }
 
     #endregion

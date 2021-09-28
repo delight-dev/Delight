@@ -37,6 +37,7 @@ namespace Delight
             dependencyProperties.Add(PopMaterialCountProperty);
             dependencyProperties.Add(CullTransparentMeshProperty);
             dependencyProperties.Add(CullProperty);
+            dependencyProperties.Add(ClippingSoftnessProperty);
         }
 
         #endregion
@@ -88,6 +89,13 @@ namespace Delight
         {
             get { return CullProperty.GetValue(this); }
             set { CullProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<UnityEngine.Vector2, UnityEngine.CanvasRenderer, CanvasRendererView> ClippingSoftnessProperty = new MappedDependencyProperty<UnityEngine.Vector2, UnityEngine.CanvasRenderer, CanvasRendererView>("ClippingSoftness", x => x.CanvasRendererComponent, x => x.clippingSoftness, (x, y) => x.clippingSoftness = y);
+        public UnityEngine.Vector2 ClippingSoftness
+        {
+            get { return ClippingSoftnessProperty.GetValue(this); }
+            set { ClippingSoftnessProperty.SetValue(this, value); }
         }
 
         #endregion

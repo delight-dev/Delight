@@ -41,6 +41,19 @@ namespace Delight
             }
         }
 
+        private DependencyProperty<AudioClipAsset> _actionSoundDependencyProperty;
+        public DependencyProperty<AudioClipAsset> ActionSoundDependencyProperty
+        {
+            get
+            {
+                return _actionSoundDependencyProperty;
+            }
+            set
+            {
+                SetProperty(ref _actionSoundDependencyProperty, value);
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -48,6 +61,12 @@ namespace Delight
         public ViewAction()
         {
             _isEnabled = true;
+        }
+
+        public ViewAction(DependencyProperty<AudioClipAsset> actionSoundDependencyProperty)
+        {
+            _isEnabled = true;
+            _actionSoundDependencyProperty = actionSoundDependencyProperty;
         }
 
         #endregion
@@ -61,6 +80,15 @@ namespace Delight
 
         public void Invoke(DependencyObject sender, object eventArgs)
         {
+            var actionSound = ActionSoundDependencyProperty?.GetValue(sender);
+            if (actionSound != null)
+            {
+                // trigger sound effect
+#pragma warning disable CS4014
+                actionSound.PlayAsync();
+#pragma warning restore CS4014
+            }
+
             if (_isEnabled)
             {
                 _action?.Invoke(sender, eventArgs);

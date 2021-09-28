@@ -52,6 +52,7 @@ namespace Delight
             dependencyProperties.Add(IsReversedProperty);
             dependencyProperties.Add(StepsProperty);
             dependencyProperties.Add(ValueChangedProperty);
+            dependencyProperties.Add(ValueChangedSoundProperty);
             dependencyProperties.Add(SliderRegionProperty);
             dependencyProperties.Add(SliderRegionTemplateProperty);
             dependencyProperties.Add(SliderBackgroundImageViewProperty);
@@ -148,12 +149,19 @@ namespace Delight
             set { StepsProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction(ValueChangedSoundProperty));
         /// <summary>Action called when the slider value changes.</summary>
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }
             set { ValueChangedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ValueChangedSoundProperty = new DependencyProperty<AudioClipAsset>("ValueChangedSound");
+        public AudioClipAsset ValueChangedSound
+        {
+            get { return ValueChangedSoundProperty.GetValue(this); }
+            set { ValueChangedSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Region> SliderRegionProperty = new DependencyProperty<Region>("SliderRegion");
@@ -350,6 +358,13 @@ namespace Delight
         {
             get { return SliderBackgroundImageView.RaycastTarget; }
             set { SliderBackgroundImageView.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty SliderRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 SliderRaycastPadding
+        {
+            get { return SliderBackgroundImageView.RaycastPadding; }
+            set { SliderBackgroundImageView.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty SliderWidthProperty = Image.WidthProperty;
@@ -660,6 +675,13 @@ namespace Delight
             set { SliderFillImageView.RaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty SliderFillRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 SliderFillRaycastPadding
+        {
+            get { return SliderFillImageView.RaycastPadding; }
+            set { SliderFillImageView.RaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty SliderFillWidthProperty = Image.WidthProperty;
         public Delight.ElementSize SliderFillWidth
         {
@@ -966,6 +988,13 @@ namespace Delight
         {
             get { return SliderHandleImageView.RaycastTarget; }
             set { SliderHandleImageView.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty SliderHandleRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 SliderHandleRaycastPadding
+        {
+            get { return SliderHandleImageView.RaycastPadding; }
+            set { SliderHandleImageView.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty SliderHandleWidthProperty = Image.WidthProperty;

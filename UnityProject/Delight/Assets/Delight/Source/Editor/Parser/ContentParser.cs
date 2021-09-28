@@ -980,6 +980,17 @@ namespace Delight.Editor.Parser
                 propertyDeclaration.DeclarationType = PropertyDeclarationType.Action;
                 propertyDeclaration.LineNumber = element.GetLineNumber();
 
+                // add action sound property declaration
+                var soundPropertyDeclaration = new PropertyDeclaration();
+                var audioClipType = typeof(AudioClip);
+                propertyExpressions.Add(soundPropertyDeclaration);
+                soundPropertyDeclaration.PropertyName = attributeName + "Sound";
+                soundPropertyDeclaration.PropertyTypeName = audioClipType.Name;
+                soundPropertyDeclaration.PropertyTypeFullName = audioClipType.FullName;
+                soundPropertyDeclaration.AssetType = _contentObjectModel.LoadAssetType(audioClipType, false);
+                soundPropertyDeclaration.DeclarationType = PropertyDeclarationType.Asset;
+                soundPropertyDeclaration.LineNumber = element.GetLineNumber();
+
                 return propertyExpressions;
             }
 

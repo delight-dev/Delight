@@ -47,7 +47,9 @@ namespace Delight
             dependencyProperties.Add(SetValueOnEndEditProperty);
             dependencyProperties.Add(OnlyTriggerValueChangedFromUIProperty);
             dependencyProperties.Add(EndEditProperty);
+            dependencyProperties.Add(EndEditSoundProperty);
             dependencyProperties.Add(ValueChangedProperty);
+            dependencyProperties.Add(ValueChangedSoundProperty);
             dependencyProperties.Add(TextMarginProperty);
             dependencyProperties.Add(InputFieldPlaceholderProperty);
             dependencyProperties.Add(InputFieldPlaceholderTemplateProperty);
@@ -137,7 +139,7 @@ namespace Delight
             set { OnlyTriggerValueChangedFromUIProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> EndEditProperty = new DependencyProperty<ViewAction>("EndEdit", () => new ViewAction(EndEditSoundProperty));
         /// <summary>Action called when the user stops editing the input field text.</summary>
         public ViewAction EndEdit
         {
@@ -145,12 +147,26 @@ namespace Delight
             set { EndEditProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction());
+        public readonly static DependencyProperty<AudioClipAsset> EndEditSoundProperty = new DependencyProperty<AudioClipAsset>("EndEditSound");
+        public AudioClipAsset EndEditSound
+        {
+            get { return EndEditSoundProperty.GetValue(this); }
+            set { EndEditSoundProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ValueChangedProperty = new DependencyProperty<ViewAction>("ValueChanged", () => new ViewAction(ValueChangedSoundProperty));
         /// <summary>Action called when the input text changes.</summary>
         public ViewAction ValueChanged
         {
             get { return ValueChangedProperty.GetValue(this); }
             set { ValueChangedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ValueChangedSoundProperty = new DependencyProperty<AudioClipAsset>("ValueChangedSound");
+        public AudioClipAsset ValueChangedSound
+        {
+            get { return ValueChangedSoundProperty.GetValue(this); }
+            set { ValueChangedSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.ElementMargin> TextMarginProperty = new DependencyProperty<Delight.ElementMargin>("TextMargin");
@@ -662,6 +678,13 @@ namespace Delight
             set { InputText.Text = value; }
         }
 
+        public readonly static DependencyProperty TextPreprocessorProperty = Label.TextPreprocessorProperty;
+        public TMPro.ITextPreprocessor TextPreprocessor
+        {
+            get { return InputText.TextPreprocessor; }
+            set { InputText.TextPreprocessor = value; }
+        }
+
         public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
         public System.Boolean IsRightToLeftText
         {
@@ -753,6 +776,20 @@ namespace Delight
             set { InputText.TintAllSprites = value; }
         }
 
+        public readonly static DependencyProperty StyleSheetProperty = Label.StyleSheetProperty;
+        public TMP_StyleSheetAsset StyleSheet
+        {
+            get { return InputText.StyleSheet; }
+            set { InputText.StyleSheet = value; }
+        }
+
+        public readonly static DependencyProperty TextStyleProperty = Label.TextStyleProperty;
+        public TMPro.TMP_Style TextStyle
+        {
+            get { return InputText.TextStyle; }
+            set { InputText.TextStyle = value; }
+        }
+
         public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
         public System.Boolean OverrideColorTags
         {
@@ -821,6 +858,20 @@ namespace Delight
         {
             get { return InputText.FontStyle; }
             set { InputText.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalAlignmentProperty = Label.HorizontalAlignmentProperty;
+        public TMPro.HorizontalAlignmentOptions HorizontalAlignment
+        {
+            get { return InputText.HorizontalAlignment; }
+            set { InputText.HorizontalAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalAlignmentProperty = Label.VerticalAlignmentProperty;
+        public TMPro.VerticalAlignmentOptions VerticalAlignment
+        {
+            get { return InputText.VerticalAlignment; }
+            set { InputText.VerticalAlignment = value; }
         }
 
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
@@ -900,13 +951,6 @@ namespace Delight
             set { InputText.LinkedTextComponent = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
-        {
-            get { return InputText.IsLinkedTextComponent; }
-            set { InputText.IsLinkedTextComponent = value; }
-        }
-
         public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
         public System.Boolean EnableKerning
         {
@@ -956,13 +1000,6 @@ namespace Delight
             set { InputText.EnableCulling = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
-        {
-            get { return InputText.IgnoreRectMaskCulling; }
-            set { InputText.IgnoreRectMaskCulling = value; }
-        }
-
         public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
         public System.Boolean IgnoreVisibility
         {
@@ -1003,6 +1040,13 @@ namespace Delight
         {
             get { return InputText.GeometrySortingOrder; }
             set { InputText.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty IsTextObjectScaleStaticProperty = Label.IsTextObjectScaleStaticProperty;
+        public System.Boolean IsTextObjectScaleStatic
+        {
+            get { return InputText.IsTextObjectScaleStatic; }
+            set { InputText.IsTextObjectScaleStatic = value; }
         }
 
         public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
@@ -1108,6 +1152,13 @@ namespace Delight
         {
             get { return InputText.RaycastTarget; }
             set { InputText.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty RaycastPaddingProperty = Label.RaycastPaddingProperty;
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return InputText.RaycastPadding; }
+            set { InputText.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty MaterialProperty = Label.MaterialProperty;

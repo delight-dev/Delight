@@ -52,6 +52,7 @@ namespace Delight
             dependencyProperties.Add(BackgroundIsMaskingGraphicProperty);
             dependencyProperties.Add(BackgroundColorProperty);
             dependencyProperties.Add(BackgroundRaycastTargetProperty);
+            dependencyProperties.Add(BackgroundRaycastPaddingProperty);
         }
 
         #endregion
@@ -222,6 +223,13 @@ namespace Delight
         {
             get { return BackgroundRaycastTargetProperty.GetValue(this); }
             set { BackgroundRaycastTargetProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<UnityEngine.Vector4, UnityEngine.UI.Image, UIImageView> BackgroundRaycastPaddingProperty = new MappedDependencyProperty<UnityEngine.Vector4, UnityEngine.UI.Image, UIImageView>("BackgroundRaycastPadding", x => x.ImageComponent, x => x.raycastPadding, (x, y) => x.raycastPadding = y);
+        public UnityEngine.Vector4 BackgroundRaycastPadding
+        {
+            get { return BackgroundRaycastPaddingProperty.GetValue(this); }
+            set { BackgroundRaycastPaddingProperty.SetValue(this, value); }
         }
 
         #endregion

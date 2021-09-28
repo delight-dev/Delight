@@ -61,7 +61,7 @@ namespace Delight
         {
             // TODO maybe use the messenger system to notify screen orientation and size changes
 
-            // update screen orientation
+            // update screen orientation and size
             Models.Globals.ScreenOrientation = Screen.orientation;
 
             if (Models.Globals.ScreenWidth.Pixels != Screen.width)
@@ -73,12 +73,27 @@ namespace Delight
             {
                 Models.Globals.ScreenHeight = Screen.height;
             }
+
+            // update location
+            if (Input.location.isEnabledByUser)
+            {
+                if (Input.location.status != LocationServiceStatus.Running)
+                {
+                    Input.location.Start();
+                }
+                else
+                {
+                    Models.Globals.Longitude = Input.location.lastData.longitude;
+                    Models.Globals.Latitude = Input.location.lastData.latitude;
+                    Models.Globals.Altitude = Input.location.lastData.altitude;
+                }
+            }
         }
 
         /// <summary>
         /// Gets device type. If handheld it guesses if it's a Tablet or Mobile based on aspect ratio and diagonal size in inches.
         /// </summary>
-        public DeviceType GetDeviceType()
+        public static DeviceType GetDeviceType()
         {
             if (SystemInfo.deviceType != UnityEngine.DeviceType.Handheld)
                 return DeviceType.Desktop;
@@ -105,7 +120,7 @@ namespace Delight
         /// <summary>
         /// Gets diagonal size of screen in inches.
         /// </summary>
-        private float DeviceDiagonalSizeInInches()
+        private static float DeviceDiagonalSizeInInches()
         {
             float screenWidth = Screen.width / Screen.dpi;
             float screenHeight = Screen.height / Screen.dpi;

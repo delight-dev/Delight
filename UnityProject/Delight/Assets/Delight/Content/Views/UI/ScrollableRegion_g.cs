@@ -65,6 +65,7 @@ namespace Delight
             dependencyProperties.Add(VerticalScrollbarVisibilityProperty);
             dependencyProperties.Add(DisableMouseWheelProperty);
             dependencyProperties.Add(ContentScrolledProperty);
+            dependencyProperties.Add(ContentScrolledSoundProperty);
             dependencyProperties.Add(UnblockDragEventsInChildrenProperty);
             dependencyProperties.Add(ScrollEnabledProperty);
             dependencyProperties.Add(ContentRegionProperty);
@@ -205,12 +206,19 @@ namespace Delight
             set { DisableMouseWheelProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ContentScrolledProperty = new DependencyProperty<ViewAction>("ContentScrolled", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ContentScrolledProperty = new DependencyProperty<ViewAction>("ContentScrolled", () => new ViewAction(ContentScrolledSoundProperty));
         /// <summary>Action called whenever the content is scrolled.</summary>
         public ViewAction ContentScrolled
         {
             get { return ContentScrolledProperty.GetValue(this); }
             set { ContentScrolledProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ContentScrolledSoundProperty = new DependencyProperty<AudioClipAsset>("ContentScrolledSound");
+        public AudioClipAsset ContentScrolledSound
+        {
+            get { return ContentScrolledSoundProperty.GetValue(this); }
+            set { ContentScrolledSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> UnblockDragEventsInChildrenProperty = new DependencyProperty<System.Boolean>("UnblockDragEventsInChildren");
@@ -430,6 +438,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.BarRaycastTarget; }
             set { HorizontalScrollbar.BarRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBarRaycastPaddingProperty = Scrollbar.BarRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBarRaycastPadding
+        {
+            get { return HorizontalScrollbar.BarRaycastPadding; }
+            set { HorizontalScrollbar.BarRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarBarWidthProperty = Scrollbar.BarWidthProperty;
@@ -738,6 +753,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.HandleRaycastTarget; }
             set { HorizontalScrollbar.HandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleRaycastPaddingProperty = Scrollbar.HandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarHandleRaycastPadding
+        {
+            get { return HorizontalScrollbar.HandleRaycastPadding; }
+            set { HorizontalScrollbar.HandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleWidthProperty = Scrollbar.HandleWidthProperty;
@@ -1053,6 +1075,13 @@ namespace Delight
         {
             get { return HorizontalScrollbar.BackgroundRaycastTarget; }
             set { HorizontalScrollbar.BackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundRaycastPaddingProperty = Scrollbar.BackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBackgroundRaycastPadding
+        {
+            get { return HorizontalScrollbar.BackgroundRaycastPadding; }
+            set { HorizontalScrollbar.BackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarWidthProperty = Scrollbar.WidthProperty;
@@ -1398,6 +1427,13 @@ namespace Delight
             set { VerticalScrollbar.BarRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRaycastPaddingProperty = Scrollbar.BarRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBarRaycastPadding
+        {
+            get { return VerticalScrollbar.BarRaycastPadding; }
+            set { VerticalScrollbar.BarRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarWidthProperty = Scrollbar.BarWidthProperty;
         public Delight.ElementSize VerticalScrollbarBarWidth
         {
@@ -1704,6 +1740,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.HandleRaycastTarget; }
             set { VerticalScrollbar.HandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleRaycastPaddingProperty = Scrollbar.HandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarHandleRaycastPadding
+        {
+            get { return VerticalScrollbar.HandleRaycastPadding; }
+            set { VerticalScrollbar.HandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleWidthProperty = Scrollbar.HandleWidthProperty;
@@ -2019,6 +2062,13 @@ namespace Delight
         {
             get { return VerticalScrollbar.BackgroundRaycastTarget; }
             set { VerticalScrollbar.BackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundRaycastPaddingProperty = Scrollbar.BackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBackgroundRaycastPadding
+        {
+            get { return VerticalScrollbar.BackgroundRaycastPadding; }
+            set { VerticalScrollbar.BackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarWidthProperty = Scrollbar.WidthProperty;

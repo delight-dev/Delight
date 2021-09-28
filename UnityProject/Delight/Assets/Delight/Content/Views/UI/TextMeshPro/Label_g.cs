@@ -39,6 +39,7 @@ namespace Delight
             dependencyProperties.Add(AutoSizeTextContainerProperty);
             dependencyProperties.Add(MaskOffsetProperty);
             dependencyProperties.Add(TextProperty);
+            dependencyProperties.Add(TextPreprocessorProperty);
             dependencyProperties.Add(IsRightToLeftTextProperty);
             dependencyProperties.Add(FontProperty);
             dependencyProperties.Add(FontSharedMaterialProperty);
@@ -52,6 +53,8 @@ namespace Delight
             dependencyProperties.Add(ColorGradientPresetProperty);
             dependencyProperties.Add(SpriteAssetProperty);
             dependencyProperties.Add(TintAllSpritesProperty);
+            dependencyProperties.Add(StyleSheetProperty);
+            dependencyProperties.Add(TextStyleProperty);
             dependencyProperties.Add(OverrideColorTagsProperty);
             dependencyProperties.Add(FaceColorProperty);
             dependencyProperties.Add(OutlineColorProperty);
@@ -62,6 +65,8 @@ namespace Delight
             dependencyProperties.Add(FontSizeMinProperty);
             dependencyProperties.Add(FontSizeMaxProperty);
             dependencyProperties.Add(FontStyleProperty);
+            dependencyProperties.Add(HorizontalAlignmentProperty);
+            dependencyProperties.Add(VerticalAlignmentProperty);
             dependencyProperties.Add(TextAlignmentProperty);
             dependencyProperties.Add(CharacterSpacingProperty);
             dependencyProperties.Add(WordSpacingProperty);
@@ -73,7 +78,6 @@ namespace Delight
             dependencyProperties.Add(WordWrappingRatiosProperty);
             dependencyProperties.Add(OverflowModeProperty);
             dependencyProperties.Add(LinkedTextComponentProperty);
-            dependencyProperties.Add(IsLinkedTextComponentProperty);
             dependencyProperties.Add(EnableKerningProperty);
             dependencyProperties.Add(ExtraPaddingProperty);
             dependencyProperties.Add(RichTextProperty);
@@ -81,13 +85,13 @@ namespace Delight
             dependencyProperties.Add(IsOverlayProperty);
             dependencyProperties.Add(IsOrthographicProperty);
             dependencyProperties.Add(EnableCullingProperty);
-            dependencyProperties.Add(IgnoreRectMaskCullingProperty);
             dependencyProperties.Add(IgnoreVisibilityProperty);
             dependencyProperties.Add(HorizontalMappingProperty);
             dependencyProperties.Add(VerticalMappingProperty);
             dependencyProperties.Add(MappingUvLineOffsetProperty);
             dependencyProperties.Add(RenderModeProperty);
             dependencyProperties.Add(GeometrySortingOrderProperty);
+            dependencyProperties.Add(IsTextObjectScaleStaticProperty);
             dependencyProperties.Add(VertexBufferAutoSizeReductionProperty);
             dependencyProperties.Add(FirstVisibleCharacterProperty);
             dependencyProperties.Add(MaxVisibleCharactersProperty);
@@ -103,6 +107,7 @@ namespace Delight
             dependencyProperties.Add(MaskableProperty);
             dependencyProperties.Add(IsMaskingGraphicProperty);
             dependencyProperties.Add(RaycastTargetProperty);
+            dependencyProperties.Add(RaycastPaddingProperty);
             dependencyProperties.Add(MaterialProperty);
         }
 
@@ -155,6 +160,13 @@ namespace Delight
         {
             get { return TextProperty.GetValue(this); }
             set { TextProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<TMPro.ITextPreprocessor, TMPro.TextMeshProUGUI, Label> TextPreprocessorProperty = new MappedDependencyProperty<TMPro.ITextPreprocessor, TMPro.TextMeshProUGUI, Label>("TextPreprocessor", x => x.TextMeshProUGUI, x => x.textPreprocessor, (x, y) => x.textPreprocessor = y);
+        public TMPro.ITextPreprocessor TextPreprocessor
+        {
+            get { return TextPreprocessorProperty.GetValue(this); }
+            set { TextPreprocessorProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IsRightToLeftTextProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IsRightToLeftText", x => x.TextMeshProUGUI, x => x.isRightToLeftText, (x, y) => x.isRightToLeftText = y);
@@ -261,6 +273,20 @@ namespace Delight
             set { TintAllSpritesProperty.SetValue(this, value); }
         }
 
+        public readonly static MappedAssetDependencyProperty<TMP_StyleSheetAsset, TMPro.TextMeshProUGUI, Label> StyleSheetProperty = new MappedAssetDependencyProperty<TMP_StyleSheetAsset, TMPro.TextMeshProUGUI, Label>("StyleSheet", x => x.TextMeshProUGUI, (x, y) => x.styleSheet = y?.UnityObject);
+        public TMP_StyleSheetAsset StyleSheet
+        {
+            get { return StyleSheetProperty.GetValue(this); }
+            set { StyleSheetProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<TMPro.TMP_Style, TMPro.TextMeshProUGUI, Label> TextStyleProperty = new MappedDependencyProperty<TMPro.TMP_Style, TMPro.TextMeshProUGUI, Label>("TextStyle", x => x.TextMeshProUGUI, x => x.textStyle, (x, y) => x.textStyle = y);
+        public TMPro.TMP_Style TextStyle
+        {
+            get { return TextStyleProperty.GetValue(this); }
+            set { TextStyleProperty.SetValue(this, value); }
+        }
+
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> OverrideColorTagsProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("OverrideColorTags", x => x.TextMeshProUGUI, x => x.overrideColorTags, (x, y) => x.overrideColorTags = y);
         /// <summary>This overrides the color tags forcing the vertex colors to be the default font color.</summary>
         public System.Boolean OverrideColorTags
@@ -339,6 +365,20 @@ namespace Delight
         {
             get { return FontStyleProperty.GetValue(this); }
             set { FontStyleProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<TMPro.HorizontalAlignmentOptions, TMPro.TextMeshProUGUI, Label> HorizontalAlignmentProperty = new MappedDependencyProperty<TMPro.HorizontalAlignmentOptions, TMPro.TextMeshProUGUI, Label>("HorizontalAlignment", x => x.TextMeshProUGUI, x => x.horizontalAlignment, (x, y) => x.horizontalAlignment = y);
+        public TMPro.HorizontalAlignmentOptions HorizontalAlignment
+        {
+            get { return HorizontalAlignmentProperty.GetValue(this); }
+            set { HorizontalAlignmentProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<TMPro.VerticalAlignmentOptions, TMPro.TextMeshProUGUI, Label> VerticalAlignmentProperty = new MappedDependencyProperty<TMPro.VerticalAlignmentOptions, TMPro.TextMeshProUGUI, Label>("VerticalAlignment", x => x.TextMeshProUGUI, x => x.verticalAlignment, (x, y) => x.verticalAlignment = y);
+        public TMPro.VerticalAlignmentOptions VerticalAlignment
+        {
+            get { return VerticalAlignmentProperty.GetValue(this); }
+            set { VerticalAlignmentProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<TMPro.TextAlignmentOptions, TMPro.TextMeshProUGUI, Label> TextAlignmentProperty = new MappedDependencyProperty<TMPro.TextAlignmentOptions, TMPro.TextMeshProUGUI, Label>("TextAlignment", x => x.TextMeshProUGUI, x => x.alignment, (x, y) => x.alignment = y);
@@ -429,14 +469,6 @@ namespace Delight
             set { LinkedTextComponentProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IsLinkedTextComponentProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IsLinkedTextComponent", x => x.TextMeshProUGUI, x => x.isLinkedTextComponent, (x, y) => x.isLinkedTextComponent = y);
-        /// <summary>Indicates whether this text component is linked to another.</summary>
-        public System.Boolean IsLinkedTextComponent
-        {
-            get { return IsLinkedTextComponentProperty.GetValue(this); }
-            set { IsLinkedTextComponentProperty.SetValue(this, value); }
-        }
-
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> EnableKerningProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("EnableKerning", x => x.TextMeshProUGUI, x => x.enableKerning, (x, y) => x.enableKerning = y);
         /// <summary>Determines if kerning is enabled or disabled.</summary>
         public System.Boolean EnableKerning
@@ -493,14 +525,6 @@ namespace Delight
             set { EnableCullingProperty.SetValue(this, value); }
         }
 
-        public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IgnoreRectMaskCullingProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IgnoreRectMaskCulling", x => x.TextMeshProUGUI, x => x.ignoreRectMaskCulling, (x, y) => x.ignoreRectMaskCulling = y);
-        /// <summary>Controls whether or not the text object will be culled when using a 2D Rect Mask.</summary>
-        public System.Boolean IgnoreRectMaskCulling
-        {
-            get { return IgnoreRectMaskCullingProperty.GetValue(this); }
-            set { IgnoreRectMaskCullingProperty.SetValue(this, value); }
-        }
-
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IgnoreVisibilityProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IgnoreVisibility", x => x.TextMeshProUGUI, x => x.ignoreVisibility, (x, y) => x.ignoreVisibility = y);
         /// <summary>Forces objects that are not visible to get refreshed.</summary>
         public System.Boolean IgnoreVisibility
@@ -547,6 +571,13 @@ namespace Delight
         {
             get { return GeometrySortingOrderProperty.GetValue(this); }
             set { GeometrySortingOrderProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> IsTextObjectScaleStaticProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("IsTextObjectScaleStatic", x => x.TextMeshProUGUI, x => x.isTextObjectScaleStatic, (x, y) => x.isTextObjectScaleStatic = y);
+        public System.Boolean IsTextObjectScaleStatic
+        {
+            get { return IsTextObjectScaleStaticProperty.GetValue(this); }
+            set { IsTextObjectScaleStaticProperty.SetValue(this, value); }
         }
 
         public readonly static MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label> VertexBufferAutoSizeReductionProperty = new MappedDependencyProperty<System.Boolean, TMPro.TextMeshProUGUI, Label>("VertexBufferAutoSizeReduction", x => x.TextMeshProUGUI, x => x.vertexBufferAutoSizeReduction, (x, y) => x.vertexBufferAutoSizeReduction = y);
@@ -667,6 +698,13 @@ namespace Delight
         {
             get { return RaycastTargetProperty.GetValue(this); }
             set { RaycastTargetProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label> RaycastPaddingProperty = new MappedDependencyProperty<UnityEngine.Vector4, TMPro.TextMeshProUGUI, Label>("RaycastPadding", x => x.TextMeshProUGUI, x => x.raycastPadding, (x, y) => x.raycastPadding = y);
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return RaycastPaddingProperty.GetValue(this); }
+            set { RaycastPaddingProperty.SetValue(this, value); }
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, TMPro.TextMeshProUGUI, Label>("Material", x => x.TextMeshProUGUI, (x, y) => x.material = y?.UnityObject);

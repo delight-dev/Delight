@@ -527,7 +527,10 @@ namespace Delight
             entry.callback = new EventTrigger.TriggerEvent();
             eventTrigger.triggers.Add(entry);
 
-            var unityAction = new UnityAction<BaseEventData>(eventData => { action?.Invoke(sender, eventData); });
+            var unityAction = new UnityAction<BaseEventData>(eventData => 
+            { 
+                action?.Invoke(sender, eventData); 
+            });
             entry.callback.AddListener(unityAction);
         }
 

@@ -706,6 +706,7 @@ namespace Delight
             if (newState.IEquals(_state) && !resetState)
                 return;
 
+            // if state is reset we trigger as if we transitioned from previous state again
             if (resetState)
             {
                 _state = _previousState;

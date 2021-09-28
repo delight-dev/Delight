@@ -1,4 +1,10 @@
 ﻿2021.2.0a
+- Added DelightLiveEditor component that can be added to scene to be able to highlight views in the hierarchy while running the scene by CTRL+Left Mouse clicking on them
+- Added functionality in SetState for resetting the same state again. 
+- Easier to adjust size of images e.g. <Image Sprite="icon200x100" PreserveAspect="True" Width="300" /> will adjust Height to 150.
+  If PreserveAspect is set to True on the Image view then if only Width or Height is set the Height or Width is now set to size that preserves aspect.
+- Audio clips in the assets folder can be played anywhere through Assets.AudioClips.YourClip.PlayAsync()
+- Added Latitude, Longitude and Altitude as Global properties which are automatically updated when Location is enabled on the client.
 - Bugfix: UnityEditor assets being generated and breaking builds
 - Bugfix: Fix issue with TextMeshPro component not activating properly often when being nested in dynamic lists
 - Bugfix: Fixed Quaternion conversion so Rotation property can be specified with euler angles

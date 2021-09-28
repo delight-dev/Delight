@@ -261,8 +261,15 @@ namespace Delight.Editor.Parser
             foreach (var declaration in propertyDeclarations)
             {
                 var typeName = declaration.DeclarationType == PropertyDeclarationType.Asset ? declaration.AssetType.FormattedTypeName : declaration.PropertyTypeFullName;
-                string activator = (declaration.DeclarationType == PropertyDeclarationType.Action || declaration.DeclarationType == PropertyDeclarationType.Method) ?
-                    String.Format(", () => new {0}()", typeName) : string.Empty;
+                string activator = string.Empty;
+                if (declaration.DeclarationType == PropertyDeclarationType.Action)
+                {
+                    activator = String.Format(", () => new ViewAction({0}SoundProperty)", declaration.PropertyName);
+                }
+                else if (declaration.DeclarationType == PropertyDeclarationType.Method)
+                {
+                    activator = String.Format(", () => new ViewMethod()");
+                }
 
                 sb.AppendLine();
                 sb.AppendLine("        public readonly static DependencyProperty<{0}> {1}Property = new DependencyProperty<{0}>(\"{1}\"{2});", typeName, declaration.PropertyName, activator);
@@ -2768,10 +2775,14 @@ namespace Delight.Editor.Parser
                 sb.AppendLine("    }");
                 sb.AppendLine();
 
-                sb.AppendLine("    public static partial class Assets");
-                sb.AppendLine("    {");
-                sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetTypeName, assetTypeNamePlural);
-                sb.AppendLine("    }");
+                // add asset data except for AudioClipAsset as it already exists
+                if (assetTypeName != "AudioClipAsset")
+                {
+                    sb.AppendLine("    public static partial class Assets");
+                    sb.AppendLine("    {");
+                    sb.AppendLine("        public static {0}Data {1} = new {0}Data();", assetTypeName, assetTypeNamePlural);
+                    sb.AppendLine("    }");
+                }
                 sb.AppendLine();
                 sb.AppendLine("    #endregion");
             }

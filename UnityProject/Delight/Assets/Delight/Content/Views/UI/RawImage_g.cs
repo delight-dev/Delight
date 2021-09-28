@@ -39,6 +39,7 @@ namespace Delight
             dependencyProperties.Add(IsMaskingGraphicProperty);
             dependencyProperties.Add(ColorProperty);
             dependencyProperties.Add(RaycastTargetProperty);
+            dependencyProperties.Add(RaycastPaddingProperty);
             dependencyProperties.Add(MaterialProperty);
         }
 
@@ -107,6 +108,13 @@ namespace Delight
         {
             get { return RaycastTargetProperty.GetValue(this); }
             set { RaycastTargetProperty.SetValue(this, value); }
+        }
+
+        public readonly static MappedDependencyProperty<UnityEngine.Vector4, UnityEngine.UI.RawImage, RawImage> RaycastPaddingProperty = new MappedDependencyProperty<UnityEngine.Vector4, UnityEngine.UI.RawImage, RawImage>("RaycastPadding", x => x.RawImageComponent, x => x.raycastPadding, (x, y) => x.raycastPadding = y);
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return RaycastPaddingProperty.GetValue(this); }
+            set { RaycastPaddingProperty.SetValue(this, value); }
         }
 
         public readonly static MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.RawImage, RawImage> MaterialProperty = new MappedAssetDependencyProperty<MaterialAsset, UnityEngine.UI.RawImage, RawImage>("Material", x => x.RawImageComponent, (x, y) => x.material = y?.UnityObject);

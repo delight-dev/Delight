@@ -43,6 +43,7 @@ namespace Delight
             dependencyProperties.Add(IsDropUpProperty);
             dependencyProperties.Add(ShowSelectedItemProperty);
             dependencyProperties.Add(ItemSelectedProperty);
+            dependencyProperties.Add(ItemSelectedSoundProperty);
             dependencyProperties.Add(ComboBoxButtonProperty);
             dependencyProperties.Add(ComboBoxButtonTemplateProperty);
             dependencyProperties.Add(ComboBoxListCanvasProperty);
@@ -71,12 +72,19 @@ namespace Delight
             set { ShowSelectedItemProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction(ItemSelectedSoundProperty));
         /// <summary>Action called when an item is selected.</summary>
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
             set { ItemSelectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ItemSelectedSoundProperty = new DependencyProperty<AudioClipAsset>("ItemSelectedSound");
+        public AudioClipAsset ItemSelectedSound
+        {
+            get { return ItemSelectedSoundProperty.GetValue(this); }
+            set { ItemSelectedSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Button> ComboBoxButtonProperty = new DependencyProperty<Button>("ComboBoxButton");
@@ -611,6 +619,13 @@ namespace Delight
             set { ComboBoxList.HorizontalScrollbarBarRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarRaycastPaddingProperty = List.HorizontalScrollbarBarRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBarRaycastPadding
+        {
+            get { return ComboBoxList.HorizontalScrollbarBarRaycastPadding; }
+            set { ComboBoxList.HorizontalScrollbarBarRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarWidthProperty = List.HorizontalScrollbarBarWidthProperty;
         public Delight.ElementSize HorizontalScrollbarBarWidth
         {
@@ -917,6 +932,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarHandleRaycastTarget; }
             set { ComboBoxList.HorizontalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleRaycastPaddingProperty = List.HorizontalScrollbarHandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarHandleRaycastPadding
+        {
+            get { return ComboBoxList.HorizontalScrollbarHandleRaycastPadding; }
+            set { ComboBoxList.HorizontalScrollbarHandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleWidthProperty = List.HorizontalScrollbarHandleWidthProperty;
@@ -1232,6 +1254,13 @@ namespace Delight
         {
             get { return ComboBoxList.HorizontalScrollbarBackgroundRaycastTarget; }
             set { ComboBoxList.HorizontalScrollbarBackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundRaycastPaddingProperty = List.HorizontalScrollbarBackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBackgroundRaycastPadding
+        {
+            get { return ComboBoxList.HorizontalScrollbarBackgroundRaycastPadding; }
+            set { ComboBoxList.HorizontalScrollbarBackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarWidthProperty = List.HorizontalScrollbarWidthProperty;
@@ -1577,6 +1606,13 @@ namespace Delight
             set { ComboBoxList.VerticalScrollbarBarRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRaycastPaddingProperty = List.VerticalScrollbarBarRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBarRaycastPadding
+        {
+            get { return ComboBoxList.VerticalScrollbarBarRaycastPadding; }
+            set { ComboBoxList.VerticalScrollbarBarRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarWidthProperty = List.VerticalScrollbarBarWidthProperty;
         public Delight.ElementSize VerticalScrollbarBarWidth
         {
@@ -1883,6 +1919,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarHandleRaycastTarget; }
             set { ComboBoxList.VerticalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleRaycastPaddingProperty = List.VerticalScrollbarHandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarHandleRaycastPadding
+        {
+            get { return ComboBoxList.VerticalScrollbarHandleRaycastPadding; }
+            set { ComboBoxList.VerticalScrollbarHandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleWidthProperty = List.VerticalScrollbarHandleWidthProperty;
@@ -2198,6 +2241,13 @@ namespace Delight
         {
             get { return ComboBoxList.VerticalScrollbarBackgroundRaycastTarget; }
             set { ComboBoxList.VerticalScrollbarBackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundRaycastPaddingProperty = List.VerticalScrollbarBackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBackgroundRaycastPadding
+        {
+            get { return ComboBoxList.VerticalScrollbarBackgroundRaycastPadding; }
+            set { ComboBoxList.VerticalScrollbarBackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarWidthProperty = List.VerticalScrollbarWidthProperty;
@@ -2578,6 +2628,13 @@ namespace Delight
             set { ComboBoxList.BlockingObjects = value; }
         }
 
+        public readonly static DependencyProperty BlockingMaskProperty = List.BlockingMaskProperty;
+        public UnityEngine.LayerMask BlockingMask
+        {
+            get { return ComboBoxList.BlockingMask; }
+            set { ComboBoxList.BlockingMask = value; }
+        }
+
         public readonly static DependencyProperty ScrollableRegionWidthProperty = List.ScrollableRegionWidthProperty;
         public Delight.ElementSize ScrollableRegionWidth
         {
@@ -2900,6 +2957,13 @@ namespace Delight
             set { ComboBoxList.BackgroundRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty BackgroundRaycastPaddingProperty = List.BackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 BackgroundRaycastPadding
+        {
+            get { return ComboBoxList.BackgroundRaycastPadding; }
+            set { ComboBoxList.BackgroundRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty ComboBoxListWidthProperty = List.WidthProperty;
         public Delight.ElementSize ComboBoxListWidth
         {
@@ -3215,6 +3279,13 @@ namespace Delight
             set { ComboBoxButton.Text = value; }
         }
 
+        public readonly static DependencyProperty ButtonTextPreprocessorProperty = Button.TextPreprocessorProperty;
+        public TMPro.ITextPreprocessor ButtonTextPreprocessor
+        {
+            get { return ComboBoxButton.TextPreprocessor; }
+            set { ComboBoxButton.TextPreprocessor = value; }
+        }
+
         public readonly static DependencyProperty ButtonIsRightToLeftTextProperty = Button.IsRightToLeftTextProperty;
         public System.Boolean ButtonIsRightToLeftText
         {
@@ -3306,6 +3377,20 @@ namespace Delight
             set { ComboBoxButton.TintAllSprites = value; }
         }
 
+        public readonly static DependencyProperty ButtonStyleSheetProperty = Button.StyleSheetProperty;
+        public TMP_StyleSheetAsset ButtonStyleSheet
+        {
+            get { return ComboBoxButton.StyleSheet; }
+            set { ComboBoxButton.StyleSheet = value; }
+        }
+
+        public readonly static DependencyProperty ButtonTextStyleProperty = Button.TextStyleProperty;
+        public TMPro.TMP_Style ButtonTextStyle
+        {
+            get { return ComboBoxButton.TextStyle; }
+            set { ComboBoxButton.TextStyle = value; }
+        }
+
         public readonly static DependencyProperty ButtonOverrideColorTagsProperty = Button.OverrideColorTagsProperty;
         public System.Boolean ButtonOverrideColorTags
         {
@@ -3374,6 +3459,20 @@ namespace Delight
         {
             get { return ComboBoxButton.FontStyle; }
             set { ComboBoxButton.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty ButtonHorizontalAlignmentProperty = Button.HorizontalAlignmentProperty;
+        public TMPro.HorizontalAlignmentOptions ButtonHorizontalAlignment
+        {
+            get { return ComboBoxButton.HorizontalAlignment; }
+            set { ComboBoxButton.HorizontalAlignment = value; }
+        }
+
+        public readonly static DependencyProperty ButtonVerticalAlignmentProperty = Button.VerticalAlignmentProperty;
+        public TMPro.VerticalAlignmentOptions ButtonVerticalAlignment
+        {
+            get { return ComboBoxButton.VerticalAlignment; }
+            set { ComboBoxButton.VerticalAlignment = value; }
         }
 
         public readonly static DependencyProperty ButtonTextAlignmentProperty = Button.TextAlignmentProperty;
@@ -3453,13 +3552,6 @@ namespace Delight
             set { ComboBoxButton.LinkedTextComponent = value; }
         }
 
-        public readonly static DependencyProperty ButtonIsLinkedTextComponentProperty = Button.IsLinkedTextComponentProperty;
-        public System.Boolean ButtonIsLinkedTextComponent
-        {
-            get { return ComboBoxButton.IsLinkedTextComponent; }
-            set { ComboBoxButton.IsLinkedTextComponent = value; }
-        }
-
         public readonly static DependencyProperty ButtonEnableKerningProperty = Button.EnableKerningProperty;
         public System.Boolean ButtonEnableKerning
         {
@@ -3509,13 +3601,6 @@ namespace Delight
             set { ComboBoxButton.EnableCulling = value; }
         }
 
-        public readonly static DependencyProperty ButtonIgnoreRectMaskCullingProperty = Button.IgnoreRectMaskCullingProperty;
-        public System.Boolean ButtonIgnoreRectMaskCulling
-        {
-            get { return ComboBoxButton.IgnoreRectMaskCulling; }
-            set { ComboBoxButton.IgnoreRectMaskCulling = value; }
-        }
-
         public readonly static DependencyProperty ButtonIgnoreVisibilityProperty = Button.IgnoreVisibilityProperty;
         public System.Boolean ButtonIgnoreVisibility
         {
@@ -3556,6 +3641,13 @@ namespace Delight
         {
             get { return ComboBoxButton.GeometrySortingOrder; }
             set { ComboBoxButton.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty ButtonIsTextObjectScaleStaticProperty = Button.IsTextObjectScaleStaticProperty;
+        public System.Boolean ButtonIsTextObjectScaleStatic
+        {
+            get { return ComboBoxButton.IsTextObjectScaleStatic; }
+            set { ComboBoxButton.IsTextObjectScaleStatic = value; }
         }
 
         public readonly static DependencyProperty ButtonVertexBufferAutoSizeReductionProperty = Button.VertexBufferAutoSizeReductionProperty;
@@ -3661,6 +3753,13 @@ namespace Delight
         {
             get { return ComboBoxButton.RaycastTarget; }
             set { ComboBoxButton.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty ButtonRaycastPaddingProperty = Button.RaycastPaddingProperty;
+        public UnityEngine.Vector4 ButtonRaycastPadding
+        {
+            get { return ComboBoxButton.RaycastPadding; }
+            set { ComboBoxButton.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty ButtonMaterialProperty = Button.MaterialProperty;
@@ -3983,6 +4082,13 @@ namespace Delight
         {
             get { return ComboBoxButton.BackgroundRaycastTarget; }
             set { ComboBoxButton.BackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty ButtonBackgroundRaycastPaddingProperty = Button.BackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 ButtonBackgroundRaycastPadding
+        {
+            get { return ComboBoxButton.BackgroundRaycastPadding; }
+            set { ComboBoxButton.BackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty ButtonWidthProperty = Button.WidthProperty;

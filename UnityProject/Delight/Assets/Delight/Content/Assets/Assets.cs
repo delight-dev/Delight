@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 #endregion
@@ -20,6 +21,7 @@ namespace Delight
         private static Dictionary<string, Func<View, View, string, Template, bool, View>> ViewActivators;
         private static Dictionary<string, Type> ViewTypes;
         public static DependencyObject RuntimeAssetObject = new DependencyObject();
+        public static AudioClipAssetData AudioClips = new AudioClipAssetData();
 
         #endregion
 
@@ -78,9 +80,48 @@ namespace Delight
                 return activator(parent, propertyName);
             }
             return null;
-
         }
 
         #endregion
+    }
+
+    /// <summary>
+    /// Allows for playing sound effects.
+    /// </summary>
+    public partial class AudioClipAsset : AssetObject<UnityEngine.AudioClip>
+    {
+        #region Fields
+
+        public static AudioSource AudioSourceInstance { get; private set; }
+
+        #endregion
+
+        #region Methods
+
+        public async Task PlayAsync(float volumeScale = 1)
+        {
+            if (AudioSourceInstance == null)
+            {
+                var instance = DelightManager.Instance;
+                if (instance == null)
+                {
+                    return;
+                }
+
+                AudioSourceInstance = instance.gameObject.AddComponent<AudioSource>();
+            }
+
+            await LoadAsync();
+            AudioSourceInstance.PlayOneShot(UnityObject, volumeScale);
+        }
+
+        #endregion
+    }
+
+    /// <summary>
+    /// AudioClipAsset data provider. Contains references to all audioclips in the project.
+    /// </summary>
+    public partial class AudioClipAssetData : BindableCollection<AudioClipAsset>
+    {
     }
 }

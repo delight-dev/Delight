@@ -94,7 +94,9 @@ namespace Delight
             dependencyProperties.Add(XmlTextProperty);
             dependencyProperties.Add(IsFocusedProperty);
             dependencyProperties.Add(EditProperty);
+            dependencyProperties.Add(EditSoundProperty);
             dependencyProperties.Add(SelectViewAtLineProperty);
+            dependencyProperties.Add(SelectViewAtLineSoundProperty);
             dependencyProperties.Add(AutoCompleteOptionsProperty);
             dependencyProperties.Add(SelectedAutoCompleteOptionProperty);
             dependencyProperties.Add(DesignerViewsProperty);
@@ -163,7 +165,7 @@ namespace Delight
             set { IsFocusedProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> EditProperty = new DependencyProperty<ViewAction>("Edit", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> EditProperty = new DependencyProperty<ViewAction>("Edit", () => new ViewAction(EditSoundProperty));
         /// <summary>Action called when the user edits the view.</summary>
         public ViewAction Edit
         {
@@ -171,11 +173,25 @@ namespace Delight
             set { EditProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> SelectViewAtLineProperty = new DependencyProperty<ViewAction>("SelectViewAtLine", () => new ViewAction());
+        public readonly static DependencyProperty<AudioClipAsset> EditSoundProperty = new DependencyProperty<AudioClipAsset>("EditSound");
+        public AudioClipAsset EditSound
+        {
+            get { return EditSoundProperty.GetValue(this); }
+            set { EditSoundProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> SelectViewAtLineProperty = new DependencyProperty<ViewAction>("SelectViewAtLine", () => new ViewAction(SelectViewAtLineSoundProperty));
         public ViewAction SelectViewAtLine
         {
             get { return SelectViewAtLineProperty.GetValue(this); }
             set { SelectViewAtLineProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> SelectViewAtLineSoundProperty = new DependencyProperty<AudioClipAsset>("SelectViewAtLineSound");
+        public AudioClipAsset SelectViewAtLineSound
+        {
+            get { return SelectViewAtLineSoundProperty.GetValue(this); }
+            set { SelectViewAtLineSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Delight.AutoCompleteOptionData> AutoCompleteOptionsProperty = new DependencyProperty<Delight.AutoCompleteOptionData>("AutoCompleteOptions");

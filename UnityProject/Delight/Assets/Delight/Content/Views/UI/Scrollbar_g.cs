@@ -243,6 +243,13 @@ namespace Delight
             set { Bar.RaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty BarRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 BarRaycastPadding
+        {
+            get { return Bar.RaycastPadding; }
+            set { Bar.RaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty BarWidthProperty = Image.WidthProperty;
         public Delight.ElementSize BarWidth
         {
@@ -549,6 +556,13 @@ namespace Delight
         {
             get { return Handle.RaycastTarget; }
             set { Handle.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HandleRaycastPaddingProperty = Image.RaycastPaddingProperty;
+        public UnityEngine.Vector4 HandleRaycastPadding
+        {
+            get { return Handle.RaycastPadding; }
+            set { Handle.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HandleWidthProperty = Image.WidthProperty;

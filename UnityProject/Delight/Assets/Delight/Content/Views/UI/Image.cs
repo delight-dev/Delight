@@ -143,17 +143,51 @@ namespace Delight
             }
 
             var sprite = ImageComponent.overrideSprite ?? ImageComponent.sprite;
-            if (WidthProperty.IsUndefined(this) && HeightProperty.IsUndefined(this))
+            bool widthUndefined = WidthProperty.IsUndefined(this);
+            bool heightUndefined = HeightProperty.IsUndefined(this);
+
+            if (widthUndefined || heightUndefined)
             {
-                // if width and height is undefined, adjust size to native size of sprite                
                 if (sprite != null)
                 {
-                    ImageComponent.SetNativeSize();
-                    OverrideWidth = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.x);
-                    OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
-                    if (OverrideHeight.Pixels != 0)
+                    // if width and height is undefined, adjust size to native size of sprite     
+                    if (widthUndefined && heightUndefined)
                     {
-                        _nativeAspectRatio = OverrideWidth.Pixels / OverrideHeight.Pixels;
+                        ImageComponent.SetNativeSize();
+                        OverrideWidth = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.x);
+                        OverrideHeight = ElementSize.FromPixels(ImageComponent.rectTransform.sizeDelta.y);
+                        if (OverrideHeight.Pixels != 0)
+                        {
+                            _nativeAspectRatio = OverrideWidth.Pixels / OverrideHeight.Pixels;
+                        }
+                    }
+                    else if (widthUndefined && PreserveAspect)
+                    {
+                        // if width is undefined adjust height if preserve aspect is true
+                        ImageComponent.SetNativeSize();
+                        _nativeAspectRatio = ImageComponent.rectTransform.sizeDelta.y != 0 ?
+                            ImageComponent.rectTransform.sizeDelta.x / ImageComponent.rectTransform.sizeDelta.y : -1;
+
+                        if (_nativeAspectRatio != -1)
+                        {
+                            OverrideWidth = ElementSize.FromPixels(Height.Pixels * _nativeAspectRatio);
+                        }
+                    }
+                    else if (heightUndefined && PreserveAspect)
+                    {
+                        // if height is undefined adjust width if preserve aspect is true
+                        ImageComponent.SetNativeSize();
+                        _nativeAspectRatio = ImageComponent.rectTransform.sizeDelta.y != 0 ?
+                            ImageComponent.rectTransform.sizeDelta.x / ImageComponent.rectTransform.sizeDelta.y : -1;
+
+                        if (_nativeAspectRatio != -1)
+                        {
+                            OverrideHeight = ElementSize.FromPixels(Width.Pixels / _nativeAspectRatio);
+                        }
+                    }
+                    else
+                    {
+                        _nativeAspectRatio = -1;
                     }
                 }
             }

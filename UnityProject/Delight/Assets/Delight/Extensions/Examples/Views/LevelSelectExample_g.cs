@@ -82,6 +82,7 @@ namespace Delight
             DependencyProperties.Add(LevelSelectExampleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(NavigateBackProperty);
+            dependencyProperties.Add(NavigateBackSoundProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Label1Property);
@@ -106,11 +107,18 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<ViewAction> NavigateBackProperty = new DependencyProperty<ViewAction>("NavigateBack", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> NavigateBackProperty = new DependencyProperty<ViewAction>("NavigateBack", () => new ViewAction(NavigateBackSoundProperty));
         public ViewAction NavigateBack
         {
             get { return NavigateBackProperty.GetValue(this); }
             set { NavigateBackProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> NavigateBackSoundProperty = new DependencyProperty<AudioClipAsset>("NavigateBackSound");
+        public AudioClipAsset NavigateBackSound
+        {
+            get { return NavigateBackSoundProperty.GetValue(this); }
+            set { NavigateBackSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");

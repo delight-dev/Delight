@@ -46,7 +46,9 @@ namespace Delight
             dependencyProperties.Add(OverflowProperty);
             dependencyProperties.Add(SortDirectionProperty);
             dependencyProperties.Add(ItemSelectedProperty);
+            dependencyProperties.Add(ItemSelectedSoundProperty);
             dependencyProperties.Add(ItemDeselectedProperty);
+            dependencyProperties.Add(ItemDeselectedSoundProperty);
             dependencyProperties.Add(CanSelectProperty);
             dependencyProperties.Add(CanDeselectProperty);
             dependencyProperties.Add(CanMultiSelectProperty);
@@ -164,7 +166,7 @@ namespace Delight
             set { SortDirectionProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction(ItemSelectedSoundProperty));
         /// <summary>Action called when an item is selected.</summary>
         public ViewAction ItemSelected
         {
@@ -172,12 +174,26 @@ namespace Delight
             set { ItemSelectedProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected", () => new ViewAction());
+        public readonly static DependencyProperty<AudioClipAsset> ItemSelectedSoundProperty = new DependencyProperty<AudioClipAsset>("ItemSelectedSound");
+        public AudioClipAsset ItemSelectedSound
+        {
+            get { return ItemSelectedSoundProperty.GetValue(this); }
+            set { ItemSelectedSoundProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ItemDeselectedProperty = new DependencyProperty<ViewAction>("ItemDeselected", () => new ViewAction(ItemDeselectedSoundProperty));
         /// <summary>Action called when an item is deselected.</summary>
         public ViewAction ItemDeselected
         {
             get { return ItemDeselectedProperty.GetValue(this); }
             set { ItemDeselectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ItemDeselectedSoundProperty = new DependencyProperty<AudioClipAsset>("ItemDeselectedSound");
+        public AudioClipAsset ItemDeselectedSound
+        {
+            get { return ItemDeselectedSoundProperty.GetValue(this); }
+            set { ItemDeselectedSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> CanSelectProperty = new DependencyProperty<System.Boolean>("CanSelect");
@@ -633,6 +649,13 @@ namespace Delight
             set { ScrollableRegion.HorizontalScrollbarBarRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty HorizontalScrollbarBarRaycastPaddingProperty = ScrollableRegion.HorizontalScrollbarBarRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBarRaycastPadding
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBarRaycastPadding; }
+            set { ScrollableRegion.HorizontalScrollbarBarRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty HorizontalScrollbarBarWidthProperty = ScrollableRegion.HorizontalScrollbarBarWidthProperty;
         public Delight.ElementSize HorizontalScrollbarBarWidth
         {
@@ -939,6 +962,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarHandleRaycastTarget; }
             set { ScrollableRegion.HorizontalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarHandleRaycastPaddingProperty = ScrollableRegion.HorizontalScrollbarHandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarHandleRaycastPadding
+        {
+            get { return ScrollableRegion.HorizontalScrollbarHandleRaycastPadding; }
+            set { ScrollableRegion.HorizontalScrollbarHandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarHandleWidthProperty = ScrollableRegion.HorizontalScrollbarHandleWidthProperty;
@@ -1254,6 +1284,13 @@ namespace Delight
         {
             get { return ScrollableRegion.HorizontalScrollbarBackgroundRaycastTarget; }
             set { ScrollableRegion.HorizontalScrollbarBackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalScrollbarBackgroundRaycastPaddingProperty = ScrollableRegion.HorizontalScrollbarBackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 HorizontalScrollbarBackgroundRaycastPadding
+        {
+            get { return ScrollableRegion.HorizontalScrollbarBackgroundRaycastPadding; }
+            set { ScrollableRegion.HorizontalScrollbarBackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty HorizontalScrollbarWidthProperty = ScrollableRegion.HorizontalScrollbarWidthProperty;
@@ -1599,6 +1636,13 @@ namespace Delight
             set { ScrollableRegion.VerticalScrollbarBarRaycastTarget = value; }
         }
 
+        public readonly static DependencyProperty VerticalScrollbarBarRaycastPaddingProperty = ScrollableRegion.VerticalScrollbarBarRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBarRaycastPadding
+        {
+            get { return ScrollableRegion.VerticalScrollbarBarRaycastPadding; }
+            set { ScrollableRegion.VerticalScrollbarBarRaycastPadding = value; }
+        }
+
         public readonly static DependencyProperty VerticalScrollbarBarWidthProperty = ScrollableRegion.VerticalScrollbarBarWidthProperty;
         public Delight.ElementSize VerticalScrollbarBarWidth
         {
@@ -1905,6 +1949,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarHandleRaycastTarget; }
             set { ScrollableRegion.VerticalScrollbarHandleRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarHandleRaycastPaddingProperty = ScrollableRegion.VerticalScrollbarHandleRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarHandleRaycastPadding
+        {
+            get { return ScrollableRegion.VerticalScrollbarHandleRaycastPadding; }
+            set { ScrollableRegion.VerticalScrollbarHandleRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarHandleWidthProperty = ScrollableRegion.VerticalScrollbarHandleWidthProperty;
@@ -2220,6 +2271,13 @@ namespace Delight
         {
             get { return ScrollableRegion.VerticalScrollbarBackgroundRaycastTarget; }
             set { ScrollableRegion.VerticalScrollbarBackgroundRaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty VerticalScrollbarBackgroundRaycastPaddingProperty = ScrollableRegion.VerticalScrollbarBackgroundRaycastPaddingProperty;
+        public UnityEngine.Vector4 VerticalScrollbarBackgroundRaycastPadding
+        {
+            get { return ScrollableRegion.VerticalScrollbarBackgroundRaycastPadding; }
+            set { ScrollableRegion.VerticalScrollbarBackgroundRaycastPadding = value; }
         }
 
         public readonly static DependencyProperty VerticalScrollbarWidthProperty = ScrollableRegion.VerticalScrollbarWidthProperty;
@@ -2598,6 +2656,13 @@ namespace Delight
         {
             get { return ScrollableRegion.BlockingObjects; }
             set { ScrollableRegion.BlockingObjects = value; }
+        }
+
+        public readonly static DependencyProperty BlockingMaskProperty = ScrollableRegion.BlockingMaskProperty;
+        public UnityEngine.LayerMask BlockingMask
+        {
+            get { return ScrollableRegion.BlockingMask; }
+            set { ScrollableRegion.BlockingMask = value; }
         }
 
         public readonly static DependencyProperty ScrollableRegionWidthProperty = ScrollableRegion.WidthProperty;

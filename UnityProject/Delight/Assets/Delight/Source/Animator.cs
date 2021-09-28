@@ -300,7 +300,6 @@ namespace Delight
 
             base.StartAnimation(currentState);
 
-            // TODO check if animating from current value is desirable
             Property.State = FromState == DependencyObject.AnyStateName ? currentState : FromState;
             From = Property.GetValueGeneric(target);
             Property.State = ToState;

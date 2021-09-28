@@ -48,6 +48,7 @@ namespace Delight
             dependencyProperties.Add(BreadthProperty);
             dependencyProperties.Add(ContentTemplateDataProperty);
             dependencyProperties.Add(ItemSelectedProperty);
+            dependencyProperties.Add(ItemSelectedSoundProperty);
         }
 
         #endregion
@@ -134,12 +135,19 @@ namespace Delight
             set { ContentTemplateDataProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ItemSelectedProperty = new DependencyProperty<ViewAction>("ItemSelected", () => new ViewAction(ItemSelectedSoundProperty));
         /// <summary>Action called when item is selected.</summary>
         public ViewAction ItemSelected
         {
             get { return ItemSelectedProperty.GetValue(this); }
             set { ItemSelectedProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ItemSelectedSoundProperty = new DependencyProperty<AudioClipAsset>("ItemSelectedSound");
+        public AudioClipAsset ItemSelectedSound
+        {
+            get { return ItemSelectedSoundProperty.GetValue(this); }
+            set { ItemSelectedSoundProperty.SetValue(this, value); }
         }
 
         public AttachedProperty<System.Boolean> SetListItemState { get; private set; }

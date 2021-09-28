@@ -46,6 +46,7 @@ namespace Delight
             DependencyProperties.Add(MainMenuExampleTemplates.Default, dependencyProperties);
 
             dependencyProperties.Add(PlayProperty);
+            dependencyProperties.Add(PlaySoundProperty);
             dependencyProperties.Add(Image1Property);
             dependencyProperties.Add(Image1TemplateProperty);
             dependencyProperties.Add(Label1Property);
@@ -64,11 +65,18 @@ namespace Delight
 
         #region Properties
 
-        public readonly static DependencyProperty<ViewAction> PlayProperty = new DependencyProperty<ViewAction>("Play", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> PlayProperty = new DependencyProperty<ViewAction>("Play", () => new ViewAction(PlaySoundProperty));
         public ViewAction Play
         {
             get { return PlayProperty.GetValue(this); }
             set { PlayProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> PlaySoundProperty = new DependencyProperty<AudioClipAsset>("PlaySound");
+        public AudioClipAsset PlaySound
+        {
+            get { return PlaySoundProperty.GetValue(this); }
+            set { PlaySoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<Image> Image1Property = new DependencyProperty<Image>("Image1");

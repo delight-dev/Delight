@@ -61,8 +61,11 @@ namespace Delight
             dependencyProperties.Add(CanToggleOnProperty);
             dependencyProperties.Add(CanToggleOffProperty);
             dependencyProperties.Add(ToggleClickProperty);
+            dependencyProperties.Add(ToggleClickSoundProperty);
             dependencyProperties.Add(ToggleOnProperty);
+            dependencyProperties.Add(ToggleOnSoundProperty);
             dependencyProperties.Add(ToggleOffProperty);
+            dependencyProperties.Add(ToggleOffSoundProperty);
             dependencyProperties.Add(IsMouseOverProperty);
             dependencyProperties.Add(IsPressedProperty);
             dependencyProperties.Add(AutoSizeProperty);
@@ -134,7 +137,7 @@ namespace Delight
             set { CanToggleOffProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ToggleClickProperty = new DependencyProperty<ViewAction>("ToggleClick", () => new ViewAction());
+        public readonly static DependencyProperty<ViewAction> ToggleClickProperty = new DependencyProperty<ViewAction>("ToggleClick", () => new ViewAction(ToggleClickSoundProperty));
         /// <summary>Action called when the button is toggled.</summary>
         public ViewAction ToggleClick
         {
@@ -142,18 +145,39 @@ namespace Delight
             set { ToggleClickProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ToggleOnProperty = new DependencyProperty<ViewAction>("ToggleOn", () => new ViewAction());
+        public readonly static DependencyProperty<AudioClipAsset> ToggleClickSoundProperty = new DependencyProperty<AudioClipAsset>("ToggleClickSound");
+        public AudioClipAsset ToggleClickSound
+        {
+            get { return ToggleClickSoundProperty.GetValue(this); }
+            set { ToggleClickSoundProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ToggleOnProperty = new DependencyProperty<ViewAction>("ToggleOn", () => new ViewAction(ToggleOnSoundProperty));
         public ViewAction ToggleOn
         {
             get { return ToggleOnProperty.GetValue(this); }
             set { ToggleOnProperty.SetValue(this, value); }
         }
 
-        public readonly static DependencyProperty<ViewAction> ToggleOffProperty = new DependencyProperty<ViewAction>("ToggleOff", () => new ViewAction());
+        public readonly static DependencyProperty<AudioClipAsset> ToggleOnSoundProperty = new DependencyProperty<AudioClipAsset>("ToggleOnSound");
+        public AudioClipAsset ToggleOnSound
+        {
+            get { return ToggleOnSoundProperty.GetValue(this); }
+            set { ToggleOnSoundProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<ViewAction> ToggleOffProperty = new DependencyProperty<ViewAction>("ToggleOff", () => new ViewAction(ToggleOffSoundProperty));
         public ViewAction ToggleOff
         {
             get { return ToggleOffProperty.GetValue(this); }
             set { ToggleOffProperty.SetValue(this, value); }
+        }
+
+        public readonly static DependencyProperty<AudioClipAsset> ToggleOffSoundProperty = new DependencyProperty<AudioClipAsset>("ToggleOffSound");
+        public AudioClipAsset ToggleOffSound
+        {
+            get { return ToggleOffSoundProperty.GetValue(this); }
+            set { ToggleOffSoundProperty.SetValue(this, value); }
         }
 
         public readonly static DependencyProperty<System.Boolean> IsMouseOverProperty = new DependencyProperty<System.Boolean>("IsMouseOver");
@@ -262,6 +286,13 @@ namespace Delight
             set { Label.Text = value; }
         }
 
+        public readonly static DependencyProperty TextPreprocessorProperty = Label.TextPreprocessorProperty;
+        public TMPro.ITextPreprocessor TextPreprocessor
+        {
+            get { return Label.TextPreprocessor; }
+            set { Label.TextPreprocessor = value; }
+        }
+
         public readonly static DependencyProperty IsRightToLeftTextProperty = Label.IsRightToLeftTextProperty;
         public System.Boolean IsRightToLeftText
         {
@@ -353,6 +384,20 @@ namespace Delight
             set { Label.TintAllSprites = value; }
         }
 
+        public readonly static DependencyProperty StyleSheetProperty = Label.StyleSheetProperty;
+        public TMP_StyleSheetAsset StyleSheet
+        {
+            get { return Label.StyleSheet; }
+            set { Label.StyleSheet = value; }
+        }
+
+        public readonly static DependencyProperty TextStyleProperty = Label.TextStyleProperty;
+        public TMPro.TMP_Style TextStyle
+        {
+            get { return Label.TextStyle; }
+            set { Label.TextStyle = value; }
+        }
+
         public readonly static DependencyProperty OverrideColorTagsProperty = Label.OverrideColorTagsProperty;
         public System.Boolean OverrideColorTags
         {
@@ -421,6 +466,20 @@ namespace Delight
         {
             get { return Label.FontStyle; }
             set { Label.FontStyle = value; }
+        }
+
+        public readonly static DependencyProperty HorizontalAlignmentProperty = Label.HorizontalAlignmentProperty;
+        public TMPro.HorizontalAlignmentOptions HorizontalAlignment
+        {
+            get { return Label.HorizontalAlignment; }
+            set { Label.HorizontalAlignment = value; }
+        }
+
+        public readonly static DependencyProperty VerticalAlignmentProperty = Label.VerticalAlignmentProperty;
+        public TMPro.VerticalAlignmentOptions VerticalAlignment
+        {
+            get { return Label.VerticalAlignment; }
+            set { Label.VerticalAlignment = value; }
         }
 
         public readonly static DependencyProperty TextAlignmentProperty = Label.TextAlignmentProperty;
@@ -500,13 +559,6 @@ namespace Delight
             set { Label.LinkedTextComponent = value; }
         }
 
-        public readonly static DependencyProperty IsLinkedTextComponentProperty = Label.IsLinkedTextComponentProperty;
-        public System.Boolean IsLinkedTextComponent
-        {
-            get { return Label.IsLinkedTextComponent; }
-            set { Label.IsLinkedTextComponent = value; }
-        }
-
         public readonly static DependencyProperty EnableKerningProperty = Label.EnableKerningProperty;
         public System.Boolean EnableKerning
         {
@@ -556,13 +608,6 @@ namespace Delight
             set { Label.EnableCulling = value; }
         }
 
-        public readonly static DependencyProperty IgnoreRectMaskCullingProperty = Label.IgnoreRectMaskCullingProperty;
-        public System.Boolean IgnoreRectMaskCulling
-        {
-            get { return Label.IgnoreRectMaskCulling; }
-            set { Label.IgnoreRectMaskCulling = value; }
-        }
-
         public readonly static DependencyProperty IgnoreVisibilityProperty = Label.IgnoreVisibilityProperty;
         public System.Boolean IgnoreVisibility
         {
@@ -603,6 +648,13 @@ namespace Delight
         {
             get { return Label.GeometrySortingOrder; }
             set { Label.GeometrySortingOrder = value; }
+        }
+
+        public readonly static DependencyProperty IsTextObjectScaleStaticProperty = Label.IsTextObjectScaleStaticProperty;
+        public System.Boolean IsTextObjectScaleStatic
+        {
+            get { return Label.IsTextObjectScaleStatic; }
+            set { Label.IsTextObjectScaleStatic = value; }
         }
 
         public readonly static DependencyProperty VertexBufferAutoSizeReductionProperty = Label.VertexBufferAutoSizeReductionProperty;
@@ -708,6 +760,13 @@ namespace Delight
         {
             get { return Label.RaycastTarget; }
             set { Label.RaycastTarget = value; }
+        }
+
+        public readonly static DependencyProperty RaycastPaddingProperty = Label.RaycastPaddingProperty;
+        public UnityEngine.Vector4 RaycastPadding
+        {
+            get { return Label.RaycastPadding; }
+            set { Label.RaycastPadding = value; }
         }
 
         public readonly static DependencyProperty MaterialProperty = Label.MaterialProperty;
