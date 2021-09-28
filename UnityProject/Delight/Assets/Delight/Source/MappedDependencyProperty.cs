@@ -164,7 +164,7 @@ namespace Delight
             }
             else if (state == DependencyObject.AnyStateName)
             {
-                return GetStateDefault(key);
+                return GetStateDefault(key, key.State);
             }
 
             TryGetStateDefault(key.Template, state, out var defaultValue);

@@ -245,6 +245,18 @@ namespace Delight
             });
         }
 
+        /// <summary>
+        /// Triggers update.
+        /// </summary>
+        public void Update(bool? animate = null)
+        {
+            Notify(new CollectionChangedEventArgs
+            {
+                ChangeAction = CollectionChangeAction.Replace,
+                Animate = animate
+            });
+        }
+
         // TODO here for backwards compatibility with MarkLight
         public void ItemsModified()
         {

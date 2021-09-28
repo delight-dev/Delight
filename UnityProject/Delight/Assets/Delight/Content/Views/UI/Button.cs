@@ -307,13 +307,13 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override async Task SetState(string state, bool animate = true, float initialDelay = 0)
+        public override async Task SetState(string state, bool animate = true, float initialDelay = 0, bool resetState = false)
         {
-            if (state.IEquals(_previousState))
+            if (state.IEquals(_state) && !resetState)
                 return;
 
-            Label.SetState(state, animate, initialDelay);
-            await base.SetState(state, animate, initialDelay);
+            Label.SetState(state, animate, initialDelay, resetState);
+            await base.SetState(state, animate, initialDelay, resetState);
         }
 
         /// <summary>

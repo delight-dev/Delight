@@ -52,7 +52,8 @@ namespace Delight
                 _layoutParent.LayoutChildren.Add(this);
             }
 
-            _previousState = string.Empty;
+            _state = DefaultStateName;
+            _previousState = DefaultStateName;
             _content = this;
             BeforeInitialize();
         }
@@ -700,11 +701,17 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public virtual async Task SetState(string newState, bool animate = true, float initialDelay = 0)
+        public virtual async Task SetState(string newState, bool animate = true, float initialDelay = 0, bool resetState = false)
         {
-            if (newState.IEquals(_previousState))
+            if (newState.IEquals(_state) && !resetState)
                 return;
 
+            if (resetState)
+            {
+                _state = _previousState;
+            }
+
+            string currentState = _state;
             if (newState == "Default")
             {
                 newState = DefaultStateName;
@@ -717,7 +724,7 @@ namespace Delight
             {
                 foreach (var stateAnimation in _stateAnimations)
                 {
-                    if ((stateAnimation.FromAny || stateAnimation.FromState == _previousState) &&
+                    if ((stateAnimation.FromAny || stateAnimation.FromState == _state) &&
                         (stateAnimation.ToAny || stateAnimation.ToState == newState))
                     {
                         if (triggeredStateAnimations == null)
@@ -752,8 +759,8 @@ namespace Delight
                 }
 
                 // set state
+                _previousState = _state;
                 _state = newState;
-                _previousState = newState;
 
                 // load all state changing dependency properties
                 for (int i = 0; i < stateChangingProperties.Count; ++i)
@@ -768,8 +775,8 @@ namespace Delight
             else
             {
                 // set state
+                _previousState = _state;
                 _state = newState;
-                _previousState = newState;
             }
 
             // start animations
@@ -785,7 +792,7 @@ namespace Delight
                 // start any state animators applicable to current state transition
                 if (animate && triggeredStateAnimations != null)
                 {
-                    await Task.WhenAll(triggeredStateAnimations.Select(x => x.Animate(LayoutRoot, initialDelay)));
+                    await Task.WhenAll(triggeredStateAnimations.Select(x => x.Animate(LayoutRoot, initialDelay, currentState)));
                 }
             }
         }
@@ -860,7 +867,7 @@ namespace Delight
             for (int i = 0; i < stateChangingProperties.Count; ++i)
             {
                 var property = stateChangingProperties[i];
-                if (!property.HasState(_template, _previousState) && !property.HasState(_template, newState))
+                if (!property.HasState(_template, _state) && !property.HasState(_template, newState))
                     continue;
 
                 filteredStateChangingProperties.Add(stateChangingProperties[i]);

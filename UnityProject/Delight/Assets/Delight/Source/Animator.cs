@@ -164,11 +164,11 @@ namespace Delight
         /// <summary>
         /// Starts animation.
         /// </summary>
-        public override void StartAnimation()
+        public override void StartAnimation(string currentState)
         {
-            base.StartAnimation();
+            base.StartAnimation(currentState);
 
-            Property.State = FromState;
+            Property.State = FromState == DependencyObject.AnyStateName ? currentState : FromState;
             From = ValueGetter();
             Property.State = ToState;
             To = ValueGetter();
@@ -292,15 +292,16 @@ namespace Delight
         /// <summary>
         /// Starts animation.
         /// </summary>
-        public override void StartAnimation()
+        public override void StartAnimation(string currentState)
         {
             bool targetIsAlive = Target.TryGetTarget(out var target);
             if (!targetIsAlive || !target.IsLoaded)
                 return;
 
-            base.StartAnimation();
+            base.StartAnimation(currentState);
 
-            Property.State = FromState;
+            // TODO check if animating from current value is desirable
+            Property.State = FromState == DependencyObject.AnyStateName ? currentState : FromState;
             From = Property.GetValueGeneric(target);
             Property.State = ToState;
             To = Property.GetValueGeneric(target);
@@ -391,7 +392,7 @@ namespace Delight
         /// <summary>
         /// Does the animation.
         /// </summary>
-        public Task Animate(LayoutRoot layoutRoot, float initialDelay)
+        public Task Animate(LayoutRoot layoutRoot, float initialDelay, string currentState)
         {
             if (!IsCompleted)
             {
@@ -402,7 +403,7 @@ namespace Delight
             InitialDelay = initialDelay;
 
             layoutRoot.RegisterAnimator(this);
-            StartAnimation();
+            StartAnimation(currentState);
 
             return _taskCompletionSource.Task;
         }
@@ -410,7 +411,7 @@ namespace Delight
         /// <summary>
         /// Starts the animation.
         /// </summary>
-        public virtual void StartAnimation()
+        public virtual void StartAnimation(string currentState)
         {
             // do nothing if animation is already active
             if (IsRunning)

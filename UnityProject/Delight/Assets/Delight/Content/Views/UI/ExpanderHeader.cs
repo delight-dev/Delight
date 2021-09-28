@@ -31,9 +31,9 @@ namespace Delight
         /// <summary>
         /// Sets the state of the view.
         /// </summary>
-        public override async Task SetState(string state, bool animate = true, float initialDelay = 0)
+        public override async Task SetState(string state, bool animate = true, float initialDelay = 0, bool resetState = false)
         {
-            if (state.IEquals(_previousState))
+            if (state.IEquals(_state) && !resetState)
                 return;
 
             foreach (var kv in SetExpanderState.AttachedValues)
@@ -44,11 +44,11 @@ namespace Delight
                 var view = kv.Key as View;
                 if (view != null)
                 {
-                    view.SetState(state, animate, initialDelay);
+                    view.SetState(state, animate, initialDelay, resetState);
                 }
             }
 
-            await base.SetState(state, animate, initialDelay);
+            await base.SetState(state, animate, initialDelay, resetState);
         }
 
         /// <summary>
